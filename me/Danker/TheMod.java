@@ -22,18 +22,30 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 public class TheMod
 {
     public static final String MODID = "Danker's Skyblock Mod";
-    public static final String VERSION = "1.1";
+    public static final String VERSION = "1.2";
     
     @EventHandler
     public void init(FMLInitializationEvent event)
     {
 		FMLCommonHandler.instance().bus().register(this);
 		MinecraftForge.EVENT_BUS.register(this);
+		
+		// Config init
+		final ConfigHandler cf = new ConfigHandler();
+		if (!cf.hasKey("toggles", "GParty")) cf.writeBooleanConfig("toggles", "GParty", true);
+		if (!cf.hasKey("toggles", "Coords")) cf.writeBooleanConfig("toggles", "Coords", true);
+		if (!cf.hasKey("api", "APIKey")) cf.writeStringConfig("api", "APIKey", "");
+		
+		final ToggleCommand tf = new ToggleCommand();
+		tf.gpartyToggled = cf.getBoolean("toggles", "GParty");
+		tf.coordsToggled = cf.getBoolean("toggles", "Coords");
     }
     
     @EventHandler
     public void preInit(final FMLPreInitializationEvent event) {
     	ClientCommandHandler.instance.registerCommand(new ToggleCommand());
+    	ClientCommandHandler.instance.registerCommand(new SetkeyCommand());
+    	ClientCommandHandler.instance.registerCommand(new GetkeyCommand());
     }
     
     @SubscribeEvent
