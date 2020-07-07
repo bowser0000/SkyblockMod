@@ -1,4 +1,4 @@
-# SkyblockMod
+# Danker's Skyblock Mod
 QOL changes that enhances your Hypixel Skyblock experience. Created to add features I couldn't find in a mod, or if the mod was paid (which is against the [Mojang TOS](https://account.mojang.com/documents/commercial_guidelines)). If I find a free mod has a feature, I will not add the feature in this mod.
 
 ## Current features
