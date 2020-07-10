@@ -57,7 +57,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 			player.addChatMessage(new ChatComponentText("Guild party notifications: " + gpartyToggled));
 			player.addChatMessage(new ChatComponentText("Coord/Angle display: " + coordsToggled));
 		} else {
-			player.addChatMessage(new ChatComponentText("Unknown value."));
+			player.addChatMessage(new ChatComponentText("Usage: /toggle [gparty/coords]"));
 		}
 	}
 }

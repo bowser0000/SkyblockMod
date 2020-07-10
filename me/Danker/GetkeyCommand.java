@@ -30,7 +30,7 @@ public class GetkeyCommand extends CommandBase implements ICommand {
 		final ConfigHandler cf = new ConfigHandler();
 		
 		if (cf.getString("api", "APIKey").equals("")) {
-			player.addChatMessage(new ChatComponentText("API key not set. Get a new one by doing /api new."));
+			player.addChatMessage(new ChatComponentText("API key not set. Set your API key using /setkey."));
 		} else {
 			player.addChatMessage(new ChatComponentText("Your set API key is " + cf.getString("api", "APIKey")));
 		}
