@@ -4,8 +4,10 @@ QOL changes that enhances your Hypixel Skyblock experience. Created to add featu
 ## Current features
 - Guild party desktop notifications (toggleable)
 - Coordinate and angle display (toggleable)
+- Slayer item tracker
 
 ## Commands
 - /toggle [gparty/coords/list] - Toggles features. /toggle list returns values of every toggle.
 - /setkey [key] - Sets API key.
-- /getkey - Returns key set with /setkey
+- /getkey - Returns key set with /setkey.
+- /loot [zombie/spider/wolf] - Returns loot received from the slayer quest.
