@@ -6,28 +6,14 @@ import java.awt.Toolkit;
 import java.awt.TrayIcon;
 import java.util.List;
 
-import me.Danker.commands.DisplayCommand;
-import me.Danker.commands.GetkeyCommand;
-import me.Danker.commands.LootCommand;
-import me.Danker.commands.ReloadConfigCommand;
-import me.Danker.commands.SetkeyCommand;
-import me.Danker.commands.ToggleCommand;
-import me.Danker.handlers.ConfigHandler;
-import me.Danker.handlers.ScoreboardHandler;
-import me.Danker.handlers.TextRenderer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
-import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.StringUtils;
 import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
-import net.minecraftforge.client.event.sound.PlaySoundEvent;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -35,14 +21,11 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-@Mod(modid = TheMod.MODID, version = TheMod.VERSION, clientSideOnly = true)
+@Mod(modid = TheMod.MODID, version = TheMod.VERSION)
 public class TheMod
 {
     public static final String MODID = "Danker's Skyblock Mod";
-    public static final String VERSION = "1.4";
-    
-    static int checkItemsNow = 0;
-    static int itemsChecked = 0;
+    public static final String VERSION = "1.3";
     
     @EventHandler
     public void init(FMLInitializationEvent event)
@@ -50,8 +33,81 @@ public class TheMod
 		FMLCommonHandler.instance().bus().register(this);
 		MinecraftForge.EVENT_BUS.register(this);
 		
+		// Config init
 		final ConfigHandler cf = new ConfigHandler();
-		cf.reloadConfig();
+		if (!cf.hasKey("toggles", "GParty")) cf.writeBooleanConfig("toggles", "GParty", true);
+		if (!cf.hasKey("toggles", "Coords")) cf.writeBooleanConfig("toggles", "Coords", true);
+		if (!cf.hasKey("api", "APIKey")) cf.writeStringConfig("api", "APIKey", "");
+		
+		// Wolf Loot
+		if (!cf.hasKey("wolf", "svens")) cf.writeIntConfig("wolf", "svens", 0);
+		if (!cf.hasKey("wolf", "spirit")) cf.writeIntConfig("wolf", "spirit", 0);
+		if (!cf.hasKey("wolf", "book")) cf.writeIntConfig("wolf", "book", 0);
+		if (!cf.hasKey("wolf", "egg")) cf.writeIntConfig("wolf", "egg", 0);
+		if (!cf.hasKey("wolf", "couture")) cf.writeIntConfig("wolf", "couture", 0);
+		if (!cf.hasKey("wolf", "bait")) cf.writeIntConfig("wolf", "bait", 0);
+		if (!cf.hasKey("wolf", "flux")) cf.writeIntConfig("wolf", "flux", 0);
+		if (!cf.hasKey("wolf", "timeRNG")) cf.writeIntConfig("wolf", "timeRNG", -1);
+		if (!cf.hasKey("wolf", "bossRNG")) cf.writeIntConfig("wolf", "bossRNG", -1);
+		// Spider Loot
+		if (!cf.hasKey("spider", "tarantulas")) cf.writeIntConfig("spider", "tarantulas", 0);
+		if (!cf.hasKey("spider", "bite")) cf.writeIntConfig("spider", "bite", 0);
+		if (!cf.hasKey("spider", "catalyst")) cf.writeIntConfig("spider", "catalyst", 0);
+		if (!cf.hasKey("spider", "book")) cf.writeIntConfig("spider", "book", 0);
+		if (!cf.hasKey("spider", "swatter")) cf.writeIntConfig("spider", "swatter", 0);
+		if (!cf.hasKey("spider", "talisman")) cf.writeIntConfig("spider", "talisman", 0);
+		if (!cf.hasKey("spider", "mosquito")) cf.writeIntConfig("spider", "mosquito", 0);
+		if (!cf.hasKey("spider", "timeRNG")) cf.writeIntConfig("spider", "timeRNG", -1);
+		if (!cf.hasKey("spider", "bossRNG")) cf.writeIntConfig("spider", "bossRNG", -1);
+		// Zombie Loot
+		if (!cf.hasKey("zombie", "revs")) cf.writeIntConfig("zombie", "revs", 0);
+		if (!cf.hasKey("zombie", "pestilence")) cf.writeIntConfig("zombie", "pestilence", 0);
+		if (!cf.hasKey("zombie", "undeadCatalyst")) cf.writeIntConfig("zombie", "undeadCatalyst", 0);
+		if (!cf.hasKey("zombie", "book")) cf.writeIntConfig("zombie", "book", 0);
+		if (!cf.hasKey("zombie", "beheaded")) cf.writeIntConfig("zombie", "beheaded", 0);
+		if (!cf.hasKey("zombie", "revCatalyst")) cf.writeIntConfig("zombie", "revCatalyst", 0);
+		if (!cf.hasKey("zombie", "snake")) cf.writeIntConfig("zombie", "snake", 0);
+		if (!cf.hasKey("zombie", "scythe")) cf.writeIntConfig("zombie", "scythe", 0);
+		if (!cf.hasKey("zombie", "timeRNG")) cf.writeIntConfig("zombie", "timeRNG", -1);
+		if (!cf.hasKey("zombie", "bossRNG")) cf.writeIntConfig("zombie", "bossRNG", -1);
+		
+		final ToggleCommand tf = new ToggleCommand();
+		tf.gpartyToggled = cf.getBoolean("toggles", "GParty");
+		tf.coordsToggled = cf.getBoolean("toggles", "Coords");
+		
+		final LootCommand lc = new LootCommand();
+		// Wolf
+		lc.wolfSvens = cf.getInt("wolf", "svens");
+		lc.wolfSpirits = cf.getInt("wolf", "spirit");
+		lc.wolfBooks = cf.getInt("wolf", "book");
+		lc.wolfEggs = cf.getInt("wolf", "egg");
+		lc.wolfCoutures = cf.getInt("wolf", "couture");
+		lc.wolfBaits = cf.getInt("wolf", "bait");
+		lc.wolfFluxes = cf.getInt("wolf", "flux");
+		lc.wolfTime = cf.getInt("wolf", "timeRNG");
+		lc.wolfBosses = cf.getInt("wolf", "bossRNG");
+		// Spider
+		lc.spiderTarantulas = cf.getInt("spider", "tarantulas");
+		lc.spiderBites = cf.getInt("spider", "bite");
+		lc.spiderCatalysts = cf.getInt("spider", "catalyst");
+		lc.spiderBooks = cf.getInt("spider", "book");
+		lc.spiderSwatters = cf.getInt("spider", "swatter");
+		lc.spiderTalismans = cf.getInt("spider", "talisman");
+		lc.spiderMosquitos = cf.getInt("spider", "mosquito");
+		lc.spiderTime = cf.getInt("spider", "timeRNG");
+		lc.spiderBosses = cf.getInt("spider", "bossRNG");
+		// Zombie
+		lc.zombieRevs = cf.getInt("zombie", "revs");
+		lc.zombiePestilences = cf.getInt("zombie", "pestilence");
+		lc.zombieUndeadCatas = cf.getInt("zombie", "undeadCatalyst");
+		lc.zombieBooks = cf.getInt("zombie", "book");
+		lc.zombieBeheadeds = cf.getInt("zombie", "beheaded");
+		lc.zombieRevCatas = cf.getInt("zombie", "revCatalyst");
+		lc.zombieSnakes = cf.getInt("zombie", "snake");
+		lc.zombieScythes = cf.getInt("zombie", "scythe");
+		lc.zombieTime = cf.getInt("zombie", "timeRNG");
+		lc.zombieBosses = cf.getInt("zombie", "bossRNG");
+		
     }
     
     @EventHandler
@@ -60,8 +116,6 @@ public class TheMod
     	ClientCommandHandler.instance.registerCommand(new SetkeyCommand());
     	ClientCommandHandler.instance.registerCommand(new GetkeyCommand());
     	ClientCommandHandler.instance.registerCommand(new LootCommand());
-    	ClientCommandHandler.instance.registerCommand(new ReloadConfigCommand());
-    	ClientCommandHandler.instance.registerCommand(new DisplayCommand());
     }
     
     @SubscribeEvent
@@ -89,6 +143,8 @@ public class TheMod
         		}
         	}
         	
+    		// Time is stored as a 32-bit int in seconds, so if Skyblock
+    		// survives until 2038, I'll just update it then
     		final LootCommand lc = new LootCommand();
     		final ConfigHandler cf = new ConfigHandler();
     		boolean wolfRNG = false;
@@ -214,8 +270,6 @@ public class TheMod
     			cf.writeIntConfig("zombie", "scythe", lc.zombieScythes);
     		}
 
-    		// Time is stored in seconds, so if Skyblock
-    		// survives until 2038, I'll just update it then
     		if (wolfRNG) {
     			lc.wolfTime = (int) System.currentTimeMillis() / 1000;
     			lc.wolfBosses = 0;
@@ -271,170 +325,6 @@ public class TheMod
         	int height = scaled.getScaledHeight();
         	new TextRenderer(Minecraft.getMinecraft(), coordText, 5, height - 25, Integer.parseInt("FFFFFF", 16));
     	}
-    	
-    	final DisplayCommand ds = new DisplayCommand();
-    	final String displayToggle = ds.display;
-    	
-    	if (!displayToggle.equals("off")) {
-    		final LootCommand lc = new LootCommand();
-    		String dropsText = "";
-    		String countText = "";
-    		String timeBetween = "Never";
-    		String bossesBetween = "Never";
-    		int timeNow = (int) System.currentTimeMillis() / 1000;
-    		
-    		if (displayToggle.equals("wolf")) {
-    			if (lc.wolfTime == -1) {
-    				timeBetween = "Never";
-    			} else {
-    				timeBetween = lc.getTimeBetween(lc.wolfTime, timeNow);
-    			}
-    			if (lc.wolfBosses == -1) {
-    				bossesBetween = "Never";
-    			} else {
-    				bossesBetween = Integer.toString(lc.wolfBosses);
-    			}
-    			
-    			dropsText = EnumChatFormatting.GOLD + "Svens Killed:\n" +
-							EnumChatFormatting.GREEN + "Wolf Teeth:\n" +
-							EnumChatFormatting.BLUE + "Hamster Wheels:\n" +
-							EnumChatFormatting.AQUA + "Spirit Runes:\n" + 
-							EnumChatFormatting.WHITE + "Critical VI Books:\n" +
-							EnumChatFormatting.DARK_RED + "Red Claw Eggs:\n" +
-							EnumChatFormatting.GOLD + "Couture Runes:\n" +
-							EnumChatFormatting.AQUA + "Grizzly Baits:\n" +
-							EnumChatFormatting.DARK_PURPLE + "Overfluxes:\n" +
-							EnumChatFormatting.AQUA + "Time Since RNG:\n" +
-							EnumChatFormatting.AQUA + "Bosses Since RNG:\n";
-    			countText = EnumChatFormatting.GOLD + "" + lc.wolfSvens + "\n" +
-							EnumChatFormatting.GREEN + lc.wolfTeeth + "\n" +
-							EnumChatFormatting.BLUE + lc.wolfWheels + "\n" +
-							EnumChatFormatting.AQUA + lc.wolfSpirits + "\n" + 
-							EnumChatFormatting.WHITE + lc.wolfBooks + "\n" +
-							EnumChatFormatting.DARK_RED + lc.wolfEggs + "\n" +
-							EnumChatFormatting.GOLD + lc.wolfCoutures + "\n" +
-							EnumChatFormatting.AQUA + lc.wolfBaits + "\n" +
-							EnumChatFormatting.DARK_PURPLE + lc.wolfFluxes + "\n" +
-							EnumChatFormatting.AQUA + timeBetween + "\n" +
-							EnumChatFormatting.AQUA + bossesBetween + "\n";
-    		} else if (displayToggle.equals("spider")) {
-    			if (lc.spiderTime == -1) {
-    				timeBetween = "Never";
-    			} else {
-    				timeBetween = lc.getTimeBetween(lc.spiderTime, timeNow);
-    			}
-    			if (lc.spiderBosses == -1) {
-    				bossesBetween = "Never";
-    			} else {
-    				bossesBetween = Integer.toString(lc.spiderBosses);
-    			}
-    			
-    			dropsText = EnumChatFormatting.GOLD + "Tarantulas Killed:\n" +
-							EnumChatFormatting.GREEN + "Tarantula Webs:\n" +
-							EnumChatFormatting.DARK_GREEN + "Arrow Poison:\n" +
-							EnumChatFormatting.DARK_GRAY + "Bite Runes:\n" + 
-							EnumChatFormatting.WHITE + "Bane VI Books:\n" +
-							EnumChatFormatting.AQUA + "Spider Catalysts:\n" +
-							EnumChatFormatting.DARK_PURPLE + "Tarantula Talismans:\n" +
-							EnumChatFormatting.LIGHT_PURPLE + "Fly Swatters:\n" +
-							EnumChatFormatting.GOLD + "Digested Mosquitos:\n" +
-							EnumChatFormatting.AQUA + "Time Since RNG:\n" +
-							EnumChatFormatting.AQUA + "Bosses Since RNG:\n";
-    			countText = EnumChatFormatting.GOLD + "" + lc.spiderTarantulas + "\n" +
-							EnumChatFormatting.GREEN + lc.spiderWebs + "\n" +
-							EnumChatFormatting.DARK_GREEN + lc.spiderTAP + "\n" +
-							EnumChatFormatting.DARK_GRAY + lc.spiderBites + "\n" + 
-							EnumChatFormatting.WHITE + lc.spiderBooks + "\n" +
-							EnumChatFormatting.AQUA + lc.spiderCatalysts + "\n" +
-							EnumChatFormatting.DARK_PURPLE + lc.spiderTalismans + "\n" +
-							EnumChatFormatting.LIGHT_PURPLE + lc.spiderSwatters + "\n" +
-							EnumChatFormatting.GOLD + lc.spiderMosquitos + "\n" +
-							EnumChatFormatting.AQUA + timeBetween + "\n" +
-							EnumChatFormatting.AQUA + bossesBetween + "\n";
-    		} else {
-    			// Zombie
-    			dropsText = EnumChatFormatting.GOLD + "Revs Killed:\n" +
-							EnumChatFormatting.GREEN + "Revenant Flesh:\n" +
-							EnumChatFormatting.BLUE + "Foul Flesh:\n" +
-							EnumChatFormatting.DARK_GREEN + "Pestilence Runes:\n" + 
-							EnumChatFormatting.WHITE + "Smite VI Books:\n" +
-							EnumChatFormatting.AQUA + "Undead Catalysts:\n" +
-							EnumChatFormatting.DARK_PURPLE + "Beheaded Horrors:\n" +
-							EnumChatFormatting.RED + "Revenant Catalysts:\n" +
-							EnumChatFormatting.DARK_GREEN + "Snake Runes:\n" +
-							EnumChatFormatting.GOLD + "Scythe Blades:\n" +
-							EnumChatFormatting.AQUA + "Time Since RNG:\n" +
-							EnumChatFormatting.AQUA + "Bosses Since RNG:\n";
-    			countText = EnumChatFormatting.GOLD + "" + lc.zombieRevs + "\n" +
-							EnumChatFormatting.GREEN + lc.zombieRevFlesh + "\n" +
-							EnumChatFormatting.BLUE + lc.zombieFoulFlesh + "\n" +
-							EnumChatFormatting.DARK_GREEN + lc.zombiePestilences + "\n" + 
-							EnumChatFormatting.WHITE + lc.zombieBooks + "\n" +
-							EnumChatFormatting.AQUA + lc.zombieUndeadCatas + "\n" +
-							EnumChatFormatting.DARK_PURPLE + lc.zombieBeheadeds + "\n" +
-							EnumChatFormatting.RED + lc.zombieRevCatas + "\n" +
-							EnumChatFormatting.DARK_GREEN + lc.zombieSnakes + "\n" +
-							EnumChatFormatting.GOLD + lc.zombieScythes + "\n" +
-							EnumChatFormatting.AQUA + timeBetween + "\n" +
-							EnumChatFormatting.AQUA + bossesBetween + "\n";
-    		}
-    		new TextRenderer(Minecraft.getMinecraft(), dropsText, 80, 5, Integer.parseInt("FFFFFF", 16));
-    		new TextRenderer(Minecraft.getMinecraft(), countText, 190, 5, Integer.parseInt("FFFFFF", 16));
-    	}
-    }
-    
-    @SubscribeEvent
-    public void onSound(final PlaySoundEvent event) {
-    	if (event.name.equals("note.pling")) {
-    		// Don't check twice within 5 seconds 
-    		checkItemsNow = (int) System.currentTimeMillis() / 1000;
-    		if (checkItemsNow - itemsChecked <= 5) return;
-    		
-    		final ScoreboardHandler sc = new ScoreboardHandler();
-    		List<String> scoreboard = sc.getSidebarLines();
-    		
-    		for (String line : scoreboard) {
-    			String cleanedLine = sc.cleanSB(line);
-    			if (cleanedLine.contains("Boss slain!")) {
-    				final LootCommand lc = new LootCommand();
-    				final ConfigHandler cf = new ConfigHandler();
-    				
-    				itemsChecked = (int) System.currentTimeMillis() / 1000;
-    				
-    				lc.wolfTeeth += getItems("Wolf Teeth");
-        			lc.wolfWheels += getItems("Hamster Wheel");
-        			lc.spiderWebs += getItems("Tarantula Web");
-        			lc.spiderTAP += getItems("Toxic Arrow Poison");
-        			lc.zombieRevFlesh += getItems("Revenant Flesh");
-        			lc.zombieFoulFlesh += getItems("Foul Flesh");
-        			
-        			cf.writeIntConfig("wolf", "teeth", lc.wolfTeeth);
-        			cf.writeIntConfig("wolf", "wheel", lc.wolfWheels);
-        			cf.writeIntConfig("spider", "web", lc.spiderWebs);
-        			cf.writeIntConfig("spider", "tap", lc.spiderTAP);
-        			cf.writeIntConfig("zombie", "revFlesh", lc.zombieRevFlesh);
-        			cf.writeIntConfig("zombie", "foulFlesh", lc.zombieFoulFlesh);
-    			}
-    		}
-    	}
-    }
-    
-    public int getItems(String item) {
-    	Minecraft mc = Minecraft.getMinecraft();
-    	EntityPlayer player = mc.thePlayer;
-    	
-    	double x = player.posX;
-    	double y = player.posY;
-    	double z = player.posZ;
-    	AxisAlignedBB scan = new AxisAlignedBB(x - 6, y - 6, z - 6, x + 6, y + 6, z + 6);
-    	List<EntityItem> items = mc.theWorld.getEntitiesWithinAABB(EntityItem.class, scan);
-    	
-    	for (EntityItem i : items) {
-    		String itemName = StringUtils.stripControlCodes(i.getEntityItem().getDisplayName());
-    		if (itemName.equals(item)) return i.getEntityItem().stackSize;
-    	}
-    	// No items found
-    	return 0;
     }
     
 }
