@@ -97,7 +97,7 @@ public class LootCommand extends CommandBase {
 		final EntityPlayer player = (EntityPlayer) arg0;
 		
 		if (arg1.length == 0) {
-			player.addChatMessage(new ChatComponentText("Usage: /loot [zombie/spider/wolf]"));
+			player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Usage: /loot [zombie/spider/wolf]"));
 			return;
 		}
 		
@@ -184,7 +184,7 @@ public class LootCommand extends CommandBase {
 														EnumChatFormatting.AQUA + "    Bosses Since RNG: " + bossesBetween + "\n" +
 														EnumChatFormatting.GREEN + "" + EnumChatFormatting.BOLD + " -------------------"));
 		} else {
-			player.addChatMessage(new ChatComponentText("Usage: /loot [zombie/spider/wolf]"));
+			player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Usage: /loot [zombie/spider/wolf]"));
 		}
 
 	}

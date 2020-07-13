@@ -7,6 +7,7 @@ import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.EnumChatFormatting;
 
 public class GetkeyCommand extends CommandBase implements ICommand {
 
@@ -31,9 +32,9 @@ public class GetkeyCommand extends CommandBase implements ICommand {
 		final ConfigHandler cf = new ConfigHandler();
 		
 		if (cf.getString("api", "APIKey").equals("")) {
-			player.addChatMessage(new ChatComponentText("API key not set. Set your API key using /setkey."));
+			player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "API key not set. Set your API key using /setkey."));
 		} else {
-			player.addChatMessage(new ChatComponentText("Your set API key is " + cf.getString("api", "APIKey")));
+			player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Your set API key is " + EnumChatFormatting.DARK_GREEN + cf.getString("api", "APIKey")));
 		}
 	}
 

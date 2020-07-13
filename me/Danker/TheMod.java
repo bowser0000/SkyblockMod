@@ -9,6 +9,7 @@ import java.util.List;
 import me.Danker.commands.DisplayCommand;
 import me.Danker.commands.GetkeyCommand;
 import me.Danker.commands.LootCommand;
+import me.Danker.commands.MoveCommand;
 import me.Danker.commands.ReloadConfigCommand;
 import me.Danker.commands.SetkeyCommand;
 import me.Danker.commands.ToggleCommand;
@@ -20,7 +21,6 @@ import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StringUtils;
 import net.minecraftforge.client.ClientCommandHandler;
@@ -33,13 +33,14 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 @Mod(modid = TheMod.MODID, version = TheMod.VERSION, clientSideOnly = true)
 public class TheMod
 {
     public static final String MODID = "Danker's Skyblock Mod";
-    public static final String VERSION = "1.4";
+    public static final String VERSION = "1.4.1";
     
     static int checkItemsNow = 0;
     static int itemsChecked = 0;
@@ -62,16 +63,17 @@ public class TheMod
     	ClientCommandHandler.instance.registerCommand(new LootCommand());
     	ClientCommandHandler.instance.registerCommand(new ReloadConfigCommand());
     	ClientCommandHandler.instance.registerCommand(new DisplayCommand());
+    	ClientCommandHandler.instance.registerCommand(new MoveCommand());
     }
     
-    @SubscribeEvent
-    public void onChat(final ClientChatReceivedEvent event) {
+    // It randomly broke, so I had to make it the highest priority
+    @SubscribeEvent(priority = EventPriority.HIGHEST)
+    public void onChat(ClientChatReceivedEvent event) {
     	final ToggleCommand tc = new ToggleCommand();
-    	final boolean isGPartyToggled = tc.getToggle("gparty");
     	String message = event.message.getUnformattedText();
     	
     	if (!message.contains(":")) {
-    		if (isGPartyToggled) {
+    		if (tc.gpartyToggled) {
         		if (message.contains(" has invited all members of ")) {
         			System.out.println(message);
         			try {
@@ -112,11 +114,15 @@ public class TheMod
     				}
     			}
     		}
-
+    		
     		// Wolf
     		if (message.contains("Talk to Maddox to claim your Wolf Slayer XP!")) {
     			lc.wolfSvens++;
+    			if (lc.wolfBosses != -1) {
+    				lc.wolfBosses++;
+    			}
     			cf.writeIntConfig("wolf", "svens", lc.wolfSvens);
+    			cf.writeIntConfig("wolf", "bossRNG", lc.wolfBosses);
     		}
     		if (message.contains("VERY RARE DROP! (◆ Spirit Rune ")) {
     			lc.wolfSpirits++;
@@ -147,7 +153,11 @@ public class TheMod
     		// Spider
     		if (message.contains("Talk to Maddox to claim your Spider Slayer XP!")) {
     			lc.spiderTarantulas++;
+    			if (lc.spiderBosses != -1) {
+    				lc.spiderBosses++;
+    			}
     			cf.writeIntConfig("spider", "tarantulas", lc.spiderTarantulas);
+    			cf.writeIntConfig("spider", "bossRNG", lc.spiderBosses);
     		}
 
     		if (message.contains("VERY RARE DROP! (◆ Bite Rune")) {
@@ -182,7 +192,11 @@ public class TheMod
     		// Zombie
     		if (message.contains("Talk to Maddox to claim your Zombie Slayer XP!")) {
     			lc.zombieRevs++;
+    			if (lc.zombieBosses != -1) {
+    				lc.zombieBosses++;
+    			}
     			cf.writeIntConfig("zombie", "revs", lc.zombieRevs);
+    			cf.writeIntConfig("wolf", "bossRNG", lc.zombieBosses);
     		}
     		// I couldn't find a pic of someone getting this drop, so I'm assuming this works
     		if (message.contains("VERY RARE DROP! (Revenant Catalyst)")) {
@@ -221,33 +235,18 @@ public class TheMod
     			lc.wolfBosses = 0;
     			cf.writeIntConfig("wolf", "timeRNG", lc.wolfTime);
     			cf.writeIntConfig("wolf", "bossRNG", 0);
-    		} else {
-    			if (lc.wolfBosses != -1) {
-    				lc.wolfBosses++;
-    			}
-    			cf.writeIntConfig("wolf", "bossRNG", lc.wolfBosses);
     		}
     		if (spiderRNG) {
     			lc.spiderTime = (int) System.currentTimeMillis() / 1000;
     			lc.spiderBosses = 0;
     			cf.writeIntConfig("spider", "timeRNG", lc.spiderTime);
     			cf.writeIntConfig("spider", "bossRNG", 0);
-    		} else {
-    			if (lc.spiderBosses != -1) {
-    				lc.spiderBosses++;
-    			}
-    			cf.writeIntConfig("spider", "bossRNG", lc.spiderBosses);
     		}
     		if (zombieRNG) {
     			lc.zombieTime = (int) System.currentTimeMillis() / 1000;
     			lc.zombieBosses = 0;
     			cf.writeIntConfig("zombie", "timeRNG", lc.zombieTime);
     			cf.writeIntConfig("zombie", "bossRNG", 0);
-    		} else {
-    			if (lc.zombieBosses != -1) {
-    				lc.zombieBosses++;
-    			}
-    			cf.writeIntConfig("wolf", "bossRNG", lc.zombieBosses);
     		}
     	}	
     }
@@ -256,10 +255,9 @@ public class TheMod
     public void renderPlayerInfo(final RenderGameOverlayEvent.Post event) {
     	if (event.type != RenderGameOverlayEvent.ElementType.EXPERIENCE) return;
     	final ToggleCommand tc = new ToggleCommand();
-    	final boolean isCoordsToggled = tc.getToggle("coords");
+    	final MoveCommand moc = new MoveCommand();
     	
-    	if (isCoordsToggled) {
-    		ScaledResolution scaled = new ScaledResolution(Minecraft.getMinecraft());
+    	if (tc.coordsToggled) {
     		EntityPlayer player = Minecraft.getMinecraft().thePlayer;
     		
         	double xDir = (player.rotationYaw % 360 + 360) % 360;
@@ -268,8 +266,7 @@ public class TheMod
         	double yDir = (double) Math.round(player.rotationPitch * 10d) / 10d;
         	
         	String coordText = (int) player.posX + " / " + (int) player.posY + " / " + (int) player.posZ + " (" + xDir + " / " + yDir + ")";
-        	int height = scaled.getScaledHeight();
-        	new TextRenderer(Minecraft.getMinecraft(), coordText, 5, height - 25, Integer.parseInt("FFFFFF", 16));
+        	new TextRenderer(Minecraft.getMinecraft(), coordText, moc.coordsXY[0], moc.coordsXY[1], Integer.parseInt("FFFFFF", 16));
     	}
     	
     	final DisplayCommand ds = new DisplayCommand();
@@ -378,17 +375,17 @@ public class TheMod
 							EnumChatFormatting.AQUA + timeBetween + "\n" +
 							EnumChatFormatting.AQUA + bossesBetween + "\n";
     		}
-    		new TextRenderer(Minecraft.getMinecraft(), dropsText, 80, 5, Integer.parseInt("FFFFFF", 16));
-    		new TextRenderer(Minecraft.getMinecraft(), countText, 190, 5, Integer.parseInt("FFFFFF", 16));
+    		new TextRenderer(Minecraft.getMinecraft(), dropsText, moc.displayXY[0], moc.displayXY[1], Integer.parseInt("FFFFFF", 16));
+    		new TextRenderer(Minecraft.getMinecraft(), countText, moc.displayXY[0] + 110, moc.displayXY[1], Integer.parseInt("FFFFFF", 16));
     	}
     }
     
-    @SubscribeEvent
+    @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void onSound(final PlaySoundEvent event) {
     	if (event.name.equals("note.pling")) {
-    		// Don't check twice within 5 seconds 
+    		// Don't check twice within 3 seconds 
     		checkItemsNow = (int) System.currentTimeMillis() / 1000;
-    		if (checkItemsNow - itemsChecked <= 5) return;
+    		if (checkItemsNow - itemsChecked < 3) return;
     		
     		final ScoreboardHandler sc = new ScoreboardHandler();
     		List<String> scoreboard = sc.getSidebarLines();
@@ -401,7 +398,7 @@ public class TheMod
     				
     				itemsChecked = (int) System.currentTimeMillis() / 1000;
     				
-    				lc.wolfTeeth += getItems("Wolf Teeth");
+    				lc.wolfTeeth += getItems("Wolf Tooth");
         			lc.wolfWheels += getItems("Hamster Wheel");
         			lc.spiderWebs += getItems("Tarantula Web");
         			lc.spiderTAP += getItems("Toxic Arrow Poison");

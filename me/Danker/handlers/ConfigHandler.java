@@ -4,7 +4,10 @@ import java.io.File;
 
 import me.Danker.commands.DisplayCommand;
 import me.Danker.commands.LootCommand;
+import me.Danker.commands.MoveCommand;
 import me.Danker.commands.ToggleCommand;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.ScaledResolution;
 import net.minecraftforge.common.config.Configuration;
 
 public class ConfigHandler {
@@ -166,6 +169,13 @@ public class ConfigHandler {
 		
 		if (!hasKey("misc", "display")) writeStringConfig("misc", "display", "off");
 		
+		ScaledResolution scaled = new ScaledResolution(Minecraft.getMinecraft());
+		int height = scaled.getScaledHeight();
+		if (!hasKey("locations", "coordsX")) writeIntConfig("locations", "coordsX", 5);
+		if (!hasKey("locations", "coordsY")) writeIntConfig("locations", "coordsY", height - 25);
+		if (!hasKey("locations", "displayX")) writeIntConfig("locations", "displayX", 80);
+		if (!hasKey("locations", "displayY")) writeIntConfig("locations", "displayY", 5);
+		
 		final ToggleCommand tf = new ToggleCommand();
 		tf.gpartyToggled = getBoolean("toggles", "GParty");
 		tf.coordsToggled = getBoolean("toggles", "Coords");
@@ -211,6 +221,12 @@ public class ConfigHandler {
 		
 		final DisplayCommand ds = new DisplayCommand();
 		ds.display = getString("misc", "display");
+		
+		final MoveCommand moc = new MoveCommand();
+		moc.coordsXY[0] = getInt("locations", "coordsX");
+		moc.coordsXY[1] = getInt("locations", "coordsY");
+		moc.displayXY[0] = getInt("locations", "displayX");
+		moc.displayXY[1] = getInt("locations", "displayY");
 	}
 	
 }

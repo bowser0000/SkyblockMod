@@ -7,6 +7,7 @@ import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.EnumChatFormatting;
 
 public class SetkeyCommand extends CommandBase implements ICommand {
 
@@ -30,13 +31,13 @@ public class SetkeyCommand extends CommandBase implements ICommand {
 		final EntityPlayer player = (EntityPlayer)arg0;
 		
 		if (arg1.length == 0) {
-			player.addChatMessage(new ChatComponentText("Usage: /setkey [key]"));
+			player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Usage: /setkey [key]"));
 			return;
 		}
 		
 		final ConfigHandler cf = new ConfigHandler();
 		cf.writeStringConfig("api", "APIKey", arg1[0]);
-		player.addChatMessage(new ChatComponentText("Set API key to " + arg1[0]));
+		player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Set API key to " + EnumChatFormatting.DARK_GREEN + arg1[0]));
 	}
 
 }

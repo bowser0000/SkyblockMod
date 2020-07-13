@@ -6,6 +6,7 @@ import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.EnumChatFormatting;
 
 public class DisplayCommand extends CommandBase {
 	public static String display;
@@ -30,7 +31,7 @@ public class DisplayCommand extends CommandBase {
 		final EntityPlayer player = (EntityPlayer) arg0;
 		
 		if (arg1.length == 0) {
-			player.addChatMessage(new ChatComponentText("Usage: /display [zombie/spider/wolf/off]"));
+			player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Usage: /display [zombie/spider/wolf/off]"));
 			return;
 		}
 		
@@ -45,10 +46,10 @@ public class DisplayCommand extends CommandBase {
 		} else if (arg1[0].equalsIgnoreCase("off")) {
 			display = "off";
 		} else {
-			player.addChatMessage(new ChatComponentText("Usage: /display [zombie/spider/wolf/off]"));
+			player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Usage: /display [zombie/spider/wolf/off]"));
 			return;
 		}
-		player.addChatMessage(new ChatComponentText("Display set to " + display + "."));
+		player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Display set to " + EnumChatFormatting.DARK_GREEN + display + EnumChatFormatting.GREEN + "."));
 		cf.writeStringConfig("misc", "display", display);
 	}
 

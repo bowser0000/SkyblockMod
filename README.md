@@ -11,7 +11,8 @@ QOL changes that enhances your Hypixel Skyblock experience. Created to add featu
 - /setkey [key] - Sets API key.
 - /getkey - Returns key set with /setkey.
 - /loot [zombie/spider/wolf] - Returns loot received from the slayer quest.
-- /display [zombie/spider/wolf/off] - Text display for slayer tracker
+- /display [zombie/spider/wolf/off] - Text display for slayer tracker.
+- /move [coords/display] [x] [y] - Moves text display to specified X and Y coordinates.
 
 ### Notes
 - Slayer tracker for token drops and 20% chance drops uses a 12x12x12 bounding box centered on the player to detect the drops. If you are out of the range of the item drop, it will not count on the tracker.
