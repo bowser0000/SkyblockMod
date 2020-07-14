@@ -40,7 +40,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 public class TheMod
 {
     public static final String MODID = "Danker's Skyblock Mod";
-    public static final String VERSION = "1.4.1";
+    public static final String VERSION = "1.4.2";
     
     static int checkItemsNow = 0;
     static int itemsChecked = 0;
@@ -97,7 +97,7 @@ public class TheMod
     		boolean spiderRNG = false;
     		boolean zombieRNG = false;
     		// T6 books
-    		if (message.contains("VERY RARE DROP! (Enchanted Book)")) {
+    		if (message.contains("VERY RARE DROP!  (Enchanted Book)")) {
     			// Loop through scoreboard to see what boss you're doing
     			List<String> scoreboard = ScoreboardHandler.getSidebarLines();
     			for (String s : scoreboard) {
@@ -124,27 +124,27 @@ public class TheMod
     			cf.writeIntConfig("wolf", "svens", lc.wolfSvens);
     			cf.writeIntConfig("wolf", "bossRNG", lc.wolfBosses);
     		}
-    		if (message.contains("VERY RARE DROP! (◆ Spirit Rune ")) {
+    		if (message.contains("VERY RARE DROP!  (◆ Spirit Rune I)")) {
     			lc.wolfSpirits++;
     			cf.writeIntConfig("wolf", "spirit", lc.wolfSpirits);
     		}
-    		if (message.contains("CRAZY RARE DROP! (Red Claw Egg)")) {
+    		if (message.contains("CRAZY RARE DROP!  (Red Claw Egg)")) {
     			wolfRNG = true;
     			lc.wolfEggs++;
     			cf.writeIntConfig("wolf", "egg", lc.wolfEggs);
     		}
-    		if (message.contains("CRAZY RARE DROP! (◆ Couture Rune")) {
+    		if (message.contains("CRAZY RARE DROP!  (◆ Couture Rune I)")) {
     			wolfRNG = true;
     			lc.wolfCoutures++;
     			cf.writeIntConfig("wolf", "couture", lc.wolfCoutures);
     		}
     		// How did Skyblock devs even manage to make this item Rename Me
-    		if (message.contains("CRAZY RARE DROP! (Grizzly Bait)") || message.contains("CRAZY RARE DROP! (Rename Me)")) {
+    		if (message.contains("CRAZY RARE DROP!  (Grizzly Bait)") || message.contains("CRAZY RARE DROP! (Rename Me)")) {
     			wolfRNG = true;
     			lc.wolfBaits++;
     			cf.writeIntConfig("wolf", "bait", lc.wolfBaits);
     		}
-    		if (message.contains("CRAZY RARE DROP! (Overflux Capacitor)")) {
+    		if (message.contains("CRAZY RARE DROP!  (Overflux Capacitor)")) {
     			wolfRNG = true;
     			lc.wolfFluxes++;
     			cf.writeIntConfig("wolf", "flux", lc.wolfFluxes);
@@ -160,30 +160,30 @@ public class TheMod
     			cf.writeIntConfig("spider", "bossRNG", lc.spiderBosses);
     		}
 
-    		if (message.contains("VERY RARE DROP! (◆ Bite Rune")) {
+    		if (message.contains("VERY RARE DROP!  (◆ Bite Rune I)")) {
     			lc.spiderBites++;
     			cf.writeIntConfig("spider", "bite", lc.spiderBites);
     		}
-    		if (message.contains("VERY RARE DROP! (Spider Catalyst)")) {
+    		if (message.contains("VERY RARE DROP!  (Spider Catalyst)")) {
     			lc.spiderCatalysts++;
     			cf.writeIntConfig("spider", "catalyst", lc.spiderCatalysts);
     		}
     		// T3 Spider Book Drop
-    		if (message.contains("CRAZY RARE DROP! (Enchanted Book)")) {
+    		if (message.contains("CRAZY RARE DROP!  (Enchanted Book)")) {
     			lc.spiderBooks++;
     			cf.writeIntConfig("spider", "book", lc.spiderBooks);
     		}
-    		if (message.contains("CRAZY RARE DROP! (Fly Swatter)")) {
+    		if (message.contains("CRAZY RARE DROP!  (Fly Swatter)")) {
     			spiderRNG = true;
     			lc.spiderSwatters++;
     			cf.writeIntConfig("spider", "swatter", lc.spiderSwatters);
     		}
-    		if (message.contains("CRAZY RARE DROP! (Tarantula Talisman")) {
+    		if (message.contains("CRAZY RARE DROP!  (Tarantula Talisman")) {
     			spiderRNG = true;
     			lc.spiderTalismans++;
     			cf.writeIntConfig("spider", "talisman", lc.spiderTalismans);
     		}
-    		if (message.contains("CRAZY RARE DROP! (Digested Mosquito)")) {
+    		if (message.contains("CRAZY RARE DROP!  (Digested Mosquito)")) {
     			spiderRNG = true;
     			lc.spiderMosquitos++;
     			cf.writeIntConfig("spider", "mosquito", lc.spiderMosquitos);
@@ -199,30 +199,30 @@ public class TheMod
     			cf.writeIntConfig("wolf", "bossRNG", lc.zombieBosses);
     		}
     		// I couldn't find a pic of someone getting this drop, so I'm assuming this works
-    		if (message.contains("VERY RARE DROP! (Revenant Catalyst)")) {
+    		if (message.contains("VERY RARE DROP!  (Revenant Catalyst)")) {
     			lc.zombieRevCatas++;
     			cf.writeIntConfig("zombie", "revCatalyst", lc.zombieRevCatas);
     		}
-    		if (message.contains("VERY RARE DROP! (◆ Pestilence Rune")) {
+    		if (message.contains("VERY RARE DROP!  (◆ Pestilence Rune I)")) {
     			lc.zombiePestilences++;
     			cf.writeIntConfig("zombie", "pestilence", lc.zombiePestilences);
     		}
-    		if (message.contains("VERY RARE DROP! (Undead Catalyst)")) {
+    		if (message.contains("VERY RARE DROP!  (Undead Catalyst)")) {
     			lc.zombieUndeadCatas++;
     			cf.writeIntConfig("zombie", "undeadCatalyst", lc.zombieUndeadCatas);
     		}
-    		if (message.contains("CRAZY RARE DROP! (Beheaded Horror)")) {
+    		if (message.contains("CRAZY RARE DROP!  (Beheaded Horror)")) {
     			zombieRNG = true;
     			lc.zombieBeheadeds++;
     			cf.writeIntConfig("zombie", "beheaded", lc.zombieBeheadeds);
     		}
 
-    		if (message.contains("CRAZY RARE DROP! (◆ Snake Rune")) {
+    		if (message.contains("CRAZY RARE DROP!  (◆ Snake Rune I)")) {
     			zombieRNG = true;
     			lc.zombieSnakes++;
     			cf.writeIntConfig("zombie", "snake", lc.zombieSnakes);
     		}
-    		if (message.contains("CRAZY RARE DROP! (Scythe Blade)")) {
+    		if (message.contains("CRAZY RARE DROP!  (Scythe Blade)")) {
     			zombieRNG = true;
     			lc.zombieScythes++;
     			cf.writeIntConfig("zombie", "scythe", lc.zombieScythes);
@@ -392,7 +392,8 @@ public class TheMod
     		
     		for (String line : scoreboard) {
     			String cleanedLine = sc.cleanSB(line);
-    			if (cleanedLine.contains("Boss slain!")) {
+    			// If Hypixel lags and scoreboard doesn't update
+    			if (cleanedLine.contains("Boss slain!") || cleanedLine.contains("Slay the boss!")) {
     				final LootCommand lc = new LootCommand();
     				final ConfigHandler cf = new ConfigHandler();
     				
