@@ -17,7 +17,6 @@ import me.Danker.handlers.ConfigHandler;
 import me.Danker.handlers.ScoreboardHandler;
 import me.Danker.handlers.TextRenderer;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.AxisAlignedBB;
@@ -40,7 +39,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 public class TheMod
 {
     public static final String MODID = "Danker's Skyblock Mod";
-    public static final String VERSION = "1.4.2";
+    public static final String VERSION = "1.4.4";
     
     static int checkItemsNow = 0;
     static int itemsChecked = 0;
@@ -124,7 +123,8 @@ public class TheMod
     			cf.writeIntConfig("wolf", "svens", lc.wolfSvens);
     			cf.writeIntConfig("wolf", "bossRNG", lc.wolfBosses);
     		}
-    		if (message.contains("VERY RARE DROP!  (◆ Spirit Rune I)")) {
+    		// Removing the unicode here *should* fix rune drops not counting
+    		if (message.contains("VERY RARE DROP!  (") && message.contains(" Spirit Rune I)")) {
     			lc.wolfSpirits++;
     			cf.writeIntConfig("wolf", "spirit", lc.wolfSpirits);
     		}
@@ -133,7 +133,7 @@ public class TheMod
     			lc.wolfEggs++;
     			cf.writeIntConfig("wolf", "egg", lc.wolfEggs);
     		}
-    		if (message.contains("CRAZY RARE DROP!  (◆ Couture Rune I)")) {
+    		if (message.contains("CRAZY RARE DROP!  (") && message.contains(" Couture Rune I)")) {
     			wolfRNG = true;
     			lc.wolfCoutures++;
     			cf.writeIntConfig("wolf", "couture", lc.wolfCoutures);
@@ -159,8 +159,7 @@ public class TheMod
     			cf.writeIntConfig("spider", "tarantulas", lc.spiderTarantulas);
     			cf.writeIntConfig("spider", "bossRNG", lc.spiderBosses);
     		}
-
-    		if (message.contains("VERY RARE DROP!  (◆ Bite Rune I)")) {
+    		if (message.contains("VERY RARE DROP!  (") && message.contains(" Bite Rune I)")) {
     			lc.spiderBites++;
     			cf.writeIntConfig("spider", "bite", lc.spiderBites);
     		}
@@ -203,7 +202,7 @@ public class TheMod
     			lc.zombieRevCatas++;
     			cf.writeIntConfig("zombie", "revCatalyst", lc.zombieRevCatas);
     		}
-    		if (message.contains("VERY RARE DROP!  (◆ Pestilence Rune I)")) {
+    		if (message.contains("VERY RARE DROP!  (") && message.contains(" Pestilence Rune I)")) {
     			lc.zombiePestilences++;
     			cf.writeIntConfig("zombie", "pestilence", lc.zombiePestilences);
     		}
@@ -216,8 +215,7 @@ public class TheMod
     			lc.zombieBeheadeds++;
     			cf.writeIntConfig("zombie", "beheaded", lc.zombieBeheadeds);
     		}
-
-    		if (message.contains("CRAZY RARE DROP!  (◆ Snake Rune I)")) {
+    		if (message.contains("CRAZY RARE DROP!  (") && message.contains(" Snake Rune I)")) {
     			zombieRNG = true;
     			lc.zombieSnakes++;
     			cf.writeIntConfig("zombie", "snake", lc.zombieSnakes);
@@ -397,21 +395,30 @@ public class TheMod
     				final LootCommand lc = new LootCommand();
     				final ConfigHandler cf = new ConfigHandler();
     				
-    				itemsChecked = (int) System.currentTimeMillis() / 1000;
-    				
-    				lc.wolfTeeth += getItems("Wolf Tooth");
-        			lc.wolfWheels += getItems("Hamster Wheel");
-        			lc.spiderWebs += getItems("Tarantula Web");
-        			lc.spiderTAP += getItems("Toxic Arrow Poison");
-        			lc.zombieRevFlesh += getItems("Revenant Flesh");
-        			lc.zombieFoulFlesh += getItems("Foul Flesh");
+    				int itemTeeth = getItems("Wolf Tooth");
+        			int itemWheels = getItems("Hamster Wheel");
+        			int itemWebs = getItems("Tarantula Web");
+        			int itemTAP = getItems("Toxic Arrow Poison");
+        			int itemRev = getItems("Revenant Flesh");
+        			int itemFoul = getItems("Foul Flesh");
         			
-        			cf.writeIntConfig("wolf", "teeth", lc.wolfTeeth);
-        			cf.writeIntConfig("wolf", "wheel", lc.wolfWheels);
-        			cf.writeIntConfig("spider", "web", lc.spiderWebs);
-        			cf.writeIntConfig("spider", "tap", lc.spiderTAP);
-        			cf.writeIntConfig("zombie", "revFlesh", lc.zombieRevFlesh);
-        			cf.writeIntConfig("zombie", "foulFlesh", lc.zombieFoulFlesh);
+        			// If no items, are detected, allow check again. Should fix items not being found
+        			if (itemTeeth + itemWheels + itemWebs + itemTAP + itemRev + itemFoul > 0) {
+        				itemsChecked = (int) System.currentTimeMillis() / 1000;
+            			lc.wolfTeeth += itemTeeth;
+            			lc.wolfWheels += itemWheels;
+            			lc.spiderWebs += itemWebs;
+            			lc.spiderTAP += itemTAP;
+            			lc.zombieRevFlesh += itemRev;
+            			lc.zombieFoulFlesh += itemFoul;
+            			
+            			cf.writeIntConfig("wolf", "teeth", lc.wolfTeeth);
+            			cf.writeIntConfig("wolf", "wheel", lc.wolfWheels);
+            			cf.writeIntConfig("spider", "web", lc.spiderWebs);
+            			cf.writeIntConfig("spider", "tap", lc.spiderTAP);
+            			cf.writeIntConfig("zombie", "revFlesh", lc.zombieRevFlesh);
+            			cf.writeIntConfig("zombie", "foulFlesh", lc.zombieFoulFlesh);
+        			}
     			}
     		}
     	}
