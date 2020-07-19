@@ -55,51 +55,21 @@ public class SlayerCommand extends CommandBase {
 				player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Checking slayer of " + username));
 			} else {
 				username = arg1[0];
-				String uuidURL = "https://api.mojang.com/users/profiles/minecraft/" + username;
 				player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Checking slayer of " + username));
-				
-				JsonObject uuidResponse = ah.getResponse(uuidURL, player);
-				uuid = uuidResponse.get("id").getAsString();
-			}
-			
-			// Get profiles
-			System.out.println("Fetching profiles...");
-			String profilesURL = "https://api.hypixel.net/skyblock/profiles?uuid=" + uuid + "&key=" + key;
-			
-			JsonObject profilesResponse = ah.getResponse(profilesURL, player);
-			if (!profilesResponse.get("success").getAsBoolean()) {
-				String reason = profilesResponse.get("cause").getAsString();
-				player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Failed with reason: " + reason));
-				return;
-			}
-			if (profilesResponse.get("profiles").isJsonNull()) {
-				player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "This player doesn't appear to have played SkyBlock."));
-				return;
-			}
-			
-			// Loop through profiles to find latest
-			System.out.println("Looping through profiles...");
-			String latestProfile = "";
-			int latestSave = 0;
-			JsonArray profilesArray = profilesResponse.get("profiles").getAsJsonArray();
-			
-			for (JsonElement profile : profilesArray) {
-				JsonObject profileJSON = profile.getAsJsonObject();
-				int profileLastSave = profileJSON.get("members").getAsJsonObject().get(uuid).getAsJsonObject().get("last_save").getAsInt();
-				
-				if (profileLastSave > latestSave) {
-					latestProfile = profileJSON.get("profile_id").getAsString();
-					latestSave = profileLastSave;
-				}
+				uuid = ah.getUUID(username);
 			}
 			
 			// Find stats of latest profile
-			System.out.println("Fetching profile...");
-			String profileURL = "https://api.hypixel.net/skyblock/profile?profile=" + latestProfile + "&key=" + key;
+			String latestProfile = ah.getLatestProfileID(uuid, key);
+			if (latestProfile == null) {
+				return;
+			}
 			
-			JsonObject profileResponse = ah.getResponse(profileURL, player);
+			String profileURL = "https://api.hypixel.net/skyblock/profile?profile=" + latestProfile + "&key=" + key;
+			System.out.println("Fetching profile...");
+			JsonObject profileResponse = ah.getResponse(profileURL);
 			if (!profileResponse.get("success").getAsBoolean()) {
-				String reason = profilesResponse.get("cause").getAsString();
+				String reason = profileResponse.get("cause").getAsString();
 				player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Failed with reason: " + reason));
 				return;
 			}
