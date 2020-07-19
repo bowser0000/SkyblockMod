@@ -1,6 +1,6 @@
 package me.Danker.commands;
 
-import java.util.List;
+import java.text.NumberFormat;
 
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
@@ -118,9 +118,9 @@ public class LootCommand extends CommandBase {
 			
 			player.addChatMessage(new ChatComponentText(EnumChatFormatting.AQUA + "" + EnumChatFormatting.BOLD + "-------------------\n" +
 														EnumChatFormatting.DARK_AQUA + "" + EnumChatFormatting.BOLD + "  Sven Loot Summary:\n" +
-														EnumChatFormatting.GOLD + "    Svens Killed: " + wolfSvens + "\n" +
-														EnumChatFormatting.GREEN + "    Wolf Teeth: " + wolfTeeth + "\n" +
-														EnumChatFormatting.BLUE + "    Hamster Wheels: " + wolfWheels + "\n" +
+														EnumChatFormatting.GOLD + "    Svens Killed: " + NumberFormat.getIntegerInstance().format(wolfSvens) + "\n" +
+														EnumChatFormatting.GREEN + "    Wolf Teeth: " + NumberFormat.getIntegerInstance().format(wolfTeeth) + "\n" +
+														EnumChatFormatting.BLUE + "    Hamster Wheels: " + NumberFormat.getIntegerInstance().format(wolfWheels) + "\n" +
 														EnumChatFormatting.AQUA + "    Spirit Runes: " + wolfSpirits + "\n" + 
 														EnumChatFormatting.WHITE + "    Critical VI Books: " + wolfBooks + "\n" +
 														EnumChatFormatting.DARK_RED + "    Red Claw Eggs: " + wolfEggs + "\n" +
@@ -128,7 +128,7 @@ public class LootCommand extends CommandBase {
 														EnumChatFormatting.AQUA + "    Grizzly Baits: " + wolfBaits + "\n" +
 														EnumChatFormatting.DARK_PURPLE + "    Overfluxes: " + wolfFluxes + "\n" +
 														EnumChatFormatting.AQUA + "    Time Since RNG: " + timeBetween + "\n" +
-														EnumChatFormatting.AQUA + "    Bosses Since RNG: " + bossesBetween + "\n" +
+														EnumChatFormatting.AQUA + "    Bosses Since RNG: " + NumberFormat.getIntegerInstance().format(bossesBetween) + "\n" +
 														EnumChatFormatting.AQUA + "" + EnumChatFormatting.BOLD + " -------------------"));
 		} else if (arg1[0].equalsIgnoreCase("spider")) {
 			if (spiderTime == -1) {
@@ -144,9 +144,9 @@ public class LootCommand extends CommandBase {
 			
 			player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "" + EnumChatFormatting.BOLD + "-------------------\n" +
 														EnumChatFormatting.DARK_RED + "" + EnumChatFormatting.BOLD + "  Spider Loot Summary:\n" +
-														EnumChatFormatting.GOLD + "    Tarantulas Killed: " + spiderTarantulas + "\n" +
-														EnumChatFormatting.GREEN + "    Tarantula Webs: " + spiderWebs + "\n" +
-														EnumChatFormatting.DARK_GREEN + "    Arrow Poison: " + spiderTAP + "\n" +
+														EnumChatFormatting.GOLD + "    Tarantulas Killed: " + NumberFormat.getIntegerInstance().format(spiderTarantulas) + "\n" +
+														EnumChatFormatting.GREEN + "    Tarantula Webs: " + NumberFormat.getIntegerInstance().format(spiderWebs) + "\n" +
+														EnumChatFormatting.DARK_GREEN + "    Arrow Poison: " + NumberFormat.getIntegerInstance().format(spiderTAP) + "\n" +
 														EnumChatFormatting.DARK_GRAY + "    Bite Runes: " + spiderBites + "\n" + 
 														EnumChatFormatting.WHITE + "    Bane VI Books: " + spiderBooks + "\n" +
 														EnumChatFormatting.AQUA + "    Spider Catalysts: " + spiderCatalysts + "\n" +
@@ -154,7 +154,7 @@ public class LootCommand extends CommandBase {
 														EnumChatFormatting.LIGHT_PURPLE + "    Fly Swatters: " + spiderSwatters + "\n" +
 														EnumChatFormatting.GOLD + "    Digested Mosquitos: " + spiderMosquitos + "\n" +
 														EnumChatFormatting.AQUA + "    Time Since RNG: " + timeBetween + "\n" +
-														EnumChatFormatting.AQUA + "    Bosses Since RNG: " + bossesBetween + "\n" +
+														EnumChatFormatting.AQUA + "    Bosses Since RNG: " + NumberFormat.getIntegerInstance().format(bossesBetween) + "\n" +
 														EnumChatFormatting.RED + "" + EnumChatFormatting.BOLD + " -------------------"));
 		} else if (arg1[0].equalsIgnoreCase("zombie")) {
 			if (zombieTime == -1) {
@@ -170,9 +170,9 @@ public class LootCommand extends CommandBase {
 			
 			player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "" + EnumChatFormatting.BOLD + "-------------------\n" +
 														EnumChatFormatting.DARK_GREEN + "" + EnumChatFormatting.BOLD + "  Zombie Loot Summary:\n" +
-														EnumChatFormatting.GOLD + "    Revs Killed: " + zombieRevs + "\n" +
-														EnumChatFormatting.GREEN + "    Revenant Flesh: " + zombieRevFlesh + "\n" +
-														EnumChatFormatting.BLUE + "    Foul Flesh: " + zombieFoulFlesh + "\n" +
+														EnumChatFormatting.GOLD + "    Revs Killed: " + NumberFormat.getIntegerInstance().format(zombieRevs) + "\n" +
+														EnumChatFormatting.GREEN + "    Revenant Flesh: " + NumberFormat.getIntegerInstance().format(zombieRevFlesh) + "\n" +
+														EnumChatFormatting.BLUE + "    Foul Flesh: " + NumberFormat.getIntegerInstance().format(zombieFoulFlesh) + "\n" +
 														EnumChatFormatting.DARK_GREEN + "    Pestilence Runes: " + zombiePestilences + "\n" + 
 														EnumChatFormatting.WHITE + "    Smite VI Books: " + zombieBooks + "\n" +
 														EnumChatFormatting.AQUA + "    Undead Catalysts: " + zombieUndeadCatas + "\n" +
@@ -181,7 +181,7 @@ public class LootCommand extends CommandBase {
 														EnumChatFormatting.DARK_GREEN + "    Snake Runes: " + zombieSnakes + "\n" +
 														EnumChatFormatting.GOLD + "    Scythe Blades: " + zombieScythes + "\n" +
 														EnumChatFormatting.AQUA + "    Time Since RNG: " + timeBetween + "\n" +
-														EnumChatFormatting.AQUA + "    Bosses Since RNG: " + bossesBetween + "\n" +
+														EnumChatFormatting.AQUA + "    Bosses Since RNG: " + NumberFormat.getIntegerInstance().format(bossesBetween) + "\n" +
 														EnumChatFormatting.GREEN + "" + EnumChatFormatting.BOLD + " -------------------"));
 		} else {
 			player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Usage: /loot [zombie/spider/wolf]"));

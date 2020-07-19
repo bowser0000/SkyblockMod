@@ -4,6 +4,7 @@ import java.awt.Image;
 import java.awt.SystemTray;
 import java.awt.Toolkit;
 import java.awt.TrayIcon;
+import java.text.NumberFormat;
 import java.util.List;
 
 import me.Danker.commands.DisplayCommand;
@@ -12,6 +13,7 @@ import me.Danker.commands.LootCommand;
 import me.Danker.commands.MoveCommand;
 import me.Danker.commands.ReloadConfigCommand;
 import me.Danker.commands.SetkeyCommand;
+import me.Danker.commands.SlayerCommand;
 import me.Danker.commands.ToggleCommand;
 import me.Danker.handlers.ConfigHandler;
 import me.Danker.handlers.ScoreboardHandler;
@@ -39,7 +41,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 public class TheMod
 {
     public static final String MODID = "Danker's Skyblock Mod";
-    public static final String VERSION = "1.4.4";
+    public static final String VERSION = "1.4.5";
     
     static int checkItemsNow = 0;
     static int itemsChecked = 0;
@@ -63,6 +65,7 @@ public class TheMod
     	ClientCommandHandler.instance.registerCommand(new ReloadConfigCommand());
     	ClientCommandHandler.instance.registerCommand(new DisplayCommand());
     	ClientCommandHandler.instance.registerCommand(new MoveCommand());
+    	ClientCommandHandler.instance.registerCommand(new SlayerCommand());
     }
     
     // It randomly broke, so I had to make it the highest priority
@@ -287,7 +290,7 @@ public class TheMod
     			if (lc.wolfBosses == -1) {
     				bossesBetween = "Never";
     			} else {
-    				bossesBetween = Integer.toString(lc.wolfBosses);
+    				bossesBetween = NumberFormat.getIntegerInstance().format(lc.wolfBosses);
     			}
     			
     			dropsText = EnumChatFormatting.GOLD + "Svens Killed:\n" +
@@ -301,9 +304,9 @@ public class TheMod
 							EnumChatFormatting.DARK_PURPLE + "Overfluxes:\n" +
 							EnumChatFormatting.AQUA + "Time Since RNG:\n" +
 							EnumChatFormatting.AQUA + "Bosses Since RNG:\n";
-    			countText = EnumChatFormatting.GOLD + "" + lc.wolfSvens + "\n" +
-							EnumChatFormatting.GREEN + lc.wolfTeeth + "\n" +
-							EnumChatFormatting.BLUE + lc.wolfWheels + "\n" +
+    			countText = EnumChatFormatting.GOLD + "" + NumberFormat.getIntegerInstance().format(lc.wolfSvens) + "\n" +
+							EnumChatFormatting.GREEN + NumberFormat.getIntegerInstance().format(lc.wolfTeeth) + "\n" +
+							EnumChatFormatting.BLUE + NumberFormat.getIntegerInstance().format(lc.wolfWheels) + "\n" +
 							EnumChatFormatting.AQUA + lc.wolfSpirits + "\n" + 
 							EnumChatFormatting.WHITE + lc.wolfBooks + "\n" +
 							EnumChatFormatting.DARK_RED + lc.wolfEggs + "\n" +
@@ -321,7 +324,7 @@ public class TheMod
     			if (lc.spiderBosses == -1) {
     				bossesBetween = "Never";
     			} else {
-    				bossesBetween = Integer.toString(lc.spiderBosses);
+    				bossesBetween = NumberFormat.getIntegerInstance().format(lc.spiderBosses);
     			}
     			
     			dropsText = EnumChatFormatting.GOLD + "Tarantulas Killed:\n" +
@@ -335,9 +338,9 @@ public class TheMod
 							EnumChatFormatting.GOLD + "Digested Mosquitos:\n" +
 							EnumChatFormatting.AQUA + "Time Since RNG:\n" +
 							EnumChatFormatting.AQUA + "Bosses Since RNG:\n";
-    			countText = EnumChatFormatting.GOLD + "" + lc.spiderTarantulas + "\n" +
-							EnumChatFormatting.GREEN + lc.spiderWebs + "\n" +
-							EnumChatFormatting.DARK_GREEN + lc.spiderTAP + "\n" +
+    			countText = EnumChatFormatting.GOLD + "" + NumberFormat.getIntegerInstance().format(lc.spiderTarantulas) + "\n" +
+							EnumChatFormatting.GREEN + NumberFormat.getIntegerInstance().format(lc.spiderWebs) + "\n" +
+							EnumChatFormatting.DARK_GREEN + NumberFormat.getIntegerInstance().format(lc.spiderTAP) + "\n" +
 							EnumChatFormatting.DARK_GRAY + lc.spiderBites + "\n" + 
 							EnumChatFormatting.WHITE + lc.spiderBooks + "\n" +
 							EnumChatFormatting.AQUA + lc.spiderCatalysts + "\n" +
@@ -347,7 +350,17 @@ public class TheMod
 							EnumChatFormatting.AQUA + timeBetween + "\n" +
 							EnumChatFormatting.AQUA + bossesBetween + "\n";
     		} else {
-    			// Zombie
+    			if (lc.zombieTime == -1) {
+    				timeBetween = "Never";
+    			} else {
+    				timeBetween = lc.getTimeBetween(lc.zombieTime, timeNow);
+    			}
+    			if (lc.zombieBosses == -1) {
+    				bossesBetween = "Never";
+    			} else {
+    				bossesBetween = NumberFormat.getIntegerInstance().format(lc.zombieBosses);
+    			}
+    			
     			dropsText = EnumChatFormatting.GOLD + "Revs Killed:\n" +
 							EnumChatFormatting.GREEN + "Revenant Flesh:\n" +
 							EnumChatFormatting.BLUE + "Foul Flesh:\n" +
@@ -360,9 +373,9 @@ public class TheMod
 							EnumChatFormatting.GOLD + "Scythe Blades:\n" +
 							EnumChatFormatting.AQUA + "Time Since RNG:\n" +
 							EnumChatFormatting.AQUA + "Bosses Since RNG:\n";
-    			countText = EnumChatFormatting.GOLD + "" + lc.zombieRevs + "\n" +
-							EnumChatFormatting.GREEN + lc.zombieRevFlesh + "\n" +
-							EnumChatFormatting.BLUE + lc.zombieFoulFlesh + "\n" +
+    			countText = EnumChatFormatting.GOLD + "" + NumberFormat.getIntegerInstance().format(lc.zombieRevs) + "\n" +
+							EnumChatFormatting.GREEN + NumberFormat.getIntegerInstance().format(lc.zombieRevFlesh) + "\n" +
+							EnumChatFormatting.BLUE + NumberFormat.getIntegerInstance().format(lc.zombieFoulFlesh) + "\n" +
 							EnumChatFormatting.DARK_GREEN + lc.zombiePestilences + "\n" + 
 							EnumChatFormatting.WHITE + lc.zombieBooks + "\n" +
 							EnumChatFormatting.AQUA + lc.zombieUndeadCatas + "\n" +
