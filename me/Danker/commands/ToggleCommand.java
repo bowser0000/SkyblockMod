@@ -20,7 +20,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 
 	@Override
 	public String getCommandUsage(ICommandSender arg0) {
-		return getCommandName() + " [gparty/coords/list]";
+		return getCommandName() + " <gparty/coords/list>";
 	}
 
 	@Override
@@ -34,7 +34,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 		final ConfigHandler cf = new ConfigHandler();
 		
 		if (arg1.length == 0) {
-			player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Usage: /toggle [gparty/coords/list]"));
+			player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Usage: /toggle <gparty/coords/list>"));
 			return;
 		}
 		
@@ -50,7 +50,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 			player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Guild party notifications: " + EnumChatFormatting.DARK_GREEN + gpartyToggled + "\n" +
 														EnumChatFormatting.GREEN + " Coord/Angle display: " + EnumChatFormatting.DARK_GREEN + coordsToggled));
 		} else {
-			player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Usage: /toggle [gparty/coords/list]"));
+			player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Usage: /toggle <gparty/coords/list>"));
 		}
 	}
 }

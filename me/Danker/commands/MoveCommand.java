@@ -20,7 +20,7 @@ public class MoveCommand extends CommandBase {
 
 	@Override
 	public String getCommandUsage(ICommandSender arg0) {
-		return getCommandName() + " [coords/display] [x] [y]";
+		return getCommandName() + " <coords/display> <x> <y>";
 	}
 	
 	@Override
@@ -34,7 +34,7 @@ public class MoveCommand extends CommandBase {
 		final ConfigHandler cf = new ConfigHandler();
 		
 		if (arg1.length < 2) {
-			player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Usage: /move [coords/display] [x] [y]"));
+			player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Usage: /move <coords/display> <x> <y>"));
 			return;
 		}
 		
@@ -51,7 +51,7 @@ public class MoveCommand extends CommandBase {
 			cf.writeIntConfig("locations", "displayY", displayXY[1]);
 			player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Tracker display has been moved to " + EnumChatFormatting.DARK_GREEN + arg1[1] + ", " + arg1[2]));
 		} else {
-			player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Usage: /move [coords/display] [x] [y]"));
+			player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Usage: /move <coords/display> <x> <y>"));
 		}
 	}
 

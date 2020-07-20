@@ -7,8 +7,10 @@ import java.awt.TrayIcon;
 import java.text.NumberFormat;
 import java.util.List;
 
+import me.Danker.commands.DHelpCommand;
 import me.Danker.commands.DisplayCommand;
 import me.Danker.commands.GetkeyCommand;
+import me.Danker.commands.GuildOfCommand;
 import me.Danker.commands.LootCommand;
 import me.Danker.commands.MoveCommand;
 import me.Danker.commands.ReloadConfigCommand;
@@ -42,7 +44,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 public class TheMod
 {
     public static final String MODID = "Danker's Skyblock Mod";
-    public static final String VERSION = "1.5.2";
+    public static final String VERSION = "1.5.3";
     
     static int checkItemsNow = 0;
     static int itemsChecked = 0;
@@ -68,6 +70,8 @@ public class TheMod
     	ClientCommandHandler.instance.registerCommand(new MoveCommand());
     	ClientCommandHandler.instance.registerCommand(new SlayerCommand());
     	ClientCommandHandler.instance.registerCommand(new SkillsCommand());
+    	ClientCommandHandler.instance.registerCommand(new GuildOfCommand());
+    	ClientCommandHandler.instance.registerCommand(new DHelpCommand());
     }
     
     // It randomly broke, so I had to make it the highest priority

@@ -24,7 +24,7 @@ public class SlayerCommand extends CommandBase {
 
 	@Override
 	public String getCommandUsage(ICommandSender arg0) {
-		return getCommandName() + " <name>";
+		return getCommandName() + " [name]";
 	}
 
 	@Override
@@ -95,7 +95,7 @@ public class SlayerCommand extends CommandBase {
 														EnumChatFormatting.AQUA + " Zombie XP: " + EnumChatFormatting.BLUE + EnumChatFormatting.BOLD + NumberFormat.getIntegerInstance().format(zombieXP) + "\n" +
 														EnumChatFormatting.AQUA + " Spider XP: " + EnumChatFormatting.BLUE + EnumChatFormatting.BOLD + NumberFormat.getIntegerInstance().format(spiderXP) + "\n" +
 														EnumChatFormatting.AQUA + " Wolf XP: " + EnumChatFormatting.BLUE + EnumChatFormatting.BOLD + NumberFormat.getIntegerInstance().format(wolfXP) + "\n" +
-														EnumChatFormatting.AQUA + "" + EnumChatFormatting.BOLD + "-------------------"));
+														EnumChatFormatting.AQUA + " " + EnumChatFormatting.BOLD + "-------------------"));
 			
 		}).start();
 	}

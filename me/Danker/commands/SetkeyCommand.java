@@ -18,7 +18,7 @@ public class SetkeyCommand extends CommandBase implements ICommand {
 
 	@Override
 	public String getCommandUsage(ICommandSender arg0) {
-		return getCommandName() + " [key]";
+		return getCommandName() + " <key>";
 	}
 	
 	@Override
@@ -31,7 +31,7 @@ public class SetkeyCommand extends CommandBase implements ICommand {
 		final EntityPlayer player = (EntityPlayer)arg0;
 		
 		if (arg1.length == 0) {
-			player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Usage: /setkey [key]"));
+			player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Usage: /setkey <key>"));
 			return;
 		}
 		

@@ -182,7 +182,7 @@ public class SkillsCommand extends CommandBase {
 
 	@Override
 	public String getCommandUsage(ICommandSender arg0) {
-		return getCommandName() + " <name>";
+		return getCommandName() + " [name]";
 	}
 
 	@Override
@@ -315,7 +315,7 @@ public class SkillsCommand extends CommandBase {
 														EnumChatFormatting.GREEN + " Taming: " + EnumChatFormatting.DARK_GREEN + EnumChatFormatting.BOLD + tamingLevel + "\n" +
 														EnumChatFormatting.AQUA + " Average Skill Level: " + EnumChatFormatting.GOLD + EnumChatFormatting.BOLD + skillAvg + "\n" +
 														EnumChatFormatting.AQUA + " True Average Skill Level: " + EnumChatFormatting.GOLD + EnumChatFormatting.BOLD + trueAvg + "\n" +
-														EnumChatFormatting.AQUA + "" + EnumChatFormatting.BOLD + "-------------------"));
+														EnumChatFormatting.AQUA + " " + EnumChatFormatting.BOLD + "-------------------"));
 		}).start();
 	}
 
