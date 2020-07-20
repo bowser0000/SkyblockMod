@@ -52,18 +52,16 @@ public class SlayerCommand extends CommandBase {
 			if (arg1.length == 0) {
 				username = player.getName();
 				uuid = player.getUniqueID().toString().replaceAll("[\\-]", "");
-				player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Checking slayer of " + username));
+				player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Checking slayer of " + EnumChatFormatting.DARK_GREEN + username));
 			} else {
 				username = arg1[0];
-				player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Checking slayer of " + username));
+				player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Checking slayer of " + EnumChatFormatting.DARK_GREEN + username));
 				uuid = ah.getUUID(username);
 			}
 			
 			// Find stats of latest profile
 			String latestProfile = ah.getLatestProfileID(uuid, key);
-			if (latestProfile == null) {
-				return;
-			}
+			if (latestProfile == null) return;
 			
 			String profileURL = "https://api.hypixel.net/skyblock/profile?profile=" + latestProfile + "&key=" + key;
 			System.out.println("Fetching profile...");
@@ -92,10 +90,12 @@ public class SlayerCommand extends CommandBase {
 				wolfXP = slayersObject.get("wolf").getAsJsonObject().get("xp").getAsInt();
 			}
 			
-			player.addChatMessage(new ChatComponentText(EnumChatFormatting.AQUA + username + "'s Total XP: " + EnumChatFormatting.GOLD + EnumChatFormatting.BOLD + NumberFormat.getIntegerInstance().format(zombieXP + spiderXP + wolfXP) + "\n" +
+			player.addChatMessage(new ChatComponentText(EnumChatFormatting.AQUA + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+														EnumChatFormatting.AQUA + " " + username + "'s Total XP: " + EnumChatFormatting.GOLD + EnumChatFormatting.BOLD + NumberFormat.getIntegerInstance().format(zombieXP + spiderXP + wolfXP) + "\n" +
 														EnumChatFormatting.AQUA + " Zombie XP: " + EnumChatFormatting.BLUE + EnumChatFormatting.BOLD + NumberFormat.getIntegerInstance().format(zombieXP) + "\n" +
 														EnumChatFormatting.AQUA + " Spider XP: " + EnumChatFormatting.BLUE + EnumChatFormatting.BOLD + NumberFormat.getIntegerInstance().format(spiderXP) + "\n" +
-														EnumChatFormatting.AQUA + " Wolf XP: " + EnumChatFormatting.BLUE + EnumChatFormatting.BOLD + NumberFormat.getIntegerInstance().format(wolfXP)));
+														EnumChatFormatting.AQUA + " Wolf XP: " + EnumChatFormatting.BLUE + EnumChatFormatting.BOLD + NumberFormat.getIntegerInstance().format(wolfXP) + "\n" +
+														EnumChatFormatting.AQUA + "" + EnumChatFormatting.BOLD + "-------------------"));
 			
 		}).start();
 	}

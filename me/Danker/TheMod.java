@@ -13,6 +13,7 @@ import me.Danker.commands.LootCommand;
 import me.Danker.commands.MoveCommand;
 import me.Danker.commands.ReloadConfigCommand;
 import me.Danker.commands.SetkeyCommand;
+import me.Danker.commands.SkillsCommand;
 import me.Danker.commands.SlayerCommand;
 import me.Danker.commands.ToggleCommand;
 import me.Danker.handlers.ConfigHandler;
@@ -41,7 +42,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 public class TheMod
 {
     public static final String MODID = "Danker's Skyblock Mod";
-    public static final String VERSION = "1.5.1";
+    public static final String VERSION = "1.5.2";
     
     static int checkItemsNow = 0;
     static int itemsChecked = 0;
@@ -66,6 +67,7 @@ public class TheMod
     	ClientCommandHandler.instance.registerCommand(new DisplayCommand());
     	ClientCommandHandler.instance.registerCommand(new MoveCommand());
     	ClientCommandHandler.instance.registerCommand(new SlayerCommand());
+    	ClientCommandHandler.instance.registerCommand(new SkillsCommand());
     }
     
     // It randomly broke, so I had to make it the highest priority
