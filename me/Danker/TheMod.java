@@ -13,6 +13,7 @@ import me.Danker.commands.GetkeyCommand;
 import me.Danker.commands.GuildOfCommand;
 import me.Danker.commands.LootCommand;
 import me.Danker.commands.MoveCommand;
+import me.Danker.commands.PetsCommand;
 import me.Danker.commands.ReloadConfigCommand;
 import me.Danker.commands.SetkeyCommand;
 import me.Danker.commands.SkillsCommand;
@@ -72,6 +73,7 @@ public class TheMod
     	ClientCommandHandler.instance.registerCommand(new SkillsCommand());
     	ClientCommandHandler.instance.registerCommand(new GuildOfCommand());
     	ClientCommandHandler.instance.registerCommand(new DHelpCommand());
+    	ClientCommandHandler.instance.registerCommand(new PetsCommand());
     }
     
     // It randomly broke, so I had to make it the highest priority

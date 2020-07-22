@@ -87,8 +87,7 @@ public class GuildOfCommand extends CommandBase {
 						String gmNameURL = "https://api.mojang.com/user/profiles/" + gmUUID + "/names";
 						JsonArray gmNameResponse = ah.getArrayResponse(gmNameURL);
 						
-						String gmName = gmNameResponse.get(gmNameResponse.size() - 1).getAsJsonObject().get("name").getAsString();
-						guildMaster = gmName;
+						guildMaster = gmNameResponse.get(gmNameResponse.size() - 1).getAsJsonObject().get("name").getAsString();
 						break;
 					}
 				}

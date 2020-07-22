@@ -39,7 +39,8 @@ public class DHelpCommand extends CommandBase {
 													EnumChatFormatting.GOLD + "/move <coords/display> <x> <y>" + EnumChatFormatting.AQUA + " - Moves text display to specified X and Y coordinates.\n" +
 													EnumChatFormatting.GOLD + "/slayer [player]" + EnumChatFormatting.AQUA + " - Uses API to get slayer xp of a person. If no name is provided, it checks yours.\n" +
 													EnumChatFormatting.GOLD + "/skills [player]" + EnumChatFormatting.AQUA + " - Uses API to get skill levels of a person. If no name is provided, it checks yours.\n" +
-													EnumChatFormatting.GOLD + "/guildof [player]" + EnumChatFormatting.AQUA + " - Uses API to get guild name and guild master of a person. If no name is provided, it checks yours."));
+													EnumChatFormatting.GOLD + "/guildof [player]" + EnumChatFormatting.AQUA + " - Uses API to get guild name and guild master of a person. If no name is provided, it checks yours.\n" +
+													EnumChatFormatting.GOLD + "/pets [player]" + EnumChatFormatting.AQUA + " - Uses API to get pets of a person. If no name is provided, it checks yours."));
 	}
 
 }
