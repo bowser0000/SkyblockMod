@@ -1,6 +1,7 @@
 package me.Danker.commands;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import com.google.gson.JsonArray;
@@ -116,14 +117,27 @@ public class PetsCommand extends CommandBase {
 			}
 			
 			System.out.println("Looping through pets...");
+			// Push each pet into list
+			List<JsonElement> sortedPets = new ArrayList<JsonElement>();
+			for (JsonElement petElement : petsArray) {
+				sortedPets.add(petElement);
+			}
 			
+			// Sort pets by exp
+			Collections.sort(sortedPets, (pet1, pet2) -> {
+				double petXp1 = pet1.getAsJsonObject().get("exp").getAsDouble();
+				double petXp2 = pet2.getAsJsonObject().get("exp").getAsDouble();
+				return -Double.compare(petXp1, petXp2);
+			});
+			
+			// Sort pets into rarities
 			List<JsonObject> commonPets = new ArrayList<JsonObject>();
 			List<JsonObject> uncommonPets = new ArrayList<JsonObject>();
 			List<JsonObject> rarePets = new ArrayList<JsonObject>();
 			List<JsonObject> epicPets = new ArrayList<JsonObject>();
 			List<JsonObject> legendaryPets = new ArrayList<JsonObject>();
 			
-			for (JsonElement petElement : petsArray) {
+			for (JsonElement petElement : sortedPets) {
 				JsonObject pet = petElement.getAsJsonObject();
 				String rarity = pet.get("tier").getAsString();
 				
