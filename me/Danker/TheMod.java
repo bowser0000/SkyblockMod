@@ -7,6 +7,7 @@ import java.awt.TrayIcon;
 import java.text.NumberFormat;
 import java.util.List;
 
+import me.Danker.commands.BankCommand;
 import me.Danker.commands.DHelpCommand;
 import me.Danker.commands.DisplayCommand;
 import me.Danker.commands.GetkeyCommand;
@@ -74,6 +75,7 @@ public class TheMod
     	ClientCommandHandler.instance.registerCommand(new GuildOfCommand());
     	ClientCommandHandler.instance.registerCommand(new DHelpCommand());
     	ClientCommandHandler.instance.registerCommand(new PetsCommand());
+    	ClientCommandHandler.instance.registerCommand(new BankCommand());
     }
     
     // It randomly broke, so I had to make it the highest priority

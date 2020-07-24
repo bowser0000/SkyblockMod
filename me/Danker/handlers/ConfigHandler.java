@@ -125,8 +125,8 @@ public class ConfigHandler {
 	
 	public static void reloadConfig() {
 		// Config init
-		if (!hasKey("toggles", "GParty")) writeBooleanConfig("toggles", "GParty", true);
-		if (!hasKey("toggles", "Coords")) writeBooleanConfig("toggles", "Coords", true);
+		if (!hasKey("toggles", "GParty")) writeBooleanConfig("toggles", "GParty", false);
+		if (!hasKey("toggles", "Coords")) writeBooleanConfig("toggles", "Coords", false);
 		if (!hasKey("api", "APIKey")) writeStringConfig("api", "APIKey", "");
 		
 		// Wolf Loot

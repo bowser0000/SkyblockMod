@@ -125,7 +125,7 @@ public class APIHandler {
 		
 		for (JsonElement profile : profilesArray) {
 			JsonObject profileJSON = profile.getAsJsonObject();
-			long profileLastSave = 0;
+			long profileLastSave = 1;
 			if (profileJSON.get("members").getAsJsonObject().get(UUID).getAsJsonObject().has("last_save")) {
 				profileLastSave = profileJSON.get("members").getAsJsonObject().get(UUID).getAsJsonObject().get("last_save").getAsLong();
 			}
