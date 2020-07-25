@@ -7,6 +7,7 @@ import java.awt.TrayIcon;
 import java.text.NumberFormat;
 import java.util.List;
 
+import me.Danker.commands.ArmourCommand;
 import me.Danker.commands.BankCommand;
 import me.Danker.commands.DHelpCommand;
 import me.Danker.commands.DisplayCommand;
@@ -76,6 +77,7 @@ public class TheMod
     	ClientCommandHandler.instance.registerCommand(new DHelpCommand());
     	ClientCommandHandler.instance.registerCommand(new PetsCommand());
     	ClientCommandHandler.instance.registerCommand(new BankCommand());
+    	ClientCommandHandler.instance.registerCommand(new ArmourCommand());
     }
     
     // It randomly broke, so I had to make it the highest priority
@@ -84,182 +86,183 @@ public class TheMod
     	final ToggleCommand tc = new ToggleCommand();
     	String message = event.message.getUnformattedText();
     	
-    	if (!message.contains(":")) {
-    		if (tc.gpartyToggled) {
-        		if (message.contains(" has invited all members of ")) {
-        			System.out.println(message);
-        			try {
-        				final SystemTray tray = SystemTray.getSystemTray();
-        				final Image image = Toolkit.getDefaultToolkit().createImage("icon.png");
-        				final TrayIcon trayIcon = new TrayIcon(image, "Guild Party Notifier");
-        				trayIcon.setImageAutoSize(true);
-        				trayIcon.setToolTip("Guild Party Notifier");
-        				tray.add(trayIcon);
-        				trayIcon.displayMessage("Guild Party", message, TrayIcon.MessageType.INFO);
-        				tray.remove(trayIcon);
-        			} catch (Exception ex) {
-        				System.err.print(ex);
-        			}
-        		}
-        	}
-        	
-    		final LootCommand lc = new LootCommand();
-    		final ConfigHandler cf = new ConfigHandler();
-    		boolean wolfRNG = false;
-    		boolean spiderRNG = false;
-    		boolean zombieRNG = false;
-    		// T6 books
-    		if (message.contains("VERY RARE DROP!  (Enchanted Book)")) {
-    			// Loop through scoreboard to see what boss you're doing
-    			List<String> scoreboard = ScoreboardHandler.getSidebarLines();
-    			for (String s : scoreboard) {
-    				String sCleaned = ScoreboardHandler.cleanSB(s);
-    				if (sCleaned.contains("Sven Packmaster")) {
-    					lc.wolfBooks++;
-    					cf.writeIntConfig("wolf", "book", lc.wolfBooks);
-    				} else if (sCleaned.contains("Tarantula Broodfather")) {
-    					lc.spiderBooks++;
-    					cf.writeIntConfig("spider", "book", lc.spiderBooks);
-    				} else if (sCleaned.contains("Revenant Horror")) {
-    					lc.zombieBooks++;
-    					cf.writeIntConfig("zombie", "book", lc.zombieBooks);
-    				}
-    			}
-    		}
-    		
-    		// Wolf
-    		if (message.contains("Talk to Maddox to claim your Wolf Slayer XP!")) {
-    			lc.wolfSvens++;
-    			if (lc.wolfBosses != -1) {
-    				lc.wolfBosses++;
-    			}
-    			cf.writeIntConfig("wolf", "svens", lc.wolfSvens);
-    			cf.writeIntConfig("wolf", "bossRNG", lc.wolfBosses);
-    		}
-    		// Removing the unicode here *should* fix rune drops not counting
-    		if (message.contains("VERY RARE DROP!  (") && message.contains(" Spirit Rune I)")) {
-    			lc.wolfSpirits++;
-    			cf.writeIntConfig("wolf", "spirit", lc.wolfSpirits);
-    		}
-    		if (message.contains("CRAZY RARE DROP!  (Red Claw Egg)")) {
-    			wolfRNG = true;
-    			lc.wolfEggs++;
-    			cf.writeIntConfig("wolf", "egg", lc.wolfEggs);
-    		}
-    		if (message.contains("CRAZY RARE DROP!  (") && message.contains(" Couture Rune I)")) {
-    			wolfRNG = true;
-    			lc.wolfCoutures++;
-    			cf.writeIntConfig("wolf", "couture", lc.wolfCoutures);
-    		}
-    		// How did Skyblock devs even manage to make this item Rename Me
-    		if (message.contains("CRAZY RARE DROP!  (Grizzly Bait)") || message.contains("CRAZY RARE DROP! (Rename Me)")) {
-    			wolfRNG = true;
-    			lc.wolfBaits++;
-    			cf.writeIntConfig("wolf", "bait", lc.wolfBaits);
-    		}
-    		if (message.contains("CRAZY RARE DROP!  (Overflux Capacitor)")) {
-    			wolfRNG = true;
-    			lc.wolfFluxes++;
-    			cf.writeIntConfig("wolf", "flux", lc.wolfFluxes);
-    		}
+    	if (message.contains(":")) return;
+    	
+		if (tc.gpartyToggled) {
+			if (message.contains(" has invited all members of ")) {
+				System.out.println(message);
+				try {
+					final SystemTray tray = SystemTray.getSystemTray();
+					final Image image = Toolkit.getDefaultToolkit().createImage("icon.png");
+					final TrayIcon trayIcon = new TrayIcon(image, "Guild Party Notifier");
+					trayIcon.setImageAutoSize(true);
+					trayIcon.setToolTip("Guild Party Notifier");
+					tray.add(trayIcon);
+					trayIcon.displayMessage("Guild Party", message, TrayIcon.MessageType.INFO);
+					tray.remove(trayIcon);
+				} catch (Exception ex) {
+					System.err.print(ex);
+				}
+			}
+		}
 
-    		// Spider
-    		if (message.contains("Talk to Maddox to claim your Spider Slayer XP!")) {
-    			lc.spiderTarantulas++;
-    			if (lc.spiderBosses != -1) {
-    				lc.spiderBosses++;
-    			}
-    			cf.writeIntConfig("spider", "tarantulas", lc.spiderTarantulas);
-    			cf.writeIntConfig("spider", "bossRNG", lc.spiderBosses);
-    		}
-    		if (message.contains("VERY RARE DROP!  (") && message.contains(" Bite Rune I)")) {
-    			lc.spiderBites++;
-    			cf.writeIntConfig("spider", "bite", lc.spiderBites);
-    		}
-    		if (message.contains("VERY RARE DROP!  (Spider Catalyst)")) {
-    			lc.spiderCatalysts++;
-    			cf.writeIntConfig("spider", "catalyst", lc.spiderCatalysts);
-    		}
-    		// T3 Spider Book Drop
-    		if (message.contains("CRAZY RARE DROP!  (Enchanted Book)")) {
-    			lc.spiderBooks++;
-    			cf.writeIntConfig("spider", "book", lc.spiderBooks);
-    		}
-    		if (message.contains("CRAZY RARE DROP!  (Fly Swatter)")) {
-    			spiderRNG = true;
-    			lc.spiderSwatters++;
-    			cf.writeIntConfig("spider", "swatter", lc.spiderSwatters);
-    		}
-    		if (message.contains("CRAZY RARE DROP!  (Tarantula Talisman")) {
-    			spiderRNG = true;
-    			lc.spiderTalismans++;
-    			cf.writeIntConfig("spider", "talisman", lc.spiderTalismans);
-    		}
-    		if (message.contains("CRAZY RARE DROP!  (Digested Mosquito)")) {
-    			spiderRNG = true;
-    			lc.spiderMosquitos++;
-    			cf.writeIntConfig("spider", "mosquito", lc.spiderMosquitos);
-    		}
+		final LootCommand lc = new LootCommand();
+		final ConfigHandler cf = new ConfigHandler();
+		boolean wolfRNG = false;
+		boolean spiderRNG = false;
+		boolean zombieRNG = false;
+		// T6 books
+		if (message.contains("VERY RARE DROP!  (Enchanted Book)")) {
+			// Loop through scoreboard to see what boss you're doing
+			List<String> scoreboard = ScoreboardHandler.getSidebarLines();
+			for (String s : scoreboard) {
+				String sCleaned = ScoreboardHandler.cleanSB(s);
+				if (sCleaned.contains("Sven Packmaster")) {
+					lc.wolfBooks++;
+					cf.writeIntConfig("wolf", "book", lc.wolfBooks);
+				} else if (sCleaned.contains("Tarantula Broodfather")) {
+					lc.spiderBooks++;
+					cf.writeIntConfig("spider", "book", lc.spiderBooks);
+				} else if (sCleaned.contains("Revenant Horror")) {
+					lc.zombieBooks++;
+					cf.writeIntConfig("zombie", "book", lc.zombieBooks);
+				}
+			}
+		}
 
-    		// Zombie
-    		if (message.contains("Talk to Maddox to claim your Zombie Slayer XP!")) {
-    			lc.zombieRevs++;
-    			if (lc.zombieBosses != -1) {
-    				lc.zombieBosses++;
-    			}
-    			cf.writeIntConfig("zombie", "revs", lc.zombieRevs);
-    			cf.writeIntConfig("wolf", "bossRNG", lc.zombieBosses);
-    		}
-    		// I couldn't find a pic of someone getting this drop, so I'm assuming this works
-    		if (message.contains("VERY RARE DROP!  (Revenant Catalyst)")) {
-    			lc.zombieRevCatas++;
-    			cf.writeIntConfig("zombie", "revCatalyst", lc.zombieRevCatas);
-    		}
-    		if (message.contains("VERY RARE DROP!  (") && message.contains(" Pestilence Rune I)")) {
-    			lc.zombiePestilences++;
-    			cf.writeIntConfig("zombie", "pestilence", lc.zombiePestilences);
-    		}
-    		if (message.contains("VERY RARE DROP!  (Undead Catalyst)")) {
-    			lc.zombieUndeadCatas++;
-    			cf.writeIntConfig("zombie", "undeadCatalyst", lc.zombieUndeadCatas);
-    		}
-    		if (message.contains("CRAZY RARE DROP!  (Beheaded Horror)")) {
-    			zombieRNG = true;
-    			lc.zombieBeheadeds++;
-    			cf.writeIntConfig("zombie", "beheaded", lc.zombieBeheadeds);
-    		}
-    		if (message.contains("CRAZY RARE DROP!  (") && message.contains(" Snake Rune I)")) {
-    			zombieRNG = true;
-    			lc.zombieSnakes++;
-    			cf.writeIntConfig("zombie", "snake", lc.zombieSnakes);
-    		}
-    		if (message.contains("CRAZY RARE DROP!  (Scythe Blade)")) {
-    			zombieRNG = true;
-    			lc.zombieScythes++;
-    			cf.writeIntConfig("zombie", "scythe", lc.zombieScythes);
-    		}
+		// Wolf
+		if (message.contains("Talk to Maddox to claim your Wolf Slayer XP!")) {
+			lc.wolfSvens++;
+			if (lc.wolfBosses != -1) {
+				lc.wolfBosses++;
+			}
+			cf.writeIntConfig("wolf", "svens", lc.wolfSvens);
+			cf.writeIntConfig("wolf", "bossRNG", lc.wolfBosses);
+		}
+		// Removing the unicode here *should* fix rune drops not counting
+		if (message.contains("VERY RARE DROP!  (") && message.contains(" Spirit Rune I)")) {
+			lc.wolfSpirits++;
+			cf.writeIntConfig("wolf", "spirit", lc.wolfSpirits);
+		}
+		if (message.contains("CRAZY RARE DROP!  (Red Claw Egg)")) {
+			wolfRNG = true;
+			lc.wolfEggs++;
+			cf.writeIntConfig("wolf", "egg", lc.wolfEggs);
+		}
+		if (message.contains("CRAZY RARE DROP!  (") && message.contains(" Couture Rune I)")) {
+			wolfRNG = true;
+			lc.wolfCoutures++;
+			cf.writeIntConfig("wolf", "couture", lc.wolfCoutures);
+		}
+		// How did Skyblock devs even manage to make this item Rename Me
+		if (message.contains("CRAZY RARE DROP!  (Grizzly Bait)") || message.contains("CRAZY RARE DROP! (Rename Me)")) {
+			wolfRNG = true;
+			lc.wolfBaits++;
+			cf.writeIntConfig("wolf", "bait", lc.wolfBaits);
+		}
+		if (message.contains("CRAZY RARE DROP!  (Overflux Capacitor)")) {
+			wolfRNG = true;
+			lc.wolfFluxes++;
+			cf.writeIntConfig("wolf", "flux", lc.wolfFluxes);
+		}
 
-    		// Time is stored in seconds, so if Skyblock
-    		// survives until 2038, I'll just update it then
-    		if (wolfRNG) {
-    			lc.wolfTime = (int) System.currentTimeMillis() / 1000;
-    			lc.wolfBosses = 0;
-    			cf.writeIntConfig("wolf", "timeRNG", lc.wolfTime);
-    			cf.writeIntConfig("wolf", "bossRNG", 0);
-    		}
-    		if (spiderRNG) {
-    			lc.spiderTime = (int) System.currentTimeMillis() / 1000;
-    			lc.spiderBosses = 0;
-    			cf.writeIntConfig("spider", "timeRNG", lc.spiderTime);
-    			cf.writeIntConfig("spider", "bossRNG", 0);
-    		}
-    		if (zombieRNG) {
-    			lc.zombieTime = (int) System.currentTimeMillis() / 1000;
-    			lc.zombieBosses = 0;
-    			cf.writeIntConfig("zombie", "timeRNG", lc.zombieTime);
-    			cf.writeIntConfig("zombie", "bossRNG", 0);
-    		}
-    	}	
+		// Spider
+		if (message.contains("Talk to Maddox to claim your Spider Slayer XP!")) {
+			lc.spiderTarantulas++;
+			if (lc.spiderBosses != -1) {
+				lc.spiderBosses++;
+			}
+			cf.writeIntConfig("spider", "tarantulas", lc.spiderTarantulas);
+			cf.writeIntConfig("spider", "bossRNG", lc.spiderBosses);
+		}
+		if (message.contains("VERY RARE DROP!  (") && message.contains(" Bite Rune I)")) {
+			lc.spiderBites++;
+			cf.writeIntConfig("spider", "bite", lc.spiderBites);
+		}
+		if (message.contains("VERY RARE DROP!  (Spider Catalyst)")) {
+			lc.spiderCatalysts++;
+			cf.writeIntConfig("spider", "catalyst", lc.spiderCatalysts);
+		}
+		// T3 Spider Book Drop
+		if (message.contains("CRAZY RARE DROP!  (Enchanted Book)")) {
+			lc.spiderBooks++;
+			cf.writeIntConfig("spider", "book", lc.spiderBooks);
+		}
+		if (message.contains("CRAZY RARE DROP!  (Fly Swatter)")) {
+			spiderRNG = true;
+			lc.spiderSwatters++;
+			cf.writeIntConfig("spider", "swatter", lc.spiderSwatters);
+		}
+		if (message.contains("CRAZY RARE DROP!  (Tarantula Talisman")) {
+			spiderRNG = true;
+			lc.spiderTalismans++;
+			cf.writeIntConfig("spider", "talisman", lc.spiderTalismans);
+		}
+		if (message.contains("CRAZY RARE DROP!  (Digested Mosquito)")) {
+			spiderRNG = true;
+			lc.spiderMosquitos++;
+			cf.writeIntConfig("spider", "mosquito", lc.spiderMosquitos);
+		}
+
+		// Zombie
+		if (message.contains("Talk to Maddox to claim your Zombie Slayer XP!")) {
+			lc.zombieRevs++;
+			if (lc.zombieBosses != -1) {
+				lc.zombieBosses++;
+			}
+			cf.writeIntConfig("zombie", "revs", lc.zombieRevs);
+			cf.writeIntConfig("wolf", "bossRNG", lc.zombieBosses);
+		}
+		// I couldn't find a pic of someone getting this drop, so I'm assuming this
+		// works
+		if (message.contains("VERY RARE DROP!  (Revenant Catalyst)")) {
+			lc.zombieRevCatas++;
+			cf.writeIntConfig("zombie", "revCatalyst", lc.zombieRevCatas);
+		}
+		if (message.contains("VERY RARE DROP!  (") && message.contains(" Pestilence Rune I)")) {
+			lc.zombiePestilences++;
+			cf.writeIntConfig("zombie", "pestilence", lc.zombiePestilences);
+		}
+		if (message.contains("VERY RARE DROP!  (Undead Catalyst)")) {
+			lc.zombieUndeadCatas++;
+			cf.writeIntConfig("zombie", "undeadCatalyst", lc.zombieUndeadCatas);
+		}
+		if (message.contains("CRAZY RARE DROP!  (Beheaded Horror)")) {
+			zombieRNG = true;
+			lc.zombieBeheadeds++;
+			cf.writeIntConfig("zombie", "beheaded", lc.zombieBeheadeds);
+		}
+		if (message.contains("CRAZY RARE DROP!  (") && message.contains(" Snake Rune I)")) {
+			zombieRNG = true;
+			lc.zombieSnakes++;
+			cf.writeIntConfig("zombie", "snake", lc.zombieSnakes);
+		}
+		if (message.contains("CRAZY RARE DROP!  (Scythe Blade)")) {
+			zombieRNG = true;
+			lc.zombieScythes++;
+			cf.writeIntConfig("zombie", "scythe", lc.zombieScythes);
+		}
+
+		// Time is stored in seconds, so if Skyblock
+		// survives until 2038, I'll just update it then
+		if (wolfRNG) {
+			lc.wolfTime = (int) System.currentTimeMillis() / 1000;
+			lc.wolfBosses = 0;
+			cf.writeIntConfig("wolf", "timeRNG", lc.wolfTime);
+			cf.writeIntConfig("wolf", "bossRNG", 0);
+		}
+		if (spiderRNG) {
+			lc.spiderTime = (int) System.currentTimeMillis() / 1000;
+			lc.spiderBosses = 0;
+			cf.writeIntConfig("spider", "timeRNG", lc.spiderTime);
+			cf.writeIntConfig("spider", "bossRNG", 0);
+		}
+		if (zombieRNG) {
+			lc.zombieTime = (int) System.currentTimeMillis() / 1000;
+			lc.zombieBosses = 0;
+			cf.writeIntConfig("zombie", "timeRNG", lc.zombieTime);
+			cf.writeIntConfig("zombie", "bossRNG", 0);
+		}
     }
     
     @SubscribeEvent
