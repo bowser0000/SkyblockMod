@@ -127,6 +127,7 @@ public class ConfigHandler {
 		// Config init
 		if (!hasKey("toggles", "GParty")) writeBooleanConfig("toggles", "GParty", false);
 		if (!hasKey("toggles", "Coords")) writeBooleanConfig("toggles", "Coords", false);
+		if (!hasKey("toggles", "Golden")) writeBooleanConfig("toggles", "Golden", false);
 		if (!hasKey("api", "APIKey")) writeStringConfig("api", "APIKey", "");
 		
 		// Wolf Loot
@@ -179,6 +180,7 @@ public class ConfigHandler {
 		final ToggleCommand tf = new ToggleCommand();
 		tf.gpartyToggled = getBoolean("toggles", "GParty");
 		tf.coordsToggled = getBoolean("toggles", "Coords");
+		tf.goldenToggled = getBoolean("toggles", "Golden");
 		
 		final LootCommand lc = new LootCommand();
 		// Wolf

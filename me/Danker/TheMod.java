@@ -5,7 +5,11 @@ import java.awt.SystemTray;
 import java.awt.Toolkit;
 import java.awt.TrayIcon;
 import java.text.NumberFormat;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import me.Danker.commands.ArmourCommand;
 import me.Danker.commands.BankCommand;
@@ -35,6 +39,7 @@ import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.sound.PlaySoundEvent;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -47,10 +52,12 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 public class TheMod
 {
     public static final String MODID = "Danker's Skyblock Mod";
-    public static final String VERSION = "1.5.3";
+    public static final String VERSION = "1.5.4";
     
     static int checkItemsNow = 0;
     static int itemsChecked = 0;
+    static Map<String, String> t6Enchants = new HashMap<String, String>();
+    static Pattern pattern = Pattern.compile("");
     
     @EventHandler
     public void init(FMLInitializationEvent event)
@@ -60,6 +67,37 @@ public class TheMod
 		
 		final ConfigHandler cf = new ConfigHandler();
 		cf.reloadConfig();
+		
+		// For golden enchants
+		t6Enchants.put("Bane of Arthropods VI", EnumChatFormatting.GOLD + "Bane of Arthropods VI" + EnumChatFormatting.BLUE);
+		t6Enchants.put("Critical VI", EnumChatFormatting.GOLD + "Critical VI" + EnumChatFormatting.BLUE);
+		t6Enchants.put("Dragon Hunter V", EnumChatFormatting.GOLD + "Dragon Hunter V" + EnumChatFormatting.BLUE);
+		t6Enchants.put("Ender Slayer VI", EnumChatFormatting.GOLD + "Ender Slayer VI" + EnumChatFormatting.BLUE);
+		t6Enchants.put("Experience IV", EnumChatFormatting.GOLD + "Experience IV" + EnumChatFormatting.BLUE);
+		t6Enchants.put("Giant Killer VI", EnumChatFormatting.GOLD + "Giant Killer VI" + EnumChatFormatting.BLUE);
+		t6Enchants.put("Life Steal IV", EnumChatFormatting.GOLD + "Life Steal IV" + EnumChatFormatting.BLUE);
+		t6Enchants.put("Looting IV", EnumChatFormatting.GOLD + "Looting IV" + EnumChatFormatting.BLUE);
+		t6Enchants.put("Luck VI", EnumChatFormatting.GOLD + "Luck VI" + EnumChatFormatting.BLUE);
+		t6Enchants.put("Scavenger IV", EnumChatFormatting.GOLD + "Scavenger IV" + EnumChatFormatting.BLUE);
+		t6Enchants.put("Scavenger V", EnumChatFormatting.GOLD + "Scavenger V" + EnumChatFormatting.BLUE);
+		t6Enchants.put("Sharpness VI", EnumChatFormatting.GOLD + "Sharpness VI" + EnumChatFormatting.BLUE);
+		t6Enchants.put("Smite VI", EnumChatFormatting.GOLD + "Smite VI" + EnumChatFormatting.BLUE);
+		t6Enchants.put("Smite VI", EnumChatFormatting.GOLD + "Smite VII" + EnumChatFormatting.BLUE);
+		t6Enchants.put("Vampirism VI", EnumChatFormatting.GOLD + "Vampirism VI" + EnumChatFormatting.BLUE);
+		t6Enchants.put("Power VI", EnumChatFormatting.GOLD + "Power VI" + EnumChatFormatting.BLUE);
+		t6Enchants.put("Growth VI", EnumChatFormatting.GOLD + "Growth VI" + EnumChatFormatting.BLUE);
+		t6Enchants.put("Protection VI", EnumChatFormatting.GOLD + "Protection VI" + EnumChatFormatting.BLUE);
+		t6Enchants.put("Efficiency VI", EnumChatFormatting.GOLD + "Efficieny VI" + EnumChatFormatting.BLUE);
+		t6Enchants.put("Angler VI", EnumChatFormatting.GOLD + "Angler VI" + EnumChatFormatting.BLUE);
+		t6Enchants.put("Caster VI", EnumChatFormatting.GOLD + "Caster VI" + EnumChatFormatting.BLUE);
+		t6Enchants.put("Frail VI", EnumChatFormatting.GOLD + "Frail VI" + EnumChatFormatting.BLUE);
+		t6Enchants.put("Luck of the Sea VI", EnumChatFormatting.GOLD + "Luck of the Sea VI" + EnumChatFormatting.BLUE);
+		t6Enchants.put("Lure VI", EnumChatFormatting.GOLD + "Lure VI" + EnumChatFormatting.BLUE);
+		t6Enchants.put("Magnet VI", EnumChatFormatting.GOLD + "Magnet VI" + EnumChatFormatting.BLUE);
+		t6Enchants.put("Spiked Hook VI", EnumChatFormatting.GOLD + "Spiked Hook VI" + EnumChatFormatting.BLUE);
+		
+		String patternString = "(" + String.join("|", t6Enchants.keySet()) + ")";
+		pattern = Pattern.compile(patternString);
     }
     
     @EventHandler
@@ -450,6 +488,18 @@ public class TheMod
     	}
     }
     
+    @SubscribeEvent(priority = EventPriority.HIGHEST)
+    public void onTooltip(ItemTooltipEvent event) {
+    	final ToggleCommand tc = new ToggleCommand();
+    	
+    	if (event.toolTip == null) return;
+    	if (tc.goldenToggled) {
+    		for (int i = 0; i < event.toolTip.size(); i++) {
+    			event.toolTip.set(i, returnGoldenEnchants(event.toolTip.get(i)));
+    		}
+    	}
+    }
+    
     public int getItems(String item) {
     	Minecraft mc = Minecraft.getMinecraft();
     	EntityPlayer player = mc.thePlayer;
@@ -466,6 +516,18 @@ public class TheMod
     	}
     	// No items found
     	return 0;
+    }
+    
+    public String returnGoldenEnchants(String line) {
+    	Matcher matcher = pattern.matcher(line);
+    	StringBuffer out = new StringBuffer();
+    	
+    	while (matcher.find()) {
+    		matcher.appendReplacement(out, t6Enchants.get(matcher.group(1)));
+    	}
+    	matcher.appendTail(out);
+    	
+    	return out.toString();
     }
     
 }

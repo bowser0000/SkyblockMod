@@ -28,10 +28,10 @@ public class DHelpCommand extends CommandBase {
 	public void processCommand(ICommandSender arg0, String[] arg1) throws CommandException {
 		EntityPlayer player = (EntityPlayer) arg0;
 		
-		player.addChatMessage(new ChatComponentText("\n" + EnumChatFormatting.GOLD + " Danker's Skyblock Mod Version 1.5.3\n" +
+		player.addChatMessage(new ChatComponentText("\n" + EnumChatFormatting.GOLD + " Danker's Skyblock Mod Version 1.5.4\n" +
 													EnumChatFormatting.AQUA + " <> = Mandatory parameter. [] = Optional parameter.\n" +
 													EnumChatFormatting.GOLD + " /dhelp" + EnumChatFormatting.AQUA + " - Returns this message.\n" +
-													EnumChatFormatting.GOLD + " /toggle <gparty/coords/list>" + EnumChatFormatting.AQUA + " - Toggles features. /toggle list returns values of every toggle.\n" +
+													EnumChatFormatting.GOLD + " /toggle <gparty/coords/golden/list>" + EnumChatFormatting.AQUA + " - Toggles features. /toggle list returns values of every toggle.\n" +
 													EnumChatFormatting.GOLD + " /setkey <key>" + EnumChatFormatting.AQUA + " - Sets API key.\n" +
 													EnumChatFormatting.GOLD + " /getkey" + EnumChatFormatting.AQUA + " - Returns key set with /setkey.\n" +
 													EnumChatFormatting.GOLD + " /loot <zombie/spider/wolf>" + EnumChatFormatting.AQUA + " - Returns loot received from slayer quests.\n" +
