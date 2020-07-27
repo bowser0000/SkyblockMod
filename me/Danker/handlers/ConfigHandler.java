@@ -40,6 +40,21 @@ public class ConfigHandler {
 		return 0;
 	}
 	
+	public static double getDouble(String category, String key) {
+		config = new Configuration(new File(file));
+		try {
+			config.load();
+			if (config.getCategory(category).containsKey(key)) {
+				return config.get(category, key, 0D).getDouble();
+			}
+		} catch (Exception ex) {
+			System.err.println(ex);
+		} finally {
+			config.save();
+		}
+		return 0D;
+	}
+	
 	public static String getString(String category, String key) {
 		config = new Configuration(new File(file));
 		try {
@@ -78,6 +93,19 @@ public class ConfigHandler {
 			config.getCategory(category).get(key).set(value);
 		} catch (Exception ex) {
 			System.err.print(ex);
+		} finally {
+			config.save();
+		}
+	}
+	
+	public static void writeDoubleConfig(String category, String key, double value) {
+		config = new Configuration(new File(file));
+		try {
+			config.load();
+			double set = config.get(category, key, value).getDouble();
+			config.getCategory(category).get(key).set(value);
+		} catch (Exception ex) {
+			System.err.println(ex);
 		} finally {
 			config.save();
 		}
@@ -140,7 +168,7 @@ public class ConfigHandler {
 		if (!hasKey("wolf", "couture")) writeIntConfig("wolf", "couture", 0);
 		if (!hasKey("wolf", "bait")) writeIntConfig("wolf", "bait", 0);
 		if (!hasKey("wolf", "flux")) writeIntConfig("wolf", "flux", 0);
-		if (!hasKey("wolf", "timeRNG")) writeIntConfig("wolf", "timeRNG", -1);
+		if (!hasKey("wolf", "timeRNG")) writeDoubleConfig("wolf", "timeRNG", -1);
 		if (!hasKey("wolf", "bossRNG")) writeIntConfig("wolf", "bossRNG", -1);
 		// Spider Loot
 		if (!hasKey("spider", "tarantulas")) writeIntConfig("spider", "tarantulas", 0);
@@ -152,7 +180,7 @@ public class ConfigHandler {
 		if (!hasKey("spider", "swatter")) writeIntConfig("spider", "swatter", 0);
 		if (!hasKey("spider", "talisman")) writeIntConfig("spider", "talisman", 0);
 		if (!hasKey("spider", "mosquito")) writeIntConfig("spider", "mosquito", 0);
-		if (!hasKey("spider", "timeRNG")) writeIntConfig("spider", "timeRNG", -1);
+		if (!hasKey("spider", "timeRNG")) writeDoubleConfig("spider", "timeRNG", -1);
 		if (!hasKey("spider", "bossRNG")) writeIntConfig("spider", "bossRNG", -1);
 		// Zombie Loot
 		if (!hasKey("zombie", "revs")) writeIntConfig("zombie", "revs", 0);
@@ -165,7 +193,7 @@ public class ConfigHandler {
 		if (!hasKey("zombie", "revCatalyst")) writeIntConfig("zombie", "revCatalyst", 0);
 		if (!hasKey("zombie", "snake")) writeIntConfig("zombie", "snake", 0);
 		if (!hasKey("zombie", "scythe")) writeIntConfig("zombie", "scythe", 0);
-		if (!hasKey("zombie", "timeRNG")) writeIntConfig("zombie", "timeRNG", -1);
+		if (!hasKey("zombie", "timeRNG")) writeDoubleConfig("zombie", "timeRNG", -1);
 		if (!hasKey("zombie", "bossRNG")) writeIntConfig("zombie", "bossRNG", -1);
 		
 		if (!hasKey("misc", "display")) writeStringConfig("misc", "display", "off");
@@ -193,7 +221,7 @@ public class ConfigHandler {
 		lc.wolfCoutures = getInt("wolf", "couture");
 		lc.wolfBaits = getInt("wolf", "bait");
 		lc.wolfFluxes = getInt("wolf", "flux");
-		lc.wolfTime = getInt("wolf", "timeRNG");
+		lc.wolfTime = getDouble("wolf", "timeRNG");
 		lc.wolfBosses = getInt("wolf", "bossRNG");
 		// Spider
 		lc.spiderTarantulas = getInt("spider", "tarantulas");
@@ -205,7 +233,7 @@ public class ConfigHandler {
 		lc.spiderSwatters = getInt("spider", "swatter");
 		lc.spiderTalismans = getInt("spider", "talisman");
 		lc.spiderMosquitos = getInt("spider", "mosquito");
-		lc.spiderTime = getInt("spider", "timeRNG");
+		lc.spiderTime = getDouble("spider", "timeRNG");
 		lc.spiderBosses = getInt("spider", "bossRNG");
 		// Zombie
 		lc.zombieRevs = getInt("zombie", "revs");
@@ -218,7 +246,7 @@ public class ConfigHandler {
 		lc.zombieRevCatas = getInt("zombie", "revCatalyst");
 		lc.zombieSnakes = getInt("zombie", "snake");
 		lc.zombieScythes = getInt("zombie", "scythe");
-		lc.zombieTime = getInt("zombie", "timeRNG");
+		lc.zombieTime = getDouble("zombie", "timeRNG");
 		lc.zombieBosses = getInt("zombie", "bossRNG");
 		
 		final DisplayCommand ds = new DisplayCommand();

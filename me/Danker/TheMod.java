@@ -54,8 +54,8 @@ public class TheMod
     public static final String MODID = "Danker's Skyblock Mod";
     public static final String VERSION = "1.5.4";
     
-    static int checkItemsNow = 0;
-    static int itemsChecked = 0;
+    static double checkItemsNow = 0;
+    static double itemsChecked = 0;
     static Map<String, String> t6Enchants = new HashMap<String, String>();
     static Pattern pattern = Pattern.compile("");
     
@@ -284,21 +284,21 @@ public class TheMod
 		// Time is stored in seconds, so if Skyblock
 		// survives until 2038, I'll just update it then
 		if (wolfRNG) {
-			lc.wolfTime = (int) System.currentTimeMillis() / 1000;
+			lc.wolfTime = System.currentTimeMillis() / 1000;
 			lc.wolfBosses = 0;
-			cf.writeIntConfig("wolf", "timeRNG", lc.wolfTime);
+			cf.writeDoubleConfig("wolf", "timeRNG", lc.wolfTime);
 			cf.writeIntConfig("wolf", "bossRNG", 0);
 		}
 		if (spiderRNG) {
-			lc.spiderTime = (int) System.currentTimeMillis() / 1000;
+			lc.spiderTime = System.currentTimeMillis() / 1000;
 			lc.spiderBosses = 0;
-			cf.writeIntConfig("spider", "timeRNG", lc.spiderTime);
+			cf.writeDoubleConfig("spider", "timeRNG", lc.spiderTime);
 			cf.writeIntConfig("spider", "bossRNG", 0);
 		}
 		if (zombieRNG) {
-			lc.zombieTime = (int) System.currentTimeMillis() / 1000;
+			lc.zombieTime = System.currentTimeMillis() / 1000;
 			lc.zombieBosses = 0;
-			cf.writeIntConfig("zombie", "timeRNG", lc.zombieTime);
+			cf.writeDoubleConfig("zombie", "timeRNG", lc.zombieTime);
 			cf.writeIntConfig("zombie", "bossRNG", 0);
 		}
     }
@@ -330,7 +330,7 @@ public class TheMod
     		String countText = "";
     		String timeBetween = "Never";
     		String bossesBetween = "Never";
-    		int timeNow = (int) System.currentTimeMillis() / 1000;
+    		double timeNow = System.currentTimeMillis() / 1000;
     		
     		if (displayToggle.equals("wolf")) {
     			if (lc.wolfTime == -1) {
@@ -446,7 +446,7 @@ public class TheMod
     public void onSound(final PlaySoundEvent event) {
     	if (event.name.equals("note.pling")) {
     		// Don't check twice within 3 seconds 
-    		checkItemsNow = (int) System.currentTimeMillis() / 1000;
+    		checkItemsNow = System.currentTimeMillis() / 1000;
     		if (checkItemsNow - itemsChecked < 3) return;
     		
     		final ScoreboardHandler sc = new ScoreboardHandler();
@@ -468,7 +468,7 @@ public class TheMod
         			
         			// If no items, are detected, allow check again. Should fix items not being found
         			if (itemTeeth + itemWheels + itemWebs + itemTAP + itemRev + itemFoul > 0) {
-        				itemsChecked = (int) System.currentTimeMillis() / 1000;
+        				itemsChecked = System.currentTimeMillis() / 1000;
             			lc.wolfTeeth += itemTeeth;
             			lc.wolfWheels += itemWheels;
             			lc.spiderWebs += itemWebs;

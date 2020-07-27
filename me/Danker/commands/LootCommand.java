@@ -20,7 +20,7 @@ public class LootCommand extends CommandBase {
 	public static int wolfCoutures;
 	public static int wolfBaits;
 	public static int wolfFluxes;
-	public static int wolfTime;
+	public static double wolfTime;
 	public static int wolfBosses;
 	// Spider
 	public static int spiderTarantulas;
@@ -32,7 +32,7 @@ public class LootCommand extends CommandBase {
 	public static int spiderSwatters;
 	public static int spiderTalismans;
 	public static int spiderMosquitos;
-	public static int spiderTime;
+	public static double spiderTime;
 	public static int spiderBosses;
 	// Zombie
 	public static int zombieRevs;
@@ -45,11 +45,11 @@ public class LootCommand extends CommandBase {
 	public static int zombieRevCatas;
 	public static int zombieSnakes;
 	public static int zombieScythes;
-	public static int zombieTime;
+	public static double zombieTime;
 	public static int zombieBosses;
 	
-	public String getTimeBetween(int timeOne, int timeTwo) {
-		int secondsBetween = timeTwo - timeOne;
+	public String getTimeBetween(double timeOne, double timeTwo) {
+		double secondsBetween = Math.floor(timeTwo - timeOne);
 		
 		String timeFormatted = "";
 		int days;
@@ -59,18 +59,18 @@ public class LootCommand extends CommandBase {
 		
 		if (secondsBetween > 86400) {
 			// More than 1d, display #d#h
-			days = secondsBetween / 86400;
-			hours = secondsBetween % 86400 / 3600;
+			days = (int) (secondsBetween / 86400);
+			hours = (int) (secondsBetween % 86400 / 3600);
 			timeFormatted = days + "d" + hours + "h";
 		} else if (secondsBetween > 3600) {
 			// More than 1h, display #h#m
-			hours = secondsBetween / 3600;
-			minutes = secondsBetween % 3600 / 60;
+			hours = (int) (secondsBetween / 3600);
+			minutes = (int) (secondsBetween % 3600 / 60);
 			timeFormatted = hours + "h" + minutes + "m";
 		} else {
 			// Display #m#s
-			minutes = secondsBetween / 60;
-			seconds = secondsBetween % 60;
+			minutes = (int) (secondsBetween / 60);
+			seconds = (int) (secondsBetween % 60);
 			timeFormatted = minutes + "m" + seconds + "s";
 		}
 		
@@ -101,7 +101,7 @@ public class LootCommand extends CommandBase {
 			return;
 		}
 		
-		int timeNow = (int) System.currentTimeMillis() / 1000;
+		double timeNow = System.currentTimeMillis() / 1000;
 		String timeBetween;
 		String bossesBetween;
 		if (arg1[0].equalsIgnoreCase("wolf")) {
