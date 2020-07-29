@@ -7,6 +7,7 @@ QOL changes that enhances your Hypixel Skyblock experience. Created to add featu
 - Golden T6/T4 enchant display (toggleable)
 - Slayer item tracker (with GUI display)
 - API commands
+- Update checker
 
 ## Commands
 - /dhelp - Returns this message in-game.
@@ -19,12 +20,12 @@ QOL changes that enhances your Hypixel Skyblock experience. Created to add featu
 - /slayer [player] - Uses API to get slayer xp of a person. If no name is provided, it checks yours.
 - /skills [player] - Uses API to get skill levels of a person. If no name is provided, it checks yours.
 - /guildof [player] - Uses API to get guild name and guild master of a person. If no name is provided, it checks yours.
-- /pets [player] - Uses API to get pets of a person. If no name is provided, it checks yours.
+- /petsof [player] - Uses API to get pets of a person. If no name is provided, it checks yours.
 - /bank [player] - Uses API to get bank and purse coins of a person. If no name is provided, it checks yours.
 - /armor [player] - Uses API to get armour of a person. If no name is provided, it checks yours.
 
 ### Notes
 - Slayer tracker for token drops and 20% chance drops uses a 12x12x12 bounding box centered on the player to detect the drops. If you are out of the range of the item drop, it will not count on the tracker.
-- API commands may take a while depending on your internet connection.
+- API commands may take a while depending on your internet connection. The API may also go down.
 - If you use too many API commands too fast, you can and will get rate-limited.
 - An incorrect API key will result in an HTTP error code of 402.

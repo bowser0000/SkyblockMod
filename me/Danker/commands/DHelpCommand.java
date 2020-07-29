@@ -1,5 +1,6 @@
 package me.Danker.commands;
 
+import me.Danker.TheMod;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
@@ -28,7 +29,7 @@ public class DHelpCommand extends CommandBase {
 	public void processCommand(ICommandSender arg0, String[] arg1) throws CommandException {
 		EntityPlayer player = (EntityPlayer) arg0;
 		
-		player.addChatMessage(new ChatComponentText("\n" + EnumChatFormatting.GOLD + " Danker's Skyblock Mod Version 1.5.4\n" +
+		player.addChatMessage(new ChatComponentText("\n" + EnumChatFormatting.GOLD + " " + TheMod.MODID + " Version " + TheMod.VERSION + "\n" +
 													EnumChatFormatting.AQUA + " <> = Mandatory parameter. [] = Optional parameter.\n" +
 													EnumChatFormatting.GOLD + " /dhelp" + EnumChatFormatting.AQUA + " - Returns this message.\n" +
 													EnumChatFormatting.GOLD + " /toggle <gparty/coords/golden/list>" + EnumChatFormatting.AQUA + " - Toggles features. /toggle list returns values of every toggle.\n" +
@@ -40,7 +41,7 @@ public class DHelpCommand extends CommandBase {
 													EnumChatFormatting.GOLD + " /slayer [player]" + EnumChatFormatting.AQUA + " - Uses API to get slayer xp of a person. If no name is provided, it checks yours.\n" +
 													EnumChatFormatting.GOLD + " /skills [player]" + EnumChatFormatting.AQUA + " - Uses API to get skill levels of a person. If no name is provided, it checks yours.\n" +
 													EnumChatFormatting.GOLD + " /guildof [player]" + EnumChatFormatting.AQUA + " - Uses API to get guild name and guild master of a person. If no name is provided, it checks yours.\n" +
-													EnumChatFormatting.GOLD + " /pets [player]" + EnumChatFormatting.AQUA + " - Uses API to get pets of a person. If no name is provided, it checks yours.\n" +
+													EnumChatFormatting.GOLD + " /petsof [player]" + EnumChatFormatting.AQUA + " - Uses API to get pets of a person. If no name is provided, it checks yours.\n" +
 													EnumChatFormatting.GOLD + " /bank [player]" + EnumChatFormatting.AQUA + " - Uses API to get bank and purse coins of a person. If no name is provided, it checks yours.\n" +
 													EnumChatFormatting.GOLD + " /armor [player]" + EnumChatFormatting.AQUA + " - Uses API to get armour of a person. If no name is provided, it checks yours.\n"));
 	}

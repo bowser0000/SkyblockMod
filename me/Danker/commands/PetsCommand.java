@@ -56,7 +56,7 @@ public class PetsCommand extends CommandBase {
 	
 	@Override
 	public String getCommandName() {
-		return "pets";
+		return "petsof";
 	}
 
 	@Override

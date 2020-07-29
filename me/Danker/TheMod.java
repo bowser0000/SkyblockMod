@@ -11,6 +11,8 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.google.gson.JsonObject;
+
 import me.Danker.commands.ArmourCommand;
 import me.Danker.commands.BankCommand;
 import me.Danker.commands.DHelpCommand;
@@ -25,13 +27,17 @@ import me.Danker.commands.SetkeyCommand;
 import me.Danker.commands.SkillsCommand;
 import me.Danker.commands.SlayerCommand;
 import me.Danker.commands.ToggleCommand;
+import me.Danker.handlers.APIHandler;
 import me.Danker.handlers.ConfigHandler;
 import me.Danker.handlers.ScoreboardHandler;
 import me.Danker.handlers.TextRenderer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.event.ClickEvent;
+import net.minecraft.event.ClickEvent.Action;
 import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StringUtils;
 import net.minecraftforge.client.ClientCommandHandler;
@@ -39,6 +45,7 @@ import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.sound.PlaySoundEvent;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
@@ -47,17 +54,19 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.versioning.DefaultArtifactVersion;
 
 @Mod(modid = TheMod.MODID, version = TheMod.VERSION, clientSideOnly = true)
 public class TheMod
 {
     public static final String MODID = "Danker's Skyblock Mod";
-    public static final String VERSION = "1.5.4";
+    public static final String VERSION = "1.5.5";
     
     static double checkItemsNow = 0;
     static double itemsChecked = 0;
     static Map<String, String> t6Enchants = new HashMap<String, String>();
     static Pattern pattern = Pattern.compile("");
+    static boolean updateChecked = false;
     
     @EventHandler
     public void init(FMLInitializationEvent event)
@@ -82,12 +91,12 @@ public class TheMod
 		t6Enchants.put("Scavenger V", EnumChatFormatting.GOLD + "Scavenger V" + EnumChatFormatting.BLUE);
 		t6Enchants.put("Sharpness VI", EnumChatFormatting.GOLD + "Sharpness VI" + EnumChatFormatting.BLUE);
 		t6Enchants.put("Smite VI", EnumChatFormatting.GOLD + "Smite VI" + EnumChatFormatting.BLUE);
-		t6Enchants.put("Smite VI", EnumChatFormatting.GOLD + "Smite VII" + EnumChatFormatting.BLUE);
+		t6Enchants.put("Smite VII", EnumChatFormatting.GOLD + "Smite VII" + EnumChatFormatting.BLUE);
 		t6Enchants.put("Vampirism VI", EnumChatFormatting.GOLD + "Vampirism VI" + EnumChatFormatting.BLUE);
 		t6Enchants.put("Power VI", EnumChatFormatting.GOLD + "Power VI" + EnumChatFormatting.BLUE);
 		t6Enchants.put("Growth VI", EnumChatFormatting.GOLD + "Growth VI" + EnumChatFormatting.BLUE);
 		t6Enchants.put("Protection VI", EnumChatFormatting.GOLD + "Protection VI" + EnumChatFormatting.BLUE);
-		t6Enchants.put("Efficiency VI", EnumChatFormatting.GOLD + "Efficieny VI" + EnumChatFormatting.BLUE);
+		t6Enchants.put("Efficiency VI", EnumChatFormatting.GOLD + "Efficiency VI" + EnumChatFormatting.BLUE);
 		t6Enchants.put("Angler VI", EnumChatFormatting.GOLD + "Angler VI" + EnumChatFormatting.BLUE);
 		t6Enchants.put("Caster VI", EnumChatFormatting.GOLD + "Caster VI" + EnumChatFormatting.BLUE);
 		t6Enchants.put("Frail VI", EnumChatFormatting.GOLD + "Frail VI" + EnumChatFormatting.BLUE);
@@ -116,6 +125,41 @@ public class TheMod
     	ClientCommandHandler.instance.registerCommand(new PetsCommand());
     	ClientCommandHandler.instance.registerCommand(new BankCommand());
     	ClientCommandHandler.instance.registerCommand(new ArmourCommand());
+    }
+    
+    // Update checker
+    @SubscribeEvent
+    public void onJoin(EntityJoinWorldEvent event) {
+    	if (!updateChecked) {
+			updateChecked = true;
+			
+    		// MULTI THREAD DRIFTING
+    		new Thread(() -> {
+    			APIHandler ah = new APIHandler();
+    			EntityPlayer player = Minecraft.getMinecraft().thePlayer;	
+    			
+    			System.err.println("Checking for updates...");
+    			JsonObject latestRelease = ah.getResponse("https://api.github.com/repos/bowser0000/SkyblockMod/releases/latest");
+    			
+    			String latestTag = latestRelease.get("tag_name").getAsString();
+    			DefaultArtifactVersion currentVersion = new DefaultArtifactVersion(VERSION);
+    			DefaultArtifactVersion latestVersion = new DefaultArtifactVersion(latestTag.substring(1));
+    			
+    			if (currentVersion.compareTo(latestVersion) < 0) {
+    				String releaseURL = latestRelease.get("html_url").getAsString();
+    				
+    				ChatComponentText update = new ChatComponentText(EnumChatFormatting.GREEN + "" + EnumChatFormatting.BOLD + "  [UPDATE]  ");
+    				update.setChatStyle(update.getChatStyle().setChatClickEvent(new ClickEvent(Action.OPEN_URL, releaseURL)));
+    					
+    				try {
+						Thread.sleep(2000);
+					} catch (InterruptedException ex) {
+						System.err.println(ex);
+					}
+    				player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + MODID + " is outdated. Please update to " + latestTag + ".\n").appendSibling(update));
+    			}
+    		}).start();
+    	}
     }
     
     // It randomly broke, so I had to make it the highest priority
