@@ -196,6 +196,32 @@ public class ConfigHandler {
 		if (!hasKey("zombie", "timeRNG")) writeDoubleConfig("zombie", "timeRNG", -1);
 		if (!hasKey("zombie", "bossRNG")) writeIntConfig("zombie", "bossRNG", -1);
 		
+		// Fishing
+		if (!hasKey("fishing", "seaCreature")) writeIntConfig("fishing", "seaCreature", 0);
+		if (!hasKey("fishing", "goodCatch")) writeIntConfig("fishing", "goodCatch", 0);
+		if (!hasKey("fishing", "greatCatch")) writeIntConfig("fishing", "greatCatch", 0);
+		if (!hasKey("fishing", "squid")) writeIntConfig("fishing", "squid", 0);
+		if (!hasKey("fishing", "seaWalker")) writeIntConfig("fishing", "seaWalker", 0);
+		if (!hasKey("fishing", "nightSquid")) writeIntConfig("fishing", "nightSquid", 0);
+		if (!hasKey("fishing", "seaGuardian")) writeIntConfig("fishing", "seaGuardian", 0);
+		if (!hasKey("fishing", "seaWitch")) writeIntConfig("fishing", "seaWitch", 0);
+		if (!hasKey("fishing", "seaArcher")) writeIntConfig("fishing", "seaArcher", 0);
+		if (!hasKey("fishing", "monsterOfDeep")) writeIntConfig("fishing", "monsterOfDeep", 0);
+		if (!hasKey("fishing", "catfish")) writeIntConfig("fishing", "catfish", 0);
+		if (!hasKey("fishing", "carrotKing")) writeIntConfig("fishing", "carrotKing", 0);
+		if (!hasKey("fishing", "seaLeech")) writeIntConfig("fishing", "seaLeech", 0);
+		if (!hasKey("fishing", "guardianDefender")) writeIntConfig("fishing", "guardianDefender", 0);
+		if (!hasKey("fishing", "deepSeaProtector")) writeIntConfig("fishing", "deepSeaProtector", 0);
+		if (!hasKey("fishing", "hydra")) writeIntConfig("fishing", "hydra", 0);
+		if (!hasKey("fishing", "seaEmperor")) writeIntConfig("fishing", "seaEmperor", 0);
+		if (!hasKey("fishing", "empTime")) writeDoubleConfig("fishing", "empTime", -1);
+		if (!hasKey("fishing", "empSC")) writeIntConfig("fishing", "empSC", -1);
+		// Fishing Winter
+		if (!hasKey("fishing", "frozenSteve")) writeIntConfig("fishing", "frozenSteve", 0);
+		if (!hasKey("fishing", "snowman")) writeIntConfig("fishing", "snowman", 0);
+		if (!hasKey("fishing", "grinch")) writeIntConfig("fishing", "grinch", 0);
+		if (!hasKey("fishing", "yeti")) writeIntConfig("fishing", "yeti", 0);
+		
 		if (!hasKey("misc", "display")) writeStringConfig("misc", "display", "off");
 		
 		ScaledResolution scaled = new ScaledResolution(Minecraft.getMinecraft());
@@ -248,6 +274,31 @@ public class ConfigHandler {
 		lc.zombieScythes = getInt("zombie", "scythe");
 		lc.zombieTime = getDouble("zombie", "timeRNG");
 		lc.zombieBosses = getInt("zombie", "bossRNG");
+		
+		// Fishing
+		lc.seaCreatures = getInt("fishing", "seaCreature");
+		lc.goodCatches = getInt("fishing", "goodCatch");
+		lc.greatCatches = getInt("fishing", "greatCatch");
+		lc.squids = getInt("fishing", "squid");
+		lc.seaWalkers = getInt("fishing", "seaWalker");
+		lc.nightSquids = getInt("fishing", "nightSquid");
+		lc.seaGuardians = getInt("fishing", "seaGuardian");
+		lc.seaWitches = getInt("fishing", "seaWitch");
+		lc.seaArchers = getInt("fishing", "seaArcher");
+		lc.monsterOfTheDeeps = getInt("fishing", "monsterOfDeep");
+		lc.catfishes = getInt("fishing", "catfish");
+		lc.seaLeeches = getInt("fishing", "seaLeech");
+		lc.guardianDefenders = getInt("fishing", "guardianDefender");
+		lc.deepSeaProtectors = getInt("fishing", "deepSeaProtector");
+		lc.hydras = getInt("fishing", "hydra");
+		lc.seaEmperors = getInt("fishing", "seaEmperor");
+		lc.empTime = getDouble("fishing", "empTime");
+		lc.empSCs = getInt("fishing", "empSC");
+		// Fishing Winter
+		lc.frozenSteves = getInt("fishing", "frozenSteve");
+		lc.frostyTheSnowmans = getInt("fishing", "snowman");
+		lc.grinches = getInt("fishing", "grinch");
+		lc.yetis = getInt("fishing", "yeti");
 		
 		final DisplayCommand ds = new DisplayCommand();
 		ds.display = getString("misc", "display");

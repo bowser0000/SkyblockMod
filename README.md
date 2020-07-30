@@ -5,7 +5,8 @@ QOL changes that enhances your Hypixel Skyblock experience. Created to add featu
 - Guild party desktop notifications (toggleable)
 - Coordinate and angle display (toggleable)
 - Golden T6/T4 enchant display (toggleable)
-- Slayer item tracker (with GUI display)
+- Slayer item tracker (with graphic display)
+- Fishing tracker (with graphic display)
 - API commands
 - Update checker
 
@@ -15,7 +16,7 @@ QOL changes that enhances your Hypixel Skyblock experience. Created to add featu
 - /setkey <key> - Sets API key.
 - /getkey - Returns key set with /setkey.
 - /loot <zombie/spider/wolf> - Returns loot received from slayer quests.
-- /display <zombie/spider/wolf/off> - Text display for slayer tracker.
+- /display <zombie/spider/wolf/fishing/off> [winter] - Text display for slayer tracker. /display fishing winter displays winter sea creatures instead.
 - /move <coords/display> <x> <y> - Moves text display to specified X and Y coordinates.
 - /slayer [player] - Uses API to get slayer xp of a person. If no name is provided, it checks yours.
 - /skills [player] - Uses API to get skill levels of a person. If no name is provided, it checks yours.
