@@ -24,9 +24,11 @@ QOL changes that enhances your Hypixel Skyblock experience. Created to add featu
 - /petsof [player] - Uses API to get pets of a person. If no name is provided, it checks yours.
 - /bank [player] - Uses API to get bank and purse coins of a person. If no name is provided, it checks yours.
 - /armor [player] - Uses API to get armour of a person. If no name is provided, it checks yours.
+- /importfishing - Imports your fishing stats from your latest profile to your fishing tracker using the API.
 
 ### Notes
 - Slayer tracker for token drops and 20% chance drops uses a 12x12x12 bounding box centered on the player to detect the drops. If you are out of the range of the item drop, it will not count on the tracker.
 - API commands may take a while depending on your internet connection. The API may also go down.
 - If you use too many API commands too fast, you can and will get rate-limited.
 - An incorrect API key will result in an HTTP error code of 402.
+- Importing fishing uses your sea creature kills, which may not always be exactly correct (e.x. someone else kills your sea creature).

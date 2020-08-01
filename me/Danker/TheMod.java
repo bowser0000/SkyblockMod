@@ -19,6 +19,7 @@ import me.Danker.commands.DHelpCommand;
 import me.Danker.commands.DisplayCommand;
 import me.Danker.commands.GetkeyCommand;
 import me.Danker.commands.GuildOfCommand;
+import me.Danker.commands.ImportFishingCommand;
 import me.Danker.commands.LootCommand;
 import me.Danker.commands.MoveCommand;
 import me.Danker.commands.PetsCommand;
@@ -60,7 +61,7 @@ import net.minecraftforge.fml.common.versioning.DefaultArtifactVersion;
 public class TheMod
 {
     public static final String MODID = "Danker's Skyblock Mod";
-    public static final String VERSION = "1.5.6";
+    public static final String VERSION = "1.6";
     
     static double checkItemsNow = 0;
     static double itemsChecked = 0;
@@ -125,6 +126,7 @@ public class TheMod
     	ClientCommandHandler.instance.registerCommand(new PetsCommand());
     	ClientCommandHandler.instance.registerCommand(new BankCommand());
     	ClientCommandHandler.instance.registerCommand(new ArmourCommand());
+    	ClientCommandHandler.instance.registerCommand(new ImportFishingCommand());
     }
     
     // Update checker
@@ -668,8 +670,8 @@ public class TheMod
 									  EnumChatFormatting.AQUA + timeBetween + "\n" +
 									  EnumChatFormatting.AQUA + bossesBetween;
     			
-    			new TextRenderer(Minecraft.getMinecraft(), dropsTextTwo, moc.displayXY[0] + 130, moc.displayXY[1], Integer.parseInt("FFFFFF", 16));
-    			new TextRenderer(Minecraft.getMinecraft(), countTextTwo, moc.displayXY[0] + 240, moc.displayXY[1], Integer.parseInt("FFFFFF", 16));
+    			new TextRenderer(Minecraft.getMinecraft(), dropsTextTwo, moc.displayXY[0] + 145, moc.displayXY[1], Integer.parseInt("FFFFFF", 16));
+    			new TextRenderer(Minecraft.getMinecraft(), countTextTwo, moc.displayXY[0] + 255, moc.displayXY[1], Integer.parseInt("FFFFFF", 16));
     			
     		} else if (ds.display.equals("fishingwinter")) {
     			dropsText = EnumChatFormatting.AQUA + "Creatures Caught:\n" +
