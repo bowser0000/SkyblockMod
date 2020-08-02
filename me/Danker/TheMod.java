@@ -7,6 +7,7 @@ import java.awt.TrayIcon;
 import java.text.NumberFormat;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -61,7 +62,7 @@ import net.minecraftforge.fml.common.versioning.DefaultArtifactVersion;
 public class TheMod
 {
     public static final String MODID = "Danker's Skyblock Mod";
-    public static final String VERSION = "1.6";
+    public static final String VERSION = "1.6.1";
     
     static double checkItemsNow = 0;
     static double itemsChecked = 0;
@@ -385,7 +386,7 @@ public class TheMod
 			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
 			increaseEmpSC();
 		}
-		if (message.contains("It looks like you've disrupted Sea Witch's brewing session")) {
+		if (message.contains("It looks like you've disrupted the Sea Witch's brewing session. Watch out, she's furious")) {
 			lc.seaWitches++;
 			lc.seaCreatures++;
 			cf.writeIntConfig("fishing", "seaWitch", lc.seaWitches);
@@ -512,7 +513,7 @@ public class TheMod
     		String timeBetween = "Never";
     		String bossesBetween = "Never";
     		double timeNow = System.currentTimeMillis() / 1000;
-    		NumberFormat nf = NumberFormat.getIntegerInstance();
+    		NumberFormat nf = NumberFormat.getIntegerInstance(Locale.US);
     		
     		if (ds.display.equals("wolf")) {
     			if (lc.wolfTime == -1) {

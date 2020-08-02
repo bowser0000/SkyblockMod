@@ -1,6 +1,7 @@
 package me.Danker.commands;
 
 import java.text.NumberFormat;
+import java.util.Locale;
 
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
@@ -130,7 +131,7 @@ public class LootCommand extends CommandBase {
 		double timeNow = System.currentTimeMillis() / 1000;
 		String timeBetween;
 		String bossesBetween;
-		NumberFormat nf = NumberFormat.getIntegerInstance();
+		NumberFormat nf = NumberFormat.getIntegerInstance(Locale.US);
 		if (arg1[0].equalsIgnoreCase("wolf")) {
 			if (wolfTime == -1) {
 				timeBetween = "Never";
