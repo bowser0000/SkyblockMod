@@ -1,10 +1,13 @@
 package me.Danker.commands;
 
+import java.util.List;
+
 import me.Danker.handlers.ConfigHandler;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 
@@ -27,6 +30,16 @@ public class DisplayCommand extends CommandBase {
 	}
 	
 	@Override
+	public List<String> addTabCompletionOptions(ICommandSender sender, String[] args, BlockPos pos) {
+		if (args.length == 1) {
+			return getListOfStringsMatchingLastWord(args, "wolf", "spider", "zombie", "fishing", "off");
+		} else if (args.length == 2 && args[0].equalsIgnoreCase("fishing")) {
+			return getListOfStringsMatchingLastWord(args, "winter");
+		}
+		return null;
+	}
+	
+	@Override
 	public void processCommand(ICommandSender arg0, String[] arg1) throws CommandException {
 		final EntityPlayer player = (EntityPlayer) arg0;
 		
@@ -43,14 +56,14 @@ public class DisplayCommand extends CommandBase {
 			display = "spider";
 		} else if (arg1[0].equalsIgnoreCase("zombie")) {
 			display = "zombie";
-		} else if (arg1[0].equalsIgnoreCase("off")) {
-			display = "off";
-		} else if (arg1[0].equalsIgnoreCase("fishing")) {
+		}  else if (arg1[0].equalsIgnoreCase("fishing")) {
 			if (arg1.length > 1 && arg1[1].equalsIgnoreCase("winter")) {
 				display = "fishingwinter";
 			} else {
 				display = "fishing";
-			}
+			} 
+		} else if (arg1[0].equalsIgnoreCase("off")) {
+			display = "off";
 		} else {
 			player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Usage: /display <zombie/spider/wolf/fishing/off> [winter]"));
 			return;

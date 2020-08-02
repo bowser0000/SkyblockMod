@@ -1,10 +1,13 @@
 package me.Danker.commands;
 
+import java.util.List;
+
 import me.Danker.handlers.ConfigHandler;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 
@@ -26,6 +29,14 @@ public class MoveCommand extends CommandBase {
 	@Override
 	public int getRequiredPermissionLevel() {
 		return 0;
+	}
+	
+	@Override
+	public List<String> addTabCompletionOptions(ICommandSender sender, String[] args, BlockPos pos) {
+		if (args.length == 1) {
+			return getListOfStringsMatchingLastWord(args, "coords", "display");
+		}
+		return null;
 	}
 
 	@Override
