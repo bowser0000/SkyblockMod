@@ -15,8 +15,8 @@ QOL changes that enhances your Hypixel Skyblock experience. Created to add featu
 - /toggle <gparty/coords/golden/list> - Toggles features. /toggle list returns values of every toggle.
 - /setkey <key> - Sets API key.
 - /getkey - Returns key set with /setkey.
-- /loot <zombie/spider/wolf/fishing> [winter] - Returns loot received from slayer quests or fishing stats. /loot fishing winter returns winter sea creatures instead.
-- /display <zombie/spider/wolf/fishing/off> [winter] - Text display for trackers. /display fishing winter displays winter sea creatures instead.
+- /loot <zombie/spider/wolf/fishing> [winter/session] - Returns loot received from slayer quests or fishing stats. /loot fishing winter returns winter sea creatures instead.
+- /display <zombie/spider/wolf/fishing/off> [winter/session] - Text display for trackers. /display fishing winter displays winter sea creatures instead.
 - /move <coords/display> <x> <y> - Moves text display to specified X and Y coordinates.
 - /slayer [player] - Uses API to get slayer xp of a person. If no name is provided, it checks yours.
 - /skills [player] - Uses API to get skill levels of a person. If no name is provided, it checks yours.

@@ -21,7 +21,7 @@ public class DisplayCommand extends CommandBase {
 
 	@Override
 	public String getCommandUsage(ICommandSender arg0) {
-		return getCommandName() + " <zombie/spider/wolf/fishing/off> [winter]";
+		return getCommandName() + " <zombie/spider/wolf/fishing/off> [winter/session]";
 	}
 
 	@Override
@@ -34,7 +34,9 @@ public class DisplayCommand extends CommandBase {
 		if (args.length == 1) {
 			return getListOfStringsMatchingLastWord(args, "wolf", "spider", "zombie", "fishing", "off");
 		} else if (args.length == 2 && args[0].equalsIgnoreCase("fishing")) {
-			return getListOfStringsMatchingLastWord(args, "winter");
+			return getListOfStringsMatchingLastWord(args, "winter", "session");
+		} else if (args.length == 2 || (args.length == 3 && args[0].equalsIgnoreCase("fishing") && args[1].equalsIgnoreCase("winter"))) { 
+			return getListOfStringsMatchingLastWord(args, "session");
 		}
 		return null;
 	}
@@ -44,28 +46,59 @@ public class DisplayCommand extends CommandBase {
 		final EntityPlayer player = (EntityPlayer) arg0;
 		
 		if (arg1.length == 0) {
-			player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Usage: /display <zombie/spider/wolf/fishing/off> [winter]"));
+			player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Usage: /display <zombie/spider/wolf/fishing/off> [winter/session]"));
 			return;
 		}
 		
 		final ConfigHandler cf = new ConfigHandler();
+		boolean showSession = false;
+		
+		if (arg1.length > 1) {
+			if (arg1[1].equalsIgnoreCase("session")) {
+				showSession = true;
+			} else if (arg1.length > 2) {
+				if (arg1[2].equalsIgnoreCase("session")) {
+					showSession = true;
+				}
+			}
+		}
 		
 		if (arg1[0].equalsIgnoreCase("wolf")) {
-			display = "wolf";
+			if (showSession) {
+				display = "wolf_session";
+			} else {
+				display = "wolf";
+			}
 		} else if (arg1[0].equalsIgnoreCase("spider")) {
-			display = "spider";
+			if (showSession) {
+				display = "spider_session";
+			} else {
+				display = "spider";
+			}
 		} else if (arg1[0].equalsIgnoreCase("zombie")) {
-			display = "zombie";
+			if (showSession) {
+				display = "zombie_session";
+			} else {
+				display = "zombie";
+			}
 		}  else if (arg1[0].equalsIgnoreCase("fishing")) {
 			if (arg1.length > 1 && arg1[1].equalsIgnoreCase("winter")) {
-				display = "fishingwinter";
+				if (showSession) {
+					display = "fishing_winter_session";
+				} else {
+					display = "fishing_winter";
+				}
 			} else {
-				display = "fishing";
+				if (showSession) {
+					display = "fishing_session";
+				} else {
+					display = "fishing";
+				}
 			} 
 		} else if (arg1[0].equalsIgnoreCase("off")) {
 			display = "off";
 		} else {
-			player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Usage: /display <zombie/spider/wolf/fishing/off> [winter]"));
+			player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Usage: /display <zombie/spider/wolf/fishing/off> [winter/session]"));
 			return;
 		}
 		player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Display set to " + EnumChatFormatting.DARK_GREEN + display + EnumChatFormatting.GREEN + "."));

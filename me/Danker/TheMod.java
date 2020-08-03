@@ -9,7 +9,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.google.gson.JsonObject;
@@ -33,15 +32,13 @@ import me.Danker.handlers.APIHandler;
 import me.Danker.handlers.ConfigHandler;
 import me.Danker.handlers.ScoreboardHandler;
 import me.Danker.handlers.TextRenderer;
+import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.event.ClickEvent;
 import net.minecraft.event.ClickEvent.Action;
-import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.StringUtils;
 import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
@@ -66,8 +63,8 @@ public class TheMod
     
     static double checkItemsNow = 0;
     static double itemsChecked = 0;
-    static Map<String, String> t6Enchants = new HashMap<String, String>();
-    static Pattern pattern = Pattern.compile("");
+    public static Map<String, String> t6Enchants = new HashMap<String, String>();
+    public static Pattern pattern = Pattern.compile("");
     static boolean updateChecked = false;
     
     @EventHandler
@@ -218,8 +215,12 @@ public class TheMod
 		// Wolf
 		if (message.contains("Talk to Maddox to claim your Wolf Slayer XP!")) {
 			lc.wolfSvens++;
+			lc.wolfSvensSession++;
 			if (lc.wolfBosses != -1) {
 				lc.wolfBosses++;
+			}
+			if (lc.wolfBossesSession != -1) {
+				lc.wolfBossesSession++;
 			}
 			cf.writeIntConfig("wolf", "svens", lc.wolfSvens);
 			cf.writeIntConfig("wolf", "bossRNG", lc.wolfBosses);
@@ -227,73 +228,92 @@ public class TheMod
 		// Removing the unicode here *should* fix rune drops not counting
 		if (message.contains("VERY RARE DROP!  (") && message.contains(" Spirit Rune I)")) {
 			lc.wolfSpirits++;
+			lc.wolfSpiritsSession++;
 			cf.writeIntConfig("wolf", "spirit", lc.wolfSpirits);
 		}
 		if (message.contains("CRAZY RARE DROP!  (Red Claw Egg)")) {
 			wolfRNG = true;
 			lc.wolfEggs++;
+			lc.wolfEggsSession++;
 			cf.writeIntConfig("wolf", "egg", lc.wolfEggs);
 		}
 		if (message.contains("CRAZY RARE DROP!  (") && message.contains(" Couture Rune I)")) {
 			wolfRNG = true;
 			lc.wolfCoutures++;
+			lc.wolfCouturesSession++;
 			cf.writeIntConfig("wolf", "couture", lc.wolfCoutures);
 		}
 		// How did Skyblock devs even manage to make this item Rename Me
 		if (message.contains("CRAZY RARE DROP!  (Grizzly Bait)") || message.contains("CRAZY RARE DROP! (Rename Me)")) {
 			wolfRNG = true;
 			lc.wolfBaits++;
+			lc.wolfBaitsSession++;
 			cf.writeIntConfig("wolf", "bait", lc.wolfBaits);
 		}
 		if (message.contains("CRAZY RARE DROP!  (Overflux Capacitor)")) {
 			wolfRNG = true;
 			lc.wolfFluxes++;
+			lc.wolfFluxesSession++;
 			cf.writeIntConfig("wolf", "flux", lc.wolfFluxes);
 		}
 
 		// Spider
 		if (message.contains("Talk to Maddox to claim your Spider Slayer XP!")) {
 			lc.spiderTarantulas++;
+			lc.spiderTarantulasSession++;
 			if (lc.spiderBosses != -1) {
 				lc.spiderBosses++;
+			}
+			if (lc.spiderBossesSession != -1) {
+				lc.spiderBossesSession++;
 			}
 			cf.writeIntConfig("spider", "tarantulas", lc.spiderTarantulas);
 			cf.writeIntConfig("spider", "bossRNG", lc.spiderBosses);
 		}
 		if (message.contains("VERY RARE DROP!  (") && message.contains(" Bite Rune I)")) {
 			lc.spiderBites++;
+			lc.spiderBitesSession++;
 			cf.writeIntConfig("spider", "bite", lc.spiderBites);
 		}
 		if (message.contains("VERY RARE DROP!  (Spider Catalyst)")) {
 			lc.spiderCatalysts++;
+			lc.spiderCatalystsSession++;
 			cf.writeIntConfig("spider", "catalyst", lc.spiderCatalysts);
 		}
 		// T3 Spider Book Drop
 		if (message.contains("CRAZY RARE DROP!  (Enchanted Book)")) {
 			lc.spiderBooks++;
+			lc.spiderBooksSession++;
 			cf.writeIntConfig("spider", "book", lc.spiderBooks);
 		}
 		if (message.contains("CRAZY RARE DROP!  (Fly Swatter)")) {
 			spiderRNG = true;
 			lc.spiderSwatters++;
+			lc.spiderSwattersSession++;
 			cf.writeIntConfig("spider", "swatter", lc.spiderSwatters);
 		}
 		if (message.contains("CRAZY RARE DROP!  (Tarantula Talisman")) {
 			spiderRNG = true;
 			lc.spiderTalismans++;
+			lc.spiderTalismansSession++;
 			cf.writeIntConfig("spider", "talisman", lc.spiderTalismans);
 		}
 		if (message.contains("CRAZY RARE DROP!  (Digested Mosquito)")) {
 			spiderRNG = true;
 			lc.spiderMosquitos++;
+			lc.spiderMosquitosSession++;
 			cf.writeIntConfig("spider", "mosquito", lc.spiderMosquitos);
 		}
 
 		// Zombie
 		if (message.contains("Talk to Maddox to claim your Zombie Slayer XP!")) {
 			lc.zombieRevs++;
+			lc.zombieRevsSession++;
 			if (lc.zombieBosses != -1) {
 				lc.zombieBosses++;
+			}
+			if (lc.zombieBossesSession != 1) {
+				lc.zombieBossesSession++;
 			}
 			cf.writeIntConfig("zombie", "revs", lc.zombieRevs);
 			cf.writeIntConfig("wolf", "bossRNG", lc.zombieBosses);
@@ -302,49 +322,59 @@ public class TheMod
 		// works
 		if (message.contains("VERY RARE DROP!  (Revenant Catalyst)")) {
 			lc.zombieRevCatas++;
+			lc.zombieRevCatasSession++;
 			cf.writeIntConfig("zombie", "revCatalyst", lc.zombieRevCatas);
 		}
 		if (message.contains("VERY RARE DROP!  (") && message.contains(" Pestilence Rune I)")) {
 			lc.zombiePestilences++;
+			lc.zombiePestilencesSession++;
 			cf.writeIntConfig("zombie", "pestilence", lc.zombiePestilences);
 		}
 		if (message.contains("VERY RARE DROP!  (Undead Catalyst)")) {
 			lc.zombieUndeadCatas++;
+			lc.zombieUndeadCatasSession++;
 			cf.writeIntConfig("zombie", "undeadCatalyst", lc.zombieUndeadCatas);
 		}
 		if (message.contains("CRAZY RARE DROP!  (Beheaded Horror)")) {
 			zombieRNG = true;
 			lc.zombieBeheadeds++;
+			lc.zombieBeheadedsSession++;
 			cf.writeIntConfig("zombie", "beheaded", lc.zombieBeheadeds);
 		}
 		if (message.contains("CRAZY RARE DROP!  (") && message.contains(" Snake Rune I)")) {
 			zombieRNG = true;
 			lc.zombieSnakes++;
+			lc.zombieSnakesSession++;
 			cf.writeIntConfig("zombie", "snake", lc.zombieSnakes);
 		}
 		if (message.contains("CRAZY RARE DROP!  (Scythe Blade)")) {
 			zombieRNG = true;
 			lc.zombieScythes++;
+			lc.zombieScythesSession++;
 			cf.writeIntConfig("zombie", "scythe", lc.zombieScythes);
 		}
 
-		// Time is stored in seconds, so if Skyblock
-		// survives until 2038, I'll just update it then
 		if (wolfRNG) {
 			lc.wolfTime = System.currentTimeMillis() / 1000;
 			lc.wolfBosses = 0;
+			lc.wolfTimeSession = System.currentTimeMillis() / 1000;
+			lc.wolfBossesSession = 0;
 			cf.writeDoubleConfig("wolf", "timeRNG", lc.wolfTime);
 			cf.writeIntConfig("wolf", "bossRNG", 0);
 		}
 		if (spiderRNG) {
 			lc.spiderTime = System.currentTimeMillis() / 1000;
 			lc.spiderBosses = 0;
+			lc.spiderTimeSession = System.currentTimeMillis() / 1000;
+			lc.spiderBossesSession = 0;
 			cf.writeDoubleConfig("spider", "timeRNG", lc.spiderTime);
 			cf.writeIntConfig("spider", "bossRNG", 0);
 		}
 		if (zombieRNG) {
 			lc.zombieTime = System.currentTimeMillis() / 1000;
 			lc.zombieBosses = 0;
+			lc.zombieTimeSession = System.currentTimeMillis() / 1000;
+			lc.zombieBossesSession = 0;
 			cf.writeDoubleConfig("zombie", "timeRNG", lc.zombieTime);
 			cf.writeIntConfig("zombie", "bossRNG", 0);
 		}
@@ -352,15 +382,19 @@ public class TheMod
 		// Fishing
 		if (message.contains("GOOD CATCH!")) {
 			lc.goodCatches++;
+			lc.goodCatchesSession++;
 			cf.writeIntConfig("fishing", "goodCatch", lc.goodCatches);
 		}
 		if (message.contains("GREAT CATCH!")) {
 			lc.greatCatches++;
+			lc.greatCatchesSession++;
 			cf.writeIntConfig("fishing", "greatCatch", lc.greatCatches);
 		}
 		if (message.contains("You caught a lowly Squid")) {
 			lc.squids++;
 			lc.seaCreatures++;
+			lc.squidsSession++;
+			lc.seaCreaturesSession++;
 			cf.writeIntConfig("fishing", "squid", lc.squids);
 			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
 			increaseEmpSC();
@@ -368,6 +402,8 @@ public class TheMod
 		if (message.contains("From the depths of the waters, you've reeled in a Sea Walker")) {
 			lc.seaWalkers++;
 			lc.seaCreatures++;
+			lc.seaWalkersSession++;
+			lc.seaCreaturesSession++;
 			cf.writeIntConfig("fishing", "seaWalker", lc.seaWalkers);
 			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
 			increaseEmpSC();
@@ -375,6 +411,8 @@ public class TheMod
 		if (message.contains("Pitch darkness reveals you've caught a")) {
 			lc.nightSquids++;
 			lc.seaCreatures++;
+			lc.nightSquidsSession++;
+			lc.seaCreaturesSession++;
 			cf.writeIntConfig("fishing", "nightSquid", lc.nightSquids);
 			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
 			increaseEmpSC();
@@ -382,6 +420,8 @@ public class TheMod
 		if (message.contains("You've stumbled upon a patrolling Sea Guardian")) {
 			lc.seaGuardians++;
 			lc.seaCreatures++;
+			lc.seaGuardiansSession++;
+			lc.seaCreaturesSession++;
 			cf.writeIntConfig("fishing", "seaGuardian", lc.seaGuardians);
 			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
 			increaseEmpSC();
@@ -389,6 +429,8 @@ public class TheMod
 		if (message.contains("It looks like you've disrupted the Sea Witch's brewing session. Watch out, she's furious")) {
 			lc.seaWitches++;
 			lc.seaCreatures++;
+			lc.seaWitchesSession++;
+			lc.seaCreaturesSession++;
 			cf.writeIntConfig("fishing", "seaWitch", lc.seaWitches);
 			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
 			increaseEmpSC();
@@ -396,6 +438,8 @@ public class TheMod
 		if (message.contains("From the depths of the waters, you've reeled in a Sea Archer")) {
 			lc.seaArchers++;
 			lc.seaCreatures++;
+			lc.seaArchersSession++;
+			lc.seaCreaturesSession++;
 			cf.writeIntConfig("fishing", "seaArcher", lc.seaArchers);
 			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
 			increaseEmpSC();
@@ -403,6 +447,8 @@ public class TheMod
 		if (message.contains("The Monster of the Deep emerges from the dark depths")) {
 			lc.monsterOfTheDeeps++;
 			lc.seaCreatures++;
+			lc.monsterOfTheDeepsSession++;
+			lc.seaCreaturesSession++;
 			cf.writeIntConfig("fishing", "monsterOfDeep", lc.monsterOfTheDeeps);
 			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
 			increaseEmpSC();
@@ -410,6 +456,8 @@ public class TheMod
 		if (message.contains("You have found a Catfish, don't let it steal your catches")) {
 			lc.catfishes++;
 			lc.seaCreatures++;
+			lc.catfishesSession++;
+			lc.seaCreaturesSession++;
 			cf.writeIntConfig("fishing", "catfish", lc.catfishes);
 			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
 			increaseEmpSC();
@@ -417,6 +465,8 @@ public class TheMod
 		if (message.contains("Is this even a fish? It's the Carrot King")) {
 			lc.carrotKings++;
 			lc.seaCreatures++;
+			lc.carrotKingsSession++;
+			lc.seaCreaturesSession++;
 			cf.writeIntConfig("fishing", "carrotKing", lc.carrotKings);
 			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
 			increaseEmpSC();
@@ -424,6 +474,8 @@ public class TheMod
 		if (message.contains("Gross! A Sea Leech")) {
 			lc.seaLeeches++;
 			lc.seaCreatures++;
+			lc.seaLeechesSession++;
+			lc.seaCreaturesSession++;
 			cf.writeIntConfig("fishing", "seaLeech", lc.seaLeeches);
 			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
 			increaseEmpSC();
@@ -431,6 +483,8 @@ public class TheMod
 		if (message.contains("You've discovered a Guardian Defender of the sea")) {
 			lc.guardianDefenders++;
 			lc.seaCreatures++;
+			lc.guardianDefendersSession++;
+			lc.seaCreaturesSession++;
 			cf.writeIntConfig("fishing", "guardianDefender", lc.guardianDefenders);
 			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
 			increaseEmpSC();
@@ -438,6 +492,8 @@ public class TheMod
 		if (message.contains("You have awoken the Deep Sea Protector, prepare for a battle")) {
 			lc.deepSeaProtectors++;
 			lc.seaCreatures++;
+			lc.deepSeaProtectorsSession++;
+			lc.seaCreaturesSession++;
 			cf.writeIntConfig("fishing", "deepSeaProtector", lc.deepSeaProtectors);
 			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
 			increaseEmpSC();
@@ -445,6 +501,8 @@ public class TheMod
 		if (message.contains("The Water Hydra has come to test your strength")) {
 			lc.hydras++;
 			lc.seaCreatures++;
+			lc.hydrasSession++;
+			lc.seaCreaturesSession++;
 			cf.writeIntConfig("fishing", "hydra", lc.hydras);
 			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
 			increaseEmpSC();
@@ -454,6 +512,10 @@ public class TheMod
 			lc.seaCreatures++;
 			lc.empTime = System.currentTimeMillis() / 1000;
 			lc.empSCs = 0;
+			lc.seaEmperorsSession++;
+			lc.seaCreaturesSession++;
+			lc.empTimeSession = System.currentTimeMillis() / 1000;
+			lc.empSCsSession = 0;
 			cf.writeIntConfig("fishing", "seaEmperor", lc.seaEmperors);
 			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
 			cf.writeDoubleConfig("fishing", "empTime", lc.empTime);
@@ -463,24 +525,32 @@ public class TheMod
 		if (message.contains("Frozen Steve fell into the pond long ago")) {
 			lc.frozenSteves++;
 			lc.seaCreatures++;
+			lc.frozenStevesSession++;
+			lc.seaCreaturesSession++;
 			cf.writeIntConfig("fishing", "frozenSteve", lc.frozenSteves);
 			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
 		}
 		if (message.contains("It's a snowman! He looks harmless")) {
 			lc.frostyTheSnowmans++;
 			lc.seaCreatures++;
+			lc.frostyTheSnowmansSession++;
+			lc.seaCreaturesSession++;
 			cf.writeIntConfig("fishing", "snowman", lc.frostyTheSnowmans);
 			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
 		}
 		if (message.contains("stole Jerry's Gifts...get them back")) {
 			lc.grinches++;
 			lc.seaCreatures++;
+			lc.grinchesSession++;
+			lc.seaCreaturesSession++;
 			cf.writeIntConfig("fishing", "grinch", lc.grinches);
 			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
 		}
 		if (message.contains("What is this creature")) {
 			lc.yetis++;
 			lc.seaCreatures++;
+			lc.yetisSession++;
+			lc.seaCreaturesSession++;
 			cf.writeIntConfig("fishing", "yeti", lc.yetis);
 			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
 		}
@@ -549,6 +619,40 @@ public class TheMod
 							EnumChatFormatting.DARK_PURPLE + lc.wolfFluxes + "\n" +
 							EnumChatFormatting.AQUA + timeBetween + "\n" +
 							EnumChatFormatting.AQUA + bossesBetween;
+    		} else if (ds.display.equals("wolf_session")) {
+    			if (lc.wolfTimeSession == -1) {
+    				timeBetween = "Never";
+    			} else {
+    				timeBetween = lc.getTimeBetween(lc.wolfTimeSession, timeNow);
+    			}
+    			if (lc.wolfBossesSession == -1) {
+    				bossesBetween = "Never";
+    			} else {
+    				bossesBetween = nf.format(lc.wolfBossesSession);
+    			}
+    			
+    			dropsText = EnumChatFormatting.GOLD + "Svens Killed:\n" +
+							EnumChatFormatting.GREEN + "Wolf Teeth:\n" +
+							EnumChatFormatting.BLUE + "Hamster Wheels:\n" +
+							EnumChatFormatting.AQUA + "Spirit Runes:\n" + 
+							EnumChatFormatting.WHITE + "Critical VI Books:\n" +
+							EnumChatFormatting.DARK_RED + "Red Claw Eggs:\n" +
+							EnumChatFormatting.GOLD + "Couture Runes:\n" +
+							EnumChatFormatting.AQUA + "Grizzly Baits:\n" +
+							EnumChatFormatting.DARK_PURPLE + "Overfluxes:\n" +
+							EnumChatFormatting.AQUA + "Time Since RNG:\n" +
+							EnumChatFormatting.AQUA + "Bosses Since RNG:";
+    			countText = EnumChatFormatting.GOLD + nf.format(lc.wolfSvensSession) + "\n" +
+							EnumChatFormatting.GREEN + nf.format(lc.wolfTeethSession) + "\n" +
+							EnumChatFormatting.BLUE + nf.format(lc.wolfWheelsSession) + "\n" +
+							EnumChatFormatting.AQUA + lc.wolfSpiritsSession + "\n" + 
+							EnumChatFormatting.WHITE + lc.wolfBooksSession + "\n" +
+							EnumChatFormatting.DARK_RED + lc.wolfEggsSession + "\n" +
+							EnumChatFormatting.GOLD + lc.wolfCouturesSession + "\n" +
+							EnumChatFormatting.AQUA + lc.wolfBaitsSession + "\n" +
+							EnumChatFormatting.DARK_PURPLE + lc.wolfFluxesSession + "\n" +
+							EnumChatFormatting.AQUA + timeBetween + "\n" +
+						EnumChatFormatting.AQUA + bossesBetween;
     		} else if (ds.display.equals("spider")) {
     			if (lc.spiderTime == -1) {
     				timeBetween = "Never";
@@ -581,6 +685,40 @@ public class TheMod
 							EnumChatFormatting.DARK_PURPLE + lc.spiderTalismans + "\n" +
 							EnumChatFormatting.LIGHT_PURPLE + lc.spiderSwatters + "\n" +
 							EnumChatFormatting.GOLD + lc.spiderMosquitos + "\n" +
+							EnumChatFormatting.AQUA + timeBetween + "\n" +
+							EnumChatFormatting.AQUA + bossesBetween;
+    		} else if (ds.display.equals("spider_session")) {
+    			if (lc.spiderTimeSession == -1) {
+    				timeBetween = "Never";
+    			} else {
+    				timeBetween = lc.getTimeBetween(lc.spiderTimeSession, timeNow);
+    			}
+    			if (lc.spiderBossesSession == -1) {
+    				bossesBetween = "Never";
+    			} else {
+    				bossesBetween = nf.format(lc.spiderBossesSession);
+    			}
+    			
+    			dropsText = EnumChatFormatting.GOLD + "Tarantulas Killed:\n" +
+							EnumChatFormatting.GREEN + "Tarantula Webs:\n" +
+							EnumChatFormatting.DARK_GREEN + "Arrow Poison:\n" +
+							EnumChatFormatting.DARK_GRAY + "Bite Runes:\n" + 
+							EnumChatFormatting.WHITE + "Bane VI Books:\n" +
+							EnumChatFormatting.AQUA + "Spider Catalysts:\n" +
+							EnumChatFormatting.DARK_PURPLE + "Tarantula Talismans:\n" +
+							EnumChatFormatting.LIGHT_PURPLE + "Fly Swatters:\n" +
+							EnumChatFormatting.GOLD + "Digested Mosquitos:\n" +
+							EnumChatFormatting.AQUA + "Time Since RNG:\n" +
+							EnumChatFormatting.AQUA + "Bosses Since RNG:";
+    			countText = EnumChatFormatting.GOLD + nf.format(lc.spiderTarantulasSession) + "\n" +
+							EnumChatFormatting.GREEN + nf.format(lc.spiderWebsSession) + "\n" +
+							EnumChatFormatting.DARK_GREEN + nf.format(lc.spiderTAPSession) + "\n" +
+							EnumChatFormatting.DARK_GRAY + lc.spiderBitesSession + "\n" + 
+							EnumChatFormatting.WHITE + lc.spiderBooksSession + "\n" +
+							EnumChatFormatting.AQUA + lc.spiderCatalystsSession + "\n" +
+							EnumChatFormatting.DARK_PURPLE + lc.spiderTalismansSession + "\n" +
+							EnumChatFormatting.LIGHT_PURPLE + lc.spiderSwattersSession + "\n" +
+							EnumChatFormatting.GOLD + lc.spiderMosquitosSession + "\n" +
 							EnumChatFormatting.AQUA + timeBetween + "\n" +
 							EnumChatFormatting.AQUA + bossesBetween;
     		} else if (ds.display.equals("zombie")) {
@@ -616,6 +754,42 @@ public class TheMod
 							EnumChatFormatting.DARK_PURPLE + lc.zombieBeheadeds + "\n" +
 							EnumChatFormatting.RED + lc.zombieRevCatas + "\n" +
 							EnumChatFormatting.DARK_GREEN + lc.zombieSnakes + "\n" +
+							EnumChatFormatting.GOLD + lc.zombieScythes + "\n" +
+							EnumChatFormatting.AQUA + timeBetween + "\n" +
+							EnumChatFormatting.AQUA + bossesBetween;
+    		} else if (ds.display.equals("zombie_session")) {
+    			if (lc.zombieTimeSession == -1) {
+    				timeBetween = "Never";
+    			} else {
+    				timeBetween = lc.getTimeBetween(lc.zombieTimeSession, timeNow);
+    			}
+    			if (lc.zombieBossesSession == -1) {
+    				bossesBetween = "Never";
+    			} else {
+    				bossesBetween = nf.format(lc.zombieBossesSession);
+    			}
+    			
+    			dropsText = EnumChatFormatting.GOLD + "Revs Killed:\n" +
+							EnumChatFormatting.GREEN + "Revenant Flesh:\n" +
+							EnumChatFormatting.BLUE + "Foul Flesh:\n" +
+							EnumChatFormatting.DARK_GREEN + "Pestilence Runes:\n" + 
+							EnumChatFormatting.WHITE + "Smite VI Books:\n" +
+							EnumChatFormatting.AQUA + "Undead Catalysts:\n" +
+							EnumChatFormatting.DARK_PURPLE + "Beheaded Horrors:\n" +
+							EnumChatFormatting.RED + "Revenant Catalysts:\n" +
+							EnumChatFormatting.DARK_GREEN + "Snake Runes:\n" +
+							EnumChatFormatting.GOLD + "Scythe Blades:\n" +
+							EnumChatFormatting.AQUA + "Time Since RNG:\n" +
+							EnumChatFormatting.AQUA + "Bosses Since RNG:";
+    			countText = EnumChatFormatting.GOLD + nf.format(lc.zombieRevsSession) + "\n" +
+							EnumChatFormatting.GREEN + nf.format(lc.zombieRevFleshSession) + "\n" +
+							EnumChatFormatting.BLUE + nf.format(lc.zombieFoulFleshSession) + "\n" +
+							EnumChatFormatting.DARK_GREEN + lc.zombiePestilencesSession + "\n" + 
+							EnumChatFormatting.WHITE + lc.zombieBooksSession + "\n" +
+							EnumChatFormatting.AQUA + lc.zombieUndeadCatasSession + "\n" +
+							EnumChatFormatting.DARK_PURPLE + lc.zombieBeheadedsSession + "\n" +
+							EnumChatFormatting.RED + lc.zombieRevCatasSession + "\n" +
+							EnumChatFormatting.DARK_GREEN + lc.zombieSnakesSession + "\n" +
 							EnumChatFormatting.GOLD + lc.zombieScythes + "\n" +
 							EnumChatFormatting.AQUA + timeBetween + "\n" +
 							EnumChatFormatting.AQUA + bossesBetween;
@@ -673,8 +847,61 @@ public class TheMod
     			
     			new TextRenderer(Minecraft.getMinecraft(), dropsTextTwo, moc.displayXY[0] + 145, moc.displayXY[1], Integer.parseInt("FFFFFF", 16));
     			new TextRenderer(Minecraft.getMinecraft(), countTextTwo, moc.displayXY[0] + 255, moc.displayXY[1], Integer.parseInt("FFFFFF", 16));
+    		} else if (ds.display.equals("fishing_session")) {
+    			if (lc.empTimeSession == -1) {
+    				timeBetween = "Never";
+    			} else {
+    				timeBetween = lc.getTimeBetween(lc.empTimeSession, timeNow);
+    			}
+    			if (lc.empSCsSession == -1) {
+    				bossesBetween = "Never";
+    			} else {
+    				bossesBetween = nf.format(lc.empSCsSession);
+    			}
     			
-    		} else if (ds.display.equals("fishingwinter")) {
+    			dropsText = EnumChatFormatting.AQUA + "Creatures Caught:\n" +
+	    					EnumChatFormatting.GOLD + "Good Catches:\n" +
+							EnumChatFormatting.DARK_PURPLE + "Great Catches:\n" +
+							EnumChatFormatting.GRAY + "Squids:\n" +
+							EnumChatFormatting.GREEN + "Sea Walkers:\n" +
+							EnumChatFormatting.DARK_GRAY + "Night Squids:\n" +
+							EnumChatFormatting.DARK_AQUA + "Sea Guardians:\n" +
+							EnumChatFormatting.BLUE + "Sea Witches:\n" +
+							EnumChatFormatting.GREEN + "Sea Archers:\n" +
+							EnumChatFormatting.GREEN + "Monster of Deeps:";
+    			countText = EnumChatFormatting.AQUA + nf.format(lc.seaCreaturesSession) + "\n" +
+							EnumChatFormatting.GOLD + nf.format(lc.goodCatchesSession) + "\n" +
+							EnumChatFormatting.DARK_PURPLE + nf.format(lc.greatCatchesSession) + "\n" +
+							EnumChatFormatting.GRAY + nf.format(lc.squidsSession) + "\n" +
+							EnumChatFormatting.GREEN + nf.format(lc.seaWalkersSession) + "\n" +
+							EnumChatFormatting.DARK_GRAY + nf.format(lc.nightSquidsSession) + "\n" +
+							EnumChatFormatting.DARK_AQUA + nf.format(lc.seaGuardiansSession) + "\n" +
+							EnumChatFormatting.BLUE + nf.format(lc.seaWitchesSession) + "\n" +
+							EnumChatFormatting.GREEN + nf.format(lc.seaArchersSession) + "\n" +
+							EnumChatFormatting.GREEN + nf.format(lc.monsterOfTheDeepsSession);
+    			// Seperated to save vertical space
+    			String dropsTextTwo = EnumChatFormatting.YELLOW + "Catfishes:\n" +
+									  EnumChatFormatting.GOLD + "Carrot Kings:\n" +
+									  EnumChatFormatting.GRAY + "Sea Leeches:\n" +
+									  EnumChatFormatting.DARK_PURPLE + "Guardian Defenders:\n" +
+									  EnumChatFormatting.DARK_PURPLE + "Deep Sea Protectors:\n" +
+									  EnumChatFormatting.GOLD + "Hydras:\n" +
+									  EnumChatFormatting.GOLD + "Sea Emperors:\n" +
+									  EnumChatFormatting.AQUA + "Time Since Emp:\n" +
+									  EnumChatFormatting.AQUA + "Creatures Since Emp:";
+    			String countTextTwo = EnumChatFormatting.YELLOW + nf.format(lc.catfishesSession) + "\n" +
+									  EnumChatFormatting.GOLD + nf.format(lc.carrotKingsSession) + "\n" +
+									  EnumChatFormatting.GRAY + nf.format(lc.seaLeechesSession) + "\n" +
+									  EnumChatFormatting.DARK_PURPLE + nf.format(lc.guardianDefendersSession) + "\n" +
+									  EnumChatFormatting.DARK_PURPLE + nf.format(lc.deepSeaProtectorsSession) + "\n" +
+									  EnumChatFormatting.GOLD + nf.format(lc.hydrasSession) + "\n" +
+									  EnumChatFormatting.GOLD + nf.format(lc.seaEmperorsSession) + "\n" +
+									  EnumChatFormatting.AQUA + timeBetween + "\n" +
+									  EnumChatFormatting.AQUA + bossesBetween;
+    			
+    			new TextRenderer(Minecraft.getMinecraft(), dropsTextTwo, moc.displayXY[0] + 145, moc.displayXY[1], Integer.parseInt("FFFFFF", 16));
+    			new TextRenderer(Minecraft.getMinecraft(), countTextTwo, moc.displayXY[0] + 255, moc.displayXY[1], Integer.parseInt("FFFFFF", 16));
+    		} else if (ds.display.equals("fishing_winter")) {
     			dropsText = EnumChatFormatting.AQUA + "Creatures Caught:\n" +
     						EnumChatFormatting.GOLD + "Good Catches:\n" +
     						EnumChatFormatting.DARK_PURPLE + "Great Catches:\n" +
@@ -689,6 +916,27 @@ public class TheMod
 							EnumChatFormatting.WHITE + nf.format(lc.frostyTheSnowmans) + "\n" +
 							EnumChatFormatting.DARK_GREEN + nf.format(lc.grinches) + "\n" +
 							EnumChatFormatting.GOLD + nf.format(lc.yetis);
+    		} else if (ds.display.contentEquals("fishing_winter_session")) {
+    			dropsText = EnumChatFormatting.AQUA + "Creatures Caught:\n" +
+							EnumChatFormatting.GOLD + "Good Catches:\n" +
+							EnumChatFormatting.DARK_PURPLE + "Great Catches:\n" +
+	    					EnumChatFormatting.AQUA + "Frozen Steves:\n" +
+							EnumChatFormatting.WHITE + "Snowmans:\n" +
+							EnumChatFormatting.DARK_GREEN + "Grinches:\n" +
+							EnumChatFormatting.GOLD + "Yetis:";
+				countText = EnumChatFormatting.AQUA + nf.format(lc.seaCreaturesSession) + "\n" +
+	    					EnumChatFormatting.GOLD + nf.format(lc.goodCatchesSession) + "\n" +
+							EnumChatFormatting.DARK_PURPLE + nf.format(lc.greatCatchesSession) + "\n" +
+	    					EnumChatFormatting.AQUA + nf.format(lc.frozenStevesSession) + "\n" +
+							EnumChatFormatting.WHITE + nf.format(lc.frostyTheSnowmansSession) + "\n" +
+							EnumChatFormatting.DARK_GREEN + nf.format(lc.grinchesSession) + "\n" +
+							EnumChatFormatting.GOLD + nf.format(lc.yetisSession);
+    		} else {
+    			ConfigHandler cf = new ConfigHandler();
+    			
+    			System.out.println("Display was an unknown value, turning off.");
+    			ds.display = "off";
+    			cf.writeStringConfig("misc", "display", "off");
     		}
     		new TextRenderer(Minecraft.getMinecraft(), dropsText, moc.displayXY[0], moc.displayXY[1], Integer.parseInt("FFFFFF", 16));
     		new TextRenderer(Minecraft.getMinecraft(), countText, moc.displayXY[0] + 110, moc.displayXY[1], Integer.parseInt("FFFFFF", 16));
@@ -712,12 +960,12 @@ public class TheMod
     				final LootCommand lc = new LootCommand();
     				final ConfigHandler cf = new ConfigHandler();
     				
-    				int itemTeeth = getItems("Wolf Tooth");
-        			int itemWheels = getItems("Hamster Wheel");
-        			int itemWebs = getItems("Tarantula Web");
-        			int itemTAP = getItems("Toxic Arrow Poison");
-        			int itemRev = getItems("Revenant Flesh");
-        			int itemFoul = getItems("Foul Flesh");
+    				int itemTeeth = Utils.getItems("Wolf Tooth");
+        			int itemWheels = Utils.getItems("Hamster Wheel");
+        			int itemWebs = Utils.getItems("Tarantula Web");
+        			int itemTAP = Utils.getItems("Toxic Arrow Poison");
+        			int itemRev = Utils.getItems("Revenant Flesh");
+        			int itemFoul = Utils.getItems("Foul Flesh");
         			
         			// If no items, are detected, allow check again. Should fix items not being found
         			if (itemTeeth + itemWheels + itemWebs + itemTAP + itemRev + itemFoul > 0) {
@@ -728,6 +976,12 @@ public class TheMod
             			lc.spiderTAP += itemTAP;
             			lc.zombieRevFlesh += itemRev;
             			lc.zombieFoulFlesh += itemFoul;
+            			lc.wolfTeethSession += itemTeeth;
+            			lc.wolfWheelsSession += itemWheels;
+            			lc.spiderWebsSession += itemWebs;
+            			lc.spiderTAPSession += itemTAP;
+            			lc.zombieRevFleshSession += itemRev;
+            			lc.zombieFoulFleshSession += itemFoul;
             			
             			cf.writeIntConfig("wolf", "teeth", lc.wolfTeeth);
             			cf.writeIntConfig("wolf", "wheel", lc.wolfWheels);
@@ -748,47 +1002,22 @@ public class TheMod
     	if (event.toolTip == null) return;
     	if (tc.goldenToggled) {
     		for (int i = 0; i < event.toolTip.size(); i++) {
-    			event.toolTip.set(i, returnGoldenEnchants(event.toolTip.get(i)));
+    			event.toolTip.set(i, Utils.returnGoldenEnchants(event.toolTip.get(i)));
     		}
     	}
-    }
-    
-    public int getItems(String item) {
-    	Minecraft mc = Minecraft.getMinecraft();
-    	EntityPlayer player = mc.thePlayer;
-    	
-    	double x = player.posX;
-    	double y = player.posY;
-    	double z = player.posZ;
-    	AxisAlignedBB scan = new AxisAlignedBB(x - 6, y - 6, z - 6, x + 6, y + 6, z + 6);
-    	List<EntityItem> items = mc.theWorld.getEntitiesWithinAABB(EntityItem.class, scan);
-    	
-    	for (EntityItem i : items) {
-    		String itemName = StringUtils.stripControlCodes(i.getEntityItem().getDisplayName());
-    		if (itemName.equals(item)) return i.getEntityItem().stackSize;
-    	}
-    	// No items found
-    	return 0;
-    }
-    
-    public String returnGoldenEnchants(String line) {
-    	Matcher matcher = pattern.matcher(line);
-    	StringBuffer out = new StringBuffer();
-    	
-    	while (matcher.find()) {
-    		matcher.appendReplacement(out, t6Enchants.get(matcher.group(1)));
-    	}
-    	matcher.appendTail(out);
-    	
-    	return out.toString();
     }
     
     public void increaseEmpSC() {
     	LootCommand lc = new LootCommand();
     	ConfigHandler cf = new ConfigHandler();
-    	if (lc.empSCs == -1) return;
     	
-    	lc.empSCs++;
+    	if (lc.empSCs != -1) {
+    		lc.empSCs++;
+    	}
+    	if (lc.empSCsSession != -1) {
+    		lc.empSCsSession++;
+    	}
+    	
     	cf.writeIntConfig("fishing", "empSC", lc.empSCs);
     }
     
