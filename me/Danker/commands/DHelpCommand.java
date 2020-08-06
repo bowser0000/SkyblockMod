@@ -37,6 +37,7 @@ public class DHelpCommand extends CommandBase {
 													EnumChatFormatting.GOLD + " /getkey" + EnumChatFormatting.AQUA + " - Returns key set with /setkey.\n" +
 													EnumChatFormatting.GOLD + " /loot <zombie/spider/wolf/fishing> [winter/session]" + EnumChatFormatting.AQUA + " - Returns loot received from slayer quests or fishing stats. /loot fishing winter returns winter sea creatures instead.\n" +
 													EnumChatFormatting.GOLD + " /display <zombie/spider/wolf/fishing/off> [winter/session]" + EnumChatFormatting.AQUA + " - Text display for trackers. /display fishing winter displays winter sea creatures instead.\n" +
+													EnumChatFormatting.GOLD + "/resetloot <zombie/spider/wolf/fishing/confirm/cancel>" + EnumChatFormatting.AQUA + " - Resets loot for trackers. /resetloot confirm confirms the reset.\n" +
 													EnumChatFormatting.GOLD + " /move <coords/display> <x> <y>" + EnumChatFormatting.AQUA + " - Moves text display to specified X and Y coordinates.\n" +
 													EnumChatFormatting.GOLD + " /slayer [player]" + EnumChatFormatting.AQUA + " - Uses API to get slayer xp of a person. If no name is provided, it checks yours.\n" +
 													EnumChatFormatting.GOLD + " /skills [player]" + EnumChatFormatting.AQUA + " - Uses API to get skill levels of a person. If no name is provided, it checks yours.\n" +

@@ -8,6 +8,7 @@ import me.Danker.commands.MoveCommand;
 import me.Danker.commands.ToggleCommand;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
+import net.minecraftforge.common.config.ConfigCategory;
 import net.minecraftforge.common.config.Configuration;
 
 public class ConfigHandler {
@@ -19,7 +20,7 @@ public class ConfigHandler {
 		try {
 			config.load();
 		} catch (Exception ex) {
-			System.err.print(ex);
+			System.err.println(ex);
 		} finally {
 			config.save();
 		}
@@ -33,7 +34,7 @@ public class ConfigHandler {
 				return config.get(category, key, 0).getInt();
 			}
 		} catch (Exception ex) {
-			System.err.print(ex);
+			System.err.println(ex);
 		} finally {
 			config.save();
 		}
@@ -63,7 +64,7 @@ public class ConfigHandler {
 				return config.get(category, key, "").getString();
 			}
 		} catch (Exception ex) {
-			System.err.print(ex);
+			System.err.println(ex);
 		} finally {
 			config.save();
 		}
@@ -78,7 +79,7 @@ public class ConfigHandler {
 				return config.get(category, key, false).getBoolean();
 			}
 		} catch (Exception ex) {
-			System.err.print(ex);
+			System.err.println(ex);
 		} finally {
 			config.save();
 		}
@@ -92,7 +93,7 @@ public class ConfigHandler {
 			int set = config.get(category, key, value).getInt();
 			config.getCategory(category).get(key).set(value);
 		} catch (Exception ex) {
-			System.err.print(ex);
+			System.err.println(ex);
 		} finally {
 			config.save();
 		}
@@ -118,7 +119,7 @@ public class ConfigHandler {
 			String set = config.get(category, key, value).getString();
 			config.getCategory(category).get(key).set(value);
 		} catch (Exception ex) {
-			System.err.print(ex);
+			System.err.println(ex);
 		} finally {
 			config.save();
 		}
@@ -131,7 +132,7 @@ public class ConfigHandler {
 			boolean set = config.get(category, key, value).getBoolean();
 			config.getCategory(category).get(key).set(value);
 		} catch (Exception ex) {
-			System.err.print(ex);
+			System.err.println(ex);
 		} finally {
 			config.save();
 		}
@@ -144,11 +145,25 @@ public class ConfigHandler {
 			if (!config.hasCategory(category)) return false;
 			return config.getCategory(category).containsKey(key);
 		} catch (Exception ex) {
-			System.err.print(ex);
+			System.err.println(ex);
 		} finally {
 			config.save();
 		}
 		return false;
+	}
+	
+	public static void deleteCategory(String category) {
+		config = new Configuration(new File(file));
+		try {
+			config.load();
+			if (config.hasCategory(category)) {
+				config.removeCategory(new ConfigCategory(category));
+			}
+		} catch (Exception ex) {
+			System.err.println(ex);
+		} finally {
+			config.save();
+		}
 	}
 	
 	public static void reloadConfig() {

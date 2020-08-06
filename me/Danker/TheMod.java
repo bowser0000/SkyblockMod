@@ -24,6 +24,7 @@ import me.Danker.commands.LootCommand;
 import me.Danker.commands.MoveCommand;
 import me.Danker.commands.PetsCommand;
 import me.Danker.commands.ReloadConfigCommand;
+import me.Danker.commands.ResetLootCommand;
 import me.Danker.commands.SetkeyCommand;
 import me.Danker.commands.SkillsCommand;
 import me.Danker.commands.SlayerCommand;
@@ -125,6 +126,7 @@ public class TheMod
     	ClientCommandHandler.instance.registerCommand(new BankCommand());
     	ClientCommandHandler.instance.registerCommand(new ArmourCommand());
     	ClientCommandHandler.instance.registerCommand(new ImportFishingCommand());
+    	ClientCommandHandler.instance.registerCommand(new ResetLootCommand());
     }
     
     // Update checker

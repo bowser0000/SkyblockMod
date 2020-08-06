@@ -18,6 +18,7 @@ QOL changes that enhances your Hypixel Skyblock experience. Created to add featu
 - /loot <zombie/spider/wolf/fishing> [winter/session] - Returns loot received from slayer quests or fishing stats. /loot fishing winter returns winter sea creatures instead.
 - /display <zombie/spider/wolf/fishing/off> [winter/session] - Text display for trackers. /display fishing winter displays winter sea creatures instead.
 - /move <coords/display> <x> <y> - Moves text display to specified X and Y coordinates.
+- /resetloot <zombie/spider/wolf/fishing/confirm/cancel> -  - Resets loot for trackers. /resetloot confirm confirms the reset.
 - /slayer [player] - Uses API to get slayer xp of a person. If no name is provided, it checks yours.
 - /skills [player] - Uses API to get skill levels of a person. If no name is provided, it checks yours.
 - /guildof [player] - Uses API to get guild name and guild master of a person. If no name is provided, it checks yours.
