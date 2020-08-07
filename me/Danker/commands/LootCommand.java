@@ -71,6 +71,7 @@ public class LootCommand extends CommandBase {
 	public static int seaEmperors;
 	public static double empTime;
 	public static int empSCs;
+	public static int fishingMilestone;
 	// Fishing Winter
 	public static int frozenSteves;
 	public static int frostyTheSnowmans;
@@ -136,6 +137,7 @@ public class LootCommand extends CommandBase {
 	public static int seaEmperorsSession = 0;
 	public static double empTimeSession = -1;
 	public static int empSCsSession = -1;
+	public static int fishingMilestoneSession = 0;
 	// Fishing Winter
 	public static int frozenStevesSession = 0;
 	public static int frostyTheSnowmansSession = 0;

@@ -166,6 +166,7 @@ public class ResetLootCommand extends CommandBase {
 		lc.seaEmperorsSession = 0;
 		lc.empTimeSession = -1;
 		lc.empSCsSession = -1;
+		lc.fishingMilestoneSession = 0;
 		lc.frozenStevesSession = 0;
 		lc.frostyTheSnowmansSession = 0;
 		lc.grinchesSession = 0;

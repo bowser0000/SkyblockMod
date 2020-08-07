@@ -231,6 +231,7 @@ public class ConfigHandler {
 		if (!hasKey("fishing", "seaEmperor")) writeIntConfig("fishing", "seaEmperor", 0);
 		if (!hasKey("fishing", "empTime")) writeDoubleConfig("fishing", "empTime", -1);
 		if (!hasKey("fishing", "empSC")) writeIntConfig("fishing", "empSC", -1);
+		if (!hasKey("fishing", "milestone")) writeIntConfig("fishing", "milestone", 0);
 		// Fishing Winter
 		if (!hasKey("fishing", "frozenSteve")) writeIntConfig("fishing", "frozenSteve", 0);
 		if (!hasKey("fishing", "snowman")) writeIntConfig("fishing", "snowman", 0);
@@ -309,6 +310,7 @@ public class ConfigHandler {
 		lc.seaEmperors = getInt("fishing", "seaEmperor");
 		lc.empTime = getDouble("fishing", "empTime");
 		lc.empSCs = getInt("fishing", "empSC");
+		lc.fishingMilestone = getInt("fishing", "milestone");
 		// Fishing Winter
 		lc.frozenSteves = getInt("fishing", "frozenSteve");
 		lc.frostyTheSnowmans = getInt("fishing", "snowman");

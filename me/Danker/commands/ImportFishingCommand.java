@@ -37,14 +37,14 @@ public class ImportFishingCommand extends CommandBase {
 			ConfigHandler cf = new ConfigHandler();
 			EntityPlayer player = (EntityPlayer) arg0;
 			
-			player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Importing your fishing stats..."));
-			
 			// Check key
 			String key = cf.getString("api", "APIKey");
 			if (key.equals("")) {
 				player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "API key not set. Use /setkey."));
 			}
 						
+			player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Importing your fishing stats..."));
+			
 			// Get UUID for Hypixel API requests
 			String username = player.getName();
 			String uuid = player.getUniqueID().toString().replaceAll("[\\-]", "");
@@ -173,6 +173,11 @@ public class ImportFishingCommand extends CommandBase {
 			}
 			lc.seaCreatures += lc.seaEmperors;
 			
+			lc.fishingMilestone = 0;
+			if (statsObject.has("pet_milestone_sea_creatures_killed")) {
+				lc.fishingMilestone = statsObject.get("pet_milestone_sea_creatures_killed").getAsInt();
+			}
+			
 			lc.frozenSteves = 0;
 			if (statsObject.has("kills_frozen_steve")) {
 				lc.frozenSteves = statsObject.get("kills_frozen_steve").getAsInt();
@@ -215,6 +220,7 @@ public class ImportFishingCommand extends CommandBase {
 			cf.writeIntConfig("fishing", "deepSeaProtector", lc.deepSeaProtectors);
 			cf.writeIntConfig("fishing", "hydra", lc.hydras);
 			cf.writeIntConfig("fishing", "seaEmperor", lc.seaEmperors);
+			cf.writeIntConfig("fishing", "milestone", lc.fishingMilestone);
 			cf.writeIntConfig("fishing", "frozenSteve", lc.frozenSteves);
 			cf.writeIntConfig("fishing", "snowman", lc.frostyTheSnowmans);
 			cf.writeIntConfig("fishing", "grinch", lc.grinches);

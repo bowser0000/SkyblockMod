@@ -81,7 +81,7 @@ public class DisplayCommand extends CommandBase {
 			} else {
 				display = "zombie";
 			}
-		}  else if (arg1[0].equalsIgnoreCase("fishing")) {
+		} else if (arg1[0].equalsIgnoreCase("fishing")) {
 			if (arg1.length > 1 && arg1[1].equalsIgnoreCase("winter")) {
 				if (showSession) {
 					display = "fishing_winter_session";
