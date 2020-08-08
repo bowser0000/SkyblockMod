@@ -196,7 +196,7 @@ public class TheMod
 		boolean spiderRNG = false;
 		boolean zombieRNG = false;
 		// T6 books
-		if (message.contains("VERY RARE DROP!  (Enchanted Book)")) {
+		if (message.contains("VERY RARE DROP!  (Enchanted Book)") || message.contains("CRAZY RARE DROP!  (Enchanted Book)")) {
 			// Loop through scoreboard to see what boss you're doing
 			List<String> scoreboard = ScoreboardHandler.getSidebarLines();
 			for (String s : scoreboard) {
@@ -226,6 +226,11 @@ public class TheMod
 			}
 			cf.writeIntConfig("wolf", "svens", lc.wolfSvens);
 			cf.writeIntConfig("wolf", "bossRNG", lc.wolfBosses);
+		}
+		if (message.contains("RARE DROP! (Hamster Wheel)")) {
+			lc.wolfWheelsDrops++;
+			lc.wolfWheelsDropsSession++;
+			cf.writeIntConfig("wolf", "wheelDrops", lc.wolfWheelsDrops);
 		}
 		// Removing the unicode here *should* fix rune drops not counting
 		if (message.contains("VERY RARE DROP!  (") && message.contains(" Spirit Rune I)")) {
@@ -272,6 +277,11 @@ public class TheMod
 			cf.writeIntConfig("spider", "tarantulas", lc.spiderTarantulas);
 			cf.writeIntConfig("spider", "bossRNG", lc.spiderBosses);
 		}
+		if (message.contains("RARE DROP! (Toxic Arrow Poison)")) {
+			lc.spiderTAPDrops++;
+			lc.spiderTAPDropsSession++;
+			cf.writeIntConfig("spider", "tapDrops", lc.spiderTAPDrops);
+		}
 		if (message.contains("VERY RARE DROP!  (") && message.contains(" Bite Rune I)")) {
 			lc.spiderBites++;
 			lc.spiderBitesSession++;
@@ -281,12 +291,6 @@ public class TheMod
 			lc.spiderCatalysts++;
 			lc.spiderCatalystsSession++;
 			cf.writeIntConfig("spider", "catalyst", lc.spiderCatalysts);
-		}
-		// T3 Spider Book Drop
-		if (message.contains("CRAZY RARE DROP!  (Enchanted Book)")) {
-			lc.spiderBooks++;
-			lc.spiderBooksSession++;
-			cf.writeIntConfig("spider", "book", lc.spiderBooks);
 		}
 		if (message.contains("CRAZY RARE DROP!  (Fly Swatter)")) {
 			spiderRNG = true;
@@ -320,8 +324,11 @@ public class TheMod
 			cf.writeIntConfig("zombie", "revs", lc.zombieRevs);
 			cf.writeIntConfig("wolf", "bossRNG", lc.zombieBosses);
 		}
-		// I couldn't find a pic of someone getting this drop, so I'm assuming this
-		// works
+		if (message.contains("RARE DROP! (Foul Flesh)")) {
+			lc.zombieFoulFleshDrops++;
+			lc.zombieFoulFleshDropsSession++;
+			cf.writeIntConfig("zombie", "foulFleshDrops", lc.zombieFoulFleshDrops);
+		}
 		if (message.contains("VERY RARE DROP!  (Revenant Catalyst)")) {
 			lc.zombieRevCatas++;
 			lc.zombieRevCatasSession++;
@@ -617,6 +624,7 @@ public class TheMod
     	if (event.type != RenderGameOverlayEvent.ElementType.EXPERIENCE) return;
     	final ToggleCommand tc = new ToggleCommand();
     	final MoveCommand moc = new MoveCommand();
+    	final DisplayCommand ds = new DisplayCommand();
     	
     	if (tc.coordsToggled) {
     		EntityPlayer player = Minecraft.getMinecraft().thePlayer;
@@ -630,14 +638,13 @@ public class TheMod
         	new TextRenderer(Minecraft.getMinecraft(), coordText, moc.coordsXY[0], moc.coordsXY[1], Integer.parseInt("FFFFFF", 16));
     	}
     	
-    	final DisplayCommand ds = new DisplayCommand();
-    	
     	if (!ds.display.equals("off")) {
     		final LootCommand lc = new LootCommand();
     		String dropsText = "";
     		String countText = "";
     		String timeBetween = "Never";
     		String bossesBetween = "Never";
+    		String drop20;
     		double timeNow = System.currentTimeMillis() / 1000;
     		NumberFormat nf = NumberFormat.getIntegerInstance(Locale.US);
     		
@@ -651,6 +658,11 @@ public class TheMod
     				bossesBetween = "Never";
     			} else {
     				bossesBetween = nf.format(lc.wolfBosses);
+    			}
+    			if (tc.slayerCountTotal) {
+    				drop20 = nf.format(lc.wolfWheels);
+    			} else {
+    				drop20 = nf.format(lc.wolfWheelsDrops) + " times";
     			}
     			
     			dropsText = EnumChatFormatting.GOLD + "Svens Killed:\n" +
@@ -666,7 +678,7 @@ public class TheMod
 							EnumChatFormatting.AQUA + "Bosses Since RNG:";
     			countText = EnumChatFormatting.GOLD + nf.format(lc.wolfSvens) + "\n" +
 							EnumChatFormatting.GREEN + nf.format(lc.wolfTeeth) + "\n" +
-							EnumChatFormatting.BLUE + nf.format(lc.wolfWheels) + "\n" +
+							EnumChatFormatting.BLUE + drop20 + "\n" +
 							EnumChatFormatting.AQUA + lc.wolfSpirits + "\n" + 
 							EnumChatFormatting.WHITE + lc.wolfBooks + "\n" +
 							EnumChatFormatting.DARK_RED + lc.wolfEggs + "\n" +
@@ -686,6 +698,11 @@ public class TheMod
     			} else {
     				bossesBetween = nf.format(lc.wolfBossesSession);
     			}
+    			if (tc.slayerCountTotal) {
+    				drop20 = nf.format(lc.wolfWheelsSession);
+    			} else {
+    				drop20 = nf.format(lc.wolfWheelsDropsSession) + " times";
+    			}
     			
     			dropsText = EnumChatFormatting.GOLD + "Svens Killed:\n" +
 							EnumChatFormatting.GREEN + "Wolf Teeth:\n" +
@@ -700,7 +717,7 @@ public class TheMod
 							EnumChatFormatting.AQUA + "Bosses Since RNG:";
     			countText = EnumChatFormatting.GOLD + nf.format(lc.wolfSvensSession) + "\n" +
 							EnumChatFormatting.GREEN + nf.format(lc.wolfTeethSession) + "\n" +
-							EnumChatFormatting.BLUE + nf.format(lc.wolfWheelsSession) + "\n" +
+							EnumChatFormatting.BLUE + drop20 + "\n" +
 							EnumChatFormatting.AQUA + lc.wolfSpiritsSession + "\n" + 
 							EnumChatFormatting.WHITE + lc.wolfBooksSession + "\n" +
 							EnumChatFormatting.DARK_RED + lc.wolfEggsSession + "\n" +
@@ -720,6 +737,11 @@ public class TheMod
     			} else {
     				bossesBetween = nf.format(lc.spiderBosses);
     			}
+    			if (tc.slayerCountTotal) {
+    				drop20 = nf.format(lc.spiderTAP);
+    			} else {
+    				drop20 = nf.format(lc.spiderTAPDrops) + " times";
+    			}
     			
     			dropsText = EnumChatFormatting.GOLD + "Tarantulas Killed:\n" +
 							EnumChatFormatting.GREEN + "Tarantula Webs:\n" +
@@ -734,7 +756,7 @@ public class TheMod
 							EnumChatFormatting.AQUA + "Bosses Since RNG:";
     			countText = EnumChatFormatting.GOLD + nf.format(lc.spiderTarantulas) + "\n" +
 							EnumChatFormatting.GREEN + nf.format(lc.spiderWebs) + "\n" +
-							EnumChatFormatting.DARK_GREEN + nf.format(lc.spiderTAP) + "\n" +
+							EnumChatFormatting.DARK_GREEN + drop20 + "\n" +
 							EnumChatFormatting.DARK_GRAY + lc.spiderBites + "\n" + 
 							EnumChatFormatting.WHITE + lc.spiderBooks + "\n" +
 							EnumChatFormatting.AQUA + lc.spiderCatalysts + "\n" +
@@ -754,6 +776,11 @@ public class TheMod
     			} else {
     				bossesBetween = nf.format(lc.spiderBossesSession);
     			}
+    			if (tc.slayerCountTotal) {
+    				drop20 = nf.format(lc.spiderTAPSession);
+    			} else {
+    				drop20 = nf.format(lc.spiderTAPDropsSession) + " times";
+    			}
     			
     			dropsText = EnumChatFormatting.GOLD + "Tarantulas Killed:\n" +
 							EnumChatFormatting.GREEN + "Tarantula Webs:\n" +
@@ -768,7 +795,7 @@ public class TheMod
 							EnumChatFormatting.AQUA + "Bosses Since RNG:";
     			countText = EnumChatFormatting.GOLD + nf.format(lc.spiderTarantulasSession) + "\n" +
 							EnumChatFormatting.GREEN + nf.format(lc.spiderWebsSession) + "\n" +
-							EnumChatFormatting.DARK_GREEN + nf.format(lc.spiderTAPSession) + "\n" +
+							EnumChatFormatting.DARK_GREEN + drop20 + "\n" +
 							EnumChatFormatting.DARK_GRAY + lc.spiderBitesSession + "\n" + 
 							EnumChatFormatting.WHITE + lc.spiderBooksSession + "\n" +
 							EnumChatFormatting.AQUA + lc.spiderCatalystsSession + "\n" +
@@ -788,6 +815,11 @@ public class TheMod
     			} else {
     				bossesBetween = nf.format(lc.zombieBosses);
     			}
+    			if (tc.slayerCountTotal) {
+    				drop20 = nf.format(lc.zombieFoulFlesh);
+    			} else {
+    				drop20 = nf.format(lc.zombieFoulFleshDrops) + " times";
+    			}
     			
     			dropsText = EnumChatFormatting.GOLD + "Revs Killed:\n" +
 							EnumChatFormatting.GREEN + "Revenant Flesh:\n" +
@@ -803,7 +835,7 @@ public class TheMod
 							EnumChatFormatting.AQUA + "Bosses Since RNG:";
     			countText = EnumChatFormatting.GOLD + nf.format(lc.zombieRevs) + "\n" +
 							EnumChatFormatting.GREEN + nf.format(lc.zombieRevFlesh) + "\n" +
-							EnumChatFormatting.BLUE + nf.format(lc.zombieFoulFlesh) + "\n" +
+							EnumChatFormatting.BLUE + drop20 + "\n" +
 							EnumChatFormatting.DARK_GREEN + lc.zombiePestilences + "\n" + 
 							EnumChatFormatting.WHITE + lc.zombieBooks + "\n" +
 							EnumChatFormatting.AQUA + lc.zombieUndeadCatas + "\n" +
@@ -824,6 +856,11 @@ public class TheMod
     			} else {
     				bossesBetween = nf.format(lc.zombieBossesSession);
     			}
+    			if (tc.slayerCountTotal) {
+    				drop20 = nf.format(lc.zombieFoulFleshSession);
+    			} else {
+    				drop20 = nf.format(lc.zombieFoulFleshDropsSession) + " times";
+    			}
     			
     			dropsText = EnumChatFormatting.GOLD + "Revs Killed:\n" +
 							EnumChatFormatting.GREEN + "Revenant Flesh:\n" +
@@ -839,7 +876,7 @@ public class TheMod
 							EnumChatFormatting.AQUA + "Bosses Since RNG:";
     			countText = EnumChatFormatting.GOLD + nf.format(lc.zombieRevsSession) + "\n" +
 							EnumChatFormatting.GREEN + nf.format(lc.zombieRevFleshSession) + "\n" +
-							EnumChatFormatting.BLUE + nf.format(lc.zombieFoulFleshSession) + "\n" +
+							EnumChatFormatting.BLUE + drop20 + "\n" +
 							EnumChatFormatting.DARK_GREEN + lc.zombiePestilencesSession + "\n" + 
 							EnumChatFormatting.WHITE + lc.zombieBooksSession + "\n" +
 							EnumChatFormatting.AQUA + lc.zombieUndeadCatasSession + "\n" +

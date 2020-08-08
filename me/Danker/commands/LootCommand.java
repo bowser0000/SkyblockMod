@@ -17,6 +17,7 @@ public class LootCommand extends CommandBase {
 	public static int wolfSvens;
 	public static int wolfTeeth;
 	public static int wolfWheels;
+	public static int wolfWheelsDrops;
 	public static int wolfSpirits;
 	public static int wolfBooks;
 	public static int wolfEggs;
@@ -29,6 +30,7 @@ public class LootCommand extends CommandBase {
 	public static int spiderTarantulas;
 	public static int spiderWebs;
 	public static int spiderTAP;
+	public static int spiderTAPDrops;
 	public static int spiderBites;
 	public static int spiderCatalysts;
 	public static int spiderBooks;
@@ -41,6 +43,7 @@ public class LootCommand extends CommandBase {
 	public static int zombieRevs;
 	public static int zombieRevFlesh;
 	public static int zombieFoulFlesh;
+	public static int zombieFoulFleshDrops;
 	public static int zombiePestilences;
 	public static int zombieUndeadCatas;
 	public static int zombieBooks;
@@ -83,6 +86,7 @@ public class LootCommand extends CommandBase {
 	public static int wolfSvensSession = 0;
 	public static int wolfTeethSession = 0;
 	public static int wolfWheelsSession = 0;
+	public static int wolfWheelsDropsSession = 0;
 	public static int wolfSpiritsSession = 0;
 	public static int wolfBooksSession = 0;
 	public static int wolfEggsSession = 0;
@@ -95,6 +99,7 @@ public class LootCommand extends CommandBase {
 	public static int spiderTarantulasSession = 0;
 	public static int spiderWebsSession = 0;
 	public static int spiderTAPSession = 0;
+	public static int spiderTAPDropsSession = 0;
 	public static int spiderBitesSession = 0;
 	public static int spiderCatalystsSession = 0;
 	public static int spiderBooksSession = 0;
@@ -107,6 +112,7 @@ public class LootCommand extends CommandBase {
 	public static int zombieRevsSession = 0;
 	public static int zombieRevFleshSession = 0;
 	public static int zombieFoulFleshSession = 0;
+	public static int zombieFoulFleshDropsSession = 0;
 	public static int zombiePestilencesSession = 0;
 	public static int zombieUndeadCatasSession = 0;
 	public static int zombieBooksSession = 0;
@@ -212,6 +218,7 @@ public class LootCommand extends CommandBase {
 		double timeNow = System.currentTimeMillis() / 1000;
 		String timeBetween;
 		String bossesBetween;
+		String drop20;
 		NumberFormat nf = NumberFormat.getIntegerInstance(Locale.US);
 		boolean showSession = false;
 		
@@ -237,12 +244,17 @@ public class LootCommand extends CommandBase {
 				} else {
 					bossesBetween = nf.format(wolfBossesSession);
 				}
+				if (ToggleCommand.slayerCountTotal) {
+					drop20 = nf.format(wolfWheelsSession);
+				} else {
+					drop20 = nf.format(wolfWheelsDropsSession) + " times";
+				}
 				
 				player.addChatMessage(new ChatComponentText(EnumChatFormatting.AQUA + "" + EnumChatFormatting.BOLD + "-------------------\n" +
 															EnumChatFormatting.DARK_AQUA + EnumChatFormatting.BOLD + "  Sven Loot Summary (Current Session):\n" +
 															EnumChatFormatting.GOLD + "    Svens Killed: " + nf.format(wolfSvensSession) + "\n" +
 															EnumChatFormatting.GREEN + "    Wolf Teeth: " + nf.format(wolfTeethSession) + "\n" +
-															EnumChatFormatting.BLUE + "    Hamster Wheels: " + nf.format(wolfWheelsSession) + "\n" +
+															EnumChatFormatting.BLUE + "    Hamster Wheels: " + drop20 + "\n" +
 															EnumChatFormatting.AQUA + "    Spirit Runes: " + wolfSpiritsSession + "\n" + 
 															EnumChatFormatting.WHITE + "    Critical VI Books: " + wolfBooksSession + "\n" +
 															EnumChatFormatting.DARK_RED + "    Red Claw Eggs: " + wolfEggsSession + "\n" +
@@ -265,12 +277,17 @@ public class LootCommand extends CommandBase {
 			} else {
 				bossesBetween = nf.format(wolfBosses);
 			}
+			if (ToggleCommand.slayerCountTotal) {
+				drop20 = nf.format(wolfWheels);
+			} else {
+				drop20 = nf.format(wolfWheelsDrops) + " times";
+			}
 			
 			player.addChatMessage(new ChatComponentText(EnumChatFormatting.AQUA + "" + EnumChatFormatting.BOLD + "-------------------\n" +
 														EnumChatFormatting.DARK_AQUA + EnumChatFormatting.BOLD + "  Sven Loot Summary:\n" +
 														EnumChatFormatting.GOLD + "    Svens Killed: " + nf.format(wolfSvens) + "\n" +
 														EnumChatFormatting.GREEN + "    Wolf Teeth: " + nf.format(wolfTeeth) + "\n" +
-														EnumChatFormatting.BLUE + "    Hamster Wheels: " + nf.format(wolfWheels) + "\n" +
+														EnumChatFormatting.BLUE + "    Hamster Wheels: " + drop20 + "\n" +
 														EnumChatFormatting.AQUA + "    Spirit Runes: " + wolfSpirits + "\n" + 
 														EnumChatFormatting.WHITE + "    Critical VI Books: " + wolfBooks + "\n" +
 														EnumChatFormatting.DARK_RED + "    Red Claw Eggs: " + wolfEggs + "\n" +
@@ -292,12 +309,17 @@ public class LootCommand extends CommandBase {
 				} else {
 					bossesBetween = nf.format(spiderBossesSession);
 				}
+				if (ToggleCommand.slayerCountTotal) {
+					drop20 = nf.format(spiderTAPSession);
+				} else {
+					drop20 = nf.format(spiderTAPDropsSession) + " times";
+				}
 				
 				player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "" + EnumChatFormatting.BOLD + "-------------------\n" +
 															EnumChatFormatting.DARK_RED + EnumChatFormatting.BOLD + "  Spider Loot Summary (Current Session):\n" +
 															EnumChatFormatting.GOLD + "    Tarantulas Killed: " + nf.format(spiderTarantulasSession) + "\n" +
 															EnumChatFormatting.GREEN + "    Tarantula Webs: " + nf.format(spiderWebsSession) + "\n" +
-															EnumChatFormatting.DARK_GREEN + "    Arrow Poison: " + nf.format(spiderTAPSession) + "\n" +
+															EnumChatFormatting.DARK_GREEN + "    Arrow Poison: " + drop20 + "\n" +
 															EnumChatFormatting.DARK_GRAY + "    Bite Runes: " + spiderBitesSession + "\n" + 
 															EnumChatFormatting.WHITE + "    Bane VI Books: " + spiderBooksSession + "\n" +
 															EnumChatFormatting.AQUA + "    Spider Catalysts: " + spiderCatalystsSession + "\n" +
@@ -320,12 +342,17 @@ public class LootCommand extends CommandBase {
 			} else {
 				bossesBetween = nf.format(spiderBosses);
 			}
+			if (ToggleCommand.slayerCountTotal) {
+				drop20 = nf.format(spiderTAP);
+			} else {
+				drop20 = nf.format(spiderTAPDrops) + " times";
+			}
 			
 			player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "" + EnumChatFormatting.BOLD + "-------------------\n" +
 														EnumChatFormatting.DARK_RED + EnumChatFormatting.BOLD + "  Spider Loot Summary:\n" +
 														EnumChatFormatting.GOLD + "    Tarantulas Killed: " + nf.format(spiderTarantulas) + "\n" +
 														EnumChatFormatting.GREEN + "    Tarantula Webs: " + nf.format(spiderWebs) + "\n" +
-														EnumChatFormatting.DARK_GREEN + "    Arrow Poison: " + nf.format(spiderTAP) + "\n" +
+														EnumChatFormatting.DARK_GREEN + "    Arrow Poison: " + drop20 + "\n" +
 														EnumChatFormatting.DARK_GRAY + "    Bite Runes: " + spiderBites + "\n" + 
 														EnumChatFormatting.WHITE + "    Bane VI Books: " + spiderBooks + "\n" +
 														EnumChatFormatting.AQUA + "    Spider Catalysts: " + spiderCatalysts + "\n" +
@@ -347,12 +374,17 @@ public class LootCommand extends CommandBase {
 				} else {
 					bossesBetween = nf.format(zombieBossesSession);
 				}
+				if (ToggleCommand.slayerCountTotal) {
+					drop20 = nf.format(zombieFoulFleshSession);
+				} else {
+					drop20 = nf.format(zombieFoulFleshDropsSession) + " times";
+				}
 				
 				player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "" + EnumChatFormatting.BOLD + "-------------------\n" +
 															EnumChatFormatting.DARK_GREEN + EnumChatFormatting.BOLD + "  Zombie Loot Summary (Current Session):\n" +
 															EnumChatFormatting.GOLD + "    Revs Killed: " + nf.format(zombieRevsSession) + "\n" +
 															EnumChatFormatting.GREEN + "    Revenant Flesh: " + nf.format(zombieRevFleshSession) + "\n" +
-															EnumChatFormatting.BLUE + "    Foul Flesh: " + nf.format(zombieFoulFleshSession) + "\n" +
+															EnumChatFormatting.BLUE + "    Foul Flesh: " + drop20 + "\n" +
 															EnumChatFormatting.DARK_GREEN + "    Pestilence Runes: " + zombiePestilencesSession + "\n" + 
 															EnumChatFormatting.WHITE + "    Smite VI Books: " + zombieBooksSession + "\n" +
 															EnumChatFormatting.AQUA + "    Undead Catalysts: " + zombieUndeadCatasSession + "\n" +
@@ -376,12 +408,17 @@ public class LootCommand extends CommandBase {
 			} else {
 				bossesBetween = nf.format(zombieBosses);
 			}
+			if (ToggleCommand.slayerCountTotal) {
+				drop20 = nf.format(zombieFoulFlesh);
+			} else {
+				drop20 = nf.format(zombieFoulFleshDrops) + " times";
+			}
 			
 			player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "" + EnumChatFormatting.BOLD + "-------------------\n" +
 														EnumChatFormatting.DARK_GREEN + EnumChatFormatting.BOLD + "  Zombie Loot Summary:\n" +
 														EnumChatFormatting.GOLD + "    Revs Killed: " + nf.format(zombieRevs) + "\n" +
 														EnumChatFormatting.GREEN + "    Revenant Flesh: " + nf.format(zombieRevFlesh) + "\n" +
-														EnumChatFormatting.BLUE + "    Foul Flesh: " + nf.format(zombieFoulFlesh) + "\n" +
+														EnumChatFormatting.BLUE + "    Foul Flesh: " + drop20 + "\n" +
 														EnumChatFormatting.DARK_GREEN + "    Pestilence Runes: " + zombiePestilences + "\n" + 
 														EnumChatFormatting.WHITE + "    Smite VI Books: " + zombieBooks + "\n" +
 														EnumChatFormatting.AQUA + "    Undead Catalysts: " + zombieUndeadCatas + "\n" +

@@ -94,6 +94,7 @@ public class ResetLootCommand extends CommandBase {
 		lc.zombieRevsSession = 0;
 		lc.zombieRevFleshSession = 0;
 		lc.zombieFoulFleshSession = 0;
+		lc.zombieFoulFleshDropsSession = 0;
 		lc.zombiePestilencesSession = 0;
 		lc.zombieUndeadCatasSession = 0;
 		lc.zombieBooksSession = 0;
@@ -114,6 +115,7 @@ public class ResetLootCommand extends CommandBase {
 		lc.spiderTarantulasSession = 0;
 		lc.spiderWebsSession = 0;
 		lc.spiderTAPSession = 0;
+		lc.spiderTAPDropsSession = 0;
 		lc.spiderBitesSession = 0;
 		lc.spiderCatalystsSession = 0;
 		lc.spiderBooksSession = 0;
@@ -132,6 +134,7 @@ public class ResetLootCommand extends CommandBase {
 		lc.wolfSvensSession = 0;
 		lc.wolfTeethSession = 0;
 		lc.wolfWheelsSession = 0;
+		lc.wolfWheelsDropsSession = 0;
 		lc.wolfSpiritsSession = 0;
 		lc.wolfBooksSession = 0;
 		lc.wolfEggsSession = 0;

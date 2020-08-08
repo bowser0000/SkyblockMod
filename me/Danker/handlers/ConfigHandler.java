@@ -171,12 +171,14 @@ public class ConfigHandler {
 		if (!hasKey("toggles", "GParty")) writeBooleanConfig("toggles", "GParty", false);
 		if (!hasKey("toggles", "Coords")) writeBooleanConfig("toggles", "Coords", false);
 		if (!hasKey("toggles", "Golden")) writeBooleanConfig("toggles", "Golden", false);
+		if (!hasKey("toggles", "SlayerCount")) writeBooleanConfig("toggles", "SlayerCount", true);
 		if (!hasKey("api", "APIKey")) writeStringConfig("api", "APIKey", "");
 		
 		// Wolf Loot
 		if (!hasKey("wolf", "svens")) writeIntConfig("wolf", "svens", 0);
 		if (!hasKey("wolf", "teeth")) writeIntConfig("wolf", "teeth", 0);
 		if (!hasKey("wolf", "wheel")) writeIntConfig("wolf", "wheel", 0);
+		if (!hasKey("wolf", "wheelDrops")) writeIntConfig("wolf", "wheelDrops", 0);
 		if (!hasKey("wolf", "spirit")) writeIntConfig("wolf", "spirit", 0);
 		if (!hasKey("wolf", "book")) writeIntConfig("wolf", "book", 0);
 		if (!hasKey("wolf", "egg")) writeIntConfig("wolf", "egg", 0);
@@ -189,6 +191,7 @@ public class ConfigHandler {
 		if (!hasKey("spider", "tarantulas")) writeIntConfig("spider", "tarantulas", 0);
 		if (!hasKey("spider", "web")) writeIntConfig("spider", "web", 0);
 		if (!hasKey("spider", "tap")) writeIntConfig("spider", "tap", 0);
+		if (!hasKey("spider", "tapDrops")) writeIntConfig("spider", "tapDrops", 0);
 		if (!hasKey("spider", "bite")) writeIntConfig("spider", "bite", 0);
 		if (!hasKey("spider", "catalyst")) writeIntConfig("spider", "catalyst", 0);
 		if (!hasKey("spider", "book")) writeIntConfig("spider", "book", 0);
@@ -201,6 +204,7 @@ public class ConfigHandler {
 		if (!hasKey("zombie", "revs")) writeIntConfig("zombie", "revs", 0);
 		if (!hasKey("zombie", "revFlesh")) writeIntConfig("zombie", "revFlesh", 0);
 		if (!hasKey("zombie", "foulFlesh")) writeIntConfig("zombie", "foulFlesh", 0);
+		if (!hasKey("zombie", "foulFleshDrops")) writeIntConfig("zombie", "foulFleshDrops", 0);
 		if (!hasKey("zombie", "pestilence")) writeIntConfig("zombie", "pestilence", 0);
 		if (!hasKey("zombie", "undeadCatalyst")) writeIntConfig("zombie", "undeadCatalyst", 0);
 		if (!hasKey("zombie", "book")) writeIntConfig("zombie", "book", 0);
@@ -251,12 +255,14 @@ public class ConfigHandler {
 		tf.gpartyToggled = getBoolean("toggles", "GParty");
 		tf.coordsToggled = getBoolean("toggles", "Coords");
 		tf.goldenToggled = getBoolean("toggles", "Golden");
+		tf.slayerCountTotal = getBoolean("toggles", "SlayerCount");
 		
 		final LootCommand lc = new LootCommand();
 		// Wolf
 		lc.wolfSvens = getInt("wolf", "svens");
 		lc.wolfTeeth = getInt("wolf", "teeth");
 		lc.wolfWheels = getInt("wolf", "wheel");
+		lc.wolfWheelsDrops = getInt("wolf", "wheelDrops");
 		lc.wolfSpirits = getInt("wolf", "spirit");
 		lc.wolfBooks = getInt("wolf", "book");
 		lc.wolfEggs = getInt("wolf", "egg");
@@ -269,6 +275,7 @@ public class ConfigHandler {
 		lc.spiderTarantulas = getInt("spider", "tarantulas");
 		lc.spiderWebs = getInt("spider", "web");
 		lc.spiderTAP = getInt("spider", "tap");
+		lc.spiderTAPDrops = getInt("spider", "tapDrops");
 		lc.spiderBites = getInt("spider", "bite");
 		lc.spiderCatalysts = getInt("spider", "catalyst");
 		lc.spiderBooks = getInt("spider", "book");
@@ -281,6 +288,7 @@ public class ConfigHandler {
 		lc.zombieRevs = getInt("zombie", "revs");
 		lc.zombieRevFlesh = getInt("zombie", "revFlesh");
 		lc.zombieFoulFlesh = getInt("zombie", "foulFlesh");
+		lc.zombieFoulFleshDrops = getInt("zombie", "foulFleshDrops");
 		lc.zombiePestilences = getInt("zombie", "pestilence");
 		lc.zombieUndeadCatas = getInt("zombie", "undeadCatalyst");
 		lc.zombieBooks = getInt("zombie", "book");
