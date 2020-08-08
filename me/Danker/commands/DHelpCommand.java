@@ -39,6 +39,7 @@ public class DHelpCommand extends CommandBase {
 													EnumChatFormatting.GOLD + " /display <zombie/spider/wolf/fishing/off> [winter/session]" + EnumChatFormatting.AQUA + " - Text display for trackers. /display fishing winter displays winter sea creatures instead.\n" +
 													EnumChatFormatting.GOLD + " /resetloot <zombie/spider/wolf/fishing/confirm/cancel>" + EnumChatFormatting.AQUA + " - Resets loot for trackers. /resetloot confirm confirms the reset.\n" +
 													EnumChatFormatting.GOLD + " /move <coords/display> <x> <y>" + EnumChatFormatting.AQUA + " - Moves text display to specified X and Y coordinates.\n" +
+													EnumChatFormatting.GOLD + " /scale <coords/display> <scale (0.1 - 10)" + EnumChatFormatting.AQUA + " - Scales text display to a specified multipler between 0.1x and 10x.\n" +
 													EnumChatFormatting.GOLD + " /slayer [player]" + EnumChatFormatting.AQUA + " - Uses API to get slayer xp of a person. If no name is provided, it checks yours.\n" +
 													EnumChatFormatting.GOLD + " /skills [player]" + EnumChatFormatting.AQUA + " - Uses API to get skill levels of a person. If no name is provided, it checks yours.\n" +
 													EnumChatFormatting.GOLD + " /guildof [player]" + EnumChatFormatting.AQUA + " - Uses API to get guild name and guild master of a person. If no name is provided, it checks yours.\n" +

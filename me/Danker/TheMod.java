@@ -25,6 +25,7 @@ import me.Danker.commands.MoveCommand;
 import me.Danker.commands.PetsCommand;
 import me.Danker.commands.ReloadConfigCommand;
 import me.Danker.commands.ResetLootCommand;
+import me.Danker.commands.ScaleCommand;
 import me.Danker.commands.SetkeyCommand;
 import me.Danker.commands.SkillsCommand;
 import me.Danker.commands.SlayerCommand;
@@ -127,6 +128,7 @@ public class TheMod
     	ClientCommandHandler.instance.registerCommand(new ArmourCommand());
     	ClientCommandHandler.instance.registerCommand(new ImportFishingCommand());
     	ClientCommandHandler.instance.registerCommand(new ResetLootCommand());
+    	ClientCommandHandler.instance.registerCommand(new ScaleCommand());
     }
     
     // Update checker
@@ -635,7 +637,7 @@ public class TheMod
         	double yDir = (double) Math.round(player.rotationPitch * 10d) / 10d;
         	
         	String coordText = (int) player.posX + " / " + (int) player.posY + " / " + (int) player.posZ + " (" + xDir + " / " + yDir + ")";
-        	new TextRenderer(Minecraft.getMinecraft(), coordText, moc.coordsXY[0], moc.coordsXY[1], Integer.parseInt("FFFFFF", 16));
+        	new TextRenderer(Minecraft.getMinecraft(), coordText, moc.coordsXY[0], moc.coordsXY[1], ScaleCommand.coordsScale);
     	}
     	
     	if (!ds.display.equals("off")) {
@@ -940,8 +942,8 @@ public class TheMod
 									  EnumChatFormatting.AQUA + timeBetween + "\n" +
 									  EnumChatFormatting.AQUA + bossesBetween;
     			
-    			new TextRenderer(Minecraft.getMinecraft(), dropsTextTwo, moc.displayXY[0] + 145, moc.displayXY[1], Integer.parseInt("FFFFFF", 16));
-    			new TextRenderer(Minecraft.getMinecraft(), countTextTwo, moc.displayXY[0] + 255, moc.displayXY[1], Integer.parseInt("FFFFFF", 16));
+    			new TextRenderer(Minecraft.getMinecraft(), dropsTextTwo, (int) (moc.displayXY[0] + (145 * ScaleCommand.displayScale)), moc.displayXY[1], ScaleCommand.displayScale);
+    			new TextRenderer(Minecraft.getMinecraft(), countTextTwo, (int) (moc.displayXY[0] + (255 * ScaleCommand.displayScale)), moc.displayXY[1], ScaleCommand.displayScale);
     		} else if (ds.display.equals("fishing_session")) {
     			if (lc.empTimeSession == -1) {
     				timeBetween = "Never";
@@ -996,8 +998,8 @@ public class TheMod
 									  EnumChatFormatting.AQUA + timeBetween + "\n" +
 									  EnumChatFormatting.AQUA + bossesBetween;
     			
-    			new TextRenderer(Minecraft.getMinecraft(), dropsTextTwo, moc.displayXY[0] + 145, moc.displayXY[1], Integer.parseInt("FFFFFF", 16));
-    			new TextRenderer(Minecraft.getMinecraft(), countTextTwo, moc.displayXY[0] + 255, moc.displayXY[1], Integer.parseInt("FFFFFF", 16));
+    			new TextRenderer(Minecraft.getMinecraft(), dropsTextTwo, (int) (moc.displayXY[0] + (145 * ScaleCommand.displayScale)), moc.displayXY[1], ScaleCommand.displayScale);
+    			new TextRenderer(Minecraft.getMinecraft(), countTextTwo, (int) (moc.displayXY[0] + (255 * ScaleCommand.displayScale)), moc.displayXY[1], ScaleCommand.displayScale);
     		} else if (ds.display.equals("fishing_winter")) {
     			dropsText = EnumChatFormatting.AQUA + "Creatures Caught:\n" +
     						EnumChatFormatting.AQUA + "Fishing Milestone:\n" +
@@ -1039,8 +1041,8 @@ public class TheMod
     			ds.display = "off";
     			cf.writeStringConfig("misc", "display", "off");
     		}
-    		new TextRenderer(Minecraft.getMinecraft(), dropsText, moc.displayXY[0], moc.displayXY[1], Integer.parseInt("FFFFFF", 16));
-    		new TextRenderer(Minecraft.getMinecraft(), countText, moc.displayXY[0] + 110, moc.displayXY[1], Integer.parseInt("FFFFFF", 16));
+    		new TextRenderer(Minecraft.getMinecraft(), dropsText, moc.displayXY[0], moc.displayXY[1], ScaleCommand.displayScale);
+    		new TextRenderer(Minecraft.getMinecraft(), countText, (int) (moc.displayXY[0] + (110 * ScaleCommand.displayScale)), moc.displayXY[1], ScaleCommand.displayScale);
     	}
     }
     

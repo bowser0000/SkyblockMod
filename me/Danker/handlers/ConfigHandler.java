@@ -5,6 +5,7 @@ import java.io.File;
 import me.Danker.commands.DisplayCommand;
 import me.Danker.commands.LootCommand;
 import me.Danker.commands.MoveCommand;
+import me.Danker.commands.ScaleCommand;
 import me.Danker.commands.ToggleCommand;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
@@ -250,6 +251,8 @@ public class ConfigHandler {
 		if (!hasKey("locations", "coordsY")) writeIntConfig("locations", "coordsY", height - 25);
 		if (!hasKey("locations", "displayX")) writeIntConfig("locations", "displayX", 80);
 		if (!hasKey("locations", "displayY")) writeIntConfig("locations", "displayY", 5);
+		if (!hasKey("scales", "coordsScale")) writeDoubleConfig("scales", "coordsScale", 1);
+		if (!hasKey("scales", "displayScale")) writeDoubleConfig("scales", "displayScale", 1);
 		
 		final ToggleCommand tf = new ToggleCommand();
 		tf.gpartyToggled = getBoolean("toggles", "GParty");
@@ -333,6 +336,10 @@ public class ConfigHandler {
 		moc.coordsXY[1] = getInt("locations", "coordsY");
 		moc.displayXY[0] = getInt("locations", "displayX");
 		moc.displayXY[1] = getInt("locations", "displayY");
+		
+		final ScaleCommand sc = new ScaleCommand();
+		sc.coordsScale = getDouble("scales", "coordsScale");
+		sc.displayScale = getDouble("scales", "displayScale");
 	}
 	
 }
