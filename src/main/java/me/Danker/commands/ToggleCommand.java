@@ -66,9 +66,11 @@ public class ToggleCommand extends CommandBase implements ICommand {
 			player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Golden T6 enchants has been set to " + EnumChatFormatting.DARK_GREEN + goldenToggled + EnumChatFormatting.GREEN + "."));
 		} else if (arg1[0].equalsIgnoreCase("slayercount")) {
 			slayerCountTotal = !slayerCountTotal;
+			cf.writeBooleanConfig("toggles", "SlayerCount", slayerCountTotal);
 			player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Counting total 20% slayer drops has been set to " + EnumChatFormatting.DARK_GREEN + slayerCountTotal + EnumChatFormatting.GREEN + "."));
 		} else if (arg1[0].equalsIgnoreCase("rngesusalerts")) {
 			rngesusAlerts = !rngesusAlerts;
+			cf.writeBooleanConfig("toggles", "RNGesusAlerts", rngesusAlerts);
 			player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Slayer RNGesus alerts has been set to " + EnumChatFormatting.DARK_GREEN + rngesusAlerts + EnumChatFormatting.GREEN + "."));
 		} else if (arg1[0].equalsIgnoreCase("list")) {
 			player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Guild party notifications: " + EnumChatFormatting.DARK_GREEN + gpartyToggled + "\n" +
