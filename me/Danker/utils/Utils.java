@@ -5,10 +5,13 @@ import java.util.List;
 import java.util.regex.Matcher;
 
 import me.Danker.TheMod;
+import me.Danker.handlers.TextRenderer;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.StringUtils;
 
 public class Utils {
@@ -55,6 +58,31 @@ public class Utils {
 		}
 		
 		return matchingPlayers;
+	}
+	
+	public static void createTitle(String text, int seconds) {
+		Minecraft.getMinecraft().thePlayer.playSound("random.orb", 1, (float) 0.5);
+		TheMod.titleTimer = seconds * 20;
+		TheMod.showTitle = true;
+		TheMod.titleText = text;
+	}
+	
+	public static void drawTitle(String text) {
+		Minecraft mc = Minecraft.getMinecraft();
+		ScaledResolution scaledResolution = new ScaledResolution(mc);
+		
+		int height = scaledResolution.getScaledHeight();
+		int width = scaledResolution.getScaledWidth();
+		int textLength = mc.fontRendererObj.getStringWidth(text);
+		
+		double scale = 4;
+		if (textLength * scale > (width * 0.9F)) {
+			scale = (width * 0.9F) / (float) textLength;
+		}
+		
+		int titleX = (int) ((width / 2) - (textLength * scale / 2));
+		int titleY = (int) ((height * 0.45) / scale);
+		new TextRenderer(mc, text, titleX, titleY, scale);
 	}
 	
 }

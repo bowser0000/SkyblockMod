@@ -173,6 +173,7 @@ public class ConfigHandler {
 		if (!hasKey("toggles", "Coords")) writeBooleanConfig("toggles", "Coords", false);
 		if (!hasKey("toggles", "Golden")) writeBooleanConfig("toggles", "Golden", false);
 		if (!hasKey("toggles", "SlayerCount")) writeBooleanConfig("toggles", "SlayerCount", true);
+		if (!hasKey("toggles", "RNGesusAlerts")) writeBooleanConfig("toggles", "RNGesusAlerts", true);
 		if (!hasKey("api", "APIKey")) writeStringConfig("api", "APIKey", "");
 		
 		// Wolf Loot
@@ -259,6 +260,7 @@ public class ConfigHandler {
 		tf.coordsToggled = getBoolean("toggles", "Coords");
 		tf.goldenToggled = getBoolean("toggles", "Golden");
 		tf.slayerCountTotal = getBoolean("toggles", "SlayerCount");
+		tf.rngesusAlerts = getBoolean("toggles", "RNGesusAlerts");
 		
 		final LootCommand lc = new LootCommand();
 		// Wolf

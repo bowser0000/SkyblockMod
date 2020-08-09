@@ -55,6 +55,7 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.common.versioning.DefaultArtifactVersion;
 
 @Mod(modid = TheMod.MODID, version = TheMod.VERSION, clientSideOnly = true)
@@ -68,6 +69,9 @@ public class TheMod
     public static Map<String, String> t6Enchants = new HashMap<String, String>();
     public static Pattern pattern = Pattern.compile("");
     static boolean updateChecked = false;
+    public static int titleTimer = -1;
+    public static boolean showTitle = false;
+    public static String titleText = "";
     
     @EventHandler
     public void init(FMLInitializationEvent event)
@@ -245,12 +249,14 @@ public class TheMod
 			lc.wolfEggs++;
 			lc.wolfEggsSession++;
 			cf.writeIntConfig("wolf", "egg", lc.wolfEggs);
+			if (tc.rngesusAlerts) Utils.createTitle(EnumChatFormatting.DARK_RED + "RED CLAW EGG!", 3);
 		}
 		if (message.contains("CRAZY RARE DROP!  (") && message.contains(" Couture Rune I)")) {
 			wolfRNG = true;
 			lc.wolfCoutures++;
 			lc.wolfCouturesSession++;
 			cf.writeIntConfig("wolf", "couture", lc.wolfCoutures);
+			if (tc.rngesusAlerts) Utils.createTitle(EnumChatFormatting.GOLD + "COUTURE RUNE!", 3);
 		}
 		// How did Skyblock devs even manage to make this item Rename Me
 		if (message.contains("CRAZY RARE DROP!  (Grizzly Bait)") || message.contains("CRAZY RARE DROP! (Rename Me)")) {
@@ -258,12 +264,14 @@ public class TheMod
 			lc.wolfBaits++;
 			lc.wolfBaitsSession++;
 			cf.writeIntConfig("wolf", "bait", lc.wolfBaits);
+			if (tc.rngesusAlerts) Utils.createTitle(EnumChatFormatting.AQUA + "GRIZZLY BAIT!", 3);
 		}
 		if (message.contains("CRAZY RARE DROP!  (Overflux Capacitor)")) {
 			wolfRNG = true;
 			lc.wolfFluxes++;
 			lc.wolfFluxesSession++;
 			cf.writeIntConfig("wolf", "flux", lc.wolfFluxes);
+			if (tc.rngesusAlerts) Utils.createTitle(EnumChatFormatting.DARK_PURPLE + "OVERFLUX CAPACITOR!", 5);
 		}
 
 		// Spider
@@ -299,18 +307,21 @@ public class TheMod
 			lc.spiderSwatters++;
 			lc.spiderSwattersSession++;
 			cf.writeIntConfig("spider", "swatter", lc.spiderSwatters);
+			if (tc.rngesusAlerts) Utils.createTitle(EnumChatFormatting.LIGHT_PURPLE + "FLY SWATTER!", 3);
 		}
 		if (message.contains("CRAZY RARE DROP!  (Tarantula Talisman")) {
 			spiderRNG = true;
 			lc.spiderTalismans++;
 			lc.spiderTalismansSession++;
 			cf.writeIntConfig("spider", "talisman", lc.spiderTalismans);
+			if (tc.rngesusAlerts) Utils.createTitle(EnumChatFormatting.DARK_PURPLE + "TARANTULA TALISMAN!", 3);
 		}
 		if (message.contains("CRAZY RARE DROP!  (Digested Mosquito)")) {
 			spiderRNG = true;
 			lc.spiderMosquitos++;
 			lc.spiderMosquitosSession++;
 			cf.writeIntConfig("spider", "mosquito", lc.spiderMosquitos);
+			if (tc.rngesusAlerts) Utils.createTitle(EnumChatFormatting.GOLD + "DIGESTED MOSQUITO!", 5);
 		}
 
 		// Zombie
@@ -351,18 +362,21 @@ public class TheMod
 			lc.zombieBeheadeds++;
 			lc.zombieBeheadedsSession++;
 			cf.writeIntConfig("zombie", "beheaded", lc.zombieBeheadeds);
+			if (tc.rngesusAlerts) Utils.createTitle(EnumChatFormatting.DARK_PURPLE + "BEHEADED HORROR!", 3);
 		}
 		if (message.contains("CRAZY RARE DROP!  (") && message.contains(" Snake Rune I)")) {
 			zombieRNG = true;
 			lc.zombieSnakes++;
 			lc.zombieSnakesSession++;
 			cf.writeIntConfig("zombie", "snake", lc.zombieSnakes);
+			if (tc.rngesusAlerts) Utils.createTitle(EnumChatFormatting.DARK_GREEN + "SNAKE RUNE!", 3);
 		}
 		if (message.contains("CRAZY RARE DROP!  (Scythe Blade)")) {
 			zombieRNG = true;
 			lc.zombieScythes++;
 			lc.zombieScythesSession++;
 			cf.writeIntConfig("zombie", "scythe", lc.zombieScythes);
+			if (tc.rngesusAlerts) Utils.createTitle(EnumChatFormatting.GOLD + "SCYTHE BLADE!", 5);
 		}
 
 		if (wolfRNG) {
@@ -1044,6 +1058,10 @@ public class TheMod
     		new TextRenderer(Minecraft.getMinecraft(), dropsText, moc.displayXY[0], moc.displayXY[1], ScaleCommand.displayScale);
     		new TextRenderer(Minecraft.getMinecraft(), countText, (int) (moc.displayXY[0] + (110 * ScaleCommand.displayScale)), moc.displayXY[1], ScaleCommand.displayScale);
     	}
+    	
+    	if (showTitle) {
+    		Utils.drawTitle(titleText);
+    	}
     }
     
     @SubscribeEvent(priority = EventPriority.HIGHEST)
@@ -1107,6 +1125,16 @@ public class TheMod
     		for (int i = 0; i < event.toolTip.size(); i++) {
     			event.toolTip.set(i, Utils.returnGoldenEnchants(event.toolTip.get(i)));
     		}
+    	}
+    }
+    
+    @SubscribeEvent
+    public void onTick(TickEvent.ClientTickEvent event) {
+    	if (titleTimer >= 0) {
+    		if (titleTimer == 0) {
+    			showTitle = false;
+    		}
+    		titleTimer--;
     	}
     }
     

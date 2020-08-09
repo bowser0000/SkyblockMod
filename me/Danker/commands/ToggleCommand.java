@@ -17,6 +17,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 	public static boolean coordsToggled;
 	public static boolean goldenToggled;
 	public static boolean slayerCountTotal;
+	public static boolean rngesusAlerts;
 	
 	@Override
 	public String getCommandName() {
@@ -25,7 +26,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 
 	@Override
 	public String getCommandUsage(ICommandSender arg0) {
-		return getCommandName() + " <gparty/coords/golden/slayercount/list>";
+		return getCommandName() + " <gparty/coords/golden/slayercount/rngesusalerts/list>";
 	}
 
 	@Override
@@ -36,7 +37,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 	@Override
 	public List<String> addTabCompletionOptions(ICommandSender sender, String[] args, BlockPos pos) {
 		if (args.length == 1) {
-			return getListOfStringsMatchingLastWord(args, "gparty", "coords", "golden", "slayercount", "list");
+			return getListOfStringsMatchingLastWord(args, "gparty", "coords", "golden", "slayercount", "rngesusalerts", "list");
 		}
 		return null;
 	}
@@ -47,7 +48,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 		final ConfigHandler cf = new ConfigHandler();
 		
 		if (arg1.length == 0) {
-			player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Usage: /toggle <gparty/coords/golden/slayercount/list>"));
+			player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Usage: /toggle <gparty/coords/golden/slayercount/rngesusalerts/list>"));
 			return;
 		}
 		
@@ -66,13 +67,17 @@ public class ToggleCommand extends CommandBase implements ICommand {
 		} else if (arg1[0].equalsIgnoreCase("slayercount")) {
 			slayerCountTotal = !slayerCountTotal;
 			player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Counting total 20% slayer drops has been set to " + EnumChatFormatting.DARK_GREEN + slayerCountTotal + EnumChatFormatting.GREEN + "."));
+		} else if (arg1[0].equalsIgnoreCase("rngesusalerts")) {
+			rngesusAlerts = !rngesusAlerts;
+			player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Slayer RNGesus alerts has been set to " + EnumChatFormatting.DARK_GREEN + rngesusAlerts + EnumChatFormatting.GREEN + "."));
 		} else if (arg1[0].equalsIgnoreCase("list")) {
 			player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Guild party notifications: " + EnumChatFormatting.DARK_GREEN + gpartyToggled + "\n" +
 														EnumChatFormatting.GREEN + " Coord/Angle display: " + EnumChatFormatting.DARK_GREEN + coordsToggled + "\n" +
 														EnumChatFormatting.GREEN + " Golden T6 enchants: " + EnumChatFormatting.DARK_GREEN + goldenToggled + "\n" +
-														EnumChatFormatting.GREEN + " Counting total 20% slayer drops: " + EnumChatFormatting.DARK_GREEN + slayerCountTotal));
+														EnumChatFormatting.GREEN + " Counting total 20% slayer drops: " + EnumChatFormatting.DARK_GREEN + slayerCountTotal + "\n" +
+														EnumChatFormatting.GREEN + " Slayer RNGesus alerts: " + EnumChatFormatting.DARK_GREEN + rngesusAlerts));
 		} else {
-			player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Usage: /toggle <gparty/coords/golden/slayercount/list>"));
+			player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Usage: /toggle <gparty/coords/golden/slayercount/rngesusalerts/list>"));
 		}
 	}
 }
