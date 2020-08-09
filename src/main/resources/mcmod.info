@@ -1,0 +1,12 @@
+[
+{
+  "modid": "Danker's Skyblock Mod",
+  "name": "Danker's Skyblock Mod",
+  "description": "QOL changes that enhances your Hypixel Skyblock experience.",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "https://github.com/bowser0000/SkyblockMod",
+  "authorList": ["Danker"],
+  "credits": "smyt for parsing scoreboard info."
+}
+]
