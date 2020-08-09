@@ -2,6 +2,7 @@ package me.Danker.commands;
 
 import java.text.NumberFormat;
 import java.util.List;
+import java.util.Locale;
 
 import com.google.gson.JsonObject;
 
@@ -99,11 +100,12 @@ public class SlayerCommand extends CommandBase {
 				wolfXP = slayersObject.get("wolf").getAsJsonObject().get("xp").getAsInt();
 			}
 			
+			NumberFormat nf = NumberFormat.getIntegerInstance(Locale.US);
 			player.addChatMessage(new ChatComponentText(EnumChatFormatting.AQUA + "" + EnumChatFormatting.BOLD + "-------------------\n" +
-														EnumChatFormatting.AQUA + " " + username + "'s Total XP: " + EnumChatFormatting.GOLD + EnumChatFormatting.BOLD + NumberFormat.getIntegerInstance().format(zombieXP + spiderXP + wolfXP) + "\n" +
-														EnumChatFormatting.AQUA + " Zombie XP: " + EnumChatFormatting.BLUE + EnumChatFormatting.BOLD + NumberFormat.getIntegerInstance().format(zombieXP) + "\n" +
-														EnumChatFormatting.AQUA + " Spider XP: " + EnumChatFormatting.BLUE + EnumChatFormatting.BOLD + NumberFormat.getIntegerInstance().format(spiderXP) + "\n" +
-														EnumChatFormatting.AQUA + " Wolf XP: " + EnumChatFormatting.BLUE + EnumChatFormatting.BOLD + NumberFormat.getIntegerInstance().format(wolfXP) + "\n" +
+														EnumChatFormatting.AQUA + " " + username + "'s Total XP: " + EnumChatFormatting.GOLD + EnumChatFormatting.BOLD + nf.format(zombieXP + spiderXP + wolfXP) + "\n" +
+														EnumChatFormatting.AQUA + " Zombie XP: " + EnumChatFormatting.BLUE + EnumChatFormatting.BOLD + nf.format(zombieXP) + "\n" +
+														EnumChatFormatting.AQUA + " Spider XP: " + EnumChatFormatting.BLUE + EnumChatFormatting.BOLD + nf.format(spiderXP) + "\n" +
+														EnumChatFormatting.AQUA + " Wolf XP: " + EnumChatFormatting.BLUE + EnumChatFormatting.BOLD + nf.format(wolfXP) + "\n" +
 														EnumChatFormatting.AQUA + " " + EnumChatFormatting.BOLD + "-------------------"));
 			
 		}).start();

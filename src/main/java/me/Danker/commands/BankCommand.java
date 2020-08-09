@@ -3,6 +3,7 @@ package me.Danker.commands;
 import java.text.NumberFormat;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 import com.google.gson.JsonObject;
 
@@ -91,6 +92,7 @@ public class BankCommand extends CommandBase {
 			System.out.println("Fetching bank + purse coins...");
 			double purseCoins = profileResponse.get("profile").getAsJsonObject().get("members").getAsJsonObject().get(uuid).getAsJsonObject().get("coin_purse").getAsDouble();
 			purseCoins = (double) Math.floor(purseCoins * 100.0) / 100.0;
+			NumberFormat nf = NumberFormat.getIntegerInstance(Locale.US);
 			
 			// Check for bank api
 			if (profileResponse.get("profile").getAsJsonObject().has("banking")) {
@@ -99,14 +101,14 @@ public class BankCommand extends CommandBase {
 				
 				player.addChatMessage(new ChatComponentText(EnumChatFormatting.AQUA + "" + EnumChatFormatting.BOLD + "-------------------\n" +
 															EnumChatFormatting.AQUA + " " + username + "'s Coins:\n" +
-															EnumChatFormatting.GREEN + " Bank: " + EnumChatFormatting.GOLD + NumberFormat.getInstance().format(bankCoins) + "\n" +
-															EnumChatFormatting.GREEN + " Purse: " + EnumChatFormatting.GOLD + NumberFormat.getInstance().format(purseCoins) + "\n" +
+															EnumChatFormatting.GREEN + " Bank: " + EnumChatFormatting.GOLD + nf.format(bankCoins) + "\n" +
+															EnumChatFormatting.GREEN + " Purse: " + EnumChatFormatting.GOLD + nf.format(purseCoins) + "\n" +
 															EnumChatFormatting.AQUA + " " + EnumChatFormatting.BOLD + "-------------------"));
 			} else {
 				player.addChatMessage(new ChatComponentText(EnumChatFormatting.AQUA + "" + EnumChatFormatting.BOLD + "-------------------\n" +
 															EnumChatFormatting.AQUA + " " + username + "'s Coins:\n" +
 															EnumChatFormatting.GREEN + " Bank: " + EnumChatFormatting.RED + "Bank API disabled.\n" +
-															EnumChatFormatting.GREEN + " Purse: " + EnumChatFormatting.GOLD + NumberFormat.getInstance().format(purseCoins) + "\n" +
+															EnumChatFormatting.GREEN + " Purse: " + EnumChatFormatting.GOLD + nf.format(purseCoins) + "\n" +
 															EnumChatFormatting.AQUA + " " + EnumChatFormatting.BOLD + "-------------------"));
 			}
 		}).start();
