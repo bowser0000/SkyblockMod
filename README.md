@@ -1,6 +1,8 @@
 # Danker's Skyblock Mod
 QOL changes that enhances your Hypixel Skyblock experience. Created to add features I couldn't find in a mod, or if the mod was paid (which is against the [Mojang TOS](https://account.mojang.com/documents/commercial_guidelines)).
 
+Discord Server: https://discord.gg/QsEkNQS
+
 ## Current features
 - Guild party desktop notifications (toggleable)
 - Coordinate and angle display (toggleable, graphic display) (scalable)
