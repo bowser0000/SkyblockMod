@@ -14,7 +14,7 @@ Discord Server: https://discord.gg/QsEkNQS
 
 ## Commands
 - /dhelp - Returns this message in-game.
-- /toggle <gparty/coords/golden/slayercount/rngesusalerts/list> - Toggles features. /toggle list returns values of every toggle.
+- /toggle <gparty/coords/golden/slayercount/rngesusalerts/splitfishing/list> - Toggles features. /toggle list returns values of every toggle.
 - /setkey <key> - Sets API key.
 - /getkey - Returns key set with /setkey.
 - /loot <zombie/spider/wolf/fishing> [winter/session] - Returns loot received from slayer quests or fishing stats. /loot fishing winter returns winter sea creatures instead.

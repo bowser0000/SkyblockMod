@@ -958,8 +958,13 @@ public class TheMod
 									  EnumChatFormatting.AQUA + timeBetween + "\n" +
 									  EnumChatFormatting.AQUA + bossesBetween;
     			
-    			new TextRenderer(Minecraft.getMinecraft(), dropsTextTwo, (int) (moc.displayXY[0] + (145 * ScaleCommand.displayScale)), moc.displayXY[1], ScaleCommand.displayScale);
-    			new TextRenderer(Minecraft.getMinecraft(), countTextTwo, (int) (moc.displayXY[0] + (255 * ScaleCommand.displayScale)), moc.displayXY[1], ScaleCommand.displayScale);
+    			if (tc.splitFishing) {
+    				new TextRenderer(Minecraft.getMinecraft(), dropsTextTwo, (int) (moc.displayXY[0] + (145 * ScaleCommand.displayScale)), moc.displayXY[1], ScaleCommand.displayScale);
+        			new TextRenderer(Minecraft.getMinecraft(), countTextTwo, (int) (moc.displayXY[0] + (255 * ScaleCommand.displayScale)), moc.displayXY[1], ScaleCommand.displayScale);
+    			} else {
+    				dropsText += "\n" + dropsTextTwo;
+    				countText += "\n" + countTextTwo;
+    			}
     		} else if (ds.display.equals("fishing_session")) {
     			if (lc.empTimeSession == -1) {
     				timeBetween = "Never";
@@ -1014,8 +1019,13 @@ public class TheMod
 									  EnumChatFormatting.AQUA + timeBetween + "\n" +
 									  EnumChatFormatting.AQUA + bossesBetween;
     			
-    			new TextRenderer(Minecraft.getMinecraft(), dropsTextTwo, (int) (moc.displayXY[0] + (145 * ScaleCommand.displayScale)), moc.displayXY[1], ScaleCommand.displayScale);
-    			new TextRenderer(Minecraft.getMinecraft(), countTextTwo, (int) (moc.displayXY[0] + (255 * ScaleCommand.displayScale)), moc.displayXY[1], ScaleCommand.displayScale);
+    			if (tc.splitFishing) {
+    				new TextRenderer(Minecraft.getMinecraft(), dropsTextTwo, (int) (moc.displayXY[0] + (145 * ScaleCommand.displayScale)), moc.displayXY[1], ScaleCommand.displayScale);
+        			new TextRenderer(Minecraft.getMinecraft(), countTextTwo, (int) (moc.displayXY[0] + (255 * ScaleCommand.displayScale)), moc.displayXY[1], ScaleCommand.displayScale);
+    			} else {
+    				dropsText += "\n" + dropsTextTwo;
+    				countText += "\n" + countTextTwo;
+    			}
     		} else if (ds.display.equals("fishing_winter")) {
     			dropsText = EnumChatFormatting.AQUA + "Creatures Caught:\n" +
     						EnumChatFormatting.AQUA + "Fishing Milestone:\n" +

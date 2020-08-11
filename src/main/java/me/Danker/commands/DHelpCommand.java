@@ -32,7 +32,7 @@ public class DHelpCommand extends CommandBase {
 		player.addChatMessage(new ChatComponentText("\n" + EnumChatFormatting.GOLD + " " + TheMod.MODID + " Version " + TheMod.VERSION + "\n" +
 													EnumChatFormatting.AQUA + " <> = Mandatory parameter. [] = Optional parameter.\n" +
 													EnumChatFormatting.GOLD + " /dhelp" + EnumChatFormatting.AQUA + " - Returns this message.\n" +
-													EnumChatFormatting.GOLD + " /toggle <gparty/coords/golden/slayercount/list>" + EnumChatFormatting.AQUA + " - Toggles features. /toggle list returns values of every toggle.\n" +
+													EnumChatFormatting.GOLD + " /toggle <gparty/coords/golden/slayercount/rngesusalerts/splitfishing/list>" + EnumChatFormatting.AQUA + " - Toggles features. /toggle list returns values of every toggle.\n" +
 													EnumChatFormatting.GOLD + " /setkey <key>" + EnumChatFormatting.AQUA + " - Sets API key.\n" +
 													EnumChatFormatting.GOLD + " /getkey" + EnumChatFormatting.AQUA + " - Returns key set with /setkey.\n" +
 													EnumChatFormatting.GOLD + " /loot <zombie/spider/wolf/fishing> [winter/session]" + EnumChatFormatting.AQUA + " - Returns loot received from slayer quests or fishing stats. /loot fishing winter returns winter sea creatures instead.\n" +
