@@ -109,6 +109,8 @@ public class TheMod
 		t6Enchants.put("Lure VI", EnumChatFormatting.GOLD + "Lure VI" + EnumChatFormatting.BLUE);
 		t6Enchants.put("Magnet VI", EnumChatFormatting.GOLD + "Magnet VI" + EnumChatFormatting.BLUE);
 		t6Enchants.put("Spiked Hook VI", EnumChatFormatting.GOLD + "Spiked Hook VI" + EnumChatFormatting.BLUE);
+		t6Enchants.put("Feather Falling X", EnumChatFormatting.GOLD + "Feather Falling X" + EnumChatFormatting.BLUE);
+		t6Enchants.put("Infinite Quiver X", EnumChatFormatting.GOLD + "Infinite Quiver X" + EnumChatFormatting.BLUE);
 		
 		String patternString = "(" + String.join("|", t6Enchants.keySet()) + ")";
 		pattern = Pattern.compile(patternString);

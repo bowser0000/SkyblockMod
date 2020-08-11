@@ -6,7 +6,7 @@ Discord Server: https://discord.gg/QsEkNQS
 ## Current features
 - Guild party desktop notifications (toggleable)
 - Coordinate and angle display (toggleable, graphic display) (scalable)
-- Golden T6/T4 enchant display (toggleable)
+- Golden T10/T6/T4 enchant display (toggleable)
 - Slayer item tracker (with graphic display) (scalable)
 - Fishing tracker (with graphic display) (scalable)
 - API commands
