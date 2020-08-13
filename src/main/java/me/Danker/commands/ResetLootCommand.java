@@ -23,7 +23,7 @@ public class ResetLootCommand extends CommandBase {
 
 	@Override
 	public String getCommandUsage(ICommandSender arg0) {
-		return getCommandName() + "<zombie/spider/wolf/fishing/confirm/cancel>";
+		return getCommandName() + "<zombie/spider/wolf/fishing/catacombs/confirm/cancel>";
 	}
 
 	@Override
@@ -38,7 +38,7 @@ public class ResetLootCommand extends CommandBase {
 		if (confirmReset) {
 			return getListOfStringsMatchingLastWord(args, "confirm", "cancel");
 		} else {
-			return getListOfStringsMatchingLastWord(args, "zombie", "spider", "wolf", "fishing");
+			return getListOfStringsMatchingLastWord(args, "zombie", "spider", "wolf", "fishing", "catacombs");
 		}
 	}
 	
@@ -47,7 +47,7 @@ public class ResetLootCommand extends CommandBase {
 		final EntityPlayer player = (EntityPlayer) arg0;
 		
 		if (arg1.length == 0) {
-			player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Usage: /resetloot <zombie/spider/wolf/fishing>"));
+			player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Usage: /resetloot <zombie/spider/wolf/fishing/catacombs>"));
 			return;
 		}
 		
@@ -63,6 +63,8 @@ public class ResetLootCommand extends CommandBase {
 					resetWolf();
 				} else if (resetOption.equalsIgnoreCase("fishing")) {
 					resetFishing();
+				} else if (resetOption.equalsIgnoreCase("catacombs")) {
+					resetCatacombs();
 				}
 				player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Reset complete."));
 			} else if (arg1[0].equalsIgnoreCase("cancel")) {
@@ -73,7 +75,7 @@ public class ResetLootCommand extends CommandBase {
 															EnumChatFormatting.RED + " Cancel by using /resetloot cancel."));
 			}
 		} else {
-			if (arg1[0].equalsIgnoreCase("zombie") || arg1[0].equalsIgnoreCase("spider") || arg1[0].equalsIgnoreCase("wolf") || arg1[0].equalsIgnoreCase("fishing")) {
+			if (arg1[0].equalsIgnoreCase("zombie") || arg1[0].equalsIgnoreCase("spider") || arg1[0].equalsIgnoreCase("wolf") || arg1[0].equalsIgnoreCase("fishing") || arg1[0].equalsIgnoreCase("catacombs")) {
 				resetOption = arg1[0];
 				player.addChatMessage(new ChatComponentText(EnumChatFormatting.YELLOW + "Are you sure you want to reset the " + resetOption + " tracker?" + 
 															" Confirm with " + EnumChatFormatting.GREEN + "/resetloot confirm" + EnumChatFormatting.YELLOW + "." + 
@@ -82,7 +84,7 @@ public class ResetLootCommand extends CommandBase {
 			} else if (arg1[0].equalsIgnoreCase("confirm") || arg1[0].equalsIgnoreCase("cancel")) {
 				player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Pick something to reset first."));
 			} else {
-				player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Usage: /resetloot <zombie/spider/wolf/fishing>"));
+				player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Usage: /resetloot <zombie/spider/wolf/fishing/catacombs>"));
 			}
 		}
 	}
@@ -175,6 +177,27 @@ public class ResetLootCommand extends CommandBase {
 		lc.grinchesSession = 0;
 		lc.yetisSession = 0;
 		cf.deleteCategory("fishing");
+		cf.reloadConfig();
+	}
+	
+	static void resetCatacombs() {
+		LootCommand lc = new LootCommand();
+		ConfigHandler cf = new ConfigHandler();
+		lc.recombobulatorsSession = 0;
+		lc.fumingPotatoBooksSession = 0;
+		lc.bonzoStaffsSession = 0;
+		lc.scarfStudiesSession = 0;
+		lc.adaptiveHelmsSession = 0;
+		lc.adaptiveChestsSession = 0;
+		lc.adaptiveLegsSession = 0;
+		lc.adaptiveBootsSession = 0;
+		lc.adaptiveSwordsSession = 0;
+		lc.spiritWingsSession = 0;
+		lc.spiritBonesSession = 0;
+		lc.spiritBootsSession = 0;
+		lc.spiritSwordsSession = 0;
+		lc.epicSpiritPetsSession = 0;
+		cf.deleteCategory("catacombs");
 		cf.reloadConfig();
 	}
 

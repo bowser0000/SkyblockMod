@@ -5,16 +5,19 @@ import java.util.List;
 import java.util.regex.Matcher;
 
 import me.Danker.TheMod;
+import me.Danker.handlers.ScoreboardHandler;
 import me.Danker.handlers.TextRenderer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.scoreboard.ScoreObjective;
 import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.StringUtils;
 
 public class Utils {
+	
+	public static boolean inSkyblock = false;
 	
     public static int getItems(String item) {
     	Minecraft mc = Minecraft.getMinecraft();
@@ -83,6 +86,21 @@ public class Utils {
 		int titleX = (int) ((width / 2) - (textLength * scale / 2));
 		int titleY = (int) ((height * 0.45) / scale);
 		new TextRenderer(mc, text, titleX, titleY, scale);
+	}
+	
+	public static void checkForSkyblock() {
+		Minecraft mc = Minecraft.getMinecraft();
+		if (mc != null && mc.theWorld != null && !mc.isSingleplayer()) {
+			ScoreObjective scoreboardObj = mc.theWorld.getScoreboard().getObjectiveInDisplaySlot(1);
+			if (scoreboardObj != null) {
+				String scObjName = ScoreboardHandler.cleanSB(scoreboardObj.getDisplayName());
+				if (scObjName.contains("SKYBLOCK")) {
+					inSkyblock = true;
+					return;
+				}
+			}
+		}
+		inSkyblock = false;
 	}
 	
 }

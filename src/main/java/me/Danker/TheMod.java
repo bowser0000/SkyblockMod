@@ -15,6 +15,7 @@ import com.google.gson.JsonObject;
 
 import me.Danker.commands.ArmourCommand;
 import me.Danker.commands.BankCommand;
+import me.Danker.commands.ChatMaddoxCommand;
 import me.Danker.commands.DHelpCommand;
 import me.Danker.commands.DisplayCommand;
 import me.Danker.commands.GetkeyCommand;
@@ -36,11 +37,13 @@ import me.Danker.handlers.ScoreboardHandler;
 import me.Danker.handlers.TextRenderer;
 import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.event.ClickEvent;
 import net.minecraft.event.ClickEvent.Action;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.IChatComponent;
 import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
@@ -72,6 +75,8 @@ public class TheMod
     public static int titleTimer = -1;
     public static boolean showTitle = false;
     public static String titleText = "";
+    static int tickAmount = 1;
+    public static String lastMaddoxCommand = "/cb placeholdervalue";
     
     @EventHandler
     public void init(FMLInitializationEvent event)
@@ -135,6 +140,7 @@ public class TheMod
     	ClientCommandHandler.instance.registerCommand(new ImportFishingCommand());
     	ClientCommandHandler.instance.registerCommand(new ResetLootCommand());
     	ClientCommandHandler.instance.registerCommand(new ScaleCommand());
+    	ClientCommandHandler.instance.registerCommand(new ChatMaddoxCommand());
     }
     
     // Update checker
@@ -178,6 +184,19 @@ public class TheMod
     	final ToggleCommand tc = new ToggleCommand();
     	String message = event.message.getUnformattedText();
     	
+    	if (event.type == 2) return;
+    	if (!Utils.inSkyblock) return;
+    	
+    	// Replace chat messages with Maddox command
+        List<IChatComponent> chatSiblings = event.message.getSiblings();
+        for (IChatComponent sibling : chatSiblings) {
+        	if (sibling.getChatStyle().getChatClickEvent() == null) {
+        		sibling.setChatStyle(sibling.getChatStyle().setChatClickEvent(new ClickEvent(Action.RUN_COMMAND, "/dmodopenmaddoxmenu")));
+        	}
+        }
+    	
+    	System.out.println(event.message);
+    	
     	if (message.contains(":")) return;
     	
 		if (tc.gpartyToggled) {
@@ -197,7 +216,7 @@ public class TheMod
 				}
 			}
 		}
-
+		
 		final LootCommand lc = new LootCommand();
 		final ConfigHandler cf = new ConfigHandler();
 		boolean wolfRNG = false;
@@ -635,6 +654,100 @@ public class TheMod
 			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
 			cf.writeIntConfig("fishing", "milestone", lc.fishingMilestone);
 		}
+		
+		// Catacombs Dungeons
+		if (message.contains("    RARE REWARD! Recombobulator 3000")) {
+			lc.recombobulators++;
+			lc.recombobulatorsSession++;
+			cf.writeIntConfig("catacombs", "recombobulator", lc.recombobulators);
+		}
+		if (message.contains("    RARE REWARD! FUMING POTATO BOOK PLACEHOLDER")) {
+			
+		}
+		// F1
+		if (message.contains("    RARE REWARD! Bonzo's Staff")) {
+			lc.bonzoStaffs++;
+			lc.bonzoStaffsSession++;
+			cf.writeIntConfig("catacombs", "bonzoStaff", lc.bonzoStaffs);
+		}
+		// F2
+		if (message.contains("    RARE REWARD! Scarf's Studies")) {
+			lc.scarfStudies++;
+			lc.scarfStudiesSession++;
+			cf.writeIntConfig("catacombs", "scarfStudies", lc.scarfStudies);
+		}
+		// F3
+		if (message.contains("    RARE REWARD! Adaptive Helmet")) {
+			lc.adaptiveHelms++;
+			lc.adaptiveHelmsSession++;
+			cf.writeIntConfig("catacombs", "adaptiveHelm", lc.adaptiveHelms);
+		}
+		if (message.contains("    RARE REWARD! Adaptive Chestplate")) {
+			lc.adaptiveChests++;
+			lc.adaptiveChestsSession++;
+			cf.writeIntConfig("catacombs", "adaptiveChest", lc.adaptiveChests);
+		}
+		if (message.contains("    RARE REWARD! Adaptive Leggings")) {
+			lc.adaptiveLegs++;
+			lc.adaptiveLegsSession++;
+			cf.writeIntConfig("catacombs", "adaptiveLegging", lc.adaptiveLegs);
+		}
+		if (message.contains("    RARE REWARD! Adaptive Boots")) {
+			lc.adaptiveBoots++;
+			lc.adaptiveBootsSession++;
+			cf.writeIntConfig("catacombs", "adaptiveBoot", lc.adaptiveBoots);
+		}
+		if (message.contains("    RARE REWARD! Adaptive Blade")) {
+			lc.adaptiveSwords++;
+			lc.adaptiveSwordsSession++;
+			cf.writeIntConfig("catacombs", "adaptiveSword", lc.adaptiveSwords);
+		}
+		// F4
+		if (message.contains("    Spirit Wing")) {
+			lc.spiritWings++;
+			lc.spiritWingsSession++;
+			cf.writeIntConfig("catacombs", "spiritWing", lc.spiritWings);
+		}
+		// TODO
+		// Fix strings for Spirit Bone, Spirit Boots, Spirit Pet
+		if (message.contains("    ") && message.contains("Spirit Bone")) {
+			lc.spiritBones++;
+			lc.spiritBonesSession++;
+			cf.writeIntConfig("catacombs", "spiritBone", lc.spiritBones);
+		}
+		if (message.contains("    ") && message.contains("Spirit Boots")) {
+			lc.spiritBoots++;
+			lc.spiritBootsSession++;
+			cf.writeIntConfig("catacombs", "spiritBoot", lc.spiritBoots);
+		}
+		if (message.contains("    ") && message.contains("Spirit Pet")) {
+			String formattedMessage = event.message.getFormattedText();
+			if (formattedMessage.contains("§5Spirit Pet")) {
+				lc.epicSpiritPets++;
+				lc.epicSpiritPetsSession++;
+				cf.writeIntConfig("catacombs", "spiritPetEpic", lc.epicSpiritPets);
+			} else if (formattedMessage.contains("§6Spirit Pet")) {
+				lc.legSpiritPets++;
+				lc.legSpiritPetsSession++;
+				cf.writeIntConfig("catacombs", "spiritPetLeg", lc.legSpiritPets);
+			} 
+		}
+		if (message.contains("    Spirit Sword")) {
+			lc.spiritSwords++;
+			lc.spiritSwordsSession++;
+			cf.writeIntConfig("catacombs", "spiritSword", lc.spiritSwords);
+		}
+		
+		// Chat Maddox
+		if (message.contains("[OPEN MENU]")) {
+			List<IChatComponent> listOfSiblings = event.message.getSiblings();
+			for (IChatComponent sibling : listOfSiblings) {
+				if (sibling.getUnformattedText().contains("[OPEN MENU]")) {
+					lastMaddoxCommand = sibling.getChatStyle().getChatClickEvent().getValue();
+				}
+			}
+			if (tc.chatMaddoxToggled) Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Click anywhere in chat to open Maddox"));
+		}
     }
     
     @SubscribeEvent
@@ -1060,6 +1173,98 @@ public class TheMod
 							EnumChatFormatting.WHITE + nf.format(lc.frostyTheSnowmansSession) + "\n" +
 							EnumChatFormatting.DARK_GREEN + nf.format(lc.grinchesSession) + "\n" +
 							EnumChatFormatting.GOLD + nf.format(lc.yetisSession);
+    		} else if (ds.display.equals("catacombs_floor_one")) {
+    			dropsText = EnumChatFormatting.GOLD + "Recombobulators:\n" +
+    						EnumChatFormatting.DARK_PURPLE + "Fuming Potato Books:\n" +
+    						EnumChatFormatting.BLUE + "Bonzo's Staffs:";
+    			countText = EnumChatFormatting.GOLD + nf.format(lc.recombobulators) + "\n" +
+							EnumChatFormatting.DARK_PURPLE + nf.format(lc.fumingPotatoBooks) + "\n" +
+							EnumChatFormatting.BLUE + nf.format(lc.bonzoStaffs);
+    		} else if (ds.display.equals("catacombs_floor_one_session")) {
+    			dropsText = EnumChatFormatting.GOLD + "Recombobulators:\n" +
+							EnumChatFormatting.DARK_PURPLE + "Fuming Potato Books:\n" +
+							EnumChatFormatting.BLUE + "Bonzo's Staffs:";
+				countText = EnumChatFormatting.GOLD + nf.format(lc.recombobulatorsSession) + "\n" +
+							EnumChatFormatting.DARK_PURPLE + nf.format(lc.fumingPotatoBooksSession) + "\n" +
+							EnumChatFormatting.BLUE + nf.format(lc.bonzoStaffsSession);
+    		} else if (ds.display.equals("catacombs_floor_two")) {
+    			dropsText = EnumChatFormatting.GOLD + "Recombobulators:\n" +
+							EnumChatFormatting.DARK_PURPLE + "Fuming Potato Books:\n" +
+							EnumChatFormatting.BLUE + "Scarf's Studies:";
+				countText = EnumChatFormatting.GOLD + nf.format(lc.recombobulators) + "\n" +
+							EnumChatFormatting.DARK_PURPLE + nf.format(lc.fumingPotatoBooks) + "\n" +
+							EnumChatFormatting.BLUE + nf.format(lc.scarfStudies);
+    		} else if (ds.display.equals("catacombs_floor_two_session")) {
+    			dropsText = EnumChatFormatting.GOLD + "Recombobulators:\n" +
+							EnumChatFormatting.DARK_PURPLE + "Fuming Potato Books:\n" +
+							EnumChatFormatting.BLUE + "Scarf's Studies:";
+				countText = EnumChatFormatting.GOLD + nf.format(lc.recombobulatorsSession) + "\n" +
+							EnumChatFormatting.DARK_PURPLE + nf.format(lc.fumingPotatoBooksSession) + "\n" +
+							EnumChatFormatting.BLUE + nf.format(lc.scarfStudiesSession);
+    		} else if (ds.display.equals("catacombs_floor_three")) {
+    			dropsText = EnumChatFormatting.GOLD + "Recombobulators:\n" +
+							EnumChatFormatting.DARK_PURPLE + "Fuming Potato Books:\n" +
+							EnumChatFormatting.DARK_PURPLE + "Adaptive Helmets:\n" +
+							EnumChatFormatting.DARK_PURPLE + "Adaptive Chestplates:\n" +
+							EnumChatFormatting.DARK_PURPLE + "Adaptive Leggings:\n" +
+							EnumChatFormatting.DARK_PURPLE + "Adaptive Boots:\n" +
+							EnumChatFormatting.DARK_PURPLE + "Adaptive Blades:";
+				countText = EnumChatFormatting.GOLD + nf.format(lc.recombobulators) + "\n" +
+							EnumChatFormatting.DARK_PURPLE + nf.format(lc.fumingPotatoBooks) + "\n" +
+							EnumChatFormatting.DARK_PURPLE + nf.format(lc.adaptiveHelms) + "\n" +
+							EnumChatFormatting.DARK_PURPLE + nf.format(lc.adaptiveChests) + "\n" +
+							EnumChatFormatting.DARK_PURPLE + nf.format(lc.adaptiveLegs) + "\n" +
+							EnumChatFormatting.DARK_PURPLE + nf.format(lc.adaptiveBoots) + "\n" +
+							EnumChatFormatting.DARK_PURPLE + nf.format(lc.adaptiveSwords);	
+    		} else if (ds.display.equals("catacombs_floor_three_session")) {
+    			dropsText = EnumChatFormatting.GOLD + "Recombobulators:\n" +
+							EnumChatFormatting.DARK_PURPLE + "Fuming Potato Books:\n" +
+							EnumChatFormatting.DARK_PURPLE + "Adaptive Helmets:\n" +
+							EnumChatFormatting.DARK_PURPLE + "Adaptive Chestplates:\n" +
+							EnumChatFormatting.DARK_PURPLE + "Adaptive Leggings:\n" +
+							EnumChatFormatting.DARK_PURPLE + "Adaptive Boots:\n" +
+							EnumChatFormatting.DARK_PURPLE + "Adaptive Blades:";
+				countText = EnumChatFormatting.GOLD + nf.format(lc.recombobulatorsSession) + "\n" +
+							EnumChatFormatting.DARK_PURPLE + nf.format(lc.fumingPotatoBooksSession) + "\n" +
+							EnumChatFormatting.DARK_PURPLE + nf.format(lc.adaptiveHelmsSession) + "\n" +
+							EnumChatFormatting.DARK_PURPLE + nf.format(lc.adaptiveChestsSession) + "\n" +
+							EnumChatFormatting.DARK_PURPLE + nf.format(lc.adaptiveLegsSession) + "\n" +
+							EnumChatFormatting.DARK_PURPLE + nf.format(lc.adaptiveBootsSession) + "\n" +
+							EnumChatFormatting.DARK_PURPLE + nf.format(lc.adaptiveSwordsSession);
+    		} else if (ds.display.equals("catacombs_floor_four")) {
+    			dropsText = EnumChatFormatting.GOLD + "Recombobulators:\n" +
+							EnumChatFormatting.DARK_PURPLE + "Fuming Potato Books:\n" +
+							EnumChatFormatting.DARK_PURPLE + "Spirit Wings:\n" +
+							EnumChatFormatting.DARK_PURPLE + "Spirit Bones:\n" +
+							EnumChatFormatting.DARK_PURPLE + "Spirit Boots:\n" +
+							EnumChatFormatting.DARK_PURPLE + "Spirit Swords:\n" +
+							EnumChatFormatting.DARK_PURPLE + "Epic Spirit Pets:\n" +
+							EnumChatFormatting.GOLD + "Leg Spirit Pets:";
+				countText = EnumChatFormatting.GOLD + nf.format(lc.recombobulators) + "\n" +
+							EnumChatFormatting.DARK_PURPLE + nf.format(lc.fumingPotatoBooks) + "\n" +
+							EnumChatFormatting.DARK_PURPLE + nf.format(lc.spiritWings) + "\n" +
+							EnumChatFormatting.DARK_PURPLE + nf.format(lc.spiritBones) + "\n" +
+							EnumChatFormatting.DARK_PURPLE + nf.format(lc.spiritBoots) + "\n" +
+							EnumChatFormatting.DARK_PURPLE + nf.format(lc.spiritSwords) + "\n" +
+							EnumChatFormatting.DARK_PURPLE + nf.format(lc.epicSpiritPets) + "\n" +
+							EnumChatFormatting.GOLD + nf.format(lc.legSpiritPets);
+    		} else if (ds.display.equals("catacombs_floor_four_session")) {
+    			dropsText = EnumChatFormatting.GOLD + "Recombobulators:\n" +
+							EnumChatFormatting.DARK_PURPLE + "Fuming Potato Books:\n" +
+							EnumChatFormatting.DARK_PURPLE + "Spirit Wings:\n" +
+							EnumChatFormatting.DARK_PURPLE + "Spirit Bones:\n" +
+							EnumChatFormatting.DARK_PURPLE + "Spirit Boots:\n" +
+							EnumChatFormatting.DARK_PURPLE + "Spirit Swords:\n" +
+							EnumChatFormatting.DARK_PURPLE + "Epic Spirit Pets:\n" +
+							EnumChatFormatting.GOLD + "Leg Spirit Pets:";
+				countText = EnumChatFormatting.GOLD + nf.format(lc.recombobulatorsSession) + "\n" +
+							EnumChatFormatting.DARK_PURPLE + nf.format(lc.fumingPotatoBooksSession) + "\n" +
+							EnumChatFormatting.DARK_PURPLE + nf.format(lc.spiritWingsSession) + "\n" +
+							EnumChatFormatting.DARK_PURPLE + nf.format(lc.spiritBonesSession) + "\n" +
+							EnumChatFormatting.DARK_PURPLE + nf.format(lc.spiritBootsSession) + "\n" +
+							EnumChatFormatting.DARK_PURPLE + nf.format(lc.spiritSwordsSession) + "\n" +
+							EnumChatFormatting.DARK_PURPLE + nf.format(lc.epicSpiritPetsSession) + "\n" +
+							EnumChatFormatting.GOLD + nf.format(lc.legSpiritPetsSession);
     		} else {
     			ConfigHandler cf = new ConfigHandler();
     			
@@ -1142,6 +1347,16 @@ public class TheMod
     
     @SubscribeEvent
     public void onTick(TickEvent.ClientTickEvent event) {
+    	// Check if player is in Skyblock every second
+    	tickAmount++;
+    	if (tickAmount % 20 == 0) {
+    		EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
+    		if (player != null) {
+        		Utils.checkForSkyblock();
+    		}
+    		tickAmount = 1;
+    	}
+    	
     	if (titleTimer >= 0) {
     		if (titleTimer == 0) {
     			showTitle = false;

@@ -9,19 +9,20 @@ Discord Server: https://discord.gg/QsEkNQS
 - Golden T10/T6/T4 enchant display (toggleable)
 - Slayer item tracker (with graphic display) (scalable)
 - Fishing tracker (with graphic display) (scalable)
+- Dungeons tracker (with graphic display) (scalable)
 - API commands
 - Update checker
 
 ## Commands
 - /dhelp - Returns this message in-game.
-- /toggle <gparty/coords/golden/slayercount/rngesusalerts/splitfishing/list> - Toggles features. /toggle list returns values of every toggle.
+- /toggle <gparty/coords/golden/slayercount/rngesusalerts/splitfishing/chatmaddox/list> - Toggles features. /toggle list returns values of every toggle.
 - /setkey <key> - Sets API key.
 - /getkey - Returns key set with /setkey.
-- /loot <zombie/spider/wolf/fishing> [winter/session] - Returns loot received from slayer quests or fishing stats. /loot fishing winter returns winter sea creatures instead.
-- /display <zombie/spider/wolf/fishing/off> [winter/session] - Text display for trackers. /display fishing winter displays winter sea creatures instead.
+- /loot <zombie/spider/wolf/fishing/catacombs> [winter/f(1-4)/session] - Returns loot received from slayer quests or fishing stats. /loot fishing winter returns winter sea creatures instead.
+- /display <zombie/spider/wolf/fishing/catacombs> [winter/f(1-4)/session] - Text display for trackers. /display fishing winter displays winter sea creatures instead.
 - /move <coords/display> <x> <y> - Moves text display to specified X and Y coordinates.
 - /scale <coords/display> <scale (0.1 - 10)> - Scales text display to a specified multipler between 0.1x and 10x.
-- /resetloot <zombie/spider/wolf/fishing/confirm/cancel> -  - Resets loot for trackers. /resetloot confirm confirms the reset.
+- /resetloot <zombie/spider/wolf/fishing/catacombs/confirm/cancel> -  - Resets loot for trackers. /resetloot confirm confirms the reset.
 - /slayer [player] - Uses API to get slayer xp of a person. If no name is provided, it checks yours.
 - /skills [player] - Uses API to get skill levels of a person. If no name is provided, it checks yours.
 - /guildof [player] - Uses API to get guild name and guild master of a person. If no name is provided, it checks yours.

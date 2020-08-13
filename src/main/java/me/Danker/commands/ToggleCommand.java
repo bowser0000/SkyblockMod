@@ -19,6 +19,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 	public static boolean slayerCountTotal;
 	public static boolean rngesusAlerts;
 	public static boolean splitFishing;
+	public static boolean chatMaddoxToggled;
 	
 	@Override
 	public String getCommandName() {
@@ -27,7 +28,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 
 	@Override
 	public String getCommandUsage(ICommandSender arg0) {
-		return getCommandName() + " <gparty/coords/golden/slayercount/rngesusalerts/splitfishing/list>";
+		return getCommandName() + " <gparty/coords/golden/slayercount/rngesusalerts/splitfishing/chatmaddox/list>";
 	}
 
 	@Override
@@ -38,7 +39,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 	@Override
 	public List<String> addTabCompletionOptions(ICommandSender sender, String[] args, BlockPos pos) {
 		if (args.length == 1) {
-			return getListOfStringsMatchingLastWord(args, "gparty", "coords", "golden", "slayercount", "rngesusalerts", "splitfishing", "list");
+			return getListOfStringsMatchingLastWord(args, "gparty", "coords", "golden", "slayercount", "rngesusalerts", "splitfishing", "chatmaddox", "list");
 		}
 		return null;
 	}
@@ -49,7 +50,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 		final ConfigHandler cf = new ConfigHandler();
 		
 		if (arg1.length == 0) {
-			player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Usage: /toggle <gparty/coords/golden/slayercount/rngesusalerts/splitfishing/list>"));
+			player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Usage: /toggle <gparty/coords/golden/slayercount/rngesusalerts/splitfishing/chatmaddox/list>"));
 			return;
 		}
 		
@@ -77,15 +78,20 @@ public class ToggleCommand extends CommandBase implements ICommand {
 			splitFishing = !splitFishing;
 			cf.writeBooleanConfig("toggles", "SplitFishing", splitFishing);
 			player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Split fishing display has been set to " + EnumChatFormatting.DARK_GREEN + splitFishing + EnumChatFormatting.GREEN + "."));
+		} else if (arg1[0].equalsIgnoreCase("chatmaddox")) {
+			chatMaddoxToggled = !chatMaddoxToggled;
+			cf.writeBooleanConfig("toggles", "ChatMaddox", chatMaddoxToggled);
+			player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Chat Maddox menu has been set to " + EnumChatFormatting.DARK_GREEN + chatMaddoxToggled + EnumChatFormatting.GREEN + "."));
 		} else if (arg1[0].equalsIgnoreCase("list")) {
 			player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Guild party notifications: " + EnumChatFormatting.DARK_GREEN + gpartyToggled + "\n" +
 														EnumChatFormatting.GREEN + " Coord/Angle display: " + EnumChatFormatting.DARK_GREEN + coordsToggled + "\n" +
 														EnumChatFormatting.GREEN + " Golden T6 enchants: " + EnumChatFormatting.DARK_GREEN + goldenToggled + "\n" +
 														EnumChatFormatting.GREEN + " Counting total 20% slayer drops: " + EnumChatFormatting.DARK_GREEN + slayerCountTotal + "\n" +
 														EnumChatFormatting.GREEN + " Slayer RNGesus alerts: " + EnumChatFormatting.DARK_GREEN + rngesusAlerts + "\n" +
-														EnumChatFormatting.GREEN + " Split fishing display: " + EnumChatFormatting.DARK_GREEN + splitFishing));
+														EnumChatFormatting.GREEN + " Split fishing display: " + EnumChatFormatting.DARK_GREEN + splitFishing + "\n" +
+														EnumChatFormatting.GREEN + " Chat Maddox menu: " + EnumChatFormatting.DARK_GREEN + chatMaddoxToggled));
 		} else {
-			player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Usage: /toggle <gparty/coords/golden/slayercount/rngesusalerts/splitfishing/list>"));
+			player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Usage: /toggle <gparty/coords/golden/slayercount/rngesusalerts/splitfishing/chatmaddox/list>"));
 		}
 	}
 }

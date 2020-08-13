@@ -81,6 +81,27 @@ public class LootCommand extends CommandBase {
 	public static int grinches;
 	public static int yetis;
 	
+	// Catacombs Dungeons
+	public static int recombobulators;
+	public static int fumingPotatoBooks;
+	// F1
+	public static int bonzoStaffs;
+	// F2
+	public static int scarfStudies;
+	// F3
+	public static int adaptiveHelms;
+	public static int adaptiveChests;
+	public static int adaptiveLegs;
+	public static int adaptiveBoots;
+	public static int adaptiveSwords;
+	// F4
+	public static int spiritWings;
+	public static int spiritBones;
+	public static int spiritBoots;
+	public static int spiritSwords;
+	public static int epicSpiritPets;
+	public static int legSpiritPets;
+	
 	// Single sessions (No config saves)
 	// Wolf
 	public static int wolfSvensSession = 0;
@@ -150,6 +171,27 @@ public class LootCommand extends CommandBase {
 	public static int grinchesSession = 0;
 	public static int yetisSession = 0;
 	
+	// Catacombs Dungeons
+	public static int recombobulatorsSession = 0;
+	public static int fumingPotatoBooksSession = 0;
+	// F1
+	public static int bonzoStaffsSession = 0;
+	// F2
+	public static int scarfStudiesSession = 0;
+	// F3
+	public static int adaptiveHelmsSession = 0;
+	public static int adaptiveChestsSession = 0;
+	public static int adaptiveLegsSession = 0;
+	public static int adaptiveBootsSession = 0;
+	public static int adaptiveSwordsSession = 0;
+	// F4
+	public static int spiritWingsSession = 0;
+	public static int spiritBonesSession = 0;
+	public static int spiritBootsSession = 0;
+	public static int spiritSwordsSession = 0;
+	public static int epicSpiritPetsSession = 0;
+	public static int legSpiritPetsSession = 0;
+	
 	public String getTimeBetween(double timeOne, double timeTwo) {
 		double secondsBetween = Math.floor(timeTwo - timeOne);
 		
@@ -186,7 +228,7 @@ public class LootCommand extends CommandBase {
 
 	@Override
 	public String getCommandUsage(ICommandSender arg0) {
-		return getCommandName() + " <zombie/spider/wolf/fishing> [winter/session]";
+		return getCommandName() + " <zombie/spider/wolf/fishing/catacombs> [winter/f(1-4)/session]";
 	}
 	
 	@Override
@@ -200,7 +242,9 @@ public class LootCommand extends CommandBase {
 			return getListOfStringsMatchingLastWord(args, "wolf", "spider", "zombie", "fishing");
 		} else if (args.length == 2 && args[0].equalsIgnoreCase("fishing")) {
 			return getListOfStringsMatchingLastWord(args, "winter", "session");
-		} else if (args.length == 2 || (args.length == 3 && args[0].equalsIgnoreCase("fishing") && args[1].equalsIgnoreCase("winter"))) { 
+		} else if (args.length == 2 && args[0].equalsIgnoreCase("catacombs")) {
+			return getListOfStringsMatchingLastWord(args, "f1", "floor1", "f2", "floor2", "f3", "floor3", "f4", "floor4");
+		} else if (args.length > 1 || (args.length == 3 && args[0].equalsIgnoreCase("fishing") && args[1].equalsIgnoreCase("winter"))) { 
 			return getListOfStringsMatchingLastWord(args, "session");
 		}
 		return null;
@@ -211,7 +255,7 @@ public class LootCommand extends CommandBase {
 		final EntityPlayer player = (EntityPlayer) arg0;
 		
 		if (arg1.length == 0) {
-			player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Usage: /loot <zombie/spider/wolf/fishing> [winter/session]"));
+			player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Usage: /loot <zombie/spider/wolf/fishing/catacombs> [winter/f(1-4)/session]"));
 			return;
 		}
 		
@@ -222,16 +266,8 @@ public class LootCommand extends CommandBase {
 		NumberFormat nf = NumberFormat.getIntegerInstance(Locale.US);
 		boolean showSession = false;
 		
-		if (arg1.length > 1) {
-			if (arg1[1].equalsIgnoreCase("session")) {
-				showSession = true;
-			} else if (arg1.length > 2) {
-				if (arg1[2].equalsIgnoreCase("session")) {
-					showSession = true;
-				}
-			}
-		}
-		
+		if (arg1[arg1.length - 1].equalsIgnoreCase("session")) showSession = true;
+
 		if (arg1[0].equalsIgnoreCase("wolf")) {
 			if (showSession) {
 				if (wolfTimeSession == -1) {
@@ -524,8 +560,98 @@ public class LootCommand extends CommandBase {
 														EnumChatFormatting.AQUA + "    Time Since Sea Emperor: " + timeBetween + "\n" +
 														EnumChatFormatting.AQUA + "    Sea Creatures Since Sea Emperor: " + bossesBetween + "\n" +
 														EnumChatFormatting.DARK_AQUA + EnumChatFormatting.BOLD + " -------------------"));
+		} else if (arg1[0].equalsIgnoreCase("catacombs")) {
+			if (arg1.length == 1) {
+				player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Usage: /loot catacombs <f1/f2/f3/f4>"));
+				return;
+			}
+			if (arg1[1].equalsIgnoreCase("f1") || arg1[1].equalsIgnoreCase("floor1")) {
+				if (showSession) {
+					player.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_RED + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+																EnumChatFormatting.RED + EnumChatFormatting.BOLD + "  Catacombs F1 Summary (Current Session):\n" +
+																EnumChatFormatting.GOLD + "    Recombobulator 3000s: " + nf.format(recombobulatorsSession) + "\n" +
+																EnumChatFormatting.DARK_PURPLE + "    Fuming Potato Books: " + nf.format(fumingPotatoBooksSession) + "\n" +
+																EnumChatFormatting.BLUE + "    Bonzo's Staffs: " + nf.format(bonzoStaffsSession) + "\n" +
+																EnumChatFormatting.DARK_RED + EnumChatFormatting.BOLD + " -------------------"));
+					return;
+				}
+				player.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_RED + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+															EnumChatFormatting.RED + EnumChatFormatting.BOLD + "  Catacombs F1 Summary:\n" +
+															EnumChatFormatting.GOLD + "    Recombobulator 3000s: " + nf.format(recombobulators) + "\n" +
+															EnumChatFormatting.DARK_PURPLE + "    Fuming Potato Books: " + nf.format(fumingPotatoBooks) + "\n" +
+															EnumChatFormatting.BLUE + "    Bonzo's Staffs: " + nf.format(bonzoStaffs) + "\n" +
+															EnumChatFormatting.DARK_RED + EnumChatFormatting.BOLD + " -------------------"));
+			} else if (arg1[1].equalsIgnoreCase("f2") || arg1[1].equalsIgnoreCase("floor2")) {
+				if (showSession) {
+					player.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_RED + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+																EnumChatFormatting.RED + EnumChatFormatting.BOLD + "  Catacombs F2 Summary (Current Session):\n" +
+																EnumChatFormatting.GOLD + "    Recombobulator 3000s: " + nf.format(recombobulatorsSession) + "\n" +
+																EnumChatFormatting.DARK_PURPLE + "    Fuming Potato Books: " + nf.format(fumingPotatoBooksSession) + "\n" +
+																EnumChatFormatting.BLUE + "    Scarf's Studies: " + nf.format(scarfStudiesSession) + "\n" +
+																EnumChatFormatting.DARK_RED + EnumChatFormatting.BOLD + " -------------------"));
+					return;
+				}
+				player.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_RED + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+															EnumChatFormatting.RED + EnumChatFormatting.BOLD + "  Catacombs F2 Summary:\n" +
+															EnumChatFormatting.GOLD + "    Recombobulator 3000s: " + nf.format(recombobulators) + "\n" +
+															EnumChatFormatting.DARK_PURPLE + "    Fuming Potato Books: " + nf.format(fumingPotatoBooks) + "\n" +
+															EnumChatFormatting.BLUE + "    Scarf's Studies: " + nf.format(scarfStudies) + "\n" +
+															EnumChatFormatting.DARK_RED + EnumChatFormatting.BOLD + " -------------------"));
+			} else if (arg1[1].equalsIgnoreCase("f3") || arg1[1].equalsIgnoreCase("floor3")) {
+				if (showSession) {
+					player.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_RED + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+																EnumChatFormatting.RED + EnumChatFormatting.BOLD + "  Catacombs F3 Summary (Current Session):\n" +
+																EnumChatFormatting.GOLD + "    Recombobulator 3000s: " + nf.format(recombobulatorsSession) + "\n" +
+																EnumChatFormatting.DARK_PURPLE + "    Fuming Potato Books: " + nf.format(fumingPotatoBooksSession) + "\n" +
+																EnumChatFormatting.DARK_PURPLE + "    Adaptive Helmets: " + nf.format(adaptiveHelmsSession) + "\n" +
+																EnumChatFormatting.DARK_PURPLE + "    Adaptive Chestplates: " + nf.format(adaptiveChestsSession) + "\n" +
+																EnumChatFormatting.DARK_PURPLE + "    Adaptive Leggings: " + nf.format(adaptiveLegsSession) + "\n" +
+																EnumChatFormatting.DARK_PURPLE + "    Adaptive Boots: " + nf.format(adaptiveBootsSession) + "\n" +
+																EnumChatFormatting.DARK_PURPLE + "    Adaptive Blades: " + nf.format(adaptiveSwordsSession) + "\n" +
+																EnumChatFormatting.DARK_RED + EnumChatFormatting.BOLD + " -------------------"));
+					return;
+				}
+				player.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_RED + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+															EnumChatFormatting.RED + EnumChatFormatting.BOLD + "  Catacombs F3 Summary:\n" +
+															EnumChatFormatting.GOLD + "    Recombobulator 3000s: " + nf.format(recombobulators) + "\n" +
+															EnumChatFormatting.DARK_PURPLE + "    Fuming Potato Books: " + nf.format(fumingPotatoBooks) + "\n" +
+															EnumChatFormatting.DARK_PURPLE + "    Adaptive Helmets: " + nf.format(adaptiveHelms) + "\n" +
+															EnumChatFormatting.DARK_PURPLE + "    Adaptive Chestplates: " + nf.format(adaptiveChests) + "\n" +
+															EnumChatFormatting.DARK_PURPLE + "    Adaptive Leggings: " + nf.format(adaptiveLegs) + "\n" +
+															EnumChatFormatting.DARK_PURPLE + "    Adaptive Boots: " + nf.format(adaptiveBoots) + "\n" +
+															EnumChatFormatting.DARK_PURPLE + "    Adaptive Blades: " + nf.format(adaptiveSwords) + "\n" +
+															EnumChatFormatting.DARK_RED + EnumChatFormatting.BOLD + " -------------------"));
+			} else if (arg1[1].equalsIgnoreCase("f4") || arg1[1].equalsIgnoreCase("floor4")) {
+				if (showSession) {
+					player.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_RED + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+																EnumChatFormatting.RED + EnumChatFormatting.BOLD + "  Catacombs F4 Summary (Current Session):\n" +
+																EnumChatFormatting.GOLD + "    Recombobulator 3000s: " + nf.format(recombobulatorsSession) + "\n" +
+																EnumChatFormatting.DARK_PURPLE + "    Fuming Potato Books: " + nf.format(fumingPotatoBooksSession) + "\n" +
+																EnumChatFormatting.DARK_PURPLE + "    Spirit Wings: " + nf.format(spiritWingsSession) + "\n" +
+																EnumChatFormatting.DARK_PURPLE + "    Spirit Bones: " + nf.format(spiritBonesSession) + "\n" +
+																EnumChatFormatting.DARK_PURPLE + "    Spirit Boots: " + nf.format(spiritBootsSession) + "\n" +
+																EnumChatFormatting.DARK_PURPLE + "    Spirit Swords: " + nf.format(spiritSwordsSession) + "\n" +
+																EnumChatFormatting.DARK_PURPLE + "    Epic Spirit Pets: " + nf.format(epicSpiritPetsSession) + "\n" +
+																EnumChatFormatting.GOLD + "    Leg Spirit Pets: " + nf.format(legSpiritPetsSession) + "\n" +
+																EnumChatFormatting.DARK_RED + EnumChatFormatting.BOLD + " -------------------"));
+					return;
+				}
+				player.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_RED + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+															EnumChatFormatting.RED + EnumChatFormatting.BOLD + "  Catacombs F4 Summary:\n" +
+															EnumChatFormatting.GOLD + "    Recombobulator 3000s: " + nf.format(recombobulators) + "\n" +
+															EnumChatFormatting.DARK_PURPLE + "    Fuming Potato Books: " + nf.format(fumingPotatoBooks) + "\n" +
+															EnumChatFormatting.DARK_PURPLE + "    Spirit Wings: " + nf.format(spiritWings) + "\n" +
+															EnumChatFormatting.DARK_PURPLE + "    Spirit Bones: " + nf.format(spiritBones) + "\n" +
+															EnumChatFormatting.DARK_PURPLE + "    Spirit Boots: " + nf.format(spiritBoots) + "\n" +
+															EnumChatFormatting.DARK_PURPLE + "    Spirit Swords: " + nf.format(spiritSwords) + "\n" +
+															EnumChatFormatting.DARK_PURPLE + "    Epic Spirit Pets: " + nf.format(epicSpiritPets) + "\n" +
+															EnumChatFormatting.GOLD + "    Leg Spirit Pets: " + nf.format(legSpiritPets) + "\n" +
+															EnumChatFormatting.DARK_RED + EnumChatFormatting.BOLD + " -------------------"));
+			} else {
+				player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Usage: /loot catacombs <f1/f2/f3/f4>"));
+			}
 		} else {
-			player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Usage: /loot <zombie/spider/wolf/fishing> [winter/session]"));
+			player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Usage: /loot <zombie/spider/wolf/fishing/catacombs> [winter/f(1-4)/session]"));
 		}
 
 	}

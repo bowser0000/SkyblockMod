@@ -175,6 +175,7 @@ public class ConfigHandler {
 		if (!hasKey("toggles", "SlayerCount")) writeBooleanConfig("toggles", "SlayerCount", true);
 		if (!hasKey("toggles", "RNGesusAlerts")) writeBooleanConfig("toggles", "RNGesusAlerts", true);
 		if (!hasKey("toggles", "SplitFishing")) writeBooleanConfig("toggles", "SplitFishing", true);
+		if (!hasKey("toggles", "ChatMaddox")) writeBooleanConfig("toggles", "ChatMaddox", true);
 		if (!hasKey("api", "APIKey")) writeStringConfig("api", "APIKey", "");
 		
 		// Wolf Loot
@@ -245,6 +246,27 @@ public class ConfigHandler {
 		if (!hasKey("fishing", "grinch")) writeIntConfig("fishing", "grinch", 0);
 		if (!hasKey("fishing", "yeti")) writeIntConfig("fishing", "yeti", 0);
 		
+		// Dungeons
+		if (!hasKey("catacombs", "recombobulator")) writeIntConfig("catacombs", "recombobulator", 0);
+		if (!hasKey("catacombs", "fumingBooks")) writeIntConfig("catacombs", "fumingBooks", 0);
+		// F1
+		if (!hasKey("catacombs", "bonzoStaff")) writeIntConfig("catacombs", "bonzoStaff", 0);
+		// F2
+		if (!hasKey("catacombs", "scarfStudies")) writeIntConfig("catacombs", "scarfStudies", 0);
+		// F3
+		if (!hasKey("catacombs", "adaptiveHelm")) writeIntConfig("catacombs", "adaptiveHelm", 0);
+		if (!hasKey("catacombs", "adaptiveChest")) writeIntConfig("catacombs", "adaptiveChest", 0);
+		if (!hasKey("catacombs", "adaptiveLegging")) writeIntConfig("catacombs", "adaptiveLegging", 0);
+		if (!hasKey("catacombs", "adaptiveBoot")) writeIntConfig("catacombs", "adaptiveBoot", 0);
+		if (!hasKey("catacombs", "adaptiveSword")) writeIntConfig("catacombs", "adaptiveSword", 0);
+		// F4
+		if (!hasKey("catacombs", "spiritWing")) writeIntConfig("catacombs", "spiritWing", 0);
+		if (!hasKey("catacombs", "spiritBone")) writeIntConfig("catacombs", "spiritBone", 0);
+		if (!hasKey("catacombs", "spiritBoot")) writeIntConfig("catacombs", "spiritBoot", 0);
+		if (!hasKey("catacombs", "spiritSword")) writeIntConfig("catacombs", "spiritSword", 0);
+		if (!hasKey("catacombs", "spiritPetEpic")) writeIntConfig("catacombs", "spiritPetEpic", 0);
+		if (!hasKey("catacombs", "spiritPetLeg")) writeIntConfig("catacombs", "spiritPetLeg", 0);
+		
 		if (!hasKey("misc", "display")) writeStringConfig("misc", "display", "off");
 		
 		ScaledResolution scaled = new ScaledResolution(Minecraft.getMinecraft());
@@ -263,6 +285,7 @@ public class ConfigHandler {
 		tf.slayerCountTotal = getBoolean("toggles", "SlayerCount");
 		tf.rngesusAlerts = getBoolean("toggles", "RNGesusAlerts");
 		tf.splitFishing = getBoolean("toggles", "SplitFishing");
+		tf.chatMaddoxToggled = getBoolean("toggles", "ChatMaddox");
 		
 		final LootCommand lc = new LootCommand();
 		// Wolf
@@ -331,6 +354,27 @@ public class ConfigHandler {
 		lc.frostyTheSnowmans = getInt("fishing", "snowman");
 		lc.grinches = getInt("fishing", "grinch");
 		lc.yetis = getInt("fishing", "yeti");
+		
+		// Dungeons
+		lc.recombobulators =  getInt("catacombs", "recombobulator");
+		lc.fumingPotatoBooks = getInt("catacombs", "fumingBooks");
+		// F1
+		lc.bonzoStaffs = getInt("catacombs", "bonzoStaff");
+		// F2
+		lc.scarfStudies = getInt("catacombs", "scarfStudies");
+		// F3
+		lc.adaptiveHelms = getInt("catacombs", "adaptiveHelm");
+		lc.adaptiveChests = getInt("catacombs", "adaptiveChest");
+		lc.adaptiveLegs = getInt("catacombs", "adaptiveLegging");
+		lc.adaptiveBoots = getInt("catacombs", "adaptiveBoot");
+		lc.adaptiveSwords = getInt("catacombs", "adaptiveSword");
+		// F4
+		lc.spiritWings = getInt("catacombs", "spiritWing");
+		lc.spiritBones = getInt("catacombs", "spiritBone");
+		lc.spiritBoots = getInt("catacombs", "spiritBoot");
+		lc.spiritSwords = getInt("catacombs", "spiritSword");
+		lc.epicSpiritPets = getInt("catacombs", "spiritPetEpic");
+		lc.legSpiritPets = getInt("catacombs", "spiritPetLeg");
 		
 		final DisplayCommand ds = new DisplayCommand();
 		ds.display = getString("misc", "display");
