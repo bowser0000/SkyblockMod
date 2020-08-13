@@ -99,6 +99,7 @@ public class LootCommand extends CommandBase {
 	public static int spiritBones;
 	public static int spiritBoots;
 	public static int spiritSwords;
+	public static int spiritBows;
 	public static int epicSpiritPets;
 	public static int legSpiritPets;
 	
@@ -189,6 +190,7 @@ public class LootCommand extends CommandBase {
 	public static int spiritBonesSession = 0;
 	public static int spiritBootsSession = 0;
 	public static int spiritSwordsSession = 0;
+	public static int spiritBowsSession = 0;
 	public static int epicSpiritPetsSession = 0;
 	public static int legSpiritPetsSession = 0;
 	
@@ -631,6 +633,7 @@ public class LootCommand extends CommandBase {
 																EnumChatFormatting.DARK_PURPLE + "    Spirit Bones: " + nf.format(spiritBonesSession) + "\n" +
 																EnumChatFormatting.DARK_PURPLE + "    Spirit Boots: " + nf.format(spiritBootsSession) + "\n" +
 																EnumChatFormatting.DARK_PURPLE + "    Spirit Swords: " + nf.format(spiritSwordsSession) + "\n" +
+																EnumChatFormatting.GOLD + "    Spirit Bows: " + nf.format(spiritBowsSession) + "\n" +
 																EnumChatFormatting.DARK_PURPLE + "    Epic Spirit Pets: " + nf.format(epicSpiritPetsSession) + "\n" +
 																EnumChatFormatting.GOLD + "    Leg Spirit Pets: " + nf.format(legSpiritPetsSession) + "\n" +
 																EnumChatFormatting.DARK_RED + EnumChatFormatting.BOLD + " -------------------"));
@@ -644,6 +647,7 @@ public class LootCommand extends CommandBase {
 															EnumChatFormatting.DARK_PURPLE + "    Spirit Bones: " + nf.format(spiritBones) + "\n" +
 															EnumChatFormatting.DARK_PURPLE + "    Spirit Boots: " + nf.format(spiritBoots) + "\n" +
 															EnumChatFormatting.DARK_PURPLE + "    Spirit Swords: " + nf.format(spiritSwords) + "\n" +
+															EnumChatFormatting.GOLD + "    Spirit Bows: " + nf.format(spiritBows) + "\n" +
 															EnumChatFormatting.DARK_PURPLE + "    Epic Spirit Pets: " + nf.format(epicSpiritPets) + "\n" +
 															EnumChatFormatting.GOLD + "    Leg Spirit Pets: " + nf.format(legSpiritPets) + "\n" +
 															EnumChatFormatting.DARK_RED + EnumChatFormatting.BOLD + " -------------------"));

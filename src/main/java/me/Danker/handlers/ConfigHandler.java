@@ -264,6 +264,7 @@ public class ConfigHandler {
 		if (!hasKey("catacombs", "spiritBone")) writeIntConfig("catacombs", "spiritBone", 0);
 		if (!hasKey("catacombs", "spiritBoot")) writeIntConfig("catacombs", "spiritBoot", 0);
 		if (!hasKey("catacombs", "spiritSword")) writeIntConfig("catacombs", "spiritSword", 0);
+		if (!hasKey("catacombs", "spiritBow")) writeIntConfig("catacombs", "spiritBow", 0);
 		if (!hasKey("catacombs", "spiritPetEpic")) writeIntConfig("catacombs", "spiritPetEpic", 0);
 		if (!hasKey("catacombs", "spiritPetLeg")) writeIntConfig("catacombs", "spiritPetLeg", 0);
 		
@@ -373,6 +374,7 @@ public class ConfigHandler {
 		lc.spiritBones = getInt("catacombs", "spiritBone");
 		lc.spiritBoots = getInt("catacombs", "spiritBoot");
 		lc.spiritSwords = getInt("catacombs", "spiritSword");
+		lc.spiritBows = getInt("catacombs", "spiritBow");
 		lc.epicSpiritPets = getInt("catacombs", "spiritPetEpic");
 		lc.legSpiritPets = getInt("catacombs", "spiritPetLeg");
 		

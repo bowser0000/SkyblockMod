@@ -737,6 +737,11 @@ public class TheMod
 			lc.spiritSwordsSession++;
 			cf.writeIntConfig("catacombs", "spiritSword", lc.spiritSwords);
 		}
+		if (message.contains("    Spirit Bow")) {
+			lc.spiritBows++;
+			lc.spiritBowsSession++;
+			cf.writeIntConfig("catacombs", "spiritBow", lc.spiritBows);
+		}
 		
 		// Chat Maddox
 		if (message.contains("[OPEN MENU]")) {
@@ -1238,6 +1243,7 @@ public class TheMod
 							EnumChatFormatting.DARK_PURPLE + "Spirit Bones:\n" +
 							EnumChatFormatting.DARK_PURPLE + "Spirit Boots:\n" +
 							EnumChatFormatting.DARK_PURPLE + "Spirit Swords:\n" +
+							EnumChatFormatting.GOLD + "Spirit Bows:\n" +
 							EnumChatFormatting.DARK_PURPLE + "Epic Spirit Pets:\n" +
 							EnumChatFormatting.GOLD + "Leg Spirit Pets:";
 				countText = EnumChatFormatting.GOLD + nf.format(lc.recombobulators) + "\n" +
@@ -1246,6 +1252,7 @@ public class TheMod
 							EnumChatFormatting.DARK_PURPLE + nf.format(lc.spiritBones) + "\n" +
 							EnumChatFormatting.DARK_PURPLE + nf.format(lc.spiritBoots) + "\n" +
 							EnumChatFormatting.DARK_PURPLE + nf.format(lc.spiritSwords) + "\n" +
+							EnumChatFormatting.GOLD + nf.format(lc.spiritBows) + "\n" +
 							EnumChatFormatting.DARK_PURPLE + nf.format(lc.epicSpiritPets) + "\n" +
 							EnumChatFormatting.GOLD + nf.format(lc.legSpiritPets);
     		} else if (ds.display.equals("catacombs_floor_four_session")) {
@@ -1255,6 +1262,7 @@ public class TheMod
 							EnumChatFormatting.DARK_PURPLE + "Spirit Bones:\n" +
 							EnumChatFormatting.DARK_PURPLE + "Spirit Boots:\n" +
 							EnumChatFormatting.DARK_PURPLE + "Spirit Swords:\n" +
+							EnumChatFormatting.GOLD + "Spirit Bows:\n" +
 							EnumChatFormatting.DARK_PURPLE + "Epic Spirit Pets:\n" +
 							EnumChatFormatting.GOLD + "Leg Spirit Pets:";
 				countText = EnumChatFormatting.GOLD + nf.format(lc.recombobulatorsSession) + "\n" +
@@ -1263,6 +1271,7 @@ public class TheMod
 							EnumChatFormatting.DARK_PURPLE + nf.format(lc.spiritBonesSession) + "\n" +
 							EnumChatFormatting.DARK_PURPLE + nf.format(lc.spiritBootsSession) + "\n" +
 							EnumChatFormatting.DARK_PURPLE + nf.format(lc.spiritSwordsSession) + "\n" +
+							EnumChatFormatting.GOLD + nf.format(lc.spiritBowsSession) + "\n" +
 							EnumChatFormatting.DARK_PURPLE + nf.format(lc.epicSpiritPetsSession) + "\n" +
 							EnumChatFormatting.GOLD + nf.format(lc.legSpiritPetsSession);
     		} else {
