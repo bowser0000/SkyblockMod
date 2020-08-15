@@ -195,8 +195,6 @@ public class TheMod
         	}
         }
     	
-    	System.out.println(event.message);
-    	
     	if (message.contains(":")) return;
     	
 		if (tc.gpartyToggled) {
