@@ -356,7 +356,7 @@ public class TheMod
 				lc.zombieBossesSession++;
 			}
 			cf.writeIntConfig("zombie", "revs", lc.zombieRevs);
-			cf.writeIntConfig("wolf", "bossRNG", lc.zombieBosses);
+			cf.writeIntConfig("zombie", "bossRNG", lc.zombieBosses);
 		}
 		if (message.contains("RARE DROP! (Foul Flesh)")) {
 			lc.zombieFoulFleshDrops++;
