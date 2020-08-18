@@ -34,7 +34,7 @@ public class DHelpCommand extends CommandBase {
 													EnumChatFormatting.GOLD + " /dhelp" + EnumChatFormatting.AQUA + " - Returns this message.\n" +
 													EnumChatFormatting.GOLD + " /toggle <gparty/coords/golden/slayercount/rngesusalerts/splitfishing/chatmaddox/list>" + EnumChatFormatting.AQUA + " - Toggles features. /toggle list returns values of every toggle.\n" +
 													EnumChatFormatting.GOLD + " /setkey <key>" + EnumChatFormatting.AQUA + " - Sets API key.\n" +
-													EnumChatFormatting.GOLD + " /getkey" + EnumChatFormatting.AQUA + " - Returns key set with /setkey.\n" +
+													EnumChatFormatting.GOLD + " /getkey [clipboard]" + EnumChatFormatting.AQUA + " - Returns key set with /setkey.\n" +
 													EnumChatFormatting.GOLD + " /loot <zombie/spider/wolf/fishing/catacombs> [winter/f(1-4)/session]" + EnumChatFormatting.AQUA + " - Returns loot received from slayer quests or fishing stats. /loot fishing winter returns winter sea creatures instead.\n" +
 													EnumChatFormatting.GOLD + " /display <zombie/spider/wolf/fishing/catacombs/off> [winter/f(1-4)/session]" + EnumChatFormatting.AQUA + " - Text display for trackers. /display fishing winter displays winter sea creatures instead.\n" +
 													EnumChatFormatting.GOLD + " /resetloot <zombie/spider/wolf/fishing/catacombs/confirm/cancel>" + EnumChatFormatting.AQUA + " - Resets loot for trackers. /resetloot confirm confirms the reset.\n" +
