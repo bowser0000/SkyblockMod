@@ -751,6 +751,11 @@ public class TheMod
 			}
 			if (tc.chatMaddoxToggled) Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Click anywhere in chat to open Maddox"));
 		}
+		
+		// Spirit Bear alerts
+		if (message.contains("The Spirit Bear has appeared!")) {
+			if (tc.spiritBearAlerts) Utils.createTitle(EnumChatFormatting.DARK_PURPLE + "SPIRIT BEAR", 2);
+		}
     }
     
     @SubscribeEvent

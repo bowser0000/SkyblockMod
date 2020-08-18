@@ -176,6 +176,7 @@ public class ConfigHandler {
 		if (!hasKey("toggles", "RNGesusAlerts")) writeBooleanConfig("toggles", "RNGesusAlerts", true);
 		if (!hasKey("toggles", "SplitFishing")) writeBooleanConfig("toggles", "SplitFishing", true);
 		if (!hasKey("toggles", "ChatMaddox")) writeBooleanConfig("toggles", "ChatMaddox", true);
+		if (!hasKey("toggles", "SpiritBearAlerts")) writeBooleanConfig("toggles", "SpiritBearAlerts", true);
 		if (!hasKey("api", "APIKey")) writeStringConfig("api", "APIKey", "");
 		
 		// Wolf Loot
@@ -287,6 +288,7 @@ public class ConfigHandler {
 		tf.rngesusAlerts = getBoolean("toggles", "RNGesusAlerts");
 		tf.splitFishing = getBoolean("toggles", "SplitFishing");
 		tf.chatMaddoxToggled = getBoolean("toggles", "ChatMaddox");
+		tf.spiritBearAlerts = getBoolean("toggles", "SpiritBearAlerts");
 		
 		final LootCommand lc = new LootCommand();
 		// Wolf
