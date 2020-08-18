@@ -103,4 +103,14 @@ public class Utils {
 		inSkyblock = false;
 	}
 	
+	public static String capitalizeString(String string) {
+		String[] words = string.split("_");
+		
+		for (int i = 0; i < words.length; i++) {
+			words[i] = words[i].substring(0, 1).toUpperCase() + words[i].substring(1).toLowerCase();
+		}
+		
+		return String.join(" ", words);
+	}
+	
 }
