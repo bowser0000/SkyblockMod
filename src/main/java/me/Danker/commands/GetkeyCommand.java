@@ -40,14 +40,10 @@ public class GetkeyCommand extends CommandBase implements ICommand {
 	    if (cf.getString("api", "APIKey").equals("")) {
 	      player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "API key not set. Set your API key using /setkey."));
 	    }
-	    else if (arg1.length == 0) {
-		  player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Your set API key is " + EnumChatFormatting.DARK_GREEN + cf.getString("api", "APIKey")));
-	    } else if (arg1[0].equalsIgnoreCase("clipboard")){
-		  clipboard.setContents(stringSelection, null);
-		  player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Your set API key has been copied to the clipboard."));
-	    } else {
-	    	player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Wrong command usage: /getkey (clipboard)"));
-	    }
+	    
+	    clipboard.setContents(stringSelection, null);
+		player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Your set API key is " + EnumChatFormatting.DARK_GREEN + cf.getString("api", "APIKey") + "\n" +
+													EnumChatFormatting.GREEN + "Your set API key has been copied to the clipboard."));
 
 	}
 
