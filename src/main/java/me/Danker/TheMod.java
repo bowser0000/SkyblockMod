@@ -29,6 +29,7 @@ import me.Danker.commands.ResetLootCommand;
 import me.Danker.commands.ScaleCommand;
 import me.Danker.commands.SetkeyCommand;
 import me.Danker.commands.SkillsCommand;
+import me.Danker.commands.SkyblockPlayersCommand;
 import me.Danker.commands.SlayerCommand;
 import me.Danker.commands.ToggleCommand;
 import me.Danker.handlers.APIHandler;
@@ -141,6 +142,7 @@ public class TheMod
     	ClientCommandHandler.instance.registerCommand(new ResetLootCommand());
     	ClientCommandHandler.instance.registerCommand(new ScaleCommand());
     	ClientCommandHandler.instance.registerCommand(new ChatMaddoxCommand());
+    	ClientCommandHandler.instance.registerCommand(new SkyblockPlayersCommand());
     }
     
     // Update checker

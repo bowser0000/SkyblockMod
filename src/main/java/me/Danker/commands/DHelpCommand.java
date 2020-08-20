@@ -39,14 +39,15 @@ public class DHelpCommand extends CommandBase {
 													EnumChatFormatting.GOLD + " /display <zombie/spider/wolf/fishing/catacombs/off> [winter/f(1-4)/session]" + EnumChatFormatting.AQUA + " - Text display for trackers. /display fishing winter displays winter sea creatures instead.\n" +
 													EnumChatFormatting.GOLD + " /resetloot <zombie/spider/wolf/fishing/catacombs/confirm/cancel>" + EnumChatFormatting.AQUA + " - Resets loot for trackers. /resetloot confirm confirms the reset.\n" +
 													EnumChatFormatting.GOLD + " /move <coords/display> <x> <y>" + EnumChatFormatting.AQUA + " - Moves text display to specified X and Y coordinates.\n" +
-													EnumChatFormatting.GOLD + " /scale <coords/display> <scale (0.1 - 10)" + EnumChatFormatting.AQUA + " - Scales text display to a specified multipler between 0.1x and 10x.\n" +
+													EnumChatFormatting.GOLD + " /scale <coords/display> <scale (0.1 - 10)>" + EnumChatFormatting.AQUA + " - Scales text display to a specified multipler between 0.1x and 10x.\n" +
 													EnumChatFormatting.GOLD + " /slayer [player]" + EnumChatFormatting.AQUA + " - Uses API to get slayer xp of a person. If no name is provided, it checks yours.\n" +
 													EnumChatFormatting.GOLD + " /skills [player]" + EnumChatFormatting.AQUA + " - Uses API to get skill levels of a person. If no name is provided, it checks yours.\n" +
 													EnumChatFormatting.GOLD + " /guildof [player]" + EnumChatFormatting.AQUA + " - Uses API to get guild name and guild master of a person. If no name is provided, it checks yours.\n" +
 													EnumChatFormatting.GOLD + " /petsof [player]" + EnumChatFormatting.AQUA + " - Uses API to get pets of a person. If no name is provided, it checks yours.\n" +
 													EnumChatFormatting.GOLD + " /bank [player]" + EnumChatFormatting.AQUA + " - Uses API to get bank and purse coins of a person. If no name is provided, it checks yours.\n" +
 													EnumChatFormatting.GOLD + " /armor [player]" + EnumChatFormatting.AQUA + " - Uses API to get armour of a person. If no name is provided, it checks yours.\n" +
-													EnumChatFormatting.GOLD + " /importfishing" + EnumChatFormatting.AQUA + " - Imports your fishing stats from your latest profile to your fishing tracker using the API.\n"));
+													EnumChatFormatting.GOLD + " /importfishing" + EnumChatFormatting.AQUA + " - Imports your fishing stats from your latest profile to your fishing tracker using the API.\n" +
+													EnumChatFormatting.GOLD + " /sbplayers" + EnumChatFormatting.AQUA + " - Uses API to find how many players are on each Skyblock island.\n"));
 	}
 
 }

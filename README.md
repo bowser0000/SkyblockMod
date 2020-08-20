@@ -8,6 +8,8 @@ Discord Server: https://discord.gg/QsEkNQS
 - Coordinate and angle display (toggleable, graphic display) (scalable)
 - Golden T10/T6/T4 enchant display (toggleable)
 - Slayer item tracker (with graphic display) (scalable)
+- RNGesus drop alerts (toggleable)
+- Click in chat to open Maddox (toggleable)
 - Fishing tracker (with graphic display) (scalable)
 - Dungeons tracker (with graphic display) (scalable)
 - API commands
@@ -15,14 +17,14 @@ Discord Server: https://discord.gg/QsEkNQS
 
 ## Commands
 - /dhelp - Returns this message in-game.
-- /toggle <gparty/coords/golden/slayercount/rngesusalerts/splitfishing/chatmaddox/list> - Toggles features. /toggle list returns values of every toggle.
+- /toggle <gparty/coords/golden/slayercount/rngesusalerts/splitfishing/chatmaddox/spiritbearalerts/list> - Toggles features. /toggle list returns values of every toggle.
 - /setkey <key> - Sets API key.
-- /getkey - Returns key set with /setkey.
+- /getkey - Returns key set with /setkey and copies it to your clipboard.
 - /loot <zombie/spider/wolf/fishing/catacombs> [winter/f(1-4)/session] - Returns loot received from slayer quests or fishing stats. /loot fishing winter returns winter sea creatures instead.
 - /display <zombie/spider/wolf/fishing/catacombs> [winter/f(1-4)/session] - Text display for trackers. /display fishing winter displays winter sea creatures instead.
+- /resetloot <zombie/spider/wolf/fishing/catacombs/confirm/cancel> -  - Resets loot for trackers. /resetloot confirm confirms the reset.
 - /move <coords/display> <x> <y> - Moves text display to specified X and Y coordinates.
 - /scale <coords/display> <scale (0.1 - 10)> - Scales text display to a specified multipler between 0.1x and 10x.
-- /resetloot <zombie/spider/wolf/fishing/catacombs/confirm/cancel> -  - Resets loot for trackers. /resetloot confirm confirms the reset.
 - /slayer [player] - Uses API to get slayer xp of a person. If no name is provided, it checks yours.
 - /skills [player] - Uses API to get skill levels of a person. If no name is provided, it checks yours.
 - /guildof [player] - Uses API to get guild name and guild master of a person. If no name is provided, it checks yours.
@@ -30,6 +32,7 @@ Discord Server: https://discord.gg/QsEkNQS
 - /bank [player] - Uses API to get bank and purse coins of a person. If no name is provided, it checks yours.
 - /armor [player] - Uses API to get armour of a person. If no name is provided, it checks yours.
 - /importfishing - Imports your fishing stats from your latest profile to your fishing tracker using the API.
+- /sbplayers - Uses API to find how many players are on each Skyblock island.
 
 ### Notes
 - Slayer tracker for token drops and 20% chance drops uses a 12x12x12 bounding box centered on the player to detect the drops. If you are out of the range of the item drop, it will not count on the tracker.
@@ -37,3 +40,4 @@ Discord Server: https://discord.gg/QsEkNQS
 - If you use too many API commands too fast, you can and will get rate-limited.
 - An incorrect API key will result in an HTTP error code of 403.
 - Importing fishing uses your sea creature kills, which may not always be exactly correct (e.x. someone else kills your sea creature).
+- If you want the Maddox menu binded to a key, get a chat binding mod and use the command "/dmodopenmaddoxmenu" (Must have chat maddox enabled)

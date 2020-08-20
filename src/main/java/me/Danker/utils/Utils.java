@@ -113,4 +113,11 @@ public class Utils {
 		return String.join(" ", words);
 	}
 	
+	public static double getPercentage(int num1, int num2) {
+		if (num2 == 0) return 0D;
+		double result = ((double) num1 * 100D) / (double) num2;
+		result = Math.round(result * 100D) / 100D;
+		return result;
+	}
+	
 }
