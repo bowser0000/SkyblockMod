@@ -42,6 +42,7 @@ import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.event.ClickEvent;
 import net.minecraft.event.ClickEvent.Action;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IChatComponent;
@@ -52,6 +53,7 @@ import net.minecraftforge.client.event.sound.PlaySoundEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -1376,6 +1378,17 @@ public class TheMod
     			showTitle = false;
     		}
     		titleTimer--;
+    	}
+    }
+    
+    @SubscribeEvent
+    public void onInteract(PlayerInteractEvent event) {
+    	if (!Utils.inSkyblock || Minecraft.getMinecraft().thePlayer != event.entityPlayer) return;
+    	ItemStack item = event.entityPlayer.getHeldItem();
+    	if (item == null) return;
+    	
+    	if (ToggleCommand.aotdToggled && item.getDisplayName().contains("Aspect of the Dragons") && event.action == PlayerInteractEvent.Action.RIGHT_CLICK_AIR) {
+    		event.setCanceled(true);
     	}
     }
     

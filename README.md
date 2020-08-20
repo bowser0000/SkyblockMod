@@ -7,6 +7,7 @@ Discord Server: https://discord.gg/QsEkNQS
 - Guild party desktop notifications (toggleable)
 - Coordinate and angle display (toggleable, graphic display) (scalable)
 - Golden T10/T6/T4 enchant display (toggleable)
+- Block AOTD ability (toggleable)
 - Slayer item tracker (with graphic display) (scalable)
 - RNGesus drop alerts (toggleable)
 - Click in chat to open Maddox (toggleable)
@@ -17,7 +18,7 @@ Discord Server: https://discord.gg/QsEkNQS
 
 ## Commands
 - /dhelp - Returns this message in-game.
-- /toggle <gparty/coords/golden/slayercount/rngesusalerts/splitfishing/chatmaddox/spiritbearalerts/list> - Toggles features. /toggle list returns values of every toggle.
+- /toggle <gparty/coords/golden/slayercount/rngesusalerts/splitfishing/chatmaddox/spiritbearalerts/aotd/list> - Toggles features. /toggle list returns values of every toggle.
 - /setkey <key> - Sets API key.
 - /getkey - Returns key set with /setkey and copies it to your clipboard.
 - /loot <zombie/spider/wolf/fishing/catacombs> [winter/f(1-4)/session] - Returns loot received from slayer quests or fishing stats. /loot fishing winter returns winter sea creatures instead.

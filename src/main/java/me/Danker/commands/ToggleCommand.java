@@ -21,6 +21,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 	public static boolean splitFishing;
 	public static boolean chatMaddoxToggled;
 	public static boolean spiritBearAlerts;
+	public static boolean aotdToggled;
 	
 	@Override
 	public String getCommandName() {
@@ -29,7 +30,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 
 	@Override
 	public String getCommandUsage(ICommandSender arg0) {
-		return getCommandName() + " <gparty/coords/golden/slayercount/rngesusalerts/splitfishing/chatmaddox/spiritbearalert/list>";
+		return getCommandName() + " <gparty/coords/golden/slayercount/rngesusalerts/splitfishing/chatmaddox/spiritbearalert/aotd/list>";
 	}
 
 	@Override
@@ -40,7 +41,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 	@Override
 	public List<String> addTabCompletionOptions(ICommandSender sender, String[] args, BlockPos pos) {
 		if (args.length == 1) {
-			return getListOfStringsMatchingLastWord(args, "gparty", "coords", "golden", "slayercount", "rngesusalerts", "splitfishing", "chatmaddox", "spiritbearalerts", "list");
+			return getListOfStringsMatchingLastWord(args, "gparty", "coords", "golden", "slayercount", "rngesusalerts", "splitfishing", "chatmaddox", "spiritbearalerts", "aotd", "list");
 		}
 		return null;
 	}
@@ -51,7 +52,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 		final ConfigHandler cf = new ConfigHandler();
 		
 		if (arg1.length == 0) {
-			player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Usage: /toggle <gparty/coords/golden/slayercount/rngesusalerts/splitfishing/chatmaddox/spiritbearalerts/list>"));
+			player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Usage: /toggle <gparty/coords/golden/slayercount/rngesusalerts/splitfishing/chatmaddox/spiritbearalerts/aotd/list>"));
 			return;
 		}
 		
@@ -87,6 +88,10 @@ public class ToggleCommand extends CommandBase implements ICommand {
 			spiritBearAlerts = !spiritBearAlerts;
 			cf.writeBooleanConfig("toggles", "SpiritBearAlerts", spiritBearAlerts);
 			player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Spirit Bear alerts have been set to " + EnumChatFormatting.DARK_GREEN + spiritBearAlerts + EnumChatFormatting.GREEN + "."));
+		} else if (arg1[0].equalsIgnoreCase("aotd")) {
+			aotdToggled = !aotdToggled;
+			cf.writeBooleanConfig("toggles", "AOTD", aotdToggled);
+			player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Block AOTD ability been set to " + EnumChatFormatting.DARK_GREEN + aotdToggled + EnumChatFormatting.GREEN + "."));
 		} else if (arg1[0].equalsIgnoreCase("list")) {
 			player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Guild party notifications: " + EnumChatFormatting.DARK_GREEN + gpartyToggled + "\n" +
 														EnumChatFormatting.GREEN + " Coord/Angle display: " + EnumChatFormatting.DARK_GREEN + coordsToggled + "\n" +
@@ -95,9 +100,10 @@ public class ToggleCommand extends CommandBase implements ICommand {
 														EnumChatFormatting.GREEN + " Slayer RNGesus alerts: " + EnumChatFormatting.DARK_GREEN + rngesusAlerts + "\n" +
 														EnumChatFormatting.GREEN + " Split fishing display: " + EnumChatFormatting.DARK_GREEN + splitFishing + "\n" +
 														EnumChatFormatting.GREEN + " Chat Maddox menu: " + EnumChatFormatting.DARK_GREEN + chatMaddoxToggled + "\n" +
-														EnumChatFormatting.GREEN + " Spirit Bear alerts: " + EnumChatFormatting.DARK_GREEN + spiritBearAlerts));
+														EnumChatFormatting.GREEN + " Spirit Bear alerts: " + EnumChatFormatting.DARK_GREEN + spiritBearAlerts + "\n" +
+														EnumChatFormatting.GREEN + " Block AOTD ability: " + EnumChatFormatting.DARK_GREEN + aotdToggled));
 		} else {
-			player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Usage: /toggle <gparty/coords/golden/slayercount/rngesusalerts/splitfishing/chatmaddox/spiritbearalerts/list>"));
+			player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Usage: /toggle <gparty/coords/golden/slayercount/rngesusalerts/splitfishing/chatmaddox/spiritbearalerts/aotd/list>"));
 		}
 	}
 }
