@@ -11,6 +11,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Pattern;
 
+import org.lwjgl.input.Keyboard;
+
 import com.google.gson.JsonObject;
 
 import me.Danker.commands.ArmourCommand;
@@ -39,6 +41,7 @@ import me.Danker.handlers.TextRenderer;
 import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.event.ClickEvent;
 import net.minecraft.event.ClickEvent.Action;
@@ -54,6 +57,8 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.fml.client.FMLClientHandler;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -61,6 +66,7 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.InputEvent.KeyInputEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.common.versioning.DefaultArtifactVersion;
 
@@ -80,6 +86,7 @@ public class TheMod
     public static String titleText = "";
     static int tickAmount = 1;
     public static String lastMaddoxCommand = "/cb placeholdervalue";
+    static KeyBinding[] keyBindings = new KeyBinding[1];
     
     @EventHandler
     public void init(FMLInitializationEvent event)
@@ -122,6 +129,12 @@ public class TheMod
 		
 		String patternString = "(" + String.join("|", t6Enchants.keySet()) + ")";
 		pattern = Pattern.compile(patternString);
+		
+		keyBindings[0] = new KeyBinding("Open Maddox Menu", Keyboard.KEY_M, "Danker's Skyblock Mod");
+		
+		for (int i = 0; i < keyBindings.length; i++) {
+			ClientRegistry.registerKeyBinding(keyBindings[i]);
+		}
     }
     
     @EventHandler
@@ -1389,6 +1402,13 @@ public class TheMod
     	
     	if (ToggleCommand.aotdToggled && item.getDisplayName().contains("Aspect of the Dragons") && event.action == PlayerInteractEvent.Action.RIGHT_CLICK_AIR) {
     		event.setCanceled(true);
+    	}
+    }
+    
+    @SubscribeEvent
+    public void onKey(KeyInputEvent event) {
+    	if (keyBindings[0].isPressed()) {
+    		Minecraft.getMinecraft().thePlayer.sendChatMessage(lastMaddoxCommand);
     	}
     }
     

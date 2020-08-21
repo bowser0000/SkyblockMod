@@ -11,6 +11,7 @@ Discord Server: https://discord.gg/QsEkNQS
 - Slayer item tracker (with graphic display) (scalable)
 - RNGesus drop alerts (toggleable)
 - Click in chat to open Maddox (toggleable)
+- Maddox Menu keybind
 - Fishing tracker (with graphic display) (scalable)
 - Dungeons tracker (with graphic display) (scalable)
 - API commands
@@ -35,10 +36,12 @@ Discord Server: https://discord.gg/QsEkNQS
 - /importfishing - Imports your fishing stats from your latest profile to your fishing tracker using the API.
 - /sbplayers - Uses API to find how many players are on each Skyblock island.
 
+## Keybinds
+- Open Maddox menu - M by default.
+
 ### Notes
 - Slayer tracker for token drops and 20% chance drops uses a 12x12x12 bounding box centered on the player to detect the drops. If you are out of the range of the item drop, it will not count on the tracker.
 - API commands may take a while depending on your internet connection. The API may also go down.
 - If you use too many API commands too fast, you can and will get rate-limited.
 - An incorrect API key will result in an HTTP error code of 403.
 - Importing fishing uses your sea creature kills, which may not always be exactly correct (e.x. someone else kills your sea creature).
-- If you want the Maddox menu binded to a key, get a chat binding mod and use the command "/dmodopenmaddoxmenu" (Must have chat maddox enabled)

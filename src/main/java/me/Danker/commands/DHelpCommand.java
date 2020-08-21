@@ -31,6 +31,7 @@ public class DHelpCommand extends CommandBase {
 		
 		player.addChatMessage(new ChatComponentText("\n" + EnumChatFormatting.GOLD + " " + TheMod.MODID + " Version " + TheMod.VERSION + "\n" +
 													EnumChatFormatting.AQUA + " <> = Mandatory parameter. [] = Optional parameter.\n" +
+													EnumChatFormatting.GOLD + " Commands, " + EnumChatFormatting.GREEN + " Keybinds.\n" +
 													EnumChatFormatting.GOLD + " /dhelp" + EnumChatFormatting.AQUA + " - Returns this message.\n" +
 													EnumChatFormatting.GOLD + " /toggle <gparty/coords/golden/slayercount/rngesusalerts/splitfishing/chatmaddox/spiritbearalerts/aotd/list>" + EnumChatFormatting.AQUA + " - Toggles features. /toggle list returns values of every toggle.\n" +
 													EnumChatFormatting.GOLD + " /setkey <key>" + EnumChatFormatting.AQUA + " - Sets API key.\n" +
@@ -47,7 +48,8 @@ public class DHelpCommand extends CommandBase {
 													EnumChatFormatting.GOLD + " /bank [player]" + EnumChatFormatting.AQUA + " - Uses API to get bank and purse coins of a person. If no name is provided, it checks yours.\n" +
 													EnumChatFormatting.GOLD + " /armor [player]" + EnumChatFormatting.AQUA + " - Uses API to get armour of a person. If no name is provided, it checks yours.\n" +
 													EnumChatFormatting.GOLD + " /importfishing" + EnumChatFormatting.AQUA + " - Imports your fishing stats from your latest profile to your fishing tracker using the API.\n" +
-													EnumChatFormatting.GOLD + " /sbplayers" + EnumChatFormatting.AQUA + " - Uses API to find how many players are on each Skyblock island.\n"));
+													EnumChatFormatting.GOLD + " /sbplayers" + EnumChatFormatting.AQUA + " - Uses API to find how many players are on each Skyblock island.\n" +
+													EnumChatFormatting.GREEN + " Open Maddox Menu" + EnumChatFormatting.AQUA + " - M by default.\n"));
 	}
 
 }
