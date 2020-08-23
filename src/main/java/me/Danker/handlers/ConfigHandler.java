@@ -178,6 +178,8 @@ public class ConfigHandler {
 		if (!hasKey("toggles", "ChatMaddox")) writeBooleanConfig("toggles", "ChatMaddox", true);
 		if (!hasKey("toggles", "SpiritBearAlerts")) writeBooleanConfig("toggles", "SpiritBearAlerts", true);
 		if (!hasKey("toggles", "AOTD")) writeBooleanConfig("toggles", "AOTD", false);
+		if (!hasKey("toggles", "SceptreMessages")) writeBooleanConfig("toggles", "SceptreMessages", true);
+		
 		if (!hasKey("api", "APIKey")) writeStringConfig("api", "APIKey", "");
 		
 		// Wolf Loot
@@ -291,6 +293,7 @@ public class ConfigHandler {
 		tf.chatMaddoxToggled = getBoolean("toggles", "ChatMaddox");
 		tf.spiritBearAlerts = getBoolean("toggles", "SpiritBearAlerts");
 		tf.aotdToggled = getBoolean("toggles", "AOTD");
+		tf.sceptreMessages = getBoolean("toggles", "SceptreMessages");
 		
 		final LootCommand lc = new LootCommand();
 		// Wolf

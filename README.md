@@ -8,6 +8,7 @@ Discord Server: https://discord.gg/QsEkNQS
 - Coordinate and angle display (toggleable, graphic display) (scalable)
 - Golden T10/T6/T4 enchant display (toggleable)
 - Block AOTD ability (toggleable)
+- Disable Spirit Sceptre messages (toggleable)
 - Slayer item tracker (with graphic display) (scalable)
 - RNGesus drop alerts (toggleable)
 - Click in chat to open Maddox (toggleable)
