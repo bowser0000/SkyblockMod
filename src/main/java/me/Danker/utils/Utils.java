@@ -12,11 +12,9 @@ import me.Danker.handlers.TextRenderer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
-import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.gui.inventory.GuiChest;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
 import net.minecraft.scoreboard.ScoreObjective;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.StringUtils;
@@ -126,12 +124,14 @@ public class Utils {
 		return result;
 	}
 	
-	public static void drawOnSlot(int xSlotPos, int ySlotPos, int colour) {
+	public static void drawOnSlot(int size, int xSlotPos, int ySlotPos, int colour) {
 		ScaledResolution sr = new ScaledResolution(Minecraft.getMinecraft());
 		int guiLeft = (sr.getScaledWidth() - 176) / 2;
 		int guiTop = (sr.getScaledHeight() - 221) / 2;
 		int x = guiLeft + xSlotPos;
 		int y = guiTop + ySlotPos;
+		// Move down when chest isn't 6 rows
+		if (size != 90) y += (6 - (size - 36) / 9) * 9;
 		
 		GL11.glTranslated(0, 0, 1);
 		Gui.drawRect(x, y, x + 16, y + 16, colour);

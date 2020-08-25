@@ -41,9 +41,7 @@ import me.Danker.handlers.TextRenderer;
 import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
-import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.inventory.GuiChest;
-import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.event.ClickEvent;
@@ -1460,7 +1458,7 @@ public class TheMod
     				} else {
     					colour = 0xBFFEBBD1; // Pink
     				}
-    				Utils.drawOnSlot(slot.xDisplayPosition, slot.yDisplayPosition, colour);
+    				Utils.drawOnSlot(inventory.inventorySlots.inventorySlots.size(), slot.xDisplayPosition, slot.yDisplayPosition, colour);
     			}
     		}
     	}
