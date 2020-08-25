@@ -728,7 +728,7 @@ public class TheMod
 			cf.writeIntConfig("catacombs", "spiritWing", lc.spiritWings);
 		}
 		// TODO
-		// Fix strings for Spirit Bone, Spirit Boots, Spirit Pet
+		// Fix strings for Spirit Bone, Spirit Boots
 		if (message.contains("    ") && message.contains("Spirit Bone")) {
 			lc.spiritBones++;
 			lc.spiritBonesSession++;
@@ -739,13 +739,14 @@ public class TheMod
 			lc.spiritBootsSession++;
 			cf.writeIntConfig("catacombs", "spiritBoot", lc.spiritBoots);
 		}
-		if (message.contains("    ") && message.contains("Spirit Pet")) {
+		if (message.contains("    [Lvl 1] Spirit")) {
 			String formattedMessage = event.message.getFormattedText();
-			if (formattedMessage.contains("§5Spirit Pet")) {
+			// Unicode colour code messes up here, just gonna remove the symbols
+			if (formattedMessage.contains("5Spirit")) {
 				lc.epicSpiritPets++;
 				lc.epicSpiritPetsSession++;
 				cf.writeIntConfig("catacombs", "spiritPetEpic", lc.epicSpiritPets);
-			} else if (formattedMessage.contains("§6Spirit Pet")) {
+			} else if (formattedMessage.contains("6Spirit")) {
 				lc.legSpiritPets++;
 				lc.legSpiritPetsSession++;
 				cf.writeIntConfig("catacombs", "spiritPetLeg", lc.legSpiritPets);
