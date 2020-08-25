@@ -15,6 +15,7 @@ Discord Server: https://discord.gg/QsEkNQS
 - Maddox Menu keybind
 - Fishing tracker (with graphic display) (scalable)
 - Dungeons tracker (with graphic display) (scalable)
+- Pet background colors based on level
 - API commands
 - Update checker
 

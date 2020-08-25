@@ -41,23 +41,27 @@ import me.Danker.handlers.TextRenderer;
 import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.inventory.GuiChest;
+import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.event.ClickEvent;
 import net.minecraft.event.ClickEvent.Action;
+import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IChatComponent;
 import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
+import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.sound.PlaySoundEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
@@ -1317,6 +1321,7 @@ public class TheMod
     
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void onSound(final PlaySoundEvent event) {
+    	if (!Utils.inSkyblock) return;
     	if (event.name.equals("note.pling")) {
     		// Don't check twice within 3 seconds 
     		checkItemsNow = System.currentTimeMillis() / 1000;
@@ -1369,6 +1374,7 @@ public class TheMod
     
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void onTooltip(ItemTooltipEvent event) {
+    	if (!Utils.inSkyblock) return;
     	final ToggleCommand tc = new ToggleCommand();
     	
     	if (event.toolTip == null) return;
@@ -1412,8 +1418,50 @@ public class TheMod
     
     @SubscribeEvent
     public void onKey(KeyInputEvent event) {
+    	if (!Utils.inSkyblock) return;
     	if (keyBindings[0].isPressed()) {
     		Minecraft.getMinecraft().thePlayer.sendChatMessage(lastMaddoxCommand);
+    	}
+    }
+    
+    @SubscribeEvent
+    public void onGuiRender(GuiScreenEvent.BackgroundDrawnEvent event) {
+    	if (!Utils.inSkyblock) return;
+    	if (ToggleCommand.petColoursToggled && event.gui instanceof GuiChest) {
+    		GuiChest inventory = (GuiChest) event.gui;
+    		List<Slot> invSlots = inventory.inventorySlots.inventorySlots;
+    		for (Slot slot : invSlots) {
+    			ItemStack item = slot.getStack();
+    			if (item == null) continue;
+    			if (item.getDisplayName().contains("[Lvl ")) {
+    				int colour;
+    				int petLevel = Integer.parseInt(item.getDisplayName().substring(item.getDisplayName().indexOf(" ") + 1, item.getDisplayName().indexOf("]")));
+    				if (petLevel == 100) {
+    					colour = 0xBFF2D249; // Gold
+    				} else if (petLevel >= 90) {
+    					colour = 0xBFE06C65; // Red
+    				} else if (petLevel >= 80) {
+    					colour = 0xBF5F91C0; // Blue
+    				} else if (petLevel >= 70) {
+    					colour = 0xBF84CA85; // Green
+    				} else if (petLevel >= 60) {
+    					colour = 0xBFF6C100; // Goldish
+    				} else if (petLevel >= 50) {
+    					colour = 0xBFA575D2; // Purple
+    				} else if (petLevel >= 40) {
+    					colour = 0xBFFFA252; // Orange
+    				} else if (petLevel >= 30) {
+    					colour = 0xBF845EF7; // Bluish purple
+    				} else if (petLevel >= 20) {
+    					colour = 0xBFD6336C; // Magenta
+    				} else if (petLevel >= 10) {
+    					colour = 0xBF58C9A3; // Teal
+    				} else {
+    					colour = 0xBFFEBBD1; // Pink
+    				}
+    				Utils.drawOnSlot(slot.xDisplayPosition, slot.yDisplayPosition, colour);
+    			}
+    		}
     	}
     }
     

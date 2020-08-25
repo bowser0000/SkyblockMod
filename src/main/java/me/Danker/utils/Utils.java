@@ -4,13 +4,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 
+import org.lwjgl.opengl.GL11;
+
 import me.Danker.TheMod;
 import me.Danker.handlers.ScoreboardHandler;
 import me.Danker.handlers.TextRenderer;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.scoreboard.ScoreObjective;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.StringUtils;
@@ -118,6 +124,18 @@ public class Utils {
 		double result = ((double) num1 * 100D) / (double) num2;
 		result = Math.round(result * 100D) / 100D;
 		return result;
+	}
+	
+	public static void drawOnSlot(int xSlotPos, int ySlotPos, int colour) {
+		ScaledResolution sr = new ScaledResolution(Minecraft.getMinecraft());
+		int guiLeft = (sr.getScaledWidth() - 176) / 2;
+		int guiTop = (sr.getScaledHeight() - 221) / 2;
+		int x = guiLeft + xSlotPos;
+		int y = guiTop + ySlotPos;
+		
+		GL11.glTranslated(0, 0, 1);
+		Gui.drawRect(x, y, x + 16, y + 16, colour);
+		GL11.glTranslated(0, 0, -1);
 	}
 	
 }

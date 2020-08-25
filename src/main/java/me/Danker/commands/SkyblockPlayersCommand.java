@@ -78,7 +78,7 @@ public class SkyblockPlayersCommand extends CommandBase {
 			int dungeonsHub = 0; // dungeon_hub
 			int dungeons = 0; // dungeon
 			int darkAuction = 0; // dark_auction
-			int jerry = 0; 
+			int jerry = 0; // winter
 			if (playersResponse.get("games").getAsJsonObject().get("SKYBLOCK").getAsJsonObject().has("modes")) {
 				JsonObject skyblockPlayers = playersResponse.get("games").getAsJsonObject().get("SKYBLOCK").getAsJsonObject().get("modes").getAsJsonObject();
 				skyblockTotalPlayers = playersResponse.get("games").getAsJsonObject().get("SKYBLOCK").getAsJsonObject().get("players").getAsInt();
@@ -121,9 +121,8 @@ public class SkyblockPlayersCommand extends CommandBase {
 				if (skyblockPlayers.has("dark_auction")) {
 					darkAuction = skyblockPlayers.get("dark_auction").getAsInt();
 				}
-				// Placeholder value until Jerry Workshop opens
-				if (skyblockPlayers.has("jerry")) {
-					jerry = skyblockPlayers.get("jerry").getAsInt();
+				if (skyblockPlayers.has("winter")) {
+					jerry = skyblockPlayers.get("winter").getAsInt();
 				}
 			}
 			
