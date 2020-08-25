@@ -678,7 +678,7 @@ public class TheMod
 			lc.recombobulatorsSession++;
 			cf.writeIntConfig("catacombs", "recombobulator", lc.recombobulators);
 		}
-		if (message.contains("    RARE REWARD! FUMING POTATO BOOK PLACEHOLDER")) {
+		if (message.contains("    RARE REWARD! Fuming Potato Book")) {
 			
 		}
 		// F1
