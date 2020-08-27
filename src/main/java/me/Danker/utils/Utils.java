@@ -127,7 +127,7 @@ public class Utils {
 	public static void drawOnSlot(int size, int xSlotPos, int ySlotPos, int colour) {
 		ScaledResolution sr = new ScaledResolution(Minecraft.getMinecraft());
 		int guiLeft = (sr.getScaledWidth() - 176) / 2;
-		int guiTop = (sr.getScaledHeight() - 221) / 2;
+		int guiTop = (sr.getScaledHeight() - 222) / 2;
 		int x = guiLeft + xSlotPos;
 		int y = guiTop + ySlotPos;
 		// Move down when chest isn't 6 rows
