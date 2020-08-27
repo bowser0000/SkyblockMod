@@ -1105,8 +1105,8 @@ public class TheMod
 									  EnumChatFormatting.AQUA + bossesBetween;
     			
     			if (tc.splitFishing) {
-    				new TextRenderer(Minecraft.getMinecraft(), dropsTextTwo, (int) (moc.displayXY[0] + (145 * ScaleCommand.displayScale)), moc.displayXY[1], ScaleCommand.displayScale);
-        			new TextRenderer(Minecraft.getMinecraft(), countTextTwo, (int) (moc.displayXY[0] + (255 * ScaleCommand.displayScale)), moc.displayXY[1], ScaleCommand.displayScale);
+    				new TextRenderer(Minecraft.getMinecraft(), dropsTextTwo, (int) (moc.displayXY[0] + (160 * ScaleCommand.displayScale)), moc.displayXY[1], ScaleCommand.displayScale);
+        			new TextRenderer(Minecraft.getMinecraft(), countTextTwo, (int) (moc.displayXY[0] + (270 * ScaleCommand.displayScale)), moc.displayXY[1], ScaleCommand.displayScale);
     			} else {
     				dropsText += "\n" + dropsTextTwo;
     				countText += "\n" + countTextTwo;
@@ -1166,8 +1166,8 @@ public class TheMod
 									  EnumChatFormatting.AQUA + bossesBetween;
     			
     			if (tc.splitFishing) {
-    				new TextRenderer(Minecraft.getMinecraft(), dropsTextTwo, (int) (moc.displayXY[0] + (145 * ScaleCommand.displayScale)), moc.displayXY[1], ScaleCommand.displayScale);
-        			new TextRenderer(Minecraft.getMinecraft(), countTextTwo, (int) (moc.displayXY[0] + (255 * ScaleCommand.displayScale)), moc.displayXY[1], ScaleCommand.displayScale);
+    				new TextRenderer(Minecraft.getMinecraft(), dropsTextTwo, (int) (moc.displayXY[0] + (160 * ScaleCommand.displayScale)), moc.displayXY[1], ScaleCommand.displayScale);
+        			new TextRenderer(Minecraft.getMinecraft(), countTextTwo, (int) (moc.displayXY[0] + (270 * ScaleCommand.displayScale)), moc.displayXY[1], ScaleCommand.displayScale);
     			} else {
     				dropsText += "\n" + dropsTextTwo;
     				countText += "\n" + countTextTwo;
