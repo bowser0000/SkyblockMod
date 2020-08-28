@@ -250,6 +250,8 @@ public class ConfigHandler {
 		if (!hasKey("fishing", "snowman")) writeIntConfig("fishing", "snowman", 0);
 		if (!hasKey("fishing", "grinch")) writeIntConfig("fishing", "grinch", 0);
 		if (!hasKey("fishing", "yeti")) writeIntConfig("fishing", "yeti", 0);
+		if (!hasKey("fishing", "yetiTime")) writeDoubleConfig("fishing", "yetiTime", -1);
+		if (!hasKey("fishing", "yetiSC")) writeIntConfig("fishing", "yetiSC", -1);
 		
 		// Dungeons
 		if (!hasKey("catacombs", "recombobulator")) writeIntConfig("catacombs", "recombobulator", 0);
@@ -364,6 +366,8 @@ public class ConfigHandler {
 		lc.frostyTheSnowmans = getInt("fishing", "snowman");
 		lc.grinches = getInt("fishing", "grinch");
 		lc.yetis = getInt("fishing", "yeti");
+		lc.yetiTime = getDouble("fishing", "yetiTime");
+		lc.yetiSCs = getInt("fishing", "yetiSC");
 		
 		// Dungeons
 		lc.recombobulators =  getInt("catacombs", "recombobulator");

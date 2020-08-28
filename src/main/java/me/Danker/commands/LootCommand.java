@@ -81,6 +81,8 @@ public class LootCommand extends CommandBase {
 	public static int frostyTheSnowmans;
 	public static int grinches;
 	public static int yetis;
+	public static double yetiTime;
+	public static int yetiSCs;
 	
 	// Catacombs Dungeons
 	public static int recombobulators;
@@ -180,6 +182,8 @@ public class LootCommand extends CommandBase {
 	public static int frostyTheSnowmansSession = 0;
 	public static int grinchesSession = 0;
 	public static int yetisSession = 0;
+	public static double yetiTimeSession = 0;
+	public static int yetiSCsSession = 0;
 	
 	// Catacombs Dungeons
 	public static int recombobulatorsSession = 0;
@@ -459,14 +463,38 @@ public class LootCommand extends CommandBase {
 			if (arg1.length > 1) {
 				if (arg1[1].equalsIgnoreCase("winter")) {
 					if (showSession) {
+						if (yetiTimeSession == -1) {
+							timeBetween = "Never";
+						} else {
+							timeBetween = Utils.getTimeBetween(yetiTimeSession, timeNow);
+						}
+						if (yetiSCsSession == -1) {
+							bossesBetween = "Never";
+						} else {
+							bossesBetween = nf.format(yetiSCsSession);
+						}
+						
 						player.addChatMessage(new ChatComponentText(EnumChatFormatting.AQUA + "" + EnumChatFormatting.BOLD + "-------------------\n" +
 								EnumChatFormatting.WHITE + EnumChatFormatting.BOLD + "  Winter Fishing Summary (Current Session):\n" +
 								EnumChatFormatting.AQUA + "    Frozen Steves: " + nf.format(frozenStevesSession) + "\n" +
 								EnumChatFormatting.WHITE + "    Snowmans: " + nf.format(frostyTheSnowmansSession) + "\n" +
 								EnumChatFormatting.DARK_GREEN + "    Grinches: " + nf.format(grinchesSession) + "\n" +
 								EnumChatFormatting.GOLD + "    Yetis: " + nf.format(yetisSession) + "\n" +
+								EnumChatFormatting.AQUA + "    Time Since Yeti: " + timeBetween + "\n" +
+								EnumChatFormatting.AQUA + "    Creatures Since Yeti: " + bossesBetween + "\n" +
 								EnumChatFormatting.AQUA + EnumChatFormatting.BOLD + " -------------------"));
 						return;
+					}
+					
+					if (yetiTime == -1) {
+						timeBetween = "Never";
+					} else {
+						timeBetween = Utils.getTimeBetween(yetiTime, timeNow);
+					}
+					if (yetiSCs == -1) {
+						bossesBetween = "Never";
+					} else {
+						bossesBetween = nf.format(yetiSCs);
 					}
 					
 					player.addChatMessage(new ChatComponentText(EnumChatFormatting.AQUA + "" + EnumChatFormatting.BOLD + "-------------------\n" +
@@ -475,6 +503,8 @@ public class LootCommand extends CommandBase {
 																EnumChatFormatting.WHITE + "    Snowmans: " + nf.format(frostyTheSnowmans) + "\n" +
 																EnumChatFormatting.DARK_GREEN + "    Grinches: " + nf.format(grinches) + "\n" +
 																EnumChatFormatting.GOLD + "    Yetis: " + nf.format(yetis) + "\n" +
+																EnumChatFormatting.AQUA + "    Time Since Yeti: " + timeBetween + "\n" +
+																EnumChatFormatting.AQUA + "    Creatures Since Yeti: " + bossesBetween + "\n" +
 																EnumChatFormatting.AQUA + EnumChatFormatting.BOLD + " -------------------"));
 					return;
 				}

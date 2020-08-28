@@ -463,7 +463,7 @@ public class TheMod
 			cf.writeIntConfig("fishing", "squid", lc.squids);
 			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
 			cf.writeIntConfig("fishing", "milestone", lc.fishingMilestone);
-			increaseEmpSC();
+			increaseSeaCreatures();
 		}
 		if (message.contains("From the depths of the waters, you've reeled in a Sea Walker")) {
 			lc.seaWalkers++;
@@ -475,7 +475,7 @@ public class TheMod
 			cf.writeIntConfig("fishing", "seaWalker", lc.seaWalkers);
 			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
 			cf.writeIntConfig("fishing", "milestone", lc.fishingMilestone);
-			increaseEmpSC();
+			increaseSeaCreatures();
 		}
 		if (message.contains("Pitch darkness reveals you've caught a")) {
 			lc.nightSquids++;
@@ -487,7 +487,7 @@ public class TheMod
 			cf.writeIntConfig("fishing", "nightSquid", lc.nightSquids);
 			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
 			cf.writeIntConfig("fishing", "milestone", lc.fishingMilestone);
-			increaseEmpSC();
+			increaseSeaCreatures();
 		}
 		if (message.contains("You've stumbled upon a patrolling Sea Guardian")) {
 			lc.seaGuardians++;
@@ -499,7 +499,7 @@ public class TheMod
 			cf.writeIntConfig("fishing", "seaGuardian", lc.seaGuardians);
 			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
 			cf.writeIntConfig("fishing", "milestone", lc.fishingMilestone);
-			increaseEmpSC();
+			increaseSeaCreatures();
 		}
 		if (message.contains("It looks like you've disrupted the Sea Witch's brewing session. Watch out, she's furious")) {
 			lc.seaWitches++;
@@ -511,7 +511,7 @@ public class TheMod
 			cf.writeIntConfig("fishing", "seaWitch", lc.seaWitches);
 			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
 			cf.writeIntConfig("fishing", "milestone", lc.fishingMilestone);
-			increaseEmpSC();
+			increaseSeaCreatures();
 		}
 		if (message.contains("From the depths of the waters, you've reeled in a Sea Archer")) {
 			lc.seaArchers++;
@@ -523,7 +523,7 @@ public class TheMod
 			cf.writeIntConfig("fishing", "seaArcher", lc.seaArchers);
 			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
 			cf.writeIntConfig("fishing", "milestone", lc.fishingMilestone);
-			increaseEmpSC();
+			increaseSeaCreatures();
 		}
 		if (message.contains("The Monster of the Deep emerges from the dark depths")) {
 			lc.monsterOfTheDeeps++;
@@ -535,7 +535,7 @@ public class TheMod
 			cf.writeIntConfig("fishing", "monsterOfDeep", lc.monsterOfTheDeeps);
 			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
 			cf.writeIntConfig("fishing", "milestone", lc.fishingMilestone);
-			increaseEmpSC();
+			increaseSeaCreatures();
 		}
 		if (message.contains("You have found a Catfish, don't let it steal your catches")) {
 			lc.catfishes++;
@@ -547,7 +547,7 @@ public class TheMod
 			cf.writeIntConfig("fishing", "catfish", lc.catfishes);
 			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
 			cf.writeIntConfig("fishing", "milestone", lc.fishingMilestone);
-			increaseEmpSC();
+			increaseSeaCreatures();
 		}
 		if (message.contains("Is this even a fish? It's the Carrot King")) {
 			lc.carrotKings++;
@@ -559,7 +559,7 @@ public class TheMod
 			cf.writeIntConfig("fishing", "carrotKing", lc.carrotKings);
 			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
 			cf.writeIntConfig("fishing", "milestone", lc.fishingMilestone);
-			increaseEmpSC();
+			increaseSeaCreatures();
 		}
 		if (message.contains("Gross! A Sea Leech")) {
 			lc.seaLeeches++;
@@ -571,7 +571,7 @@ public class TheMod
 			cf.writeIntConfig("fishing", "seaLeech", lc.seaLeeches);
 			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
 			cf.writeIntConfig("fishing", "milestone", lc.fishingMilestone);
-			increaseEmpSC();
+			increaseSeaCreatures();
 		}
 		if (message.contains("You've discovered a Guardian Defender of the sea")) {
 			lc.guardianDefenders++;
@@ -583,7 +583,7 @@ public class TheMod
 			cf.writeIntConfig("fishing", "guardianDefender", lc.guardianDefenders);
 			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
 			cf.writeIntConfig("fishing", "milestone", lc.fishingMilestone);
-			increaseEmpSC();
+			increaseSeaCreatures();
 		}
 		if (message.contains("You have awoken the Deep Sea Protector, prepare for a battle")) {
 			lc.deepSeaProtectors++;
@@ -595,7 +595,7 @@ public class TheMod
 			cf.writeIntConfig("fishing", "deepSeaProtector", lc.deepSeaProtectors);
 			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
 			cf.writeIntConfig("fishing", "milestone", lc.fishingMilestone);
-			increaseEmpSC();
+			increaseSeaCreatures();
 		}
 		if (message.contains("The Water Hydra has come to test your strength")) {
 			lc.hydras++;
@@ -607,7 +607,7 @@ public class TheMod
 			cf.writeIntConfig("fishing", "hydra", lc.hydras);
 			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
 			cf.writeIntConfig("fishing", "milestone", lc.fishingMilestone);
-			increaseEmpSC();
+			increaseSeaCreatures();
 		}
 		if (message.contains("The Sea Emperor arises from the depths")) {
 			lc.seaEmperors++;
@@ -637,6 +637,7 @@ public class TheMod
 			cf.writeIntConfig("fishing", "frozenSteve", lc.frozenSteves);
 			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
 			cf.writeIntConfig("fishing", "milestone", lc.fishingMilestone);
+			increaseSeaCreatures();
 		}
 		if (message.contains("It's a snowman! He looks harmless")) {
 			lc.frostyTheSnowmans++;
@@ -648,6 +649,7 @@ public class TheMod
 			cf.writeIntConfig("fishing", "snowman", lc.frostyTheSnowmans);
 			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
 			cf.writeIntConfig("fishing", "milestone", lc.fishingMilestone);
+			increaseSeaCreatures();
 		}
 		if (message.contains("stole Jerry's Gifts...get them back")) {
 			lc.grinches++;
@@ -659,15 +661,22 @@ public class TheMod
 			cf.writeIntConfig("fishing", "grinch", lc.grinches);
 			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
 			cf.writeIntConfig("fishing", "milestone", lc.fishingMilestone);
+			increaseSeaCreatures();
 		}
 		if (message.contains("What is this creature")) {
 			lc.yetis++;
 			lc.seaCreatures++;
 			lc.fishingMilestone++;
+			lc.yetiTime = System.currentTimeMillis() / 1000;
+			lc.yetiSCs = 0;
 			lc.yetisSession++;
 			lc.seaCreaturesSession++;
 			lc.fishingMilestoneSession++;
+			lc.yetiTimeSession = System.currentTimeMillis() / 1000;
+			lc.yetiSCsSession = 0;
 			cf.writeIntConfig("fishing", "yeti", lc.yetis);
+			cf.writeDoubleConfig("fishing", "yetiTime", lc.yetiTime);
+			cf.writeIntConfig("fishing", "yetiSC", lc.yetiSCs);
 			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
 			cf.writeIntConfig("fishing", "milestone", lc.fishingMilestone);
 		}
@@ -1207,6 +1216,17 @@ public class TheMod
     				countText += "\n" + countTextTwo;
     			}
     		} else if (ds.display.equals("fishing_winter")) {
+    			if (lc.yetiTime == -1) {
+    				timeBetween = "Never";
+    			} else {
+    				timeBetween = Utils.getTimeBetween(lc.yetiTime, timeNow);
+    			}
+    			if (lc.yetiSCs == -1) {
+    				bossesBetween = "Never";
+    			} else {
+    				bossesBetween = nf.format(lc.yetiSCs);
+    			}
+    			
     			dropsText = EnumChatFormatting.AQUA + "Creatures Caught:\n" +
     						EnumChatFormatting.AQUA + "Fishing Milestone:\n" +
     						EnumChatFormatting.GOLD + "Good Catches:\n" +
@@ -1214,7 +1234,9 @@ public class TheMod
 	    					EnumChatFormatting.AQUA + "Frozen Steves:\n" +
 							EnumChatFormatting.WHITE + "Snowmans:\n" +
 							EnumChatFormatting.DARK_GREEN + "Grinches:\n" +
-							EnumChatFormatting.GOLD + "Yetis:";
+							EnumChatFormatting.GOLD + "Yetis:\n" +
+							EnumChatFormatting.AQUA + "Time Since Yeti:\n" +
+							EnumChatFormatting.AQUA + "Creatures Since Yeti:";
     			countText = EnumChatFormatting.AQUA + nf.format(lc.seaCreatures) + "\n" +
 							EnumChatFormatting.AQUA + nf.format(lc.fishingMilestone) + "\n" +
 	    					EnumChatFormatting.GOLD + nf.format(lc.goodCatches) + "\n" +
@@ -1222,16 +1244,31 @@ public class TheMod
 	    					EnumChatFormatting.AQUA + nf.format(lc.frozenSteves) + "\n" +
 							EnumChatFormatting.WHITE + nf.format(lc.frostyTheSnowmans) + "\n" +
 							EnumChatFormatting.DARK_GREEN + nf.format(lc.grinches) + "\n" +
-							EnumChatFormatting.GOLD + nf.format(lc.yetis);
+							EnumChatFormatting.GOLD + nf.format(lc.yetis) + "\n" +
+							EnumChatFormatting.AQUA + timeBetween + "\n" +
+							EnumChatFormatting.AQUA + bossesBetween;
     		} else if (ds.display.equals("fishing_winter_session")) {
+    			if (lc.yetiTimeSession == -1) {
+    				timeBetween = "Never";
+    			} else {
+    				timeBetween = Utils.getTimeBetween(lc.yetiTimeSession, timeNow);
+    			}
+    			if (lc.yetiSCsSession == -1) {
+    				bossesBetween = "Never";
+    			} else {
+    				bossesBetween = nf.format(lc.yetiSCsSession);
+    			}
+    			
     			dropsText = EnumChatFormatting.AQUA + "Creatures Caught:\n" +
-    						EnumChatFormatting.AQUA + "Fishing Milestone:\n" +
+							EnumChatFormatting.AQUA + "Fishing Milestone:\n" +
 							EnumChatFormatting.GOLD + "Good Catches:\n" +
 							EnumChatFormatting.DARK_PURPLE + "Great Catches:\n" +
 	    					EnumChatFormatting.AQUA + "Frozen Steves:\n" +
 							EnumChatFormatting.WHITE + "Snowmans:\n" +
 							EnumChatFormatting.DARK_GREEN + "Grinches:\n" +
-							EnumChatFormatting.GOLD + "Yetis:";
+							EnumChatFormatting.GOLD + "Yetis:\n" +
+							EnumChatFormatting.AQUA + "Time Since Yeti:\n" +
+							EnumChatFormatting.AQUA + "Creatures Since Yeti:";
 				countText = EnumChatFormatting.AQUA + nf.format(lc.seaCreaturesSession) + "\n" +
 							EnumChatFormatting.AQUA + nf.format(lc.fishingMilestoneSession) + "\n" +
 	    					EnumChatFormatting.GOLD + nf.format(lc.goodCatchesSession) + "\n" +
@@ -1239,7 +1276,9 @@ public class TheMod
 	    					EnumChatFormatting.AQUA + nf.format(lc.frozenStevesSession) + "\n" +
 							EnumChatFormatting.WHITE + nf.format(lc.frostyTheSnowmansSession) + "\n" +
 							EnumChatFormatting.DARK_GREEN + nf.format(lc.grinchesSession) + "\n" +
-							EnumChatFormatting.GOLD + nf.format(lc.yetisSession);
+							EnumChatFormatting.GOLD + nf.format(lc.yetisSession) + "\n" +
+							EnumChatFormatting.AQUA + timeBetween + "\n" +
+							EnumChatFormatting.AQUA + bossesBetween;
     		} else if (ds.display.equals("catacombs_floor_one")) {
     			dropsText = EnumChatFormatting.GOLD + "Recombobulators:\n" +
     						EnumChatFormatting.DARK_PURPLE + "Fuming Potato Books:\n" +
@@ -1249,8 +1288,8 @@ public class TheMod
     			countText = EnumChatFormatting.GOLD + nf.format(lc.recombobulators) + "\n" +
 							EnumChatFormatting.DARK_PURPLE + nf.format(lc.fumingPotatoBooks) + "\n" +
 							EnumChatFormatting.BLUE + nf.format(lc.bonzoStaffs) + "\n" +
-							EnumChatFormatting.GREEN + Utils.getTimeBetween(0, lc.f1TimeSpent) + "\n" +
-							EnumChatFormatting.GREEN + nf.format(lc.f1CoinsSpent);
+							EnumChatFormatting.GREEN + nf.format(lc.f1CoinsSpent) + "\n" +
+							EnumChatFormatting.GREEN + Utils.getTimeBetween(0, lc.f1TimeSpent);
     		} else if (ds.display.equals("catacombs_floor_one_session")) {
     			dropsText = EnumChatFormatting.GOLD + "Recombobulators:\n" +
 							EnumChatFormatting.DARK_PURPLE + "Fuming Potato Books:\n" +
@@ -1260,8 +1299,8 @@ public class TheMod
 				countText = EnumChatFormatting.GOLD + nf.format(lc.recombobulatorsSession) + "\n" +
 							EnumChatFormatting.DARK_PURPLE + nf.format(lc.fumingPotatoBooksSession) + "\n" +
 							EnumChatFormatting.BLUE + nf.format(lc.bonzoStaffsSession) + "\n" +
-							EnumChatFormatting.GREEN + Utils.getTimeBetween(0, lc.f1TimeSpentSession) + "\n" +
-							EnumChatFormatting.GREEN + nf.format(lc.f1CoinsSpentSession);
+							EnumChatFormatting.GREEN + nf.format(lc.f1CoinsSpentSession) + "\n" +
+							EnumChatFormatting.GREEN + Utils.getTimeBetween(0, lc.f1TimeSpentSession);
     		} else if (ds.display.equals("catacombs_floor_two")) {
     			dropsText = EnumChatFormatting.GOLD + "Recombobulators:\n" +
 							EnumChatFormatting.DARK_PURPLE + "Fuming Potato Books:\n" +
@@ -1271,19 +1310,19 @@ public class TheMod
 				countText = EnumChatFormatting.GOLD + nf.format(lc.recombobulators) + "\n" +
 							EnumChatFormatting.DARK_PURPLE + nf.format(lc.fumingPotatoBooks) + "\n" +
 							EnumChatFormatting.BLUE + nf.format(lc.scarfStudies) + "\n" +
-							EnumChatFormatting.GREEN + Utils.getTimeBetween(0, lc.f2TimeSpent) + "\n" +
-							EnumChatFormatting.GREEN + nf.format(lc.f2CoinsSpent);
+							EnumChatFormatting.GREEN + nf.format(lc.f2CoinsSpent) + "\n" +
+							EnumChatFormatting.GREEN + Utils.getTimeBetween(0, lc.f2TimeSpent);
     		} else if (ds.display.equals("catacombs_floor_two_session")) {
     			dropsText = EnumChatFormatting.GOLD + "Recombobulators:\n" +
 							EnumChatFormatting.DARK_PURPLE + "Fuming Potato Books:\n" +
-							EnumChatFormatting.BLUE + "Scarf's Studies:" +
+							EnumChatFormatting.BLUE + "Scarf's Studies:\n" +
 		    				EnumChatFormatting.GREEN + "Coins Spent:\n" +
 		    				EnumChatFormatting.GREEN + "Time Spent:\n";
 				countText = EnumChatFormatting.GOLD + nf.format(lc.recombobulatorsSession) + "\n" +
 							EnumChatFormatting.DARK_PURPLE + nf.format(lc.fumingPotatoBooksSession) + "\n" +
 							EnumChatFormatting.BLUE + nf.format(lc.scarfStudiesSession) + "\n" +
-							EnumChatFormatting.GREEN + Utils.getTimeBetween(0, lc.f2TimeSpentSession) + "\n" +
-							EnumChatFormatting.GREEN + nf.format(lc.f2CoinsSpentSession);
+							EnumChatFormatting.GREEN + nf.format(lc.f2CoinsSpentSession) + "\n" +
+							EnumChatFormatting.GREEN + Utils.getTimeBetween(0, lc.f2TimeSpentSession);
     		} else if (ds.display.equals("catacombs_floor_three")) {
     			dropsText = EnumChatFormatting.GOLD + "Recombobulators:\n" +
 							EnumChatFormatting.DARK_PURPLE + "Fuming Potato Books:\n" +
@@ -1291,7 +1330,7 @@ public class TheMod
 							EnumChatFormatting.DARK_PURPLE + "Adaptive Chestplates:\n" +
 							EnumChatFormatting.DARK_PURPLE + "Adaptive Leggings:\n" +
 							EnumChatFormatting.DARK_PURPLE + "Adaptive Boots:\n" +
-							EnumChatFormatting.DARK_PURPLE + "Adaptive Blades:" +
+							EnumChatFormatting.DARK_PURPLE + "Adaptive Blades\n:" +
 		    				EnumChatFormatting.GREEN + "Coins Spent:\n" +
 		    				EnumChatFormatting.GREEN + "Time Spent:\n";
 				countText = EnumChatFormatting.GOLD + nf.format(lc.recombobulators) + "\n" +
@@ -1301,8 +1340,8 @@ public class TheMod
 							EnumChatFormatting.DARK_PURPLE + nf.format(lc.adaptiveLegs) + "\n" +
 							EnumChatFormatting.DARK_PURPLE + nf.format(lc.adaptiveBoots) + "\n" +
 							EnumChatFormatting.DARK_PURPLE + nf.format(lc.adaptiveSwords) + "\n" +
-							EnumChatFormatting.GREEN + Utils.getTimeBetween(0, lc.f3TimeSpent) + "\n" +
-							EnumChatFormatting.GREEN + nf.format(lc.f3CoinsSpent);
+							EnumChatFormatting.GREEN + nf.format(lc.f3CoinsSpent) + "\n" +
+							EnumChatFormatting.GREEN + Utils.getTimeBetween(0, lc.f3TimeSpent);
     		} else if (ds.display.equals("catacombs_floor_three_session")) {
     			dropsText = EnumChatFormatting.GOLD + "Recombobulators:\n" +
 							EnumChatFormatting.DARK_PURPLE + "Fuming Potato Books:\n" +
@@ -1310,7 +1349,7 @@ public class TheMod
 							EnumChatFormatting.DARK_PURPLE + "Adaptive Chestplates:\n" +
 							EnumChatFormatting.DARK_PURPLE + "Adaptive Leggings:\n" +
 							EnumChatFormatting.DARK_PURPLE + "Adaptive Boots:\n" +
-							EnumChatFormatting.DARK_PURPLE + "Adaptive Blades:" +
+							EnumChatFormatting.DARK_PURPLE + "Adaptive Blades\n:" +
 		    				EnumChatFormatting.GREEN + "Coins Spent:\n" +
 		    				EnumChatFormatting.GREEN + "Time Spent:\n";
 				countText = EnumChatFormatting.GOLD + nf.format(lc.recombobulatorsSession) + "\n" +
@@ -1320,8 +1359,8 @@ public class TheMod
 							EnumChatFormatting.DARK_PURPLE + nf.format(lc.adaptiveLegsSession) + "\n" +
 							EnumChatFormatting.DARK_PURPLE + nf.format(lc.adaptiveBootsSession) + "\n" +
 							EnumChatFormatting.DARK_PURPLE + nf.format(lc.adaptiveSwordsSession) + "\n" +
-							EnumChatFormatting.GREEN + Utils.getTimeBetween(0, lc.f3TimeSpentSession) + "\n" +
-							EnumChatFormatting.GREEN + nf.format(lc.f3CoinsSpentSession);
+							EnumChatFormatting.GREEN + nf.format(lc.f3CoinsSpentSession) + "\n" +
+							EnumChatFormatting.GREEN + Utils.getTimeBetween(0, lc.f3TimeSpentSession);
     		} else if (ds.display.equals("catacombs_floor_four")) {
     			dropsText = EnumChatFormatting.GOLD + "Recombobulators:\n" +
 							EnumChatFormatting.DARK_PURPLE + "Fuming Potato Books:\n" +
@@ -1331,7 +1370,7 @@ public class TheMod
 							EnumChatFormatting.DARK_PURPLE + "Spirit Swords:\n" +
 							EnumChatFormatting.GOLD + "Spirit Bows:\n" +
 							EnumChatFormatting.DARK_PURPLE + "Epic Spirit Pets:\n" +
-							EnumChatFormatting.GOLD + "Leg Spirit Pets:" +
+							EnumChatFormatting.GOLD + "Leg Spirit Pets:\n" +
 		    				EnumChatFormatting.GREEN + "Coins Spent:\n" +
 		    				EnumChatFormatting.GREEN + "Time Spent:\n";
 				countText = EnumChatFormatting.GOLD + nf.format(lc.recombobulators) + "\n" +
@@ -1343,8 +1382,8 @@ public class TheMod
 							EnumChatFormatting.GOLD + nf.format(lc.spiritBows) + "\n" +
 							EnumChatFormatting.DARK_PURPLE + nf.format(lc.epicSpiritPets) + "\n" +
 							EnumChatFormatting.GOLD + nf.format(lc.legSpiritPets) + "\n" +
-							EnumChatFormatting.GREEN + Utils.getTimeBetween(0, lc.f4TimeSpent) + "\n" +
-							EnumChatFormatting.GREEN + nf.format(lc.f4CoinsSpent);
+							EnumChatFormatting.GREEN + nf.format(lc.f4CoinsSpent) + "\n" +
+							EnumChatFormatting.GREEN + Utils.getTimeBetween(0, lc.f4TimeSpent);
     		} else if (ds.display.equals("catacombs_floor_four_session")) {
     			dropsText = EnumChatFormatting.GOLD + "Recombobulators:\n" +
 							EnumChatFormatting.DARK_PURPLE + "Fuming Potato Books:\n" +
@@ -1354,7 +1393,7 @@ public class TheMod
 							EnumChatFormatting.DARK_PURPLE + "Spirit Swords:\n" +
 							EnumChatFormatting.GOLD + "Spirit Bows:\n" +
 							EnumChatFormatting.DARK_PURPLE + "Epic Spirit Pets:\n" +
-							EnumChatFormatting.GOLD + "Leg Spirit Pets:" +
+							EnumChatFormatting.GOLD + "Leg Spirit Pets:\n" +
 		    				EnumChatFormatting.GREEN + "Coins Spent:\n" +
 		    				EnumChatFormatting.GREEN + "Time Spent:\n";
 				countText = EnumChatFormatting.GOLD + nf.format(lc.recombobulatorsSession) + "\n" +
@@ -1366,8 +1405,8 @@ public class TheMod
 							EnumChatFormatting.GOLD + nf.format(lc.spiritBowsSession) + "\n" +
 							EnumChatFormatting.DARK_PURPLE + nf.format(lc.epicSpiritPetsSession) + "\n" +
 							EnumChatFormatting.GOLD + nf.format(lc.legSpiritPetsSession) + "\n" +
-							EnumChatFormatting.GREEN + Utils.getTimeBetween(0, lc.f4TimeSpentSession) + "\n" +
-							EnumChatFormatting.GREEN + nf.format(lc.f4CoinsSpentSession);
+							EnumChatFormatting.GREEN + nf.format(lc.f4CoinsSpentSession) + "\n" +
+							EnumChatFormatting.GREEN + Utils.getTimeBetween(0, lc.f4TimeSpentSession);
     		} else {
     			ConfigHandler cf = new ConfigHandler();
     			
@@ -1530,7 +1569,7 @@ public class TheMod
     	}
     }
     
-    public void increaseEmpSC() {
+    public void increaseSeaCreatures() {
     	LootCommand lc = new LootCommand();
     	ConfigHandler cf = new ConfigHandler();
     	
@@ -1540,8 +1579,23 @@ public class TheMod
     	if (lc.empSCsSession != -1) {
     		lc.empSCsSession++;
     	}
+    	// Only increment Yetis when in Jerry's Workshop
+    	List<String> scoreboard = ScoreboardHandler.getSidebarLines();
+    	for (String s : scoreboard) {
+    		String sCleaned = ScoreboardHandler.cleanSB(s);
+    		if (sCleaned.contains("Jerry's Workshop")) {
+    			if (lc.yetiSCs != -1) {
+    				lc.yetiSCs++;
+    			}
+    			if (lc.yetiSCsSession != -1) {
+    				lc.yetiSCsSession++;
+    			}
+    		}
+    	}
     	
     	cf.writeIntConfig("fishing", "empSC", lc.empSCs);
+    	cf.writeIntConfig("fishing", "yetiSC", lc.yetiSCs);
+    	
     }
     
 }
