@@ -32,7 +32,7 @@ public class DisplayCommand extends CommandBase {
 	@Override
 	public List<String> addTabCompletionOptions(ICommandSender sender, String[] args, BlockPos pos) {
 		if (args.length == 1) {
-			return getListOfStringsMatchingLastWord(args, "wolf", "spider", "zombie", "fishing", "off");
+			return getListOfStringsMatchingLastWord(args, "wolf", "spider", "zombie", "fishing", "catacombs", "off");
 		} else if (args.length == 2 && args[0].equalsIgnoreCase("fishing")) {
 			return getListOfStringsMatchingLastWord(args, "winter", "session");
 		} else if (args.length == 2 && args[0].equalsIgnoreCase("catacombs")) {

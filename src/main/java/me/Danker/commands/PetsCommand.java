@@ -51,11 +51,6 @@ public class PetsCommand extends CommandBase {
 		return 100;
 	}
 	
-	static String capitalize(String string) {
-		String capitalized = string.substring(0, 1).toUpperCase() + string.substring(1).toLowerCase();
-		return capitalized;
-	}
-	
 	@Override
 	public String getCommandName() {
 		return "petsof";
@@ -169,7 +164,7 @@ public class PetsCommand extends CommandBase {
 			
 			// Loop through pet rarities
 			for (JsonObject legPet : legendaryPets) {
-				String petName = capitalize(legPet.get("type").getAsString());
+				String petName = Utils.capitalizeString(legPet.get("type").getAsString());
 				int level = petXpToLevel(legPet.get("exp").getAsDouble(), "LEGENDARY");
 				
 				String messageToAdd = "";
@@ -183,7 +178,7 @@ public class PetsCommand extends CommandBase {
 			}
 			
 			for (JsonObject epicPet: epicPets) {
-				String petName = capitalize(epicPet.get("type").getAsString());
+				String petName = Utils.capitalizeString(epicPet.get("type").getAsString());
 				int level = petXpToLevel(epicPet.get("exp").getAsDouble(), "EPIC");
 				
 				String messageToAdd = "";
@@ -197,7 +192,7 @@ public class PetsCommand extends CommandBase {
 			}
 			
 			for (JsonObject rarePet: rarePets) {
-				String petName = capitalize(rarePet.get("type").getAsString());
+				String petName = Utils.capitalizeString(rarePet.get("type").getAsString());
 				int level = petXpToLevel(rarePet.get("exp").getAsDouble(), "RARE");
 				
 				String messageToAdd = "";
@@ -211,7 +206,7 @@ public class PetsCommand extends CommandBase {
 			}
 			
 			for (JsonObject uncommonPet: uncommonPets) {
-				String petName = capitalize(uncommonPet.get("type").getAsString());
+				String petName = Utils.capitalizeString(uncommonPet.get("type").getAsString());
 				int level = petXpToLevel(uncommonPet.get("exp").getAsDouble(), "UNCOMMON");
 				
 				String messageToAdd = "";
@@ -225,7 +220,7 @@ public class PetsCommand extends CommandBase {
 			}
 			
 			for (JsonObject commonPet: commonPets) {
-				String petName = capitalize(commonPet.get("type").getAsString());
+				String petName = Utils.capitalizeString(commonPet.get("type").getAsString());
 				int level = petXpToLevel(commonPet.get("exp").getAsDouble(), "COMMON");
 				
 				String messageToAdd = "";

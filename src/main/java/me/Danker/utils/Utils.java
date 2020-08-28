@@ -4,11 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 
+import org.lwjgl.opengl.GL11;
+
 import me.Danker.TheMod;
 import me.Danker.handlers.ScoreboardHandler;
 import me.Danker.handlers.TextRenderer;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.gui.inventory.GuiChest;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.scoreboard.ScoreObjective;
@@ -101,6 +105,66 @@ public class Utils {
 			}
 		}
 		inSkyblock = false;
+	}
+	
+	public static String capitalizeString(String string) {
+		String[] words = string.split("_");
+		
+		for (int i = 0; i < words.length; i++) {
+			words[i] = words[i].substring(0, 1).toUpperCase() + words[i].substring(1).toLowerCase();
+		}
+		
+		return String.join(" ", words);
+	}
+	
+	public static double getPercentage(int num1, int num2) {
+		if (num2 == 0) return 0D;
+		double result = ((double) num1 * 100D) / (double) num2;
+		result = Math.round(result * 100D) / 100D;
+		return result;
+	}
+	
+	public static void drawOnSlot(int size, int xSlotPos, int ySlotPos, int colour) {
+		ScaledResolution sr = new ScaledResolution(Minecraft.getMinecraft());
+		int guiLeft = (sr.getScaledWidth() - 176) / 2;
+		int guiTop = (sr.getScaledHeight() - 222) / 2;
+		int x = guiLeft + xSlotPos;
+		int y = guiTop + ySlotPos;
+		// Move down when chest isn't 6 rows
+		if (size != 90) y += (6 - (size - 36) / 9) * 9;
+		
+		GL11.glTranslated(0, 0, 1);
+		Gui.drawRect(x, y, x + 16, y + 16, colour);
+		GL11.glTranslated(0, 0, -1);
+	}
+	
+	public static String getTimeBetween(double timeOne, double timeTwo) {
+		double secondsBetween = Math.floor(timeTwo - timeOne);
+		
+		String timeFormatted = "";
+		int days;
+		int hours;
+		int minutes;
+		int seconds;
+		
+		if (secondsBetween > 86400) {
+			// More than 1d, display #d#h
+			days = (int) (secondsBetween / 86400);
+			hours = (int) (secondsBetween % 86400 / 3600);
+			timeFormatted = days + "d" + hours + "h";
+		} else if (secondsBetween > 3600) {
+			// More than 1h, display #h#m
+			hours = (int) (secondsBetween / 3600);
+			minutes = (int) (secondsBetween % 3600 / 60);
+			timeFormatted = hours + "h" + minutes + "m";
+		} else {
+			// Display #m#s
+			minutes = (int) (secondsBetween / 60);
+			seconds = (int) (secondsBetween % 60);
+			timeFormatted = minutes + "m" + seconds + "s";
+		}
+		
+		return timeFormatted;
 	}
 	
 }

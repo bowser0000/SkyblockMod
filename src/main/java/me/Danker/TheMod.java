@@ -11,6 +11,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Pattern;
 
+import org.lwjgl.input.Keyboard;
+
 import com.google.gson.JsonObject;
 
 import me.Danker.commands.ArmourCommand;
@@ -29,6 +31,7 @@ import me.Danker.commands.ResetLootCommand;
 import me.Danker.commands.ScaleCommand;
 import me.Danker.commands.SetkeyCommand;
 import me.Danker.commands.SkillsCommand;
+import me.Danker.commands.SkyblockPlayersCommand;
 import me.Danker.commands.SlayerCommand;
 import me.Danker.commands.ToggleCommand;
 import me.Danker.handlers.APIHandler;
@@ -38,19 +41,26 @@ import me.Danker.handlers.TextRenderer;
 import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.client.gui.inventory.GuiChest;
+import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.event.ClickEvent;
 import net.minecraft.event.ClickEvent.Action;
+import net.minecraft.inventory.Slot;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IChatComponent;
 import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
+import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.sound.PlaySoundEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -58,6 +68,7 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.InputEvent.KeyInputEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.common.versioning.DefaultArtifactVersion;
 
@@ -77,6 +88,7 @@ public class TheMod
     public static String titleText = "";
     static int tickAmount = 1;
     public static String lastMaddoxCommand = "/cb placeholdervalue";
+    static KeyBinding[] keyBindings = new KeyBinding[1];
     
     @EventHandler
     public void init(FMLInitializationEvent event)
@@ -88,37 +100,43 @@ public class TheMod
 		cf.reloadConfig();
 		
 		// For golden enchants
-		t6Enchants.put("Bane of Arthropods VI", EnumChatFormatting.GOLD + "Bane of Arthropods VI" + EnumChatFormatting.BLUE);
-		t6Enchants.put("Critical VI", EnumChatFormatting.GOLD + "Critical VI" + EnumChatFormatting.BLUE);
-		t6Enchants.put("Dragon Hunter V", EnumChatFormatting.GOLD + "Dragon Hunter V" + EnumChatFormatting.BLUE);
-		t6Enchants.put("Ender Slayer VI", EnumChatFormatting.GOLD + "Ender Slayer VI" + EnumChatFormatting.BLUE);
-		t6Enchants.put("Experience IV", EnumChatFormatting.GOLD + "Experience IV" + EnumChatFormatting.BLUE);
-		t6Enchants.put("Giant Killer VI", EnumChatFormatting.GOLD + "Giant Killer VI" + EnumChatFormatting.BLUE);
-		t6Enchants.put("Life Steal IV", EnumChatFormatting.GOLD + "Life Steal IV" + EnumChatFormatting.BLUE);
-		t6Enchants.put("Looting IV", EnumChatFormatting.GOLD + "Looting IV" + EnumChatFormatting.BLUE);
-		t6Enchants.put("Luck VI", EnumChatFormatting.GOLD + "Luck VI" + EnumChatFormatting.BLUE);
-		t6Enchants.put("Scavenger IV", EnumChatFormatting.GOLD + "Scavenger IV" + EnumChatFormatting.BLUE);
-		t6Enchants.put("Scavenger V", EnumChatFormatting.GOLD + "Scavenger V" + EnumChatFormatting.BLUE);
-		t6Enchants.put("Sharpness VI", EnumChatFormatting.GOLD + "Sharpness VI" + EnumChatFormatting.BLUE);
-		t6Enchants.put("Smite VI", EnumChatFormatting.GOLD + "Smite VI" + EnumChatFormatting.BLUE);
-		t6Enchants.put("Smite VII", EnumChatFormatting.GOLD + "Smite VII" + EnumChatFormatting.BLUE);
-		t6Enchants.put("Vampirism VI", EnumChatFormatting.GOLD + "Vampirism VI" + EnumChatFormatting.BLUE);
-		t6Enchants.put("Power VI", EnumChatFormatting.GOLD + "Power VI" + EnumChatFormatting.BLUE);
-		t6Enchants.put("Growth VI", EnumChatFormatting.GOLD + "Growth VI" + EnumChatFormatting.BLUE);
-		t6Enchants.put("Protection VI", EnumChatFormatting.GOLD + "Protection VI" + EnumChatFormatting.BLUE);
-		t6Enchants.put("Efficiency VI", EnumChatFormatting.GOLD + "Efficiency VI" + EnumChatFormatting.BLUE);
-		t6Enchants.put("Angler VI", EnumChatFormatting.GOLD + "Angler VI" + EnumChatFormatting.BLUE);
-		t6Enchants.put("Caster VI", EnumChatFormatting.GOLD + "Caster VI" + EnumChatFormatting.BLUE);
-		t6Enchants.put("Frail VI", EnumChatFormatting.GOLD + "Frail VI" + EnumChatFormatting.BLUE);
-		t6Enchants.put("Luck of the Sea VI", EnumChatFormatting.GOLD + "Luck of the Sea VI" + EnumChatFormatting.BLUE);
-		t6Enchants.put("Lure VI", EnumChatFormatting.GOLD + "Lure VI" + EnumChatFormatting.BLUE);
-		t6Enchants.put("Magnet VI", EnumChatFormatting.GOLD + "Magnet VI" + EnumChatFormatting.BLUE);
-		t6Enchants.put("Spiked Hook VI", EnumChatFormatting.GOLD + "Spiked Hook VI" + EnumChatFormatting.BLUE);
-		t6Enchants.put("Feather Falling X", EnumChatFormatting.GOLD + "Feather Falling X" + EnumChatFormatting.BLUE);
-		t6Enchants.put("Infinite Quiver X", EnumChatFormatting.GOLD + "Infinite Quiver X" + EnumChatFormatting.BLUE);
+		t6Enchants.put("9Bane of Arthropods VI", "6Bane of Arthropods VI");
+		t6Enchants.put("9Critical VI", "6Critical VI");
+		t6Enchants.put("9Dragon Hunter V", "6Dragon Hunter V");
+		t6Enchants.put("9Ender Slayer VI", "6Ender Slayer VI");
+		t6Enchants.put("9Experience IV", "6Experience IV");
+		t6Enchants.put("9Giant Killer VI", "6Giant Killer VI");
+		t6Enchants.put("9Life Steal IV", "6Life Steal IV");
+		t6Enchants.put("9Looting IV", "6Looting IV");
+		t6Enchants.put("9Luck VI", "6Luck VI");
+		t6Enchants.put("9Scavenger IV", "6Scavenger IV");
+		t6Enchants.put("9Scavenger V", "6Scavenger V");
+		t6Enchants.put("9Sharpness VI", "6Sharpness VI");
+		t6Enchants.put("9Smite VII", "6Smite VII");
+		t6Enchants.put("9Smite VI", "6Smite VI");
+		t6Enchants.put("9Vampirism VI", "6Vampirism VI");
+		t6Enchants.put("9Power VI", "6Power VI");
+		t6Enchants.put("9Growth VI", "6Growth VI");
+		t6Enchants.put("9Protection VI", "6Protection VI");
+		t6Enchants.put("9Efficiency VI", "6Efficiency VI");
+		t6Enchants.put("9Angler VI", "6Angler VI");
+		t6Enchants.put("9Caster VI", "6Caster VI");
+		t6Enchants.put("9Frail VI", "6Frail VI");
+		t6Enchants.put("9Luck of the Sea VI", "6Luck of the Sea VI");
+		t6Enchants.put("9Lure VI", "6Lure VI");
+		t6Enchants.put("9Magnet VI", "6Magnet VI");
+		t6Enchants.put("9Spiked Hook VI", "6Spiked Hook VI");
+		t6Enchants.put("9Feather Falling X", "6Feather Falling X");
+		t6Enchants.put("9Infinite Quiver X", "6Infinite Quiver X");
 		
 		String patternString = "(" + String.join("|", t6Enchants.keySet()) + ")";
 		pattern = Pattern.compile(patternString);
+		
+		keyBindings[0] = new KeyBinding("Open Maddox Menu", Keyboard.KEY_M, "Danker's Skyblock Mod");
+		
+		for (int i = 0; i < keyBindings.length; i++) {
+			ClientRegistry.registerKeyBinding(keyBindings[i]);
+		}
     }
     
     @EventHandler
@@ -141,6 +159,7 @@ public class TheMod
     	ClientCommandHandler.instance.registerCommand(new ResetLootCommand());
     	ClientCommandHandler.instance.registerCommand(new ScaleCommand());
     	ClientCommandHandler.instance.registerCommand(new ChatMaddoxCommand());
+    	ClientCommandHandler.instance.registerCommand(new SkyblockPlayersCommand());
     }
     
     // Update checker
@@ -659,8 +678,10 @@ public class TheMod
 			lc.recombobulatorsSession++;
 			cf.writeIntConfig("catacombs", "recombobulator", lc.recombobulators);
 		}
-		if (message.contains("    RARE REWARD! FUMING POTATO BOOK PLACEHOLDER")) {
-			
+		if (message.contains("    RARE REWARD! Fuming Potato Book")) {
+			lc.fumingPotatoBooks++;
+			lc.fumingPotatoBooksSession++;
+			cf.writeIntConfig("catacombs", "fumingBooks", lc.fumingPotatoBooks);
 		}
 		// F1
 		if (message.contains("    RARE REWARD! Bonzo's Staff")) {
@@ -668,11 +689,27 @@ public class TheMod
 			lc.bonzoStaffsSession++;
 			cf.writeIntConfig("catacombs", "bonzoStaff", lc.bonzoStaffs);
 		}
+		if (message.contains("Defeated Bonzo in ")) {
+			String time = message.substring(message.lastIndexOf(" ") + 1, message.length());
+			int minutes = Integer.parseInt(message.substring(message.indexOf("m")));
+			int seconds = Integer.parseInt(message.substring(message.indexOf("m") + 1, message.indexOf("s")));
+			// Prevent rounding off errors
+			lc.f1TimeSpent = Math.floor(lc.f1TimeSpent + (minutes * 60) + seconds);
+			lc.f1TimeSpentSession = Math.floor(lc.f1TimeSpentSession + (minutes * 60) + seconds);
+		}
 		// F2
 		if (message.contains("    RARE REWARD! Scarf's Studies")) {
 			lc.scarfStudies++;
 			lc.scarfStudiesSession++;
 			cf.writeIntConfig("catacombs", "scarfStudies", lc.scarfStudies);
+		}
+		if (message.contains("Defeated Scarf in ")) {
+			String time = message.substring(message.lastIndexOf(" ") + 1, message.length());
+			int minutes = Integer.parseInt(message.substring(message.indexOf("m")));
+			int seconds = Integer.parseInt(message.substring(message.indexOf("m") + 1, message.indexOf("s")));
+			// Prevent rounding off errors
+			lc.f2TimeSpent = Math.floor(lc.f2TimeSpent + (minutes * 60) + seconds);
+			lc.f2TimeSpentSession = Math.floor(lc.f2TimeSpentSession + (minutes * 60) + seconds);
 		}
 		// F3
 		if (message.contains("    RARE REWARD! Adaptive Helmet")) {
@@ -700,6 +737,14 @@ public class TheMod
 			lc.adaptiveSwordsSession++;
 			cf.writeIntConfig("catacombs", "adaptiveSword", lc.adaptiveSwords);
 		}
+		if (message.contains("Defeated The Professor in ")) {
+			String time = message.substring(message.lastIndexOf(" ") + 1, message.length());
+			int minutes = Integer.parseInt(message.substring(message.indexOf("m")));
+			int seconds = Integer.parseInt(message.substring(message.indexOf("m") + 1, message.indexOf("s")));
+			// Prevent rounding off errors
+			lc.f3TimeSpent = Math.floor(lc.f3TimeSpent + (minutes * 60) + seconds);
+			lc.f3TimeSpentSession = Math.floor(lc.f3TimeSpentSession + (minutes * 60) + seconds);
+		}
 		// F4
 		if (message.contains("    Spirit Wing")) {
 			lc.spiritWings++;
@@ -707,7 +752,7 @@ public class TheMod
 			cf.writeIntConfig("catacombs", "spiritWing", lc.spiritWings);
 		}
 		// TODO
-		// Fix strings for Spirit Bone, Spirit Boots, Spirit Pet
+		// Fix strings for Spirit Bone, Spirit Boots
 		if (message.contains("    ") && message.contains("Spirit Bone")) {
 			lc.spiritBones++;
 			lc.spiritBonesSession++;
@@ -718,13 +763,14 @@ public class TheMod
 			lc.spiritBootsSession++;
 			cf.writeIntConfig("catacombs", "spiritBoot", lc.spiritBoots);
 		}
-		if (message.contains("    ") && message.contains("Spirit Pet")) {
+		if (message.contains("    [Lvl 1] Spirit")) {
 			String formattedMessage = event.message.getFormattedText();
-			if (formattedMessage.contains("§5Spirit Pet")) {
+			// Unicode colour code messes up here, just gonna remove the symbols
+			if (formattedMessage.contains("5Spirit")) {
 				lc.epicSpiritPets++;
 				lc.epicSpiritPetsSession++;
 				cf.writeIntConfig("catacombs", "spiritPetEpic", lc.epicSpiritPets);
-			} else if (formattedMessage.contains("§6Spirit Pet")) {
+			} else if (formattedMessage.contains("6Spirit")) {
 				lc.legSpiritPets++;
 				lc.legSpiritPetsSession++;
 				cf.writeIntConfig("catacombs", "spiritPetLeg", lc.legSpiritPets);
@@ -740,6 +786,14 @@ public class TheMod
 			lc.spiritBowsSession++;
 			cf.writeIntConfig("catacombs", "spiritBow", lc.spiritBows);
 		}
+		if (message.contains("Defeated Thorn in ")) {
+			String time = message.substring(message.lastIndexOf(" ") + 1, message.length());
+			int minutes = Integer.parseInt(message.substring(message.indexOf("m")));
+			int seconds = Integer.parseInt(message.substring(message.indexOf("m") + 1, message.indexOf("s")));
+			// Prevent rounding off errors
+			lc.f4TimeSpent = Math.floor(lc.f4TimeSpent + (minutes * 60) + seconds);
+			lc.f4TimeSpentSession = Math.floor(lc.f4TimeSpentSession + (minutes * 60) + seconds);
+		}
 		
 		// Chat Maddox
 		if (message.contains("[OPEN MENU]")) {
@@ -750,6 +804,16 @@ public class TheMod
 				}
 			}
 			if (tc.chatMaddoxToggled) Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Click anywhere in chat to open Maddox"));
+		}
+		
+		// Spirit Bear alerts
+		if (tc.spiritBearAlerts && message.contains("The Spirit Bear has appeared!")) {
+			Utils.createTitle(EnumChatFormatting.DARK_PURPLE + "SPIRIT BEAR", 2);
+		}
+		
+		// Spirit Sceptre
+		if (!tc.sceptreMessages && message.contains("Your Bat Staff hit ")) {
+			event.setCanceled(true);
 		}
     }
     
@@ -786,7 +850,7 @@ public class TheMod
     			if (lc.wolfTime == -1) {
     				timeBetween = "Never";
     			} else {
-    				timeBetween = lc.getTimeBetween(lc.wolfTime, timeNow);
+    				timeBetween = Utils.getTimeBetween(lc.wolfTime, timeNow);
     			}
     			if (lc.wolfBosses == -1) {
     				bossesBetween = "Never";
@@ -825,7 +889,7 @@ public class TheMod
     			if (lc.wolfTimeSession == -1) {
     				timeBetween = "Never";
     			} else {
-    				timeBetween = lc.getTimeBetween(lc.wolfTimeSession, timeNow);
+    				timeBetween = Utils.getTimeBetween(lc.wolfTimeSession, timeNow);
     			}
     			if (lc.wolfBossesSession == -1) {
     				bossesBetween = "Never";
@@ -864,7 +928,7 @@ public class TheMod
     			if (lc.spiderTime == -1) {
     				timeBetween = "Never";
     			} else {
-    				timeBetween = lc.getTimeBetween(lc.spiderTime, timeNow);
+    				timeBetween = Utils.getTimeBetween(lc.spiderTime, timeNow);
     			}
     			if (lc.spiderBosses == -1) {
     				bossesBetween = "Never";
@@ -903,7 +967,7 @@ public class TheMod
     			if (lc.spiderTimeSession == -1) {
     				timeBetween = "Never";
     			} else {
-    				timeBetween = lc.getTimeBetween(lc.spiderTimeSession, timeNow);
+    				timeBetween = Utils.getTimeBetween(lc.spiderTimeSession, timeNow);
     			}
     			if (lc.spiderBossesSession == -1) {
     				bossesBetween = "Never";
@@ -942,7 +1006,7 @@ public class TheMod
     			if (lc.zombieTime == -1) {
     				timeBetween = "Never";
     			} else {
-    				timeBetween = lc.getTimeBetween(lc.zombieTime, timeNow);
+    				timeBetween = Utils.getTimeBetween(lc.zombieTime, timeNow);
     			}
     			if (lc.zombieBosses == -1) {
     				bossesBetween = "Never";
@@ -983,7 +1047,7 @@ public class TheMod
     			if (lc.zombieTimeSession == -1) {
     				timeBetween = "Never";
     			} else {
-    				timeBetween = lc.getTimeBetween(lc.zombieTimeSession, timeNow);
+    				timeBetween = Utils.getTimeBetween(lc.zombieTimeSession, timeNow);
     			}
     			if (lc.zombieBossesSession == -1) {
     				bossesBetween = "Never";
@@ -1024,7 +1088,7 @@ public class TheMod
     			if (lc.empTime == -1) {
     				timeBetween = "Never";
     			} else {
-    				timeBetween = lc.getTimeBetween(lc.empTime, timeNow);
+    				timeBetween = Utils.getTimeBetween(lc.empTime, timeNow);
     			}
     			if (lc.empSCs == -1) {
     				bossesBetween = "Never";
@@ -1075,8 +1139,8 @@ public class TheMod
 									  EnumChatFormatting.AQUA + bossesBetween;
     			
     			if (tc.splitFishing) {
-    				new TextRenderer(Minecraft.getMinecraft(), dropsTextTwo, (int) (moc.displayXY[0] + (145 * ScaleCommand.displayScale)), moc.displayXY[1], ScaleCommand.displayScale);
-        			new TextRenderer(Minecraft.getMinecraft(), countTextTwo, (int) (moc.displayXY[0] + (255 * ScaleCommand.displayScale)), moc.displayXY[1], ScaleCommand.displayScale);
+    				new TextRenderer(Minecraft.getMinecraft(), dropsTextTwo, (int) (moc.displayXY[0] + (160 * ScaleCommand.displayScale)), moc.displayXY[1], ScaleCommand.displayScale);
+        			new TextRenderer(Minecraft.getMinecraft(), countTextTwo, (int) (moc.displayXY[0] + (270 * ScaleCommand.displayScale)), moc.displayXY[1], ScaleCommand.displayScale);
     			} else {
     				dropsText += "\n" + dropsTextTwo;
     				countText += "\n" + countTextTwo;
@@ -1085,7 +1149,7 @@ public class TheMod
     			if (lc.empTimeSession == -1) {
     				timeBetween = "Never";
     			} else {
-    				timeBetween = lc.getTimeBetween(lc.empTimeSession, timeNow);
+    				timeBetween = Utils.getTimeBetween(lc.empTimeSession, timeNow);
     			}
     			if (lc.empSCsSession == -1) {
     				bossesBetween = "Never";
@@ -1136,8 +1200,8 @@ public class TheMod
 									  EnumChatFormatting.AQUA + bossesBetween;
     			
     			if (tc.splitFishing) {
-    				new TextRenderer(Minecraft.getMinecraft(), dropsTextTwo, (int) (moc.displayXY[0] + (145 * ScaleCommand.displayScale)), moc.displayXY[1], ScaleCommand.displayScale);
-        			new TextRenderer(Minecraft.getMinecraft(), countTextTwo, (int) (moc.displayXY[0] + (255 * ScaleCommand.displayScale)), moc.displayXY[1], ScaleCommand.displayScale);
+    				new TextRenderer(Minecraft.getMinecraft(), dropsTextTwo, (int) (moc.displayXY[0] + (160 * ScaleCommand.displayScale)), moc.displayXY[1], ScaleCommand.displayScale);
+        			new TextRenderer(Minecraft.getMinecraft(), countTextTwo, (int) (moc.displayXY[0] + (270 * ScaleCommand.displayScale)), moc.displayXY[1], ScaleCommand.displayScale);
     			} else {
     				dropsText += "\n" + dropsTextTwo;
     				countText += "\n" + countTextTwo;
@@ -1179,31 +1243,47 @@ public class TheMod
     		} else if (ds.display.equals("catacombs_floor_one")) {
     			dropsText = EnumChatFormatting.GOLD + "Recombobulators:\n" +
     						EnumChatFormatting.DARK_PURPLE + "Fuming Potato Books:\n" +
-    						EnumChatFormatting.BLUE + "Bonzo's Staffs:";
+    						EnumChatFormatting.BLUE + "Bonzo's Staffs:\n" +
+    						EnumChatFormatting.GREEN + "Coins Spent:\n" +
+    						EnumChatFormatting.GREEN + "Time Spent:\n";
     			countText = EnumChatFormatting.GOLD + nf.format(lc.recombobulators) + "\n" +
 							EnumChatFormatting.DARK_PURPLE + nf.format(lc.fumingPotatoBooks) + "\n" +
-							EnumChatFormatting.BLUE + nf.format(lc.bonzoStaffs);
+							EnumChatFormatting.BLUE + nf.format(lc.bonzoStaffs) + "\n" +
+							EnumChatFormatting.GREEN + Utils.getTimeBetween(0, lc.f1TimeSpent) + "\n" +
+							EnumChatFormatting.GREEN + nf.format(lc.f1CoinsSpent);
     		} else if (ds.display.equals("catacombs_floor_one_session")) {
     			dropsText = EnumChatFormatting.GOLD + "Recombobulators:\n" +
 							EnumChatFormatting.DARK_PURPLE + "Fuming Potato Books:\n" +
-							EnumChatFormatting.BLUE + "Bonzo's Staffs:";
+							EnumChatFormatting.BLUE + "Bonzo's Staffs:\n" +
+    						EnumChatFormatting.GREEN + "Coins Spent:\n" +
+    						EnumChatFormatting.GREEN + "Time Spent:\n";
 				countText = EnumChatFormatting.GOLD + nf.format(lc.recombobulatorsSession) + "\n" +
 							EnumChatFormatting.DARK_PURPLE + nf.format(lc.fumingPotatoBooksSession) + "\n" +
-							EnumChatFormatting.BLUE + nf.format(lc.bonzoStaffsSession);
+							EnumChatFormatting.BLUE + nf.format(lc.bonzoStaffsSession) + "\n" +
+							EnumChatFormatting.GREEN + Utils.getTimeBetween(0, lc.f1TimeSpentSession) + "\n" +
+							EnumChatFormatting.GREEN + nf.format(lc.f1CoinsSpentSession);
     		} else if (ds.display.equals("catacombs_floor_two")) {
     			dropsText = EnumChatFormatting.GOLD + "Recombobulators:\n" +
 							EnumChatFormatting.DARK_PURPLE + "Fuming Potato Books:\n" +
-							EnumChatFormatting.BLUE + "Scarf's Studies:";
+							EnumChatFormatting.BLUE + "Scarf's Studies:\n" +
+		    				EnumChatFormatting.GREEN + "Coins Spent:\n" +
+		    				EnumChatFormatting.GREEN + "Time Spent:\n";
 				countText = EnumChatFormatting.GOLD + nf.format(lc.recombobulators) + "\n" +
 							EnumChatFormatting.DARK_PURPLE + nf.format(lc.fumingPotatoBooks) + "\n" +
-							EnumChatFormatting.BLUE + nf.format(lc.scarfStudies);
+							EnumChatFormatting.BLUE + nf.format(lc.scarfStudies) + "\n" +
+							EnumChatFormatting.GREEN + Utils.getTimeBetween(0, lc.f2TimeSpent) + "\n" +
+							EnumChatFormatting.GREEN + nf.format(lc.f2CoinsSpent);
     		} else if (ds.display.equals("catacombs_floor_two_session")) {
     			dropsText = EnumChatFormatting.GOLD + "Recombobulators:\n" +
 							EnumChatFormatting.DARK_PURPLE + "Fuming Potato Books:\n" +
-							EnumChatFormatting.BLUE + "Scarf's Studies:";
+							EnumChatFormatting.BLUE + "Scarf's Studies:" +
+		    				EnumChatFormatting.GREEN + "Coins Spent:\n" +
+		    				EnumChatFormatting.GREEN + "Time Spent:\n";
 				countText = EnumChatFormatting.GOLD + nf.format(lc.recombobulatorsSession) + "\n" +
 							EnumChatFormatting.DARK_PURPLE + nf.format(lc.fumingPotatoBooksSession) + "\n" +
-							EnumChatFormatting.BLUE + nf.format(lc.scarfStudiesSession);
+							EnumChatFormatting.BLUE + nf.format(lc.scarfStudiesSession) + "\n" +
+							EnumChatFormatting.GREEN + Utils.getTimeBetween(0, lc.f2TimeSpentSession) + "\n" +
+							EnumChatFormatting.GREEN + nf.format(lc.f2CoinsSpentSession);
     		} else if (ds.display.equals("catacombs_floor_three")) {
     			dropsText = EnumChatFormatting.GOLD + "Recombobulators:\n" +
 							EnumChatFormatting.DARK_PURPLE + "Fuming Potato Books:\n" +
@@ -1211,14 +1291,18 @@ public class TheMod
 							EnumChatFormatting.DARK_PURPLE + "Adaptive Chestplates:\n" +
 							EnumChatFormatting.DARK_PURPLE + "Adaptive Leggings:\n" +
 							EnumChatFormatting.DARK_PURPLE + "Adaptive Boots:\n" +
-							EnumChatFormatting.DARK_PURPLE + "Adaptive Blades:";
+							EnumChatFormatting.DARK_PURPLE + "Adaptive Blades:" +
+		    				EnumChatFormatting.GREEN + "Coins Spent:\n" +
+		    				EnumChatFormatting.GREEN + "Time Spent:\n";
 				countText = EnumChatFormatting.GOLD + nf.format(lc.recombobulators) + "\n" +
 							EnumChatFormatting.DARK_PURPLE + nf.format(lc.fumingPotatoBooks) + "\n" +
 							EnumChatFormatting.DARK_PURPLE + nf.format(lc.adaptiveHelms) + "\n" +
 							EnumChatFormatting.DARK_PURPLE + nf.format(lc.adaptiveChests) + "\n" +
 							EnumChatFormatting.DARK_PURPLE + nf.format(lc.adaptiveLegs) + "\n" +
 							EnumChatFormatting.DARK_PURPLE + nf.format(lc.adaptiveBoots) + "\n" +
-							EnumChatFormatting.DARK_PURPLE + nf.format(lc.adaptiveSwords);	
+							EnumChatFormatting.DARK_PURPLE + nf.format(lc.adaptiveSwords) + "\n" +
+							EnumChatFormatting.GREEN + Utils.getTimeBetween(0, lc.f3TimeSpent) + "\n" +
+							EnumChatFormatting.GREEN + nf.format(lc.f3CoinsSpent);
     		} else if (ds.display.equals("catacombs_floor_three_session")) {
     			dropsText = EnumChatFormatting.GOLD + "Recombobulators:\n" +
 							EnumChatFormatting.DARK_PURPLE + "Fuming Potato Books:\n" +
@@ -1226,14 +1310,18 @@ public class TheMod
 							EnumChatFormatting.DARK_PURPLE + "Adaptive Chestplates:\n" +
 							EnumChatFormatting.DARK_PURPLE + "Adaptive Leggings:\n" +
 							EnumChatFormatting.DARK_PURPLE + "Adaptive Boots:\n" +
-							EnumChatFormatting.DARK_PURPLE + "Adaptive Blades:";
+							EnumChatFormatting.DARK_PURPLE + "Adaptive Blades:" +
+		    				EnumChatFormatting.GREEN + "Coins Spent:\n" +
+		    				EnumChatFormatting.GREEN + "Time Spent:\n";
 				countText = EnumChatFormatting.GOLD + nf.format(lc.recombobulatorsSession) + "\n" +
 							EnumChatFormatting.DARK_PURPLE + nf.format(lc.fumingPotatoBooksSession) + "\n" +
 							EnumChatFormatting.DARK_PURPLE + nf.format(lc.adaptiveHelmsSession) + "\n" +
 							EnumChatFormatting.DARK_PURPLE + nf.format(lc.adaptiveChestsSession) + "\n" +
 							EnumChatFormatting.DARK_PURPLE + nf.format(lc.adaptiveLegsSession) + "\n" +
 							EnumChatFormatting.DARK_PURPLE + nf.format(lc.adaptiveBootsSession) + "\n" +
-							EnumChatFormatting.DARK_PURPLE + nf.format(lc.adaptiveSwordsSession);
+							EnumChatFormatting.DARK_PURPLE + nf.format(lc.adaptiveSwordsSession) + "\n" +
+							EnumChatFormatting.GREEN + Utils.getTimeBetween(0, lc.f3TimeSpentSession) + "\n" +
+							EnumChatFormatting.GREEN + nf.format(lc.f3CoinsSpentSession);
     		} else if (ds.display.equals("catacombs_floor_four")) {
     			dropsText = EnumChatFormatting.GOLD + "Recombobulators:\n" +
 							EnumChatFormatting.DARK_PURPLE + "Fuming Potato Books:\n" +
@@ -1243,7 +1331,9 @@ public class TheMod
 							EnumChatFormatting.DARK_PURPLE + "Spirit Swords:\n" +
 							EnumChatFormatting.GOLD + "Spirit Bows:\n" +
 							EnumChatFormatting.DARK_PURPLE + "Epic Spirit Pets:\n" +
-							EnumChatFormatting.GOLD + "Leg Spirit Pets:";
+							EnumChatFormatting.GOLD + "Leg Spirit Pets:" +
+		    				EnumChatFormatting.GREEN + "Coins Spent:\n" +
+		    				EnumChatFormatting.GREEN + "Time Spent:\n";
 				countText = EnumChatFormatting.GOLD + nf.format(lc.recombobulators) + "\n" +
 							EnumChatFormatting.DARK_PURPLE + nf.format(lc.fumingPotatoBooks) + "\n" +
 							EnumChatFormatting.DARK_PURPLE + nf.format(lc.spiritWings) + "\n" +
@@ -1252,7 +1342,9 @@ public class TheMod
 							EnumChatFormatting.DARK_PURPLE + nf.format(lc.spiritSwords) + "\n" +
 							EnumChatFormatting.GOLD + nf.format(lc.spiritBows) + "\n" +
 							EnumChatFormatting.DARK_PURPLE + nf.format(lc.epicSpiritPets) + "\n" +
-							EnumChatFormatting.GOLD + nf.format(lc.legSpiritPets);
+							EnumChatFormatting.GOLD + nf.format(lc.legSpiritPets) + "\n" +
+							EnumChatFormatting.GREEN + Utils.getTimeBetween(0, lc.f4TimeSpent) + "\n" +
+							EnumChatFormatting.GREEN + nf.format(lc.f4CoinsSpent);
     		} else if (ds.display.equals("catacombs_floor_four_session")) {
     			dropsText = EnumChatFormatting.GOLD + "Recombobulators:\n" +
 							EnumChatFormatting.DARK_PURPLE + "Fuming Potato Books:\n" +
@@ -1262,7 +1354,9 @@ public class TheMod
 							EnumChatFormatting.DARK_PURPLE + "Spirit Swords:\n" +
 							EnumChatFormatting.GOLD + "Spirit Bows:\n" +
 							EnumChatFormatting.DARK_PURPLE + "Epic Spirit Pets:\n" +
-							EnumChatFormatting.GOLD + "Leg Spirit Pets:";
+							EnumChatFormatting.GOLD + "Leg Spirit Pets:" +
+		    				EnumChatFormatting.GREEN + "Coins Spent:\n" +
+		    				EnumChatFormatting.GREEN + "Time Spent:\n";
 				countText = EnumChatFormatting.GOLD + nf.format(lc.recombobulatorsSession) + "\n" +
 							EnumChatFormatting.DARK_PURPLE + nf.format(lc.fumingPotatoBooksSession) + "\n" +
 							EnumChatFormatting.DARK_PURPLE + nf.format(lc.spiritWingsSession) + "\n" +
@@ -1271,7 +1365,9 @@ public class TheMod
 							EnumChatFormatting.DARK_PURPLE + nf.format(lc.spiritSwordsSession) + "\n" +
 							EnumChatFormatting.GOLD + nf.format(lc.spiritBowsSession) + "\n" +
 							EnumChatFormatting.DARK_PURPLE + nf.format(lc.epicSpiritPetsSession) + "\n" +
-							EnumChatFormatting.GOLD + nf.format(lc.legSpiritPetsSession);
+							EnumChatFormatting.GOLD + nf.format(lc.legSpiritPetsSession) + "\n" +
+							EnumChatFormatting.GREEN + Utils.getTimeBetween(0, lc.f4TimeSpentSession) + "\n" +
+							EnumChatFormatting.GREEN + nf.format(lc.f4CoinsSpentSession);
     		} else {
     			ConfigHandler cf = new ConfigHandler();
     			
@@ -1290,6 +1386,7 @@ public class TheMod
     
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void onSound(final PlaySoundEvent event) {
+    	if (!Utils.inSkyblock) return;
     	if (event.name.equals("note.pling")) {
     		// Don't check twice within 3 seconds 
     		checkItemsNow = System.currentTimeMillis() / 1000;
@@ -1342,6 +1439,7 @@ public class TheMod
     
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void onTooltip(ItemTooltipEvent event) {
+    	if (!Utils.inSkyblock) return;
     	final ToggleCommand tc = new ToggleCommand();
     	
     	if (event.toolTip == null) return;
@@ -1369,6 +1467,66 @@ public class TheMod
     			showTitle = false;
     		}
     		titleTimer--;
+    	}
+    }
+    
+    @SubscribeEvent
+    public void onInteract(PlayerInteractEvent event) {
+    	if (!Utils.inSkyblock || Minecraft.getMinecraft().thePlayer != event.entityPlayer) return;
+    	ItemStack item = event.entityPlayer.getHeldItem();
+    	if (item == null) return;
+    	
+    	if (ToggleCommand.aotdToggled && item.getDisplayName().contains("Aspect of the Dragons") && event.action == PlayerInteractEvent.Action.RIGHT_CLICK_AIR) {
+    		event.setCanceled(true);
+    	}
+    }
+    
+    @SubscribeEvent
+    public void onKey(KeyInputEvent event) {
+    	if (!Utils.inSkyblock) return;
+    	if (keyBindings[0].isPressed()) {
+    		Minecraft.getMinecraft().thePlayer.sendChatMessage(lastMaddoxCommand);
+    	}
+    }
+    
+    @SubscribeEvent
+    public void onGuiRender(GuiScreenEvent.BackgroundDrawnEvent event) {
+    	if (!Utils.inSkyblock) return;
+    	if (ToggleCommand.petColoursToggled && event.gui instanceof GuiChest) {
+    		GuiChest inventory = (GuiChest) event.gui;
+    		List<Slot> invSlots = inventory.inventorySlots.inventorySlots;
+    		for (Slot slot : invSlots) {
+    			ItemStack item = slot.getStack();
+    			if (item == null) continue;
+    			if (item.getDisplayName().contains("[Lvl ")) {
+    				int colour;
+    				int petLevel = Integer.parseInt(item.getDisplayName().substring(item.getDisplayName().indexOf(" ") + 1, item.getDisplayName().indexOf("]")));
+    				if (petLevel == 100) {
+    					colour = 0xBFF2D249; // Gold
+    				} else if (petLevel >= 90) {
+    					colour = 0xBF9E794E; // Brown
+    				} else if (petLevel >= 80) {
+    					colour = 0xBF5C1F35; // idk weird magenta
+    				} else if (petLevel >= 70) {
+    					colour = 0xBFD64FC8; // Pink
+    				} else if (petLevel >= 60) {
+    					colour = 0xBF7E4FC6; // Purple
+    				} else if (petLevel >= 50) {
+    					colour = 0xBF008AD8; // Light Blue
+    				} else if (petLevel >= 40) {
+    					colour = 0xBF0EAC35; // Green
+    				} else if (petLevel >= 30) {
+    					colour = 0xBFFFC400; // Yellow
+    				} else if (petLevel >= 20) {
+    					colour = 0xBFEF5230; // Orange
+    				} else if (petLevel >= 10) {
+    					colour = 0xBFD62440; // Red
+    				} else {
+    					colour = 0xBF999999; // Gray
+    				}
+    				Utils.drawOnSlot(inventory.inventorySlots.inventorySlots.size(), slot.xDisplayPosition, slot.yDisplayPosition, colour);
+    			}
+    		}
     	}
     }
     

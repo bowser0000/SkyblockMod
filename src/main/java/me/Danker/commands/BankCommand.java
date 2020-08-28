@@ -26,8 +26,7 @@ public class BankCommand extends CommandBase {
 	}
 	
 	@Override
-	public List<String> getCommandAliases()
-    {
+	public List<String> getCommandAliases() {
         return Collections.singletonList("purse");
     }
 
