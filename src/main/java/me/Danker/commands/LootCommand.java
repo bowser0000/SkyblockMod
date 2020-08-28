@@ -4,6 +4,7 @@ import java.text.NumberFormat;
 import java.util.List;
 import java.util.Locale;
 
+import me.Danker.utils.Utils;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
@@ -86,14 +87,20 @@ public class LootCommand extends CommandBase {
 	public static int fumingPotatoBooks;
 	// F1
 	public static int bonzoStaffs;
+	public static double f1CoinsSpent;
+	public static double f1TimeSpent;
 	// F2
 	public static int scarfStudies;
+	public static double f2CoinsSpent;
+	public static double f2TimeSpent;
 	// F3
 	public static int adaptiveHelms;
 	public static int adaptiveChests;
 	public static int adaptiveLegs;
 	public static int adaptiveBoots;
 	public static int adaptiveSwords;
+	public static double f3CoinsSpent;
+	public static double f3TimeSpent;
 	// F4
 	public static int spiritWings;
 	public static int spiritBones;
@@ -102,6 +109,8 @@ public class LootCommand extends CommandBase {
 	public static int spiritBows;
 	public static int epicSpiritPets;
 	public static int legSpiritPets;
+	public static double f4CoinsSpent;
+	public static double f4TimeSpent;
 	
 	// Single sessions (No config saves)
 	// Wolf
@@ -177,14 +186,20 @@ public class LootCommand extends CommandBase {
 	public static int fumingPotatoBooksSession = 0;
 	// F1
 	public static int bonzoStaffsSession = 0;
+	public static double f1CoinsSpentSession = 0;
+	public static double f1TimeSpentSession = 0;
 	// F2
 	public static int scarfStudiesSession = 0;
+	public static double f2CoinsSpentSession = 0;
+	public static double f2TimeSpentSession = 0;
 	// F3
 	public static int adaptiveHelmsSession = 0;
 	public static int adaptiveChestsSession = 0;
 	public static int adaptiveLegsSession = 0;
 	public static int adaptiveBootsSession = 0;
 	public static int adaptiveSwordsSession = 0;
+	public static double f3CoinsSpentSession = 0;
+	public static double f3TimeSpentSession = 0;
 	// F4
 	public static int spiritWingsSession = 0;
 	public static int spiritBonesSession = 0;
@@ -193,35 +208,8 @@ public class LootCommand extends CommandBase {
 	public static int spiritBowsSession = 0;
 	public static int epicSpiritPetsSession = 0;
 	public static int legSpiritPetsSession = 0;
-	
-	public String getTimeBetween(double timeOne, double timeTwo) {
-		double secondsBetween = Math.floor(timeTwo - timeOne);
-		
-		String timeFormatted = "";
-		int days;
-		int hours;
-		int minutes;
-		int seconds;
-		
-		if (secondsBetween > 86400) {
-			// More than 1d, display #d#h
-			days = (int) (secondsBetween / 86400);
-			hours = (int) (secondsBetween % 86400 / 3600);
-			timeFormatted = days + "d" + hours + "h";
-		} else if (secondsBetween > 3600) {
-			// More than 1h, display #h#m
-			hours = (int) (secondsBetween / 3600);
-			minutes = (int) (secondsBetween % 3600 / 60);
-			timeFormatted = hours + "h" + minutes + "m";
-		} else {
-			// Display #m#s
-			minutes = (int) (secondsBetween / 60);
-			seconds = (int) (secondsBetween % 60);
-			timeFormatted = minutes + "m" + seconds + "s";
-		}
-		
-		return timeFormatted;
-	}
+	public static double f4CoinsSpentSession = 0;
+	public static double f4TimeSpentSession = 0;
 	
 	@Override
 	public String getCommandName() {
@@ -275,7 +263,7 @@ public class LootCommand extends CommandBase {
 				if (wolfTimeSession == -1) {
 					timeBetween = "Never";
 				} else {
-					timeBetween = getTimeBetween(wolfTimeSession, timeNow);
+					timeBetween = Utils.getTimeBetween(wolfTimeSession, timeNow);
 				}
 				if (wolfBossesSession == -1) {
 					bossesBetween = "Never";
@@ -308,7 +296,7 @@ public class LootCommand extends CommandBase {
 			if (wolfTime == -1) {
 				timeBetween = "Never";
 			} else {
-				timeBetween = getTimeBetween(wolfTime, timeNow);
+				timeBetween = Utils.getTimeBetween(wolfTime, timeNow);
 			}
 			if (wolfBosses == -1) {
 				bossesBetween = "Never";
@@ -340,7 +328,7 @@ public class LootCommand extends CommandBase {
 				if (spiderTimeSession == -1) {
 					timeBetween = "Never";
 				} else {
-					timeBetween = getTimeBetween(spiderTimeSession, timeNow);
+					timeBetween = Utils.getTimeBetween(spiderTimeSession, timeNow);
 				}
 				if (spiderBossesSession == -1) {
 					bossesBetween = "Never";
@@ -373,7 +361,7 @@ public class LootCommand extends CommandBase {
 			if (spiderTime == -1) {
 				timeBetween = "Never";
 			} else {
-				timeBetween = getTimeBetween(spiderTime, timeNow);
+				timeBetween = Utils.getTimeBetween(spiderTime, timeNow);
 			}
 			if (spiderBosses == -1) {
 				bossesBetween = "Never";
@@ -405,7 +393,7 @@ public class LootCommand extends CommandBase {
 				if (zombieTimeSession == -1) {
 					timeBetween = "Never";
 				} else {
-					timeBetween = getTimeBetween(zombieTimeSession, timeNow);
+					timeBetween = Utils.getTimeBetween(zombieTimeSession, timeNow);
 				}
 				if (zombieBossesSession == -1) {
 					bossesBetween = "Never";
@@ -439,7 +427,7 @@ public class LootCommand extends CommandBase {
 			if (zombieTime == -1) {
 				timeBetween = "Never";
 			} else {
-				timeBetween = getTimeBetween(zombieTime, timeNow);
+				timeBetween = Utils.getTimeBetween(zombieTime, timeNow);
 			}
 			if (zombieBosses == -1) {
 				bossesBetween = "Never";
@@ -496,7 +484,7 @@ public class LootCommand extends CommandBase {
 				if (empTimeSession == -1) {
 					timeBetween = "Never";
 				} else {
-					timeBetween = getTimeBetween(empTimeSession, timeNow);
+					timeBetween = Utils.getTimeBetween(empTimeSession, timeNow);
 				}
 				if (empSCsSession == -1) {
 					bossesBetween = "Never";
@@ -532,7 +520,7 @@ public class LootCommand extends CommandBase {
 			if (empTime == -1) {
 				timeBetween = "Never";
 			} else {
-				timeBetween = getTimeBetween(empTime, timeNow);
+				timeBetween = Utils.getTimeBetween(empTime, timeNow);
 			}
 			if (empSCs == -1) {
 				bossesBetween = "Never";

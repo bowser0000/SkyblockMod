@@ -679,7 +679,9 @@ public class TheMod
 			cf.writeIntConfig("catacombs", "recombobulator", lc.recombobulators);
 		}
 		if (message.contains("    RARE REWARD! Fuming Potato Book")) {
-			
+			lc.fumingPotatoBooks++;
+			lc.fumingPotatoBooksSession++;
+			cf.writeIntConfig("catacombs", "fumingBooks", lc.fumingPotatoBooks);
 		}
 		// F1
 		if (message.contains("    RARE REWARD! Bonzo's Staff")) {
@@ -687,11 +689,27 @@ public class TheMod
 			lc.bonzoStaffsSession++;
 			cf.writeIntConfig("catacombs", "bonzoStaff", lc.bonzoStaffs);
 		}
+		if (message.contains("Defeated Bonzo in ")) {
+			String time = message.substring(message.lastIndexOf(" ") + 1, message.length());
+			int minutes = Integer.parseInt(message.substring(message.indexOf("m")));
+			int seconds = Integer.parseInt(message.substring(message.indexOf("m") + 1, message.indexOf("s")));
+			// Prevent rounding off errors
+			lc.f1TimeSpent = Math.floor(lc.f1TimeSpent + (minutes * 60) + seconds);
+			lc.f1TimeSpentSession = Math.floor(lc.f1TimeSpentSession + (minutes * 60) + seconds);
+		}
 		// F2
 		if (message.contains("    RARE REWARD! Scarf's Studies")) {
 			lc.scarfStudies++;
 			lc.scarfStudiesSession++;
 			cf.writeIntConfig("catacombs", "scarfStudies", lc.scarfStudies);
+		}
+		if (message.contains("Defeated Scarf in ")) {
+			String time = message.substring(message.lastIndexOf(" ") + 1, message.length());
+			int minutes = Integer.parseInt(message.substring(message.indexOf("m")));
+			int seconds = Integer.parseInt(message.substring(message.indexOf("m") + 1, message.indexOf("s")));
+			// Prevent rounding off errors
+			lc.f2TimeSpent = Math.floor(lc.f2TimeSpent + (minutes * 60) + seconds);
+			lc.f2TimeSpentSession = Math.floor(lc.f2TimeSpentSession + (minutes * 60) + seconds);
 		}
 		// F3
 		if (message.contains("    RARE REWARD! Adaptive Helmet")) {
@@ -718,6 +736,14 @@ public class TheMod
 			lc.adaptiveSwords++;
 			lc.adaptiveSwordsSession++;
 			cf.writeIntConfig("catacombs", "adaptiveSword", lc.adaptiveSwords);
+		}
+		if (message.contains("Defeated The Professor in ")) {
+			String time = message.substring(message.lastIndexOf(" ") + 1, message.length());
+			int minutes = Integer.parseInt(message.substring(message.indexOf("m")));
+			int seconds = Integer.parseInt(message.substring(message.indexOf("m") + 1, message.indexOf("s")));
+			// Prevent rounding off errors
+			lc.f3TimeSpent = Math.floor(lc.f3TimeSpent + (minutes * 60) + seconds);
+			lc.f3TimeSpentSession = Math.floor(lc.f3TimeSpentSession + (minutes * 60) + seconds);
 		}
 		// F4
 		if (message.contains("    Spirit Wing")) {
@@ -759,6 +785,14 @@ public class TheMod
 			lc.spiritBows++;
 			lc.spiritBowsSession++;
 			cf.writeIntConfig("catacombs", "spiritBow", lc.spiritBows);
+		}
+		if (message.contains("Defeated Thorn in ")) {
+			String time = message.substring(message.lastIndexOf(" ") + 1, message.length());
+			int minutes = Integer.parseInt(message.substring(message.indexOf("m")));
+			int seconds = Integer.parseInt(message.substring(message.indexOf("m") + 1, message.indexOf("s")));
+			// Prevent rounding off errors
+			lc.f4TimeSpent = Math.floor(lc.f4TimeSpent + (minutes * 60) + seconds);
+			lc.f4TimeSpentSession = Math.floor(lc.f4TimeSpentSession + (minutes * 60) + seconds);
 		}
 		
 		// Chat Maddox
@@ -816,7 +850,7 @@ public class TheMod
     			if (lc.wolfTime == -1) {
     				timeBetween = "Never";
     			} else {
-    				timeBetween = lc.getTimeBetween(lc.wolfTime, timeNow);
+    				timeBetween = Utils.getTimeBetween(lc.wolfTime, timeNow);
     			}
     			if (lc.wolfBosses == -1) {
     				bossesBetween = "Never";
@@ -855,7 +889,7 @@ public class TheMod
     			if (lc.wolfTimeSession == -1) {
     				timeBetween = "Never";
     			} else {
-    				timeBetween = lc.getTimeBetween(lc.wolfTimeSession, timeNow);
+    				timeBetween = Utils.getTimeBetween(lc.wolfTimeSession, timeNow);
     			}
     			if (lc.wolfBossesSession == -1) {
     				bossesBetween = "Never";
@@ -894,7 +928,7 @@ public class TheMod
     			if (lc.spiderTime == -1) {
     				timeBetween = "Never";
     			} else {
-    				timeBetween = lc.getTimeBetween(lc.spiderTime, timeNow);
+    				timeBetween = Utils.getTimeBetween(lc.spiderTime, timeNow);
     			}
     			if (lc.spiderBosses == -1) {
     				bossesBetween = "Never";
@@ -933,7 +967,7 @@ public class TheMod
     			if (lc.spiderTimeSession == -1) {
     				timeBetween = "Never";
     			} else {
-    				timeBetween = lc.getTimeBetween(lc.spiderTimeSession, timeNow);
+    				timeBetween = Utils.getTimeBetween(lc.spiderTimeSession, timeNow);
     			}
     			if (lc.spiderBossesSession == -1) {
     				bossesBetween = "Never";
@@ -972,7 +1006,7 @@ public class TheMod
     			if (lc.zombieTime == -1) {
     				timeBetween = "Never";
     			} else {
-    				timeBetween = lc.getTimeBetween(lc.zombieTime, timeNow);
+    				timeBetween = Utils.getTimeBetween(lc.zombieTime, timeNow);
     			}
     			if (lc.zombieBosses == -1) {
     				bossesBetween = "Never";
@@ -1013,7 +1047,7 @@ public class TheMod
     			if (lc.zombieTimeSession == -1) {
     				timeBetween = "Never";
     			} else {
-    				timeBetween = lc.getTimeBetween(lc.zombieTimeSession, timeNow);
+    				timeBetween = Utils.getTimeBetween(lc.zombieTimeSession, timeNow);
     			}
     			if (lc.zombieBossesSession == -1) {
     				bossesBetween = "Never";
@@ -1054,7 +1088,7 @@ public class TheMod
     			if (lc.empTime == -1) {
     				timeBetween = "Never";
     			} else {
-    				timeBetween = lc.getTimeBetween(lc.empTime, timeNow);
+    				timeBetween = Utils.getTimeBetween(lc.empTime, timeNow);
     			}
     			if (lc.empSCs == -1) {
     				bossesBetween = "Never";
@@ -1115,7 +1149,7 @@ public class TheMod
     			if (lc.empTimeSession == -1) {
     				timeBetween = "Never";
     			} else {
-    				timeBetween = lc.getTimeBetween(lc.empTimeSession, timeNow);
+    				timeBetween = Utils.getTimeBetween(lc.empTimeSession, timeNow);
     			}
     			if (lc.empSCsSession == -1) {
     				bossesBetween = "Never";
@@ -1209,31 +1243,47 @@ public class TheMod
     		} else if (ds.display.equals("catacombs_floor_one")) {
     			dropsText = EnumChatFormatting.GOLD + "Recombobulators:\n" +
     						EnumChatFormatting.DARK_PURPLE + "Fuming Potato Books:\n" +
-    						EnumChatFormatting.BLUE + "Bonzo's Staffs:";
+    						EnumChatFormatting.BLUE + "Bonzo's Staffs:\n" +
+    						EnumChatFormatting.GREEN + "Coins Spent:\n" +
+    						EnumChatFormatting.GREEN + "Time Spent:\n";
     			countText = EnumChatFormatting.GOLD + nf.format(lc.recombobulators) + "\n" +
 							EnumChatFormatting.DARK_PURPLE + nf.format(lc.fumingPotatoBooks) + "\n" +
-							EnumChatFormatting.BLUE + nf.format(lc.bonzoStaffs);
+							EnumChatFormatting.BLUE + nf.format(lc.bonzoStaffs) + "\n" +
+							EnumChatFormatting.GREEN + Utils.getTimeBetween(0, lc.f1TimeSpent) + "\n" +
+							EnumChatFormatting.GREEN + nf.format(lc.f1CoinsSpent);
     		} else if (ds.display.equals("catacombs_floor_one_session")) {
     			dropsText = EnumChatFormatting.GOLD + "Recombobulators:\n" +
 							EnumChatFormatting.DARK_PURPLE + "Fuming Potato Books:\n" +
-							EnumChatFormatting.BLUE + "Bonzo's Staffs:";
+							EnumChatFormatting.BLUE + "Bonzo's Staffs:\n" +
+    						EnumChatFormatting.GREEN + "Coins Spent:\n" +
+    						EnumChatFormatting.GREEN + "Time Spent:\n";
 				countText = EnumChatFormatting.GOLD + nf.format(lc.recombobulatorsSession) + "\n" +
 							EnumChatFormatting.DARK_PURPLE + nf.format(lc.fumingPotatoBooksSession) + "\n" +
-							EnumChatFormatting.BLUE + nf.format(lc.bonzoStaffsSession);
+							EnumChatFormatting.BLUE + nf.format(lc.bonzoStaffsSession) + "\n" +
+							EnumChatFormatting.GREEN + Utils.getTimeBetween(0, lc.f1TimeSpentSession) + "\n" +
+							EnumChatFormatting.GREEN + nf.format(lc.f1CoinsSpentSession);
     		} else if (ds.display.equals("catacombs_floor_two")) {
     			dropsText = EnumChatFormatting.GOLD + "Recombobulators:\n" +
 							EnumChatFormatting.DARK_PURPLE + "Fuming Potato Books:\n" +
-							EnumChatFormatting.BLUE + "Scarf's Studies:";
+							EnumChatFormatting.BLUE + "Scarf's Studies:\n" +
+		    				EnumChatFormatting.GREEN + "Coins Spent:\n" +
+		    				EnumChatFormatting.GREEN + "Time Spent:\n";
 				countText = EnumChatFormatting.GOLD + nf.format(lc.recombobulators) + "\n" +
 							EnumChatFormatting.DARK_PURPLE + nf.format(lc.fumingPotatoBooks) + "\n" +
-							EnumChatFormatting.BLUE + nf.format(lc.scarfStudies);
+							EnumChatFormatting.BLUE + nf.format(lc.scarfStudies) + "\n" +
+							EnumChatFormatting.GREEN + Utils.getTimeBetween(0, lc.f2TimeSpent) + "\n" +
+							EnumChatFormatting.GREEN + nf.format(lc.f2CoinsSpent);
     		} else if (ds.display.equals("catacombs_floor_two_session")) {
     			dropsText = EnumChatFormatting.GOLD + "Recombobulators:\n" +
 							EnumChatFormatting.DARK_PURPLE + "Fuming Potato Books:\n" +
-							EnumChatFormatting.BLUE + "Scarf's Studies:";
+							EnumChatFormatting.BLUE + "Scarf's Studies:" +
+		    				EnumChatFormatting.GREEN + "Coins Spent:\n" +
+		    				EnumChatFormatting.GREEN + "Time Spent:\n";
 				countText = EnumChatFormatting.GOLD + nf.format(lc.recombobulatorsSession) + "\n" +
 							EnumChatFormatting.DARK_PURPLE + nf.format(lc.fumingPotatoBooksSession) + "\n" +
-							EnumChatFormatting.BLUE + nf.format(lc.scarfStudiesSession);
+							EnumChatFormatting.BLUE + nf.format(lc.scarfStudiesSession) + "\n" +
+							EnumChatFormatting.GREEN + Utils.getTimeBetween(0, lc.f2TimeSpentSession) + "\n" +
+							EnumChatFormatting.GREEN + nf.format(lc.f2CoinsSpentSession);
     		} else if (ds.display.equals("catacombs_floor_three")) {
     			dropsText = EnumChatFormatting.GOLD + "Recombobulators:\n" +
 							EnumChatFormatting.DARK_PURPLE + "Fuming Potato Books:\n" +
@@ -1241,14 +1291,18 @@ public class TheMod
 							EnumChatFormatting.DARK_PURPLE + "Adaptive Chestplates:\n" +
 							EnumChatFormatting.DARK_PURPLE + "Adaptive Leggings:\n" +
 							EnumChatFormatting.DARK_PURPLE + "Adaptive Boots:\n" +
-							EnumChatFormatting.DARK_PURPLE + "Adaptive Blades:";
+							EnumChatFormatting.DARK_PURPLE + "Adaptive Blades:" +
+		    				EnumChatFormatting.GREEN + "Coins Spent:\n" +
+		    				EnumChatFormatting.GREEN + "Time Spent:\n";
 				countText = EnumChatFormatting.GOLD + nf.format(lc.recombobulators) + "\n" +
 							EnumChatFormatting.DARK_PURPLE + nf.format(lc.fumingPotatoBooks) + "\n" +
 							EnumChatFormatting.DARK_PURPLE + nf.format(lc.adaptiveHelms) + "\n" +
 							EnumChatFormatting.DARK_PURPLE + nf.format(lc.adaptiveChests) + "\n" +
 							EnumChatFormatting.DARK_PURPLE + nf.format(lc.adaptiveLegs) + "\n" +
 							EnumChatFormatting.DARK_PURPLE + nf.format(lc.adaptiveBoots) + "\n" +
-							EnumChatFormatting.DARK_PURPLE + nf.format(lc.adaptiveSwords);	
+							EnumChatFormatting.DARK_PURPLE + nf.format(lc.adaptiveSwords) + "\n" +
+							EnumChatFormatting.GREEN + Utils.getTimeBetween(0, lc.f3TimeSpent) + "\n" +
+							EnumChatFormatting.GREEN + nf.format(lc.f3CoinsSpent);
     		} else if (ds.display.equals("catacombs_floor_three_session")) {
     			dropsText = EnumChatFormatting.GOLD + "Recombobulators:\n" +
 							EnumChatFormatting.DARK_PURPLE + "Fuming Potato Books:\n" +
@@ -1256,14 +1310,18 @@ public class TheMod
 							EnumChatFormatting.DARK_PURPLE + "Adaptive Chestplates:\n" +
 							EnumChatFormatting.DARK_PURPLE + "Adaptive Leggings:\n" +
 							EnumChatFormatting.DARK_PURPLE + "Adaptive Boots:\n" +
-							EnumChatFormatting.DARK_PURPLE + "Adaptive Blades:";
+							EnumChatFormatting.DARK_PURPLE + "Adaptive Blades:" +
+		    				EnumChatFormatting.GREEN + "Coins Spent:\n" +
+		    				EnumChatFormatting.GREEN + "Time Spent:\n";
 				countText = EnumChatFormatting.GOLD + nf.format(lc.recombobulatorsSession) + "\n" +
 							EnumChatFormatting.DARK_PURPLE + nf.format(lc.fumingPotatoBooksSession) + "\n" +
 							EnumChatFormatting.DARK_PURPLE + nf.format(lc.adaptiveHelmsSession) + "\n" +
 							EnumChatFormatting.DARK_PURPLE + nf.format(lc.adaptiveChestsSession) + "\n" +
 							EnumChatFormatting.DARK_PURPLE + nf.format(lc.adaptiveLegsSession) + "\n" +
 							EnumChatFormatting.DARK_PURPLE + nf.format(lc.adaptiveBootsSession) + "\n" +
-							EnumChatFormatting.DARK_PURPLE + nf.format(lc.adaptiveSwordsSession);
+							EnumChatFormatting.DARK_PURPLE + nf.format(lc.adaptiveSwordsSession) + "\n" +
+							EnumChatFormatting.GREEN + Utils.getTimeBetween(0, lc.f3TimeSpentSession) + "\n" +
+							EnumChatFormatting.GREEN + nf.format(lc.f3CoinsSpentSession);
     		} else if (ds.display.equals("catacombs_floor_four")) {
     			dropsText = EnumChatFormatting.GOLD + "Recombobulators:\n" +
 							EnumChatFormatting.DARK_PURPLE + "Fuming Potato Books:\n" +
@@ -1273,7 +1331,9 @@ public class TheMod
 							EnumChatFormatting.DARK_PURPLE + "Spirit Swords:\n" +
 							EnumChatFormatting.GOLD + "Spirit Bows:\n" +
 							EnumChatFormatting.DARK_PURPLE + "Epic Spirit Pets:\n" +
-							EnumChatFormatting.GOLD + "Leg Spirit Pets:";
+							EnumChatFormatting.GOLD + "Leg Spirit Pets:" +
+		    				EnumChatFormatting.GREEN + "Coins Spent:\n" +
+		    				EnumChatFormatting.GREEN + "Time Spent:\n";
 				countText = EnumChatFormatting.GOLD + nf.format(lc.recombobulators) + "\n" +
 							EnumChatFormatting.DARK_PURPLE + nf.format(lc.fumingPotatoBooks) + "\n" +
 							EnumChatFormatting.DARK_PURPLE + nf.format(lc.spiritWings) + "\n" +
@@ -1282,7 +1342,9 @@ public class TheMod
 							EnumChatFormatting.DARK_PURPLE + nf.format(lc.spiritSwords) + "\n" +
 							EnumChatFormatting.GOLD + nf.format(lc.spiritBows) + "\n" +
 							EnumChatFormatting.DARK_PURPLE + nf.format(lc.epicSpiritPets) + "\n" +
-							EnumChatFormatting.GOLD + nf.format(lc.legSpiritPets);
+							EnumChatFormatting.GOLD + nf.format(lc.legSpiritPets) + "\n" +
+							EnumChatFormatting.GREEN + Utils.getTimeBetween(0, lc.f4TimeSpent) + "\n" +
+							EnumChatFormatting.GREEN + nf.format(lc.f4CoinsSpent);
     		} else if (ds.display.equals("catacombs_floor_four_session")) {
     			dropsText = EnumChatFormatting.GOLD + "Recombobulators:\n" +
 							EnumChatFormatting.DARK_PURPLE + "Fuming Potato Books:\n" +
@@ -1292,7 +1354,9 @@ public class TheMod
 							EnumChatFormatting.DARK_PURPLE + "Spirit Swords:\n" +
 							EnumChatFormatting.GOLD + "Spirit Bows:\n" +
 							EnumChatFormatting.DARK_PURPLE + "Epic Spirit Pets:\n" +
-							EnumChatFormatting.GOLD + "Leg Spirit Pets:";
+							EnumChatFormatting.GOLD + "Leg Spirit Pets:" +
+		    				EnumChatFormatting.GREEN + "Coins Spent:\n" +
+		    				EnumChatFormatting.GREEN + "Time Spent:\n";
 				countText = EnumChatFormatting.GOLD + nf.format(lc.recombobulatorsSession) + "\n" +
 							EnumChatFormatting.DARK_PURPLE + nf.format(lc.fumingPotatoBooksSession) + "\n" +
 							EnumChatFormatting.DARK_PURPLE + nf.format(lc.spiritWingsSession) + "\n" +
@@ -1301,7 +1365,9 @@ public class TheMod
 							EnumChatFormatting.DARK_PURPLE + nf.format(lc.spiritSwordsSession) + "\n" +
 							EnumChatFormatting.GOLD + nf.format(lc.spiritBowsSession) + "\n" +
 							EnumChatFormatting.DARK_PURPLE + nf.format(lc.epicSpiritPetsSession) + "\n" +
-							EnumChatFormatting.GOLD + nf.format(lc.legSpiritPetsSession);
+							EnumChatFormatting.GOLD + nf.format(lc.legSpiritPetsSession) + "\n" +
+							EnumChatFormatting.GREEN + Utils.getTimeBetween(0, lc.f4TimeSpentSession) + "\n" +
+							EnumChatFormatting.GREEN + nf.format(lc.f4CoinsSpentSession);
     		} else {
     			ConfigHandler cf = new ConfigHandler();
     			
@@ -1438,25 +1504,25 @@ public class TheMod
     				if (petLevel == 100) {
     					colour = 0xBFF2D249; // Gold
     				} else if (petLevel >= 90) {
-    					colour = 0xBFE06C65; // Red
+    					colour = 0xBF9E794E; // Brown
     				} else if (petLevel >= 80) {
-    					colour = 0xBF5F91C0; // Blue
+    					colour = 0xBF5C1F35; // idk weird magenta
     				} else if (petLevel >= 70) {
-    					colour = 0xBF84CA85; // Green
+    					colour = 0xBFD64FC8; // Pink
     				} else if (petLevel >= 60) {
-    					colour = 0xBFF6C100; // Goldish
+    					colour = 0xBF7E4FC6; // Purple
     				} else if (petLevel >= 50) {
-    					colour = 0xBFA575D2; // Purple
+    					colour = 0xBF008AD8; // Light Blue
     				} else if (petLevel >= 40) {
-    					colour = 0xBFFFA252; // Orange
+    					colour = 0xBF0EAC35; // Green
     				} else if (petLevel >= 30) {
-    					colour = 0xBF845EF7; // Bluish purple
+    					colour = 0xBFFFC400; // Yellow
     				} else if (petLevel >= 20) {
-    					colour = 0xBFD6336C; // Magenta
+    					colour = 0xBFEF5230; // Orange
     				} else if (petLevel >= 10) {
-    					colour = 0xBF58C9A3; // Teal
+    					colour = 0xBFD62440; // Red
     				} else {
-    					colour = 0xBFFEBBD1; // Pink
+    					colour = 0xBF999999; // Gray
     				}
     				Utils.drawOnSlot(inventory.inventorySlots.inventorySlots.size(), slot.xDisplayPosition, slot.yDisplayPosition, colour);
     			}

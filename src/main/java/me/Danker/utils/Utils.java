@@ -138,4 +138,33 @@ public class Utils {
 		GL11.glTranslated(0, 0, -1);
 	}
 	
+	public static String getTimeBetween(double timeOne, double timeTwo) {
+		double secondsBetween = Math.floor(timeTwo - timeOne);
+		
+		String timeFormatted = "";
+		int days;
+		int hours;
+		int minutes;
+		int seconds;
+		
+		if (secondsBetween > 86400) {
+			// More than 1d, display #d#h
+			days = (int) (secondsBetween / 86400);
+			hours = (int) (secondsBetween % 86400 / 3600);
+			timeFormatted = days + "d" + hours + "h";
+		} else if (secondsBetween > 3600) {
+			// More than 1h, display #h#m
+			hours = (int) (secondsBetween / 3600);
+			minutes = (int) (secondsBetween % 3600 / 60);
+			timeFormatted = hours + "h" + minutes + "m";
+		} else {
+			// Display #m#s
+			minutes = (int) (secondsBetween / 60);
+			seconds = (int) (secondsBetween % 60);
+			timeFormatted = minutes + "m" + seconds + "s";
+		}
+		
+		return timeFormatted;
+	}
+	
 }
