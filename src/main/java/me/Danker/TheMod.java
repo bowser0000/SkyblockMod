@@ -464,6 +464,7 @@ public class TheMod
 			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
 			cf.writeIntConfig("fishing", "milestone", lc.fishingMilestone);
 			increaseEmpSC();
+			increaseYetiSC();
 		}
 		if (message.contains("From the depths of the waters, you've reeled in a Sea Walker")) {
 			lc.seaWalkers++;
@@ -476,6 +477,7 @@ public class TheMod
 			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
 			cf.writeIntConfig("fishing", "milestone", lc.fishingMilestone);
 			increaseEmpSC();
+			increaseYetiSC();
 		}
 		if (message.contains("Pitch darkness reveals you've caught a")) {
 			lc.nightSquids++;
@@ -488,6 +490,7 @@ public class TheMod
 			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
 			cf.writeIntConfig("fishing", "milestone", lc.fishingMilestone);
 			increaseEmpSC();
+			increaseYetiSC();
 		}
 		if (message.contains("You've stumbled upon a patrolling Sea Guardian")) {
 			lc.seaGuardians++;
@@ -500,6 +503,7 @@ public class TheMod
 			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
 			cf.writeIntConfig("fishing", "milestone", lc.fishingMilestone);
 			increaseEmpSC();
+			increaseYetiSC();
 		}
 		if (message.contains("It looks like you've disrupted the Sea Witch's brewing session. Watch out, she's furious")) {
 			lc.seaWitches++;
@@ -512,6 +516,7 @@ public class TheMod
 			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
 			cf.writeIntConfig("fishing", "milestone", lc.fishingMilestone);
 			increaseEmpSC();
+			increaseYetiSC();
 		}
 		if (message.contains("From the depths of the waters, you've reeled in a Sea Archer")) {
 			lc.seaArchers++;
@@ -524,6 +529,7 @@ public class TheMod
 			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
 			cf.writeIntConfig("fishing", "milestone", lc.fishingMilestone);
 			increaseEmpSC();
+			increaseYetiSC();
 		}
 		if (message.contains("The Monster of the Deep emerges from the dark depths")) {
 			lc.monsterOfTheDeeps++;
@@ -536,6 +542,7 @@ public class TheMod
 			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
 			cf.writeIntConfig("fishing", "milestone", lc.fishingMilestone);
 			increaseEmpSC();
+			increaseYetiSC();
 		}
 		if (message.contains("You have found a Catfish, don't let it steal your catches")) {
 			lc.catfishes++;
@@ -548,6 +555,7 @@ public class TheMod
 			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
 			cf.writeIntConfig("fishing", "milestone", lc.fishingMilestone);
 			increaseEmpSC();
+			increaseYetiSC();
 		}
 		if (message.contains("Is this even a fish? It's the Carrot King")) {
 			lc.carrotKings++;
@@ -560,6 +568,7 @@ public class TheMod
 			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
 			cf.writeIntConfig("fishing", "milestone", lc.fishingMilestone);
 			increaseEmpSC();
+			increaseYetiSC();
 		}
 		if (message.contains("Gross! A Sea Leech")) {
 			lc.seaLeeches++;
@@ -572,6 +581,7 @@ public class TheMod
 			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
 			cf.writeIntConfig("fishing", "milestone", lc.fishingMilestone);
 			increaseEmpSC();
+			increaseYetiSC();
 		}
 		if (message.contains("You've discovered a Guardian Defender of the sea")) {
 			lc.guardianDefenders++;
@@ -584,6 +594,7 @@ public class TheMod
 			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
 			cf.writeIntConfig("fishing", "milestone", lc.fishingMilestone);
 			increaseEmpSC();
+			increaseYetiSC();
 		}
 		if (message.contains("You have awoken the Deep Sea Protector, prepare for a battle")) {
 			lc.deepSeaProtectors++;
@@ -596,6 +607,7 @@ public class TheMod
 			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
 			cf.writeIntConfig("fishing", "milestone", lc.fishingMilestone);
 			increaseEmpSC();
+			increaseYetiSC();
 		}
 		if (message.contains("The Water Hydra has come to test your strength")) {
 			lc.hydras++;
@@ -608,6 +620,7 @@ public class TheMod
 			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
 			cf.writeIntConfig("fishing", "milestone", lc.fishingMilestone);
 			increaseEmpSC();
+			increaseYetiSC();
 		}
 		if (message.contains("The Sea Emperor arises from the depths")) {
 			lc.seaEmperors++;
@@ -625,6 +638,7 @@ public class TheMod
 			cf.writeIntConfig("fishing", "milestone", lc.fishingMilestone);
 			cf.writeDoubleConfig("fishing", "empTime", lc.empTime);
 			cf.writeIntConfig("fishing", "empSC", lc.empSCs);
+			increaseYetiSC();
 		}
 		// Fishing Winter
 		if (message.contains("Frozen Steve fell into the pond long ago")) {
@@ -637,6 +651,8 @@ public class TheMod
 			cf.writeIntConfig("fishing", "frozenSteve", lc.frozenSteves);
 			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
 			cf.writeIntConfig("fishing", "milestone", lc.fishingMilestone);
+			increaseEmpSC();
+			increaseYetiSC();
 		}
 		if (message.contains("It's a snowman! He looks harmless")) {
 			lc.frostyTheSnowmans++;
@@ -648,6 +664,8 @@ public class TheMod
 			cf.writeIntConfig("fishing", "snowman", lc.frostyTheSnowmans);
 			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
 			cf.writeIntConfig("fishing", "milestone", lc.fishingMilestone);
+			increaseEmpSC();
+			increaseYetiSC();
 		}
 		if (message.contains("stole Jerry's Gifts...get them back")) {
 			lc.grinches++;
@@ -659,17 +677,26 @@ public class TheMod
 			cf.writeIntConfig("fishing", "grinch", lc.grinches);
 			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
 			cf.writeIntConfig("fishing", "milestone", lc.fishingMilestone);
+			increaseEmpSC();
+			increaseYetiSC();
 		}
 		if (message.contains("What is this creature")) {
 			lc.yetis++;
 			lc.seaCreatures++;
 			lc.fishingMilestone++;
+			lc.yetiTime = System.currentTimeMillis() / 1000;
+			lc.yetiSCs = 0;
 			lc.yetisSession++;
 			lc.seaCreaturesSession++;
 			lc.fishingMilestoneSession++;
+			lc.yetiTimeSession = System.currentTimeMillis() / 1000;
+			lc.yetiSCsSession = 0;
 			cf.writeIntConfig("fishing", "yeti", lc.yetis);
 			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
 			cf.writeIntConfig("fishing", "milestone", lc.fishingMilestone);
+			cf.writeDoubleConfig("fishing", "yetiTime", lc.yetiTime);
+			cf.writeIntConfig("fishing", "yetiSC", lc.yetiSCs);
+			increaseEmpSC();
 		}
 		
 		// Catacombs Dungeons
@@ -1207,6 +1234,17 @@ public class TheMod
     				countText += "\n" + countTextTwo;
     			}
     		} else if (ds.display.equals("fishing_winter")) {
+    			if (lc.yetiTime == -1) {
+    				timeBetween = "Never";
+    			} else {
+    				timeBetween = Utils.getTimeBetween(lc.yetiTime, timeNow);
+    			}
+    			if (lc.yetiSCs == -1) {
+    				bossesBetween = "Never";
+    			} else {
+    				bossesBetween = nf.format(lc.yetiSCs);
+    			}
+    			
     			dropsText = EnumChatFormatting.AQUA + "Creatures Caught:\n" +
     						EnumChatFormatting.AQUA + "Fishing Milestone:\n" +
     						EnumChatFormatting.GOLD + "Good Catches:\n" +
@@ -1214,7 +1252,9 @@ public class TheMod
 	    					EnumChatFormatting.AQUA + "Frozen Steves:\n" +
 							EnumChatFormatting.WHITE + "Snowmans:\n" +
 							EnumChatFormatting.DARK_GREEN + "Grinches:\n" +
-							EnumChatFormatting.GOLD + "Yetis:";
+							EnumChatFormatting.GOLD + "Yetis: \n" +
+							EnumChatFormatting.AQUA + "Time Since Yeti:\n" +
+							EnumChatFormatting.AQUA + "Creatures Since Yeti:";
     			countText = EnumChatFormatting.AQUA + nf.format(lc.seaCreatures) + "\n" +
 							EnumChatFormatting.AQUA + nf.format(lc.fishingMilestone) + "\n" +
 	    					EnumChatFormatting.GOLD + nf.format(lc.goodCatches) + "\n" +
@@ -1222,8 +1262,21 @@ public class TheMod
 	    					EnumChatFormatting.AQUA + nf.format(lc.frozenSteves) + "\n" +
 							EnumChatFormatting.WHITE + nf.format(lc.frostyTheSnowmans) + "\n" +
 							EnumChatFormatting.DARK_GREEN + nf.format(lc.grinches) + "\n" +
-							EnumChatFormatting.GOLD + nf.format(lc.yetis);
+							EnumChatFormatting.GOLD + nf.format(lc.yetis) + "\n" +
+				  			EnumChatFormatting.AQUA + timeBetween + "\n" +
+				  			EnumChatFormatting.AQUA + bossesBetween;
     		} else if (ds.display.equals("fishing_winter_session")) {
+    			if (lc.yetiTimeSession == -1) {
+    				timeBetween = "Never";
+    			} else {
+    				timeBetween = Utils.getTimeBetween(lc.yetiTimeSession, timeNow);
+    			}
+    			if (lc.yetiSCsSession == -1) {
+    				bossesBetween = "Never";
+    			} else {
+    				bossesBetween = nf.format(lc.yetiSCsSession);
+    			}
+    			
     			dropsText = EnumChatFormatting.AQUA + "Creatures Caught:\n" +
     						EnumChatFormatting.AQUA + "Fishing Milestone:\n" +
 							EnumChatFormatting.GOLD + "Good Catches:\n" +
@@ -1231,7 +1284,9 @@ public class TheMod
 	    					EnumChatFormatting.AQUA + "Frozen Steves:\n" +
 							EnumChatFormatting.WHITE + "Snowmans:\n" +
 							EnumChatFormatting.DARK_GREEN + "Grinches:\n" +
-							EnumChatFormatting.GOLD + "Yetis:";
+							EnumChatFormatting.GOLD + "Yetis: \n" +
+							EnumChatFormatting.AQUA + "Time Since Yeti:\n" +
+							EnumChatFormatting.AQUA + "Creatures Since Yeti:";
 				countText = EnumChatFormatting.AQUA + nf.format(lc.seaCreaturesSession) + "\n" +
 							EnumChatFormatting.AQUA + nf.format(lc.fishingMilestoneSession) + "\n" +
 	    					EnumChatFormatting.GOLD + nf.format(lc.goodCatchesSession) + "\n" +
@@ -1239,7 +1294,9 @@ public class TheMod
 	    					EnumChatFormatting.AQUA + nf.format(lc.frozenStevesSession) + "\n" +
 							EnumChatFormatting.WHITE + nf.format(lc.frostyTheSnowmansSession) + "\n" +
 							EnumChatFormatting.DARK_GREEN + nf.format(lc.grinchesSession) + "\n" +
-							EnumChatFormatting.GOLD + nf.format(lc.yetisSession);
+							EnumChatFormatting.GOLD + nf.format(lc.yetisSession) + "\n" +
+	  						EnumChatFormatting.AQUA + timeBetween + "\n" +
+	  						EnumChatFormatting.AQUA + bossesBetween;
     		} else if (ds.display.equals("catacombs_floor_one")) {
     			dropsText = EnumChatFormatting.GOLD + "Recombobulators:\n" +
     						EnumChatFormatting.DARK_PURPLE + "Fuming Potato Books:\n" +
@@ -1542,6 +1599,20 @@ public class TheMod
     	}
     	
     	cf.writeIntConfig("fishing", "empSC", lc.empSCs);
+    }
+    
+    public void increaseYetiSC() {
+    	LootCommand lc = new LootCommand();
+    	ConfigHandler cf = new ConfigHandler();
+    	
+    	if (lc.yetiSCs != -1) {
+    		lc.yetiSCs++;
+    	}
+    	if (lc.yetiSCsSession != -1) {
+    		lc.yetiSCsSession++;
+    	}
+    	
+    	cf.writeIntConfig("fishing", "yetiSC", lc.yetiSCs);
     }
     
 }
