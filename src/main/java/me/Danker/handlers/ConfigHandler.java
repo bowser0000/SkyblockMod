@@ -353,6 +353,7 @@ public class ConfigHandler {
 		lc.seaArchers = getInt("fishing", "seaArcher");
 		lc.monsterOfTheDeeps = getInt("fishing", "monsterOfDeep");
 		lc.catfishes = getInt("fishing", "catfish");
+		lc.carrotKings = getInt("fishing", "carrotKing");
 		lc.seaLeeches = getInt("fishing", "seaLeech");
 		lc.guardianDefenders = getInt("fishing", "guardianDefender");
 		lc.deepSeaProtectors = getInt("fishing", "deepSeaProtector");
