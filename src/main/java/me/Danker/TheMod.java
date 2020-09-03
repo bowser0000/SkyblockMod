@@ -12,6 +12,7 @@ import java.util.Map;
 import java.util.regex.Pattern;
 
 import org.lwjgl.input.Keyboard;
+import org.lwjgl.input.Mouse;
 
 import com.google.gson.JsonObject;
 
@@ -89,6 +90,7 @@ public class TheMod
     static int tickAmount = 1;
     public static String lastMaddoxCommand = "/cb placeholdervalue";
     static KeyBinding[] keyBindings = new KeyBinding[1];
+    static int lastMouse = -1;
     
     @EventHandler
     public void init(FMLInitializationEvent event)
@@ -1283,46 +1285,46 @@ public class TheMod
     			dropsText = EnumChatFormatting.GOLD + "Recombobulators:\n" +
     						EnumChatFormatting.DARK_PURPLE + "Fuming Potato Books:\n" +
     						EnumChatFormatting.BLUE + "Bonzo's Staffs:\n" +
-    						EnumChatFormatting.GREEN + "Coins Spent:\n" +
-    						EnumChatFormatting.GREEN + "Time Spent:\n";
+    						EnumChatFormatting.AQUA + "Coins Spent:\n" +
+    						EnumChatFormatting.AQUA + "Time Spent:\n";
     			countText = EnumChatFormatting.GOLD + nf.format(lc.recombobulators) + "\n" +
 							EnumChatFormatting.DARK_PURPLE + nf.format(lc.fumingPotatoBooks) + "\n" +
 							EnumChatFormatting.BLUE + nf.format(lc.bonzoStaffs) + "\n" +
-							EnumChatFormatting.GREEN + nf.format(lc.f1CoinsSpent) + "\n" +
-							EnumChatFormatting.GREEN + Utils.getTimeBetween(0, lc.f1TimeSpent);
+							EnumChatFormatting.AQUA + Utils.getMoneySpent(lc.f1CoinsSpent) + "\n" +
+							EnumChatFormatting.AQUA + Utils.getTimeBetween(0, lc.f1TimeSpent);
     		} else if (ds.display.equals("catacombs_floor_one_session")) {
     			dropsText = EnumChatFormatting.GOLD + "Recombobulators:\n" +
 							EnumChatFormatting.DARK_PURPLE + "Fuming Potato Books:\n" +
 							EnumChatFormatting.BLUE + "Bonzo's Staffs:\n" +
-    						EnumChatFormatting.GREEN + "Coins Spent:\n" +
-    						EnumChatFormatting.GREEN + "Time Spent:\n";
+    						EnumChatFormatting.AQUA + "Coins Spent:\n" +
+    						EnumChatFormatting.AQUA + "Time Spent:\n";
 				countText = EnumChatFormatting.GOLD + nf.format(lc.recombobulatorsSession) + "\n" +
 							EnumChatFormatting.DARK_PURPLE + nf.format(lc.fumingPotatoBooksSession) + "\n" +
 							EnumChatFormatting.BLUE + nf.format(lc.bonzoStaffsSession) + "\n" +
-							EnumChatFormatting.GREEN + nf.format(lc.f1CoinsSpentSession) + "\n" +
-							EnumChatFormatting.GREEN + Utils.getTimeBetween(0, lc.f1TimeSpentSession);
+							EnumChatFormatting.AQUA + Utils.getMoneySpent(lc.f1CoinsSpentSession) + "\n" +
+							EnumChatFormatting.AQUA + Utils.getTimeBetween(0, lc.f1TimeSpentSession);
     		} else if (ds.display.equals("catacombs_floor_two")) {
     			dropsText = EnumChatFormatting.GOLD + "Recombobulators:\n" +
 							EnumChatFormatting.DARK_PURPLE + "Fuming Potato Books:\n" +
 							EnumChatFormatting.BLUE + "Scarf's Studies:\n" +
-		    				EnumChatFormatting.GREEN + "Coins Spent:\n" +
-		    				EnumChatFormatting.GREEN + "Time Spent:\n";
+		    				EnumChatFormatting.AQUA + "Coins Spent:\n" +
+		    				EnumChatFormatting.AQUA + "Time Spent:\n";
 				countText = EnumChatFormatting.GOLD + nf.format(lc.recombobulators) + "\n" +
 							EnumChatFormatting.DARK_PURPLE + nf.format(lc.fumingPotatoBooks) + "\n" +
 							EnumChatFormatting.BLUE + nf.format(lc.scarfStudies) + "\n" +
-							EnumChatFormatting.GREEN + nf.format(lc.f2CoinsSpent) + "\n" +
-							EnumChatFormatting.GREEN + Utils.getTimeBetween(0, lc.f2TimeSpent);
+							EnumChatFormatting.AQUA + Utils.getMoneySpent(lc.f2CoinsSpent) + "\n" +
+							EnumChatFormatting.AQUA + Utils.getTimeBetween(0, lc.f2TimeSpent);
     		} else if (ds.display.equals("catacombs_floor_two_session")) {
     			dropsText = EnumChatFormatting.GOLD + "Recombobulators:\n" +
 							EnumChatFormatting.DARK_PURPLE + "Fuming Potato Books:\n" +
 							EnumChatFormatting.BLUE + "Scarf's Studies:\n" +
-		    				EnumChatFormatting.GREEN + "Coins Spent:\n" +
-		    				EnumChatFormatting.GREEN + "Time Spent:\n";
+		    				EnumChatFormatting.AQUA + "Coins Spent:\n" +
+		    				EnumChatFormatting.AQUA + "Time Spent:\n";
 				countText = EnumChatFormatting.GOLD + nf.format(lc.recombobulatorsSession) + "\n" +
 							EnumChatFormatting.DARK_PURPLE + nf.format(lc.fumingPotatoBooksSession) + "\n" +
 							EnumChatFormatting.BLUE + nf.format(lc.scarfStudiesSession) + "\n" +
-							EnumChatFormatting.GREEN + nf.format(lc.f2CoinsSpentSession) + "\n" +
-							EnumChatFormatting.GREEN + Utils.getTimeBetween(0, lc.f2TimeSpentSession);
+							EnumChatFormatting.AQUA + Utils.getMoneySpent(lc.f2CoinsSpentSession) + "\n" +
+							EnumChatFormatting.AQUA + Utils.getTimeBetween(0, lc.f2TimeSpentSession);
     		} else if (ds.display.equals("catacombs_floor_three")) {
     			dropsText = EnumChatFormatting.GOLD + "Recombobulators:\n" +
 							EnumChatFormatting.DARK_PURPLE + "Fuming Potato Books:\n" +
@@ -1331,8 +1333,8 @@ public class TheMod
 							EnumChatFormatting.DARK_PURPLE + "Adaptive Leggings:\n" +
 							EnumChatFormatting.DARK_PURPLE + "Adaptive Boots:\n" +
 							EnumChatFormatting.DARK_PURPLE + "Adaptive Blades\n:" +
-		    				EnumChatFormatting.GREEN + "Coins Spent:\n" +
-		    				EnumChatFormatting.GREEN + "Time Spent:\n";
+		    				EnumChatFormatting.AQUA + "Coins Spent:\n" +
+		    				EnumChatFormatting.AQUA + "Time Spent:\n";
 				countText = EnumChatFormatting.GOLD + nf.format(lc.recombobulators) + "\n" +
 							EnumChatFormatting.DARK_PURPLE + nf.format(lc.fumingPotatoBooks) + "\n" +
 							EnumChatFormatting.DARK_PURPLE + nf.format(lc.adaptiveHelms) + "\n" +
@@ -1340,8 +1342,8 @@ public class TheMod
 							EnumChatFormatting.DARK_PURPLE + nf.format(lc.adaptiveLegs) + "\n" +
 							EnumChatFormatting.DARK_PURPLE + nf.format(lc.adaptiveBoots) + "\n" +
 							EnumChatFormatting.DARK_PURPLE + nf.format(lc.adaptiveSwords) + "\n" +
-							EnumChatFormatting.GREEN + nf.format(lc.f3CoinsSpent) + "\n" +
-							EnumChatFormatting.GREEN + Utils.getTimeBetween(0, lc.f3TimeSpent);
+							EnumChatFormatting.AQUA + Utils.getMoneySpent(lc.f3CoinsSpent) + "\n" +
+							EnumChatFormatting.AQUA + Utils.getTimeBetween(0, lc.f3TimeSpent);
     		} else if (ds.display.equals("catacombs_floor_three_session")) {
     			dropsText = EnumChatFormatting.GOLD + "Recombobulators:\n" +
 							EnumChatFormatting.DARK_PURPLE + "Fuming Potato Books:\n" +
@@ -1350,8 +1352,8 @@ public class TheMod
 							EnumChatFormatting.DARK_PURPLE + "Adaptive Leggings:\n" +
 							EnumChatFormatting.DARK_PURPLE + "Adaptive Boots:\n" +
 							EnumChatFormatting.DARK_PURPLE + "Adaptive Blades\n:" +
-		    				EnumChatFormatting.GREEN + "Coins Spent:\n" +
-		    				EnumChatFormatting.GREEN + "Time Spent:\n";
+		    				EnumChatFormatting.AQUA + "Coins Spent:\n" +
+		    				EnumChatFormatting.AQUA + "Time Spent:\n";
 				countText = EnumChatFormatting.GOLD + nf.format(lc.recombobulatorsSession) + "\n" +
 							EnumChatFormatting.DARK_PURPLE + nf.format(lc.fumingPotatoBooksSession) + "\n" +
 							EnumChatFormatting.DARK_PURPLE + nf.format(lc.adaptiveHelmsSession) + "\n" +
@@ -1359,8 +1361,8 @@ public class TheMod
 							EnumChatFormatting.DARK_PURPLE + nf.format(lc.adaptiveLegsSession) + "\n" +
 							EnumChatFormatting.DARK_PURPLE + nf.format(lc.adaptiveBootsSession) + "\n" +
 							EnumChatFormatting.DARK_PURPLE + nf.format(lc.adaptiveSwordsSession) + "\n" +
-							EnumChatFormatting.GREEN + nf.format(lc.f3CoinsSpentSession) + "\n" +
-							EnumChatFormatting.GREEN + Utils.getTimeBetween(0, lc.f3TimeSpentSession);
+							EnumChatFormatting.AQUA + Utils.getMoneySpent(lc.f3CoinsSpentSession) + "\n" +
+							EnumChatFormatting.AQUA + Utils.getTimeBetween(0, lc.f3TimeSpentSession);
     		} else if (ds.display.equals("catacombs_floor_four")) {
     			dropsText = EnumChatFormatting.GOLD + "Recombobulators:\n" +
 							EnumChatFormatting.DARK_PURPLE + "Fuming Potato Books:\n" +
@@ -1371,8 +1373,8 @@ public class TheMod
 							EnumChatFormatting.GOLD + "Spirit Bows:\n" +
 							EnumChatFormatting.DARK_PURPLE + "Epic Spirit Pets:\n" +
 							EnumChatFormatting.GOLD + "Leg Spirit Pets:\n" +
-		    				EnumChatFormatting.GREEN + "Coins Spent:\n" +
-		    				EnumChatFormatting.GREEN + "Time Spent:\n";
+		    				EnumChatFormatting.AQUA + "Coins Spent:\n" +
+		    				EnumChatFormatting.AQUA + "Time Spent:\n";
 				countText = EnumChatFormatting.GOLD + nf.format(lc.recombobulators) + "\n" +
 							EnumChatFormatting.DARK_PURPLE + nf.format(lc.fumingPotatoBooks) + "\n" +
 							EnumChatFormatting.DARK_PURPLE + nf.format(lc.spiritWings) + "\n" +
@@ -1382,8 +1384,8 @@ public class TheMod
 							EnumChatFormatting.GOLD + nf.format(lc.spiritBows) + "\n" +
 							EnumChatFormatting.DARK_PURPLE + nf.format(lc.epicSpiritPets) + "\n" +
 							EnumChatFormatting.GOLD + nf.format(lc.legSpiritPets) + "\n" +
-							EnumChatFormatting.GREEN + nf.format(lc.f4CoinsSpent) + "\n" +
-							EnumChatFormatting.GREEN + Utils.getTimeBetween(0, lc.f4TimeSpent);
+							EnumChatFormatting.AQUA + Utils.getMoneySpent(lc.f4CoinsSpent) + "\n" +
+							EnumChatFormatting.AQUA + Utils.getTimeBetween(0, lc.f4TimeSpent);
     		} else if (ds.display.equals("catacombs_floor_four_session")) {
     			dropsText = EnumChatFormatting.GOLD + "Recombobulators:\n" +
 							EnumChatFormatting.DARK_PURPLE + "Fuming Potato Books:\n" +
@@ -1394,8 +1396,8 @@ public class TheMod
 							EnumChatFormatting.GOLD + "Spirit Bows:\n" +
 							EnumChatFormatting.DARK_PURPLE + "Epic Spirit Pets:\n" +
 							EnumChatFormatting.GOLD + "Leg Spirit Pets:\n" +
-		    				EnumChatFormatting.GREEN + "Coins Spent:\n" +
-		    				EnumChatFormatting.GREEN + "Time Spent:\n";
+		    				EnumChatFormatting.AQUA + "Coins Spent:\n" +
+		    				EnumChatFormatting.AQUA + "Time Spent:\n";
 				countText = EnumChatFormatting.GOLD + nf.format(lc.recombobulatorsSession) + "\n" +
 							EnumChatFormatting.DARK_PURPLE + nf.format(lc.fumingPotatoBooksSession) + "\n" +
 							EnumChatFormatting.DARK_PURPLE + nf.format(lc.spiritWingsSession) + "\n" +
@@ -1405,8 +1407,8 @@ public class TheMod
 							EnumChatFormatting.GOLD + nf.format(lc.spiritBowsSession) + "\n" +
 							EnumChatFormatting.DARK_PURPLE + nf.format(lc.epicSpiritPetsSession) + "\n" +
 							EnumChatFormatting.GOLD + nf.format(lc.legSpiritPetsSession) + "\n" +
-							EnumChatFormatting.GREEN + nf.format(lc.f4CoinsSpentSession) + "\n" +
-							EnumChatFormatting.GREEN + Utils.getTimeBetween(0, lc.f4TimeSpentSession);
+							EnumChatFormatting.AQUA + Utils.getMoneySpent(lc.f4CoinsSpentSession) + "\n" +
+							EnumChatFormatting.AQUA + Utils.getTimeBetween(0, lc.f4TimeSpentSession);
     		} else {
     			ConfigHandler cf = new ConfigHandler();
     			
@@ -1525,6 +1527,60 @@ public class TheMod
     	if (!Utils.inSkyblock) return;
     	if (keyBindings[0].isPressed()) {
     		Minecraft.getMinecraft().thePlayer.sendChatMessage(lastMaddoxCommand);
+    	}
+    }
+    
+    @SubscribeEvent
+    public void onGuiMouseInput(GuiScreenEvent.MouseInputEvent.Pre event) {
+    	if (!Utils.inSkyblock) return;
+    	if (Mouse.getEventButton() != 0 && Mouse.getEventButton() != 1) return; // Left click or right click
+    	if (Mouse.getEventButton() == lastMouse) return;
+    	lastMouse = Mouse.getEventButton();
+    	
+    	if (event.gui instanceof GuiChest) {
+    		LootCommand lc = new LootCommand();
+    		ConfigHandler cf = new ConfigHandler();
+    		GuiChest inventory = (GuiChest) event.gui;
+    		Slot mouseSlot = inventory.getSlotUnderMouse();
+			if (mouseSlot == null || mouseSlot.getStack() == null) return;
+			ItemStack item = mouseSlot.getStack();
+			
+			if (item.getDisplayName().contains("Open Reward Chest")) {
+				List<String> tooltip = item.getTooltip(Minecraft.getMinecraft().thePlayer, Minecraft.getMinecraft().gameSettings.advancedItemTooltips);
+				for (String line : tooltip) {
+					if (line.contains("FREE")) {
+						break;
+					} else if (line.contains(" Coins")) {
+						int coinsSpent = Integer.parseInt(line.substring(0, line.indexOf(" ")).replaceAll(",", ""));
+						
+						List<String> scoreboard = ScoreboardHandler.getSidebarLines();
+						for (String s : scoreboard) {
+							String sCleaned = ScoreboardHandler.cleanSB(s);
+							if (sCleaned.contains("The Catacombs (")) {
+								if (sCleaned.contains("F1")) {
+									lc.f1CoinsSpent += coinsSpent;
+									lc.f1CoinsSpentSession += coinsSpent;
+									cf.writeDoubleConfig("catacombs", "floorOneCoins", lc.f1CoinsSpent);
+								} else if (sCleaned.contains("F2")) {
+									lc.f2CoinsSpent += coinsSpent;
+									lc.f2CoinsSpentSession += coinsSpent;
+									cf.writeDoubleConfig("catacombs", "floorTwoCoins", lc.f2CoinsSpent);
+								} else if (sCleaned.contains("F3")) {
+									lc.f3CoinsSpent += coinsSpent;
+									lc.f3CoinsSpentSession += coinsSpent;
+									cf.writeDoubleConfig("catacombs", "floorThreeCoins", lc.f3CoinsSpent);
+								} else if (sCleaned.contains("F4")) {
+									lc.f4CoinsSpent += coinsSpent;
+									lc.f4CoinsSpentSession += coinsSpent;
+									cf.writeDoubleConfig("catacombs", "floorFourCoins", lc.f4CoinsSpent);
+								}
+								break;
+							}
+							break;
+						}
+					}
+				}
+			}
     	}
     }
     

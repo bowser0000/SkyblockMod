@@ -592,6 +592,8 @@ public class LootCommand extends CommandBase {
 																EnumChatFormatting.GOLD + "    Recombobulator 3000s: " + nf.format(recombobulatorsSession) + "\n" +
 																EnumChatFormatting.DARK_PURPLE + "    Fuming Potato Books: " + nf.format(fumingPotatoBooksSession) + "\n" +
 																EnumChatFormatting.BLUE + "    Bonzo's Staffs: " + nf.format(bonzoStaffsSession) + "\n" +
+																EnumChatFormatting.AQUA + "    Coins Spent: " + Utils.getMoneySpent(f1CoinsSpentSession) + "\n" +
+																EnumChatFormatting.AQUA + "    Time Spent: " + Utils.getTimeBetween(0, f1TimeSpentSession) + "\n" +
 																EnumChatFormatting.DARK_RED + EnumChatFormatting.BOLD + " -------------------"));
 					return;
 				}
@@ -600,6 +602,8 @@ public class LootCommand extends CommandBase {
 															EnumChatFormatting.GOLD + "    Recombobulator 3000s: " + nf.format(recombobulators) + "\n" +
 															EnumChatFormatting.DARK_PURPLE + "    Fuming Potato Books: " + nf.format(fumingPotatoBooks) + "\n" +
 															EnumChatFormatting.BLUE + "    Bonzo's Staffs: " + nf.format(bonzoStaffs) + "\n" +
+															EnumChatFormatting.AQUA + "    Coins Spent: " + Utils.getMoneySpent(f1CoinsSpent) + "\n" +
+															EnumChatFormatting.AQUA + "    Time Spent: " + Utils.getTimeBetween(0, f1TimeSpent) + "\n" +
 															EnumChatFormatting.DARK_RED + EnumChatFormatting.BOLD + " -------------------"));
 			} else if (arg1[1].equalsIgnoreCase("f2") || arg1[1].equalsIgnoreCase("floor2")) {
 				if (showSession) {
@@ -608,6 +612,8 @@ public class LootCommand extends CommandBase {
 																EnumChatFormatting.GOLD + "    Recombobulator 3000s: " + nf.format(recombobulatorsSession) + "\n" +
 																EnumChatFormatting.DARK_PURPLE + "    Fuming Potato Books: " + nf.format(fumingPotatoBooksSession) + "\n" +
 																EnumChatFormatting.BLUE + "    Scarf's Studies: " + nf.format(scarfStudiesSession) + "\n" +
+																EnumChatFormatting.AQUA + "    Coins Spent: " + Utils.getMoneySpent(f2CoinsSpentSession) + "\n" +
+																EnumChatFormatting.AQUA + "    Time Spent: " + Utils.getTimeBetween(0, f2TimeSpentSession) + "\n" +
 																EnumChatFormatting.DARK_RED + EnumChatFormatting.BOLD + " -------------------"));
 					return;
 				}
@@ -616,6 +622,8 @@ public class LootCommand extends CommandBase {
 															EnumChatFormatting.GOLD + "    Recombobulator 3000s: " + nf.format(recombobulators) + "\n" +
 															EnumChatFormatting.DARK_PURPLE + "    Fuming Potato Books: " + nf.format(fumingPotatoBooks) + "\n" +
 															EnumChatFormatting.BLUE + "    Scarf's Studies: " + nf.format(scarfStudies) + "\n" +
+															EnumChatFormatting.AQUA + "    Coins Spent: " + Utils.getMoneySpent(f2CoinsSpent) + "\n" +
+															EnumChatFormatting.AQUA + "    Time Spent: " + Utils.getTimeBetween(0, f2TimeSpent) + "\n" +
 															EnumChatFormatting.DARK_RED + EnumChatFormatting.BOLD + " -------------------"));
 			} else if (arg1[1].equalsIgnoreCase("f3") || arg1[1].equalsIgnoreCase("floor3")) {
 				if (showSession) {
@@ -628,6 +636,8 @@ public class LootCommand extends CommandBase {
 																EnumChatFormatting.DARK_PURPLE + "    Adaptive Leggings: " + nf.format(adaptiveLegsSession) + "\n" +
 																EnumChatFormatting.DARK_PURPLE + "    Adaptive Boots: " + nf.format(adaptiveBootsSession) + "\n" +
 																EnumChatFormatting.DARK_PURPLE + "    Adaptive Blades: " + nf.format(adaptiveSwordsSession) + "\n" +
+																EnumChatFormatting.AQUA + "    Coins Spent: " + Utils.getMoneySpent(f3CoinsSpentSession) + "\n" +
+																EnumChatFormatting.AQUA + "    Time Spent: " + Utils.getTimeBetween(0, f3TimeSpentSession) + "\n" +
 																EnumChatFormatting.DARK_RED + EnumChatFormatting.BOLD + " -------------------"));
 					return;
 				}
@@ -640,6 +650,8 @@ public class LootCommand extends CommandBase {
 															EnumChatFormatting.DARK_PURPLE + "    Adaptive Leggings: " + nf.format(adaptiveLegs) + "\n" +
 															EnumChatFormatting.DARK_PURPLE + "    Adaptive Boots: " + nf.format(adaptiveBoots) + "\n" +
 															EnumChatFormatting.DARK_PURPLE + "    Adaptive Blades: " + nf.format(adaptiveSwords) + "\n" +
+															EnumChatFormatting.AQUA + "    Coins Spent: " + Utils.getMoneySpent(f3CoinsSpent) + "\n" +
+															EnumChatFormatting.AQUA + "    Time Spent: " + Utils.getTimeBetween(0, f3TimeSpent) + "\n" +
 															EnumChatFormatting.DARK_RED + EnumChatFormatting.BOLD + " -------------------"));
 			} else if (arg1[1].equalsIgnoreCase("f4") || arg1[1].equalsIgnoreCase("floor4")) {
 				if (showSession) {
@@ -654,6 +666,8 @@ public class LootCommand extends CommandBase {
 																EnumChatFormatting.GOLD + "    Spirit Bows: " + nf.format(spiritBowsSession) + "\n" +
 																EnumChatFormatting.DARK_PURPLE + "    Epic Spirit Pets: " + nf.format(epicSpiritPetsSession) + "\n" +
 																EnumChatFormatting.GOLD + "    Leg Spirit Pets: " + nf.format(legSpiritPetsSession) + "\n" +
+																EnumChatFormatting.AQUA + "    Coins Spent: " + Utils.getMoneySpent(f4CoinsSpentSession) + "\n" +
+																EnumChatFormatting.AQUA + "    Time Spent: " + Utils.getTimeBetween(0, f4TimeSpentSession) + "\n" +
 																EnumChatFormatting.DARK_RED + EnumChatFormatting.BOLD + " -------------------"));
 					return;
 				}
@@ -668,6 +682,8 @@ public class LootCommand extends CommandBase {
 															EnumChatFormatting.GOLD + "    Spirit Bows: " + nf.format(spiritBows) + "\n" +
 															EnumChatFormatting.DARK_PURPLE + "    Epic Spirit Pets: " + nf.format(epicSpiritPets) + "\n" +
 															EnumChatFormatting.GOLD + "    Leg Spirit Pets: " + nf.format(legSpiritPets) + "\n" +
+															EnumChatFormatting.AQUA + "    Coins Spent: " + Utils.getMoneySpent(f4CoinsSpent) + "\n" +
+															EnumChatFormatting.AQUA + "    Time Spent: " + Utils.getTimeBetween(0, f4TimeSpent) + "\n" +
 															EnumChatFormatting.DARK_RED + EnumChatFormatting.BOLD + " -------------------"));
 			} else {
 				player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Usage: /loot catacombs <f1/f2/f3/f4>"));

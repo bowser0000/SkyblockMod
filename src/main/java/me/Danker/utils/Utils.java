@@ -171,6 +171,12 @@ public class Utils {
 		return timeFormatted;
 	}
 	
+	public static String getMoneySpent(double coins) {
+		double coinsSpentMillions = coins / 1000000D;
+		coinsSpentMillions = Math.floor(coinsSpentMillions * 100D) / 100D;
+		return coinsSpentMillions + "M";
+	}
+	
 	public static double xpToSkillLevel(double xp) {
 		for (int i = 0, xpAdded = 0; i < skillXPPerLevel.length; i++) {
 			xpAdded += skillXPPerLevel[i];
