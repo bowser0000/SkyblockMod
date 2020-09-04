@@ -180,6 +180,7 @@ public class ConfigHandler {
 		if (!hasKey("toggles", "AOTD")) writeBooleanConfig("toggles", "AOTD", false);
 		if (!hasKey("toggles", "SceptreMessages")) writeBooleanConfig("toggles", "SceptreMessages", true);
 		if (!hasKey("toggles", "PetColors")) writeBooleanConfig("toggles", "PetColors", false);
+		if (!hasKey("toggles", "DungeonTimer")) writeBooleanConfig("toggles", "DungeonTimer", false);
 		
 		if (!hasKey("api", "APIKey")) writeStringConfig("api", "APIKey", "");
 		
@@ -291,8 +292,11 @@ public class ConfigHandler {
 		if (!hasKey("locations", "coordsY")) writeIntConfig("locations", "coordsY", height - 25);
 		if (!hasKey("locations", "displayX")) writeIntConfig("locations", "displayX", 80);
 		if (!hasKey("locations", "displayY")) writeIntConfig("locations", "displayY", 5);
+		if (!hasKey("locations", "dungeonTimerX")) writeIntConfig("locations", "dungeonTimerX", 5);
+		if (!hasKey("locations", "dungeonTimerY")) writeIntConfig("locations", "dungeonTimerY", 5);
 		if (!hasKey("scales", "coordsScale")) writeDoubleConfig("scales", "coordsScale", 1);
 		if (!hasKey("scales", "displayScale")) writeDoubleConfig("scales", "displayScale", 1);
+		if (!hasKey("scales", "dungeonTimerScale")) writeDoubleConfig("scales", "dungeonTimerScale", 1);
 		
 		final ToggleCommand tf = new ToggleCommand();
 		tf.gpartyToggled = getBoolean("toggles", "GParty");
@@ -306,6 +310,7 @@ public class ConfigHandler {
 		tf.aotdToggled = getBoolean("toggles", "AOTD");
 		tf.sceptreMessages = getBoolean("toggles", "SceptreMessages");
 		tf.petColoursToggled = getBoolean("toggles", "PetColors");
+		tf.dungeonTimerToggled = getBoolean("toggles", "DungeonTimer");
 		
 		final LootCommand lc = new LootCommand();
 		// Wolf
@@ -416,10 +421,13 @@ public class ConfigHandler {
 		moc.coordsXY[1] = getInt("locations", "coordsY");
 		moc.displayXY[0] = getInt("locations", "displayX");
 		moc.displayXY[1] = getInt("locations", "displayY");
+		moc.dungeonTimerXY[0] = getInt("locations", "dungeonTimerX");
+		moc.dungeonTimerXY[1] = getInt("locations", "dungeonTimerY");
 		
 		final ScaleCommand sc = new ScaleCommand();
 		sc.coordsScale = getDouble("scales", "coordsScale");
 		sc.displayScale = getDouble("scales", "displayScale");
+		sc.dungeonTimerScale = getDouble("scales", "dungeonTimerScale");
 	}
 	
 }

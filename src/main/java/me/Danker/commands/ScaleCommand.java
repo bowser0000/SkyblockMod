@@ -15,6 +15,7 @@ public class ScaleCommand extends CommandBase {
 
 	public static double coordsScale;
 	public static double displayScale;
+	public static double dungeonTimerScale;
 	
 	@Override
 	public String getCommandName() {
@@ -23,7 +24,7 @@ public class ScaleCommand extends CommandBase {
 
 	@Override
 	public String getCommandUsage(ICommandSender arg0) {
-		return getCommandName() + " <coords/display> <size (0.1 - 10)>";
+		return getCommandName() + " <coords/display/dungeontimer> <size (0.1 - 10)>";
 	}
 	
 	@Override
@@ -34,7 +35,7 @@ public class ScaleCommand extends CommandBase {
 	@Override
 	public List<String> addTabCompletionOptions(ICommandSender sender, String[] args, BlockPos pos) {
 		if (args.length == 1) {
-			return getListOfStringsMatchingLastWord(args, "coords", "display");
+			return getListOfStringsMatchingLastWord(args, "coords", "display", "dungeontimer");
 		}
 		return null;
 	}
@@ -44,7 +45,7 @@ public class ScaleCommand extends CommandBase {
 		final EntityPlayer player = (EntityPlayer) arg0;
 		
 		if (arg1.length < 2) {
-			player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Usage: /scale <coords/display> <size (0.1 - 10)>"));
+			player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Usage: /scale <coords/display/dungeontimer> <size (0.1 - 10)>"));
 			return;
 		}
 		
@@ -62,8 +63,12 @@ public class ScaleCommand extends CommandBase {
 			displayScale = scaleAmount;
 			ConfigHandler.writeDoubleConfig("scales", "displayScale", displayScale);
 			player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Display has been scaled to " + EnumChatFormatting.DARK_GREEN + displayScale + "x"));
+		} else if (arg1[0].equalsIgnoreCase("dungeontimer")) {
+			dungeonTimerScale = scaleAmount;
+			ConfigHandler.writeDoubleConfig("scales", "dungeonTimerScale", dungeonTimerScale);
+			player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Dungeon timer has been scaled to " + EnumChatFormatting.DARK_GREEN + dungeonTimerScale + "x"));
 		} else {
-			player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Usage: /scale <coords/display> <size (0.1 - 10)>"));
+			player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Usage: /scale <coords/display/dungeontimer> <size (0.1 - 10)>"));
 		}
 	}
 

@@ -52,6 +52,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IChatComponent;
+import net.minecraft.util.StringUtils;
 import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.client.event.GuiScreenEvent;
@@ -91,6 +92,14 @@ public class TheMod
     public static String lastMaddoxCommand = "/cb placeholdervalue";
     static KeyBinding[] keyBindings = new KeyBinding[1];
     static int lastMouse = -1;
+    
+    static double dungeonStartTime = 0;
+    static double bloodOpenTime = 0;
+    static double watcherClearTime = 0;
+    static double bossClearTime = 0;
+    static int witherDoors = 0;
+    static int dungeonDeaths = 0;
+    static int puzzleFails = 0;
     
     @EventHandler
     public void init(FMLInitializationEvent event)
@@ -216,6 +225,14 @@ public class TheMod
         	}
         }
     	
+        // Dungeon chat spoken by an NPC, containing :
+        if (message.contains("[BOSS] The Watcher: You have proven yourself. You may pass.")) {
+        	watcherClearTime = System.currentTimeMillis() / 1000;
+        }
+		if (message.contains(" PUZZLE FAIL! ") || message.contains("chose the wrong answer! I shall never forget this moment")) {
+			dungeonDeaths++;
+		}
+        
     	if (message.contains(":")) return;
     	
 		if (tc.gpartyToggled) {
@@ -684,6 +701,62 @@ public class TheMod
 		}
 		
 		// Catacombs Dungeons
+		// Timers
+		if (message.contains("Dungeon starts in 1 second.")) {
+		    dungeonStartTime = System.currentTimeMillis() / 1000;
+		    bloodOpenTime = dungeonStartTime;
+		    watcherClearTime = dungeonStartTime;
+		    bossClearTime = dungeonStartTime;
+		    witherDoors = 0;
+		    dungeonDeaths = 0;
+		    puzzleFails = 0;
+		}
+		if (message.contains("The BLOOD DOOR has been opened!")) {
+			bloodOpenTime = System.currentTimeMillis() / 1000;
+		}
+		if (message.contains(" opened a WITHER door!")) {
+			witherDoors++;
+		}
+		if (message.contains(" and became a ghost.")) {
+			dungeonDeaths++;
+		}
+		
+		// Trackers
+		if (message.contains(" Defeated ") && message.contains(" in ")) {
+			bossClearTime = System.currentTimeMillis() / 1000;
+			List<String> scoreboard = ScoreboardHandler.getSidebarLines();
+			int timeToAdd = 0;
+			for (String s : scoreboard) {
+				String sCleaned = ScoreboardHandler.cleanSB(s);
+				System.out.println(sCleaned);
+				if (sCleaned.contains("The Catacombs (")) {
+					// Add time to floor
+					if (sCleaned.contains("F1")) {
+						lc.f1TimeSpent = Math.floor(lc.f1TimeSpent + timeToAdd);
+						lc.f1TimeSpentSession = Math.floor(lc.f1TimeSpentSession + timeToAdd);
+						cf.writeDoubleConfig("catacombs", "floorOneTime", lc.f1TimeSpent);
+					} else if (sCleaned.contains("F2")) {
+						lc.f2TimeSpent = Math.floor(lc.f2TimeSpent + timeToAdd);
+						lc.f2TimeSpentSession = Math.floor(lc.f2TimeSpentSession + timeToAdd);
+						cf.writeDoubleConfig("catacombs", "floorTwoTime", lc.f1TimeSpent);
+					} else if (sCleaned.contains("F3")) {
+						lc.f3TimeSpent = Math.floor(lc.f3TimeSpent + timeToAdd);
+						lc.f3TimeSpentSession = Math.floor(lc.f3TimeSpentSession + timeToAdd);
+						cf.writeDoubleConfig("catacombs", "floorThreeTime", lc.f1TimeSpent);
+					} else if (sCleaned.contains("F4")) {
+						lc.f4TimeSpent = Math.floor(lc.f4TimeSpent + timeToAdd);
+						lc.f4TimeSpentSession = Math.floor(lc.f4TimeSpentSession + timeToAdd);
+						cf.writeDoubleConfig("catacombs", "floorFourTime", lc.f1TimeSpent);
+					}
+				} else if (sCleaned.contains("Time Elapsed:")) {
+					// Get floor time
+					String time = sCleaned.substring(sCleaned.indexOf(":") + 2);
+					int minutes = Integer.parseInt(time.substring(0, time.indexOf("m")));
+					int seconds = Integer.parseInt(time.substring(time.indexOf("m") + 1, time.indexOf("s")));
+					timeToAdd = (minutes * 60) + seconds;
+				}
+			}
+		}
 		if (message.contains("    RARE REWARD! Recombobulator 3000")) {
 			lc.recombobulators++;
 			lc.recombobulatorsSession++;
@@ -700,27 +773,11 @@ public class TheMod
 			lc.bonzoStaffsSession++;
 			cf.writeIntConfig("catacombs", "bonzoStaff", lc.bonzoStaffs);
 		}
-		if (message.contains("Defeated Bonzo in ")) {
-			String time = message.substring(message.lastIndexOf(" ") + 1, message.length());
-			int minutes = Integer.parseInt(message.substring(message.indexOf("m")));
-			int seconds = Integer.parseInt(message.substring(message.indexOf("m") + 1, message.indexOf("s")));
-			// Prevent rounding off errors
-			lc.f1TimeSpent = Math.floor(lc.f1TimeSpent + (minutes * 60) + seconds);
-			lc.f1TimeSpentSession = Math.floor(lc.f1TimeSpentSession + (minutes * 60) + seconds);
-		}
 		// F2
 		if (message.contains("    RARE REWARD! Scarf's Studies")) {
 			lc.scarfStudies++;
 			lc.scarfStudiesSession++;
 			cf.writeIntConfig("catacombs", "scarfStudies", lc.scarfStudies);
-		}
-		if (message.contains("Defeated Scarf in ")) {
-			String time = message.substring(message.lastIndexOf(" ") + 1, message.length());
-			int minutes = Integer.parseInt(message.substring(message.indexOf("m")));
-			int seconds = Integer.parseInt(message.substring(message.indexOf("m") + 1, message.indexOf("s")));
-			// Prevent rounding off errors
-			lc.f2TimeSpent = Math.floor(lc.f2TimeSpent + (minutes * 60) + seconds);
-			lc.f2TimeSpentSession = Math.floor(lc.f2TimeSpentSession + (minutes * 60) + seconds);
 		}
 		// F3
 		if (message.contains("    RARE REWARD! Adaptive Helmet")) {
@@ -747,14 +804,6 @@ public class TheMod
 			lc.adaptiveSwords++;
 			lc.adaptiveSwordsSession++;
 			cf.writeIntConfig("catacombs", "adaptiveSword", lc.adaptiveSwords);
-		}
-		if (message.contains("Defeated The Professor in ")) {
-			String time = message.substring(message.lastIndexOf(" ") + 1, message.length());
-			int minutes = Integer.parseInt(message.substring(message.indexOf("m")));
-			int seconds = Integer.parseInt(message.substring(message.indexOf("m") + 1, message.indexOf("s")));
-			// Prevent rounding off errors
-			lc.f3TimeSpent = Math.floor(lc.f3TimeSpent + (minutes * 60) + seconds);
-			lc.f3TimeSpentSession = Math.floor(lc.f3TimeSpentSession + (minutes * 60) + seconds);
 		}
 		// F4
 		if (message.contains("    Spirit Wing")) {
@@ -797,14 +846,6 @@ public class TheMod
 			lc.spiritBowsSession++;
 			cf.writeIntConfig("catacombs", "spiritBow", lc.spiritBows);
 		}
-		if (message.contains("Defeated Thorn in ")) {
-			String time = message.substring(message.lastIndexOf(" ") + 1, message.length());
-			int minutes = Integer.parseInt(message.substring(message.indexOf("m")));
-			int seconds = Integer.parseInt(message.substring(message.indexOf("m") + 1, message.indexOf("s")));
-			// Prevent rounding off errors
-			lc.f4TimeSpent = Math.floor(lc.f4TimeSpent + (minutes * 60) + seconds);
-			lc.f4TimeSpentSession = Math.floor(lc.f4TimeSpentSession + (minutes * 60) + seconds);
-		}
 		
 		// Chat Maddox
 		if (message.contains("[OPEN MENU]")) {
@@ -845,6 +886,23 @@ public class TheMod
         	
         	String coordText = (int) player.posX + " / " + (int) player.posY + " / " + (int) player.posZ + " (" + xDir + " / " + yDir + ")";
         	new TextRenderer(Minecraft.getMinecraft(), coordText, moc.coordsXY[0], moc.coordsXY[1], ScaleCommand.coordsScale);
+    	}
+    	
+    	if (tc.dungeonTimerToggled) {
+    		String dungeonTimerText = EnumChatFormatting.GRAY + "Wither Doors:\n" +
+    								  EnumChatFormatting.DARK_RED + "Blood Open:\n" +
+    								  EnumChatFormatting.RED + "Watcher Clear:\n" +
+    								  EnumChatFormatting.BLUE + "Boss Clear:\n" +
+    								  EnumChatFormatting.YELLOW + "Deaths:\n" +
+    								  EnumChatFormatting.YELLOW + "Puzzle Fails:";
+    		String dungeonTimers = EnumChatFormatting.GRAY + "" + witherDoors + "\n" +
+								   EnumChatFormatting.DARK_RED + Utils.getTimeBetween(dungeonStartTime, bloodOpenTime) + "\n" +
+								   EnumChatFormatting.RED + Utils.getTimeBetween(dungeonStartTime, watcherClearTime) + "\n" +
+								   EnumChatFormatting.BLUE + Utils.getTimeBetween(dungeonStartTime, bossClearTime) + "\n" +
+								   EnumChatFormatting.YELLOW + dungeonDeaths + "\n" +
+								   EnumChatFormatting.YELLOW + puzzleFails;
+    		new TextRenderer(Minecraft.getMinecraft(), dungeonTimerText, moc.dungeonTimerXY[0], moc.dungeonTimerXY[1], ScaleCommand.dungeonTimerScale);
+    		new TextRenderer(Minecraft.getMinecraft(), dungeonTimers, (int) (moc.dungeonTimerXY[0] + (80 * ScaleCommand.dungeonTimerScale)), moc.dungeonTimerXY[1], ScaleCommand.dungeonTimerScale);
     	}
     	
     	if (!ds.display.equals("off")) {
@@ -1332,7 +1390,7 @@ public class TheMod
 							EnumChatFormatting.DARK_PURPLE + "Adaptive Chestplates:\n" +
 							EnumChatFormatting.DARK_PURPLE + "Adaptive Leggings:\n" +
 							EnumChatFormatting.DARK_PURPLE + "Adaptive Boots:\n" +
-							EnumChatFormatting.DARK_PURPLE + "Adaptive Blades\n:" +
+							EnumChatFormatting.DARK_PURPLE + "Adaptive Blades:\n" +
 		    				EnumChatFormatting.AQUA + "Coins Spent:\n" +
 		    				EnumChatFormatting.AQUA + "Time Spent:\n";
 				countText = EnumChatFormatting.GOLD + nf.format(lc.recombobulators) + "\n" +
@@ -1351,7 +1409,7 @@ public class TheMod
 							EnumChatFormatting.DARK_PURPLE + "Adaptive Chestplates:\n" +
 							EnumChatFormatting.DARK_PURPLE + "Adaptive Leggings:\n" +
 							EnumChatFormatting.DARK_PURPLE + "Adaptive Boots:\n" +
-							EnumChatFormatting.DARK_PURPLE + "Adaptive Blades\n:" +
+							EnumChatFormatting.DARK_PURPLE + "Adaptive Blades:\n" +
 		    				EnumChatFormatting.AQUA + "Coins Spent:\n" +
 		    				EnumChatFormatting.AQUA + "Time Spent:\n";
 				countText = EnumChatFormatting.GOLD + nf.format(lc.recombobulatorsSession) + "\n" +
@@ -1533,9 +1591,9 @@ public class TheMod
     @SubscribeEvent
     public void onGuiMouseInput(GuiScreenEvent.MouseInputEvent.Pre event) {
     	if (!Utils.inSkyblock) return;
-    	if (Mouse.getEventButton() != 0 && Mouse.getEventButton() != 1) return; // Left click or right click
     	if (Mouse.getEventButton() == lastMouse) return;
     	lastMouse = Mouse.getEventButton();
+    	if (Mouse.getEventButton() != 0 && Mouse.getEventButton() != 1) return; // Left click or right click
     	
     	if (event.gui instanceof GuiChest) {
     		LootCommand lc = new LootCommand();
@@ -1547,7 +1605,8 @@ public class TheMod
 			
 			if (item.getDisplayName().contains("Open Reward Chest")) {
 				List<String> tooltip = item.getTooltip(Minecraft.getMinecraft().thePlayer, Minecraft.getMinecraft().gameSettings.advancedItemTooltips);
-				for (String line : tooltip) {
+				for (String lineUnclean : tooltip) {
+					String line = StringUtils.stripControlCodes(lineUnclean);
 					if (line.contains("FREE")) {
 						break;
 					} else if (line.contains(" Coins")) {
@@ -1576,8 +1635,8 @@ public class TheMod
 								}
 								break;
 							}
-							break;
 						}
+						break;
 					}
 				}
 			}
