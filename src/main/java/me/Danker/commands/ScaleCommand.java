@@ -49,7 +49,7 @@ public class ScaleCommand extends CommandBase {
 			return;
 		}
 		
-		double scaleAmount = (double) Math.floor(Double.parseDouble(arg1[1]) * 10.0) / 10.0;
+		double scaleAmount = (double) Math.floor(Double.parseDouble(arg1[1]) * 100.0) / 100.0;
 		if (scaleAmount < 0.1 || scaleAmount > 10.0) {
 			player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Scale multipler can only be between 0.1x and 10x."));
 			return;
