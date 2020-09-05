@@ -237,7 +237,6 @@ public class TheMod
     	
 		if (tc.gpartyToggled) {
 			if (message.contains(" has invited all members of ")) {
-				System.out.println(message);
 				try {
 					final SystemTray tray = SystemTray.getSystemTray();
 					final Image image = Toolkit.getDefaultToolkit().createImage("icon.png");
@@ -724,11 +723,12 @@ public class TheMod
 		// Trackers
 		if (message.contains(" Defeated ") && message.contains(" in ")) {
 			bossClearTime = System.currentTimeMillis() / 1000;
+		}
+		if (message.contains("EXTRA STATS ")) {
 			List<String> scoreboard = ScoreboardHandler.getSidebarLines();
 			int timeToAdd = 0;
 			for (String s : scoreboard) {
 				String sCleaned = ScoreboardHandler.cleanSB(s);
-				System.out.println(sCleaned);
 				if (sCleaned.contains("The Catacombs (")) {
 					// Add time to floor
 					if (sCleaned.contains("F1")) {
