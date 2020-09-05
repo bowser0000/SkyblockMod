@@ -21,14 +21,14 @@ Discord Server: https://discord.gg/QsEkNQS
 
 ## Commands
 - /dhelp - Returns this message in-game.
-- /toggle <gparty/coords/golden/slayercount/rngesusalerts/splitfishing/chatmaddox/spiritbearalerts/aotd/list> - Toggles features. /toggle list returns values of every toggle.
+- /toggle <gparty/coords/golden/slayercount/rngesusalerts/splitfishing/chatmaddox/spiritbearalerts/aotd/sceptremessages/petcolors/dungeontimer/list> - Toggles features. /toggle list returns values of every toggle.
 - /setkey <key> - Sets API key.
 - /getkey - Returns key set with /setkey and copies it to your clipboard.
 - /loot <zombie/spider/wolf/fishing/catacombs> [winter/f(1-4)/session] - Returns loot received from slayer quests or fishing stats. /loot fishing winter returns winter sea creatures instead.
 - /display <zombie/spider/wolf/fishing/catacombs> [winter/f(1-4)/session] - Text display for trackers. /display fishing winter displays winter sea creatures instead.
 - /resetloot <zombie/spider/wolf/fishing/catacombs/confirm/cancel> -  - Resets loot for trackers. /resetloot confirm confirms the reset.
-- /move <coords/display> <x> <y> - Moves text display to specified X and Y coordinates.
-- /scale <coords/display> <scale (0.1 - 10)> - Scales text display to a specified multipler between 0.1x and 10x.
+- /move <coords/display/dungeontimer> <x> <y> - Moves text display to specified X and Y coordinates.
+- /scale <coords/display/dungeontimer> <scale (0.1 - 10)> - Scales text display to a specified multipler between 0.1x and 10x.
 - /slayer [player] - Uses API to get slayer xp of a person. If no name is provided, it checks yours.
 - /skills [player] - Uses API to get skill levels of a person. If no name is provided, it checks yours.
 - /guildof [player] - Uses API to get guild name and guild master of a person. If no name is provided, it checks yours.

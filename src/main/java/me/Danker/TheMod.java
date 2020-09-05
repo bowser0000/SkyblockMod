@@ -1652,7 +1652,9 @@ public class TheMod
     		for (Slot slot : invSlots) {
     			ItemStack item = slot.getStack();
     			if (item == null) continue;
-    			if (item.getDisplayName().contains("[Lvl ")) {
+    			String name = item.getDisplayName();
+    			if (name.contains("[Lvl ")) {
+    				if (name.endsWith("aHealer") || name.endsWith("aMage") || name.endsWith("aBerserk") || name.endsWith("aArcher") || name.endsWith("aTank")) continue;
     				int colour;
     				int petLevel = Integer.parseInt(item.getDisplayName().substring(item.getDisplayName().indexOf(" ") + 1, item.getDisplayName().indexOf("]")));
     				if (petLevel == 100) {

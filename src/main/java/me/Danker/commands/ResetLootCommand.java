@@ -188,17 +188,25 @@ public class ResetLootCommand extends CommandBase {
 		lc.recombobulatorsSession = 0;
 		lc.fumingPotatoBooksSession = 0;
 		lc.bonzoStaffsSession = 0;
+		lc.f1CoinsSpentSession = 0;
+		lc.f1TimeSpentSession = 0;
 		lc.scarfStudiesSession = 0;
+		lc.f2CoinsSpentSession = 0;
+		lc.f2TimeSpentSession = 0;
 		lc.adaptiveHelmsSession = 0;
 		lc.adaptiveChestsSession = 0;
 		lc.adaptiveLegsSession = 0;
 		lc.adaptiveBootsSession = 0;
 		lc.adaptiveSwordsSession = 0;
+		lc.f3CoinsSpentSession = 0;
+		lc.f3TimeSpentSession = 0;
 		lc.spiritWingsSession = 0;
 		lc.spiritBonesSession = 0;
 		lc.spiritBootsSession = 0;
 		lc.spiritSwordsSession = 0;
 		lc.epicSpiritPetsSession = 0;
+		lc.f4CoinsSpentSession = 0;
+		lc.f4TimeSpentSession = 0;
 		cf.deleteCategory("catacombs");
 		cf.reloadConfig();
 	}
