@@ -738,15 +738,15 @@ public class TheMod
 					} else if (sCleaned.contains("F2")) {
 						lc.f2TimeSpent = Math.floor(lc.f2TimeSpent + timeToAdd);
 						lc.f2TimeSpentSession = Math.floor(lc.f2TimeSpentSession + timeToAdd);
-						cf.writeDoubleConfig("catacombs", "floorTwoTime", lc.f1TimeSpent);
+						cf.writeDoubleConfig("catacombs", "floorTwoTime", lc.f2TimeSpent);
 					} else if (sCleaned.contains("F3")) {
 						lc.f3TimeSpent = Math.floor(lc.f3TimeSpent + timeToAdd);
 						lc.f3TimeSpentSession = Math.floor(lc.f3TimeSpentSession + timeToAdd);
-						cf.writeDoubleConfig("catacombs", "floorThreeTime", lc.f1TimeSpent);
+						cf.writeDoubleConfig("catacombs", "floorThreeTime", lc.f3TimeSpent);
 					} else if (sCleaned.contains("F4")) {
 						lc.f4TimeSpent = Math.floor(lc.f4TimeSpent + timeToAdd);
 						lc.f4TimeSpentSession = Math.floor(lc.f4TimeSpentSession + timeToAdd);
-						cf.writeDoubleConfig("catacombs", "floorFourTime", lc.f1TimeSpent);
+						cf.writeDoubleConfig("catacombs", "floorFourTime", lc.f4TimeSpent);
 					}
 				} else if (sCleaned.contains("Time Elapsed:")) {
 					// Get floor time
