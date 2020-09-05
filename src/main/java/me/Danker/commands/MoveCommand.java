@@ -15,6 +15,7 @@ public class MoveCommand extends CommandBase {
 
 	public static int[] coordsXY = {0, 0};
 	public static int[] displayXY = {0, 0};
+	public static int[] dungeonTimerXY = {0, 0};
 	
 	@Override
 	public String getCommandName() {
@@ -23,7 +24,7 @@ public class MoveCommand extends CommandBase {
 
 	@Override
 	public String getCommandUsage(ICommandSender arg0) {
-		return getCommandName() + " <coords/display> <x> <y>";
+		return getCommandName() + " <coords/display/dungeontimer> <x> <y>";
 	}
 	
 	@Override
@@ -34,7 +35,7 @@ public class MoveCommand extends CommandBase {
 	@Override
 	public List<String> addTabCompletionOptions(ICommandSender sender, String[] args, BlockPos pos) {
 		if (args.length == 1) {
-			return getListOfStringsMatchingLastWord(args, "coords", "display");
+			return getListOfStringsMatchingLastWord(args, "coords", "display", "dungeontimer");
 		}
 		return null;
 	}
@@ -45,7 +46,7 @@ public class MoveCommand extends CommandBase {
 		final ConfigHandler cf = new ConfigHandler();
 		
 		if (arg1.length < 2) {
-			player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Usage: /move <coords/display> <x> <y>"));
+			player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Usage: /move <coords/display/dungeontimer> <x> <y>"));
 			return;
 		}
 		
@@ -61,8 +62,14 @@ public class MoveCommand extends CommandBase {
 			cf.writeIntConfig("locations", "displayX", displayXY[0]);
 			cf.writeIntConfig("locations", "displayY", displayXY[1]);
 			player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Tracker display has been moved to " + EnumChatFormatting.DARK_GREEN + arg1[1] + ", " + arg1[2]));
+		} else if (arg1[0].equalsIgnoreCase("dungeontimer")) {
+			dungeonTimerXY[0] = Integer.parseInt(arg1[1]);
+			dungeonTimerXY[1] = Integer.parseInt(arg1[2]);
+			cf.writeIntConfig("locations", "dungeonTimerX", dungeonTimerXY[0]);
+			cf.writeIntConfig("locations", "dungeonTimerY", dungeonTimerXY[1]);
+			player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Dungeon timer has been moved to " + EnumChatFormatting.DARK_GREEN + arg1[1] + ", " + arg1[2]));
 		} else {
-			player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Usage: /move <coords/display> <x> <y>"));
+			player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Usage: /move <coords/display/dungeontimer> <x> <y>"));
 		}
 	}
 

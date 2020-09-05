@@ -23,7 +23,7 @@ public class PetsCommand extends CommandBase {
 
 	static int petXpToLevel(double xp, String rarity) {
 		int[] xpPerLevel = {100, 110, 120, 130, 145, 160, 175, 190, 210, 230, 250, 275, 300, 330, 360, 400, 440, 490, 540, 600, 660, 730,
-							800, 880, 860, 1050, 1150, 1260, 1380, 1510, 1650, 1800, 1960, 2130, 2310, 2500, 2700, 2920, 3160, 3420, 3700,
+							800, 880, 960, 1050, 1150, 1260, 1380, 1510, 1650, 1800, 1960, 2130, 2310, 2500, 2700, 2920, 3160, 3420, 3700,
 							4000, 4350, 4750, 5200, 5700, 6300, 7000, 7800, 8700, 9700, 10800, 12000, 13300, 14700, 16200, 17800, 19500,
 							21300, 23200, 25200, 27400, 29800, 32400, 35200, 38200, 41400, 44800, 48400, 52200, 56200, 60400, 64800, 69400,
 							74200, 79200, 84700, 90700, 97200, 104200, 111700, 119700, 128200, 137200, 146700, 156700, 167700, 179700, 192700,
@@ -49,11 +49,6 @@ public class PetsCommand extends CommandBase {
 			}
 		}
 		return 100;
-	}
-	
-	static String capitalize(String string) {
-		String capitalized = string.substring(0, 1).toUpperCase() + string.substring(1).toLowerCase();
-		return capitalized;
 	}
 	
 	@Override
@@ -169,7 +164,7 @@ public class PetsCommand extends CommandBase {
 			
 			// Loop through pet rarities
 			for (JsonObject legPet : legendaryPets) {
-				String petName = capitalize(legPet.get("type").getAsString());
+				String petName = Utils.capitalizeString(legPet.get("type").getAsString());
 				int level = petXpToLevel(legPet.get("exp").getAsDouble(), "LEGENDARY");
 				
 				String messageToAdd = "";
@@ -183,7 +178,7 @@ public class PetsCommand extends CommandBase {
 			}
 			
 			for (JsonObject epicPet: epicPets) {
-				String petName = capitalize(epicPet.get("type").getAsString());
+				String petName = Utils.capitalizeString(epicPet.get("type").getAsString());
 				int level = petXpToLevel(epicPet.get("exp").getAsDouble(), "EPIC");
 				
 				String messageToAdd = "";
@@ -197,7 +192,7 @@ public class PetsCommand extends CommandBase {
 			}
 			
 			for (JsonObject rarePet: rarePets) {
-				String petName = capitalize(rarePet.get("type").getAsString());
+				String petName = Utils.capitalizeString(rarePet.get("type").getAsString());
 				int level = petXpToLevel(rarePet.get("exp").getAsDouble(), "RARE");
 				
 				String messageToAdd = "";
@@ -211,7 +206,7 @@ public class PetsCommand extends CommandBase {
 			}
 			
 			for (JsonObject uncommonPet: uncommonPets) {
-				String petName = capitalize(uncommonPet.get("type").getAsString());
+				String petName = Utils.capitalizeString(uncommonPet.get("type").getAsString());
 				int level = petXpToLevel(uncommonPet.get("exp").getAsDouble(), "UNCOMMON");
 				
 				String messageToAdd = "";
@@ -225,7 +220,7 @@ public class PetsCommand extends CommandBase {
 			}
 			
 			for (JsonObject commonPet: commonPets) {
-				String petName = capitalize(commonPet.get("type").getAsString());
+				String petName = Utils.capitalizeString(commonPet.get("type").getAsString());
 				int level = petXpToLevel(commonPet.get("exp").getAsDouble(), "COMMON");
 				
 				String messageToAdd = "";

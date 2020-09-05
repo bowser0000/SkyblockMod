@@ -2,10 +2,12 @@ package me.Danker.handlers;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Scanner;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -41,6 +43,17 @@ public class APIHandler {
 				
 				return object;
 			} else {
+				if (urlString.startsWith("https://api.hypixel.net/")) {
+					InputStream errorStream = conn.getErrorStream();
+					try (Scanner scanner = new Scanner(errorStream)) {
+						scanner.useDelimiter("\\Z");
+						String error = scanner.next();
+						
+						Gson gson = new Gson();
+						JsonObject object = gson.fromJson(error, JsonObject.class);
+						return object;
+					}
+				}
 				player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Request failed. HTTP Error Code: " + conn.getResponseCode()));
 			}
 		} catch (MalformedURLException ex) {

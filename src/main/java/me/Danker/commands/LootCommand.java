@@ -4,6 +4,7 @@ import java.text.NumberFormat;
 import java.util.List;
 import java.util.Locale;
 
+import me.Danker.utils.Utils;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
@@ -80,6 +81,38 @@ public class LootCommand extends CommandBase {
 	public static int frostyTheSnowmans;
 	public static int grinches;
 	public static int yetis;
+	public static double yetiTime;
+	public static int yetiSCs;
+	
+	// Catacombs Dungeons
+	public static int recombobulators;
+	public static int fumingPotatoBooks;
+	// F1
+	public static int bonzoStaffs;
+	public static double f1CoinsSpent;
+	public static double f1TimeSpent;
+	// F2
+	public static int scarfStudies;
+	public static double f2CoinsSpent;
+	public static double f2TimeSpent;
+	// F3
+	public static int adaptiveHelms;
+	public static int adaptiveChests;
+	public static int adaptiveLegs;
+	public static int adaptiveBoots;
+	public static int adaptiveSwords;
+	public static double f3CoinsSpent;
+	public static double f3TimeSpent;
+	// F4
+	public static int spiritWings;
+	public static int spiritBones;
+	public static int spiritBoots;
+	public static int spiritSwords;
+	public static int spiritBows;
+	public static int epicSpiritPets;
+	public static int legSpiritPets;
+	public static double f4CoinsSpent;
+	public static double f4TimeSpent;
 	
 	// Single sessions (No config saves)
 	// Wolf
@@ -149,35 +182,38 @@ public class LootCommand extends CommandBase {
 	public static int frostyTheSnowmansSession = 0;
 	public static int grinchesSession = 0;
 	public static int yetisSession = 0;
+	public static double yetiTimeSession = 0;
+	public static int yetiSCsSession = 0;
 	
-	public String getTimeBetween(double timeOne, double timeTwo) {
-		double secondsBetween = Math.floor(timeTwo - timeOne);
-		
-		String timeFormatted = "";
-		int days;
-		int hours;
-		int minutes;
-		int seconds;
-		
-		if (secondsBetween > 86400) {
-			// More than 1d, display #d#h
-			days = (int) (secondsBetween / 86400);
-			hours = (int) (secondsBetween % 86400 / 3600);
-			timeFormatted = days + "d" + hours + "h";
-		} else if (secondsBetween > 3600) {
-			// More than 1h, display #h#m
-			hours = (int) (secondsBetween / 3600);
-			minutes = (int) (secondsBetween % 3600 / 60);
-			timeFormatted = hours + "h" + minutes + "m";
-		} else {
-			// Display #m#s
-			minutes = (int) (secondsBetween / 60);
-			seconds = (int) (secondsBetween % 60);
-			timeFormatted = minutes + "m" + seconds + "s";
-		}
-		
-		return timeFormatted;
-	}
+	// Catacombs Dungeons
+	public static int recombobulatorsSession = 0;
+	public static int fumingPotatoBooksSession = 0;
+	// F1
+	public static int bonzoStaffsSession = 0;
+	public static double f1CoinsSpentSession = 0;
+	public static double f1TimeSpentSession = 0;
+	// F2
+	public static int scarfStudiesSession = 0;
+	public static double f2CoinsSpentSession = 0;
+	public static double f2TimeSpentSession = 0;
+	// F3
+	public static int adaptiveHelmsSession = 0;
+	public static int adaptiveChestsSession = 0;
+	public static int adaptiveLegsSession = 0;
+	public static int adaptiveBootsSession = 0;
+	public static int adaptiveSwordsSession = 0;
+	public static double f3CoinsSpentSession = 0;
+	public static double f3TimeSpentSession = 0;
+	// F4
+	public static int spiritWingsSession = 0;
+	public static int spiritBonesSession = 0;
+	public static int spiritBootsSession = 0;
+	public static int spiritSwordsSession = 0;
+	public static int spiritBowsSession = 0;
+	public static int epicSpiritPetsSession = 0;
+	public static int legSpiritPetsSession = 0;
+	public static double f4CoinsSpentSession = 0;
+	public static double f4TimeSpentSession = 0;
 	
 	@Override
 	public String getCommandName() {
@@ -186,7 +222,7 @@ public class LootCommand extends CommandBase {
 
 	@Override
 	public String getCommandUsage(ICommandSender arg0) {
-		return getCommandName() + " <zombie/spider/wolf/fishing> [winter/session]";
+		return getCommandName() + " <zombie/spider/wolf/fishing/catacombs> [winter/f(1-4)/session]";
 	}
 	
 	@Override
@@ -197,10 +233,12 @@ public class LootCommand extends CommandBase {
 	@Override
 	public List<String> addTabCompletionOptions(ICommandSender sender, String[] args, BlockPos pos) {
 		if (args.length == 1) {
-			return getListOfStringsMatchingLastWord(args, "wolf", "spider", "zombie", "fishing");
+			return getListOfStringsMatchingLastWord(args, "wolf", "spider", "zombie", "fishing", "catacombs");
 		} else if (args.length == 2 && args[0].equalsIgnoreCase("fishing")) {
 			return getListOfStringsMatchingLastWord(args, "winter", "session");
-		} else if (args.length == 2 || (args.length == 3 && args[0].equalsIgnoreCase("fishing") && args[1].equalsIgnoreCase("winter"))) { 
+		} else if (args.length == 2 && args[0].equalsIgnoreCase("catacombs")) {
+			return getListOfStringsMatchingLastWord(args, "f1", "floor1", "f2", "floor2", "f3", "floor3", "f4", "floor4");
+		} else if (args.length > 1 || (args.length == 3 && args[0].equalsIgnoreCase("fishing") && args[1].equalsIgnoreCase("winter"))) { 
 			return getListOfStringsMatchingLastWord(args, "session");
 		}
 		return null;
@@ -211,7 +249,7 @@ public class LootCommand extends CommandBase {
 		final EntityPlayer player = (EntityPlayer) arg0;
 		
 		if (arg1.length == 0) {
-			player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Usage: /loot <zombie/spider/wolf/fishing> [winter/session]"));
+			player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Usage: /loot <zombie/spider/wolf/fishing/catacombs> [winter/f(1-4)/session]"));
 			return;
 		}
 		
@@ -222,22 +260,14 @@ public class LootCommand extends CommandBase {
 		NumberFormat nf = NumberFormat.getIntegerInstance(Locale.US);
 		boolean showSession = false;
 		
-		if (arg1.length > 1) {
-			if (arg1[1].equalsIgnoreCase("session")) {
-				showSession = true;
-			} else if (arg1.length > 2) {
-				if (arg1[2].equalsIgnoreCase("session")) {
-					showSession = true;
-				}
-			}
-		}
-		
+		if (arg1[arg1.length - 1].equalsIgnoreCase("session")) showSession = true;
+
 		if (arg1[0].equalsIgnoreCase("wolf")) {
 			if (showSession) {
 				if (wolfTimeSession == -1) {
 					timeBetween = "Never";
 				} else {
-					timeBetween = getTimeBetween(wolfTimeSession, timeNow);
+					timeBetween = Utils.getTimeBetween(wolfTimeSession, timeNow);
 				}
 				if (wolfBossesSession == -1) {
 					bossesBetween = "Never";
@@ -270,7 +300,7 @@ public class LootCommand extends CommandBase {
 			if (wolfTime == -1) {
 				timeBetween = "Never";
 			} else {
-				timeBetween = getTimeBetween(wolfTime, timeNow);
+				timeBetween = Utils.getTimeBetween(wolfTime, timeNow);
 			}
 			if (wolfBosses == -1) {
 				bossesBetween = "Never";
@@ -302,7 +332,7 @@ public class LootCommand extends CommandBase {
 				if (spiderTimeSession == -1) {
 					timeBetween = "Never";
 				} else {
-					timeBetween = getTimeBetween(spiderTimeSession, timeNow);
+					timeBetween = Utils.getTimeBetween(spiderTimeSession, timeNow);
 				}
 				if (spiderBossesSession == -1) {
 					bossesBetween = "Never";
@@ -335,7 +365,7 @@ public class LootCommand extends CommandBase {
 			if (spiderTime == -1) {
 				timeBetween = "Never";
 			} else {
-				timeBetween = getTimeBetween(spiderTime, timeNow);
+				timeBetween = Utils.getTimeBetween(spiderTime, timeNow);
 			}
 			if (spiderBosses == -1) {
 				bossesBetween = "Never";
@@ -367,7 +397,7 @@ public class LootCommand extends CommandBase {
 				if (zombieTimeSession == -1) {
 					timeBetween = "Never";
 				} else {
-					timeBetween = getTimeBetween(zombieTimeSession, timeNow);
+					timeBetween = Utils.getTimeBetween(zombieTimeSession, timeNow);
 				}
 				if (zombieBossesSession == -1) {
 					bossesBetween = "Never";
@@ -401,7 +431,7 @@ public class LootCommand extends CommandBase {
 			if (zombieTime == -1) {
 				timeBetween = "Never";
 			} else {
-				timeBetween = getTimeBetween(zombieTime, timeNow);
+				timeBetween = Utils.getTimeBetween(zombieTime, timeNow);
 			}
 			if (zombieBosses == -1) {
 				bossesBetween = "Never";
@@ -433,14 +463,38 @@ public class LootCommand extends CommandBase {
 			if (arg1.length > 1) {
 				if (arg1[1].equalsIgnoreCase("winter")) {
 					if (showSession) {
+						if (yetiTimeSession == -1) {
+							timeBetween = "Never";
+						} else {
+							timeBetween = Utils.getTimeBetween(yetiTimeSession, timeNow);
+						}
+						if (yetiSCsSession == -1) {
+							bossesBetween = "Never";
+						} else {
+							bossesBetween = nf.format(yetiSCsSession);
+						}
+						
 						player.addChatMessage(new ChatComponentText(EnumChatFormatting.AQUA + "" + EnumChatFormatting.BOLD + "-------------------\n" +
 								EnumChatFormatting.WHITE + EnumChatFormatting.BOLD + "  Winter Fishing Summary (Current Session):\n" +
 								EnumChatFormatting.AQUA + "    Frozen Steves: " + nf.format(frozenStevesSession) + "\n" +
 								EnumChatFormatting.WHITE + "    Snowmans: " + nf.format(frostyTheSnowmansSession) + "\n" +
 								EnumChatFormatting.DARK_GREEN + "    Grinches: " + nf.format(grinchesSession) + "\n" +
 								EnumChatFormatting.GOLD + "    Yetis: " + nf.format(yetisSession) + "\n" +
+								EnumChatFormatting.AQUA + "    Time Since Yeti: " + timeBetween + "\n" +
+								EnumChatFormatting.AQUA + "    Creatures Since Yeti: " + bossesBetween + "\n" +
 								EnumChatFormatting.AQUA + EnumChatFormatting.BOLD + " -------------------"));
 						return;
+					}
+					
+					if (yetiTime == -1) {
+						timeBetween = "Never";
+					} else {
+						timeBetween = Utils.getTimeBetween(yetiTime, timeNow);
+					}
+					if (yetiSCs == -1) {
+						bossesBetween = "Never";
+					} else {
+						bossesBetween = nf.format(yetiSCs);
 					}
 					
 					player.addChatMessage(new ChatComponentText(EnumChatFormatting.AQUA + "" + EnumChatFormatting.BOLD + "-------------------\n" +
@@ -449,6 +503,8 @@ public class LootCommand extends CommandBase {
 																EnumChatFormatting.WHITE + "    Snowmans: " + nf.format(frostyTheSnowmans) + "\n" +
 																EnumChatFormatting.DARK_GREEN + "    Grinches: " + nf.format(grinches) + "\n" +
 																EnumChatFormatting.GOLD + "    Yetis: " + nf.format(yetis) + "\n" +
+																EnumChatFormatting.AQUA + "    Time Since Yeti: " + timeBetween + "\n" +
+																EnumChatFormatting.AQUA + "    Creatures Since Yeti: " + bossesBetween + "\n" +
 																EnumChatFormatting.AQUA + EnumChatFormatting.BOLD + " -------------------"));
 					return;
 				}
@@ -458,7 +514,7 @@ public class LootCommand extends CommandBase {
 				if (empTimeSession == -1) {
 					timeBetween = "Never";
 				} else {
-					timeBetween = getTimeBetween(empTimeSession, timeNow);
+					timeBetween = Utils.getTimeBetween(empTimeSession, timeNow);
 				}
 				if (empSCsSession == -1) {
 					bossesBetween = "Never";
@@ -494,7 +550,7 @@ public class LootCommand extends CommandBase {
 			if (empTime == -1) {
 				timeBetween = "Never";
 			} else {
-				timeBetween = getTimeBetween(empTime, timeNow);
+				timeBetween = Utils.getTimeBetween(empTime, timeNow);
 			}
 			if (empSCs == -1) {
 				bossesBetween = "Never";
@@ -524,8 +580,116 @@ public class LootCommand extends CommandBase {
 														EnumChatFormatting.AQUA + "    Time Since Sea Emperor: " + timeBetween + "\n" +
 														EnumChatFormatting.AQUA + "    Sea Creatures Since Sea Emperor: " + bossesBetween + "\n" +
 														EnumChatFormatting.DARK_AQUA + EnumChatFormatting.BOLD + " -------------------"));
+		} else if (arg1[0].equalsIgnoreCase("catacombs")) {
+			if (arg1.length == 1) {
+				player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Usage: /loot catacombs <f1/f2/f3/f4>"));
+				return;
+			}
+			if (arg1[1].equalsIgnoreCase("f1") || arg1[1].equalsIgnoreCase("floor1")) {
+				if (showSession) {
+					player.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_RED + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+																EnumChatFormatting.RED + EnumChatFormatting.BOLD + "  Catacombs F1 Summary (Current Session):\n" +
+																EnumChatFormatting.GOLD + "    Recombobulator 3000s: " + nf.format(recombobulatorsSession) + "\n" +
+																EnumChatFormatting.DARK_PURPLE + "    Fuming Potato Books: " + nf.format(fumingPotatoBooksSession) + "\n" +
+																EnumChatFormatting.BLUE + "    Bonzo's Staffs: " + nf.format(bonzoStaffsSession) + "\n" +
+																EnumChatFormatting.AQUA + "    Coins Spent: " + Utils.getMoneySpent(f1CoinsSpentSession) + "\n" +
+																EnumChatFormatting.AQUA + "    Time Spent: " + Utils.getTimeBetween(0, f1TimeSpentSession) + "\n" +
+																EnumChatFormatting.DARK_RED + EnumChatFormatting.BOLD + " -------------------"));
+					return;
+				}
+				player.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_RED + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+															EnumChatFormatting.RED + EnumChatFormatting.BOLD + "  Catacombs F1 Summary:\n" +
+															EnumChatFormatting.GOLD + "    Recombobulator 3000s: " + nf.format(recombobulators) + "\n" +
+															EnumChatFormatting.DARK_PURPLE + "    Fuming Potato Books: " + nf.format(fumingPotatoBooks) + "\n" +
+															EnumChatFormatting.BLUE + "    Bonzo's Staffs: " + nf.format(bonzoStaffs) + "\n" +
+															EnumChatFormatting.AQUA + "    Coins Spent: " + Utils.getMoneySpent(f1CoinsSpent) + "\n" +
+															EnumChatFormatting.AQUA + "    Time Spent: " + Utils.getTimeBetween(0, f1TimeSpent) + "\n" +
+															EnumChatFormatting.DARK_RED + EnumChatFormatting.BOLD + " -------------------"));
+			} else if (arg1[1].equalsIgnoreCase("f2") || arg1[1].equalsIgnoreCase("floor2")) {
+				if (showSession) {
+					player.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_RED + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+																EnumChatFormatting.RED + EnumChatFormatting.BOLD + "  Catacombs F2 Summary (Current Session):\n" +
+																EnumChatFormatting.GOLD + "    Recombobulator 3000s: " + nf.format(recombobulatorsSession) + "\n" +
+																EnumChatFormatting.DARK_PURPLE + "    Fuming Potato Books: " + nf.format(fumingPotatoBooksSession) + "\n" +
+																EnumChatFormatting.BLUE + "    Scarf's Studies: " + nf.format(scarfStudiesSession) + "\n" +
+																EnumChatFormatting.AQUA + "    Coins Spent: " + Utils.getMoneySpent(f2CoinsSpentSession) + "\n" +
+																EnumChatFormatting.AQUA + "    Time Spent: " + Utils.getTimeBetween(0, f2TimeSpentSession) + "\n" +
+																EnumChatFormatting.DARK_RED + EnumChatFormatting.BOLD + " -------------------"));
+					return;
+				}
+				player.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_RED + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+															EnumChatFormatting.RED + EnumChatFormatting.BOLD + "  Catacombs F2 Summary:\n" +
+															EnumChatFormatting.GOLD + "    Recombobulator 3000s: " + nf.format(recombobulators) + "\n" +
+															EnumChatFormatting.DARK_PURPLE + "    Fuming Potato Books: " + nf.format(fumingPotatoBooks) + "\n" +
+															EnumChatFormatting.BLUE + "    Scarf's Studies: " + nf.format(scarfStudies) + "\n" +
+															EnumChatFormatting.AQUA + "    Coins Spent: " + Utils.getMoneySpent(f2CoinsSpent) + "\n" +
+															EnumChatFormatting.AQUA + "    Time Spent: " + Utils.getTimeBetween(0, f2TimeSpent) + "\n" +
+															EnumChatFormatting.DARK_RED + EnumChatFormatting.BOLD + " -------------------"));
+			} else if (arg1[1].equalsIgnoreCase("f3") || arg1[1].equalsIgnoreCase("floor3")) {
+				if (showSession) {
+					player.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_RED + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+																EnumChatFormatting.RED + EnumChatFormatting.BOLD + "  Catacombs F3 Summary (Current Session):\n" +
+																EnumChatFormatting.GOLD + "    Recombobulator 3000s: " + nf.format(recombobulatorsSession) + "\n" +
+																EnumChatFormatting.DARK_PURPLE + "    Fuming Potato Books: " + nf.format(fumingPotatoBooksSession) + "\n" +
+																EnumChatFormatting.DARK_PURPLE + "    Adaptive Helmets: " + nf.format(adaptiveHelmsSession) + "\n" +
+																EnumChatFormatting.DARK_PURPLE + "    Adaptive Chestplates: " + nf.format(adaptiveChestsSession) + "\n" +
+																EnumChatFormatting.DARK_PURPLE + "    Adaptive Leggings: " + nf.format(adaptiveLegsSession) + "\n" +
+																EnumChatFormatting.DARK_PURPLE + "    Adaptive Boots: " + nf.format(adaptiveBootsSession) + "\n" +
+																EnumChatFormatting.DARK_PURPLE + "    Adaptive Blades: " + nf.format(adaptiveSwordsSession) + "\n" +
+																EnumChatFormatting.AQUA + "    Coins Spent: " + Utils.getMoneySpent(f3CoinsSpentSession) + "\n" +
+																EnumChatFormatting.AQUA + "    Time Spent: " + Utils.getTimeBetween(0, f3TimeSpentSession) + "\n" +
+																EnumChatFormatting.DARK_RED + EnumChatFormatting.BOLD + " -------------------"));
+					return;
+				}
+				player.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_RED + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+															EnumChatFormatting.RED + EnumChatFormatting.BOLD + "  Catacombs F3 Summary:\n" +
+															EnumChatFormatting.GOLD + "    Recombobulator 3000s: " + nf.format(recombobulators) + "\n" +
+															EnumChatFormatting.DARK_PURPLE + "    Fuming Potato Books: " + nf.format(fumingPotatoBooks) + "\n" +
+															EnumChatFormatting.DARK_PURPLE + "    Adaptive Helmets: " + nf.format(adaptiveHelms) + "\n" +
+															EnumChatFormatting.DARK_PURPLE + "    Adaptive Chestplates: " + nf.format(adaptiveChests) + "\n" +
+															EnumChatFormatting.DARK_PURPLE + "    Adaptive Leggings: " + nf.format(adaptiveLegs) + "\n" +
+															EnumChatFormatting.DARK_PURPLE + "    Adaptive Boots: " + nf.format(adaptiveBoots) + "\n" +
+															EnumChatFormatting.DARK_PURPLE + "    Adaptive Blades: " + nf.format(adaptiveSwords) + "\n" +
+															EnumChatFormatting.AQUA + "    Coins Spent: " + Utils.getMoneySpent(f3CoinsSpent) + "\n" +
+															EnumChatFormatting.AQUA + "    Time Spent: " + Utils.getTimeBetween(0, f3TimeSpent) + "\n" +
+															EnumChatFormatting.DARK_RED + EnumChatFormatting.BOLD + " -------------------"));
+			} else if (arg1[1].equalsIgnoreCase("f4") || arg1[1].equalsIgnoreCase("floor4")) {
+				if (showSession) {
+					player.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_RED + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+																EnumChatFormatting.RED + EnumChatFormatting.BOLD + "  Catacombs F4 Summary (Current Session):\n" +
+																EnumChatFormatting.GOLD + "    Recombobulator 3000s: " + nf.format(recombobulatorsSession) + "\n" +
+																EnumChatFormatting.DARK_PURPLE + "    Fuming Potato Books: " + nf.format(fumingPotatoBooksSession) + "\n" +
+																EnumChatFormatting.DARK_PURPLE + "    Spirit Wings: " + nf.format(spiritWingsSession) + "\n" +
+																EnumChatFormatting.DARK_PURPLE + "    Spirit Bones: " + nf.format(spiritBonesSession) + "\n" +
+																EnumChatFormatting.DARK_PURPLE + "    Spirit Boots: " + nf.format(spiritBootsSession) + "\n" +
+																EnumChatFormatting.DARK_PURPLE + "    Spirit Swords: " + nf.format(spiritSwordsSession) + "\n" +
+																EnumChatFormatting.GOLD + "    Spirit Bows: " + nf.format(spiritBowsSession) + "\n" +
+																EnumChatFormatting.DARK_PURPLE + "    Epic Spirit Pets: " + nf.format(epicSpiritPetsSession) + "\n" +
+																EnumChatFormatting.GOLD + "    Leg Spirit Pets: " + nf.format(legSpiritPetsSession) + "\n" +
+																EnumChatFormatting.AQUA + "    Coins Spent: " + Utils.getMoneySpent(f4CoinsSpentSession) + "\n" +
+																EnumChatFormatting.AQUA + "    Time Spent: " + Utils.getTimeBetween(0, f4TimeSpentSession) + "\n" +
+																EnumChatFormatting.DARK_RED + EnumChatFormatting.BOLD + " -------------------"));
+					return;
+				}
+				player.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_RED + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+															EnumChatFormatting.RED + EnumChatFormatting.BOLD + "  Catacombs F4 Summary:\n" +
+															EnumChatFormatting.GOLD + "    Recombobulator 3000s: " + nf.format(recombobulators) + "\n" +
+															EnumChatFormatting.DARK_PURPLE + "    Fuming Potato Books: " + nf.format(fumingPotatoBooks) + "\n" +
+															EnumChatFormatting.DARK_PURPLE + "    Spirit Wings: " + nf.format(spiritWings) + "\n" +
+															EnumChatFormatting.DARK_PURPLE + "    Spirit Bones: " + nf.format(spiritBones) + "\n" +
+															EnumChatFormatting.DARK_PURPLE + "    Spirit Boots: " + nf.format(spiritBoots) + "\n" +
+															EnumChatFormatting.DARK_PURPLE + "    Spirit Swords: " + nf.format(spiritSwords) + "\n" +
+															EnumChatFormatting.GOLD + "    Spirit Bows: " + nf.format(spiritBows) + "\n" +
+															EnumChatFormatting.DARK_PURPLE + "    Epic Spirit Pets: " + nf.format(epicSpiritPets) + "\n" +
+															EnumChatFormatting.GOLD + "    Leg Spirit Pets: " + nf.format(legSpiritPets) + "\n" +
+															EnumChatFormatting.AQUA + "    Coins Spent: " + Utils.getMoneySpent(f4CoinsSpent) + "\n" +
+															EnumChatFormatting.AQUA + "    Time Spent: " + Utils.getTimeBetween(0, f4TimeSpent) + "\n" +
+															EnumChatFormatting.DARK_RED + EnumChatFormatting.BOLD + " -------------------"));
+			} else {
+				player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Usage: /loot catacombs <f1/f2/f3/f4>"));
+			}
 		} else {
-			player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Usage: /loot <zombie/spider/wolf/fishing> [winter/session]"));
+			player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Usage: /loot <zombie/spider/wolf/fishing/catacombs> [winter/f(1-4)/session]"));
 		}
 
 	}
