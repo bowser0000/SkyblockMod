@@ -1649,11 +1649,12 @@ public class TheMod
     	if (ToggleCommand.petColoursToggled && event.gui instanceof GuiChest) {
     		GuiChest inventory = (GuiChest) event.gui;
     		List<Slot> invSlots = inventory.inventorySlots.inventorySlots;
+    		Pattern petPattern = Pattern.compile("\\[Lvl [\\d]{1,3}]");
     		for (Slot slot : invSlots) {
     			ItemStack item = slot.getStack();
     			if (item == null) continue;
     			String name = item.getDisplayName();
-    			if (name.contains("[Lvl ")) {
+    			if (petPattern.matcher(StringUtils.stripControlCodes(name)).find()) {
     				if (name.endsWith("aHealer") || name.endsWith("aMage") || name.endsWith("aBerserk") || name.endsWith("aArcher") || name.endsWith("aTank")) continue;
     				int colour;
     				int petLevel = Integer.parseInt(item.getDisplayName().substring(item.getDisplayName().indexOf(" ") + 1, item.getDisplayName().indexOf("]")));
