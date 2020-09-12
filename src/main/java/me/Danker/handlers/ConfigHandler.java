@@ -2,6 +2,7 @@ package me.Danker.handlers;
 
 import java.io.File;
 
+import me.Danker.commands.BlockSlayerCommand;
 import me.Danker.commands.DisplayCommand;
 import me.Danker.commands.LootCommand;
 import me.Danker.commands.MoveCommand;
@@ -181,6 +182,7 @@ public class ConfigHandler {
 		if (!hasKey("toggles", "SceptreMessages")) writeBooleanConfig("toggles", "SceptreMessages", true);
 		if (!hasKey("toggles", "PetColors")) writeBooleanConfig("toggles", "PetColors", false);
 		if (!hasKey("toggles", "DungeonTimer")) writeBooleanConfig("toggles", "DungeonTimer", false);
+		if (!hasKey("toggles", "BlockSlayer")) writeStringConfig("toggles", "BlockSlayer", "");
 		
 		if (!hasKey("api", "APIKey")) writeStringConfig("api", "APIKey", "");
 		
@@ -311,6 +313,13 @@ public class ConfigHandler {
 		tf.sceptreMessages = getBoolean("toggles", "SceptreMessages");
 		tf.petColoursToggled = getBoolean("toggles", "PetColors");
 		tf.dungeonTimerToggled = getBoolean("toggles", "DungeonTimer");
+		
+		final BlockSlayerCommand bs = new BlockSlayerCommand();
+		String onlySlayer = getString("toggles", "BlockSlayer");
+		if (!onlySlayer.equals("")) {
+			bs.onlySlayerName = onlySlayer.substring(0, onlySlayer.lastIndexOf(" "));
+			bs.onlySlayerNumber = onlySlayer.substring(onlySlayer.lastIndexOf(" ") + 1, onlySlayer.length());
+		}
 		
 		final LootCommand lc = new LootCommand();
 		// Wolf

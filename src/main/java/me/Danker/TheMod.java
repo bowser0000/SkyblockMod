@@ -18,6 +18,7 @@ import com.google.gson.JsonObject;
 
 import me.Danker.commands.ArmourCommand;
 import me.Danker.commands.BankCommand;
+import me.Danker.commands.BlockSlayerCommand;
 import me.Danker.commands.ChatMaddoxCommand;
 import me.Danker.commands.DHelpCommand;
 import me.Danker.commands.DisplayCommand;
@@ -47,6 +48,9 @@ import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.event.ClickEvent;
 import net.minecraft.event.ClickEvent.Action;
+import net.minecraft.inventory.Container;
+import net.minecraft.inventory.ContainerChest;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ChatComponentText;
@@ -171,6 +175,7 @@ public class TheMod
     	ClientCommandHandler.instance.registerCommand(new ScaleCommand());
     	ClientCommandHandler.instance.registerCommand(new ChatMaddoxCommand());
     	ClientCommandHandler.instance.registerCommand(new SkyblockPlayersCommand());
+    	ClientCommandHandler.instance.registerCommand(new BlockSlayerCommand());
     }
     
     // Update checker
@@ -1596,50 +1601,75 @@ public class TheMod
     	if (Mouse.getEventButton() != 0 && Mouse.getEventButton() != 1) return; // Left click or right click
     	
     	if (event.gui instanceof GuiChest) {
-    		LootCommand lc = new LootCommand();
-    		ConfigHandler cf = new ConfigHandler();
-    		GuiChest inventory = (GuiChest) event.gui;
-    		Slot mouseSlot = inventory.getSlotUnderMouse();
-			if (mouseSlot == null || mouseSlot.getStack() == null) return;
-			ItemStack item = mouseSlot.getStack();
-			
-			if (item.getDisplayName().contains("Open Reward Chest")) {
-				List<String> tooltip = item.getTooltip(Minecraft.getMinecraft().thePlayer, Minecraft.getMinecraft().gameSettings.advancedItemTooltips);
-				for (String lineUnclean : tooltip) {
-					String line = StringUtils.stripControlCodes(lineUnclean);
-					if (line.contains("FREE")) {
-						break;
-					} else if (line.contains(" Coins")) {
-						int coinsSpent = Integer.parseInt(line.substring(0, line.indexOf(" ")).replaceAll(",", ""));
-						
-						List<String> scoreboard = ScoreboardHandler.getSidebarLines();
-						for (String s : scoreboard) {
-							String sCleaned = ScoreboardHandler.cleanSB(s);
-							if (sCleaned.contains("The Catacombs (")) {
-								if (sCleaned.contains("F1")) {
-									lc.f1CoinsSpent += coinsSpent;
-									lc.f1CoinsSpentSession += coinsSpent;
-									cf.writeDoubleConfig("catacombs", "floorOneCoins", lc.f1CoinsSpent);
-								} else if (sCleaned.contains("F2")) {
-									lc.f2CoinsSpent += coinsSpent;
-									lc.f2CoinsSpentSession += coinsSpent;
-									cf.writeDoubleConfig("catacombs", "floorTwoCoins", lc.f2CoinsSpent);
-								} else if (sCleaned.contains("F3")) {
-									lc.f3CoinsSpent += coinsSpent;
-									lc.f3CoinsSpentSession += coinsSpent;
-									cf.writeDoubleConfig("catacombs", "floorThreeCoins", lc.f3CoinsSpent);
-								} else if (sCleaned.contains("F4")) {
-									lc.f4CoinsSpent += coinsSpent;
-									lc.f4CoinsSpentSession += coinsSpent;
-									cf.writeDoubleConfig("catacombs", "floorFourCoins", lc.f4CoinsSpent);
-								}
-								break;
-							}
-						}
-						break;
-					}
-				}
-			}
+    		Container containerChest = ((GuiChest) event.gui).inventorySlots;
+    		if (containerChest instanceof ContainerChest) {
+    			// a lot of declarations here, if you get scarred, my bad
+        		LootCommand lc = new LootCommand();
+        		ConfigHandler cf = new ConfigHandler();
+    			GuiChest chest = (GuiChest) event.gui;
+    			IInventory inventory = ((ContainerChest) containerChest).getLowerChestInventory();
+    			Slot mouseSlot = chest.getSlotUnderMouse();
+    			if (mouseSlot == null || mouseSlot.getStack() == null) return;
+    			ItemStack item = mouseSlot.getStack();
+    			String inventoryName = inventory.getDisplayName().getUnformattedText();
+    			
+    			if (inventoryName.endsWith(" Chest") && item.getDisplayName().contains("Open Reward Chest")) {
+    				List<String> tooltip = item.getTooltip(Minecraft.getMinecraft().thePlayer, Minecraft.getMinecraft().gameSettings.advancedItemTooltips);
+    				for (String lineUnclean : tooltip) {
+    					String line = StringUtils.stripControlCodes(lineUnclean);
+    					if (line.contains("FREE")) {
+    						break;
+    					} else if (line.contains(" Coins")) {
+    						int coinsSpent = Integer.parseInt(line.substring(0, line.indexOf(" ")).replaceAll(",", ""));
+    						
+    						List<String> scoreboard = ScoreboardHandler.getSidebarLines();
+    						for (String s : scoreboard) {
+    							String sCleaned = ScoreboardHandler.cleanSB(s);
+    							if (sCleaned.contains("The Catacombs (")) {
+    								if (sCleaned.contains("F1")) {
+    									lc.f1CoinsSpent += coinsSpent;
+    									lc.f1CoinsSpentSession += coinsSpent;
+    									cf.writeDoubleConfig("catacombs", "floorOneCoins", lc.f1CoinsSpent);
+    								} else if (sCleaned.contains("F2")) {
+    									lc.f2CoinsSpent += coinsSpent;
+    									lc.f2CoinsSpentSession += coinsSpent;
+    									cf.writeDoubleConfig("catacombs", "floorTwoCoins", lc.f2CoinsSpent);
+    								} else if (sCleaned.contains("F3")) {
+    									lc.f3CoinsSpent += coinsSpent;
+    									lc.f3CoinsSpentSession += coinsSpent;
+    									cf.writeDoubleConfig("catacombs", "floorThreeCoins", lc.f3CoinsSpent);
+    								} else if (sCleaned.contains("F4")) {
+    									lc.f4CoinsSpent += coinsSpent;
+    									lc.f4CoinsSpentSession += coinsSpent;
+    									cf.writeDoubleConfig("catacombs", "floorFourCoins", lc.f4CoinsSpent);
+    								}
+    								break;
+    							}
+    						}
+    						break;
+    					}
+    				}
+    			} if (!BlockSlayerCommand.onlySlayerName.equals(""))  {
+    				if (inventoryName.equals("Slayer")) {
+        				if (!item.getDisplayName().contains("Revenant Horror") && !item.getDisplayName().contains("Tarantula Broodfather") && !item.getDisplayName().contains("Sven Packmaster")) return;
+        				if (!item.getDisplayName().contains(BlockSlayerCommand.onlySlayerName)) {
+        					Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Danker's Skyblock Mod has stopped you from starting this quest (Set to " + BlockSlayerCommand.onlySlayerName + " " + BlockSlayerCommand.onlySlayerNumber + ")"));
+        					Minecraft.getMinecraft().thePlayer.playSound("note.bass", 1, (float) 0.5);
+        					event.setCanceled(true);
+        				}
+        			} else if (inventoryName.equals("Revenant Horror") || inventoryName.equals("Tarantula Broodfather") || inventoryName.equals("Sven Packmaster")) {
+        				if (item.getDisplayName().contains("Revenant Horror") || item.getDisplayName().contains("Tarantula Broodfather") || item.getDisplayName().contains("Sven Packmaster")) {
+        					// Only check number as they passed the above check
+        					String slayerNumber = item.getDisplayName().substring(item.getDisplayName().lastIndexOf(" ") + 1, item.getDisplayName().length());
+            				if (!slayerNumber.equals(BlockSlayerCommand.onlySlayerNumber)) {
+            					Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Danker's Skyblock Mod has stopped you from starting this quest (Set to " + BlockSlayerCommand.onlySlayerName + " " + BlockSlayerCommand.onlySlayerNumber + ")"));
+            					Minecraft.getMinecraft().thePlayer.playSound("note.bass", 1, (float) 0.5);
+            					event.setCanceled(true);
+            				}
+        				}
+        			}
+    			}
+    		}
     	}
     }
     
