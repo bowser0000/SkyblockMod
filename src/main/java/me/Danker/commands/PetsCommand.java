@@ -159,8 +159,9 @@ public class PetsCommand extends CommandBase {
 				}
 			}
 			
+			int totalPets = commonPets.size() + uncommonPets.size() + rarePets.size() + epicPets.size() + legendaryPets.size();
 			String finalMessage = EnumChatFormatting.AQUA + "" + EnumChatFormatting.BOLD + "-------------------\n" +
-					  			  EnumChatFormatting.AQUA + " " + username + "'s Pets:\n";
+					  			  EnumChatFormatting.AQUA + " " + username + "'s Pets (" + totalPets + "):\n";
 			
 			// Loop through pet rarities
 			for (JsonObject legPet : legendaryPets) {
