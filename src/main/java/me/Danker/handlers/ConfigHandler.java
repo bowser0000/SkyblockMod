@@ -183,6 +183,7 @@ public class ConfigHandler {
 		if (!hasKey("toggles", "PetColors")) writeBooleanConfig("toggles", "PetColors", false);
 		if (!hasKey("toggles", "DungeonTimer")) writeBooleanConfig("toggles", "DungeonTimer", false);
 		if (!hasKey("toggles", "BlockSlayer")) writeStringConfig("toggles", "BlockSlayer", "");
+		if (!hasKey("toggles", "GolemAlerts")) writeBooleanConfig("toggles", "GolemAlerts", false);
 		
 		if (!hasKey("api", "APIKey")) writeStringConfig("api", "APIKey", "");
 		
@@ -255,6 +256,11 @@ public class ConfigHandler {
 		if (!hasKey("fishing", "yeti")) writeIntConfig("fishing", "yeti", 0);
 		if (!hasKey("fishing", "yetiTime")) writeDoubleConfig("fishing", "yetiTime", -1);
 		if (!hasKey("fishing", "yetiSC")) writeIntConfig("fishing", "yetiSC", -1);
+		// Fishing Festival
+		if (!hasKey("fishing", "nurseShark")) writeIntConfig("fishing", "nurseShark", 0);
+		if (!hasKey("fishing", "blueShark")) writeIntConfig("fishing", "blueShark", 0);
+		if (!hasKey("fishing", "tigerShark")) writeIntConfig("fishing", "tigerShark", 0);
+		if (!hasKey("fishing", "greatWhiteShark")) writeIntConfig("fishing", "greatWhiteShark", 0);
 		
 		// Dungeons
 		if (!hasKey("catacombs", "recombobulator")) writeIntConfig("catacombs", "recombobulator", 0);
@@ -313,6 +319,7 @@ public class ConfigHandler {
 		tf.sceptreMessages = getBoolean("toggles", "SceptreMessages");
 		tf.petColoursToggled = getBoolean("toggles", "PetColors");
 		tf.dungeonTimerToggled = getBoolean("toggles", "DungeonTimer");
+		tf.golemAlertToggled = getBoolean("toggles", "GolemAlerts");
 		
 		final BlockSlayerCommand bs = new BlockSlayerCommand();
 		String onlySlayer = getString("toggles", "BlockSlayer");
@@ -391,6 +398,11 @@ public class ConfigHandler {
 		lc.yetis = getInt("fishing", "yeti");
 		lc.yetiTime = getDouble("fishing", "yetiTime");
 		lc.yetiSCs = getInt("fishing", "yetiSC");
+		// Fishing Festival
+		lc.nurseSharks = getInt("fishing", "nurseShark");
+		lc.blueSharks = getInt("fishing", "blueShark");
+		lc.tigerSharks = getInt("fishing", "tigerShark");
+		lc.greatWhiteSharks = getInt("fishing", "greatWhiteShark");
 		
 		// Dungeons
 		lc.recombobulators =  getInt("catacombs", "recombobulator");

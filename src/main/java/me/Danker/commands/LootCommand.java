@@ -83,6 +83,11 @@ public class LootCommand extends CommandBase {
 	public static int yetis;
 	public static double yetiTime;
 	public static int yetiSCs;
+	// Fishing Festival
+	public static int nurseSharks;
+	public static int blueSharks;
+	public static int tigerSharks;
+	public static int greatWhiteSharks;
 	
 	// Catacombs Dungeons
 	public static int recombobulators;
@@ -184,6 +189,11 @@ public class LootCommand extends CommandBase {
 	public static int yetisSession = 0;
 	public static double yetiTimeSession = 0;
 	public static int yetiSCsSession = 0;
+	// Fishing Festival
+	public static int nurseSharksSession = 0;
+	public static int blueSharksSession = 0;
+	public static int tigerSharksSession = 0;
+	public static int greatWhiteSharksSession = 0;
 	
 	// Catacombs Dungeons
 	public static int recombobulatorsSession = 0;
@@ -222,7 +232,7 @@ public class LootCommand extends CommandBase {
 
 	@Override
 	public String getCommandUsage(ICommandSender arg0) {
-		return getCommandName() + " <zombie/spider/wolf/fishing/catacombs> [winter/f(1-4)/session]";
+		return getCommandName() + " <zombie/spider/wolf/fishing/catacombs> [winter/festival/f(1-4)/session]";
 	}
 	
 	@Override
@@ -235,7 +245,7 @@ public class LootCommand extends CommandBase {
 		if (args.length == 1) {
 			return getListOfStringsMatchingLastWord(args, "wolf", "spider", "zombie", "fishing", "catacombs");
 		} else if (args.length == 2 && args[0].equalsIgnoreCase("fishing")) {
-			return getListOfStringsMatchingLastWord(args, "winter", "session");
+			return getListOfStringsMatchingLastWord(args, "winter", "festival", "session");
 		} else if (args.length == 2 && args[0].equalsIgnoreCase("catacombs")) {
 			return getListOfStringsMatchingLastWord(args, "f1", "floor1", "f2", "floor2", "f3", "floor3", "f4", "floor4");
 		} else if (args.length > 1 || (args.length == 3 && args[0].equalsIgnoreCase("fishing") && args[1].equalsIgnoreCase("winter"))) { 
@@ -249,7 +259,7 @@ public class LootCommand extends CommandBase {
 		final EntityPlayer player = (EntityPlayer) arg0;
 		
 		if (arg1.length == 0) {
-			player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Usage: /loot <zombie/spider/wolf/fishing/catacombs> [winter/f(1-4)/session]"));
+			player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Usage: /" + getCommandUsage(arg0)));
 			return;
 		}
 		
@@ -507,6 +517,25 @@ public class LootCommand extends CommandBase {
 																EnumChatFormatting.AQUA + "    Creatures Since Yeti: " + bossesBetween + "\n" +
 																EnumChatFormatting.AQUA + EnumChatFormatting.BOLD + " -------------------"));
 					return;
+				} else if (arg1[1].equalsIgnoreCase("festival")) {
+					if (showSession) {
+						player.addChatMessage(new ChatComponentText(EnumChatFormatting.AQUA + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+																	EnumChatFormatting.DARK_BLUE + EnumChatFormatting.BOLD + " Fishing Festival Summary (Current Session):\n" +
+																	EnumChatFormatting.LIGHT_PURPLE + "    Nurse Sharks: " + nf.format(nurseSharksSession) + "\n" +
+																	EnumChatFormatting.BLUE + "    Blue Sharks: " + nf.format(blueSharksSession) + "\n" +
+																	EnumChatFormatting.GOLD + "    Tiger Sharks: " + nf.format(tigerSharksSession) + "\n" +
+																	EnumChatFormatting.WHITE + "    Great White Sharks: " + nf.format(greatWhiteSharksSession) + "\n" +
+																	EnumChatFormatting.AQUA + EnumChatFormatting.BOLD + " -------------------"));
+						return;
+					}
+					
+					player.addChatMessage(new ChatComponentText(EnumChatFormatting.AQUA + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+																EnumChatFormatting.DARK_BLUE + EnumChatFormatting.BOLD + " Fishing Festival Summary:\n" +
+																EnumChatFormatting.LIGHT_PURPLE + "    Nurse Sharks: " + nf.format(nurseSharks) + "\n" +
+																EnumChatFormatting.BLUE + "    Blue Sharks: " + nf.format(blueSharks) + "\n" +
+																EnumChatFormatting.GOLD + "    Tiger Sharks: " + nf.format(tigerSharks) + "\n" +
+																EnumChatFormatting.WHITE + "    Great White Sharks: " + nf.format(greatWhiteSharks) + "\n" +
+																EnumChatFormatting.AQUA + EnumChatFormatting.BOLD + " -------------------"));
 				}
 			}
 			
@@ -689,7 +718,7 @@ public class LootCommand extends CommandBase {
 				player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Usage: /loot catacombs <f1/f2/f3/f4>"));
 			}
 		} else {
-			player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Usage: /loot <zombie/spider/wolf/fishing/catacombs> [winter/f(1-4)/session]"));
+			player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Usage: /" + getCommandUsage(arg0)));
 		}
 
 	}

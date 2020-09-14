@@ -257,6 +257,12 @@ public class TheMod
 			}
 		}
 		
+		if (tc.golemAlertToggled) {
+			if (message.contains("The ground begins to shake as an Endstone Protector rises from below!")) {
+				Utils.createTitle(EnumChatFormatting.RED + "GOLEM SPAWNING!", 3);
+			}
+		}
+		
 		final LootCommand lc = new LootCommand();
 		final ConfigHandler cf = new ConfigHandler();
 		boolean wolfRNG = false;
@@ -702,6 +708,55 @@ public class TheMod
 			cf.writeIntConfig("fishing", "yetiSC", lc.yetiSCs);
 			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
 			cf.writeIntConfig("fishing", "milestone", lc.fishingMilestone);
+		}
+		// Fishing Festival
+		if (message.contains("A tiny fin emerges from the water, you've caught a Nurse Shark")) {
+			lc.nurseSharks++;
+			lc.seaCreatures++;
+			lc.fishingMilestone++;
+			lc.nurseSharksSession++;
+			lc.seaCreaturesSession++;
+			lc.fishingMilestoneSession++;
+			cf.writeIntConfig("fishing", "nurseShark", lc.nurseSharks);
+			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
+			cf.writeIntConfig("fishing", "milestone", lc.fishingMilestone);
+			increaseSeaCreatures();
+		}
+		if (message.contains("You spot a fin as blue as the water it came from, it's a Blue Shark")) {
+			lc.blueSharks++;
+			lc.seaCreatures++;
+			lc.fishingMilestone++;
+			lc.blueSharksSession++;
+			lc.seaCreaturesSession++;
+			lc.fishingMilestoneSession++;
+			cf.writeIntConfig("fishing", "blueShark", lc.blueSharks);
+			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
+			cf.writeIntConfig("fishing", "milestone", lc.fishingMilestone);
+			increaseSeaCreatures();
+		}
+		if (message.contains("A striped beast bounds from the depths, the wild Tiger Shark")) {
+			lc.tigerSharks++;
+			lc.seaCreatures++;
+			lc.fishingMilestone++;
+			lc.tigerSharksSession++;
+			lc.seaCreaturesSession++;
+			lc.fishingMilestoneSession++;
+			cf.writeIntConfig("fishing", "tigerShark", lc.tigerSharks);
+			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
+			cf.writeIntConfig("fishing", "milestone", lc.fishingMilestone);
+			increaseSeaCreatures();
+		}
+		if (message.contains("Hide no longer, a Great White Shark has tracked your scent and thirsts for your blood")) {
+			lc.greatWhiteSharks++;
+			lc.seaCreatures++;
+			lc.fishingMilestone++;
+			lc.greatWhiteSharksSession++;
+			lc.seaCreaturesSession++;
+			lc.fishingMilestoneSession++;
+			cf.writeIntConfig("fishing", "greatWhiteShark", lc.greatWhiteSharks);
+			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
+			cf.writeIntConfig("fishing", "milestone", lc.fishingMilestone);
+			increaseSeaCreatures();
 		}
 		
 		// Catacombs Dungeons
@@ -1344,7 +1399,41 @@ public class TheMod
 							EnumChatFormatting.GOLD + nf.format(lc.yetisSession) + "\n" +
 							EnumChatFormatting.AQUA + timeBetween + "\n" +
 							EnumChatFormatting.AQUA + bossesBetween;
-    		} else if (ds.display.equals("catacombs_floor_one")) {
+    		} else if (ds.display.equals("fishing_festival")) {
+    			dropsText = EnumChatFormatting.AQUA + "Creatures Caught:\n" +
+    						EnumChatFormatting.AQUA + "Fishing Milestone:\n" +
+    						EnumChatFormatting.GOLD + "Good Catches:\n" +
+    						EnumChatFormatting.DARK_PURPLE + "Great Catches:\n" +
+    						EnumChatFormatting.LIGHT_PURPLE + "Nurse Sharks:\n" +
+    						EnumChatFormatting.BLUE + "Blue Sharks:\n" +
+    						EnumChatFormatting.GOLD + "Tiger Sharks:\n" +
+    						EnumChatFormatting.WHITE + "Great White Sharks:";
+    			countText = EnumChatFormatting.AQUA + nf.format(lc.seaCreatures) + "\n" +
+							EnumChatFormatting.AQUA + nf.format(lc.fishingMilestone) + "\n" +
+	    					EnumChatFormatting.GOLD + nf.format(lc.goodCatches) + "\n" +
+							EnumChatFormatting.DARK_PURPLE + nf.format(lc.greatCatches) + "\n" +
+	    					EnumChatFormatting.LIGHT_PURPLE + nf.format(lc.nurseSharks) + "\n" +
+							EnumChatFormatting.BLUE + nf.format(lc.blueSharks) + "\n" +
+	    					EnumChatFormatting.GOLD + nf.format(lc.tigerSharks) + "\n" +
+							EnumChatFormatting.WHITE + nf.format(lc.greatWhiteSharks);
+     		} else if (ds.display.equals("fishing_festival_session")) {
+    			dropsText = EnumChatFormatting.AQUA + "Creatures Caught:\n" +
+							EnumChatFormatting.AQUA + "Fishing Milestone:\n" +
+							EnumChatFormatting.GOLD + "Good Catches:\n" +
+							EnumChatFormatting.DARK_PURPLE + "Great Catches:\n" +
+							EnumChatFormatting.LIGHT_PURPLE + "Nurse Sharks:\n" +
+							EnumChatFormatting.BLUE + "Blue Sharks:\n" +
+							EnumChatFormatting.GOLD + "Tiger Sharks:\n" +
+							EnumChatFormatting.WHITE + "Great White Sharks:";
+				countText = EnumChatFormatting.AQUA + nf.format(lc.seaCreaturesSession) + "\n" +
+							EnumChatFormatting.AQUA + nf.format(lc.fishingMilestoneSession) + "\n" +
+	    					EnumChatFormatting.GOLD + nf.format(lc.goodCatchesSession) + "\n" +
+							EnumChatFormatting.DARK_PURPLE + nf.format(lc.greatCatchesSession) + "\n" +
+	    					EnumChatFormatting.LIGHT_PURPLE + nf.format(lc.nurseSharksSession) + "\n" +
+							EnumChatFormatting.BLUE + nf.format(lc.blueSharksSession) + "\n" +
+	    					EnumChatFormatting.GOLD + nf.format(lc.tigerSharksSession) + "\n" +
+							EnumChatFormatting.WHITE + nf.format(lc.greatWhiteSharksSession);
+     		} else if (ds.display.equals("catacombs_floor_one")) {
     			dropsText = EnumChatFormatting.GOLD + "Recombobulators:\n" +
     						EnumChatFormatting.DARK_PURPLE + "Fuming Potato Books:\n" +
     						EnumChatFormatting.BLUE + "Bonzo's Staffs:\n" +

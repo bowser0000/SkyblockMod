@@ -21,7 +21,7 @@ public class DisplayCommand extends CommandBase {
 
 	@Override
 	public String getCommandUsage(ICommandSender arg0) {
-		return getCommandName() + " <zombie/spider/wolf/fishing/catacombs/off> [winter/session/f(1-4)]";
+		return getCommandName() + " <zombie/spider/wolf/fishing/catacombs/off> [winter/festival/session/f(1-4)]";
 	}
 
 	@Override
@@ -34,7 +34,7 @@ public class DisplayCommand extends CommandBase {
 		if (args.length == 1) {
 			return getListOfStringsMatchingLastWord(args, "wolf", "spider", "zombie", "fishing", "catacombs", "off");
 		} else if (args.length == 2 && args[0].equalsIgnoreCase("fishing")) {
-			return getListOfStringsMatchingLastWord(args, "winter", "session");
+			return getListOfStringsMatchingLastWord(args, "winter", "festival", "session");
 		} else if (args.length == 2 && args[0].equalsIgnoreCase("catacombs")) {
 			return getListOfStringsMatchingLastWord(args, "f1", "floor1", "f2", "floor2", "f3", "floor3", "f4", "floor4");
 		} else if (args.length > 1 || (args.length == 3 && args[0].equalsIgnoreCase("fishing") && args[1].equalsIgnoreCase("winter"))) { 
@@ -48,7 +48,7 @@ public class DisplayCommand extends CommandBase {
 		final EntityPlayer player = (EntityPlayer) arg0;
 		
 		if (arg1.length == 0) {
-			player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Usage: <zombie/spider/wolf/fishing/catacombs/off> [winter/session/f(1-4)]"));
+			player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Usage: /" + getCommandUsage(arg0)));
 			return;
 		}
 		
@@ -81,6 +81,12 @@ public class DisplayCommand extends CommandBase {
 					display = "fishing_winter_session";
 				} else {
 					display = "fishing_winter";
+				}
+			} else if (arg1.length > 1 && arg1[1].equalsIgnoreCase("festival")) {
+				if (showSession) {
+					display = "fishing_festival_session";
+				} else {
+					display = "fishing_festival";
 				}
 			} else {
 				if (showSession) {
@@ -125,7 +131,7 @@ public class DisplayCommand extends CommandBase {
 		} else if (arg1[0].equalsIgnoreCase("off")) {
 			display = "off";
 		} else {
-			player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Usage: <zombie/spider/wolf/fishing/catacombs/off> [winter/session/f(1-4)]"));
+			player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Usage: /" + getCommandUsage(arg0)));
 			return;
 		}
 		player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Display set to " + EnumChatFormatting.DARK_GREEN + display + EnumChatFormatting.GREEN + "."));
