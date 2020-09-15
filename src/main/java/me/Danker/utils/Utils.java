@@ -26,6 +26,7 @@ public class Utils {
 									75000, 100000, 200000, 300000, 400000, 500000, 600000, 700000, 800000, 900000, 1000000, 1100000,
 									1200000, 1300000, 1400000, 1500000, 1600000, 1700000, 1800000, 1900000, 2000000, 2100000, 2200000,
 									2300000, 2400000, 2500000, 2600000, 2750000, 2900000, 3100000, 3400000, 3700000, 4000000};
+	static int[] expertiseKills = {50, 100, 250, 500, 1000, 2500, 5500, 10000, 15000};
 	
     public static int getItems(String item) {
     	Minecraft mc = Minecraft.getMinecraft();
@@ -185,6 +186,15 @@ public class Utils {
 			}
 		}
 		return 50D;
+	}
+	
+	public static int expertiseKillsLeft(int kills) {
+		for (int i = 0; i < expertiseKills.length; i++) {
+			if (kills < expertiseKills[i]) {
+				return expertiseKills[i] - kills;
+			}
+		}
+		return -1;
 	}
 	
 }

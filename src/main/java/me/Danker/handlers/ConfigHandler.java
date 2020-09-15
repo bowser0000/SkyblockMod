@@ -184,6 +184,7 @@ public class ConfigHandler {
 		if (!hasKey("toggles", "DungeonTimer")) writeBooleanConfig("toggles", "DungeonTimer", false);
 		if (!hasKey("toggles", "BlockSlayer")) writeStringConfig("toggles", "BlockSlayer", "");
 		if (!hasKey("toggles", "GolemAlerts")) writeBooleanConfig("toggles", "GolemAlerts", false);
+		if (!hasKey("toggles", "ExpertiseLore")) writeBooleanConfig("toggles", "ExpertiseLore", true);
 		
 		if (!hasKey("api", "APIKey")) writeStringConfig("api", "APIKey", "");
 		
@@ -320,6 +321,7 @@ public class ConfigHandler {
 		tf.petColoursToggled = getBoolean("toggles", "PetColors");
 		tf.dungeonTimerToggled = getBoolean("toggles", "DungeonTimer");
 		tf.golemAlertToggled = getBoolean("toggles", "GolemAlerts");
+		tf.expertiseLoreToggled = getBoolean("toggles", "ExpertiseLore");
 		
 		final BlockSlayerCommand bs = new BlockSlayerCommand();
 		String onlySlayer = getString("toggles", "BlockSlayer");

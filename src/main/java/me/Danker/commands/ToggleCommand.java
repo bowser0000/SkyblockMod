@@ -26,6 +26,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 	public static boolean petColoursToggled;
 	public static boolean dungeonTimerToggled;
 	public static boolean golemAlertToggled;
+	public static boolean expertiseLoreToggled;
 	
 	@Override
 	public String getCommandName() {
@@ -34,7 +35,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 
 	@Override
 	public String getCommandUsage(ICommandSender arg0) {
-		return getCommandName() + " <gparty/coords/golden/slayercount/rngesusalerts/splitfishing/chatmaddox/spiritbearalert/aotd/sceptremessages/petcolors/dungeontimer/golemalerts/list>";
+		return getCommandName() + " <gparty/coords/golden/slayercount/rngesusalerts/splitfishing/chatmaddox/spiritbearalert/aotd/sceptremessages/petcolors/dungeontimer/golemalerts/expertiselore/list>";
 	}
 
 	@Override
@@ -45,7 +46,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 	@Override
 	public List<String> addTabCompletionOptions(ICommandSender sender, String[] args, BlockPos pos) {
 		if (args.length == 1) {
-			return getListOfStringsMatchingLastWord(args, "gparty", "coords", "golden", "slayercount", "rngesusalerts", "splitfishing", "chatmaddox", "spiritbearalerts", "aotd", "sceptremessages", "petcolors", "dungeontimer", "golemalerts", "list");
+			return getListOfStringsMatchingLastWord(args, "gparty", "coords", "golden", "slayercount", "rngesusalerts", "splitfishing", "chatmaddox", "spiritbearalerts", "aotd", "sceptremessages", "petcolors", "dungeontimer", "golemalerts", "expertiselore", "list");
 		}
 		return null;
 	}
@@ -112,6 +113,10 @@ public class ToggleCommand extends CommandBase implements ICommand {
 			golemAlertToggled = !golemAlertToggled;
 			cf.writeBooleanConfig("toggles", "GolemAlerts", golemAlertToggled);
 			player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Golem spawn alerts has been set to " + EnumChatFormatting.DARK_GREEN + golemAlertToggled + EnumChatFormatting.GREEN + "."));
+		} else if (arg1[0].equalsIgnoreCase("expertiselore")) {
+			expertiseLoreToggled = !expertiseLoreToggled;
+			cf.writeBooleanConfig("toggles", "ExpertiseLore", expertiseLoreToggled);
+			player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Expertise in lore has been set to " + EnumChatFormatting.DARK_GREEN + expertiseLoreToggled + EnumChatFormatting.GREEN + "."));
 		} else if (arg1[0].equalsIgnoreCase("list")) {
 			player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Guild party notifications: " + EnumChatFormatting.DARK_GREEN + gpartyToggled + "\n" +
 														EnumChatFormatting.GREEN + " Coord/Angle display: " + EnumChatFormatting.DARK_GREEN + coordsToggled + "\n" +
@@ -125,7 +130,8 @@ public class ToggleCommand extends CommandBase implements ICommand {
 														EnumChatFormatting.GREEN + " Spirit Sceptre messages: " + EnumChatFormatting.DARK_GREEN + sceptreMessages + "\n" +
 														EnumChatFormatting.GREEN + " Pet colours: " + EnumChatFormatting.DARK_GREEN + petColoursToggled + "\n" +
 														EnumChatFormatting.GREEN + " Dungeon timer: " + EnumChatFormatting.DARK_GREEN + dungeonTimerToggled + "\n" +
-														EnumChatFormatting.GREEN + " Golem spawn alerts: " + EnumChatFormatting.DARK_GREEN + golemAlertToggled));
+														EnumChatFormatting.GREEN + " Golem spawn alerts: " + EnumChatFormatting.DARK_GREEN + golemAlertToggled + "\n" +
+														EnumChatFormatting.GREEN + " Expertise in lore: " + EnumChatFormatting.DARK_GREEN + expertiseLoreToggled));
 		} else {
 			player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Usage: /" + getCommandUsage(arg0)));
 		}

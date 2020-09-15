@@ -15,6 +15,7 @@ Discord Server: https://discord.gg/QsEkNQS
 - Maddox Menu keybind
 - Block starting other slayer quests
 - Fishing tracker (with graphic display) (scalable)
+- Expertise kills in fishing rod lore
 - Dungeons tracker (with graphic display) (scalable)
 - Pet background colors based on level
 - API commands
