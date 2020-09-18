@@ -292,6 +292,14 @@ public class ConfigHandler {
 		if (!hasKey("catacombs", "spiritPetLeg")) writeIntConfig("catacombs", "spiritPetLeg", 0);
 		if (!hasKey("catacombs", "floorFourCoins")) writeDoubleConfig("catacombs", "floorFourCoins", 0);
 		if (!hasKey("catacombs", "floorFourTime")) writeDoubleConfig("catacombs", "floorFourTime", 0);
+		// F5
+		if (!hasKey("catacombs", "warpedStone")) writeIntConfig("catacombs", "warpedStone", 0);
+		if (!hasKey("catacombs", "shadowAssassinHelm")) writeIntConfig("catacombs", "shadowAssassinHelm", 0);
+		if (!hasKey("catacombs", "shadowAssassinChest")) writeIntConfig("catacombs", "shadowAssassinChest", 0);
+		if (!hasKey("catacombs", "shadowAssassinLegging")) writeIntConfig("catacombs", "shadowAssassinLegging", 0);
+		if (!hasKey("catacombs", "shadowAssassinBoot")) writeIntConfig("catacombs", "shadowAssassinBoot", 0);
+		if (!hasKey("catacombs", "floorFiveCoins")) writeDoubleConfig("catacombs", "floorFiveCoins", 0);
+		if (!hasKey("catacombs", "floorFiveTime")) writeDoubleConfig("catacombs", "floorFiveTime", 0);
 		
 		if (!hasKey("misc", "display")) writeStringConfig("misc", "display", "off");
 		
@@ -435,6 +443,14 @@ public class ConfigHandler {
 		lc.legSpiritPets = getInt("catacombs", "spiritPetLeg");
 		lc.f4CoinsSpent = getDouble("catacombs", "floorFourCoins");
 		lc.f4TimeSpent = getDouble("catacombs", "floorFourTime");
+		// F5
+		lc.warpedStones = getInt("catacombs", "warpedStone");
+		lc.shadowAssHelms = getInt("catacombs", "shadowAssassinHelm");
+		lc.shadowAssChests = getInt("catacombs", "shadowAssassinChest");
+		lc.shadowAssLegs = getInt("catacombs", "shadowAssassinLegging");
+		lc.shadowAssBoots = getInt("catacombs", "shadowAssassinBoot");
+		lc.f5CoinsSpent = getDouble("catacombs", "floorFiveCoins");
+		lc.f5TimeSpent = getDouble("catacombs", "floorFiveTime");
 		
 		final DisplayCommand ds = new DisplayCommand();
 		ds.display = getString("misc", "display");

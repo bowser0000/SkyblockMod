@@ -211,6 +211,13 @@ public class ResetLootCommand extends CommandBase {
 		lc.epicSpiritPetsSession = 0;
 		lc.f4CoinsSpentSession = 0;
 		lc.f4TimeSpentSession = 0;
+		lc.warpedStonesSession = 0;
+		lc.shadowAssHelmsSession = 0;
+		lc.shadowAssChestsSession = 0;
+		lc.shadowAssLegsSession = 0;
+		lc.shadowAssBootsSession = 0;
+		lc.f5CoinsSpentSession = 0;
+		lc.f5TimeSpentSession = 0;
 		cf.deleteCategory("catacombs");
 		cf.reloadConfig();
 	}

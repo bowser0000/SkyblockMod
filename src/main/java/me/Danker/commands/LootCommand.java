@@ -118,6 +118,14 @@ public class LootCommand extends CommandBase {
 	public static int legSpiritPets;
 	public static double f4CoinsSpent;
 	public static double f4TimeSpent;
+	// F5
+	public static int warpedStones;
+	public static int shadowAssHelms;
+	public static int shadowAssChests;
+	public static int shadowAssLegs;
+	public static int shadowAssBoots;
+	public static double f5CoinsSpent;
+	public static double f5TimeSpent;
 	
 	// Single sessions (No config saves)
 	// Wolf
@@ -224,6 +232,14 @@ public class LootCommand extends CommandBase {
 	public static int legSpiritPetsSession = 0;
 	public static double f4CoinsSpentSession = 0;
 	public static double f4TimeSpentSession = 0;
+	// F5
+	public static int warpedStonesSession = 0;
+	public static int shadowAssHelmsSession = 0;
+	public static int shadowAssChestsSession = 0;
+	public static int shadowAssLegsSession = 0;
+	public static int shadowAssBootsSession = 0;
+	public static double f5CoinsSpentSession = 0;
+	public static double f5TimeSpentSession = 0;
 	
 	@Override
 	public String getCommandName() {
@@ -232,7 +248,7 @@ public class LootCommand extends CommandBase {
 
 	@Override
 	public String getCommandUsage(ICommandSender arg0) {
-		return getCommandName() + " <zombie/spider/wolf/fishing/catacombs> [winter/festival/f(1-4)/session]";
+		return getCommandName() + " <zombie/spider/wolf/fishing/catacombs> [winter/festival/f(1-5)/session]";
 	}
 	
 	@Override
@@ -247,7 +263,7 @@ public class LootCommand extends CommandBase {
 		} else if (args.length == 2 && args[0].equalsIgnoreCase("fishing")) {
 			return getListOfStringsMatchingLastWord(args, "winter", "festival", "session");
 		} else if (args.length == 2 && args[0].equalsIgnoreCase("catacombs")) {
-			return getListOfStringsMatchingLastWord(args, "f1", "floor1", "f2", "floor2", "f3", "floor3", "f4", "floor4");
+			return getListOfStringsMatchingLastWord(args, "f1", "floor1", "f2", "floor2", "f3", "floor3", "f4", "floor4", "f5", "floor5");
 		} else if (args.length > 1 || (args.length == 3 && args[0].equalsIgnoreCase("fishing") && args[1].equalsIgnoreCase("winter"))) { 
 			return getListOfStringsMatchingLastWord(args, "session");
 		}
@@ -714,8 +730,36 @@ public class LootCommand extends CommandBase {
 															EnumChatFormatting.AQUA + "    Coins Spent: " + Utils.getMoneySpent(f4CoinsSpent) + "\n" +
 															EnumChatFormatting.AQUA + "    Time Spent: " + Utils.getTimeBetween(0, f4TimeSpent) + "\n" +
 															EnumChatFormatting.DARK_RED + EnumChatFormatting.BOLD + " -------------------"));
+			} else if (arg1[1].equalsIgnoreCase("f5") || arg1[1].equalsIgnoreCase("floor5")) {
+				if (showSession) {
+					player.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_RED + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+																EnumChatFormatting.RED + EnumChatFormatting.BOLD + "  Catacombs F5 Summary (Current Session):\n" +
+																EnumChatFormatting.GOLD + "    Recombobulator 3000s: " + nf.format(recombobulatorsSession) + "\n" +
+																EnumChatFormatting.BLUE + "    Warped Stones: " + nf.format(warpedStonesSession) + "\n" +
+																EnumChatFormatting.DARK_PURPLE + "    Fuming Potato Books: " + nf.format(fumingPotatoBooksSession) + "\n" +
+																EnumChatFormatting.DARK_PURPLE + "    Shadow Assassin Helmets: " + nf.format(shadowAssHelmsSession) + "\n" +
+																EnumChatFormatting.DARK_PURPLE + "    Shadow Assassin Chests: " + nf.format(shadowAssChestsSession) + "\n" +
+																EnumChatFormatting.DARK_PURPLE + "    Shadow Assassin Legs: " + nf.format(shadowAssLegsSession) + "\n" +
+																EnumChatFormatting.DARK_PURPLE + "    Shadow Assassin Boots: " + nf.format(shadowAssBootsSession) + "\n" +
+																EnumChatFormatting.AQUA + "    Coins Spent: " + Utils.getMoneySpent(f5CoinsSpentSession) + "\n" +
+																EnumChatFormatting.AQUA + "    Time Spent: " + Utils.getTimeBetween(0, f5TimeSpentSession) + "\n" +
+																EnumChatFormatting.DARK_RED + EnumChatFormatting.BOLD + " -------------------"));
+					return;
+				}
+				player.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_RED + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+															EnumChatFormatting.RED + EnumChatFormatting.BOLD + "  Catacombs F5 Summary:\n" +
+															EnumChatFormatting.GOLD + "    Recombobulator 3000s: " + nf.format(recombobulators) + "\n" +
+															EnumChatFormatting.DARK_PURPLE + "    Fuming Potato Books: " + nf.format(fumingPotatoBooks) + "\n" +
+															EnumChatFormatting.BLUE + "    Warped Stones: " + nf.format(warpedStones) + "\n" +
+															EnumChatFormatting.DARK_PURPLE + "    Shadow Assassin Helmets: " + nf.format(shadowAssHelms) + "\n" +
+															EnumChatFormatting.DARK_PURPLE + "    Shadow Assassin Chests: " + nf.format(shadowAssChests) + "\n" +
+															EnumChatFormatting.DARK_PURPLE + "    Shadow Assassin Legs: " + nf.format(shadowAssLegs) + "\n" +
+															EnumChatFormatting.DARK_PURPLE + "    Shadow Assassin Boots: " + nf.format(shadowAssBoots) + "\n" +
+															EnumChatFormatting.AQUA + "    Coins Spent: " + Utils.getMoneySpent(f5CoinsSpent) + "\n" +
+															EnumChatFormatting.AQUA + "    Time Spent: " + Utils.getTimeBetween(0, f5TimeSpent) + "\n" +
+															EnumChatFormatting.DARK_RED + EnumChatFormatting.BOLD + " -------------------"));
 			} else {
-				player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Usage: /loot catacombs <f1/f2/f3/f4>"));
+				player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Usage: /loot catacombs <f1/f2/f3/f4/f5>"));
 			}
 		} else {
 			player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Usage: /" + getCommandUsage(arg0)));

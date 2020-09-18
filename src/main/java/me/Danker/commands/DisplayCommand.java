@@ -21,7 +21,7 @@ public class DisplayCommand extends CommandBase {
 
 	@Override
 	public String getCommandUsage(ICommandSender arg0) {
-		return getCommandName() + " <zombie/spider/wolf/fishing/catacombs/off> [winter/festival/session/f(1-4)]";
+		return getCommandName() + " <zombie/spider/wolf/fishing/catacombs/off> [winter/festival/session/f(1-5)]";
 	}
 
 	@Override
@@ -36,7 +36,7 @@ public class DisplayCommand extends CommandBase {
 		} else if (args.length == 2 && args[0].equalsIgnoreCase("fishing")) {
 			return getListOfStringsMatchingLastWord(args, "winter", "festival", "session");
 		} else if (args.length == 2 && args[0].equalsIgnoreCase("catacombs")) {
-			return getListOfStringsMatchingLastWord(args, "f1", "floor1", "f2", "floor2", "f3", "floor3", "f4", "floor4");
+			return getListOfStringsMatchingLastWord(args, "f1", "floor1", "f2", "floor2", "f3", "floor3", "f4", "floor4", "f5", "floor5");
 		} else if (args.length > 1 || (args.length == 3 && args[0].equalsIgnoreCase("fishing") && args[1].equalsIgnoreCase("winter"))) { 
 			return getListOfStringsMatchingLastWord(args, "session");
 		}
@@ -124,8 +124,14 @@ public class DisplayCommand extends CommandBase {
 				} else {
 					display = "catacombs_floor_four";
 				}
+			} else if (arg1[1].equalsIgnoreCase("f5") || arg1[1].equalsIgnoreCase("floor5")) {
+				if (showSession) {
+					display = "catacombs_floor_five_session";
+				} else {
+					display = "catacombs_floor_five";
+				}
 			} else {
-				player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Usage: /display catacombs <f1/f2/f3/f4>"));
+				player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Usage: /display catacombs <f1/f2/f3/f4/f5>"));
 				return;
 			}
 		} else if (arg1[0].equalsIgnoreCase("off")) {
