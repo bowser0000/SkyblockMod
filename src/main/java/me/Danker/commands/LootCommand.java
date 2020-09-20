@@ -124,6 +124,7 @@ public class LootCommand extends CommandBase {
 	public static int shadowAssChests;
 	public static int shadowAssLegs;
 	public static int shadowAssBoots;
+	public static int lividDaggers;
 	public static double f5CoinsSpent;
 	public static double f5TimeSpent;
 	
@@ -238,6 +239,7 @@ public class LootCommand extends CommandBase {
 	public static int shadowAssChestsSession = 0;
 	public static int shadowAssLegsSession = 0;
 	public static int shadowAssBootsSession = 0;
+	public static int lividDaggersSession = 0;
 	public static double f5CoinsSpentSession = 0;
 	public static double f5TimeSpentSession = 0;
 	
@@ -741,6 +743,7 @@ public class LootCommand extends CommandBase {
 																EnumChatFormatting.DARK_PURPLE + "    Shadow Assassin Chests: " + nf.format(shadowAssChestsSession) + "\n" +
 																EnumChatFormatting.DARK_PURPLE + "    Shadow Assassin Legs: " + nf.format(shadowAssLegsSession) + "\n" +
 																EnumChatFormatting.DARK_PURPLE + "    Shadow Assassin Boots: " + nf.format(shadowAssBootsSession) + "\n" +
+																EnumChatFormatting.GOLD + "    Livid Daggers: " + nf.format(lividDaggersSession) + "\n" +
 																EnumChatFormatting.AQUA + "    Coins Spent: " + Utils.getMoneySpent(f5CoinsSpentSession) + "\n" +
 																EnumChatFormatting.AQUA + "    Time Spent: " + Utils.getTimeBetween(0, f5TimeSpentSession) + "\n" +
 																EnumChatFormatting.DARK_RED + EnumChatFormatting.BOLD + " -------------------"));
@@ -755,6 +758,7 @@ public class LootCommand extends CommandBase {
 															EnumChatFormatting.DARK_PURPLE + "    Shadow Assassin Chests: " + nf.format(shadowAssChests) + "\n" +
 															EnumChatFormatting.DARK_PURPLE + "    Shadow Assassin Legs: " + nf.format(shadowAssLegs) + "\n" +
 															EnumChatFormatting.DARK_PURPLE + "    Shadow Assassin Boots: " + nf.format(shadowAssBoots) + "\n" +
+															EnumChatFormatting.GOLD + "    Livid Daggers: " + nf.format(lividDaggers) + "\n" +
 															EnumChatFormatting.AQUA + "    Coins Spent: " + Utils.getMoneySpent(f5CoinsSpent) + "\n" +
 															EnumChatFormatting.AQUA + "    Time Spent: " + Utils.getTimeBetween(0, f5TimeSpent) + "\n" +
 															EnumChatFormatting.DARK_RED + EnumChatFormatting.BOLD + " -------------------"));

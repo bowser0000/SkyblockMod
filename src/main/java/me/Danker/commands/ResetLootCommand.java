@@ -216,6 +216,7 @@ public class ResetLootCommand extends CommandBase {
 		lc.shadowAssChestsSession = 0;
 		lc.shadowAssLegsSession = 0;
 		lc.shadowAssBootsSession = 0;
+		lc.lividDaggersSession = 0;
 		lc.f5CoinsSpentSession = 0;
 		lc.f5TimeSpentSession = 0;
 		cf.deleteCategory("catacombs");
