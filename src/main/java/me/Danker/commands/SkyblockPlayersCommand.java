@@ -31,7 +31,7 @@ public class SkyblockPlayersCommand extends CommandBase {
 
 	@Override
 	public String getCommandUsage(ICommandSender arg0) {
-		return null;
+		return "/" + getCommandName();
 	}
 	
 	@Override

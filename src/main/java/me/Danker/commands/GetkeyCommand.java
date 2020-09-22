@@ -22,7 +22,7 @@ public class GetkeyCommand extends CommandBase implements ICommand {
 
 	@Override
 	public String getCommandUsage(ICommandSender arg0) {
-		return getCommandName();
+		return "/" + getCommandName();
 	}
 	
 	@Override

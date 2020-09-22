@@ -24,7 +24,7 @@ public class ScaleCommand extends CommandBase {
 
 	@Override
 	public String getCommandUsage(ICommandSender arg0) {
-		return getCommandName() + " <coords/display/dungeontimer> <size (0.1 - 10)>";
+		return "/" + getCommandName() + " <coords/display/dungeontimer> <size (0.1 - 10)>";
 	}
 	
 	@Override
@@ -45,7 +45,7 @@ public class ScaleCommand extends CommandBase {
 		final EntityPlayer player = (EntityPlayer) arg0;
 		
 		if (arg1.length < 2) {
-			player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Usage: /scale <coords/display/dungeontimer> <size (0.1 - 10)>"));
+			player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Usage: " + getCommandUsage(arg0)));
 			return;
 		}
 		
@@ -68,7 +68,7 @@ public class ScaleCommand extends CommandBase {
 			ConfigHandler.writeDoubleConfig("scales", "dungeonTimerScale", dungeonTimerScale);
 			player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Dungeon timer has been scaled to " + EnumChatFormatting.DARK_GREEN + dungeonTimerScale + "x"));
 		} else {
-			player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Usage: /scale <coords/display/dungeontimer> <size (0.1 - 10)>"));
+			player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Usage: " + getCommandUsage(arg0)));
 		}
 	}
 

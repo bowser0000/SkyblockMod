@@ -58,7 +58,7 @@ public class PetsCommand extends CommandBase {
 
 	@Override
 	public String getCommandUsage(ICommandSender arg0) {
-		return getCommandName() + " [name]";
+		return "/" + getCommandName() + " [name]";
 	}
 	
 	@Override

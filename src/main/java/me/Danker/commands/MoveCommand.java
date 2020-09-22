@@ -24,7 +24,7 @@ public class MoveCommand extends CommandBase {
 
 	@Override
 	public String getCommandUsage(ICommandSender arg0) {
-		return getCommandName() + " <coords/display/dungeontimer> <x> <y>";
+		return "/" + getCommandName() + " <coords/display/dungeontimer> <x> <y>";
 	}
 	
 	@Override
@@ -46,7 +46,7 @@ public class MoveCommand extends CommandBase {
 		final ConfigHandler cf = new ConfigHandler();
 		
 		if (arg1.length < 2) {
-			player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Usage: /move <coords/display/dungeontimer> <x> <y>"));
+			player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Usage: " + getCommandUsage(arg0)));
 			return;
 		}
 		
@@ -69,7 +69,7 @@ public class MoveCommand extends CommandBase {
 			cf.writeIntConfig("locations", "dungeonTimerY", dungeonTimerXY[1]);
 			player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Dungeon timer has been moved to " + EnumChatFormatting.DARK_GREEN + arg1[1] + ", " + arg1[2]));
 		} else {
-			player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Usage: /move <coords/display/dungeontimer> <x> <y>"));
+			player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Usage: " + getCommandUsage(arg0)));
 		}
 	}
 

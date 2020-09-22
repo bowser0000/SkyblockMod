@@ -20,7 +20,7 @@ public class ImportFishingCommand extends CommandBase {
 
 	@Override
 	public String getCommandUsage(ICommandSender arg0) {
-		return getCommandName();
+		return "/" + getCommandName();
 	}
 	
 	@Override
