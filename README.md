@@ -18,16 +18,17 @@ Discord Server: https://discord.gg/QsEkNQS
 - Expertise kills in fishing rod lore
 - Dungeons tracker (with graphic display) (scalable)
 - Pet background colors based on level
+- Golem spawning alerts (toggleable)
 - API commands
 - Update checker
 
 ## Commands
 - /dhelp - Returns this message in-game.
-- /toggle <gparty/coords/golden/slayercount/rngesusalerts/splitfishing/chatmaddox/spiritbearalerts/aotd/sceptremessages/petcolors/dungeontimer/list> - Toggles features. /toggle list returns values of every toggle.
+- /toggle <gparty/coords/golden/slayercount/rngesusalerts/splitfishing/chatmaddox/spiritbearalerts/aotd/sceptremessages/petcolors/dungeontimer/golemalerts/expertiselore/list> - Toggles features. /toggle list returns values of every toggle.
 - /setkey <key> - Sets API key.
 - /getkey - Returns key set with /setkey and copies it to your clipboard.
-- /loot <zombie/spider/wolf/fishing/catacombs> [winter/f(1-4)/session] - Returns loot received from slayer quests or fishing stats. /loot fishing winter returns winter sea creatures instead.
-- /display <zombie/spider/wolf/fishing/catacombs> [winter/f(1-4)/session] - Text display for trackers. /display fishing winter displays winter sea creatures instead.
+- /loot <zombie/spider/wolf/fishing/catacombs> [winter/f(1-5)/session] - Returns loot received from slayer quests or fishing stats. /loot fishing winter returns winter sea creatures instead.
+- /display <zombie/spider/wolf/fishing/catacombs> [winter/f(1-5)/session] - Text display for trackers. /display fishing winter displays winter sea creatures instead.
 - /resetloot <zombie/spider/wolf/fishing/catacombs/confirm/cancel> -  - Resets loot for trackers. /resetloot confirm confirms the reset.
 - /move <coords/display/dungeontimer> <x> <y> - Moves text display to specified X and Y coordinates.
 - /scale <coords/display/dungeontimer> <scale (0.1 - 10)> - Scales text display to a specified multipler between 0.1x and 10x.
@@ -37,6 +38,7 @@ Discord Server: https://discord.gg/QsEkNQS
 - /petsof [player] - Uses API to get pets of a person. If no name is provided, it checks yours.
 - /bank [player] - Uses API to get bank and purse coins of a person. If no name is provided, it checks yours.
 - /armor [player] - Uses API to get armour of a person. If no name is provided, it checks yours.
+- /dungeons [player] - Uses API to get dungeon levels of a person. If no name is provided, it checks yours.
 - /importfishing - Imports your fishing stats from your latest profile to your fishing tracker using the API.
 - /sbplayers - Uses API to find how many players are on each Skyblock island.
 - /blockslayer <zombie/spider/wolf> <1/2/3/4> - Stops you from starting a slayer quest other than the one specified.

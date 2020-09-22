@@ -22,6 +22,7 @@ import me.Danker.commands.BlockSlayerCommand;
 import me.Danker.commands.ChatMaddoxCommand;
 import me.Danker.commands.DHelpCommand;
 import me.Danker.commands.DisplayCommand;
+import me.Danker.commands.DungeonsCommand;
 import me.Danker.commands.GetkeyCommand;
 import me.Danker.commands.GuildOfCommand;
 import me.Danker.commands.ImportFishingCommand;
@@ -177,6 +178,7 @@ public class TheMod
     	ClientCommandHandler.instance.registerCommand(new ChatMaddoxCommand());
     	ClientCommandHandler.instance.registerCommand(new SkyblockPlayersCommand());
     	ClientCommandHandler.instance.registerCommand(new BlockSlayerCommand());
+    	ClientCommandHandler.instance.registerCommand(new DungeonsCommand());
     }
     
     // Update checker
