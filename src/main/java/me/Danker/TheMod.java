@@ -70,9 +70,11 @@ import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -98,6 +100,7 @@ public class TheMod
     public static String lastMaddoxCommand = "/cb placeholdervalue";
     static KeyBinding[] keyBindings = new KeyBinding[1];
     static int lastMouse = -1;
+    static boolean usingLabymod = false;
     
     static double dungeonStartTime = 0;
     static double bloodOpenTime = 0;
@@ -108,8 +111,7 @@ public class TheMod
     static int puzzleFails = 0;
     
     @EventHandler
-    public void init(FMLInitializationEvent event)
-    {
+    public void init(FMLInitializationEvent event) {
 		FMLCommonHandler.instance().bus().register(this);
 		MinecraftForge.EVENT_BUS.register(this);
 		
@@ -179,6 +181,12 @@ public class TheMod
     	ClientCommandHandler.instance.registerCommand(new SkyblockPlayersCommand());
     	ClientCommandHandler.instance.registerCommand(new BlockSlayerCommand());
     	ClientCommandHandler.instance.registerCommand(new DungeonsCommand());
+    }
+    
+    @EventHandler
+    public void postInit(final FMLPostInitializationEvent event) {
+    	usingLabymod = Loader.isModLoaded("labymod");
+    	System.out.println("LabyMod detection: " + usingLabymod);
     }
     
     // Update checker
@@ -970,7 +978,20 @@ public class TheMod
     
     @SubscribeEvent
     public void renderPlayerInfo(final RenderGameOverlayEvent.Post event) {
-    	if (event.type != RenderGameOverlayEvent.ElementType.EXPERIENCE) return;
+    	if (usingLabymod) return;
+    	if (event.type != RenderGameOverlayEvent.ElementType.EXPERIENCE && event.type != RenderGameOverlayEvent.ElementType.JUMPBAR) return;
+    	renderEverything();
+    }
+    
+    // LabyMod Support
+    @SubscribeEvent
+    public void renderPlayerInfoLabyMod(final RenderGameOverlayEvent event) {
+    	if (!usingLabymod) return;
+    	if (event.type != null) return;
+    	renderEverything();
+    }
+    
+    public void renderEverything() {
     	final ToggleCommand tc = new ToggleCommand();
     	final MoveCommand moc = new MoveCommand();
     	final DisplayCommand ds = new DisplayCommand();
