@@ -3,6 +3,10 @@ QOL changes that enhances your Hypixel Skyblock experience. Created to add featu
 
 Discord Server: https://discord.gg/QsEkNQS
 
+## Incompatibilities
+- Old Animations <2.6.4 - Frequent crashes
+- Old Animations 2.6.4 - Pet colors does not work
+
 ## Current features
 - Guild party desktop notifications (toggleable)
 - Coordinate and angle display (toggleable, graphic display) (scalable)
