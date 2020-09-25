@@ -246,10 +246,11 @@ public class TheMod
     					String xpGained = section.substring(section.indexOf("+"), section.indexOf("(") - 1);
     					double currentXp = Double.parseDouble(section.substring(section.indexOf("(") + 1, section.indexOf("/")).replaceAll(",", ""));
     					int previousXp = Utils.getPastXpEarned(Integer.parseInt(section.substring(section.indexOf("/") + 1, section.indexOf(")")).replaceAll(",", "")));
+    					double percentage = (double) Math.floor(((currentXp + previousXp) / 55172425) * 10000D) / 100D;
     					
     					skillTimer = 40;
     					showSkill = true;
-    					skillText = EnumChatFormatting.AQUA + xpGained + " (" + NumberFormat.getNumberInstance(Locale.US).format(currentXp + previousXp) + "/55,172,425)";
+    					skillText = EnumChatFormatting.AQUA + xpGained + " (" + NumberFormat.getNumberInstance(Locale.US).format(currentXp + previousXp) + "/55,172,425) " + percentage + "%";
     				}
     			}
     		}
