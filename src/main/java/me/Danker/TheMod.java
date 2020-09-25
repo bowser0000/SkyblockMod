@@ -96,6 +96,9 @@ public class TheMod
     public static int titleTimer = -1;
     public static boolean showTitle = false;
     public static String titleText = "";
+    public static int skillTimer = -1;
+    public static boolean showSkill = false;
+    public static String skillText = "";
     static int tickAmount = 1;
     public static String lastMaddoxCommand = "/cb placeholdervalue";
     static KeyBinding[] keyBindings = new KeyBinding[1];
@@ -230,8 +233,28 @@ public class TheMod
     	final ToggleCommand tc = new ToggleCommand();
     	String message = event.message.getUnformattedText();
     	
-    	if (event.type == 2) return;
     	if (!Utils.inSkyblock) return;
+    	
+    	// Action Bar
+    	if (event.type == 2) {
+    		String[] actionBarSections = event.message.getUnformattedText().split(" {3,}");
+    		for (String section : actionBarSections) {
+    			if (tc.skill50DisplayToggled) {
+    				if (section.contains("(")) {
+    					if (section.contains("Runecrafting")) return;
+    					
+    					String xpGained = section.substring(section.indexOf("+"), section.indexOf("(") - 1);
+    					double currentXp = Double.parseDouble(section.substring(section.indexOf("(") + 1, section.indexOf("/")).replaceAll(",", ""));
+    					int previousXp = Utils.getPastXpEarned(Integer.parseInt(section.substring(section.indexOf("/") + 1, section.indexOf(")")).replaceAll(",", "")));
+    					
+    					skillTimer = 40;
+    					showSkill = true;
+    					skillText = EnumChatFormatting.AQUA + xpGained + " (" + NumberFormat.getNumberInstance(Locale.US).format(currentXp + previousXp) + "/55,172,425)";
+    				}
+    			}
+    		}
+    		return;
+    	}
     	
     	// Replace chat messages with Maddox command
         List<IChatComponent> chatSiblings = event.message.getSiblings();
@@ -1677,6 +1700,9 @@ public class TheMod
     	if (showTitle) {
     		Utils.drawTitle(titleText);
     	}
+    	if (showSkill) {
+    		new TextRenderer(Minecraft.getMinecraft(), skillText, moc.skill50XY[0], moc.skill50XY[1], ScaleCommand.skill50Scale);
+    	}
     }
     
     @SubscribeEvent(priority = EventPriority.HIGHEST)
@@ -1783,6 +1809,12 @@ public class TheMod
     		}
     		titleTimer--;
     	}
+    	if (skillTimer >= 0) {
+    		if (skillTimer == 0) {
+    			showSkill = false;
+    		}
+    		skillTimer--;
+     	}
     }
     
     @SubscribeEvent

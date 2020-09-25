@@ -185,6 +185,7 @@ public class ConfigHandler {
 		if (!hasKey("toggles", "BlockSlayer")) writeStringConfig("toggles", "BlockSlayer", "");
 		if (!hasKey("toggles", "GolemAlerts")) writeBooleanConfig("toggles", "GolemAlerts", false);
 		if (!hasKey("toggles", "ExpertiseLore")) writeBooleanConfig("toggles", "ExpertiseLore", true);
+		if (!hasKey("toggles", "Skill50Display")) writeBooleanConfig("toggles", "Skill50Display", false);
 		
 		if (!hasKey("api", "APIKey")) writeStringConfig("api", "APIKey", "");
 		
@@ -312,9 +313,12 @@ public class ConfigHandler {
 		if (!hasKey("locations", "displayY")) writeIntConfig("locations", "displayY", 5);
 		if (!hasKey("locations", "dungeonTimerX")) writeIntConfig("locations", "dungeonTimerX", 5);
 		if (!hasKey("locations", "dungeonTimerY")) writeIntConfig("locations", "dungeonTimerY", 5);
+		if (!hasKey("locations", "skill50X")) writeIntConfig("locations", "skill50X", 40);
+		if (!hasKey("locations", "skill50Y")) writeIntConfig("locations", "skill50Y", 10);
 		if (!hasKey("scales", "coordsScale")) writeDoubleConfig("scales", "coordsScale", 1);
 		if (!hasKey("scales", "displayScale")) writeDoubleConfig("scales", "displayScale", 1);
 		if (!hasKey("scales", "dungeonTimerScale")) writeDoubleConfig("scales", "dungeonTimerScale", 1);
+		if (!hasKey("scales", "skill50Scale")) writeDoubleConfig("scales", "skill50Scale", 1);
 		
 		final ToggleCommand tf = new ToggleCommand();
 		tf.gpartyToggled = getBoolean("toggles", "GParty");
@@ -331,6 +335,7 @@ public class ConfigHandler {
 		tf.dungeonTimerToggled = getBoolean("toggles", "DungeonTimer");
 		tf.golemAlertToggled = getBoolean("toggles", "GolemAlerts");
 		tf.expertiseLoreToggled = getBoolean("toggles", "ExpertiseLore");
+		tf.skill50DisplayToggled = getBoolean("toggles", "Skill50Display");
 		
 		final BlockSlayerCommand bs = new BlockSlayerCommand();
 		String onlySlayer = getString("toggles", "BlockSlayer");
@@ -464,11 +469,14 @@ public class ConfigHandler {
 		moc.displayXY[1] = getInt("locations", "displayY");
 		moc.dungeonTimerXY[0] = getInt("locations", "dungeonTimerX");
 		moc.dungeonTimerXY[1] = getInt("locations", "dungeonTimerY");
+		moc.skill50XY[0] = getInt("locations", "skill50X");
+		moc.skill50XY[1] = getInt("locations", "skill50Y");
 		
 		final ScaleCommand sc = new ScaleCommand();
 		sc.coordsScale = getDouble("scales", "coordsScale");
 		sc.displayScale = getDouble("scales", "displayScale");
 		sc.dungeonTimerScale = getDouble("scales", "dungeonTimerScale");
+		sc.skill50Scale = getDouble("scales", "skill50Scale");
 	}
 	
 }

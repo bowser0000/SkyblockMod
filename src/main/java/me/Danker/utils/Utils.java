@@ -212,4 +212,13 @@ public class Utils {
 		return -1;
 	}
 	
+	public static int getPastXpEarned(int currentLevelXp) {
+		if (currentLevelXp == 0) return 55172425;
+		for (int i = 1, xpAdded = 0; i < skillXPPerLevel.length; i++) {
+			xpAdded += skillXPPerLevel[i - 1];
+			if (currentLevelXp == skillXPPerLevel[i]) return xpAdded;
+		}
+		return 0;
+	}
+	
 }
