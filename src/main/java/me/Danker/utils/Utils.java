@@ -1,6 +1,7 @@
 package me.Danker.utils;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.regex.Matcher;
 
@@ -12,7 +13,7 @@ import me.Danker.handlers.TextRenderer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
-import net.minecraft.client.gui.inventory.GuiChest;
+import net.minecraft.client.network.NetworkPlayerInfo;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.scoreboard.ScoreObjective;
@@ -64,10 +65,10 @@ public class Utils {
 	
 	public static List<String> getMatchingPlayers(String arg) {
 		List<String> matchingPlayers = new ArrayList<>();
-		List<EntityPlayer> players = Minecraft.getMinecraft().theWorld.playerEntities;
+		Collection<NetworkPlayerInfo> players = Minecraft.getMinecraft().getNetHandler().getPlayerInfoMap();
 		
-		for (EntityPlayer player : players) {
-			String playerName = player.getName();
+		for (NetworkPlayerInfo player : players) {
+			String playerName = player.getGameProfile().getName();
 			if (playerName.toLowerCase().startsWith(arg.toLowerCase())) {
 				matchingPlayers.add(playerName);
 			}
