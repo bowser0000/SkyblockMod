@@ -69,6 +69,7 @@ public class Utils {
 		
 		for (NetworkPlayerInfo player : players) {
 			String playerName = player.getGameProfile().getName();
+			if (playerName.startsWith("!")) continue; // New tablist
 			if (playerName.toLowerCase().startsWith(arg.toLowerCase())) {
 				matchingPlayers.add(playerName);
 			}
