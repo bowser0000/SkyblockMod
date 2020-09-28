@@ -196,8 +196,8 @@ public class LootCommand extends CommandBase {
 	public static int frostyTheSnowmansSession = 0;
 	public static int grinchesSession = 0;
 	public static int yetisSession = 0;
-	public static double yetiTimeSession = 0;
-	public static int yetiSCsSession = 0;
+	public static double yetiTimeSession = -1;
+	public static int yetiSCsSession = -1;
 	// Fishing Festival
 	public static int nurseSharksSession = 0;
 	public static int blueSharksSession = 0;

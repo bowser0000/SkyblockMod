@@ -1981,7 +1981,8 @@ public class TheMod
     	List<String> scoreboard = ScoreboardHandler.getSidebarLines();
     	for (String s : scoreboard) {
     		String sCleaned = ScoreboardHandler.cleanSB(s);
-    		if (sCleaned.contains("Jerry's Workshop")) {
+    		System.out.println(sCleaned);
+    		if (sCleaned.contains("Jerry's Workshop") || sCleaned.contains("Jerry Pond")) {
     			if (lc.yetiSCs != -1) {
     				lc.yetiSCs++;
     			}
