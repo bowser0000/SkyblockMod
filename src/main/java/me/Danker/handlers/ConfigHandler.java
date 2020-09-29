@@ -300,6 +300,7 @@ public class ConfigHandler {
 		if (!hasKey("catacombs", "shadowAssassinLegging")) writeIntConfig("catacombs", "shadowAssassinLegging", 0);
 		if (!hasKey("catacombs", "shadowAssassinBoot")) writeIntConfig("catacombs", "shadowAssassinBoot", 0);
 		if (!hasKey("catacombs", "lividDagger")) writeIntConfig("catacombs", "lividDagger", 0);
+		if (!hasKey("catacombs", "shadowFury")) writeIntConfig("catacombs", "shadowFury", 0);
 		if (!hasKey("catacombs", "floorFiveCoins")) writeDoubleConfig("catacombs", "floorFiveCoins", 0);
 		if (!hasKey("catacombs", "floorFiveTime")) writeDoubleConfig("catacombs", "floorFiveTime", 0);
 		
@@ -456,6 +457,7 @@ public class ConfigHandler {
 		lc.shadowAssLegs = getInt("catacombs", "shadowAssassinLegging");
 		lc.shadowAssBoots = getInt("catacombs", "shadowAssassinBoot");
 		lc.lividDaggers = getInt("catacombs", "lividDagger");
+		lc.shadowFurys = getInt("catacombs", "shadowFury");
 		lc.f5CoinsSpent = getDouble("catacombs", "floorFiveCoins");
 		lc.f5TimeSpent = getDouble("catacombs", "floorFiveTime");
 		

@@ -977,6 +977,11 @@ public class TheMod
 			lc.lividDaggersSession++;
 			cf.writeIntConfig("catacombs", "lividDagger", lc.lividDaggers);
 		}
+		if (message.contains("    RARE REWARD! Shadow Fury")) {
+			lc.shadowFurys++;
+			lc.shadowFurysSession++;
+			cf.writeIntConfig("catacombs", "shadowFury", lc.shadowFurys);
+		}
 		
 		// Chat Maddox
 		if (message.contains("[OPEN MENU]")) {
@@ -1654,6 +1659,7 @@ public class TheMod
 							EnumChatFormatting.DARK_PURPLE + "Shadow Leggings:\n" +
 							EnumChatFormatting.DARK_PURPLE + "Shadow Boots:\n" +
 							EnumChatFormatting.GOLD + "Livid Daggers:\n" +
+							EnumChatFormatting.GOLD + "Shadow Furys:\n" +
 							EnumChatFormatting.AQUA + "Coins Spent:\n" +
 		    				EnumChatFormatting.AQUA + "Time Spent:";
     			countText = EnumChatFormatting.GOLD + nf.format(lc.recombobulators) + "\n" +
@@ -1664,6 +1670,7 @@ public class TheMod
 							EnumChatFormatting.DARK_PURPLE + nf.format(lc.shadowAssLegs) + "\n" +
 							EnumChatFormatting.DARK_PURPLE + nf.format(lc.shadowAssBoots) + "\n" +
 							EnumChatFormatting.GOLD + nf.format(lc.lividDaggers) + "\n" +
+							EnumChatFormatting.GOLD + nf.format(lc.shadowFurys) + "\n" +
 							EnumChatFormatting.AQUA + Utils.getMoneySpent(lc.f5CoinsSpent) + "\n" +
 							EnumChatFormatting.AQUA + Utils.getTimeBetween(0, lc.f5TimeSpent);
     		} else if (ds.display.equals("catacombs_floor_five_session")) {
@@ -1675,6 +1682,7 @@ public class TheMod
 							EnumChatFormatting.DARK_PURPLE + "Shadow Leggings:\n" +
 							EnumChatFormatting.DARK_PURPLE + "Shadow Boots:\n" +
 							EnumChatFormatting.GOLD + "Livid Daggers:\n" +
+							EnumChatFormatting.GOLD + "Shadow Furys:\n" +
 							EnumChatFormatting.AQUA + "Coins Spent:\n" +
 		    				EnumChatFormatting.AQUA + "Time Spent:";
     			countText = EnumChatFormatting.GOLD + nf.format(lc.recombobulatorsSession) + "\n" +
@@ -1685,6 +1693,7 @@ public class TheMod
 							EnumChatFormatting.DARK_PURPLE + nf.format(lc.shadowAssLegsSession) + "\n" +
 							EnumChatFormatting.DARK_PURPLE + nf.format(lc.shadowAssBootsSession) + "\n" +
 							EnumChatFormatting.GOLD + nf.format(lc.lividDaggersSession) + "\n" +
+							EnumChatFormatting.GOLD + nf.format(lc.shadowFurysSession) + "\n" +
 							EnumChatFormatting.AQUA + Utils.getMoneySpent(lc.f5CoinsSpentSession) + "\n" +
 							EnumChatFormatting.AQUA + Utils.getTimeBetween(0, lc.f5TimeSpentSession);
     		} else {
