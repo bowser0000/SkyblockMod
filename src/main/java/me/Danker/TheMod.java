@@ -1809,8 +1809,12 @@ public class TheMod
     		EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
     		if (player != null) {
         		Utils.checkForSkyblock();
+        		// if (Utils.inSkyblock) {
+        			// System.out.println("Autosyncing inventory to server...");
+        			// player.inventoryContainer.detectAndSendChanges(); // Spirit boot fix every 1 second
+        		// }
     		}
-    		tickAmount = 1;
+    		tickAmount = 0;
     	}
     	
     	if (titleTimer >= 0) {
