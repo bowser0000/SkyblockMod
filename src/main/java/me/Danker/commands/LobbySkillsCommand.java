@@ -65,6 +65,7 @@ public class LobbySkillsCommand extends CommandBase {
 				// Send request every .6 seconds, leaving room for another 20 requests per minute
 				
 				for (final NetworkPlayerInfo player : players) {
+					if (player.getGameProfile().getName().startsWith("!")) continue;
 					// Manually get latest profile to use reduced requests on extra achievement API
 					String UUID = player.getGameProfile().getId().toString().replaceAll("-", "");
 					long biggestLastSave = 0;
