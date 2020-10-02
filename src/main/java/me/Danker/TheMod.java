@@ -26,6 +26,7 @@ import me.Danker.commands.DungeonsCommand;
 import me.Danker.commands.GetkeyCommand;
 import me.Danker.commands.GuildOfCommand;
 import me.Danker.commands.ImportFishingCommand;
+import me.Danker.commands.LobbySkillsCommand;
 import me.Danker.commands.LootCommand;
 import me.Danker.commands.MoveCommand;
 import me.Danker.commands.PetsCommand;
@@ -184,6 +185,7 @@ public class TheMod
     	ClientCommandHandler.instance.registerCommand(new SkyblockPlayersCommand());
     	ClientCommandHandler.instance.registerCommand(new BlockSlayerCommand());
     	ClientCommandHandler.instance.registerCommand(new DungeonsCommand());
+    	ClientCommandHandler.instance.registerCommand(new LobbySkillsCommand());
     }
     
     @EventHandler
