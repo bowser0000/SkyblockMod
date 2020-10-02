@@ -66,7 +66,6 @@ public class LobbySkillsCommand extends CommandBase {
 				
 				for (final NetworkPlayerInfo player : players) {
 					// Manually get latest profile to use reduced requests on extra achievement API
-					System.out.println("Now parsing " + player.getGameProfile().getName());
 					String UUID = player.getGameProfile().getId().toString().replaceAll("-", "");
 					long biggestLastSave = 0;
 					int profileIndex = -1;

@@ -51,7 +51,7 @@ public class DHelpCommand extends CommandBase {
 													EnumChatFormatting.GOLD + " /dungeons [player] " + EnumChatFormatting.AQUA + " - Uses API to get dungeon levels of a person. If no name is provided, it checks yours.\n" +
 													EnumChatFormatting.GOLD + " /importfishing" + EnumChatFormatting.AQUA + " - Imports your fishing stats from your latest profile to your fishing tracker using the API.\n" +
 													EnumChatFormatting.GOLD + " /sbplayers" + EnumChatFormatting.AQUA + " - Uses API to find how many players are on each Skyblock island.\n" +
-													EnumChatFormatting.GOLD + " /blockslayer <zombie/spider/wolf> <1/2/3/4>" + EnumChatFormatting.AQUA + " - Stops you from starting a slayer quest other than the one specified.\n" +
+													EnumChatFormatting.GOLD + " /onlyslayer <zombie/spider/wolf> <1/2/3/4>" + EnumChatFormatting.AQUA + " - Stops you from starting a slayer quest other than the one specified.\n" +
 													EnumChatFormatting.GREEN + " Open Maddox Menu" + EnumChatFormatting.AQUA + " - M by default.\n"));
 	}
 

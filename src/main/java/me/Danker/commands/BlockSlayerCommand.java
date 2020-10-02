@@ -18,7 +18,7 @@ public class BlockSlayerCommand extends CommandBase {
 
 	@Override
 	public String getCommandName() {
-		return "blockslayer";
+		return "onlyslayer";
 	}
 
 	@Override
