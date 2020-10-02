@@ -43,7 +43,7 @@ public class DHelpCommand extends CommandBase {
 													EnumChatFormatting.GOLD + " /scale <coords/display/dungeontimer/skill50> <scale (0.1 - 10)>" + EnumChatFormatting.AQUA + " - Scales text display to a specified multipler between 0.1x and 10x.\n" +
 													EnumChatFormatting.GOLD + " /slayer [player]" + EnumChatFormatting.AQUA + " - Uses API to get slayer xp of a person. If no name is provided, it checks yours.\n" +
 													EnumChatFormatting.GOLD + " /skills [player]" + EnumChatFormatting.AQUA + " - Uses API to get skill levels of a person. If no name is provided, it checks yours.\n" +
-													EnumChatFormatting.GOLD + " /lobbyskills" + EnumChatFormatting.AQUA + " - Uses API to find the average skills of the lobby, as well the three players with the highest skill average.\n"
+													EnumChatFormatting.GOLD + " /lobbyskills" + EnumChatFormatting.AQUA + " - Uses API to find the average skills of the lobby, as well the three players with the highest skill average.\n" +
 													EnumChatFormatting.GOLD + " /guildof [player]" + EnumChatFormatting.AQUA + " - Uses API to get guild name and guild master of a person. If no name is provided, it checks yours.\n" +
 													EnumChatFormatting.GOLD + " /petsof [player]" + EnumChatFormatting.AQUA + " - Uses API to get pets of a person. If no name is provided, it checks yours.\n" +
 													EnumChatFormatting.GOLD + " /bank [player]" + EnumChatFormatting.AQUA + " - Uses API to get bank and purse coins of a person. If no name is provided, it checks yours.\n" +
