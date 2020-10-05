@@ -303,6 +303,17 @@ public class ConfigHandler {
 		if (!hasKey("catacombs", "shadowFury")) writeIntConfig("catacombs", "shadowFury", 0);
 		if (!hasKey("catacombs", "floorFiveCoins")) writeDoubleConfig("catacombs", "floorFiveCoins", 0);
 		if (!hasKey("catacombs", "floorFiveTime")) writeDoubleConfig("catacombs", "floorFiveTime", 0);
+		// F6
+		if (!hasKey("catacombs", "ancientRose")) writeIntConfig("catacombs", "ancientRose", 0);
+		if (!hasKey("catacombs", "precursorEye")) writeIntConfig("catacombs", "precursorEye", 0);
+		if (!hasKey("catacombs", "giantsSword")) writeIntConfig("catacombs", "giantsSword", 0);
+		if (!hasKey("catacombs", "necroLordHelm")) writeIntConfig("catacombs", "necroHelm", 0);
+		if (!hasKey("catacombs", "necroLordChest")) writeIntConfig("catacombs", "necroChest", 0);
+		if (!hasKey("catacombs", "necroLordLegging")) writeIntConfig("catacombs", "necroLegging", 0);
+		if (!hasKey("catacombs", "necroLordBoot")) writeIntConfig("catacombs", "necroBoot", 0);
+		if (!hasKey("catacombs", "necroSword")) writeIntConfig("catacombs", "necroSword", 0);
+		if (!hasKey("catacombs", "floorSixCoins")) writeDoubleConfig("catacombs", "floorSixCoins", 0);
+		if (!hasKey("catacombs", "floorSixTime")) writeDoubleConfig("catacombs", "floorSixTime", 0);
 		
 		if (!hasKey("misc", "display")) writeStringConfig("misc", "display", "off");
 		
@@ -460,6 +471,17 @@ public class ConfigHandler {
 		lc.shadowFurys = getInt("catacombs", "shadowFury");
 		lc.f5CoinsSpent = getDouble("catacombs", "floorFiveCoins");
 		lc.f5TimeSpent = getDouble("catacombs", "floorFiveTime");
+		// F6
+		lc.ancientRoses = getInt("catacombs", "ancientRose");
+		lc.precursorEyes = getInt("catacombs", "precursorEye");
+		lc.giantsSwords = getInt("catacombs", "giantsSword");
+		lc.necroLordHelms = getInt("catacombs", "necroLordHelm");
+		lc.necroLordChests = getInt("catacombs", "necroLordChest");
+		lc.necroLordLegs = getInt("catacombs", "necroLordLegging");
+		lc.necroLordBoots = getInt("catacombs", "necroLordBoot");
+		lc.necroSwords = getInt("catacombs", "necroSword");
+		lc.f6CoinsSpent = getDouble("catacombs", "floorSixCoins");
+		lc.f6TimeSpent = getDouble("catacombs", "floorSixTime");
 		
 		final DisplayCommand ds = new DisplayCommand();
 		ds.display = getString("misc", "display");

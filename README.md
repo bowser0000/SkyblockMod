@@ -32,8 +32,8 @@ Discord Server: https://discord.gg/QsEkNQS
 - /toggle <gparty/coords/golden/slayercount/rngesusalerts/splitfishing/chatmaddox/spiritbearalerts/aotd/sceptremessages/petcolors/dungeontimer/golemalerts/expertiselore/skill50display/list> - Toggles features. /toggle list returns values of every toggle.
 - /setkey <key> - Sets API key.
 - /getkey - Returns key set with /setkey and copies it to your clipboard.
-- /loot <zombie/spider/wolf/fishing/catacombs> [winter/f(1-5)/session] - Returns loot received from slayer quests or fishing stats. /loot fishing winter returns winter sea creatures instead.
-- /display <zombie/spider/wolf/fishing/catacombs> [winter/f(1-5)/session] - Text display for trackers. /display fishing winter displays winter sea creatures instead.
+- /loot <zombie/spider/wolf/fishing/catacombs> [winter/f(1-6)/session] - Returns loot received from slayer quests or fishing stats. /loot fishing winter returns winter sea creatures instead.
+- /display <zombie/spider/wolf/fishing/catacombs> [winter/f(1-6)/session] - Text display for trackers. /display fishing winter displays winter sea creatures instead.
 - /resetloot <zombie/spider/wolf/fishing/catacombs/confirm/cancel> -  - Resets loot for trackers. /resetloot confirm confirms the reset.
 - /move <coords/display/dungeontimer/skill50> <x> <y> - Moves text display to specified X and Y coordinates.
 - /scale <coords/display/dungeontimer/skill50> <scale (0.1 - 10)> - Scales text display to a specified multipler between 0.1x and 10x.

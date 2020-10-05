@@ -757,6 +757,10 @@ public class TheMod
 						lc.f5TimeSpent = Math.floor(lc.f5TimeSpent + timeToAdd);
 						lc.f5TimeSpentSession = Math.floor(lc.f5TimeSpentSession + timeToAdd);
 						cf.writeDoubleConfig("catacombs", "floorFiveTime", lc.f5TimeSpent);
+					} else if (sCleaned.contains("F6")) {
+						lc.f6TimeSpent = Math.floor(lc.f6TimeSpent + timeToAdd);
+						lc.f6TimeSpentSession = Math.floor(lc.f6TimeSpentSession + timeToAdd);
+						cf.writeDoubleConfig("catacombs", "floorSixTime", lc.f6TimeSpent);
 					}
 				} else if (sCleaned.contains("Time Elapsed:")) {
 					// Get floor time
@@ -892,6 +896,38 @@ public class TheMod
 				lc.shadowFurys++;
 				lc.shadowFurysSession++;
 				cf.writeIntConfig("catacombs", "shadowFury", lc.shadowFurys);
+			} else if (message.contains("Ancient Rose")) { // F6
+				lc.ancientRoses++;
+				lc.ancientRosesSession++;
+				cf.writeIntConfig("catacombs", "ancientRose", lc.ancientRoses);
+			} else if (message.contains("Precursor Eye")) {
+				lc.precursorEyes++;
+				lc.precursorEyesSession++;
+				cf.writeIntConfig("catacombs", "precursorEye", lc.precursorEyes);
+			} else if (message.contains("Giant's Sword")) {
+				lc.giantsSwords++;
+				lc.giantsSwordsSession++;
+				cf.writeIntConfig("catacombs", "giantsSword", lc.giantsSwords);
+			} else if (message.contains("Necromancer Lord Helmet")) {
+				lc.necroLordHelms++;
+				lc.necroLordHelmsSession++;
+				cf.writeIntConfig("catacombs", "necroLordHelm", lc.necroLordHelms);
+			} else if (message.contains("Necromancer Lord Chestplate")) {
+				lc.necroLordChests++;
+				lc.necroLordChestsSession++;
+				cf.writeIntConfig("catacombs", "necroLordChest", lc.necroLordChests);
+			} else if (message.contains("Necromancer Lord Leggings")) {
+				lc.necroLordLegs++;
+				lc.necroLordLegsSession++;
+				cf.writeIntConfig("catacombs", "necroLordLegging", lc.necroLordLegs);
+			} else if (message.contains("Necromancer Lord Boots")) {
+				lc.necroLordBoots++;
+				lc.necroLordBootsSession++;
+				cf.writeIntConfig("catacombs", "necroLordBoot", lc.necroLordBoots);
+			} else if (message.contains("Necromancer Sword")) {
+				lc.necroSwords++;
+				lc.necroSwordsSession++;
+				cf.writeIntConfig("catacombs", "necroSword", lc.necroSwords);
 			}
 		}
 		
@@ -1608,6 +1644,56 @@ public class TheMod
 							EnumChatFormatting.GOLD + nf.format(lc.shadowFurysSession) + "\n" +
 							EnumChatFormatting.AQUA + Utils.getMoneySpent(lc.f5CoinsSpentSession) + "\n" +
 							EnumChatFormatting.AQUA + Utils.getTimeBetween(0, lc.f5TimeSpentSession);
+    		} else if (ds.display.equals("catacombs_floor_six")) {
+    			dropsText = EnumChatFormatting.GOLD + "Recombobulators:\n" +
+							EnumChatFormatting.DARK_PURPLE + "Fuming Potato Books:\n" +
+							EnumChatFormatting.BLUE + "Ancient Roses:\n" +
+							EnumChatFormatting.GOLD + "Precursor Eyes:\n" +
+							EnumChatFormatting.GOLD + "Giant's Swords:\n" +
+							EnumChatFormatting.GOLD + "Necro Lord Helmets:\n" +
+							EnumChatFormatting.GOLD + "Necro Lord Chests:\n" +
+							EnumChatFormatting.GOLD + "Necro Lord Leggings:\n" +
+							EnumChatFormatting.GOLD + "Necro Lord Boots:\n" +
+							EnumChatFormatting.GOLD + "Necro Swords:\n" +
+							EnumChatFormatting.AQUA + "Coins Spent:\n" +
+		    				EnumChatFormatting.AQUA + "Time Spent:";
+    			countText = EnumChatFormatting.GOLD + nf.format(lc.recombobulators) + "\n" +
+							EnumChatFormatting.DARK_PURPLE + nf.format(lc.fumingPotatoBooks) + "\n" +
+							EnumChatFormatting.BLUE + nf.format(lc.ancientRoses) + "\n" +
+							EnumChatFormatting.GOLD + nf.format(lc.precursorEyes) + "\n" +
+							EnumChatFormatting.GOLD + nf.format(lc.giantsSwords) + "\n" +
+							EnumChatFormatting.GOLD + nf.format(lc.necroLordHelms) + "\n" +
+							EnumChatFormatting.GOLD + nf.format(lc.necroLordChests) + "\n" +
+							EnumChatFormatting.GOLD + nf.format(lc.necroLordLegs) + "\n" +
+							EnumChatFormatting.GOLD + nf.format(lc.necroLordBoots) + "\n" +
+							EnumChatFormatting.GOLD + nf.format(lc.necroSwords) + "\n" +
+							EnumChatFormatting.AQUA + Utils.getMoneySpent(lc.f6CoinsSpent) + "\n" +
+							EnumChatFormatting.AQUA + Utils.getTimeBetween(0, lc.f6TimeSpent);
+    		} else if (ds.display.equals("catacombs_floor_six_session")) {
+    			dropsText = EnumChatFormatting.GOLD + "Recombobulators:\n" +
+							EnumChatFormatting.DARK_PURPLE + "Fuming Potato Books:\n" +
+							EnumChatFormatting.BLUE + "Ancient Roses:\n" +
+							EnumChatFormatting.GOLD + "Precursor Eyes:\n" +
+							EnumChatFormatting.GOLD + "Giant's Swords:\n" +
+							EnumChatFormatting.GOLD + "Necro Lord Helmets:\n" +
+							EnumChatFormatting.GOLD + "Necro Lord Chests:\n" +
+							EnumChatFormatting.GOLD + "Necro Lord Leggings:\n" +
+							EnumChatFormatting.GOLD + "Necro Lord Boots:\n" +
+							EnumChatFormatting.GOLD + "Necro Swords:\n" +
+							EnumChatFormatting.AQUA + "Coins Spent:\n" +
+		    				EnumChatFormatting.AQUA + "Time Spent:";
+    			countText = EnumChatFormatting.GOLD + nf.format(lc.recombobulatorsSession) + "\n" +
+							EnumChatFormatting.DARK_PURPLE + nf.format(lc.fumingPotatoBooksSession) + "\n" +
+							EnumChatFormatting.BLUE + nf.format(lc.ancientRosesSession) + "\n" +
+							EnumChatFormatting.GOLD + nf.format(lc.precursorEyesSession) + "\n" +
+							EnumChatFormatting.GOLD + nf.format(lc.giantsSwordsSession) + "\n" +
+							EnumChatFormatting.GOLD + nf.format(lc.necroLordHelmsSession) + "\n" +
+							EnumChatFormatting.GOLD + nf.format(lc.necroLordChestsSession) + "\n" +
+							EnumChatFormatting.GOLD + nf.format(lc.necroLordLegsSession) + "\n" +
+							EnumChatFormatting.GOLD + nf.format(lc.necroLordBootsSession) + "\n" +
+							EnumChatFormatting.GOLD + nf.format(lc.necroSwordsSession) + "\n" +
+							EnumChatFormatting.AQUA + Utils.getMoneySpent(lc.f6CoinsSpentSession) + "\n" +
+							EnumChatFormatting.AQUA + Utils.getTimeBetween(0, lc.f6TimeSpentSession);
     		} else {
     			ConfigHandler cf = new ConfigHandler();
     			
@@ -1815,6 +1901,10 @@ public class TheMod
     									lc.f5CoinsSpent += coinsSpent;
     									lc.f5CoinsSpentSession += coinsSpent;
     									cf.writeDoubleConfig("catacombs", "floorFiveCoins", lc.f5CoinsSpent);
+    								} else if (sCleaned.contains("F6")) {
+    									lc.f6CoinsSpent += coinsSpent;
+    									lc.f6CoinsSpentSession += coinsSpent;
+    									cf.writeDoubleConfig("catacombs", "floorSixCoins", lc.f6CoinsSpent);
     								}
     								break;
     							}
