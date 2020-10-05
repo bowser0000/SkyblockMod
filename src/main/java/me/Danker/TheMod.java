@@ -336,50 +336,39 @@ public class TheMod
 			}
 			cf.writeIntConfig("wolf", "svens", lc.wolfSvens);
 			cf.writeIntConfig("wolf", "bossRNG", lc.wolfBosses);
-		}
-		if (message.contains("RARE DROP! (Hamster Wheel)")) {
+		} else if (message.contains("RARE DROP! (Hamster Wheel)")) {
 			lc.wolfWheelsDrops++;
 			lc.wolfWheelsDropsSession++;
 			cf.writeIntConfig("wolf", "wheelDrops", lc.wolfWheelsDrops);
-		}
-		// Removing the unicode here *should* fix rune drops not counting
-		if (message.contains("VERY RARE DROP!  (") && message.contains(" Spirit Rune I)")) {
+		} else if (message.contains("VERY RARE DROP!  (") && message.contains(" Spirit Rune I)")) { // Removing the unicode here *should* fix rune drops not counting
 			lc.wolfSpirits++;
 			lc.wolfSpiritsSession++;
 			cf.writeIntConfig("wolf", "spirit", lc.wolfSpirits);
-		}
-		if (message.contains("CRAZY RARE DROP!  (Red Claw Egg)")) {
+		} else if (message.contains("CRAZY RARE DROP!  (Red Claw Egg)")) {
 			wolfRNG = true;
 			lc.wolfEggs++;
 			lc.wolfEggsSession++;
 			cf.writeIntConfig("wolf", "egg", lc.wolfEggs);
 			if (tc.rngesusAlerts) Utils.createTitle(EnumChatFormatting.DARK_RED + "RED CLAW EGG!", 3);
-		}
-		if (message.contains("CRAZY RARE DROP!  (") && message.contains(" Couture Rune I)")) {
+		} else if (message.contains("CRAZY RARE DROP!  (") && message.contains(" Couture Rune I)")) {
 			wolfRNG = true;
 			lc.wolfCoutures++;
 			lc.wolfCouturesSession++;
 			cf.writeIntConfig("wolf", "couture", lc.wolfCoutures);
 			if (tc.rngesusAlerts) Utils.createTitle(EnumChatFormatting.GOLD + "COUTURE RUNE!", 3);
-		}
-		// How did Skyblock devs even manage to make this item Rename Me
-		if (message.contains("CRAZY RARE DROP!  (Grizzly Bait)") || message.contains("CRAZY RARE DROP! (Rename Me)")) {
+		} else if (message.contains("CRAZY RARE DROP!  (Grizzly Bait)") || message.contains("CRAZY RARE DROP! (Rename Me)")) { // How did Skyblock devs even manage to make this item Rename Me
 			wolfRNG = true;
 			lc.wolfBaits++;
 			lc.wolfBaitsSession++;
 			cf.writeIntConfig("wolf", "bait", lc.wolfBaits);
 			if (tc.rngesusAlerts) Utils.createTitle(EnumChatFormatting.AQUA + "GRIZZLY BAIT!", 3);
-		}
-		if (message.contains("CRAZY RARE DROP!  (Overflux Capacitor)")) {
+		} else if (message.contains("CRAZY RARE DROP!  (Overflux Capacitor)")) {
 			wolfRNG = true;
 			lc.wolfFluxes++;
 			lc.wolfFluxesSession++;
 			cf.writeIntConfig("wolf", "flux", lc.wolfFluxes);
 			if (tc.rngesusAlerts) Utils.createTitle(EnumChatFormatting.DARK_PURPLE + "OVERFLUX CAPACITOR!", 5);
-		}
-
-		// Spider
-		if (message.contains("Talk to Maddox to claim your Spider Slayer XP!")) {
+		} else if (message.contains("Talk to Maddox to claim your Spider Slayer XP!")) { // Spider
 			lc.spiderTarantulas++;
 			lc.spiderTarantulasSession++;
 			if (lc.spiderBosses != -1) {
@@ -390,46 +379,37 @@ public class TheMod
 			}
 			cf.writeIntConfig("spider", "tarantulas", lc.spiderTarantulas);
 			cf.writeIntConfig("spider", "bossRNG", lc.spiderBosses);
-		}
-		if (message.contains("RARE DROP! (Toxic Arrow Poison)")) {
+		} else if (message.contains("RARE DROP! (Toxic Arrow Poison)")) {
 			lc.spiderTAPDrops++;
 			lc.spiderTAPDropsSession++;
 			cf.writeIntConfig("spider", "tapDrops", lc.spiderTAPDrops);
-		}
-		if (message.contains("VERY RARE DROP!  (") && message.contains(" Bite Rune I)")) {
+		} else if (message.contains("VERY RARE DROP!  (") && message.contains(" Bite Rune I)")) {
 			lc.spiderBites++;
 			lc.spiderBitesSession++;
 			cf.writeIntConfig("spider", "bite", lc.spiderBites);
-		}
-		if (message.contains("VERY RARE DROP!  (Spider Catalyst)")) {
+		} else if (message.contains("VERY RARE DROP!  (Spider Catalyst)")) {
 			lc.spiderCatalysts++;
 			lc.spiderCatalystsSession++;
 			cf.writeIntConfig("spider", "catalyst", lc.spiderCatalysts);
-		}
-		if (message.contains("CRAZY RARE DROP!  (Fly Swatter)")) {
+		} else if (message.contains("CRAZY RARE DROP!  (Fly Swatter)")) {
 			spiderRNG = true;
 			lc.spiderSwatters++;
 			lc.spiderSwattersSession++;
 			cf.writeIntConfig("spider", "swatter", lc.spiderSwatters);
 			if (tc.rngesusAlerts) Utils.createTitle(EnumChatFormatting.LIGHT_PURPLE + "FLY SWATTER!", 3);
-		}
-		if (message.contains("CRAZY RARE DROP!  (Tarantula Talisman")) {
+		} else if (message.contains("CRAZY RARE DROP!  (Tarantula Talisman")) {
 			spiderRNG = true;
 			lc.spiderTalismans++;
 			lc.spiderTalismansSession++;
 			cf.writeIntConfig("spider", "talisman", lc.spiderTalismans);
 			if (tc.rngesusAlerts) Utils.createTitle(EnumChatFormatting.DARK_PURPLE + "TARANTULA TALISMAN!", 3);
-		}
-		if (message.contains("CRAZY RARE DROP!  (Digested Mosquito)")) {
+		} else if (message.contains("CRAZY RARE DROP!  (Digested Mosquito)")) {
 			spiderRNG = true;
 			lc.spiderMosquitos++;
 			lc.spiderMosquitosSession++;
 			cf.writeIntConfig("spider", "mosquito", lc.spiderMosquitos);
 			if (tc.rngesusAlerts) Utils.createTitle(EnumChatFormatting.GOLD + "DIGESTED MOSQUITO!", 5);
-		}
-
-		// Zombie
-		if (message.contains("Talk to Maddox to claim your Zombie Slayer XP!")) {
+		} else if (message.contains("Talk to Maddox to claim your Zombie Slayer XP!")) { // Zombie
 			lc.zombieRevs++;
 			lc.zombieRevsSession++;
 			if (lc.zombieBosses != -1) {
@@ -440,86 +420,49 @@ public class TheMod
 			}
 			cf.writeIntConfig("zombie", "revs", lc.zombieRevs);
 			cf.writeIntConfig("zombie", "bossRNG", lc.zombieBosses);
-		}
-		if (message.contains("RARE DROP! (Foul Flesh)")) {
+		} else if (message.contains("RARE DROP! (Foul Flesh)")) {
 			lc.zombieFoulFleshDrops++;
 			lc.zombieFoulFleshDropsSession++;
 			cf.writeIntConfig("zombie", "foulFleshDrops", lc.zombieFoulFleshDrops);
-		}
-		if (message.contains("VERY RARE DROP!  (Revenant Catalyst)")) {
+		} else if (message.contains("VERY RARE DROP!  (Revenant Catalyst)")) {
 			lc.zombieRevCatas++;
 			lc.zombieRevCatasSession++;
 			cf.writeIntConfig("zombie", "revCatalyst", lc.zombieRevCatas);
-		}
-		if (message.contains("VERY RARE DROP!  (") && message.contains(" Pestilence Rune I)")) {
+		} else if (message.contains("VERY RARE DROP!  (") && message.contains(" Pestilence Rune I)")) {
 			lc.zombiePestilences++;
 			lc.zombiePestilencesSession++;
 			cf.writeIntConfig("zombie", "pestilence", lc.zombiePestilences);
-		}
-		if (message.contains("VERY RARE DROP!  (Undead Catalyst)")) {
+		} else if (message.contains("VERY RARE DROP!  (Undead Catalyst)")) {
 			lc.zombieUndeadCatas++;
 			lc.zombieUndeadCatasSession++;
 			cf.writeIntConfig("zombie", "undeadCatalyst", lc.zombieUndeadCatas);
-		}
-		if (message.contains("CRAZY RARE DROP!  (Beheaded Horror)")) {
+		} else if (message.contains("CRAZY RARE DROP!  (Beheaded Horror)")) {
 			zombieRNG = true;
 			lc.zombieBeheadeds++;
 			lc.zombieBeheadedsSession++;
 			cf.writeIntConfig("zombie", "beheaded", lc.zombieBeheadeds);
 			if (tc.rngesusAlerts) Utils.createTitle(EnumChatFormatting.DARK_PURPLE + "BEHEADED HORROR!", 3);
-		}
-		if (message.contains("CRAZY RARE DROP!  (") && message.contains(" Snake Rune I)")) {
+		} else if (message.contains("CRAZY RARE DROP!  (") && message.contains(" Snake Rune I)")) {
 			zombieRNG = true;
 			lc.zombieSnakes++;
 			lc.zombieSnakesSession++;
 			cf.writeIntConfig("zombie", "snake", lc.zombieSnakes);
 			if (tc.rngesusAlerts) Utils.createTitle(EnumChatFormatting.DARK_GREEN + "SNAKE RUNE!", 3);
-		}
-		if (message.contains("CRAZY RARE DROP!  (Scythe Blade)")) {
+		} else if (message.contains("CRAZY RARE DROP!  (Scythe Blade)")) {
 			zombieRNG = true;
 			lc.zombieScythes++;
 			lc.zombieScythesSession++;
 			cf.writeIntConfig("zombie", "scythe", lc.zombieScythes);
 			if (tc.rngesusAlerts) Utils.createTitle(EnumChatFormatting.GOLD + "SCYTHE BLADE!", 5);
-		}
-
-		if (wolfRNG) {
-			lc.wolfTime = System.currentTimeMillis() / 1000;
-			lc.wolfBosses = 0;
-			lc.wolfTimeSession = System.currentTimeMillis() / 1000;
-			lc.wolfBossesSession = 0;
-			cf.writeDoubleConfig("wolf", "timeRNG", lc.wolfTime);
-			cf.writeIntConfig("wolf", "bossRNG", 0);
-		}
-		if (spiderRNG) {
-			lc.spiderTime = System.currentTimeMillis() / 1000;
-			lc.spiderBosses = 0;
-			lc.spiderTimeSession = System.currentTimeMillis() / 1000;
-			lc.spiderBossesSession = 0;
-			cf.writeDoubleConfig("spider", "timeRNG", lc.spiderTime);
-			cf.writeIntConfig("spider", "bossRNG", 0);
-		}
-		if (zombieRNG) {
-			lc.zombieTime = System.currentTimeMillis() / 1000;
-			lc.zombieBosses = 0;
-			lc.zombieTimeSession = System.currentTimeMillis() / 1000;
-			lc.zombieBossesSession = 0;
-			cf.writeDoubleConfig("zombie", "timeRNG", lc.zombieTime);
-			cf.writeIntConfig("zombie", "bossRNG", 0);
-		}
-		
-		// Fishing
-		if (message.contains("GOOD CATCH!")) {
+		} else if (message.contains("GOOD CATCH!")) { // Fishing
 			lc.goodCatches++;
 			lc.goodCatchesSession++;
 			cf.writeIntConfig("fishing", "goodCatch", lc.goodCatches);
-		}
-		if (message.contains("GREAT CATCH!")) {
+		} else if (message.contains("GREAT CATCH!")) {
 			lc.greatCatches++;
 			lc.greatCatchesSession++;
 			cf.writeIntConfig("fishing", "greatCatch", lc.greatCatches);
-		}
-		if (message.contains("You caught a lowly Squid")) {
+		} else if (message.contains("You caught a lowly Squid")) {
 			lc.squids++;
 			lc.seaCreatures++;
 			lc.fishingMilestone++;
@@ -530,8 +473,7 @@ public class TheMod
 			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
 			cf.writeIntConfig("fishing", "milestone", lc.fishingMilestone);
 			increaseSeaCreatures();
-		}
-		if (message.contains("From the depths of the waters, you've reeled in a Sea Walker")) {
+		} else if (message.contains("From the depths of the waters, you've reeled in a Sea Walker")) {
 			lc.seaWalkers++;
 			lc.seaCreatures++;
 			lc.fishingMilestone++;
@@ -542,8 +484,7 @@ public class TheMod
 			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
 			cf.writeIntConfig("fishing", "milestone", lc.fishingMilestone);
 			increaseSeaCreatures();
-		}
-		if (message.contains("Pitch darkness reveals you've caught a")) {
+		} else if (message.contains("Pitch darkness reveals you've caught a")) {
 			lc.nightSquids++;
 			lc.seaCreatures++;
 			lc.fishingMilestone++;
@@ -554,8 +495,7 @@ public class TheMod
 			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
 			cf.writeIntConfig("fishing", "milestone", lc.fishingMilestone);
 			increaseSeaCreatures();
-		}
-		if (message.contains("You've stumbled upon a patrolling Sea Guardian")) {
+		} else if (message.contains("You've stumbled upon a patrolling Sea Guardian")) {
 			lc.seaGuardians++;
 			lc.seaCreatures++;
 			lc.fishingMilestone++;
@@ -566,8 +506,7 @@ public class TheMod
 			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
 			cf.writeIntConfig("fishing", "milestone", lc.fishingMilestone);
 			increaseSeaCreatures();
-		}
-		if (message.contains("It looks like you've disrupted the Sea Witch's brewing session. Watch out, she's furious")) {
+		} else if (message.contains("It looks like you've disrupted the Sea Witch's brewing session. Watch out, she's furious")) {
 			lc.seaWitches++;
 			lc.seaCreatures++;
 			lc.fishingMilestone++;
@@ -578,8 +517,7 @@ public class TheMod
 			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
 			cf.writeIntConfig("fishing", "milestone", lc.fishingMilestone);
 			increaseSeaCreatures();
-		}
-		if (message.contains("From the depths of the waters, you've reeled in a Sea Archer")) {
+		} else if (message.contains("From the depths of the waters, you've reeled in a Sea Archer")) {
 			lc.seaArchers++;
 			lc.seaCreatures++;
 			lc.fishingMilestone++;
@@ -590,8 +528,7 @@ public class TheMod
 			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
 			cf.writeIntConfig("fishing", "milestone", lc.fishingMilestone);
 			increaseSeaCreatures();
-		}
-		if (message.contains("The Monster of the Deep emerges from the dark depths")) {
+		} else if (message.contains("The Monster of the Deep emerges from the dark depths")) {
 			lc.monsterOfTheDeeps++;
 			lc.seaCreatures++;
 			lc.fishingMilestone++;
@@ -602,8 +539,7 @@ public class TheMod
 			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
 			cf.writeIntConfig("fishing", "milestone", lc.fishingMilestone);
 			increaseSeaCreatures();
-		}
-		if (message.contains("You have found a Catfish, don't let it steal your catches")) {
+		} else if (message.contains("You have found a Catfish, don't let it steal your catches")) {
 			lc.catfishes++;
 			lc.seaCreatures++;
 			lc.fishingMilestone++;
@@ -614,8 +550,7 @@ public class TheMod
 			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
 			cf.writeIntConfig("fishing", "milestone", lc.fishingMilestone);
 			increaseSeaCreatures();
-		}
-		if (message.contains("Is this even a fish? It's the Carrot King")) {
+		} else if (message.contains("Is this even a fish? It's the Carrot King")) {
 			lc.carrotKings++;
 			lc.seaCreatures++;
 			lc.fishingMilestone++;
@@ -626,8 +561,7 @@ public class TheMod
 			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
 			cf.writeIntConfig("fishing", "milestone", lc.fishingMilestone);
 			increaseSeaCreatures();
-		}
-		if (message.contains("Gross! A Sea Leech")) {
+		} else if (message.contains("Gross! A Sea Leech")) {
 			lc.seaLeeches++;
 			lc.seaCreatures++;
 			lc.fishingMilestone++;
@@ -638,8 +572,7 @@ public class TheMod
 			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
 			cf.writeIntConfig("fishing", "milestone", lc.fishingMilestone);
 			increaseSeaCreatures();
-		}
-		if (message.contains("You've discovered a Guardian Defender of the sea")) {
+		} else if (message.contains("You've discovered a Guardian Defender of the sea")) {
 			lc.guardianDefenders++;
 			lc.seaCreatures++;
 			lc.fishingMilestone++;
@@ -650,8 +583,7 @@ public class TheMod
 			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
 			cf.writeIntConfig("fishing", "milestone", lc.fishingMilestone);
 			increaseSeaCreatures();
-		}
-		if (message.contains("You have awoken the Deep Sea Protector, prepare for a battle")) {
+		} else if (message.contains("You have awoken the Deep Sea Protector, prepare for a battle")) {
 			lc.deepSeaProtectors++;
 			lc.seaCreatures++;
 			lc.fishingMilestone++;
@@ -662,8 +594,7 @@ public class TheMod
 			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
 			cf.writeIntConfig("fishing", "milestone", lc.fishingMilestone);
 			increaseSeaCreatures();
-		}
-		if (message.contains("The Water Hydra has come to test your strength")) {
+		} else if (message.contains("The Water Hydra has come to test your strength")) {
 			lc.hydras++;
 			lc.seaCreatures++;
 			lc.fishingMilestone++;
@@ -674,8 +605,7 @@ public class TheMod
 			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
 			cf.writeIntConfig("fishing", "milestone", lc.fishingMilestone);
 			increaseSeaCreatures();
-		}
-		if (message.contains("The Sea Emperor arises from the depths")) {
+		} else if (message.contains("The Sea Emperor arises from the depths")) {
 			lc.seaEmperors++;
 			lc.seaCreatures++;
 			lc.fishingMilestone++;
@@ -691,9 +621,7 @@ public class TheMod
 			cf.writeIntConfig("fishing", "milestone", lc.fishingMilestone);
 			cf.writeDoubleConfig("fishing", "empTime", lc.empTime);
 			cf.writeIntConfig("fishing", "empSC", lc.empSCs);
-		}
-		// Fishing Winter
-		if (message.contains("Frozen Steve fell into the pond long ago")) {
+		} else if (message.contains("Frozen Steve fell into the pond long ago")) { // Fishing Winter
 			lc.frozenSteves++;
 			lc.seaCreatures++;
 			lc.fishingMilestone++;
@@ -704,8 +632,7 @@ public class TheMod
 			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
 			cf.writeIntConfig("fishing", "milestone", lc.fishingMilestone);
 			increaseSeaCreatures();
-		}
-		if (message.contains("It's a snowman! He looks harmless")) {
+		} else if (message.contains("It's a snowman! He looks harmless")) {
 			lc.frostyTheSnowmans++;
 			lc.seaCreatures++;
 			lc.fishingMilestone++;
@@ -716,8 +643,7 @@ public class TheMod
 			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
 			cf.writeIntConfig("fishing", "milestone", lc.fishingMilestone);
 			increaseSeaCreatures();
-		}
-		if (message.contains("stole Jerry's Gifts...get them back")) {
+		} else if (message.contains("stole Jerry's Gifts...get them back")) {
 			lc.grinches++;
 			lc.seaCreatures++;
 			lc.fishingMilestone++;
@@ -728,8 +654,7 @@ public class TheMod
 			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
 			cf.writeIntConfig("fishing", "milestone", lc.fishingMilestone);
 			increaseSeaCreatures();
-		}
-		if (message.contains("What is this creature")) {
+		} else if (message.contains("What is this creature")) {
 			lc.yetis++;
 			lc.seaCreatures++;
 			lc.fishingMilestone++;
@@ -745,9 +670,7 @@ public class TheMod
 			cf.writeIntConfig("fishing", "yetiSC", lc.yetiSCs);
 			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
 			cf.writeIntConfig("fishing", "milestone", lc.fishingMilestone);
-		}
-		// Fishing Festival
-		if (message.contains("A tiny fin emerges from the water, you've caught a Nurse Shark")) {
+		} else if (message.contains("A tiny fin emerges from the water, you've caught a Nurse Shark")) { // Fishing Festival
 			lc.nurseSharks++;
 			lc.seaCreatures++;
 			lc.fishingMilestone++;
@@ -758,8 +681,7 @@ public class TheMod
 			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
 			cf.writeIntConfig("fishing", "milestone", lc.fishingMilestone);
 			increaseSeaCreatures();
-		}
-		if (message.contains("You spot a fin as blue as the water it came from, it's a Blue Shark")) {
+		} else if (message.contains("You spot a fin as blue as the water it came from, it's a Blue Shark")) {
 			lc.blueSharks++;
 			lc.seaCreatures++;
 			lc.fishingMilestone++;
@@ -770,8 +692,7 @@ public class TheMod
 			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
 			cf.writeIntConfig("fishing", "milestone", lc.fishingMilestone);
 			increaseSeaCreatures();
-		}
-		if (message.contains("A striped beast bounds from the depths, the wild Tiger Shark")) {
+		} else if (message.contains("A striped beast bounds from the depths, the wild Tiger Shark")) {
 			lc.tigerSharks++;
 			lc.seaCreatures++;
 			lc.fishingMilestone++;
@@ -782,8 +703,7 @@ public class TheMod
 			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
 			cf.writeIntConfig("fishing", "milestone", lc.fishingMilestone);
 			increaseSeaCreatures();
-		}
-		if (message.contains("Hide no longer, a Great White Shark has tracked your scent and thirsts for your blood")) {
+		} else if (message.contains("Hide no longer, a Great White Shark has tracked your scent and thirsts for your blood")) {
 			lc.greatWhiteSharks++;
 			lc.seaCreatures++;
 			lc.fishingMilestone++;
@@ -794,11 +714,7 @@ public class TheMod
 			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
 			cf.writeIntConfig("fishing", "milestone", lc.fishingMilestone);
 			increaseSeaCreatures();
-		}
-		
-		// Catacombs Dungeons
-		// Timers
-		if (message.contains("Dungeon starts in 1 second.")) {
+		} else if (message.contains("Dungeon starts in 1 second.")) { // Dungeons Stuff
 		    dungeonStartTime = System.currentTimeMillis() / 1000;
 		    bloodOpenTime = dungeonStartTime;
 		    watcherClearTime = dungeonStartTime;
@@ -806,22 +722,15 @@ public class TheMod
 		    witherDoors = 0;
 		    dungeonDeaths = 0;
 		    puzzleFails = 0;
-		}
-		if (message.contains("The BLOOD DOOR has been opened!")) {
+		} else if (message.contains("The BLOOD DOOR has been opened!")) {
 			bloodOpenTime = System.currentTimeMillis() / 1000;
-		}
-		if (message.contains(" opened a WITHER door!")) {
+		} else if (message.contains(" opened a WITHER door!")) {
 			witherDoors++;
-		}
-		if (message.contains(" and became a ghost.")) {
+		} else if (message.contains(" and became a ghost.")) {
 			dungeonDeaths++;
-		}
-		
-		// Trackers
-		if (message.contains(" Defeated ") && message.contains(" in ")) {
+		} else if (message.contains(" Defeated ") && message.contains(" in ")) {
 			bossClearTime = System.currentTimeMillis() / 1000;
-		}
-		if (message.contains("EXTRA STATS ")) {
+		} else if (message.contains("EXTRA STATS ")) {
 			List<String> scoreboard = ScoreboardHandler.getSidebarLines();
 			int timeToAdd = 0;
 			for (String s : scoreboard) {
@@ -859,130 +768,131 @@ public class TheMod
 				}
 			}
 		}
-		if (message.contains("    RARE REWARD! Recombobulator 3000")) {
-			lc.recombobulators++;
-			lc.recombobulatorsSession++;
-			cf.writeIntConfig("catacombs", "recombobulator", lc.recombobulators);
+		
+		if (wolfRNG) {
+			lc.wolfTime = System.currentTimeMillis() / 1000;
+			lc.wolfBosses = 0;
+			lc.wolfTimeSession = System.currentTimeMillis() / 1000;
+			lc.wolfBossesSession = 0;
+			cf.writeDoubleConfig("wolf", "timeRNG", lc.wolfTime);
+			cf.writeIntConfig("wolf", "bossRNG", 0);
 		}
-		if (message.contains("    RARE REWARD! Fuming Potato Book")) {
-			lc.fumingPotatoBooks++;
-			lc.fumingPotatoBooksSession++;
-			cf.writeIntConfig("catacombs", "fumingBooks", lc.fumingPotatoBooks);
+		if (spiderRNG) {
+			lc.spiderTime = System.currentTimeMillis() / 1000;
+			lc.spiderBosses = 0;
+			lc.spiderTimeSession = System.currentTimeMillis() / 1000;
+			lc.spiderBossesSession = 0;
+			cf.writeDoubleConfig("spider", "timeRNG", lc.spiderTime);
+			cf.writeIntConfig("spider", "bossRNG", 0);
 		}
-		// F1
-		if (message.contains("    RARE REWARD! Bonzo's Staff")) {
-			lc.bonzoStaffs++;
-			lc.bonzoStaffsSession++;
-			cf.writeIntConfig("catacombs", "bonzoStaff", lc.bonzoStaffs);
+		if (zombieRNG) {
+			lc.zombieTime = System.currentTimeMillis() / 1000;
+			lc.zombieBosses = 0;
+			lc.zombieTimeSession = System.currentTimeMillis() / 1000;
+			lc.zombieBossesSession = 0;
+			cf.writeDoubleConfig("zombie", "timeRNG", lc.zombieTime);
+			cf.writeIntConfig("zombie", "bossRNG", 0);
 		}
-		// F2
-		if (message.contains("    RARE REWARD! Scarf's Studies")) {
-			lc.scarfStudies++;
-			lc.scarfStudiesSession++;
-			cf.writeIntConfig("catacombs", "scarfStudies", lc.scarfStudies);
-		}
-		// F3
-		if (message.contains("    RARE REWARD! Adaptive Helmet")) {
-			lc.adaptiveHelms++;
-			lc.adaptiveHelmsSession++;
-			cf.writeIntConfig("catacombs", "adaptiveHelm", lc.adaptiveHelms);
-		}
-		if (message.contains("    RARE REWARD! Adaptive Chestplate")) {
-			lc.adaptiveChests++;
-			lc.adaptiveChestsSession++;
-			cf.writeIntConfig("catacombs", "adaptiveChest", lc.adaptiveChests);
-		}
-		if (message.contains("    RARE REWARD! Adaptive Leggings")) {
-			lc.adaptiveLegs++;
-			lc.adaptiveLegsSession++;
-			cf.writeIntConfig("catacombs", "adaptiveLegging", lc.adaptiveLegs);
-		}
-		if (message.contains("    RARE REWARD! Adaptive Boots")) {
-			lc.adaptiveBoots++;
-			lc.adaptiveBootsSession++;
-			cf.writeIntConfig("catacombs", "adaptiveBoot", lc.adaptiveBoots);
-		}
-		if (message.contains("    RARE REWARD! Adaptive Blade")) {
-			lc.adaptiveSwords++;
-			lc.adaptiveSwordsSession++;
-			cf.writeIntConfig("catacombs", "adaptiveSword", lc.adaptiveSwords);
-		}
-		// F4
-		if (message.contains("    Spirit Wing")) {
-			lc.spiritWings++;
-			lc.spiritWingsSession++;
-			cf.writeIntConfig("catacombs", "spiritWing", lc.spiritWings);
-		}
-		// TODO
-		// Fix strings for Spirit Bone, Spirit Boots
-		if (message.contains("    ") && message.contains("Spirit Bone")) {
-			lc.spiritBones++;
-			lc.spiritBonesSession++;
-			cf.writeIntConfig("catacombs", "spiritBone", lc.spiritBones);
-		}
-		if (message.contains("    ") && message.contains("Spirit Boots")) {
-			lc.spiritBoots++;
-			lc.spiritBootsSession++;
-			cf.writeIntConfig("catacombs", "spiritBoot", lc.spiritBoots);
-		}
-		if (message.contains("    [Lvl 1] Spirit")) {
-			String formattedMessage = event.message.getFormattedText();
-			// Unicode colour code messes up here, just gonna remove the symbols
-			if (formattedMessage.contains("5Spirit")) {
-				lc.epicSpiritPets++;
-				lc.epicSpiritPetsSession++;
-				cf.writeIntConfig("catacombs", "spiritPetEpic", lc.epicSpiritPets);
-			} else if (formattedMessage.contains("6Spirit")) {
-				lc.legSpiritPets++;
-				lc.legSpiritPetsSession++;
-				cf.writeIntConfig("catacombs", "spiritPetLeg", lc.legSpiritPets);
-			} 
-		}
-		if (message.contains("    Spirit Sword")) {
-			lc.spiritSwords++;
-			lc.spiritSwordsSession++;
-			cf.writeIntConfig("catacombs", "spiritSword", lc.spiritSwords);
-		}
-		if (message.contains("    Spirit Bow")) {
-			lc.spiritBows++;
-			lc.spiritBowsSession++;
-			cf.writeIntConfig("catacombs", "spiritBow", lc.spiritBows);
-		}
-		// F5
-		if (message.contains("    Warped Stone")) {
-			lc.warpedStones++;
-			lc.warpedStonesSession++;
-			cf.writeIntConfig("catacombs", "warpedStone", lc.warpedStones);
-		}
-		if (message.contains("    Shadow Assassin Helmet")) {
-			lc.shadowAssHelms++;
-			lc.shadowAssHelmsSession++;
-			cf.writeIntConfig("catacombs", "shadowAssassinHelm", lc.shadowAssHelms);
-		}
-		if (message.contains("    Shadow Assassin Chestplate")) {
-			lc.shadowAssChests++;
-			lc.shadowAssChestsSession++;
-			cf.writeIntConfig("catacombs", "shadowAssassinChest", lc.shadowAssChests);
-		}
-		if (message.contains("    Shadow Assassin Leggings")) {
-			lc.shadowAssLegs++;
-			lc.shadowAssLegsSession++;
-			cf.writeIntConfig("catacombs", "shadowAssassinLegging", lc.shadowAssLegs);
-		}
-		if (message.contains("    Shadow Assassin Boots")) {
-			lc.shadowAssBoots++;
-			lc.shadowAssBootsSession++;
-			cf.writeIntConfig("catacombs", "shadowAssassinBoot", lc.shadowAssBoots);
-		}
-		if (message.contains("    Livid Dagger")) {
-			lc.lividDaggers++;
-			lc.lividDaggersSession++;
-			cf.writeIntConfig("catacombs", "lividDagger", lc.lividDaggers);
-		}
-		if (message.contains("    RARE REWARD! Shadow Fury")) {
-			lc.shadowFurys++;
-			lc.shadowFurysSession++;
-			cf.writeIntConfig("catacombs", "shadowFury", lc.shadowFurys);
+		
+		// Dungeons Trackers
+		if (message.contains("    ")) {
+			if (message.contains("Recombobulator 3000")) {
+				lc.recombobulators++;
+				lc.recombobulatorsSession++;
+				cf.writeIntConfig("catacombs", "recombobulator", lc.recombobulators);
+			} else if (message.contains("Fuming Potato Book")) {
+				lc.fumingPotatoBooks++;
+				lc.fumingPotatoBooksSession++;
+				cf.writeIntConfig("catacombs", "fumingBooks", lc.fumingPotatoBooks);
+			} else if (message.contains("Bonzo's Staff")) { // F1
+				lc.bonzoStaffs++;
+				lc.bonzoStaffsSession++;
+				cf.writeIntConfig("catacombs", "bonzoStaff", lc.bonzoStaffs);
+			} else if (message.contains("Scarf's Studies")) { // F2
+				lc.scarfStudies++;
+				lc.scarfStudiesSession++;
+				cf.writeIntConfig("catacombs", "scarfStudies", lc.scarfStudies);
+			} else if (message.contains("Adaptive Helmet")) { // F3
+				lc.adaptiveHelms++;
+				lc.adaptiveHelmsSession++;
+				cf.writeIntConfig("catacombs", "adaptiveHelm", lc.adaptiveHelms);
+			} else if (message.contains("Adaptive Chestplate")) {
+				lc.adaptiveChests++;
+				lc.adaptiveChestsSession++;
+				cf.writeIntConfig("catacombs", "adaptiveChest", lc.adaptiveChests);
+			} else if (message.contains("Adaptive Leggings")) {
+				lc.adaptiveLegs++;
+				lc.adaptiveLegsSession++;
+				cf.writeIntConfig("catacombs", "adaptiveLegging", lc.adaptiveLegs);
+			} else if (message.contains("Adaptive Boots")) {
+				lc.adaptiveBoots++;
+				lc.adaptiveBootsSession++;
+				cf.writeIntConfig("catacombs", "adaptiveBoot", lc.adaptiveBoots);
+			} else if (message.contains("Adaptive Blade")) {
+				lc.adaptiveSwords++;
+				lc.adaptiveSwordsSession++;
+				cf.writeIntConfig("catacombs", "adaptiveSword", lc.adaptiveSwords);
+			} else if (message.contains("Spirit Wing")) { // F4
+				lc.spiritWings++;
+				lc.spiritWingsSession++;
+				cf.writeIntConfig("catacombs", "spiritWing", lc.spiritWings);
+			} else if (message.contains("Spirit Bone")) {
+				lc.spiritBones++;
+				lc.spiritBonesSession++;
+				cf.writeIntConfig("catacombs", "spiritBone", lc.spiritBones);
+			} else if (message.contains("Spirit Boots")) {
+				lc.spiritBoots++;
+				lc.spiritBootsSession++;
+				cf.writeIntConfig("catacombs", "spiritBoot", lc.spiritBoots);
+			} else if (message.contains("[Lvl 1] Spirit")) {
+				String formattedMessage = event.message.getFormattedText();
+				// Unicode colour code messes up here, just gonna remove the symbols
+				if (formattedMessage.contains("5Spirit")) {
+					lc.epicSpiritPets++;
+					lc.epicSpiritPetsSession++;
+					cf.writeIntConfig("catacombs", "spiritPetEpic", lc.epicSpiritPets);
+				} else if (formattedMessage.contains("6Spirit")) {
+					lc.legSpiritPets++;
+					lc.legSpiritPetsSession++;
+					cf.writeIntConfig("catacombs", "spiritPetLeg", lc.legSpiritPets);
+				} 
+			} else if (message.contains("Spirit Sword")) {
+				lc.spiritSwords++;
+				lc.spiritSwordsSession++;
+				cf.writeIntConfig("catacombs", "spiritSword", lc.spiritSwords);
+			} else if (message.contains("Spirit Bow")) {
+				lc.spiritBows++;
+				lc.spiritBowsSession++;
+				cf.writeIntConfig("catacombs", "spiritBow", lc.spiritBows);
+			} else if (message.contains("Warped Stone")) { // F5
+				lc.warpedStones++;
+				lc.warpedStonesSession++;
+				cf.writeIntConfig("catacombs", "warpedStone", lc.warpedStones);
+			} else if (message.contains("Shadow Assassin Helmet")) {
+				lc.shadowAssHelms++;
+				lc.shadowAssHelmsSession++;
+				cf.writeIntConfig("catacombs", "shadowAssassinHelm", lc.shadowAssHelms);
+			} else if (message.contains("Shadow Assassin Chestplate")) {
+				lc.shadowAssChests++;
+				lc.shadowAssChestsSession++;
+				cf.writeIntConfig("catacombs", "shadowAssassinChest", lc.shadowAssChests);
+			} else if (message.contains("Shadow Assassin Leggings")) {
+				lc.shadowAssLegs++;
+				lc.shadowAssLegsSession++;
+				cf.writeIntConfig("catacombs", "shadowAssassinLegging", lc.shadowAssLegs);
+			} else if (message.contains("Shadow Assassin Boots")) {
+				lc.shadowAssBoots++;
+				lc.shadowAssBootsSession++;
+				cf.writeIntConfig("catacombs", "shadowAssassinBoot", lc.shadowAssBoots);
+			} else if (message.contains("Livid Dagger")) {
+				lc.lividDaggers++;
+				lc.lividDaggersSession++;
+				cf.writeIntConfig("catacombs", "lividDagger", lc.lividDaggers);
+			} else if (message.contains("Shadow Fury")) {
+				lc.shadowFurys++;
+				lc.shadowFurysSession++;
+				cf.writeIntConfig("catacombs", "shadowFury", lc.shadowFurys);
+			}
 		}
 		
 		// Chat Maddox
