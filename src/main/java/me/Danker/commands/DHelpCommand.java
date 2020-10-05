@@ -37,7 +37,7 @@ public class DHelpCommand extends CommandBase {
 													EnumChatFormatting.GOLD + " /setkey <key>" + EnumChatFormatting.AQUA + " - Sets API key.\n" +
 													EnumChatFormatting.GOLD + " /getkey" + EnumChatFormatting.AQUA + " - Returns key set with /setkey and copies it to your clipboard.\n" +
 													EnumChatFormatting.GOLD + " /loot <zombie/spider/wolf/fishing/catacombs> [winter/f(1-6)/session]" + EnumChatFormatting.AQUA + " - Returns loot received from slayer quests or fishing stats. /loot fishing winter returns winter sea creatures instead.\n" +
-													EnumChatFormatting.GOLD + " /display <zombie/spider/wolf/fishing/catacombs/off> [winter/f(1-6)/session]" + EnumChatFormatting.AQUA + " - Text display for trackers. /display fishing winter displays winter sea creatures instead.\n" +
+													EnumChatFormatting.GOLD + " /display <zombie/spider/wolf/fishing/catacombs/auto/off> [winter/f(1-6)/session]" + EnumChatFormatting.AQUA + " - Text display for trackers. /display fishing winter displays winter sea creatures instead. /display auto automatically displays the loot for the slayer quest you have active.\n" +
 													EnumChatFormatting.GOLD + " /resetloot <zombie/spider/wolf/fishing/catacombs/confirm/cancel>" + EnumChatFormatting.AQUA + " - Resets loot for trackers. /resetloot confirm confirms the reset.\n" +
 													EnumChatFormatting.GOLD + " /move <coords/display/dungeontimer/skill50> <x> <y>" + EnumChatFormatting.AQUA + " - Moves text display to specified X and Y coordinates.\n" +
 													EnumChatFormatting.GOLD + " /scale <coords/display/dungeontimer/skill50> <scale (0.1 - 10)>" + EnumChatFormatting.AQUA + " - Scales text display to a specified multipler between 0.1x and 10x.\n" +

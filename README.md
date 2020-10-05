@@ -33,7 +33,7 @@ Discord Server: https://discord.gg/QsEkNQS
 - /setkey <key> - Sets API key.
 - /getkey - Returns key set with /setkey and copies it to your clipboard.
 - /loot <zombie/spider/wolf/fishing/catacombs> [winter/f(1-6)/session] - Returns loot received from slayer quests or fishing stats. /loot fishing winter returns winter sea creatures instead.
-- /display <zombie/spider/wolf/fishing/catacombs> [winter/f(1-6)/session] - Text display for trackers. /display fishing winter displays winter sea creatures instead.
+- /display <zombie/spider/wolf/fishing/catacombs/auto/off> [winter/f(1-6)/session] - Text display for trackers. /display fishing winter displays winter sea creatures instead. /display auto automatically displays the loot for the slayer quest you have active.
 - /resetloot <zombie/spider/wolf/fishing/catacombs/confirm/cancel> -  - Resets loot for trackers. /resetloot confirm confirms the reset.
 - /move <coords/display/dungeontimer/skill50> <x> <y> - Moves text display to specified X and Y coordinates.
 - /scale <coords/display/dungeontimer/skill50> <scale (0.1 - 10)> - Scales text display to a specified multipler between 0.1x and 10x.

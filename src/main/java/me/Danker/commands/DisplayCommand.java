@@ -13,6 +13,7 @@ import net.minecraft.util.EnumChatFormatting;
 
 public class DisplayCommand extends CommandBase {
 	public static String display;
+	public static boolean auto;
 
 	@Override
 	public String getCommandName() {
@@ -21,7 +22,7 @@ public class DisplayCommand extends CommandBase {
 
 	@Override
 	public String getCommandUsage(ICommandSender arg0) {
-		return "/" + getCommandName() + " <zombie/spider/wolf/fishing/catacombs/off> [winter/festival/session/f(1-6)]";
+		return "/" + getCommandName() + " <zombie/spider/wolf/fishing/catacombs/auto/off> [winter/festival/session/f(1-6)]";
 	}
 
 	@Override
@@ -32,7 +33,7 @@ public class DisplayCommand extends CommandBase {
 	@Override
 	public List<String> addTabCompletionOptions(ICommandSender sender, String[] args, BlockPos pos) {
 		if (args.length == 1) {
-			return getListOfStringsMatchingLastWord(args, "wolf", "spider", "zombie", "fishing", "catacombs", "off");
+			return getListOfStringsMatchingLastWord(args, "wolf", "spider", "zombie", "fishing", "catacombs", "auto", "off");
 		} else if (args.length == 2 && args[0].equalsIgnoreCase("fishing")) {
 			return getListOfStringsMatchingLastWord(args, "winter", "festival", "session");
 		} else if (args.length == 2 && args[0].equalsIgnoreCase("catacombs")) {
@@ -140,13 +141,20 @@ public class DisplayCommand extends CommandBase {
 				player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Usage: /display catacombs <f1/f2/f3/f4/f5/f6>"));
 				return;
 			}
+		} else if (arg1[0].equalsIgnoreCase("auto")) {
+			auto = true;
+			player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Display set to " + EnumChatFormatting.DARK_GREEN + "auto" + EnumChatFormatting.GREEN + "."));
+			cf.writeBooleanConfig("misc", "autoDisplay", true);
+			return;
 		} else if (arg1[0].equalsIgnoreCase("off")) {
 			display = "off";
 		} else {
 			player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Usage: " + getCommandUsage(arg0)));
 			return;
 		}
+		auto = false;
 		player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Display set to " + EnumChatFormatting.DARK_GREEN + display + EnumChatFormatting.GREEN + "."));
+		cf.writeBooleanConfig("misc", "autoDisplay", false);
 		cf.writeStringConfig("misc", "display", display);
 	}
 

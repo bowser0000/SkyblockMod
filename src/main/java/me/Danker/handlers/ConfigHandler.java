@@ -316,6 +316,7 @@ public class ConfigHandler {
 		if (!hasKey("catacombs", "floorSixTime")) writeDoubleConfig("catacombs", "floorSixTime", 0);
 		
 		if (!hasKey("misc", "display")) writeStringConfig("misc", "display", "off");
+		if (!hasKey("misc", "autoDisplay")) writeBooleanConfig("misc", "autoDisplay", false);
 		
 		ScaledResolution scaled = new ScaledResolution(Minecraft.getMinecraft());
 		int height = scaled.getScaledHeight();
@@ -485,6 +486,7 @@ public class ConfigHandler {
 		
 		final DisplayCommand ds = new DisplayCommand();
 		ds.display = getString("misc", "display");
+		ds.auto = getBoolean("misc", "autoDisplay");
 		
 		final MoveCommand moc = new MoveCommand();
 		moc.coordsXY[0] = getInt("locations", "coordsX");

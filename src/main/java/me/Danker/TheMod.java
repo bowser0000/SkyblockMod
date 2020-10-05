@@ -56,6 +56,7 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.scoreboard.ScoreObjective;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IChatComponent;
@@ -1804,14 +1805,33 @@ public class TheMod
     	// Check if player is in Skyblock every second
     	tickAmount++;
     	if (tickAmount % 20 == 0) {
-    		EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
+    		Minecraft mc = Minecraft.getMinecraft();
+    		EntityPlayerSP player = mc.thePlayer;
+    		
     		if (player != null) {
         		Utils.checkForSkyblock();
-        		// if (Utils.inSkyblock) {
-        			// System.out.println("Autosyncing inventory to server...");
-        			// player.inventoryContainer.detectAndSendChanges(); // Spirit boot fix every 1 second
-        		// }
     		}
+    		
+    		if (DisplayCommand.auto && mc != null && mc.theWorld != null) {
+    			List<String> scoreboard = ScoreboardHandler.getSidebarLines();
+    			boolean found = false;
+    			for (String s : scoreboard) {
+    				String sCleaned = ScoreboardHandler.cleanSB(s);
+    				if (sCleaned.contains("Sven Packmaster")) {
+    					DisplayCommand.display = "wolf";
+    					found = true;
+    				} else if (sCleaned.contains("Tarantula Broodfather")) {
+    					DisplayCommand.display = "spider";
+    					found = true;
+    				} else if (sCleaned.contains("Revenant Horror")) {
+    					DisplayCommand.display = "zombie";
+    					found = true;
+    				}
+    			}
+    			if (!found) DisplayCommand.display = "off";
+    			ConfigHandler.writeStringConfig("misc", "display", DisplayCommand.display);
+    		}
+    		
     		tickAmount = 0;
     	}
     	
