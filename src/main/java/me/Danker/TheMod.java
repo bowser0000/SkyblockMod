@@ -272,7 +272,7 @@ public class TheMod
         	watcherClearTime = System.currentTimeMillis() / 1000;
         }
 		if (message.contains("PUZZLE FAIL! ") || message.contains("chose the wrong answer! I shall never forget this moment")) {
-			dungeonDeaths++;
+			puzzleFails++;
 		}
         
     	if (message.contains(":")) return;
