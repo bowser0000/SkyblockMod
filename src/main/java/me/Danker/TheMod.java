@@ -243,7 +243,7 @@ public class TheMod
     		String[] actionBarSections = event.message.getUnformattedText().split(" {3,}");
     		for (String section : actionBarSections) {
     			if (tc.skill50DisplayToggled) {
-    				if (section.contains("(")) {
+    				if (section.contains("+") && section.contains("/") && section.contains("(")) {
     					if (section.contains("Runecrafting")) return;
     					
     					String xpGained = section.substring(section.indexOf("+"), section.indexOf("(") - 1);

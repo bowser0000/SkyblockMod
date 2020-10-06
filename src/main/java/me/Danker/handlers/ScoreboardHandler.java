@@ -41,7 +41,7 @@ public class ScoreboardHandler {
 		Collection<Score> scores = scoreboard.getSortedScores(objective);
 		List<Score> list = Lists.newArrayList(scores.stream()
 				.filter(input -> input != null && input.getPlayerName() != null && !input.getPlayerName()
-						.startsWith("#"))
+				.startsWith("#"))
 				.collect(Collectors.toList()));
 		
 		if (list.size() > 15) {
