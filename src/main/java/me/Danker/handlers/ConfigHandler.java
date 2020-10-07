@@ -186,6 +186,7 @@ public class ConfigHandler {
 		if (!hasKey("toggles", "GolemAlerts")) writeBooleanConfig("toggles", "GolemAlerts", false);
 		if (!hasKey("toggles", "ExpertiseLore")) writeBooleanConfig("toggles", "ExpertiseLore", true);
 		if (!hasKey("toggles", "Skill50Display")) writeBooleanConfig("toggles", "Skill50Display", false);
+		if (!hasKey("toggles", "OutlineText")) writeBooleanConfig("toggles", "OutlineText", false);
 		
 		if (!hasKey("api", "APIKey")) writeStringConfig("api", "APIKey", "");
 		
@@ -349,6 +350,7 @@ public class ConfigHandler {
 		tf.golemAlertToggled = getBoolean("toggles", "GolemAlerts");
 		tf.expertiseLoreToggled = getBoolean("toggles", "ExpertiseLore");
 		tf.skill50DisplayToggled = getBoolean("toggles", "Skill50Display");
+		tf.outlineTextToggled = getBoolean("toggles", "OutlineText");
 		
 		final BlockSlayerCommand bs = new BlockSlayerCommand();
 		String onlySlayer = getString("toggles", "BlockSlayer");

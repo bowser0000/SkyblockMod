@@ -2,8 +2,10 @@ package me.Danker.handlers;
 
 import org.lwjgl.opengl.GL11;
 
+import me.Danker.commands.ToggleCommand;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
+import net.minecraft.util.StringUtils;
 
 public class TextRenderer extends Gui {
 	public TextRenderer(Minecraft mc, String text, int x, int y, double scale) {
@@ -13,7 +15,16 @@ public class TextRenderer extends Gui {
 		y -= mc.fontRendererObj.FONT_HEIGHT;
 		for (String line : text.split("\n")) {
 			y += mc.fontRendererObj.FONT_HEIGHT * scale;
-			drawString(mc.fontRendererObj, line, (int) Math.round(x / scale), (int) Math.round(y / scale), 0xFFFFFF);
+			if (ToggleCommand.outlineTextToggled) {
+				String noColorLine = StringUtils.stripControlCodes(line);
+				mc.fontRendererObj.drawString(noColorLine, (int) Math.round(x / scale) - 1, (int) Math.round(y / scale), 0x000000, false);
+				mc.fontRendererObj.drawString(noColorLine, (int) Math.round(x / scale) + 1, (int) Math.round(y / scale), 0x000000, false);
+				mc.fontRendererObj.drawString(noColorLine, (int) Math.round(x / scale), (int) Math.round(y / scale) - 1, 0x000000, false);
+				mc.fontRendererObj.drawString(noColorLine, (int) Math.round(x / scale), (int) Math.round(y / scale) + 1, 0x000000, false);
+				mc.fontRendererObj.drawString(line, (int) Math.round(x / scale), (int) Math.round(y / scale), 0xFFFFFF, false);
+			} else {
+				mc.fontRendererObj.drawString(line, (int) Math.round(x / scale), (int) Math.round(y / scale), 0xFFFFFF, true);
+			}
 		}
 		GL11.glScaled(scaleReset, scaleReset, scaleReset);
 	}
