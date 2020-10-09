@@ -21,6 +21,7 @@ import me.Danker.commands.BankCommand;
 import me.Danker.commands.BlockSlayerCommand;
 import me.Danker.commands.ChatMaddoxCommand;
 import me.Danker.commands.DHelpCommand;
+import me.Danker.commands.DankerGuiCommand;
 import me.Danker.commands.DisplayCommand;
 import me.Danker.commands.DungeonsCommand;
 import me.Danker.commands.GetkeyCommand;
@@ -38,6 +39,10 @@ import me.Danker.commands.SkillsCommand;
 import me.Danker.commands.SkyblockPlayersCommand;
 import me.Danker.commands.SlayerCommand;
 import me.Danker.commands.ToggleCommand;
+import me.Danker.gui.DankerGui;
+import me.Danker.gui.DisplayGui;
+import me.Danker.gui.EditLocationsGui;
+import me.Danker.gui.OnlySlayerGui;
 import me.Danker.handlers.APIHandler;
 import me.Danker.handlers.ConfigHandler;
 import me.Danker.handlers.ScoreboardHandler;
@@ -56,7 +61,6 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.scoreboard.ScoreObjective;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IChatComponent;
@@ -106,6 +110,7 @@ public class TheMod
     static KeyBinding[] keyBindings = new KeyBinding[1];
     static int lastMouse = -1;
     static boolean usingLabymod = false;
+    public static String guiToOpen = null;
     
     static double dungeonStartTime = 0;
     static double bloodOpenTime = 0;
@@ -187,6 +192,7 @@ public class TheMod
     	ClientCommandHandler.instance.registerCommand(new BlockSlayerCommand());
     	ClientCommandHandler.instance.registerCommand(new DungeonsCommand());
     	ClientCommandHandler.instance.registerCommand(new LobbySkillsCommand());
+    	ClientCommandHandler.instance.registerCommand(new DankerGuiCommand());	
     }
     
     @EventHandler
@@ -973,6 +979,8 @@ public class TheMod
     	final ToggleCommand tc = new ToggleCommand();
     	final MoveCommand moc = new MoveCommand();
     	final DisplayCommand ds = new DisplayCommand();
+    	
+    	if (Minecraft.getMinecraft().currentScreen instanceof EditLocationsGui) return;
     	
     	if (tc.coordsToggled) {
     		EntityPlayer player = Minecraft.getMinecraft().thePlayer;
@@ -1847,6 +1855,25 @@ public class TheMod
     		}
     		skillTimer--;
      	}
+    }
+    
+    // Delay GUI by 1 tick
+    @SubscribeEvent
+    public void onRenderTick(TickEvent.RenderTickEvent event) {
+    	if (guiToOpen != null) {
+    		Minecraft mc = Minecraft.getMinecraft();
+        	if (guiToOpen.startsWith("dankergui")) {
+        		int page = Character.getNumericValue(guiToOpen.charAt(guiToOpen.length() - 1));
+        		mc.displayGuiScreen(new DankerGui(page));
+        	} else if (guiToOpen.equals("displaygui")) {
+        		mc.displayGuiScreen(new DisplayGui());
+        	} else if (guiToOpen.equals("onlyslayergui")) {
+        		mc.displayGuiScreen(new OnlySlayerGui());
+        	} else if (guiToOpen.equals("editlocations")) {
+        		mc.displayGuiScreen(new EditLocationsGui());
+        	}
+        	guiToOpen = null;
+    	}
     }
     
     @SubscribeEvent

@@ -18,6 +18,7 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.scoreboard.ScoreObjective;
 import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StringUtils;
 
 public class Utils {
@@ -221,6 +222,10 @@ public class Utils {
 			if (currentLevelXp == skillXPPerLevel[i]) return xpAdded;
 		}
 		return 0;
+	}
+	
+	public static String getColouredBoolean(boolean bool) {
+		return bool ? EnumChatFormatting.GREEN + "On" : EnumChatFormatting.RED + "Off";
 	}
 	
 }
