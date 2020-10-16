@@ -1,5 +1,6 @@
 package me.Danker.gui;
 
+import me.Danker.TheMod;
 import me.Danker.commands.BlockSlayerCommand;
 import me.Danker.handlers.ConfigHandler;
 import me.Danker.handlers.TextRenderer;
@@ -13,6 +14,7 @@ public class OnlySlayerGui extends GuiScreen {
 	private int onlyNumberInt = 4;
 	private String onlyName = "Revenant Horror";
 	
+	private GuiButton goBack;
 	private GuiButton off;
 	private GuiButton zombie;
 	private GuiButton spider;
@@ -46,6 +48,7 @@ public class OnlySlayerGui extends GuiScreen {
 			onlyNumberInt = 4;
 		}
 		
+		goBack = new GuiButton(0, 2, height - 30, 100, 20, "Go Back");
 		off = new GuiButton(0, width / 2 - 100, (int) (height * 0.3), "Off");
 		zombie = new GuiButton(0, width / 2 - 200, (int) (height * 0.4), 120, 20, "Zombie");
 		spider = new GuiButton(0, width / 2 - 60, (int) (height * 0.4), 120, 20, "Spider");
@@ -63,6 +66,7 @@ public class OnlySlayerGui extends GuiScreen {
 		this.buttonList.add(two);
 		this.buttonList.add(three);
 		this.buttonList.add(four);
+		this.buttonList.add(goBack);
 	}
 	
 	@Override
@@ -84,7 +88,9 @@ public class OnlySlayerGui extends GuiScreen {
 	
 	@Override
 	public void actionPerformed(GuiButton button) {
-		if (button == off) {
+		if (button == goBack) {
+			TheMod.guiToOpen = "dankergui1";
+		} else if (button == off) {
 			BlockSlayerCommand.onlySlayerName = "";
 			BlockSlayerCommand.onlySlayerNumber = "";
 			ConfigHandler.writeStringConfig("toggles", "BlockSlayer", "");
