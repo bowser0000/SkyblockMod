@@ -36,6 +36,7 @@ public class DankerGui extends GuiScreen {
 	private GuiButton chatMaddox;
 	private GuiButton spiritBearAlert;
 	private GuiButton aotd;
+	private GuiButton lividDagger;
 	private GuiButton sceptreMessages;
 	private GuiButton petColours;
 	private GuiButton dungeonTimer;
@@ -78,12 +79,14 @@ public class DankerGui extends GuiScreen {
 		slayerCount = new GuiButton(0, width / 2 - 100, (int) (height * 0.7), "Count Total 20% Drops: " + Utils.getColouredBoolean(ToggleCommand.slayerCountTotal));
 		// Page 2
 		aotd = new GuiButton(0, width / 2 - 100, (int) (height * 0.1), "Disable AOTD Ability: " + Utils.getColouredBoolean(ToggleCommand.aotdToggled));
-		sceptreMessages = new GuiButton(0, width / 2 - 100, (int) (height * 0.2), "Enable Spirit Sceptre Messages: " + Utils.getColouredBoolean(ToggleCommand.sceptreMessages));
-		petColours = new GuiButton(0, width / 2 - 100, (int) (height * 0.3), "Colour Pet Backgrounds: " + Utils.getColouredBoolean(ToggleCommand.petColoursToggled));
-		dungeonTimer = new GuiButton(0, width / 2 - 100, (int) (height * 0.4), "Display Dungeon Timers: " + Utils.getColouredBoolean(ToggleCommand.dungeonTimerToggled));
-		golemAlerts = new GuiButton(0, width / 2 - 100, (int) (height * 0.5), "Alert When Golem Spawns: " + Utils.getColouredBoolean(ToggleCommand.golemAlertToggled));
-		expertiseLore = new GuiButton(0, width / 2 - 100, (int) (height * 0.6), "Expertise Kills In Lore: " + Utils.getColouredBoolean(ToggleCommand.expertiseLoreToggled));
-		skill50Display = new GuiButton(0, width / 2 - 100, (int) (height * 0.7), "Display Progress To Skill Level 50: " + Utils.getColouredBoolean(ToggleCommand.skill50DisplayToggled));
+		lividDagger = new GuiButton(0, width / 2 - 100, (int) (height * 0.2), "Disable Livid Dagger Ability: " + Utils.getColouredBoolean(ToggleCommand.lividDaggerToggled));
+		sceptreMessages = new GuiButton(0, width / 2 - 100, (int) (height * 0.3), "Enable Spirit Sceptre Messages: " + Utils.getColouredBoolean(ToggleCommand.sceptreMessages));
+		petColours = new GuiButton(0, width / 2 - 100, (int) (height * 0.4), "Colour Pet Backgrounds: " + Utils.getColouredBoolean(ToggleCommand.petColoursToggled));
+		dungeonTimer = new GuiButton(0, width / 2 - 100, (int) (height * 0.5), "Display Dungeon Timers: " + Utils.getColouredBoolean(ToggleCommand.dungeonTimerToggled));
+		golemAlerts = new GuiButton(0, width / 2 - 100, (int) (height * 0.6), "Alert When Golem Spawns: " + Utils.getColouredBoolean(ToggleCommand.golemAlertToggled));
+		expertiseLore = new GuiButton(0, width / 2 - 100, (int) (height * 0.7), "Expertise Kills In Lore: " + Utils.getColouredBoolean(ToggleCommand.expertiseLoreToggled));
+		// Page 3
+		skill50Display = new GuiButton(0, width / 2 - 100, (int) (height * 0.1), "Display Progress To Skill Level 50: " + Utils.getColouredBoolean(ToggleCommand.skill50DisplayToggled));
 		
 		if (page == 1) {
 			this.buttonList.add(changeDisplay);
@@ -97,11 +100,16 @@ public class DankerGui extends GuiScreen {
 			this.buttonList.add(closeGUI);
 		} else if (page == 2) {
 			this.buttonList.add(aotd);
+			this.buttonList.add(lividDagger);
 			this.buttonList.add(sceptreMessages);
 			this.buttonList.add(petColours);
 			this.buttonList.add(dungeonTimer);
 			this.buttonList.add(golemAlerts);
 			this.buttonList.add(expertiseLore);
+			this.buttonList.add(nextPage);
+			this.buttonList.add(backPage);
+			this.buttonList.add(closeGUI);
+		} else if (page == 3) {
 			this.buttonList.add(skill50Display);
 			this.buttonList.add(backPage);
 			this.buttonList.add(closeGUI);
@@ -164,6 +172,10 @@ public class DankerGui extends GuiScreen {
 			ToggleCommand.aotdToggled = !ToggleCommand.aotdToggled;
 			ConfigHandler.writeBooleanConfig("toggles", "AOTD", ToggleCommand.aotdToggled);
 			aotd.displayString = "Disable AOTD Ability: " + Utils.getColouredBoolean(ToggleCommand.aotdToggled);
+		} else if (button == lividDagger) {
+			ToggleCommand.lividDaggerToggled = !ToggleCommand.lividDaggerToggled;
+			ConfigHandler.writeBooleanConfig("toggles", "LividDagger", ToggleCommand.lividDaggerToggled);
+			lividDagger.displayString = "Disable Livid Dagger Ability: " + Utils.getColouredBoolean(ToggleCommand.lividDaggerToggled);
 		} else if (button == sceptreMessages) {
 			ToggleCommand.sceptreMessages = !ToggleCommand.sceptreMessages;
 			ConfigHandler.writeBooleanConfig("toggles", "SceptreMessages", ToggleCommand.sceptreMessages);

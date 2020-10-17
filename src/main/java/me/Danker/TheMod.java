@@ -1882,8 +1882,13 @@ public class TheMod
     	ItemStack item = event.entityPlayer.getHeldItem();
     	if (item == null) return;
     	
-    	if (ToggleCommand.aotdToggled && item.getDisplayName().contains("Aspect of the Dragons") && event.action == PlayerInteractEvent.Action.RIGHT_CLICK_AIR) {
-    		event.setCanceled(true);
+    	if (event.action == PlayerInteractEvent.Action.RIGHT_CLICK_AIR) {
+    		if (ToggleCommand.aotdToggled && item.getDisplayName().contains("Aspect of the Dragons")) {
+    			event.setCanceled(true);
+    		}
+    		if (ToggleCommand.lividDaggerToggled && item.getDisplayName().contains("Livid Dagger")) {
+    			event.setCanceled(true);
+    		}
     	}
     }
     

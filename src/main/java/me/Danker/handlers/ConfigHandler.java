@@ -179,6 +179,7 @@ public class ConfigHandler {
 		if (!hasKey("toggles", "ChatMaddox")) writeBooleanConfig("toggles", "ChatMaddox", true);
 		if (!hasKey("toggles", "SpiritBearAlerts")) writeBooleanConfig("toggles", "SpiritBearAlerts", true);
 		if (!hasKey("toggles", "AOTD")) writeBooleanConfig("toggles", "AOTD", false);
+		if (!hasKey("toggles", "LividDagger")) writeBooleanConfig("toggles", "LividDagger", false);
 		if (!hasKey("toggles", "SceptreMessages")) writeBooleanConfig("toggles", "SceptreMessages", true);
 		if (!hasKey("toggles", "PetColors")) writeBooleanConfig("toggles", "PetColors", false);
 		if (!hasKey("toggles", "DungeonTimer")) writeBooleanConfig("toggles", "DungeonTimer", false);
@@ -344,6 +345,7 @@ public class ConfigHandler {
 		tf.chatMaddoxToggled = getBoolean("toggles", "ChatMaddox");
 		tf.spiritBearAlerts = getBoolean("toggles", "SpiritBearAlerts");
 		tf.aotdToggled = getBoolean("toggles", "AOTD");
+		tf.lividDaggerToggled = getBoolean("toggles", "LividDagger");
 		tf.sceptreMessages = getBoolean("toggles", "SceptreMessages");
 		tf.petColoursToggled = getBoolean("toggles", "PetColors");
 		tf.dungeonTimerToggled = getBoolean("toggles", "DungeonTimer");
