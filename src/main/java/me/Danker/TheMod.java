@@ -45,6 +45,7 @@ import me.Danker.gui.EditLocationsGui;
 import me.Danker.gui.OnlySlayerGui;
 import me.Danker.handlers.APIHandler;
 import me.Danker.handlers.ConfigHandler;
+import me.Danker.handlers.PacketHandler;
 import me.Danker.handlers.ScoreboardHandler;
 import me.Danker.handlers.TextRenderer;
 import me.Danker.utils.Utils;
@@ -86,6 +87,7 @@ import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent.KeyInputEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
+import net.minecraftforge.fml.common.network.FMLNetworkEvent.ClientConnectedToServerEvent;
 import net.minecraftforge.fml.common.versioning.DefaultArtifactVersion;
 
 @Mod(modid = TheMod.MODID, version = TheMod.VERSION, clientSideOnly = true)
@@ -124,6 +126,7 @@ public class TheMod
     public void init(FMLInitializationEvent event) {
 		FMLCommonHandler.instance().bus().register(this);
 		MinecraftForge.EVENT_BUS.register(this);
+		MinecraftForge.EVENT_BUS.register(new PacketHandler());
 		
 		final ConfigHandler cf = new ConfigHandler();
 		cf.reloadConfig();
@@ -2031,6 +2034,15 @@ public class TheMod
     				Utils.drawOnSlot(inventory.inventorySlots.inventorySlots.size(), slot.xDisplayPosition, slot.yDisplayPosition, colour);
     			}
     		}
+    	}
+    }
+    
+    @SubscribeEvent
+    public void onServerConnect(ClientConnectedToServerEvent event) {
+    	if (!PacketHandler.added) {
+        	event.manager.channel().pipeline().addBefore("packet_handler", "danker_packet_handler", new PacketHandler());
+        	PacketHandler.added = true;
+        	System.out.println("Added packet handler to channel pipeline.");
     	}
     }
     
