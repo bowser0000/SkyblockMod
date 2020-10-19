@@ -48,11 +48,11 @@ public class DisplayGui extends GuiScreen {
 		goBack = new GuiButton(0, 2, height - 30, 100, 20, "Go Back");
 		editLocations = new GuiButton(0, 2, height - 55, 100, 20, "Edit Locations");
 		showSession = new GuiButton(0, width / 2 - 100, (int) (height * 0.1), "Current Session Only: " + Utils.getColouredBoolean(addSession));
-		off = new GuiButton(0, width / 2 - 100, (int) (height * 0.2), "Off");
-		zombie = new GuiButton(0, width / 2 - 190, (int) (height * 0.3), 80, 20, "Zombie");
-		spider = new GuiButton(0, width / 2 - 90, (int) (height * 0.3), 80, 20, "Spider");
-		wolf = new GuiButton(0, width / 2 + 10, (int) (height * 0.3), 80, 20, "Wolf");
-		auto = new GuiButton(0, width / 2 + 110, (int) (height * 0.3), 80, 20, "Auto");
+		off = new GuiButton(0, width / 2 - 210, (int) (height * 0.2), "Off");
+		auto = new GuiButton(0, width / 2 + 10, (int) (height * 0.2), "Auto");
+		zombie = new GuiButton(0, width / 2 - 190, (int) (height * 0.3), 110, 20, "Zombie");
+		spider = new GuiButton(0, width / 2 - 55, (int) (height * 0.3), 110, 20, "Spider");
+		wolf = new GuiButton(0, width / 2 + 75, (int) (height * 0.3), 110, 20, "Wolf");
 		fishing = new GuiButton(0, width / 2 - 190, (int) (height * 0.4), 110, 20, "Fishing");
 		fishingWinter = new GuiButton(0, width / 2 - 55, (int) (height * 0.4), 110, 20, "Fishing Winter");
 		fishingFestival = new GuiButton(0, width / 2 + 75, (int) (height * 0.4), 110, 20, "Fishing Festival");
@@ -65,10 +65,10 @@ public class DisplayGui extends GuiScreen {
 		
 		this.buttonList.add(showSession);
 		this.buttonList.add(off);
+		this.buttonList.add(auto);
 		this.buttonList.add(zombie);
 		this.buttonList.add(spider);
 		this.buttonList.add(wolf);
-		this.buttonList.add(auto);
 		this.buttonList.add(fishing);
 		this.buttonList.add(fishingWinter);
 		this.buttonList.add(fishingFestival);

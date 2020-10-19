@@ -1837,6 +1837,21 @@ public class TheMod
     				} else if (sCleaned.contains("Revenant Horror")) {
     					DisplayCommand.display = "zombie";
     					found = true;
+    				} else if (sCleaned.contains("The Catacombs (")) {
+    					if (sCleaned.contains("F1")) {
+    						DisplayCommand.display = "catacombs_floor_one";
+    					} else if (sCleaned.contains("F2")) {
+    						DisplayCommand.display = "catacombs_floor_two";
+    					} else if (sCleaned.contains("F3")) {
+    						DisplayCommand.display = "catacombs_floor_three";
+    					} else if (sCleaned.contains("F4")) {
+    						DisplayCommand.display = "catacombs_floor_four";
+    					} else if (sCleaned.contains("F5")) {
+    						DisplayCommand.display = "catacombs_floor_five";
+    					} else if (sCleaned.contains("F6")) {
+    						DisplayCommand.display = "catacombs_floor_six";
+    					}
+    					found = true;
     				}
     			}
     			if (!found) DisplayCommand.display = "off";
