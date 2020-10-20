@@ -131,36 +131,74 @@ public class TheMod
 		final ConfigHandler cf = new ConfigHandler();
 		cf.reloadConfig();
 		
-		// For golden enchants
+		// Custom color enchants
 		t6Enchants.put("9Bane of Arthropods VI", "6Bane of Arthropods VI");
 		t6Enchants.put("9Critical VI", "6Critical VI");
+	    	t6Enchants.put("9Dragon Hunter I", "bDragon Hunter I");
+	    	t6Enchants.put("9Dragon Hunter II", "bDragon Hunter II");
+	    	t6Enchants.put("9Dragon Hunter III", "5Dragon Hunter III");
+	    	t6Enchants.put("9Dragon Hunter IV", "5Dragon Hunter IV");
 		t6Enchants.put("9Dragon Hunter V", "6Dragon Hunter V");
 		t6Enchants.put("9Ender Slayer VI", "6Ender Slayer VI");
 		t6Enchants.put("9Experience IV", "6Experience IV");
 		t6Enchants.put("9Giant Killer VI", "6Giant Killer VI");
+	   	t6Enchants.put("9Lethality VI", "6Lethality VI"); 
 		t6Enchants.put("9Life Steal IV", "6Life Steal IV");
 		t6Enchants.put("9Looting IV", "6Looting IV");
 		t6Enchants.put("9Luck VI", "6Luck VI");
 		t6Enchants.put("9Scavenger IV", "6Scavenger IV");
-		t6Enchants.put("9Scavenger V", "6Scavenger V");
+		t6Enchants.put("9Scavenger V", "dScavenger V");
 		t6Enchants.put("9Sharpness VI", "6Sharpness VI");
-		t6Enchants.put("9Smite VII", "6Smite VII");
 		t6Enchants.put("9Smite VI", "6Smite VI");
-		t6Enchants.put("9Vampirism VI", "6Vampirism VI");
-		t6Enchants.put("9Power VI", "6Power VI");
+		t6Enchants.put("9Smite VII", "dSmite VII");
+	    	t6Enchants.put("9Vampirism VI", "6Vampirism VI");
+	    	t6Enchants.put("9Thunderlord VI", "6Thunderlord VI");
+	    
+		t6Enchants.put("9Infinite Quiver VI", "bInfinite Quiver VI");
+	    	t6Enchants.put("9Infinite Quiver VII", "bInfinite Quiver VII");
+	    	t6Enchants.put("9Infinite Quiver VIII", "5Infinite Quiver VIII");
+	    	t6Enchants.put("9Infinite Quiver IX", "5Infinite Quiver IX");
+	    	t6Enchants.put("9Infinite Quiver X", "6Infinite Quiver X");
+	    	t6Enchants.put("9Overload ", "bOverload I");
+	    	t6Enchants.put("9Overload ", "bOverload II");
+	    	t6Enchants.put("9Overload ", "5Overload III");
+	    	t6Enchants.put("9Overload ", "5Overload IV");
+	    	t6Enchants.put("9Overload ", "66Overload V");
+	    	t6Enchants.put("9Power VI", "6Power VI");
+	    
 		t6Enchants.put("9Growth VI", "6Growth VI");
-		t6Enchants.put("9Protection VI", "6Protection VI");
+		t6Enchants.put("9Feather Falling VI", "bFeather Falling VI");
+	    	t6Enchants.put("9Feather Falling VII", "bFeather Falling VII");
+	    	t6Enchants.put("9Feather Falling VIII", "5Feather Falling VIII");
+	    	t6Enchants.put("9Feather Falling IX", "5Feather Falling IX");
+	    	t6Enchants.put("9Feather Falling X", "6Feather Falling X");
+	   	t6Enchants.put("9Protection VI", "6Protection VI");
+	    	t6Enchants.put("9True Protection I", "5True Protection I");
+	    	t6Enchants.put("9Sugar Rush I", "bSugar Rush I");
+	    	t6Enchants.put("9Sugar Rush II", "5Sugar Rush II");
+	    	t6Enchants.put("9Sugar Rush III", "6Sugar Rush III");
+	    
 		t6Enchants.put("9Efficiency VI", "6Efficiency VI");
+	    	t6Enchants.put("9Replenish I", "5Replenish I");
+	    	t6Enchants.put("9Rainbow I", "5Rainbow I");
+	    
 		t6Enchants.put("9Angler VI", "6Angler VI");
 		t6Enchants.put("9Caster VI", "6Caster VI");
+	    	t6Enchants.put("9Expertise I", "bExpertise I");
+	    	t6Enchants.put("9Expertise II", "bExpertise II");
+	    	t6Enchants.put("9Expertise III", "bExpertise III");
+	    	t6Enchants.put("9Expertise IV", "5Expertise IV");
+	    	t6Enchants.put("9Expertise VI", "5Expertise VI");
+	    	t6Enchants.put("9Expertise VII", "5Expertise VII");
+	    	t6Enchants.put("9Expertise VIII", "6Expertise VIII");
+	    	t6Enchants.put("9Expertise IX", "6Expertise IX");
+	    	t6Enchants.put("9Expertise X", "dExpertise X");
 		t6Enchants.put("9Frail VI", "6Frail VI");
 		t6Enchants.put("9Luck of the Sea VI", "6Luck of the Sea VI");
 		t6Enchants.put("9Lure VI", "6Lure VI");
 		t6Enchants.put("9Magnet VI", "6Magnet VI");
 		t6Enchants.put("9Spiked Hook VI", "6Spiked Hook VI");
-		t6Enchants.put("9Feather Falling X", "6Feather Falling X");
-		t6Enchants.put("9Infinite Quiver X", "6Infinite Quiver X");
-		
+	    	
 		String patternString = "(" + String.join("|", t6Enchants.keySet()) + ")";
 		pattern = Pattern.compile(patternString);
 		
