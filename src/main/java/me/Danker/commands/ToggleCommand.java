@@ -142,6 +142,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 														EnumChatFormatting.GREEN + " Chat Maddox menu: " + EnumChatFormatting.DARK_GREEN + chatMaddoxToggled + "\n" +
 														EnumChatFormatting.GREEN + " Spirit Bear alerts: " + EnumChatFormatting.DARK_GREEN + spiritBearAlerts + "\n" +
 														EnumChatFormatting.GREEN + " Block AOTD ability: " + EnumChatFormatting.DARK_GREEN + aotdToggled + "\n" +
+														EnumChatFormatting.GREEN + " Block Livid Dagger ability: " + EnumChatFormatting.DARK_GREEN + lividDaggerToggled + "\n" +
 														EnumChatFormatting.GREEN + " Spirit Sceptre messages: " + EnumChatFormatting.DARK_GREEN + sceptreMessages + "\n" +
 														EnumChatFormatting.GREEN + " Pet colours: " + EnumChatFormatting.DARK_GREEN + petColoursToggled + "\n" +
 														EnumChatFormatting.GREEN + " Dungeon timer: " + EnumChatFormatting.DARK_GREEN + dungeonTimerToggled + "\n" +
