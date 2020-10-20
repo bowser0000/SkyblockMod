@@ -24,7 +24,7 @@ public class SkillsCommand extends CommandBase {
 
 	@Override
 	public String getCommandUsage(ICommandSender arg0) {
-		return getCommandName() + " [name]";
+		return "/" + getCommandName() + " [name]";
 	}
 
 	@Override
@@ -139,14 +139,30 @@ public class SkillsCommand extends CommandBase {
 				}
 				
 				JsonObject achievementObject = playerObject.get("player").getAsJsonObject().get("achievements").getAsJsonObject();
-				farmingLevel = achievementObject.get("skyblock_harvester").getAsInt();
-				miningLevel = achievementObject.get("skyblock_excavator").getAsInt();
-				combatLevel = achievementObject.get("skyblock_combat").getAsInt();
-				foragingLevel = achievementObject.get("skyblock_gatherer").getAsInt();
-				fishingLevel = achievementObject.get("skyblock_angler").getAsInt();
-				enchantingLevel = achievementObject.get("skyblock_augmentation").getAsInt();
-				alchemyLevel = achievementObject.get("skyblock_concoctor").getAsInt();
-				tamingLevel = achievementObject.get("skyblock_domesticator").getAsInt();
+				if (achievementObject.has("skyblock_harvester")) {
+					farmingLevel = achievementObject.get("skyblock_harvester").getAsInt();
+				}
+				if (achievementObject.has("skyblock_excavator")) {
+					miningLevel = achievementObject.get("skyblock_excavator").getAsInt();
+				}
+				if (achievementObject.has("skyblock_combat")) {
+					combatLevel = achievementObject.get("skyblock_combat").getAsInt();
+				}
+				if (achievementObject.has("skyblock_gatherer")) {
+					foragingLevel = achievementObject.get("skyblock_gatherer").getAsInt();
+				}
+				if (achievementObject.has("skyblock_angler")) {
+					fishingLevel = achievementObject.get("skyblock_angler").getAsInt();
+				}
+				if (achievementObject.has("skyblock_augmentation")) {
+					enchantingLevel = achievementObject.get("skyblock_augmentation").getAsInt();
+				}
+				if (achievementObject.has("skyblock_concoctor")) {
+					alchemyLevel = achievementObject.get("skyblock_concoctor").getAsInt();
+				}
+				if (achievementObject.has("skyblock_domesticator")) {
+					tamingLevel = achievementObject.get("skyblock_domesticator").getAsInt();
+				}
 			}
 
 			double skillAvg = (farmingLevel + miningLevel + combatLevel + foragingLevel + fishingLevel + enchantingLevel + alchemyLevel + tamingLevel) / 8;

@@ -23,7 +23,7 @@ public class ResetLootCommand extends CommandBase {
 
 	@Override
 	public String getCommandUsage(ICommandSender arg0) {
-		return getCommandName() + "<zombie/spider/wolf/fishing/catacombs/confirm/cancel>";
+		return "/" + getCommandName() + "<zombie/spider/wolf/fishing/catacombs/confirm/cancel>";
 	}
 
 	@Override
@@ -178,6 +178,10 @@ public class ResetLootCommand extends CommandBase {
 		lc.yetisSession = 0;
 		lc.yetiTimeSession = -1;
 		lc.yetiSCsSession = -1;
+		lc.nurseSharksSession = 0;
+		lc.blueSharksSession = 0;
+		lc.tigerSharksSession = 0;
+		lc.greatWhiteSharksSession = 0;
 		cf.deleteCategory("fishing");
 		cf.reloadConfig();
 	}
@@ -207,6 +211,14 @@ public class ResetLootCommand extends CommandBase {
 		lc.epicSpiritPetsSession = 0;
 		lc.f4CoinsSpentSession = 0;
 		lc.f4TimeSpentSession = 0;
+		lc.warpedStonesSession = 0;
+		lc.shadowAssHelmsSession = 0;
+		lc.shadowAssChestsSession = 0;
+		lc.shadowAssLegsSession = 0;
+		lc.shadowAssBootsSession = 0;
+		lc.lividDaggersSession = 0;
+		lc.f5CoinsSpentSession = 0;
+		lc.f5TimeSpentSession = 0;
 		cf.deleteCategory("catacombs");
 		cf.reloadConfig();
 	}

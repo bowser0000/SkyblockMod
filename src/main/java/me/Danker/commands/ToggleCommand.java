@@ -22,9 +22,14 @@ public class ToggleCommand extends CommandBase implements ICommand {
 	public static boolean chatMaddoxToggled;
 	public static boolean spiritBearAlerts;
 	public static boolean aotdToggled;
+	public static boolean lividDaggerToggled;
 	public static boolean sceptreMessages;
 	public static boolean petColoursToggled;
 	public static boolean dungeonTimerToggled;
+	public static boolean golemAlertToggled;
+	public static boolean expertiseLoreToggled;
+	public static boolean skill50DisplayToggled;
+	public static boolean outlineTextToggled;
 	
 	@Override
 	public String getCommandName() {
@@ -33,7 +38,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 
 	@Override
 	public String getCommandUsage(ICommandSender arg0) {
-		return getCommandName() + " <gparty/coords/golden/slayercount/rngesusalerts/splitfishing/chatmaddox/spiritbearalert/aotd/sceptremessages/petcolors/dungeontimer/list>";
+		return "/" + getCommandName() + " <gparty/coords/golden/slayercount/rngesusalerts/splitfishing/chatmaddox/spiritbearalert/aotd/lividdagger/sceptremessages/petcolors/dungeontimer/golemalerts/expertiselore/skill50display/outlinetext/list>";
 	}
 
 	@Override
@@ -44,7 +49,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 	@Override
 	public List<String> addTabCompletionOptions(ICommandSender sender, String[] args, BlockPos pos) {
 		if (args.length == 1) {
-			return getListOfStringsMatchingLastWord(args, "gparty", "coords", "golden", "slayercount", "rngesusalerts", "splitfishing", "chatmaddox", "spiritbearalerts", "aotd", "sceptremessages", "petcolors", "dungeontimer", "list");
+			return getListOfStringsMatchingLastWord(args, "gparty", "coords", "golden", "slayercount", "rngesusalerts", "splitfishing", "chatmaddox", "spiritbearalerts", "aotd", "lividdagger", "sceptremessages", "petcolors", "dungeontimer", "golemalerts", "expertiselore", "skill50display", "outlinetext", "list");
 		}
 		return null;
 	}
@@ -55,7 +60,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 		final ConfigHandler cf = new ConfigHandler();
 		
 		if (arg1.length == 0) {
-			player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Usage: /toggle <gparty/coords/golden/slayercount/rngesusalerts/splitfishing/chatmaddox/spiritbearalerts/aotd/sceptremessages/petcolors/dungeontimer/list>"));
+			player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Usage: " + getCommandUsage(arg0)));
 			return;
 		}
 		
@@ -95,6 +100,10 @@ public class ToggleCommand extends CommandBase implements ICommand {
 			aotdToggled = !aotdToggled;
 			cf.writeBooleanConfig("toggles", "AOTD", aotdToggled);
 			player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Block AOTD ability been set to " + EnumChatFormatting.DARK_GREEN + aotdToggled + EnumChatFormatting.GREEN + "."));
+		} else if (arg1[0].equalsIgnoreCase("lividdagger")) {
+			lividDaggerToggled = !lividDaggerToggled;
+			cf.writeBooleanConfig("toggles", "LividDagger", lividDaggerToggled);
+			player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Block Livid Dagger ability been set to " + EnumChatFormatting.DARK_GREEN + lividDaggerToggled + EnumChatFormatting.GREEN + "."));
 		} else if (arg1[0].equalsIgnoreCase("sceptremessages")) {
 			sceptreMessages = !sceptreMessages;
 			cf.writeBooleanConfig("toggles", "SceptreMessages", sceptreMessages);
@@ -107,6 +116,22 @@ public class ToggleCommand extends CommandBase implements ICommand {
 			dungeonTimerToggled = !dungeonTimerToggled;
 			cf.writeBooleanConfig("toggles", "DungeonTimer", dungeonTimerToggled);
 			player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Dungeon timer has been set to " + EnumChatFormatting.DARK_GREEN + dungeonTimerToggled + EnumChatFormatting.GREEN + "."));
+		} else if (arg1[0].equalsIgnoreCase("golemalerts")) {
+			golemAlertToggled = !golemAlertToggled;
+			cf.writeBooleanConfig("toggles", "GolemAlerts", golemAlertToggled);
+			player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Golem spawn alerts has been set to " + EnumChatFormatting.DARK_GREEN + golemAlertToggled + EnumChatFormatting.GREEN + "."));
+		} else if (arg1[0].equalsIgnoreCase("expertiselore")) {
+			expertiseLoreToggled = !expertiseLoreToggled;
+			cf.writeBooleanConfig("toggles", "ExpertiseLore", expertiseLoreToggled);
+			player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Expertise in lore has been set to " + EnumChatFormatting.DARK_GREEN + expertiseLoreToggled + EnumChatFormatting.GREEN + "."));
+		} else if (arg1[0].equalsIgnoreCase("skill50display")) {
+			skill50DisplayToggled = !skill50DisplayToggled;
+			cf.writeBooleanConfig("toggles", "Skill50Display", skill50DisplayToggled);
+			player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Skill 50 display has been set to " + EnumChatFormatting.DARK_GREEN + skill50DisplayToggled + EnumChatFormatting.GREEN + "."));
+		} else if (arg1[0].equalsIgnoreCase("outlinetext")) {
+			outlineTextToggled = !outlineTextToggled;
+			cf.writeBooleanConfig("toggles", "OutlineText", outlineTextToggled);
+			player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Outline displayed text has been set to " + EnumChatFormatting.DARK_GREEN + outlineTextToggled + EnumChatFormatting.GREEN + "."));
 		} else if (arg1[0].equalsIgnoreCase("list")) {
 			player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Guild party notifications: " + EnumChatFormatting.DARK_GREEN + gpartyToggled + "\n" +
 														EnumChatFormatting.GREEN + " Coord/Angle display: " + EnumChatFormatting.DARK_GREEN + coordsToggled + "\n" +
@@ -117,11 +142,16 @@ public class ToggleCommand extends CommandBase implements ICommand {
 														EnumChatFormatting.GREEN + " Chat Maddox menu: " + EnumChatFormatting.DARK_GREEN + chatMaddoxToggled + "\n" +
 														EnumChatFormatting.GREEN + " Spirit Bear alerts: " + EnumChatFormatting.DARK_GREEN + spiritBearAlerts + "\n" +
 														EnumChatFormatting.GREEN + " Block AOTD ability: " + EnumChatFormatting.DARK_GREEN + aotdToggled + "\n" +
+														EnumChatFormatting.GREEN + " Block Livid Dagger ability: " + EnumChatFormatting.DARK_GREEN + lividDaggerToggled + "\n" +
 														EnumChatFormatting.GREEN + " Spirit Sceptre messages: " + EnumChatFormatting.DARK_GREEN + sceptreMessages + "\n" +
 														EnumChatFormatting.GREEN + " Pet colours: " + EnumChatFormatting.DARK_GREEN + petColoursToggled + "\n" +
-														EnumChatFormatting.GREEN + " Dungeon timer: " + EnumChatFormatting.DARK_GREEN + dungeonTimerToggled));
+														EnumChatFormatting.GREEN + " Dungeon timer: " + EnumChatFormatting.DARK_GREEN + dungeonTimerToggled + "\n" +
+														EnumChatFormatting.GREEN + " Golem spawn alerts: " + EnumChatFormatting.DARK_GREEN + golemAlertToggled + "\n" +
+														EnumChatFormatting.GREEN + " Expertise in lore: " + EnumChatFormatting.DARK_GREEN + expertiseLoreToggled + "\n" +
+														EnumChatFormatting.GREEN + " Skill 50 display: " + EnumChatFormatting.DARK_GREEN + skill50DisplayToggled + "\n" +
+														EnumChatFormatting.GREEN + " Outline displayed text: " + EnumChatFormatting.DARK_GREEN + outlineTextToggled));
 		} else {
-			player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Usage: /toggle <gparty/coords/golden/slayercount/rngesusalerts/splitfishing/chatmaddox/spiritbearalerts/aotd/sceptremessages/petcolors/dungeontimer/list>"));
+			player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Usage: " + getCommandUsage(arg0)));
 		}
 	}
 }

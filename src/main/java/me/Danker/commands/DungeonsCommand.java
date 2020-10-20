@@ -1,8 +1,6 @@
 package me.Danker.commands;
 
-import java.text.NumberFormat;
 import java.util.List;
-import java.util.Locale;
 
 import com.google.gson.JsonObject;
 
@@ -17,18 +15,18 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 
-public class SlayerCommand extends CommandBase {
+public class DungeonsCommand extends CommandBase {
 
 	@Override
 	public String getCommandName() {
-		return "slayer";
+		return "dungeons";
 	}
 
 	@Override
 	public String getCommandUsage(ICommandSender arg0) {
 		return "/" + getCommandName() + " [name]";
 	}
-
+	
 	@Override
 	public int getRequiredPermissionLevel() {
 		return 0;
@@ -41,7 +39,7 @@ public class SlayerCommand extends CommandBase {
 		}
 		return null;
 	}
-	
+
 	@Override
 	public void processCommand(ICommandSender arg0, String[] arg1) throws CommandException {
 		// MULTI THREAD DRIFTING
@@ -62,10 +60,10 @@ public class SlayerCommand extends CommandBase {
 			if (arg1.length == 0) {
 				username = player.getName();
 				uuid = player.getUniqueID().toString().replaceAll("[\\-]", "");
-				player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Checking slayer of " + EnumChatFormatting.DARK_GREEN + username));
+				player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Checking dungeon stats of " + EnumChatFormatting.DARK_GREEN + username));
 			} else {
 				username = arg1[0];
-				player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Checking slayer of " + EnumChatFormatting.DARK_GREEN + username));
+				player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Checking dungeon stats of " + EnumChatFormatting.DARK_GREEN + username));
 				uuid = ah.getUUID(username);
 			}
 			
@@ -82,32 +80,30 @@ public class SlayerCommand extends CommandBase {
 				return;
 			}
 			
-			System.out.println("Fetching slayer stats...");
-			JsonObject slayersObject = profileResponse.get("profile").getAsJsonObject().get("members").getAsJsonObject().get(uuid).getAsJsonObject().get("slayer_bosses").getAsJsonObject();
-			// Zombie
-			int zombieXP = 0;
-			if (slayersObject.get("zombie").getAsJsonObject().has("xp")) {
-				zombieXP = slayersObject.get("zombie").getAsJsonObject().get("xp").getAsInt();
-			}
-			// Spider
-			int spiderXP = 0;
-			if (slayersObject.get("spider").getAsJsonObject().has("xp")) {
-				spiderXP = slayersObject.get("spider").getAsJsonObject().get("xp").getAsInt();
-			}
-			// Wolf
-			int wolfXP = 0;
-			if (slayersObject.get("wolf").getAsJsonObject().has("xp")) {
-				wolfXP = slayersObject.get("wolf").getAsJsonObject().get("xp").getAsInt();
+			System.out.println("Fetching dungeon stats...");
+			JsonObject dungeonsObject = profileResponse.get("profile").getAsJsonObject().get("members").getAsJsonObject().get(uuid).getAsJsonObject().get("dungeons").getAsJsonObject();
+			if (!dungeonsObject.get("dungeon_types").getAsJsonObject().get("catacombs").getAsJsonObject().has("experience")) {
+				player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "This player has not played dungeons."));
+				return;
 			}
 			
-			NumberFormat nf = NumberFormat.getIntegerInstance(Locale.US);
+			double catacombs = Utils.xpToDungeonsLevel(dungeonsObject.get("dungeon_types").getAsJsonObject().get("catacombs").getAsJsonObject().get("experience").getAsDouble());
+			double healer = Utils.xpToDungeonsLevel(dungeonsObject.get("player_classes").getAsJsonObject().get("healer").getAsJsonObject().get("experience").getAsDouble());
+			double mage = Utils.xpToDungeonsLevel(dungeonsObject.get("player_classes").getAsJsonObject().get("mage").getAsJsonObject().get("experience").getAsDouble());
+			double berserk = Utils.xpToDungeonsLevel(dungeonsObject.get("player_classes").getAsJsonObject().get("berserk").getAsJsonObject().get("experience").getAsDouble());
+			double archer = Utils.xpToDungeonsLevel(dungeonsObject.get("player_classes").getAsJsonObject().get("archer").getAsJsonObject().get("experience").getAsDouble());
+			double tank = Utils.xpToDungeonsLevel(dungeonsObject.get("player_classes").getAsJsonObject().get("tank").getAsJsonObject().get("experience").getAsDouble());
+			String selectedClass = Utils.capitalizeString(dungeonsObject.get("selected_dungeon_class").getAsString());
+			
 			player.addChatMessage(new ChatComponentText(EnumChatFormatting.AQUA + "" + EnumChatFormatting.BOLD + "-------------------\n" +
-														EnumChatFormatting.AQUA + " " + username + "'s Total XP: " + EnumChatFormatting.GOLD + EnumChatFormatting.BOLD + nf.format(zombieXP + spiderXP + wolfXP) + "\n" +
-														EnumChatFormatting.AQUA + " Zombie XP: " + EnumChatFormatting.BLUE + EnumChatFormatting.BOLD + nf.format(zombieXP) + "\n" +
-														EnumChatFormatting.AQUA + " Spider XP: " + EnumChatFormatting.BLUE + EnumChatFormatting.BOLD + nf.format(spiderXP) + "\n" +
-														EnumChatFormatting.AQUA + " Wolf XP: " + EnumChatFormatting.BLUE + EnumChatFormatting.BOLD + nf.format(wolfXP) + "\n" +
+														EnumChatFormatting.RED + " Catacombs Level: " + catacombs + "\n" +
+														EnumChatFormatting.GOLD + " Selected Class: " + selectedClass + "\n\n" +
+														EnumChatFormatting.YELLOW + " Healer Level: " + healer + "\n" +
+														EnumChatFormatting.LIGHT_PURPLE + " Mage Level: " + mage + "\n" +
+														EnumChatFormatting.RED + " Berserk Level: " + berserk + "\n" +
+														EnumChatFormatting.GREEN + " Archer Level: " + archer + "\n" +
+														EnumChatFormatting.BLUE + " Tank Level: " + tank + "\n" +
 														EnumChatFormatting.AQUA + " " + EnumChatFormatting.BOLD + "-------------------"));
-			
 		}).start();
 	}
 

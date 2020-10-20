@@ -26,7 +26,7 @@ public class GuildOfCommand extends CommandBase {
 
 	@Override
 	public String getCommandUsage(ICommandSender arg0) {
-		return getCommandName() + " [name]";
+		return "/" + getCommandName() + " [name]";
 	}
 
 	@Override
@@ -83,12 +83,14 @@ public class GuildOfCommand extends CommandBase {
 			
 			String guildName = "N/A";
 			String guildMaster = "N/A";
+			int players = 0;
 			// Check if player is in guild
 			if (!guildResponse.get("guild").isJsonNull()) {
 				guildName = guildResponse.get("guild").getAsJsonObject().get("name").getAsString();
 				
 				// Loop through members to find guildmaster
 				JsonArray guildMembers = guildResponse.get("guild").getAsJsonObject().get("members").getAsJsonArray();
+				players = guildMembers.size();
 				for (JsonElement member : guildMembers) {
 					JsonObject memberObject = member.getAsJsonObject();
 					String memberRank = memberObject.get("rank").getAsString();
@@ -109,6 +111,7 @@ public class GuildOfCommand extends CommandBase {
 														EnumChatFormatting.AQUA + " " + username + "'s Guild:\n" +
 														EnumChatFormatting.GREEN + " Guild: " + EnumChatFormatting.DARK_GREEN + EnumChatFormatting.BOLD + guildName + "\n" +
 														EnumChatFormatting.GREEN + " Guildmaster: " + EnumChatFormatting.DARK_GREEN + EnumChatFormatting.BOLD + guildMaster + "\n" +
+														EnumChatFormatting.GREEN + " Members: " + EnumChatFormatting.DARK_GREEN + EnumChatFormatting.BOLD + players + "\n" +
 														EnumChatFormatting.AQUA + " " + EnumChatFormatting.BOLD + "-------------------"));
 		}).start();
 	}

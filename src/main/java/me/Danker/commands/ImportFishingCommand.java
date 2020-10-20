@@ -20,7 +20,7 @@ public class ImportFishingCommand extends CommandBase {
 
 	@Override
 	public String getCommandUsage(ICommandSender arg0) {
-		return getCommandName();
+		return "/" + getCommandName();
 	}
 	
 	@Override
@@ -202,6 +202,30 @@ public class ImportFishingCommand extends CommandBase {
 			}
 			lc.seaCreatures += lc.yetis;
 			
+			lc.nurseSharks = 0;
+			if (statsObject.has("kills_nurse_shark")) {
+				lc.nurseSharks = statsObject.get("kills_nurse_shark").getAsInt();
+			}
+			lc.seaCreatures += lc.nurseSharks;
+			
+			lc.blueSharks = 0;
+			if (statsObject.has("kills_nurse_shark")) {
+				lc.blueSharks = statsObject.get("kills_blue_shark").getAsInt();
+			}
+			lc.seaCreatures += lc.blueSharks;
+			
+			lc.tigerSharks = 0;
+			if (statsObject.has("kills_nurse_shark")) {
+				lc.tigerSharks = statsObject.get("kills_tiger_shark").getAsInt();
+			}
+			lc.seaCreatures += lc.tigerSharks;
+			
+			lc.greatWhiteSharks = 0;
+			if (statsObject.has("kills_nurse_shark")) {
+				lc.greatWhiteSharks = statsObject.get("kills_great_white_shark").getAsInt();
+			}
+			lc.seaCreatures += lc.greatWhiteSharks;
+			
 			System.out.println("Writing to config...");
 			cf.writeIntConfig("fishing", "goodCatch", lc.goodCatches);
 			cf.writeIntConfig("fishing", "greatCatch", lc.greatCatches);
@@ -225,6 +249,10 @@ public class ImportFishingCommand extends CommandBase {
 			cf.writeIntConfig("fishing", "snowman", lc.frostyTheSnowmans);
 			cf.writeIntConfig("fishing", "grinch", lc.grinches);
 			cf.writeIntConfig("fishing", "yeti", lc.yetis);
+			cf.writeIntConfig("fishing", "nurseShark", lc.nurseSharks);
+			cf.writeIntConfig("fishing", "blueShark", lc.blueSharks);
+			cf.writeIntConfig("fishing", "tigerShark", lc.tigerSharks);
+			cf.writeIntConfig("fishing", "greatWhiteShark", lc.greatWhiteSharks);
 			
 			player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Fishing stats imported."));
 		}).start();

@@ -83,6 +83,11 @@ public class LootCommand extends CommandBase {
 	public static int yetis;
 	public static double yetiTime;
 	public static int yetiSCs;
+	// Fishing Festival
+	public static int nurseSharks;
+	public static int blueSharks;
+	public static int tigerSharks;
+	public static int greatWhiteSharks;
 	
 	// Catacombs Dungeons
 	public static int recombobulators;
@@ -113,6 +118,27 @@ public class LootCommand extends CommandBase {
 	public static int legSpiritPets;
 	public static double f4CoinsSpent;
 	public static double f4TimeSpent;
+	// F5
+	public static int warpedStones;
+	public static int shadowAssHelms;
+	public static int shadowAssChests;
+	public static int shadowAssLegs;
+	public static int shadowAssBoots;
+	public static int lividDaggers;
+	public static int shadowFurys;
+	public static double f5CoinsSpent;
+	public static double f5TimeSpent;
+	// F6
+	public static int ancientRoses;
+	public static int precursorEyes;
+	public static int giantsSwords;
+	public static int necroLordHelms;
+	public static int necroLordChests;
+	public static int necroLordLegs;
+	public static int necroLordBoots;
+	public static int necroSwords;
+	public static double f6CoinsSpent;
+	public static double f6TimeSpent;
 	
 	// Single sessions (No config saves)
 	// Wolf
@@ -182,8 +208,13 @@ public class LootCommand extends CommandBase {
 	public static int frostyTheSnowmansSession = 0;
 	public static int grinchesSession = 0;
 	public static int yetisSession = 0;
-	public static double yetiTimeSession = 0;
-	public static int yetiSCsSession = 0;
+	public static double yetiTimeSession = -1;
+	public static int yetiSCsSession = -1;
+	// Fishing Festival
+	public static int nurseSharksSession = 0;
+	public static int blueSharksSession = 0;
+	public static int tigerSharksSession = 0;
+	public static int greatWhiteSharksSession = 0;
 	
 	// Catacombs Dungeons
 	public static int recombobulatorsSession = 0;
@@ -214,6 +245,27 @@ public class LootCommand extends CommandBase {
 	public static int legSpiritPetsSession = 0;
 	public static double f4CoinsSpentSession = 0;
 	public static double f4TimeSpentSession = 0;
+	// F5
+	public static int warpedStonesSession = 0;
+	public static int shadowAssHelmsSession = 0;
+	public static int shadowAssChestsSession = 0;
+	public static int shadowAssLegsSession = 0;
+	public static int shadowAssBootsSession = 0;
+	public static int lividDaggersSession = 0;
+	public static int shadowFurysSession = 0;
+	public static double f5CoinsSpentSession = 0;
+	public static double f5TimeSpentSession = 0;
+	// F6
+	public static int ancientRosesSession = 0;
+	public static int precursorEyesSession = 0;
+	public static int giantsSwordsSession = 0;
+	public static int necroLordHelmsSession = 0;
+	public static int necroLordChestsSession = 0;
+	public static int necroLordLegsSession = 0;
+	public static int necroLordBootsSession = 0;
+	public static int necroSwordsSession = 0;
+	public static double f6CoinsSpentSession = 0;
+	public static double f6TimeSpentSession = 0;
 	
 	@Override
 	public String getCommandName() {
@@ -222,7 +274,7 @@ public class LootCommand extends CommandBase {
 
 	@Override
 	public String getCommandUsage(ICommandSender arg0) {
-		return getCommandName() + " <zombie/spider/wolf/fishing/catacombs> [winter/f(1-4)/session]";
+		return "/" + getCommandName() + " <zombie/spider/wolf/fishing/catacombs> [winter/festival/f(1-6)/session]";
 	}
 	
 	@Override
@@ -235,9 +287,9 @@ public class LootCommand extends CommandBase {
 		if (args.length == 1) {
 			return getListOfStringsMatchingLastWord(args, "wolf", "spider", "zombie", "fishing", "catacombs");
 		} else if (args.length == 2 && args[0].equalsIgnoreCase("fishing")) {
-			return getListOfStringsMatchingLastWord(args, "winter", "session");
+			return getListOfStringsMatchingLastWord(args, "winter", "festival", "session");
 		} else if (args.length == 2 && args[0].equalsIgnoreCase("catacombs")) {
-			return getListOfStringsMatchingLastWord(args, "f1", "floor1", "f2", "floor2", "f3", "floor3", "f4", "floor4");
+			return getListOfStringsMatchingLastWord(args, "f1", "floor1", "f2", "floor2", "f3", "floor3", "f4", "floor4", "f5", "floor5", "f6", "floor6");
 		} else if (args.length > 1 || (args.length == 3 && args[0].equalsIgnoreCase("fishing") && args[1].equalsIgnoreCase("winter"))) { 
 			return getListOfStringsMatchingLastWord(args, "session");
 		}
@@ -249,7 +301,7 @@ public class LootCommand extends CommandBase {
 		final EntityPlayer player = (EntityPlayer) arg0;
 		
 		if (arg1.length == 0) {
-			player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Usage: /loot <zombie/spider/wolf/fishing/catacombs> [winter/f(1-4)/session]"));
+			player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Usage: " + getCommandUsage(arg0)));
 			return;
 		}
 		
@@ -507,6 +559,25 @@ public class LootCommand extends CommandBase {
 																EnumChatFormatting.AQUA + "    Creatures Since Yeti: " + bossesBetween + "\n" +
 																EnumChatFormatting.AQUA + EnumChatFormatting.BOLD + " -------------------"));
 					return;
+				} else if (arg1[1].equalsIgnoreCase("festival")) {
+					if (showSession) {
+						player.addChatMessage(new ChatComponentText(EnumChatFormatting.AQUA + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+																	EnumChatFormatting.DARK_BLUE + EnumChatFormatting.BOLD + " Fishing Festival Summary (Current Session):\n" +
+																	EnumChatFormatting.LIGHT_PURPLE + "    Nurse Sharks: " + nf.format(nurseSharksSession) + "\n" +
+																	EnumChatFormatting.BLUE + "    Blue Sharks: " + nf.format(blueSharksSession) + "\n" +
+																	EnumChatFormatting.GOLD + "    Tiger Sharks: " + nf.format(tigerSharksSession) + "\n" +
+																	EnumChatFormatting.WHITE + "    Great White Sharks: " + nf.format(greatWhiteSharksSession) + "\n" +
+																	EnumChatFormatting.AQUA + EnumChatFormatting.BOLD + " -------------------"));
+						return;
+					}
+					
+					player.addChatMessage(new ChatComponentText(EnumChatFormatting.AQUA + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+																EnumChatFormatting.DARK_BLUE + EnumChatFormatting.BOLD + " Fishing Festival Summary:\n" +
+																EnumChatFormatting.LIGHT_PURPLE + "    Nurse Sharks: " + nf.format(nurseSharks) + "\n" +
+																EnumChatFormatting.BLUE + "    Blue Sharks: " + nf.format(blueSharks) + "\n" +
+																EnumChatFormatting.GOLD + "    Tiger Sharks: " + nf.format(tigerSharks) + "\n" +
+																EnumChatFormatting.WHITE + "    Great White Sharks: " + nf.format(greatWhiteSharks) + "\n" +
+																EnumChatFormatting.AQUA + EnumChatFormatting.BOLD + " -------------------"));
 				}
 			}
 			
@@ -685,11 +756,77 @@ public class LootCommand extends CommandBase {
 															EnumChatFormatting.AQUA + "    Coins Spent: " + Utils.getMoneySpent(f4CoinsSpent) + "\n" +
 															EnumChatFormatting.AQUA + "    Time Spent: " + Utils.getTimeBetween(0, f4TimeSpent) + "\n" +
 															EnumChatFormatting.DARK_RED + EnumChatFormatting.BOLD + " -------------------"));
+			} else if (arg1[1].equalsIgnoreCase("f5") || arg1[1].equalsIgnoreCase("floor5")) {
+				if (showSession) {
+					player.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_RED + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+																EnumChatFormatting.RED + EnumChatFormatting.BOLD + "  Catacombs F5 Summary (Current Session):\n" +
+																EnumChatFormatting.GOLD + "    Recombobulator 3000s: " + nf.format(recombobulatorsSession) + "\n" +
+																EnumChatFormatting.BLUE + "    Warped Stones: " + nf.format(warpedStonesSession) + "\n" +
+																EnumChatFormatting.DARK_PURPLE + "    Fuming Potato Books: " + nf.format(fumingPotatoBooksSession) + "\n" +
+																EnumChatFormatting.DARK_PURPLE + "    Shadow Assassin Helmets: " + nf.format(shadowAssHelmsSession) + "\n" +
+																EnumChatFormatting.DARK_PURPLE + "    Shadow Assassin Chests: " + nf.format(shadowAssChestsSession) + "\n" +
+																EnumChatFormatting.DARK_PURPLE + "    Shadow Assassin Legs: " + nf.format(shadowAssLegsSession) + "\n" +
+																EnumChatFormatting.DARK_PURPLE + "    Shadow Assassin Boots: " + nf.format(shadowAssBootsSession) + "\n" +
+																EnumChatFormatting.GOLD + "    Livid Daggers: " + nf.format(lividDaggersSession) + "\n" +
+																EnumChatFormatting.GOLD + "    Shadow Furys: " + nf.format(shadowFurysSession) + "\n" +
+																EnumChatFormatting.AQUA + "    Coins Spent: " + Utils.getMoneySpent(f5CoinsSpentSession) + "\n" +
+																EnumChatFormatting.AQUA + "    Time Spent: " + Utils.getTimeBetween(0, f5TimeSpentSession) + "\n" +
+																EnumChatFormatting.DARK_RED + EnumChatFormatting.BOLD + " -------------------"));
+					return;
+				}
+				player.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_RED + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+															EnumChatFormatting.RED + EnumChatFormatting.BOLD + "  Catacombs F5 Summary:\n" +
+															EnumChatFormatting.GOLD + "    Recombobulator 3000s: " + nf.format(recombobulators) + "\n" +
+															EnumChatFormatting.DARK_PURPLE + "    Fuming Potato Books: " + nf.format(fumingPotatoBooks) + "\n" +
+															EnumChatFormatting.BLUE + "    Warped Stones: " + nf.format(warpedStones) + "\n" +
+															EnumChatFormatting.DARK_PURPLE + "    Shadow Assassin Helmets: " + nf.format(shadowAssHelms) + "\n" +
+															EnumChatFormatting.DARK_PURPLE + "    Shadow Assassin Chests: " + nf.format(shadowAssChests) + "\n" +
+															EnumChatFormatting.DARK_PURPLE + "    Shadow Assassin Legs: " + nf.format(shadowAssLegs) + "\n" +
+															EnumChatFormatting.DARK_PURPLE + "    Shadow Assassin Boots: " + nf.format(shadowAssBoots) + "\n" +
+															EnumChatFormatting.GOLD + "    Livid Daggers: " + nf.format(lividDaggers) + "\n" +
+															EnumChatFormatting.GOLD + "    Shadow Furys: " + nf.format(shadowFurys) + "\n" +
+															EnumChatFormatting.AQUA + "    Coins Spent: " + Utils.getMoneySpent(f5CoinsSpent) + "\n" +
+															EnumChatFormatting.AQUA + "    Time Spent: " + Utils.getTimeBetween(0, f5TimeSpent) + "\n" +
+															EnumChatFormatting.DARK_RED + EnumChatFormatting.BOLD + " -------------------"));
+			} else if (arg1[1].equalsIgnoreCase("f6") || arg1[1].equalsIgnoreCase("floor6")) {
+				if (showSession) {
+					player.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_RED + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+																EnumChatFormatting.RED + EnumChatFormatting.BOLD + "  Catacombs F6 Summary (Current Session):\n" +
+																EnumChatFormatting.GOLD + "    Recombobulator 3000s: " + nf.format(recombobulatorsSession) + "\n" +
+																EnumChatFormatting.DARK_PURPLE + "    Fuming Potato Books: " + nf.format(fumingPotatoBooksSession) + "\n" +
+																EnumChatFormatting.BLUE + "    Ancient Roses: " + nf.format(ancientRosesSession) + "\n" +
+																EnumChatFormatting.GOLD + "    Precursor Eyes: " + nf.format(precursorEyesSession) + "\n" +
+																EnumChatFormatting.GOLD + "    Giant's Swords: " + nf.format(giantsSwordsSession) + "\n" +
+																EnumChatFormatting.GOLD + "    Necro Lord Helmets: " + nf.format(necroLordHelmsSession) + "\n" +
+																EnumChatFormatting.GOLD + "    Necro Lord Chestplates: " + nf.format(necroLordChestsSession) + "\n" +
+																EnumChatFormatting.GOLD + "    Necro Lord Leggings: " + nf.format(necroLordLegsSession) + "\n" +
+																EnumChatFormatting.GOLD + "    Necro Lord Boots: " + nf.format(necroLordBootsSession) + "\n" +
+																EnumChatFormatting.GOLD + "    Necro Swords: " + nf.format(necroSwordsSession) + "\n" +
+																EnumChatFormatting.AQUA + "    Coins Spent: " + Utils.getMoneySpent(f6CoinsSpentSession) + "\n" +
+																EnumChatFormatting.AQUA + "    Time Spent: " + Utils.getTimeBetween(0, f6TimeSpentSession) + "\n" +
+																EnumChatFormatting.DARK_RED + EnumChatFormatting.BOLD + " -------------------"));
+					return;
+				}
+				player.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_RED + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+															EnumChatFormatting.RED + EnumChatFormatting.BOLD + "  Catacombs F6 Summary:\n" +
+															EnumChatFormatting.GOLD + "    Recombobulator 3000s: " + nf.format(recombobulators) + "\n" +
+															EnumChatFormatting.DARK_PURPLE + "    Fuming Potato Books: " + nf.format(fumingPotatoBooks) + "\n" +
+															EnumChatFormatting.BLUE + "    Ancient Roses: " + nf.format(ancientRoses) + "\n" +
+															EnumChatFormatting.GOLD + "    Precursor Eyes: " + nf.format(precursorEyes) + "\n" +
+															EnumChatFormatting.GOLD + "    Giant's Swords: " + nf.format(giantsSwords) + "\n" +
+															EnumChatFormatting.GOLD + "    Necro Lord Helmets: " + nf.format(necroLordHelms) + "\n" +
+															EnumChatFormatting.GOLD + "    Necro Lord Chestplates: " + nf.format(necroLordChests) + "\n" +
+															EnumChatFormatting.GOLD + "    Necro Lord Leggings: " + nf.format(necroLordLegs) + "\n" +
+															EnumChatFormatting.GOLD + "    Necro Lord Boots: " + nf.format(necroLordBoots) + "\n" +
+															EnumChatFormatting.GOLD + "    Necro Swords: " + nf.format(necroSwords) + "\n" +
+															EnumChatFormatting.AQUA + "    Coins Spent: " + Utils.getMoneySpent(f6CoinsSpent) + "\n" +
+															EnumChatFormatting.AQUA + "    Time Spent: " + Utils.getTimeBetween(0, f6TimeSpent) + "\n" +
+															EnumChatFormatting.DARK_RED + EnumChatFormatting.BOLD + " -------------------"));
 			} else {
-				player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Usage: /loot catacombs <f1/f2/f3/f4>"));
+				player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Usage: /loot catacombs <f1/f2/f3/f4/f5/f6>"));
 			}
 		} else {
-			player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Usage: /loot <zombie/spider/wolf/fishing/catacombs> [winter/f(1-4)/session]"));
+			player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Usage: " + getCommandUsage(arg0)));
 		}
 
 	}

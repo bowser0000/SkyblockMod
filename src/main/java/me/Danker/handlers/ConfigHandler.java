@@ -2,6 +2,7 @@ package me.Danker.handlers;
 
 import java.io.File;
 
+import me.Danker.commands.BlockSlayerCommand;
 import me.Danker.commands.DisplayCommand;
 import me.Danker.commands.LootCommand;
 import me.Danker.commands.MoveCommand;
@@ -178,9 +179,15 @@ public class ConfigHandler {
 		if (!hasKey("toggles", "ChatMaddox")) writeBooleanConfig("toggles", "ChatMaddox", true);
 		if (!hasKey("toggles", "SpiritBearAlerts")) writeBooleanConfig("toggles", "SpiritBearAlerts", true);
 		if (!hasKey("toggles", "AOTD")) writeBooleanConfig("toggles", "AOTD", false);
+		if (!hasKey("toggles", "LividDagger")) writeBooleanConfig("toggles", "LividDagger", false);
 		if (!hasKey("toggles", "SceptreMessages")) writeBooleanConfig("toggles", "SceptreMessages", true);
 		if (!hasKey("toggles", "PetColors")) writeBooleanConfig("toggles", "PetColors", false);
 		if (!hasKey("toggles", "DungeonTimer")) writeBooleanConfig("toggles", "DungeonTimer", false);
+		if (!hasKey("toggles", "BlockSlayer")) writeStringConfig("toggles", "BlockSlayer", "");
+		if (!hasKey("toggles", "GolemAlerts")) writeBooleanConfig("toggles", "GolemAlerts", false);
+		if (!hasKey("toggles", "ExpertiseLore")) writeBooleanConfig("toggles", "ExpertiseLore", true);
+		if (!hasKey("toggles", "Skill50Display")) writeBooleanConfig("toggles", "Skill50Display", false);
+		if (!hasKey("toggles", "OutlineText")) writeBooleanConfig("toggles", "OutlineText", false);
 		
 		if (!hasKey("api", "APIKey")) writeStringConfig("api", "APIKey", "");
 		
@@ -253,6 +260,11 @@ public class ConfigHandler {
 		if (!hasKey("fishing", "yeti")) writeIntConfig("fishing", "yeti", 0);
 		if (!hasKey("fishing", "yetiTime")) writeDoubleConfig("fishing", "yetiTime", -1);
 		if (!hasKey("fishing", "yetiSC")) writeIntConfig("fishing", "yetiSC", -1);
+		// Fishing Festival
+		if (!hasKey("fishing", "nurseShark")) writeIntConfig("fishing", "nurseShark", 0);
+		if (!hasKey("fishing", "blueShark")) writeIntConfig("fishing", "blueShark", 0);
+		if (!hasKey("fishing", "tigerShark")) writeIntConfig("fishing", "tigerShark", 0);
+		if (!hasKey("fishing", "greatWhiteShark")) writeIntConfig("fishing", "greatWhiteShark", 0);
 		
 		// Dungeons
 		if (!hasKey("catacombs", "recombobulator")) writeIntConfig("catacombs", "recombobulator", 0);
@@ -283,8 +295,30 @@ public class ConfigHandler {
 		if (!hasKey("catacombs", "spiritPetLeg")) writeIntConfig("catacombs", "spiritPetLeg", 0);
 		if (!hasKey("catacombs", "floorFourCoins")) writeDoubleConfig("catacombs", "floorFourCoins", 0);
 		if (!hasKey("catacombs", "floorFourTime")) writeDoubleConfig("catacombs", "floorFourTime", 0);
+		// F5
+		if (!hasKey("catacombs", "warpedStone")) writeIntConfig("catacombs", "warpedStone", 0);
+		if (!hasKey("catacombs", "shadowAssassinHelm")) writeIntConfig("catacombs", "shadowAssassinHelm", 0);
+		if (!hasKey("catacombs", "shadowAssassinChest")) writeIntConfig("catacombs", "shadowAssassinChest", 0);
+		if (!hasKey("catacombs", "shadowAssassinLegging")) writeIntConfig("catacombs", "shadowAssassinLegging", 0);
+		if (!hasKey("catacombs", "shadowAssassinBoot")) writeIntConfig("catacombs", "shadowAssassinBoot", 0);
+		if (!hasKey("catacombs", "lividDagger")) writeIntConfig("catacombs", "lividDagger", 0);
+		if (!hasKey("catacombs", "shadowFury")) writeIntConfig("catacombs", "shadowFury", 0);
+		if (!hasKey("catacombs", "floorFiveCoins")) writeDoubleConfig("catacombs", "floorFiveCoins", 0);
+		if (!hasKey("catacombs", "floorFiveTime")) writeDoubleConfig("catacombs", "floorFiveTime", 0);
+		// F6
+		if (!hasKey("catacombs", "ancientRose")) writeIntConfig("catacombs", "ancientRose", 0);
+		if (!hasKey("catacombs", "precursorEye")) writeIntConfig("catacombs", "precursorEye", 0);
+		if (!hasKey("catacombs", "giantsSword")) writeIntConfig("catacombs", "giantsSword", 0);
+		if (!hasKey("catacombs", "necroLordHelm")) writeIntConfig("catacombs", "necroHelm", 0);
+		if (!hasKey("catacombs", "necroLordChest")) writeIntConfig("catacombs", "necroChest", 0);
+		if (!hasKey("catacombs", "necroLordLegging")) writeIntConfig("catacombs", "necroLegging", 0);
+		if (!hasKey("catacombs", "necroLordBoot")) writeIntConfig("catacombs", "necroBoot", 0);
+		if (!hasKey("catacombs", "necroSword")) writeIntConfig("catacombs", "necroSword", 0);
+		if (!hasKey("catacombs", "floorSixCoins")) writeDoubleConfig("catacombs", "floorSixCoins", 0);
+		if (!hasKey("catacombs", "floorSixTime")) writeDoubleConfig("catacombs", "floorSixTime", 0);
 		
 		if (!hasKey("misc", "display")) writeStringConfig("misc", "display", "off");
+		if (!hasKey("misc", "autoDisplay")) writeBooleanConfig("misc", "autoDisplay", false);
 		
 		ScaledResolution scaled = new ScaledResolution(Minecraft.getMinecraft());
 		int height = scaled.getScaledHeight();
@@ -294,9 +328,12 @@ public class ConfigHandler {
 		if (!hasKey("locations", "displayY")) writeIntConfig("locations", "displayY", 5);
 		if (!hasKey("locations", "dungeonTimerX")) writeIntConfig("locations", "dungeonTimerX", 5);
 		if (!hasKey("locations", "dungeonTimerY")) writeIntConfig("locations", "dungeonTimerY", 5);
+		if (!hasKey("locations", "skill50X")) writeIntConfig("locations", "skill50X", 40);
+		if (!hasKey("locations", "skill50Y")) writeIntConfig("locations", "skill50Y", 10);
 		if (!hasKey("scales", "coordsScale")) writeDoubleConfig("scales", "coordsScale", 1);
 		if (!hasKey("scales", "displayScale")) writeDoubleConfig("scales", "displayScale", 1);
 		if (!hasKey("scales", "dungeonTimerScale")) writeDoubleConfig("scales", "dungeonTimerScale", 1);
+		if (!hasKey("scales", "skill50Scale")) writeDoubleConfig("scales", "skill50Scale", 1);
 		
 		final ToggleCommand tf = new ToggleCommand();
 		tf.gpartyToggled = getBoolean("toggles", "GParty");
@@ -308,9 +345,21 @@ public class ConfigHandler {
 		tf.chatMaddoxToggled = getBoolean("toggles", "ChatMaddox");
 		tf.spiritBearAlerts = getBoolean("toggles", "SpiritBearAlerts");
 		tf.aotdToggled = getBoolean("toggles", "AOTD");
+		tf.lividDaggerToggled = getBoolean("toggles", "LividDagger");
 		tf.sceptreMessages = getBoolean("toggles", "SceptreMessages");
 		tf.petColoursToggled = getBoolean("toggles", "PetColors");
 		tf.dungeonTimerToggled = getBoolean("toggles", "DungeonTimer");
+		tf.golemAlertToggled = getBoolean("toggles", "GolemAlerts");
+		tf.expertiseLoreToggled = getBoolean("toggles", "ExpertiseLore");
+		tf.skill50DisplayToggled = getBoolean("toggles", "Skill50Display");
+		tf.outlineTextToggled = getBoolean("toggles", "OutlineText");
+		
+		final BlockSlayerCommand bs = new BlockSlayerCommand();
+		String onlySlayer = getString("toggles", "BlockSlayer");
+		if (!onlySlayer.equals("")) {
+			bs.onlySlayerName = onlySlayer.substring(0, onlySlayer.lastIndexOf(" "));
+			bs.onlySlayerNumber = onlySlayer.substring(onlySlayer.lastIndexOf(" ") + 1, onlySlayer.length());
+		}
 		
 		final LootCommand lc = new LootCommand();
 		// Wolf
@@ -382,6 +431,11 @@ public class ConfigHandler {
 		lc.yetis = getInt("fishing", "yeti");
 		lc.yetiTime = getDouble("fishing", "yetiTime");
 		lc.yetiSCs = getInt("fishing", "yetiSC");
+		// Fishing Festival
+		lc.nurseSharks = getInt("fishing", "nurseShark");
+		lc.blueSharks = getInt("fishing", "blueShark");
+		lc.tigerSharks = getInt("fishing", "tigerShark");
+		lc.greatWhiteSharks = getInt("fishing", "greatWhiteShark");
 		
 		// Dungeons
 		lc.recombobulators =  getInt("catacombs", "recombobulator");
@@ -412,9 +466,31 @@ public class ConfigHandler {
 		lc.legSpiritPets = getInt("catacombs", "spiritPetLeg");
 		lc.f4CoinsSpent = getDouble("catacombs", "floorFourCoins");
 		lc.f4TimeSpent = getDouble("catacombs", "floorFourTime");
+		// F5
+		lc.warpedStones = getInt("catacombs", "warpedStone");
+		lc.shadowAssHelms = getInt("catacombs", "shadowAssassinHelm");
+		lc.shadowAssChests = getInt("catacombs", "shadowAssassinChest");
+		lc.shadowAssLegs = getInt("catacombs", "shadowAssassinLegging");
+		lc.shadowAssBoots = getInt("catacombs", "shadowAssassinBoot");
+		lc.lividDaggers = getInt("catacombs", "lividDagger");
+		lc.shadowFurys = getInt("catacombs", "shadowFury");
+		lc.f5CoinsSpent = getDouble("catacombs", "floorFiveCoins");
+		lc.f5TimeSpent = getDouble("catacombs", "floorFiveTime");
+		// F6
+		lc.ancientRoses = getInt("catacombs", "ancientRose");
+		lc.precursorEyes = getInt("catacombs", "precursorEye");
+		lc.giantsSwords = getInt("catacombs", "giantsSword");
+		lc.necroLordHelms = getInt("catacombs", "necroLordHelm");
+		lc.necroLordChests = getInt("catacombs", "necroLordChest");
+		lc.necroLordLegs = getInt("catacombs", "necroLordLegging");
+		lc.necroLordBoots = getInt("catacombs", "necroLordBoot");
+		lc.necroSwords = getInt("catacombs", "necroSword");
+		lc.f6CoinsSpent = getDouble("catacombs", "floorSixCoins");
+		lc.f6TimeSpent = getDouble("catacombs", "floorSixTime");
 		
 		final DisplayCommand ds = new DisplayCommand();
 		ds.display = getString("misc", "display");
+		ds.auto = getBoolean("misc", "autoDisplay");
 		
 		final MoveCommand moc = new MoveCommand();
 		moc.coordsXY[0] = getInt("locations", "coordsX");
@@ -423,11 +499,14 @@ public class ConfigHandler {
 		moc.displayXY[1] = getInt("locations", "displayY");
 		moc.dungeonTimerXY[0] = getInt("locations", "dungeonTimerX");
 		moc.dungeonTimerXY[1] = getInt("locations", "dungeonTimerY");
+		moc.skill50XY[0] = getInt("locations", "skill50X");
+		moc.skill50XY[1] = getInt("locations", "skill50Y");
 		
 		final ScaleCommand sc = new ScaleCommand();
 		sc.coordsScale = getDouble("scales", "coordsScale");
 		sc.displayScale = getDouble("scales", "displayScale");
 		sc.dungeonTimerScale = getDouble("scales", "dungeonTimerScale");
+		sc.skill50Scale = getDouble("scales", "skill50Scale");
 	}
 	
 }
