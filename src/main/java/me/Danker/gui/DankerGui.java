@@ -26,6 +26,7 @@ public class DankerGui extends GuiScreen {
 	private GuiButton discordLink;
 	private GuiButton changeDisplay;
 	private GuiButton onlySlayer;
+	private GuiButton puzzleSolvers;
 	// Toggles
 	private GuiButton gparty;
 	private GuiButton coords;
@@ -72,44 +73,46 @@ public class DankerGui extends GuiScreen {
 		// Page 1
 		changeDisplay = new GuiButton(0, width / 2 - 100, (int) (height * 0.1), "Change Display Settings");
 		onlySlayer = new GuiButton(0, width / 2 - 100, (int) (height * 0.2), "Set Slayer Quest");
-		outlineText = new GuiButton(0, width / 2 - 100, (int) (height * 0.3), "Outline Displayed Text: " + Utils.getColouredBoolean(ToggleCommand.outlineTextToggled));
-		gparty = new GuiButton(0, width / 2 - 100, (int) (height * 0.4), "Guild Party Notifications: " + Utils.getColouredBoolean(ToggleCommand.gpartyToggled));
-		coords = new GuiButton(0, width / 2 - 100, (int) (height * 0.5), "Coordinate/Angle Display: " + Utils.getColouredBoolean(ToggleCommand.coordsToggled));
-		goldenEnch = new GuiButton(0, width / 2 - 100, (int) (height * 0.6), "Golden T10/T6/T4 Enchantments: " + Utils.getColouredBoolean(ToggleCommand.goldenToggled));
-		slayerCount = new GuiButton(0, width / 2 - 100, (int) (height * 0.7), "Count Total 20% Drops: " + Utils.getColouredBoolean(ToggleCommand.slayerCountTotal));
+		puzzleSolvers = new GuiButton(0, width / 2 - 100, (int) (height * 0.3), "Toggle Dungeons Puzzle Solvers");
+		outlineText = new GuiButton(0, width / 2 - 100, (int) (height * 0.4), "Outline Displayed Text: " + Utils.getColouredBoolean(ToggleCommand.outlineTextToggled));
+		gparty = new GuiButton(0, width / 2 - 100, (int) (height * 0.5), "Guild Party Notifications: " + Utils.getColouredBoolean(ToggleCommand.gpartyToggled));
+		coords = new GuiButton(0, width / 2 - 100, (int) (height * 0.6), "Coordinate/Angle Display: " + Utils.getColouredBoolean(ToggleCommand.coordsToggled));
+		goldenEnch = new GuiButton(0, width / 2 - 100, (int) (height * 0.7), "Golden T10/T6/T4 Enchantments: " + Utils.getColouredBoolean(ToggleCommand.goldenToggled));
 		// Page 2
-		aotd = new GuiButton(0, width / 2 - 100, (int) (height * 0.1), "Disable AOTD Ability: " + Utils.getColouredBoolean(ToggleCommand.aotdToggled));
-		lividDagger = new GuiButton(0, width / 2 - 100, (int) (height * 0.2), "Disable Livid Dagger Ability: " + Utils.getColouredBoolean(ToggleCommand.lividDaggerToggled));
-		sceptreMessages = new GuiButton(0, width / 2 - 100, (int) (height * 0.3), "Enable Spirit Sceptre Messages: " + Utils.getColouredBoolean(ToggleCommand.sceptreMessages));
-		petColours = new GuiButton(0, width / 2 - 100, (int) (height * 0.4), "Colour Pet Backgrounds: " + Utils.getColouredBoolean(ToggleCommand.petColoursToggled));
-		dungeonTimer = new GuiButton(0, width / 2 - 100, (int) (height * 0.5), "Display Dungeon Timers: " + Utils.getColouredBoolean(ToggleCommand.dungeonTimerToggled));
-		golemAlerts = new GuiButton(0, width / 2 - 100, (int) (height * 0.6), "Alert When Golem Spawns: " + Utils.getColouredBoolean(ToggleCommand.golemAlertToggled));
-		expertiseLore = new GuiButton(0, width / 2 - 100, (int) (height * 0.7), "Expertise Kills In Lore: " + Utils.getColouredBoolean(ToggleCommand.expertiseLoreToggled));
+		slayerCount = new GuiButton(0, width / 2 - 100, (int) (height * 0.1), "Count Total 20% Drops: " + Utils.getColouredBoolean(ToggleCommand.slayerCountTotal));
+		aotd = new GuiButton(0, width / 2 - 100, (int) (height * 0.2), "Disable AOTD Ability: " + Utils.getColouredBoolean(ToggleCommand.aotdToggled));
+		lividDagger = new GuiButton(0, width / 2 - 100, (int) (height * 0.3), "Disable Livid Dagger Ability: " + Utils.getColouredBoolean(ToggleCommand.lividDaggerToggled));
+		sceptreMessages = new GuiButton(0, width / 2 - 100, (int) (height * 0.4), "Enable Spirit Sceptre Messages: " + Utils.getColouredBoolean(ToggleCommand.sceptreMessages));
+		petColours = new GuiButton(0, width / 2 - 100, (int) (height * 0.5), "Colour Pet Backgrounds: " + Utils.getColouredBoolean(ToggleCommand.petColoursToggled));
+		dungeonTimer = new GuiButton(0, width / 2 - 100, (int) (height * 0.6), "Display Dungeon Timers: " + Utils.getColouredBoolean(ToggleCommand.dungeonTimerToggled));
+		golemAlerts = new GuiButton(0, width / 2 - 100, (int) (height * 0.7), "Alert When Golem Spawns: " + Utils.getColouredBoolean(ToggleCommand.golemAlertToggled));
 		// Page 3
-		skill50Display = new GuiButton(0, width / 2 - 100, (int) (height * 0.1), "Display Progress To Skill Level 50: " + Utils.getColouredBoolean(ToggleCommand.skill50DisplayToggled));
+		expertiseLore = new GuiButton(0, width / 2 - 100, (int) (height * 0.1), "Expertise Kills In Lore: " + Utils.getColouredBoolean(ToggleCommand.expertiseLoreToggled));
+		skill50Display = new GuiButton(0, width / 2 - 100, (int) (height * 0.2), "Display Progress To Skill Level 50: " + Utils.getColouredBoolean(ToggleCommand.skill50DisplayToggled));
 		
 		if (page == 1) {
 			this.buttonList.add(changeDisplay);
 			this.buttonList.add(onlySlayer);
+			this.buttonList.add(puzzleSolvers);
 			this.buttonList.add(outlineText);
 			this.buttonList.add(gparty);
 			this.buttonList.add(coords);
 			this.buttonList.add(goldenEnch);
-			this.buttonList.add(slayerCount);
 			this.buttonList.add(nextPage);
 			this.buttonList.add(closeGUI);
 		} else if (page == 2) {
+			this.buttonList.add(slayerCount);
 			this.buttonList.add(aotd);
 			this.buttonList.add(lividDagger);
 			this.buttonList.add(sceptreMessages);
 			this.buttonList.add(petColours);
 			this.buttonList.add(dungeonTimer);
 			this.buttonList.add(golemAlerts);
-			this.buttonList.add(expertiseLore);
 			this.buttonList.add(nextPage);
 			this.buttonList.add(backPage);
 			this.buttonList.add(closeGUI);
 		} else if (page == 3) {
+			this.buttonList.add(expertiseLore);
 			this.buttonList.add(skill50Display);
 			this.buttonList.add(backPage);
 			this.buttonList.add(closeGUI);
@@ -148,6 +151,8 @@ public class DankerGui extends GuiScreen {
 			TheMod.guiToOpen = "displaygui";
 		} else if (button == onlySlayer) {
 			TheMod.guiToOpen = "onlyslayergui";
+		} else if (button == puzzleSolvers) { 
+			TheMod.guiToOpen = "puzzlesolvers";
 		} else if (button == outlineText) {
 			ToggleCommand.outlineTextToggled = !ToggleCommand.outlineTextToggled;
 			ConfigHandler.writeBooleanConfig("toggles", "OutlineText", ToggleCommand.outlineTextToggled);

@@ -22,6 +22,7 @@ Discord Server: https://discord.gg/QsEkNQS
 - Fishing tracker (with graphic display) (scalable)
 - Expertise kills in fishing rod lore
 - Dungeons tracker (with graphic display) (scalable)
+- Dungeons puzzle solver (Riddle, trivia, blaze) (toggleable)
 - Pet background colors based on level
 - Golem spawning alerts (toggleable)
 - Show total skill xp instead of progress to next level

@@ -188,6 +188,10 @@ public class ConfigHandler {
 		if (!hasKey("toggles", "ExpertiseLore")) writeBooleanConfig("toggles", "ExpertiseLore", true);
 		if (!hasKey("toggles", "Skill50Display")) writeBooleanConfig("toggles", "Skill50Display", false);
 		if (!hasKey("toggles", "OutlineText")) writeBooleanConfig("toggles", "OutlineText", false);
+		// Puzzle Solvers
+		if (!hasKey("toggles", "ThreeManPuzzle")) writeBooleanConfig("toggles", "ThreeManPuzzle", false);
+		if (!hasKey("toggles", "OruoPuzzle")) writeBooleanConfig("toggles", "OruoPuzzle", false);
+		if (!hasKey("toggles", "BlazePuzzle")) writeBooleanConfig("toggles", "BlazePuzzle", false);
 		
 		if (!hasKey("api", "APIKey")) writeStringConfig("api", "APIKey", "");
 		
@@ -353,6 +357,10 @@ public class ConfigHandler {
 		tf.expertiseLoreToggled = getBoolean("toggles", "ExpertiseLore");
 		tf.skill50DisplayToggled = getBoolean("toggles", "Skill50Display");
 		tf.outlineTextToggled = getBoolean("toggles", "OutlineText");
+		// Puzzle Solvers
+		tf.threeManToggled = getBoolean("toggles", "ThreeManPuzzle");
+		tf.oruoToggled = getBoolean("toggles", "OruoPuzzle");
+		tf.blazeToggled = getBoolean("toggles", "BlazePuzzle");
 		
 		final BlockSlayerCommand bs = new BlockSlayerCommand();
 		String onlySlayer = getString("toggles", "BlockSlayer");

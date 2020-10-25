@@ -30,6 +30,10 @@ public class ToggleCommand extends CommandBase implements ICommand {
 	public static boolean expertiseLoreToggled;
 	public static boolean skill50DisplayToggled;
 	public static boolean outlineTextToggled;
+	// Puzzle Solvers
+	public static boolean threeManToggled;
+	public static boolean oruoToggled;
+	public static boolean blazeToggled;
 	
 	@Override
 	public String getCommandName() {
@@ -38,7 +42,9 @@ public class ToggleCommand extends CommandBase implements ICommand {
 
 	@Override
 	public String getCommandUsage(ICommandSender arg0) {
-		return "/" + getCommandName() + " <gparty/coords/golden/slayercount/rngesusalerts/splitfishing/chatmaddox/spiritbearalert/aotd/lividdagger/sceptremessages/petcolors/dungeontimer/golemalerts/expertiselore/skill50display/outlinetext/list>";
+		return "/" + getCommandName() + " <gparty/coords/golden/slayercount/rngesusalerts/splitfishing/chatmaddox/spiritbearalert/" + 
+										  "aotd/lividdagger/sceptremessages/petcolors/dungeontimer/golemalerts/expertiselore/skill50display/" + 
+										  "outlinetext/threemanpuzzle/oruopuzzle/blazepuzzle/list>";
 	}
 
 	@Override
@@ -49,7 +55,11 @@ public class ToggleCommand extends CommandBase implements ICommand {
 	@Override
 	public List<String> addTabCompletionOptions(ICommandSender sender, String[] args, BlockPos pos) {
 		if (args.length == 1) {
-			return getListOfStringsMatchingLastWord(args, "gparty", "coords", "golden", "slayercount", "rngesusalerts", "splitfishing", "chatmaddox", "spiritbearalerts", "aotd", "lividdagger", "sceptremessages", "petcolors", "dungeontimer", "golemalerts", "expertiselore", "skill50display", "outlinetext", "list");
+			return getListOfStringsMatchingLastWord(args, "gparty", "coords", "golden", "slayercount", "rngesusalerts",
+														  "splitfishing", "chatmaddox", "spiritbearalerts", "aotd", "lividdagger",
+														  "sceptremessages", "petcolors", "dungeontimer", "golemalerts",
+														  "expertiselore", "skill50display", "outlinetext", "threemanpuzzle",
+														  "oruopuzzle", "blazepuzzle", "list");
 		}
 		return null;
 	}
@@ -132,6 +142,18 @@ public class ToggleCommand extends CommandBase implements ICommand {
 			outlineTextToggled = !outlineTextToggled;
 			cf.writeBooleanConfig("toggles", "OutlineText", outlineTextToggled);
 			player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Outline displayed text has been set to " + EnumChatFormatting.DARK_GREEN + outlineTextToggled + EnumChatFormatting.GREEN + "."));
+		} else if (arg1[0].equalsIgnoreCase("threemanpuzzle")) { 
+			threeManToggled = !threeManToggled;
+			cf.writeBooleanConfig("toggles", "ThreeManPuzzle", threeManToggled);
+			player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Three man puzzle solver has been set to " + EnumChatFormatting.DARK_GREEN + threeManToggled + EnumChatFormatting.GREEN + "."));
+		} else if (arg1[0].equalsIgnoreCase("oruopuzzle")) { 
+			oruoToggled = !oruoToggled;
+			cf.writeBooleanConfig("toggles", "OruoPuzzle", oruoToggled);
+			player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Oruo trivia solver has been set to " + EnumChatFormatting.DARK_GREEN + threeManToggled + EnumChatFormatting.GREEN + "."));
+		} else if (arg1[0].equalsIgnoreCase("blazepuzzle")) { 
+			blazeToggled = !blazeToggled;
+			cf.writeBooleanConfig("toggles", "BlazePuzzle", blazeToggled);
+			player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Blaze puzzle solver has been set to " + EnumChatFormatting.DARK_GREEN + threeManToggled + EnumChatFormatting.GREEN + "."));
 		} else if (arg1[0].equalsIgnoreCase("list")) {
 			player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Guild party notifications: " + EnumChatFormatting.DARK_GREEN + gpartyToggled + "\n" +
 														EnumChatFormatting.GREEN + " Coord/Angle display: " + EnumChatFormatting.DARK_GREEN + coordsToggled + "\n" +
@@ -149,7 +171,10 @@ public class ToggleCommand extends CommandBase implements ICommand {
 														EnumChatFormatting.GREEN + " Golem spawn alerts: " + EnumChatFormatting.DARK_GREEN + golemAlertToggled + "\n" +
 														EnumChatFormatting.GREEN + " Expertise in lore: " + EnumChatFormatting.DARK_GREEN + expertiseLoreToggled + "\n" +
 														EnumChatFormatting.GREEN + " Skill 50 display: " + EnumChatFormatting.DARK_GREEN + skill50DisplayToggled + "\n" +
-														EnumChatFormatting.GREEN + " Outline displayed text: " + EnumChatFormatting.DARK_GREEN + outlineTextToggled));
+														EnumChatFormatting.GREEN + " Outline displayed text: " + EnumChatFormatting.DARK_GREEN + outlineTextToggled + "\n" +
+														EnumChatFormatting.GREEN + " Three man puzzle solver: " + EnumChatFormatting.DARK_GREEN + threeManToggled + "\n" +
+														EnumChatFormatting.GREEN + " Oruo trivia solver: " + EnumChatFormatting.DARK_GREEN + oruoToggled + "\n" +
+														EnumChatFormatting.GREEN + " Blaze puzzle solver: " + EnumChatFormatting.DARK_GREEN + blazeToggled));
 		} else {
 			player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Usage: " + getCommandUsage(arg0)));
 		}

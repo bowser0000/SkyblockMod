@@ -43,6 +43,7 @@ import me.Danker.gui.DankerGui;
 import me.Danker.gui.DisplayGui;
 import me.Danker.gui.EditLocationsGui;
 import me.Danker.gui.OnlySlayerGui;
+import me.Danker.gui.PuzzleSolversGui;
 import me.Danker.handlers.APIHandler;
 import me.Danker.handlers.ConfigHandler;
 import me.Danker.handlers.PacketHandler;
@@ -53,6 +54,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.inventory.GuiChest;
 import net.minecraft.client.settings.KeyBinding;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.event.ClickEvent;
 import net.minecraft.event.ClickEvent.Action;
@@ -62,6 +64,8 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IChatComponent;
@@ -70,6 +74,7 @@ import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
+import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.client.event.sound.PlaySoundEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
@@ -113,6 +118,12 @@ public class TheMod
     static int lastMouse = -1;
     static boolean usingLabymod = false;
     public static String guiToOpen = null;
+    static String[] riddleSolutions = {"The reward is not in my chest!", "At least one of them is lying, and the reward is not in", 
+    								   "My chest doesn't have the reward. We are all telling the truth", "My chest has the reward and I'm telling the truth",
+    								   "The reward isn't in any of our chests", "Both of them are telling the truth."};
+    static Map<String, String> triviaSolutions = new HashMap<String, String>();
+	Entity highestBlaze = null;
+	Entity lowestBlaze = null;
     
     static double dungeonStartTime = 0;
     static double bloodOpenTime = 0;
@@ -164,6 +175,40 @@ public class TheMod
 		t6Enchants.put("9Spiked Hook VI", "6Spiked Hook VI");
 		t6Enchants.put("9Thunderlord VI", "6Thunderlord VI");
 		t6Enchants.put("9Vampirism VI", "6Vampirism VI");
+		
+		triviaSolutions.put("What is the status of The Watcher?", "Stalker");
+		triviaSolutions.put("What is the status of Bonzo?", "New Necromancer");
+		triviaSolutions.put("What is the status of Scarf?", "Apprentice Necromancer");
+		triviaSolutions.put("What is the status of The Professor?", "Professor");
+		triviaSolutions.put("What is the status of Thorn?", "Shaman Necromancer");
+		triviaSolutions.put("What is the status of Livid?", "Master Necromancer");
+		triviaSolutions.put("What is the status of Sadan?", "Necromancer Lord");
+		triviaSolutions.put("What is the status of Maxor?", "Young Wither");
+		triviaSolutions.put("What is the status of Goldor?", "Wither Soldier");
+		triviaSolutions.put("What is the status of Storm?", "Elementalist");
+		triviaSolutions.put("What is the status of Necron?", "Wither Lord");
+		triviaSolutions.put("How many total Fairy Souls are there?", "209 Fairy Souls");
+		triviaSolutions.put("How many Fairy Souls are there in Spider's Den?", "17 Fairy Souls");
+		triviaSolutions.put("How many Fairy Souls are there in The End?", "12 Fairy Souls");
+		triviaSolutions.put("How many Fairy Souls are there in The Barn?", "7 Fairy Souls");
+		triviaSolutions.put("How many Fairy Souls are there in Mushroom Desert?", "8 Fairy Souls");
+		triviaSolutions.put("How many Fairy Souls are there in Blazing Fortress?", "19 Fairy Souls");
+		triviaSolutions.put("How many Fairy Souls are there in The Park?", "11 Fairy Souls");
+		triviaSolutions.put("How many Fairy Souls are there in Jerry's Workshop?", "5 Fairy Souls");
+		triviaSolutions.put("How many Fairy Souls are there in The Hub?", "79 Fairy Souls");
+		triviaSolutions.put("How many Fairy Souls are there in Deep Caverns?", "21 Fairy Souls");
+		triviaSolutions.put("How many Fairy Souls are there in Gold Mine?", "12 Fairy Souls");
+		triviaSolutions.put("How many Fairy Souls are there in Dungeon Hub?", "7 Fairy Souls");
+		triviaSolutions.put("Which brother is on the Spider's Den?", "Rick");
+		triviaSolutions.put("What is the name of Rick's brother?", "Pat");
+		triviaSolutions.put("What is the name of the Painter in the Hub?", "Marco");
+		triviaSolutions.put("What is the name of the person that upgrades pets?", "Kat");
+		triviaSolutions.put("What is the name of the lady of the Nether?", "Elle");
+		triviaSolutions.put("Which villager in the Village gives you a Rogue Sword?", "Jamie");
+		triviaSolutions.put("How many unique minions are there?", "52 Minions");
+		triviaSolutions.put("Which of these enemies does not spawn in the Spider's Den?", "Zombie Spider OR Cave Spider OR Broodfather");
+		triviaSolutions.put("Which of these monsters only spawns at night?", "Zombie Villager OR Ghast");
+		triviaSolutions.put("Which of these is not a dragon in The End?", "Zoomer Dragon OR Weak Dragon OR Stonk Dragon OR Holy Dragon OR Boomer Dragon");
 		
 		String patternString = "(" + String.join("|", t6Enchants.keySet()) + ")";
 		pattern = Pattern.compile(patternString);
@@ -282,6 +327,16 @@ public class TheMod
         }
     	
         // Dungeon chat spoken by an NPC, containing :
+        if (ToggleCommand.threeManToggled && message.contains("[NPC]")) {
+        	for (String solution : riddleSolutions) {
+        		if (message.contains(solution)) {
+        			String npcName = message.substring(message.indexOf("]") + 2, message.indexOf(":"));
+        			Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_GREEN + "" + EnumChatFormatting.BOLD + npcName + EnumChatFormatting.GREEN + " has the blessing."));
+        			break;
+        		}
+        	}
+        }
+        
         if (message.contains("[BOSS] The Watcher: You have proven yourself. You may pass.")) {
         	watcherClearTime = System.currentTimeMillis() / 1000;
         }
@@ -290,6 +345,15 @@ public class TheMod
 		}
         
     	if (message.contains(":")) return;
+    	
+        if (ToggleCommand.oruoToggled) {
+        	for (String question : triviaSolutions.keySet()) {
+        		if (message.contains(question)) {
+        			Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Answer: " + EnumChatFormatting.DARK_GREEN + EnumChatFormatting.BOLD + triviaSolutions.get(question)));
+        			break;
+        		}
+        	}
+        }
     	
 		if (tc.gpartyToggled) {
 			if (message.contains(" has invited all members of ")) {
@@ -1817,14 +1881,15 @@ public class TheMod
     
     @SubscribeEvent
     public void onTick(TickEvent.ClientTickEvent event) {
-    	// Check if player is in Skyblock every second
+		Minecraft mc = Minecraft.getMinecraft();
+		EntityPlayerSP player = mc.thePlayer;
+		
+    	// Checks every second
     	tickAmount++;
     	if (tickAmount % 20 == 0) {
-    		Minecraft mc = Minecraft.getMinecraft();
-    		EntityPlayerSP player = mc.thePlayer;
-    		
     		if (player != null) {
         		Utils.checkForSkyblock();
+        		Utils.checkForDungeons();
     		}
     		
     		if (DisplayCommand.auto && mc != null && mc.theWorld != null) {
@@ -1865,6 +1930,36 @@ public class TheMod
     		tickAmount = 0;
     	}
     	
+    	// Checks 5 times per second
+    	if (tickAmount % 4 == 0) {
+    		if (ToggleCommand.blazeToggled && Utils.inDungeons) {
+    			List<Entity> entities = mc.theWorld.getLoadedEntityList();
+    			int highestHealth = 0;
+    			highestBlaze = null;
+    			int lowestHealth = 99999999;
+    			lowestBlaze = null;
+
+    			for (Entity entity : entities) {
+    				if (entity.getName().contains("Blaze") && entity.getName().contains("/")) {
+    					String blazeName = StringUtils.stripControlCodes(entity.getName());
+    					try {
+    						int health = Integer.parseInt(blazeName.substring(blazeName.indexOf("/") + 1, blazeName.length() - 2));
+    						if (health > highestHealth) {
+    							highestHealth = health;
+    							highestBlaze = entity;
+    						}
+    						if (health < lowestHealth) {
+    							lowestHealth = health;
+    							lowestBlaze = entity;
+    						}
+    					} catch (NumberFormatException ex) {
+    						System.err.println(ex);
+    					}
+    				}
+    			}
+    		}
+    	}
+    	
     	if (titleTimer >= 0) {
     		if (titleTimer == 0) {
     			showTitle = false;
@@ -1893,8 +1988,28 @@ public class TheMod
         		mc.displayGuiScreen(new OnlySlayerGui());
         	} else if (guiToOpen.equals("editlocations")) {
         		mc.displayGuiScreen(new EditLocationsGui());
+        	} else if (guiToOpen.equals("puzzlesolvers")) {
+        		mc.displayGuiScreen(new PuzzleSolversGui());
         	}
         	guiToOpen = null;
+    	}
+    }
+    
+    @SubscribeEvent
+    public void onWorldRender(RenderWorldLastEvent event) {
+    	if (ToggleCommand.blazeToggled) {
+    		if (lowestBlaze != null) {
+    			BlockPos stringPos = new BlockPos(lowestBlaze.posX, lowestBlaze.posY + 1, lowestBlaze.posZ);
+    			Utils.draw3DString(stringPos, EnumChatFormatting.BOLD + "Smallest", 0xFF0000, event.partialTicks);
+    			AxisAlignedBB aabb = new AxisAlignedBB(lowestBlaze.posX - 0.5, lowestBlaze.posY - 2, lowestBlaze.posZ - 0.5, lowestBlaze.posX + 0.5, lowestBlaze.posY, lowestBlaze.posZ + 0.5);
+    			Utils.draw3DBox(aabb, 0xFF, 0x00, 0x00, 0xFF, event.partialTicks);
+    		}
+    		if (highestBlaze != null) {
+    			BlockPos stringPos = new BlockPos(highestBlaze.posX, highestBlaze.posY + 1, highestBlaze.posZ);
+    			Utils.draw3DString(stringPos, EnumChatFormatting.BOLD + "Biggest", 0x40FF40, event.partialTicks);
+    			AxisAlignedBB aabb = new AxisAlignedBB(highestBlaze.posX - 0.5, highestBlaze.posY - 2, highestBlaze.posZ - 0.5, highestBlaze.posX + 0.5, highestBlaze.posY, highestBlaze.posZ + 0.5);
+    			Utils.draw3DBox(aabb, 0x00, 0xFF, 0x00, 0xFF, event.partialTicks);
+    		}
     	}
     }
     
