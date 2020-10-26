@@ -793,7 +793,7 @@ public class TheMod
 			cf.writeIntConfig("fishing", "milestone", lc.fishingMilestone);
 			increaseSeaCreatures();
 		} else if (message.contains("Dungeon starts in 1 second.")) { // Dungeons Stuff
-		    dungeonStartTime = System.currentTimeMillis() / 1000;
+		    dungeonStartTime = System.currentTimeMillis() / 1000 + 1;
 		    bloodOpenTime = dungeonStartTime;
 		    watcherClearTime = dungeonStartTime;
 		    bossClearTime = dungeonStartTime;
@@ -1932,7 +1932,7 @@ public class TheMod
     	
     	// Checks 5 times per second
     	if (tickAmount % 4 == 0) {
-    		if (ToggleCommand.blazeToggled && Utils.inDungeons) {
+    		if (ToggleCommand.blazeToggled && Utils.inDungeons && mc.theWorld != null) {
     			List<Entity> entities = mc.theWorld.getLoadedEntityList();
     			int highestHealth = 0;
     			highestBlaze = null;
@@ -2173,11 +2173,8 @@ public class TheMod
     
     @SubscribeEvent
     public void onServerConnect(ClientConnectedToServerEvent event) {
-    	if (!PacketHandler.added) {
-        	event.manager.channel().pipeline().addBefore("packet_handler", "danker_packet_handler", new PacketHandler());
-        	PacketHandler.added = true;
-        	System.out.println("Added packet handler to channel pipeline.");
-    	}
+        event.manager.channel().pipeline().addBefore("packet_handler", "danker_packet_handler", new PacketHandler());
+        System.out.println("Added packet handler to channel pipeline.");
     }
     
     public void increaseSeaCreatures() {

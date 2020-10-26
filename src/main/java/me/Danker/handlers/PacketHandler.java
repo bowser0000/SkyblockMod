@@ -10,8 +10,6 @@ import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S04PacketEntityEquipment;
 
 public class PacketHandler extends ChannelDuplexHandler {
-
-	public static boolean added = false;
 	
 	@Override
 	public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
