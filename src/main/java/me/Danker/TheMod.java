@@ -5,6 +5,7 @@ import java.awt.SystemTray;
 import java.awt.Toolkit;
 import java.awt.TrayIcon;
 import java.text.NumberFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -50,14 +51,17 @@ import me.Danker.handlers.PacketHandler;
 import me.Danker.handlers.ScoreboardHandler;
 import me.Danker.handlers.TextRenderer;
 import me.Danker.utils.Utils;
+import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.inventory.GuiChest;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.event.ClickEvent;
 import net.minecraft.event.ClickEvent.Action;
+import net.minecraft.init.Blocks;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.ContainerChest;
 import net.minecraft.inventory.IInventory;
@@ -70,6 +74,7 @@ import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IChatComponent;
 import net.minecraft.util.StringUtils;
+import net.minecraft.util.Vec3;
 import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.client.event.GuiScreenEvent;
@@ -122,8 +127,13 @@ public class TheMod
     								   "My chest doesn't have the reward. We are all telling the truth", "My chest has the reward and I'm telling the truth",
     								   "The reward isn't in any of our chests", "Both of them are telling the truth."};
     static Map<String, String> triviaSolutions = new HashMap<String, String>();
-	Entity highestBlaze = null;
-	Entity lowestBlaze = null;
+	static Entity highestBlaze = null;
+	static Entity lowestBlaze = null;
+	// Among Us colours
+	static int[] creeperLineColours = {0x50EF39, 0xC51111, 0x132ED1, 0x117F2D, 0xED54BA, 0xEF7D0D, 0xF5F557, 0xD6E0F0, 0x6B2FBB, 0x39FEDC};
+	static boolean drawCreeperLines = false;
+	static Vec3 creeperLocation = new Vec3(0, 0, 0);
+	static List<Vec3[]> creeperLines = new ArrayList<Vec3[]>();
     
     static double dungeonStartTime = 0;
     static double bloodOpenTime = 0;
@@ -195,6 +205,7 @@ public class TheMod
 		triviaSolutions.put("How many Fairy Souls are there in Blazing Fortress?", "19 Fairy Souls");
 		triviaSolutions.put("How many Fairy Souls are there in The Park?", "11 Fairy Souls");
 		triviaSolutions.put("How many Fairy Souls are there in Jerry's Workshop?", "5 Fairy Souls");
+		triviaSolutions.put("How many Fairy Souls are there in Hub?", "79 Fairy Souls");
 		triviaSolutions.put("How many Fairy Souls are there in The Hub?", "79 Fairy Souls");
 		triviaSolutions.put("How many Fairy Souls are there in Deep Caverns?", "21 Fairy Souls");
 		triviaSolutions.put("How many Fairy Souls are there in Gold Mine?", "12 Fairy Souls");
@@ -1927,6 +1938,43 @@ public class TheMod
     			ConfigHandler.writeStringConfig("misc", "display", DisplayCommand.display);
     		}
     		
+    		if (ToggleCommand.creeperToggled && Utils.inDungeons && mc.theWorld != null) {
+    	    	double x = player.posX;
+    	    	double y = player.posY;
+    	    	double z = player.posZ;
+    			// Find creepers nearby
+    			AxisAlignedBB creeperScan = new AxisAlignedBB(x - 14, y - 8, z - 13, x + 14, y + 8, z + 13); // 28x16x26 cube
+    			List<EntityCreeper> creepers = mc.theWorld.getEntitiesWithinAABB(EntityCreeper.class, creeperScan);
+    			// Check if creeper is nearby
+    			if (creepers.size() > 0) {
+    				EntityCreeper creeper = creepers.get(0);
+    				// Start creeper line drawings
+    				creeperLines.clear();
+    				if (!drawCreeperLines) creeperLocation = new Vec3(creeper.posX, creeper.posY + 1, creeper.posZ);
+    				drawCreeperLines = true;
+    				// Search for nearby sea lanterns and prismarine blocks
+    				BlockPos point1 = new BlockPos(creeper.posX - 14, creeper.posY - 7, creeper.posZ - 13);
+    				BlockPos point2 = new BlockPos(creeper.posX + 14, creeper.posY + 10, creeper.posZ + 13);
+    				Iterable<BlockPos> blocks = BlockPos.getAllInBox(point1, point2);
+    				for (BlockPos blockPos : blocks) {
+    					Block block = mc.theWorld.getBlockState(blockPos).getBlock();
+    					if (block == Blocks.sea_lantern || block == Blocks.prismarine) {
+    						// Connect block to nearest block on opposite side
+    						Vec3 startBlock = new Vec3(blockPos.getX() + 0.5, blockPos.getY() + 0.5, blockPos.getZ() + 0.5);
+    						BlockPos oppositeBlock = Utils.getFirstBlockPosAfterVectors(mc, startBlock, creeperLocation, 10, 20);
+    						BlockPos endBlock = Utils.getNearbyBlock(mc, oppositeBlock, Blocks.sea_lantern, Blocks.prismarine);
+    						if (endBlock != null) {
+    							// Add to list for drawing
+        						Vec3[] insertArray = {startBlock, new Vec3(endBlock.getX() + 0.5, endBlock.getY() + 0.5, endBlock.getZ() + 0.5)};
+        						creeperLines.add(insertArray);
+    						}
+    					}
+    				}
+    			} else {
+    				drawCreeperLines = false;
+    			}
+    		}
+    		
     		tickAmount = 0;
     	}
     	
@@ -2009,6 +2057,11 @@ public class TheMod
     			Utils.draw3DString(stringPos, EnumChatFormatting.BOLD + "Biggest", 0x40FF40, event.partialTicks);
     			AxisAlignedBB aabb = new AxisAlignedBB(highestBlaze.posX - 0.5, highestBlaze.posY - 2, highestBlaze.posZ - 0.5, highestBlaze.posX + 0.5, highestBlaze.posY, highestBlaze.posZ + 0.5);
     			Utils.draw3DBox(aabb, 0x00, 0xFF, 0x00, 0xFF, event.partialTicks);
+    		}
+    	}
+    	if (ToggleCommand.creeperToggled && drawCreeperLines && !creeperLines.isEmpty()) {
+    		for (int i = 0; i < creeperLines.size(); i++) {
+    			Utils.draw3DLine(creeperLines.get(i)[0], creeperLines.get(i)[1], creeperLineColours[i % 10], event.partialTicks);
     		}
     	}
     }

@@ -34,6 +34,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 	public static boolean threeManToggled;
 	public static boolean oruoToggled;
 	public static boolean blazeToggled;
+	public static boolean creeperToggled;
 	
 	@Override
 	public String getCommandName() {
@@ -44,7 +45,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 	public String getCommandUsage(ICommandSender arg0) {
 		return "/" + getCommandName() + " <gparty/coords/golden/slayercount/rngesusalerts/splitfishing/chatmaddox/spiritbearalert/" + 
 										  "aotd/lividdagger/sceptremessages/petcolors/dungeontimer/golemalerts/expertiselore/skill50display/" + 
-										  "outlinetext/threemanpuzzle/oruopuzzle/blazepuzzle/list>";
+										  "outlinetext/threemanpuzzle/oruopuzzle/blazepuzzle/creeperpuzzle/list>";
 	}
 
 	@Override
@@ -59,7 +60,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 														  "splitfishing", "chatmaddox", "spiritbearalerts", "aotd", "lividdagger",
 														  "sceptremessages", "petcolors", "dungeontimer", "golemalerts",
 														  "expertiselore", "skill50display", "outlinetext", "threemanpuzzle",
-														  "oruopuzzle", "blazepuzzle", "list");
+														  "oruopuzzle", "blazepuzzle", "creeperpuzzle", "list");
 		}
 		return null;
 	}
@@ -149,11 +150,15 @@ public class ToggleCommand extends CommandBase implements ICommand {
 		} else if (arg1[0].equalsIgnoreCase("oruopuzzle")) { 
 			oruoToggled = !oruoToggled;
 			cf.writeBooleanConfig("toggles", "OruoPuzzle", oruoToggled);
-			player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Oruo trivia solver has been set to " + EnumChatFormatting.DARK_GREEN + threeManToggled + EnumChatFormatting.GREEN + "."));
+			player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Oruo trivia solver has been set to " + EnumChatFormatting.DARK_GREEN + oruoToggled + EnumChatFormatting.GREEN + "."));
 		} else if (arg1[0].equalsIgnoreCase("blazepuzzle")) { 
 			blazeToggled = !blazeToggled;
 			cf.writeBooleanConfig("toggles", "BlazePuzzle", blazeToggled);
-			player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Blaze puzzle solver has been set to " + EnumChatFormatting.DARK_GREEN + threeManToggled + EnumChatFormatting.GREEN + "."));
+			player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Blaze puzzle solver has been set to " + EnumChatFormatting.DARK_GREEN + blazeToggled + EnumChatFormatting.GREEN + "."));
+		} else if (arg1[0].equalsIgnoreCase("creeperpuzzle")) {
+			creeperToggled = !creeperToggled;
+			cf.writeBooleanConfig("creeperpuzzle", "CreeperPuzzle", creeperToggled);
+			player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Creeper puzzle solver has been set to " + EnumChatFormatting.DARK_GREEN + creeperToggled + EnumChatFormatting.GREEN + "."));
 		} else if (arg1[0].equalsIgnoreCase("list")) {
 			player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Guild party notifications: " + EnumChatFormatting.DARK_GREEN + gpartyToggled + "\n" +
 														EnumChatFormatting.GREEN + " Coord/Angle display: " + EnumChatFormatting.DARK_GREEN + coordsToggled + "\n" +
@@ -174,7 +179,8 @@ public class ToggleCommand extends CommandBase implements ICommand {
 														EnumChatFormatting.GREEN + " Outline displayed text: " + EnumChatFormatting.DARK_GREEN + outlineTextToggled + "\n" +
 														EnumChatFormatting.GREEN + " Three man puzzle solver: " + EnumChatFormatting.DARK_GREEN + threeManToggled + "\n" +
 														EnumChatFormatting.GREEN + " Oruo trivia solver: " + EnumChatFormatting.DARK_GREEN + oruoToggled + "\n" +
-														EnumChatFormatting.GREEN + " Blaze puzzle solver: " + EnumChatFormatting.DARK_GREEN + blazeToggled));
+														EnumChatFormatting.GREEN + " Blaze puzzle solver: " + EnumChatFormatting.DARK_GREEN + blazeToggled + "\n" +
+														EnumChatFormatting.GREEN + " Creeper puzzle solver: " + EnumChatFormatting.DARK_GREEN + creeperToggled));
 		} else {
 			player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Usage: " + getCommandUsage(arg0)));
 		}

@@ -1,5 +1,6 @@
 package me.Danker.utils;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -10,6 +11,7 @@ import org.lwjgl.opengl.GL11;
 import me.Danker.TheMod;
 import me.Danker.handlers.ScoreboardHandler;
 import me.Danker.handlers.TextRenderer;
+import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
@@ -22,11 +24,13 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.scoreboard.ScoreObjective;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StringUtils;
+import net.minecraft.util.Vec3;
 
 public class Utils {
 	
@@ -251,6 +255,37 @@ public class Utils {
 		return bool ? EnumChatFormatting.GREEN + "On" : EnumChatFormatting.RED + "Off";
 	}
 	
+	public static void draw3DLine(Vec3 pos1, Vec3 pos2, int colourInt, float partialTicks) {
+		Entity render = Minecraft.getMinecraft().getRenderViewEntity();
+		WorldRenderer worldRenderer = Tessellator.getInstance().getWorldRenderer();
+		Color colour = new Color(colourInt);
+		
+		double realX = render.lastTickPosX + (render.posX - render.lastTickPosX) * partialTicks;
+		double realY = render.lastTickPosY + (render.posY - render.lastTickPosY) * partialTicks;
+		double realZ = render.lastTickPosZ + (render.posZ - render.lastTickPosZ) * partialTicks;
+		
+		GlStateManager.pushMatrix();
+		GlStateManager.translate(-realX, -realY, -realZ);
+		GlStateManager.disableTexture2D();
+		GlStateManager.enableBlend();
+		GlStateManager.disableAlpha();
+		GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
+		GL11.glLineWidth(2);
+		GlStateManager.color(colour.getRed() / 255f, colour.getGreen() / 255f, colour.getBlue()/ 255f, colour.getAlpha() / 255f);
+		worldRenderer.begin(GL11.GL_LINE_STRIP, DefaultVertexFormats.POSITION);
+		
+		worldRenderer.pos(pos1.xCoord, pos1.yCoord, pos1.zCoord).endVertex();
+		worldRenderer.pos(pos2.xCoord, pos2.yCoord, pos2.zCoord).endVertex();
+		Tessellator.getInstance().draw();
+
+		GlStateManager.translate(realX, realY, realZ);
+		GlStateManager.disableBlend();
+		GlStateManager.enableAlpha();
+		GlStateManager.enableTexture2D();
+		GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+		GlStateManager.popMatrix();
+	}
+	
 	public static void draw3DString(BlockPos pos, String text, int colour, float partialTicks) {
 		Minecraft mc = Minecraft.getMinecraft();
 		EntityPlayer player = mc.thePlayer;
@@ -324,6 +359,46 @@ public class Utils {
 		GlStateManager.enableTexture2D();
 		GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 		GlStateManager.popMatrix();
+	}
+	
+	public static BlockPos getFirstBlockPosAfterVectors(Minecraft mc, Vec3 pos1, Vec3 pos2, int strength, int distance) {
+		double x = pos2.xCoord - pos1.xCoord;
+		double y = pos2.yCoord - pos1.yCoord;
+		double z = pos2.zCoord - pos1.zCoord;
+		
+		for (int i = strength; i < distance * strength; i++) { // Start at least 1 strength away
+			double newX = pos1.xCoord + ((x / strength) * i);
+			double newY = pos1.yCoord + ((y / strength) * i);
+			double newZ = pos1.zCoord + ((z / strength) * i);
+			
+			BlockPos newBlock = new BlockPos(newX, newY, newZ);
+			if (mc.theWorld.getBlockState(newBlock).getBlock() != Blocks.air) {
+				return newBlock;
+			}
+		}
+		
+		return null;
+	}
+	
+	public static BlockPos getNearbyBlock(Minecraft mc, BlockPos pos, Block... blockTypes) {
+		if (pos == null) return null;
+		BlockPos pos1 = new BlockPos(pos.getX() - 2, pos.getY() - 3, pos.getZ() - 2);
+		BlockPos pos2 = new BlockPos(pos.getX() + 2, pos.getY() + 3, pos.getZ() + 2);
+		
+		BlockPos closestBlock = null;
+		double closestBlockDistance = 99;
+		Iterable<BlockPos> blocks = BlockPos.getAllInBox(pos1, pos2);
+		
+		for (BlockPos block : blocks) {
+			for (Block blockType : blockTypes) {
+				if (mc.theWorld.getBlockState(block).getBlock() == blockType && block.distanceSq(pos) < closestBlockDistance) {
+					closestBlock = block;
+					closestBlockDistance = block.distanceSq(pos);
+				}
+			}
+		}
+		
+		return closestBlock;
 	}
 	
 }
