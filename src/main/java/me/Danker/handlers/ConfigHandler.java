@@ -2,6 +2,7 @@ package me.Danker.handlers;
 
 import java.io.File;
 
+import me.Danker.TheMod;
 import me.Danker.commands.BlockSlayerCommand;
 import me.Danker.commands.DisplayCommand;
 import me.Danker.commands.LootCommand;
@@ -188,6 +189,7 @@ public class ConfigHandler {
 		if (!hasKey("toggles", "ExpertiseLore")) writeBooleanConfig("toggles", "ExpertiseLore", true);
 		if (!hasKey("toggles", "Skill50Display")) writeBooleanConfig("toggles", "Skill50Display", false);
 		if (!hasKey("toggles", "OutlineText")) writeBooleanConfig("toggles", "OutlineText", false);
+		if (!hasKey("toggles", "MidasStaffMessages")) writeBooleanConfig("toggles", "MidasStaffMessages", true);
 		// Puzzle Solvers
 		if (!hasKey("toggles", "ThreeManPuzzle")) writeBooleanConfig("toggles", "ThreeManPuzzle", false);
 		if (!hasKey("toggles", "OruoPuzzle")) writeBooleanConfig("toggles", "OruoPuzzle", false);
@@ -324,6 +326,7 @@ public class ConfigHandler {
 		
 		if (!hasKey("misc", "display")) writeStringConfig("misc", "display", "off");
 		if (!hasKey("misc", "autoDisplay")) writeBooleanConfig("misc", "autoDisplay", false);
+		if (!hasKey("misc", "skill50Time")) writeIntConfig("misc", "skill50Time", 3);
 		
 		ScaledResolution scaled = new ScaledResolution(Minecraft.getMinecraft());
 		int height = scaled.getScaledHeight();
@@ -358,6 +361,7 @@ public class ConfigHandler {
 		tf.expertiseLoreToggled = getBoolean("toggles", "ExpertiseLore");
 		tf.skill50DisplayToggled = getBoolean("toggles", "Skill50Display");
 		tf.outlineTextToggled = getBoolean("toggles", "OutlineText");
+		tf.midasStaffMessages = getBoolean("toggles", "MidasStaffMessages");
 		// Puzzle Solvers
 		tf.threeManToggled = getBoolean("toggles", "ThreeManPuzzle");
 		tf.oruoToggled = getBoolean("toggles", "OruoPuzzle");
@@ -501,6 +505,7 @@ public class ConfigHandler {
 		final DisplayCommand ds = new DisplayCommand();
 		ds.display = getString("misc", "display");
 		ds.auto = getBoolean("misc", "autoDisplay");
+		TheMod.SKILL_TIME = getInt("misc", "skill50Time") * 20;
 		
 		final MoveCommand moc = new MoveCommand();
 		moc.coordsXY[0] = getInt("locations", "coordsX");

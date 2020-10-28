@@ -114,6 +114,7 @@ public class TheMod
     public static int titleTimer = -1;
     public static boolean showTitle = false;
     public static String titleText = "";
+    public static int SKILL_TIME;
     public static int skillTimer = -1;
     public static boolean showSkill = false;
     public static String skillText = "";
@@ -320,7 +321,7 @@ public class TheMod
     					int previousXp = Utils.getPastXpEarned(Integer.parseInt(section.substring(section.indexOf("/") + 1, section.indexOf(")")).replaceAll(",", "")));
     					double percentage = (double) Math.floor(((currentXp + previousXp) / 55172425) * 10000D) / 100D;
     					
-    					skillTimer = 40;
+    					skillTimer = SKILL_TIME;
     					showSkill = true;
     					skillText = EnumChatFormatting.AQUA + xpGained + " (" + NumberFormat.getNumberInstance(Locale.US).format(currentXp + previousXp) + "/55,172,425) " + percentage + "%";
     				}
@@ -338,7 +339,7 @@ public class TheMod
         }
     	
         // Dungeon chat spoken by an NPC, containing :
-        if (ToggleCommand.threeManToggled && message.contains("[NPC]")) {
+        if (ToggleCommand.threeManToggled && Utils.inDungeons && message.contains("[NPC]")) {
         	for (String solution : riddleSolutions) {
         		if (message.contains(solution)) {
         			String npcName = message.substring(message.indexOf("]") + 2, message.indexOf(":"));
@@ -357,7 +358,7 @@ public class TheMod
         
     	if (message.contains(":")) return;
     	
-        if (ToggleCommand.oruoToggled) {
+        if (ToggleCommand.oruoToggled && Utils.inDungeons) {
         	for (String question : triviaSolutions.keySet()) {
         		if (message.contains(question)) {
         			Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Answer: " + EnumChatFormatting.DARK_GREEN + EnumChatFormatting.BOLD + triviaSolutions.get(question)));
@@ -1038,6 +1039,10 @@ public class TheMod
 		
 		// Spirit Sceptre
 		if (!tc.sceptreMessages && message.contains("Your Bat Staff hit ")) {
+			event.setCanceled(true);
+		}
+		// Midas Staff
+		if (!tc.midasStaffMessages && message.contains("Your Molten Wave hit ")) {
 			event.setCanceled(true);
 		}
     }
@@ -1963,7 +1968,7 @@ public class TheMod
     						Vec3 startBlock = new Vec3(blockPos.getX() + 0.5, blockPos.getY() + 0.5, blockPos.getZ() + 0.5);
     						BlockPos oppositeBlock = Utils.getFirstBlockPosAfterVectors(mc, startBlock, creeperLocation, 10, 20);
     						BlockPos endBlock = Utils.getNearbyBlock(mc, oppositeBlock, Blocks.sea_lantern, Blocks.prismarine);
-    						if (endBlock != null) {
+    						if (endBlock != null && startBlock.yCoord > 68 && endBlock.getY() > 68) { // Don't create line underground
     							// Add to list for drawing
         						Vec3[] insertArray = {startBlock, new Vec3(endBlock.getX() + 0.5, endBlock.getY() + 0.5, endBlock.getZ() + 0.5)};
         						creeperLines.add(insertArray);
