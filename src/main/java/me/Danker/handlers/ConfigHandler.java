@@ -190,6 +190,7 @@ public class ConfigHandler {
 		if (!hasKey("toggles", "Skill50Display")) writeBooleanConfig("toggles", "Skill50Display", false);
 		if (!hasKey("toggles", "OutlineText")) writeBooleanConfig("toggles", "OutlineText", false);
 		if (!hasKey("toggles", "MidasStaffMessages")) writeBooleanConfig("toggles", "MidasStaffMessages", true);
+		if (!hasKey("toggles", "LividSolver")) writeBooleanConfig("toggles", "LividSolver", false);
 		// Puzzle Solvers
 		if (!hasKey("toggles", "ThreeManPuzzle")) writeBooleanConfig("toggles", "ThreeManPuzzle", false);
 		if (!hasKey("toggles", "OruoPuzzle")) writeBooleanConfig("toggles", "OruoPuzzle", false);
@@ -338,10 +339,13 @@ public class ConfigHandler {
 		if (!hasKey("locations", "dungeonTimerY")) writeIntConfig("locations", "dungeonTimerY", 5);
 		if (!hasKey("locations", "skill50X")) writeIntConfig("locations", "skill50X", 40);
 		if (!hasKey("locations", "skill50Y")) writeIntConfig("locations", "skill50Y", 10);
+		if (!hasKey("locations", "lividHpX")) writeIntConfig("locations", "lividHpX", 40);
+		if (!hasKey("locations", "lividHpY")) writeIntConfig("locations", "lividHpY", 20);
 		if (!hasKey("scales", "coordsScale")) writeDoubleConfig("scales", "coordsScale", 1);
 		if (!hasKey("scales", "displayScale")) writeDoubleConfig("scales", "displayScale", 1);
 		if (!hasKey("scales", "dungeonTimerScale")) writeDoubleConfig("scales", "dungeonTimerScale", 1);
 		if (!hasKey("scales", "skill50Scale")) writeDoubleConfig("scales", "skill50Scale", 1);
+		if (!hasKey("scales", "lividHpScale")) writeDoubleConfig("scales", "lividHpScale", 1);
 		
 		final ToggleCommand tf = new ToggleCommand();
 		tf.gpartyToggled = getBoolean("toggles", "GParty");
@@ -362,6 +366,7 @@ public class ConfigHandler {
 		tf.skill50DisplayToggled = getBoolean("toggles", "Skill50Display");
 		tf.outlineTextToggled = getBoolean("toggles", "OutlineText");
 		tf.midasStaffMessages = getBoolean("toggles", "MidasStaffMessages");
+		tf.lividSolverToggled = getBoolean("toggles", "LividSolver");
 		// Puzzle Solvers
 		tf.threeManToggled = getBoolean("toggles", "ThreeManPuzzle");
 		tf.oruoToggled = getBoolean("toggles", "OruoPuzzle");
@@ -516,12 +521,15 @@ public class ConfigHandler {
 		moc.dungeonTimerXY[1] = getInt("locations", "dungeonTimerY");
 		moc.skill50XY[0] = getInt("locations", "skill50X");
 		moc.skill50XY[1] = getInt("locations", "skill50Y");
+		moc.lividHpXY[0] = getInt("locations", "lividHpX");
+		moc.lividHpXY[1] = getInt("locations", "lividHpY");
 		
 		final ScaleCommand sc = new ScaleCommand();
 		sc.coordsScale = getDouble("scales", "coordsScale");
 		sc.displayScale = getDouble("scales", "displayScale");
 		sc.dungeonTimerScale = getDouble("scales", "dungeonTimerScale");
 		sc.skill50Scale = getDouble("scales", "skill50Scale");
+		sc.lividHpScale = getDouble("scales", "lividHpScale");
 	}
 	
 }

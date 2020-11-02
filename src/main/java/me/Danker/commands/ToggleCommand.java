@@ -31,6 +31,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 	public static boolean skill50DisplayToggled;
 	public static boolean outlineTextToggled;
 	public static boolean midasStaffMessages;
+	public static boolean lividSolverToggled;
 	// Puzzle Solvers
 	public static boolean threeManToggled;
 	public static boolean oruoToggled;
@@ -46,7 +47,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 	public String getCommandUsage(ICommandSender arg0) {
 		return "/" + getCommandName() + " <gparty/coords/golden/slayercount/rngesusalerts/splitfishing/chatmaddox/spiritbearalert/" + 
 										  "aotd/lividdagger/sceptremessages/petcolors/dungeontimer/golemalerts/expertiselore/skill50display/" + 
-										  "outlinetext/midasstaffmessages/threemanpuzzle/oruopuzzle/blazepuzzle/creeperpuzzle/list>";
+										  "outlinetext/midasstaffmessages/lividsolver/threemanpuzzle/oruopuzzle/blazepuzzle/creeperpuzzle/list>";
 	}
 
 	@Override
@@ -61,7 +62,8 @@ public class ToggleCommand extends CommandBase implements ICommand {
 														  "splitfishing", "chatmaddox", "spiritbearalerts", "aotd", "lividdagger",
 														  "sceptremessages", "petcolors", "dungeontimer", "golemalerts",
 														  "expertiselore", "skill50display", "outlinetext", "midasstaffmessages",
-														  "threemanpuzzle", "oruopuzzle", "blazepuzzle", "creeperpuzzle", "list");
+														  "lividsolver",  "threemanpuzzle", "oruopuzzle", "blazepuzzle", "creeperpuzzle", 
+														  "list");
 		}
 		return null;
 	}
@@ -148,6 +150,10 @@ public class ToggleCommand extends CommandBase implements ICommand {
 			midasStaffMessages = !midasStaffMessages;
 			cf.writeBooleanConfig("toggles", "MidasStaffMessages", midasStaffMessages);
 			player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Midas Staff messages have been set to " + EnumChatFormatting.DARK_GREEN + midasStaffMessages + EnumChatFormatting.GREEN + "."));
+		} else if (arg1[0].equalsIgnoreCase("lividsolver")) { 
+			lividSolverToggled = !lividSolverToggled;
+			cf.writeBooleanConfig("toggles", "LividSolver", lividSolverToggled);
+			player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Livid solver has been set to " + EnumChatFormatting.DARK_GREEN + lividSolverToggled + EnumChatFormatting.GREEN + "."));
 		} else if (arg1[0].equalsIgnoreCase("threemanpuzzle")) { 
 			threeManToggled = !threeManToggled;
 			cf.writeBooleanConfig("toggles", "ThreeManPuzzle", threeManToggled);
@@ -183,6 +189,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 														EnumChatFormatting.GREEN + " Skill 50 display: " + EnumChatFormatting.DARK_GREEN + skill50DisplayToggled + "\n" +
 														EnumChatFormatting.GREEN + " Outline displayed text: " + EnumChatFormatting.DARK_GREEN + outlineTextToggled + "\n" +
 														EnumChatFormatting.GREEN + " Midas Staff messages: " + EnumChatFormatting.DARK_GREEN + midasStaffMessages + "\n" +
+														EnumChatFormatting.GREEN + " Livid solver: " + EnumChatFormatting.DARK_GREEN + lividSolverToggled + "\n" +
 														EnumChatFormatting.GREEN + " Three man puzzle solver: " + EnumChatFormatting.DARK_GREEN + threeManToggled + "\n" +
 														EnumChatFormatting.GREEN + " Oruo trivia solver: " + EnumChatFormatting.DARK_GREEN + oruoToggled + "\n" +
 														EnumChatFormatting.GREEN + " Blaze puzzle solver: " + EnumChatFormatting.DARK_GREEN + blazeToggled + "\n" +

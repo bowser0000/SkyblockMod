@@ -46,6 +46,7 @@ public class DankerGui extends GuiScreen {
 	private GuiButton skill50Display;
 	private GuiButton outlineText;
 	private GuiButton midasStaffMessages;
+	private GuiButton lividSolver;
 	
 	public DankerGui(int page) {
 		this.page = page;
@@ -94,6 +95,7 @@ public class DankerGui extends GuiScreen {
 		golemAlerts = new GuiButton(0, width / 2 - 100, (int) (height * 0.4), "Alert When Golem Spawns: " + Utils.getColouredBoolean(ToggleCommand.golemAlertToggled));
 		expertiseLore = new GuiButton(0, width / 2 - 100, (int) (height * 0.5), "Expertise Kills In Lore: " + Utils.getColouredBoolean(ToggleCommand.expertiseLoreToggled));
 		skill50Display = new GuiButton(0, width / 2 - 100, (int) (height * 0.6), "Display Progress To Skill Level 50: " + Utils.getColouredBoolean(ToggleCommand.skill50DisplayToggled));
+		lividSolver = new GuiButton(0, width / 2 - 100, (int) (height * 0.7), "Find Correct Livid: " + Utils.getColouredBoolean(ToggleCommand.lividSolverToggled));
 		
 		if (page == 1) {
 			this.buttonList.add(changeDisplay);
@@ -121,6 +123,7 @@ public class DankerGui extends GuiScreen {
 			this.buttonList.add(golemAlerts);
 			this.buttonList.add(expertiseLore);
 			this.buttonList.add(skill50Display);
+			this.buttonList.add(lividSolver);
 			this.buttonList.add(backPage);
 		}
 		this.buttonList.add(githubLink);
@@ -228,6 +231,10 @@ public class DankerGui extends GuiScreen {
 			ToggleCommand.midasStaffMessages = !ToggleCommand.midasStaffMessages;
 			ConfigHandler.writeBooleanConfig("toggles", "MidasStaffMessages", ToggleCommand.midasStaffMessages);
 			midasStaffMessages.displayString = "Midas Staff Messages: " + Utils.getColouredBoolean(ToggleCommand.midasStaffMessages);
+		} else if (button == lividSolver) {
+			ToggleCommand.lividSolverToggled = !ToggleCommand.lividSolverToggled;
+			ConfigHandler.writeBooleanConfig("toggles", "LividSolver", ToggleCommand.lividSolverToggled);
+			lividSolver.displayString = "Find Correct Livid: " + Utils.getColouredBoolean(ToggleCommand.lividSolverToggled);
 		}
 	}
 	

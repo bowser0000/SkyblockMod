@@ -85,6 +85,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Loader;
@@ -96,6 +97,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent.KeyInputEvent;
+import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerChangedDimensionEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.common.network.FMLNetworkEvent.ClientConnectedToServerEvent;
 import net.minecraftforge.fml.common.versioning.DefaultArtifactVersion;
@@ -135,6 +137,8 @@ public class TheMod
 	static boolean drawCreeperLines = false;
 	static Vec3 creeperLocation = new Vec3(0, 0, 0);
 	static List<Vec3[]> creeperLines = new ArrayList<Vec3[]>();
+	static boolean foundLivid = false;
+	static Entity livid = null;
     
     static double dungeonStartTime = 0;
     static double bloodOpenTime = 0;
@@ -298,6 +302,12 @@ public class TheMod
     			}
     		}).start();
     	}
+    }
+    
+    @SubscribeEvent
+    public void onWorldChange(WorldEvent.Load event) {
+    	foundLivid = false;
+    	livid = null;
     }
     
     // It randomly broke, so I had to make it the highest priority
@@ -1038,7 +1048,7 @@ public class TheMod
 		}
 		
 		// Spirit Sceptre
-		if (!tc.sceptreMessages && message.contains("Your Bat Staff hit ")) {
+		if (!tc.sceptreMessages && message.contains("Your Spirit Sceptre hit ")) {
 			event.setCanceled(true);
 		}
 		// Midas Staff
@@ -1081,7 +1091,7 @@ public class TheMod
         	new TextRenderer(Minecraft.getMinecraft(), coordText, moc.coordsXY[0], moc.coordsXY[1], ScaleCommand.coordsScale);
     	}
     	
-    	if (tc.dungeonTimerToggled) {
+    	if (tc.dungeonTimerToggled && Utils.inDungeons) {
     		String dungeonTimerText = EnumChatFormatting.GRAY + "Wither Doors:\n" +
     								  EnumChatFormatting.DARK_RED + "Blood Open:\n" +
     								  EnumChatFormatting.RED + "Watcher Clear:\n" +
@@ -1096,6 +1106,10 @@ public class TheMod
 								   EnumChatFormatting.YELLOW + puzzleFails;
     		new TextRenderer(Minecraft.getMinecraft(), dungeonTimerText, moc.dungeonTimerXY[0], moc.dungeonTimerXY[1], ScaleCommand.dungeonTimerScale);
     		new TextRenderer(Minecraft.getMinecraft(), dungeonTimers, (int) (moc.dungeonTimerXY[0] + (80 * ScaleCommand.dungeonTimerScale)), moc.dungeonTimerXY[1], ScaleCommand.dungeonTimerScale);
+    	}
+    	
+    	if (tc.lividSolverToggled && foundLivid && livid != null) {
+    		new TextRenderer(Minecraft.getMinecraft(), livid.getName().replace("" + EnumChatFormatting.BOLD, ""), moc.lividHpXY[0], moc.lividHpXY[1], ScaleCommand.lividHpScale);
     	}
     	
     	if (!ds.display.equals("off")) {
@@ -1980,6 +1994,34 @@ public class TheMod
     			}
     		}
     		
+    		if (ToggleCommand.lividSolverToggled && Utils.inDungeons && !foundLivid && mc.theWorld != null) {
+    			boolean inF5 = false;
+    			
+    			List<String> scoreboard = ScoreboardHandler.getSidebarLines();
+    			for (String s : scoreboard) {
+    				String sCleaned = ScoreboardHandler.cleanSB(s);
+    				if (sCleaned.contains("The Catacombs (F5)")) {
+    					inF5 = true;
+    					break;
+    				}
+    			}
+    			
+    			if (inF5) {
+    				List<Entity> loadedLivids = new ArrayList<Entity>();
+    				List<Entity> entities = mc.theWorld.getLoadedEntityList();
+    				for (Entity entity : entities) {
+    					String name = entity.getName();
+    					if (name.contains("Livid") && name.length() > 5 && name.charAt(1) == name.charAt(5) && !loadedLivids.contains(entity)) {
+    						loadedLivids.add(entity);
+    					}
+    				}
+    				if (loadedLivids.size() > 8) {
+    					livid = loadedLivids.get(0);
+    					foundLivid = true;
+    				}
+    			}
+    		}
+    		
     		tickAmount = 0;
     	}
     	
@@ -2249,7 +2291,6 @@ public class TheMod
     	List<String> scoreboard = ScoreboardHandler.getSidebarLines();
     	for (String s : scoreboard) {
     		String sCleaned = ScoreboardHandler.cleanSB(s);
-    		System.out.println(sCleaned);
     		if (sCleaned.contains("Jerry's Workshop") || sCleaned.contains("Jerry Pond")) {
     			if (lc.yetiSCs != -1) {
     				lc.yetiSCs++;

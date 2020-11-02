@@ -19,6 +19,7 @@ public class EditLocationsGui extends GuiScreen {
 	private LocationButton dungeonTimer;
 	private LocationButton coords;
 	private LocationButton skill50;
+	private LocationButton lividHP;
 	
 	@Override
 	public boolean doesGuiPauseGame() {
@@ -72,9 +73,11 @@ public class EditLocationsGui extends GuiScreen {
 		dungeonTimer = new LocationButton(0, moc.dungeonTimerXY[0], moc.dungeonTimerXY[1], 113 * sc.dungeonTimerScale, 57 * sc.dungeonTimerScale, sc.dungeonTimerScale, dungeonTimerText, dungeonTimerNums, 80);
 		coords = new LocationButton(0, moc.coordsXY[0], moc.coordsXY[1], 141 * sc.coordsScale, 12 * sc.coordsScale, sc.coordsScale, "74 / 14 / -26 (141.1 / 6.7)", null, null);
 		skill50 = new LocationButton(0, moc.skill50XY[0], moc.skill50XY[1], 233 * sc.skill50Scale, 12 * sc.skill50Scale, sc.skill50Scale, EnumChatFormatting.AQUA + "+3.5 Farming (28,882,117.7/55,172,425) 52.34%", null, null);
+		lividHP = new LocationButton(0, moc.lividHpXY[0], moc.lividHpXY[1], 85 * sc.lividHpScale, 12 * sc.lividHpScale, sc.lividHpScale, EnumChatFormatting.WHITE + "﴾ Livid " + EnumChatFormatting.YELLOW + "6.9M" + EnumChatFormatting.RED + "❤ " + EnumChatFormatting.WHITE + "﴿", null, null);
 		
 		this.buttonList.add(coords);
 		this.buttonList.add(dungeonTimer);
+		this.buttonList.add(lividHP);
 		this.buttonList.add(display);
 		this.buttonList.add(skill50);
 	}
@@ -111,6 +114,11 @@ public class EditLocationsGui extends GuiScreen {
 				MoveCommand.skill50XY[1] += yMoved;
 				skill50.xPosition = MoveCommand.skill50XY[0];
 				skill50.yPosition = MoveCommand.skill50XY[1];
+			} else if (moving.equals("lividHP")) {
+				MoveCommand.lividHpXY[0] += xMoved;
+				MoveCommand.lividHpXY[1] += yMoved;
+				lividHP.xPosition = MoveCommand.lividHpXY[0];
+				lividHP.yPosition = MoveCommand.lividHpXY[1];
 			}
 			this.buttonList.clear();
 			initGui();
@@ -131,6 +139,8 @@ public class EditLocationsGui extends GuiScreen {
 				moving = "coords";
 			} else if (button == skill50) {
 				moving = "skill50";
+			} else if (button == lividHP) {
+				moving = "lividHP";
 			}
 		}
 	}
@@ -147,6 +157,8 @@ public class EditLocationsGui extends GuiScreen {
 		ConfigHandler.writeIntConfig("locations", "dungeonTimerY", MoveCommand.dungeonTimerXY[1]);
 		ConfigHandler.writeIntConfig("locations", "skill50X", MoveCommand.skill50XY[0]);
 		ConfigHandler.writeIntConfig("locations", "skill50Y", MoveCommand.skill50XY[1]);
+		ConfigHandler.writeIntConfig("locations", "lividHpX", MoveCommand.lividHpXY[0]);
+		ConfigHandler.writeIntConfig("locations", "lividHpY", MoveCommand.lividHpXY[1]);
 	}
 	
 }

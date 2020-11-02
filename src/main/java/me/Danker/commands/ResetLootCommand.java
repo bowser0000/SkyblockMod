@@ -217,8 +217,19 @@ public class ResetLootCommand extends CommandBase {
 		lc.shadowAssLegsSession = 0;
 		lc.shadowAssBootsSession = 0;
 		lc.lividDaggersSession = 0;
+		lc.shadowFurysSession = 0;
 		lc.f5CoinsSpentSession = 0;
 		lc.f5TimeSpentSession = 0;
+		lc.ancientRosesSession = 0;
+		lc.precursorEyesSession = 0;
+		lc.giantsSwordsSession = 0;
+		lc.necroLordHelmsSession = 0;
+		lc.necroLordChestsSession = 0;
+		lc.necroLordLegsSession = 0;
+		lc.necroLordBootsSession = 0;
+		lc.necroSwordsSession = 0;
+		lc.f6CoinsSpentSession = 0;
+		lc.f6TimeSpentSession = 0;
 		cf.deleteCategory("catacombs");
 		cf.reloadConfig();
 	}
