@@ -5,6 +5,7 @@ import java.awt.SystemTray;
 import java.awt.Toolkit;
 import java.awt.TrayIcon;
 import java.text.NumberFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -43,38 +44,48 @@ import me.Danker.gui.DankerGui;
 import me.Danker.gui.DisplayGui;
 import me.Danker.gui.EditLocationsGui;
 import me.Danker.gui.OnlySlayerGui;
+import me.Danker.gui.PuzzleSolversGui;
 import me.Danker.handlers.APIHandler;
 import me.Danker.handlers.ConfigHandler;
 import me.Danker.handlers.PacketHandler;
 import me.Danker.handlers.ScoreboardHandler;
 import me.Danker.handlers.TextRenderer;
 import me.Danker.utils.Utils;
+import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.inventory.GuiChest;
 import net.minecraft.client.settings.KeyBinding;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.event.ClickEvent;
 import net.minecraft.event.ClickEvent.Action;
+import net.minecraft.init.Blocks;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.ContainerChest;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IChatComponent;
 import net.minecraft.util.StringUtils;
+import net.minecraft.util.Vec3;
 import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
+import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.client.event.sound.PlaySoundEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Loader;
@@ -86,6 +97,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent.KeyInputEvent;
+import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerChangedDimensionEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.common.network.FMLNetworkEvent.ClientConnectedToServerEvent;
 import net.minecraftforge.fml.common.versioning.DefaultArtifactVersion;
@@ -94,7 +106,7 @@ import net.minecraftforge.fml.common.versioning.DefaultArtifactVersion;
 public class TheMod
 {
     public static final String MODID = "Danker's Skyblock Mod";
-    public static final String VERSION = "1.8";
+    public static final String VERSION = "1.8.1";
     
     static double checkItemsNow = 0;
     static double itemsChecked = 0;
@@ -104,6 +116,7 @@ public class TheMod
     public static int titleTimer = -1;
     public static boolean showTitle = false;
     public static String titleText = "";
+    public static int SKILL_TIME;
     public static int skillTimer = -1;
     public static boolean showSkill = false;
     public static String skillText = "";
@@ -113,6 +126,19 @@ public class TheMod
     static int lastMouse = -1;
     static boolean usingLabymod = false;
     public static String guiToOpen = null;
+    static String[] riddleSolutions = {"The reward is not in my chest!", "At least one of them is lying, and the reward is not in", 
+    								   "My chest doesn't have the reward. We are all telling the truth", "My chest has the reward and I'm telling the truth",
+    								   "The reward isn't in any of our chests", "Both of them are telling the truth."};
+    static Map<String, String> triviaSolutions = new HashMap<String, String>();
+	static Entity highestBlaze = null;
+	static Entity lowestBlaze = null;
+	// Among Us colours
+	static int[] creeperLineColours = {0x50EF39, 0xC51111, 0x132ED1, 0x117F2D, 0xED54BA, 0xEF7D0D, 0xF5F557, 0xD6E0F0, 0x6B2FBB, 0x39FEDC};
+	static boolean drawCreeperLines = false;
+	static Vec3 creeperLocation = new Vec3(0, 0, 0);
+	static List<Vec3[]> creeperLines = new ArrayList<Vec3[]>();
+	static boolean foundLivid = false;
+	static Entity livid = null;
     
     static double dungeonStartTime = 0;
     static double bloodOpenTime = 0;
@@ -132,34 +158,73 @@ public class TheMod
 		cf.reloadConfig();
 		
 		// For golden enchants
+		t6Enchants.put("9Angler VI", "6Angler VI");
 		t6Enchants.put("9Bane of Arthropods VI", "6Bane of Arthropods VI");
+		t6Enchants.put("9Caster VI", "6Caster VI");
+		t6Enchants.put("9Compact X", "6Compact X");
 		t6Enchants.put("9Critical VI", "6Critical VI");
 		t6Enchants.put("9Dragon Hunter V", "6Dragon Hunter V");
+		t6Enchants.put("9Efficiency VI", "6Efficiency VI");
 		t6Enchants.put("9Ender Slayer VI", "6Ender Slayer VI");
 		t6Enchants.put("9Experience IV", "6Experience IV");
+		t6Enchants.put("9Expertise X", "6Expertise X");
+		t6Enchants.put("9Feather Falling X", "6Feather Falling X");
+		t6Enchants.put("9Frail VI", "6Frail VI");
 		t6Enchants.put("9Giant Killer VI", "6Giant Killer VI");
+		t6Enchants.put("9Growth VI", "6Growth VI");
+		t6Enchants.put("9Infinite Quiver X", "6Infinite Quiver X");
+		t6Enchants.put("9Lethality VI", "6Lethality VI"); 
 		t6Enchants.put("9Life Steal IV", "6Life Steal IV");
 		t6Enchants.put("9Looting IV", "6Looting IV");
 		t6Enchants.put("9Luck VI", "6Luck VI");
-		t6Enchants.put("9Scavenger IV", "6Scavenger IV");
-		t6Enchants.put("9Scavenger V", "6Scavenger V");
-		t6Enchants.put("9Sharpness VI", "6Sharpness VI");
-		t6Enchants.put("9Smite VII", "6Smite VII");
-		t6Enchants.put("9Smite VI", "6Smite VI");
-		t6Enchants.put("9Vampirism VI", "6Vampirism VI");
-		t6Enchants.put("9Power VI", "6Power VI");
-		t6Enchants.put("9Growth VI", "6Growth VI");
-		t6Enchants.put("9Protection VI", "6Protection VI");
-		t6Enchants.put("9Efficiency VI", "6Efficiency VI");
-		t6Enchants.put("9Angler VI", "6Angler VI");
-		t6Enchants.put("9Caster VI", "6Caster VI");
-		t6Enchants.put("9Frail VI", "6Frail VI");
 		t6Enchants.put("9Luck of the Sea VI", "6Luck of the Sea VI");
 		t6Enchants.put("9Lure VI", "6Lure VI");
 		t6Enchants.put("9Magnet VI", "6Magnet VI");
+		t6Enchants.put("9Overload V", "6Overload V");
+		t6Enchants.put("9Power VI", "6Power VI");
+		t6Enchants.put("9Protection VI", "6Protection VI");
+		t6Enchants.put("9Scavenger IV", "6Scavenger IV");
+		t6Enchants.put("9Scavenger V", "6Scavenger V");
+		t6Enchants.put("9Sharpness VI", "6Sharpness VI");
+		t6Enchants.put("9Smite VI", "6Smite VI");
 		t6Enchants.put("9Spiked Hook VI", "6Spiked Hook VI");
-		t6Enchants.put("9Feather Falling X", "6Feather Falling X");
-		t6Enchants.put("9Infinite Quiver X", "6Infinite Quiver X");
+		t6Enchants.put("9Thunderlord VI", "6Thunderlord VI");
+		t6Enchants.put("9Vampirism VI", "6Vampirism VI");
+		
+		triviaSolutions.put("What is the status of The Watcher?", "Stalker");
+		triviaSolutions.put("What is the status of Bonzo?", "New Necromancer");
+		triviaSolutions.put("What is the status of Scarf?", "Apprentice Necromancer");
+		triviaSolutions.put("What is the status of The Professor?", "Professor");
+		triviaSolutions.put("What is the status of Thorn?", "Shaman Necromancer");
+		triviaSolutions.put("What is the status of Livid?", "Master Necromancer");
+		triviaSolutions.put("What is the status of Sadan?", "Necromancer Lord");
+		triviaSolutions.put("What is the status of Maxor?", "Young Wither");
+		triviaSolutions.put("What is the status of Goldor?", "Wither Soldier");
+		triviaSolutions.put("What is the status of Storm?", "Elementalist");
+		triviaSolutions.put("What is the status of Necron?", "Wither Lord");
+		triviaSolutions.put("How many total Fairy Souls are there?", "209 Fairy Souls");
+		triviaSolutions.put("How many Fairy Souls are there in Spider's Den?", "17 Fairy Souls");
+		triviaSolutions.put("How many Fairy Souls are there in The End?", "12 Fairy Souls");
+		triviaSolutions.put("How many Fairy Souls are there in The Barn?", "7 Fairy Souls");
+		triviaSolutions.put("How many Fairy Souls are there in Mushroom Desert?", "8 Fairy Souls");
+		triviaSolutions.put("How many Fairy Souls are there in Blazing Fortress?", "19 Fairy Souls");
+		triviaSolutions.put("How many Fairy Souls are there in The Park?", "11 Fairy Souls");
+		triviaSolutions.put("How many Fairy Souls are there in Jerry's Workshop?", "5 Fairy Souls");
+		triviaSolutions.put("How many Fairy Souls are there in Hub?", "79 Fairy Souls");
+		triviaSolutions.put("How many Fairy Souls are there in The Hub?", "79 Fairy Souls");
+		triviaSolutions.put("How many Fairy Souls are there in Deep Caverns?", "21 Fairy Souls");
+		triviaSolutions.put("How many Fairy Souls are there in Gold Mine?", "12 Fairy Souls");
+		triviaSolutions.put("How many Fairy Souls are there in Dungeon Hub?", "7 Fairy Souls");
+		triviaSolutions.put("Which brother is on the Spider's Den?", "Rick");
+		triviaSolutions.put("What is the name of Rick's brother?", "Pat");
+		triviaSolutions.put("What is the name of the Painter in the Hub?", "Marco");
+		triviaSolutions.put("What is the name of the person that upgrades pets?", "Kat");
+		triviaSolutions.put("What is the name of the lady of the Nether?", "Elle");
+		triviaSolutions.put("Which villager in the Village gives you a Rogue Sword?", "Jamie");
+		triviaSolutions.put("How many unique minions are there?", "52 Minions");
+		triviaSolutions.put("Which of these enemies does not spawn in the Spider's Den?", "Zombie Spider OR Cave Spider OR Broodfather OR Wither Skeleton");
+		triviaSolutions.put("Which of these monsters only spawns at night?", "Zombie Villager OR Ghast");
+		triviaSolutions.put("Which of these is not a dragon in The End?", "Zoomer Dragon OR Weak Dragon OR Stonk Dragon OR Holy Dragon OR Boomer Dragon");
 		
 		String patternString = "(" + String.join("|", t6Enchants.keySet()) + ")";
 		pattern = Pattern.compile(patternString);
@@ -239,6 +304,12 @@ public class TheMod
     	}
     }
     
+    @SubscribeEvent
+    public void onWorldChange(WorldEvent.Load event) {
+    	foundLivid = false;
+    	livid = null;
+    }
+    
     // It randomly broke, so I had to make it the highest priority
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void onChat(ClientChatReceivedEvent event) {
@@ -260,7 +331,7 @@ public class TheMod
     					int previousXp = Utils.getPastXpEarned(Integer.parseInt(section.substring(section.indexOf("/") + 1, section.indexOf(")")).replaceAll(",", "")));
     					double percentage = (double) Math.floor(((currentXp + previousXp) / 55172425) * 10000D) / 100D;
     					
-    					skillTimer = 40;
+    					skillTimer = SKILL_TIME;
     					showSkill = true;
     					skillText = EnumChatFormatting.AQUA + xpGained + " (" + NumberFormat.getNumberInstance(Locale.US).format(currentXp + previousXp) + "/55,172,425) " + percentage + "%";
     				}
@@ -278,6 +349,16 @@ public class TheMod
         }
     	
         // Dungeon chat spoken by an NPC, containing :
+        if (ToggleCommand.threeManToggled && Utils.inDungeons && message.contains("[NPC]")) {
+        	for (String solution : riddleSolutions) {
+        		if (message.contains(solution)) {
+        			String npcName = message.substring(message.indexOf("]") + 2, message.indexOf(":"));
+        			Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_GREEN + "" + EnumChatFormatting.BOLD + npcName + EnumChatFormatting.GREEN + " has the blessing."));
+        			break;
+        		}
+        	}
+        }
+        
         if (message.contains("[BOSS] The Watcher: You have proven yourself. You may pass.")) {
         	watcherClearTime = System.currentTimeMillis() / 1000;
         }
@@ -286,6 +367,15 @@ public class TheMod
 		}
         
     	if (message.contains(":")) return;
+    	
+        if (ToggleCommand.oruoToggled && Utils.inDungeons) {
+        	for (String question : triviaSolutions.keySet()) {
+        		if (message.contains(question)) {
+        			Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Answer: " + EnumChatFormatting.DARK_GREEN + EnumChatFormatting.BOLD + triviaSolutions.get(question)));
+        			break;
+        		}
+        	}
+        }
     	
 		if (tc.gpartyToggled) {
 			if (message.contains(" has invited all members of ")) {
@@ -472,260 +562,157 @@ public class TheMod
 			lc.greatCatches++;
 			lc.greatCatchesSession++;
 			cf.writeIntConfig("fishing", "greatCatch", lc.greatCatches);
-		} else if (message.contains("You caught a lowly Squid")) {
+		} else if (message.contains("A Squid appeared")) {
 			lc.squids++;
-			lc.seaCreatures++;
-			lc.fishingMilestone++;
 			lc.squidsSession++;
-			lc.seaCreaturesSession++;
-			lc.fishingMilestoneSession++;
 			cf.writeIntConfig("fishing", "squid", lc.squids);
-			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
-			cf.writeIntConfig("fishing", "milestone", lc.fishingMilestone);
 			increaseSeaCreatures();
-		} else if (message.contains("From the depths of the waters, you've reeled in a Sea Walker")) {
+		} else if (message.contains("You caught a Sea Walker")) {
 			lc.seaWalkers++;
-			lc.seaCreatures++;
-			lc.fishingMilestone++;
 			lc.seaWalkersSession++;
-			lc.seaCreaturesSession++;
-			lc.fishingMilestoneSession++;
 			cf.writeIntConfig("fishing", "seaWalker", lc.seaWalkers);
-			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
-			cf.writeIntConfig("fishing", "milestone", lc.fishingMilestone);
 			increaseSeaCreatures();
-		} else if (message.contains("Pitch darkness reveals you've caught a")) {
+		} else if (message.contains("Pitch darkness reveals a Night Squid")) {
 			lc.nightSquids++;
-			lc.seaCreatures++;
-			lc.fishingMilestone++;
 			lc.nightSquidsSession++;
-			lc.seaCreaturesSession++;
-			lc.fishingMilestoneSession++;
 			cf.writeIntConfig("fishing", "nightSquid", lc.nightSquids);
-			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
-			cf.writeIntConfig("fishing", "milestone", lc.fishingMilestone);
 			increaseSeaCreatures();
-		} else if (message.contains("You've stumbled upon a patrolling Sea Guardian")) {
+		} else if (message.contains("You stumbled upon a Sea Guardian")) {
 			lc.seaGuardians++;
-			lc.seaCreatures++;
-			lc.fishingMilestone++;
 			lc.seaGuardiansSession++;
-			lc.seaCreaturesSession++;
-			lc.fishingMilestoneSession++;
 			cf.writeIntConfig("fishing", "seaGuardian", lc.seaGuardians);
-			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
-			cf.writeIntConfig("fishing", "milestone", lc.fishingMilestone);
 			increaseSeaCreatures();
 		} else if (message.contains("It looks like you've disrupted the Sea Witch's brewing session. Watch out, she's furious")) {
 			lc.seaWitches++;
-			lc.seaCreatures++;
-			lc.fishingMilestone++;
 			lc.seaWitchesSession++;
-			lc.seaCreaturesSession++;
-			lc.fishingMilestoneSession++;
 			cf.writeIntConfig("fishing", "seaWitch", lc.seaWitches);
-			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
-			cf.writeIntConfig("fishing", "milestone", lc.fishingMilestone);
 			increaseSeaCreatures();
-		} else if (message.contains("From the depths of the waters, you've reeled in a Sea Archer")) {
+		} else if (message.contains("You reeled in a Sea Archer")) {
 			lc.seaArchers++;
-			lc.seaCreatures++;
-			lc.fishingMilestone++;
 			lc.seaArchersSession++;
-			lc.seaCreaturesSession++;
-			lc.fishingMilestoneSession++;
 			cf.writeIntConfig("fishing", "seaArcher", lc.seaArchers);
-			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
-			cf.writeIntConfig("fishing", "milestone", lc.fishingMilestone);
 			increaseSeaCreatures();
-		} else if (message.contains("The Monster of the Deep emerges from the dark depths")) {
+		} else if (message.contains("The Monster of the Deep has emerged")) {
 			lc.monsterOfTheDeeps++;
-			lc.seaCreatures++;
-			lc.fishingMilestone++;
 			lc.monsterOfTheDeepsSession++;
-			lc.seaCreaturesSession++;
-			lc.fishingMilestoneSession++;
 			cf.writeIntConfig("fishing", "monsterOfDeep", lc.monsterOfTheDeeps);
-			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
-			cf.writeIntConfig("fishing", "milestone", lc.fishingMilestone);
 			increaseSeaCreatures();
-		} else if (message.contains("You have found a Catfish, don't let it steal your catches")) {
+		} else if (message.contains("Huh? A Catfish")) {
 			lc.catfishes++;
-			lc.seaCreatures++;
-			lc.fishingMilestone++;
 			lc.catfishesSession++;
-			lc.seaCreaturesSession++;
-			lc.fishingMilestoneSession++;
 			cf.writeIntConfig("fishing", "catfish", lc.catfishes);
-			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
-			cf.writeIntConfig("fishing", "milestone", lc.fishingMilestone);
 			increaseSeaCreatures();
 		} else if (message.contains("Is this even a fish? It's the Carrot King")) {
 			lc.carrotKings++;
-			lc.seaCreatures++;
-			lc.fishingMilestone++;
 			lc.carrotKingsSession++;
-			lc.seaCreaturesSession++;
-			lc.fishingMilestoneSession++;
 			cf.writeIntConfig("fishing", "carrotKing", lc.carrotKings);
-			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
-			cf.writeIntConfig("fishing", "milestone", lc.fishingMilestone);
 			increaseSeaCreatures();
 		} else if (message.contains("Gross! A Sea Leech")) {
 			lc.seaLeeches++;
-			lc.seaCreatures++;
-			lc.fishingMilestone++;
 			lc.seaLeechesSession++;
-			lc.seaCreaturesSession++;
-			lc.fishingMilestoneSession++;
 			cf.writeIntConfig("fishing", "seaLeech", lc.seaLeeches);
-			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
-			cf.writeIntConfig("fishing", "milestone", lc.fishingMilestone);
 			increaseSeaCreatures();
 		} else if (message.contains("You've discovered a Guardian Defender of the sea")) {
 			lc.guardianDefenders++;
-			lc.seaCreatures++;
-			lc.fishingMilestone++;
 			lc.guardianDefendersSession++;
-			lc.seaCreaturesSession++;
-			lc.fishingMilestoneSession++;
 			cf.writeIntConfig("fishing", "guardianDefender", lc.guardianDefenders);
-			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
-			cf.writeIntConfig("fishing", "milestone", lc.fishingMilestone);
 			increaseSeaCreatures();
 		} else if (message.contains("You have awoken the Deep Sea Protector, prepare for a battle")) {
 			lc.deepSeaProtectors++;
-			lc.seaCreatures++;
-			lc.fishingMilestone++;
 			lc.deepSeaProtectorsSession++;
-			lc.seaCreaturesSession++;
-			lc.fishingMilestoneSession++;
 			cf.writeIntConfig("fishing", "deepSeaProtector", lc.deepSeaProtectors);
-			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
-			cf.writeIntConfig("fishing", "milestone", lc.fishingMilestone);
 			increaseSeaCreatures();
 		} else if (message.contains("The Water Hydra has come to test your strength")) {
 			lc.hydras++;
-			lc.seaCreatures++;
-			lc.fishingMilestone++;
 			lc.hydrasSession++;
-			lc.seaCreaturesSession++;
-			lc.fishingMilestoneSession++;
 			cf.writeIntConfig("fishing", "hydra", lc.hydras);
-			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
-			cf.writeIntConfig("fishing", "milestone", lc.fishingMilestone);
 			increaseSeaCreatures();
 		} else if (message.contains("The Sea Emperor arises from the depths")) {
+			increaseSeaCreatures();
+			
 			lc.seaEmperors++;
-			lc.seaCreatures++;
-			lc.fishingMilestone++;
 			lc.empTime = System.currentTimeMillis() / 1000;
 			lc.empSCs = 0;
 			lc.seaEmperorsSession++;
-			lc.seaCreaturesSession++;
-			lc.fishingMilestoneSession++;
 			lc.empTimeSession = System.currentTimeMillis() / 1000;
 			lc.empSCsSession = 0;
 			cf.writeIntConfig("fishing", "seaEmperor", lc.seaEmperors);
-			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
-			cf.writeIntConfig("fishing", "milestone", lc.fishingMilestone);
 			cf.writeDoubleConfig("fishing", "empTime", lc.empTime);
 			cf.writeIntConfig("fishing", "empSC", lc.empSCs);
 		} else if (message.contains("Frozen Steve fell into the pond long ago")) { // Fishing Winter
 			lc.frozenSteves++;
-			lc.seaCreatures++;
-			lc.fishingMilestone++;
 			lc.frozenStevesSession++;
-			lc.seaCreaturesSession++;
-			lc.fishingMilestoneSession++;
 			cf.writeIntConfig("fishing", "frozenSteve", lc.frozenSteves);
-			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
-			cf.writeIntConfig("fishing", "milestone", lc.fishingMilestone);
 			increaseSeaCreatures();
 		} else if (message.contains("It's a snowman! He looks harmless")) {
 			lc.frostyTheSnowmans++;
-			lc.seaCreatures++;
-			lc.fishingMilestone++;
 			lc.frostyTheSnowmansSession++;
-			lc.seaCreaturesSession++;
-			lc.fishingMilestoneSession++;
 			cf.writeIntConfig("fishing", "snowman", lc.frostyTheSnowmans);
-			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
-			cf.writeIntConfig("fishing", "milestone", lc.fishingMilestone);
 			increaseSeaCreatures();
 		} else if (message.contains("stole Jerry's Gifts...get them back")) {
 			lc.grinches++;
-			lc.seaCreatures++;
-			lc.fishingMilestone++;
 			lc.grinchesSession++;
-			lc.seaCreaturesSession++;
-			lc.fishingMilestoneSession++;
 			cf.writeIntConfig("fishing", "grinch", lc.grinches);
-			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
-			cf.writeIntConfig("fishing", "milestone", lc.fishingMilestone);
 			increaseSeaCreatures();
 		} else if (message.contains("What is this creature")) {
+			increaseSeaCreatures();
+			
 			lc.yetis++;
-			lc.seaCreatures++;
-			lc.fishingMilestone++;
 			lc.yetiTime = System.currentTimeMillis() / 1000;
 			lc.yetiSCs = 0;
 			lc.yetisSession++;
-			lc.seaCreaturesSession++;
-			lc.fishingMilestoneSession++;
 			lc.yetiTimeSession = System.currentTimeMillis() / 1000;
 			lc.yetiSCsSession = 0;
 			cf.writeIntConfig("fishing", "yeti", lc.yetis);
 			cf.writeDoubleConfig("fishing", "yetiTime", lc.yetiTime);
 			cf.writeIntConfig("fishing", "yetiSC", lc.yetiSCs);
-			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
-			cf.writeIntConfig("fishing", "milestone", lc.fishingMilestone);
 		} else if (message.contains("A tiny fin emerges from the water, you've caught a Nurse Shark")) { // Fishing Festival
 			lc.nurseSharks++;
-			lc.seaCreatures++;
-			lc.fishingMilestone++;
 			lc.nurseSharksSession++;
-			lc.seaCreaturesSession++;
-			lc.fishingMilestoneSession++;
 			cf.writeIntConfig("fishing", "nurseShark", lc.nurseSharks);
-			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
-			cf.writeIntConfig("fishing", "milestone", lc.fishingMilestone);
 			increaseSeaCreatures();
 		} else if (message.contains("You spot a fin as blue as the water it came from, it's a Blue Shark")) {
 			lc.blueSharks++;
-			lc.seaCreatures++;
-			lc.fishingMilestone++;
 			lc.blueSharksSession++;
-			lc.seaCreaturesSession++;
-			lc.fishingMilestoneSession++;
 			cf.writeIntConfig("fishing", "blueShark", lc.blueSharks);
-			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
-			cf.writeIntConfig("fishing", "milestone", lc.fishingMilestone);
 			increaseSeaCreatures();
 		} else if (message.contains("A striped beast bounds from the depths, the wild Tiger Shark")) {
 			lc.tigerSharks++;
-			lc.seaCreatures++;
-			lc.fishingMilestone++;
 			lc.tigerSharksSession++;
-			lc.seaCreaturesSession++;
-			lc.fishingMilestoneSession++;
 			cf.writeIntConfig("fishing", "tigerShark", lc.tigerSharks);
-			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
-			cf.writeIntConfig("fishing", "milestone", lc.fishingMilestone);
 			increaseSeaCreatures();
 		} else if (message.contains("Hide no longer, a Great White Shark has tracked your scent and thirsts for your blood")) {
 			lc.greatWhiteSharks++;
-			lc.seaCreatures++;
-			lc.fishingMilestone++;
 			lc.greatWhiteSharksSession++;
-			lc.seaCreaturesSession++;
-			lc.fishingMilestoneSession++;
 			cf.writeIntConfig("fishing", "greatWhiteShark", lc.greatWhiteSharks);
-			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
-			cf.writeIntConfig("fishing", "milestone", lc.fishingMilestone);
+			increaseSeaCreatures();
+		} else if (message.contains("Phew! It's only a Scarecrow")) {
+			lc.scarecrows++;
+			lc.scarecrowsSession++;
+			cf.writeIntConfig("fishing", "scarecrow", lc.werewolfs);
+			increaseSeaCreatures();
+		} else if (message.contains("You hear trotting from beneath the waves, you caught a Nightmare")) {
+			lc.nightmares++;
+			lc.nightmaresSession++;
+			cf.writeIntConfig("fishing", "nightmare", lc.werewolfs);
+			increaseSeaCreatures();
+		} else if (message.contains("It must be a full moon, a Werewolf appears")) {
+			lc.werewolfs++;
+			lc.werewolfsSession++;
+			cf.writeIntConfig("fishing", "werewolf", lc.werewolfs);
+			increaseSeaCreatures();
+		} else if (message.contains("The spirit of a long lost Phantom Fisher has come to haunt you")) {
+			lc.phantomFishers++;
+			lc.phantomFishersSession++;
+			cf.writeIntConfig("fishing", "phantomFisher", lc.werewolfs);
+			increaseSeaCreatures();
+		} else if (message.contains("This can't be! The manifestation of death himself")) {
+			lc.grimReapers++;
+			lc.grimReapersSession++;
+			cf.writeIntConfig("fishing", "grimReaper", lc.werewolfs);
 			increaseSeaCreatures();
 		} else if (message.contains("Dungeon starts in 1 second.")) { // Dungeons Stuff
-		    dungeonStartTime = System.currentTimeMillis() / 1000;
+		    dungeonStartTime = System.currentTimeMillis() / 1000 + 1;
 		    bloodOpenTime = dungeonStartTime;
 		    watcherClearTime = dungeonStartTime;
 		    bossClearTime = dungeonStartTime;
@@ -958,7 +945,11 @@ public class TheMod
 		}
 		
 		// Spirit Sceptre
-		if (!tc.sceptreMessages && message.contains("Your Bat Staff hit ")) {
+		if (!tc.sceptreMessages && message.contains("Your Spirit Sceptre hit ")) {
+			event.setCanceled(true);
+		}
+		// Midas Staff
+		if (!tc.midasStaffMessages && message.contains("Your Molten Wave hit ")) {
 			event.setCanceled(true);
 		}
     }
@@ -997,7 +988,7 @@ public class TheMod
         	new TextRenderer(Minecraft.getMinecraft(), coordText, moc.coordsXY[0], moc.coordsXY[1], ScaleCommand.coordsScale);
     	}
     	
-    	if (tc.dungeonTimerToggled) {
+    	if (tc.dungeonTimerToggled && Utils.inDungeons) {
     		String dungeonTimerText = EnumChatFormatting.GRAY + "Wither Doors:\n" +
     								  EnumChatFormatting.DARK_RED + "Blood Open:\n" +
     								  EnumChatFormatting.RED + "Watcher Clear:\n" +
@@ -1012,6 +1003,10 @@ public class TheMod
 								   EnumChatFormatting.YELLOW + puzzleFails;
     		new TextRenderer(Minecraft.getMinecraft(), dungeonTimerText, moc.dungeonTimerXY[0], moc.dungeonTimerXY[1], ScaleCommand.dungeonTimerScale);
     		new TextRenderer(Minecraft.getMinecraft(), dungeonTimers, (int) (moc.dungeonTimerXY[0] + (80 * ScaleCommand.dungeonTimerScale)), moc.dungeonTimerXY[1], ScaleCommand.dungeonTimerScale);
+    	}
+    	
+    	if (tc.lividSolverToggled && foundLivid && livid != null) {
+    		new TextRenderer(Minecraft.getMinecraft(), livid.getName().replace("" + EnumChatFormatting.BOLD, ""), moc.lividHpXY[0], moc.lividHpXY[1], ScaleCommand.lividHpScale);
     	}
     	
     	if (!ds.display.equals("off")) {
@@ -1482,6 +1477,44 @@ public class TheMod
 							EnumChatFormatting.BLUE + nf.format(lc.blueSharksSession) + "\n" +
 	    					EnumChatFormatting.GOLD + nf.format(lc.tigerSharksSession) + "\n" +
 							EnumChatFormatting.WHITE + nf.format(lc.greatWhiteSharksSession);
+     		} else if (ds.display.equals("spooky_fishing")) {
+     			dropsText = EnumChatFormatting.AQUA + "Creatures Caught:\n" +
+     						EnumChatFormatting.AQUA + "Fishing Milestone:\n" +
+     						EnumChatFormatting.GOLD + "Good Catches:\n" +
+							EnumChatFormatting.DARK_PURPLE + "Great Catches:\n" +
+     						EnumChatFormatting.BLUE + "Scarecrows:\n" +
+							EnumChatFormatting.GRAY + "Nightmares:\n" +
+     						EnumChatFormatting.DARK_PURPLE + "Werewolves:\n" +
+							EnumChatFormatting.GOLD + "Phantom Fishers:\n" +
+     						EnumChatFormatting.GOLD + "Grim Reapers:";
+     			countText = EnumChatFormatting.AQUA + nf.format(lc.seaCreatures) + "\n" +
+							EnumChatFormatting.AQUA + nf.format(lc.fishingMilestone) + "\n" +
+	    					EnumChatFormatting.GOLD + nf.format(lc.goodCatches) + "\n" +
+							EnumChatFormatting.DARK_PURPLE + nf.format(lc.greatCatches) + "\n" +
+	    					EnumChatFormatting.BLUE + nf.format(lc.scarecrows) + "\n" +
+							EnumChatFormatting.GRAY + nf.format(lc.nightmares) + "\n" +
+	    					EnumChatFormatting.DARK_PURPLE + nf.format(lc.werewolfs) + "\n" +
+							EnumChatFormatting.GOLD + nf.format(lc.phantomFishers) + "\n" +
+	    					EnumChatFormatting.GOLD + nf.format(lc.grimReapers);
+     		} else if (ds.display.equals("spooky_fishing_session")) {
+     			dropsText = EnumChatFormatting.AQUA + "Creatures Caught:\n" +
+	 						EnumChatFormatting.AQUA + "Fishing Milestone:\n" +
+	 						EnumChatFormatting.GOLD + "Good Catches:\n" +
+							EnumChatFormatting.DARK_PURPLE + "Great Catches:\n" +
+	 						EnumChatFormatting.BLUE + "Scarecrows:\n" +
+							EnumChatFormatting.GRAY + "Nightmares:\n" +
+	 						EnumChatFormatting.DARK_PURPLE + "Werewolves:\n" +
+							EnumChatFormatting.GOLD + "Phantom Fishers:\n" +
+	 						EnumChatFormatting.GOLD + "Grim Reapers:";
+	 			countText = EnumChatFormatting.AQUA + nf.format(lc.seaCreaturesSession) + "\n" +
+							EnumChatFormatting.AQUA + nf.format(lc.fishingMilestoneSession) + "\n" +
+	    					EnumChatFormatting.GOLD + nf.format(lc.goodCatchesSession) + "\n" +
+							EnumChatFormatting.DARK_PURPLE + nf.format(lc.greatCatchesSession) + "\n" +
+	    					EnumChatFormatting.BLUE + nf.format(lc.scarecrowsSession) + "\n" +
+							EnumChatFormatting.GRAY + nf.format(lc.nightmaresSession) + "\n" +
+	    					EnumChatFormatting.DARK_PURPLE + nf.format(lc.werewolfsSession) + "\n" +
+							EnumChatFormatting.GOLD + nf.format(lc.phantomFishersSession) + "\n" +
+	    					EnumChatFormatting.GOLD + nf.format(lc.grimReapersSession);
      		} else if (ds.display.equals("catacombs_floor_one")) {
     			dropsText = EnumChatFormatting.GOLD + "Recombobulators:\n" +
     						EnumChatFormatting.DARK_PURPLE + "Fuming Potato Books:\n" +
@@ -1813,14 +1846,15 @@ public class TheMod
     
     @SubscribeEvent
     public void onTick(TickEvent.ClientTickEvent event) {
-    	// Check if player is in Skyblock every second
+		Minecraft mc = Minecraft.getMinecraft();
+		EntityPlayerSP player = mc.thePlayer;
+		
+    	// Checks every second
     	tickAmount++;
     	if (tickAmount % 20 == 0) {
-    		Minecraft mc = Minecraft.getMinecraft();
-    		EntityPlayerSP player = mc.thePlayer;
-    		
     		if (player != null) {
         		Utils.checkForSkyblock();
+        		Utils.checkForDungeons();
     		}
     		
     		if (DisplayCommand.auto && mc != null && mc.theWorld != null) {
@@ -1858,7 +1892,102 @@ public class TheMod
     			ConfigHandler.writeStringConfig("misc", "display", DisplayCommand.display);
     		}
     		
+    		if (ToggleCommand.creeperToggled && Utils.inDungeons && mc.theWorld != null) {
+    	    	double x = player.posX;
+    	    	double y = player.posY;
+    	    	double z = player.posZ;
+    			// Find creepers nearby
+    			AxisAlignedBB creeperScan = new AxisAlignedBB(x - 14, y - 8, z - 13, x + 14, y + 8, z + 13); // 28x16x26 cube
+    			List<EntityCreeper> creepers = mc.theWorld.getEntitiesWithinAABB(EntityCreeper.class, creeperScan);
+    			// Check if creeper is nearby
+    			if (creepers.size() > 0) {
+    				EntityCreeper creeper = creepers.get(0);
+    				// Start creeper line drawings
+    				creeperLines.clear();
+    				if (!drawCreeperLines) creeperLocation = new Vec3(creeper.posX, creeper.posY + 1, creeper.posZ);
+    				drawCreeperLines = true;
+    				// Search for nearby sea lanterns and prismarine blocks
+    				BlockPos point1 = new BlockPos(creeper.posX - 14, creeper.posY - 7, creeper.posZ - 13);
+    				BlockPos point2 = new BlockPos(creeper.posX + 14, creeper.posY + 10, creeper.posZ + 13);
+    				Iterable<BlockPos> blocks = BlockPos.getAllInBox(point1, point2);
+    				for (BlockPos blockPos : blocks) {
+    					Block block = mc.theWorld.getBlockState(blockPos).getBlock();
+    					if (block == Blocks.sea_lantern || block == Blocks.prismarine) {
+    						// Connect block to nearest block on opposite side
+    						Vec3 startBlock = new Vec3(blockPos.getX() + 0.5, blockPos.getY() + 0.5, blockPos.getZ() + 0.5);
+    						BlockPos oppositeBlock = Utils.getFirstBlockPosAfterVectors(mc, startBlock, creeperLocation, 10, 20);
+    						BlockPos endBlock = Utils.getNearbyBlock(mc, oppositeBlock, Blocks.sea_lantern, Blocks.prismarine);
+    						if (endBlock != null && startBlock.yCoord > 68 && endBlock.getY() > 68) { // Don't create line underground
+    							// Add to list for drawing
+        						Vec3[] insertArray = {startBlock, new Vec3(endBlock.getX() + 0.5, endBlock.getY() + 0.5, endBlock.getZ() + 0.5)};
+        						creeperLines.add(insertArray);
+    						}
+    					}
+    				}
+    			} else {
+    				drawCreeperLines = false;
+    			}
+    		}
+    		
+    		if (ToggleCommand.lividSolverToggled && Utils.inDungeons && !foundLivid && mc.theWorld != null) {
+    			boolean inF5 = false;
+    			
+    			List<String> scoreboard = ScoreboardHandler.getSidebarLines();
+    			for (String s : scoreboard) {
+    				String sCleaned = ScoreboardHandler.cleanSB(s);
+    				if (sCleaned.contains("The Catacombs (F5)")) {
+    					inF5 = true;
+    					break;
+    				}
+    			}
+    			
+    			if (inF5) {
+    				List<Entity> loadedLivids = new ArrayList<Entity>();
+    				List<Entity> entities = mc.theWorld.getLoadedEntityList();
+    				for (Entity entity : entities) {
+    					String name = entity.getName();
+    					if (name.contains("Livid") && name.length() > 5 && name.charAt(1) == name.charAt(5) && !loadedLivids.contains(entity)) {
+    						loadedLivids.add(entity);
+    					}
+    				}
+    				if (loadedLivids.size() > 8) {
+    					livid = loadedLivids.get(0);
+    					foundLivid = true;
+    				}
+    			}
+    		}
+    		
     		tickAmount = 0;
+    	}
+    	
+    	// Checks 5 times per second
+    	if (tickAmount % 4 == 0) {
+    		if (ToggleCommand.blazeToggled && Utils.inDungeons && mc.theWorld != null) {
+    			List<Entity> entities = mc.theWorld.getLoadedEntityList();
+    			int highestHealth = 0;
+    			highestBlaze = null;
+    			int lowestHealth = 99999999;
+    			lowestBlaze = null;
+
+    			for (Entity entity : entities) {
+    				if (entity.getName().contains("Blaze") && entity.getName().contains("/")) {
+    					String blazeName = StringUtils.stripControlCodes(entity.getName());
+    					try {
+    						int health = Integer.parseInt(blazeName.substring(blazeName.indexOf("/") + 1, blazeName.length() - 2));
+    						if (health > highestHealth) {
+    							highestHealth = health;
+    							highestBlaze = entity;
+    						}
+    						if (health < lowestHealth) {
+    							lowestHealth = health;
+    							lowestBlaze = entity;
+    						}
+    					} catch (NumberFormatException ex) {
+    						System.err.println(ex);
+    					}
+    				}
+    			}
+    		}
     	}
     	
     	if (titleTimer >= 0) {
@@ -1889,8 +2018,33 @@ public class TheMod
         		mc.displayGuiScreen(new OnlySlayerGui());
         	} else if (guiToOpen.equals("editlocations")) {
         		mc.displayGuiScreen(new EditLocationsGui());
+        	} else if (guiToOpen.equals("puzzlesolvers")) {
+        		mc.displayGuiScreen(new PuzzleSolversGui());
         	}
         	guiToOpen = null;
+    	}
+    }
+    
+    @SubscribeEvent
+    public void onWorldRender(RenderWorldLastEvent event) {
+    	if (ToggleCommand.blazeToggled) {
+    		if (lowestBlaze != null) {
+    			BlockPos stringPos = new BlockPos(lowestBlaze.posX, lowestBlaze.posY + 1, lowestBlaze.posZ);
+    			Utils.draw3DString(stringPos, EnumChatFormatting.BOLD + "Smallest", 0xFF0000, event.partialTicks);
+    			AxisAlignedBB aabb = new AxisAlignedBB(lowestBlaze.posX - 0.5, lowestBlaze.posY - 2, lowestBlaze.posZ - 0.5, lowestBlaze.posX + 0.5, lowestBlaze.posY, lowestBlaze.posZ + 0.5);
+    			Utils.draw3DBox(aabb, 0xFF, 0x00, 0x00, 0xFF, event.partialTicks);
+    		}
+    		if (highestBlaze != null) {
+    			BlockPos stringPos = new BlockPos(highestBlaze.posX, highestBlaze.posY + 1, highestBlaze.posZ);
+    			Utils.draw3DString(stringPos, EnumChatFormatting.BOLD + "Biggest", 0x40FF40, event.partialTicks);
+    			AxisAlignedBB aabb = new AxisAlignedBB(highestBlaze.posX - 0.5, highestBlaze.posY - 2, highestBlaze.posZ - 0.5, highestBlaze.posX + 0.5, highestBlaze.posY, highestBlaze.posZ + 0.5);
+    			Utils.draw3DBox(aabb, 0x00, 0xFF, 0x00, 0xFF, event.partialTicks);
+    		}
+    	}
+    	if (ToggleCommand.creeperToggled && drawCreeperLines && !creeperLines.isEmpty()) {
+    		for (int i = 0; i < creeperLines.size(); i++) {
+    			Utils.draw3DLine(creeperLines.get(i)[0], creeperLines.get(i)[1], creeperLineColours[i % 10], event.partialTicks);
+    		}
     	}
     }
     
@@ -2054,11 +2208,8 @@ public class TheMod
     
     @SubscribeEvent
     public void onServerConnect(ClientConnectedToServerEvent event) {
-    	if (!PacketHandler.added) {
-        	event.manager.channel().pipeline().addBefore("packet_handler", "danker_packet_handler", new PacketHandler());
-        	PacketHandler.added = true;
-        	System.out.println("Added packet handler to channel pipeline.");
-    	}
+        event.manager.channel().pipeline().addBefore("packet_handler", "danker_packet_handler", new PacketHandler());
+        System.out.println("Added packet handler to channel pipeline.");
     }
     
     public void increaseSeaCreatures() {
@@ -2075,7 +2226,6 @@ public class TheMod
     	List<String> scoreboard = ScoreboardHandler.getSidebarLines();
     	for (String s : scoreboard) {
     		String sCleaned = ScoreboardHandler.cleanSB(s);
-    		System.out.println(sCleaned);
     		if (sCleaned.contains("Jerry's Workshop") || sCleaned.contains("Jerry Pond")) {
     			if (lc.yetiSCs != -1) {
     				lc.yetiSCs++;
@@ -2086,6 +2236,12 @@ public class TheMod
     		}
     	}
     	
+		lc.seaCreatures++;
+		lc.fishingMilestone++;
+		lc.seaCreaturesSession++;
+		lc.fishingMilestoneSession++;
+		cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
+		cf.writeIntConfig("fishing", "milestone", lc.fishingMilestone);
     	cf.writeIntConfig("fishing", "empSC", lc.empSCs);
     	cf.writeIntConfig("fishing", "yetiSC", lc.yetiSCs);
     	

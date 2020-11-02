@@ -1,5 +1,6 @@
 package me.Danker.utils;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -10,20 +11,31 @@ import org.lwjgl.opengl.GL11;
 import me.Danker.TheMod;
 import me.Danker.handlers.ScoreboardHandler;
 import me.Danker.handlers.TextRenderer;
+import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.network.NetworkPlayerInfo;
+import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.WorldRenderer;
+import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.scoreboard.ScoreObjective;
 import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StringUtils;
+import net.minecraft.util.Vec3;
 
 public class Utils {
 	
 	public static boolean inSkyblock = false;
+	public static boolean inDungeons = false;
 	static int[] skillXPPerLevel = {0, 50, 125, 200, 300, 500, 750, 1000, 1500, 2000, 3500, 5000, 7500, 10000, 15000, 20000, 30000, 50000,
 								   75000, 100000, 200000, 300000, 400000, 500000, 600000, 700000, 800000, 900000, 1000000, 1100000,
 								   1200000, 1300000, 1400000, 1500000, 1600000, 1700000, 1800000, 1900000, 2000000, 2100000, 2200000,
@@ -117,6 +129,21 @@ public class Utils {
 			}
 		}
 		inSkyblock = false;
+	}
+
+	public static void checkForDungeons() {
+		Minecraft mc = Minecraft.getMinecraft();
+		if (inSkyblock) {
+			List<String> scoreboard = ScoreboardHandler.getSidebarLines();
+			for (String s : scoreboard) {
+				String sCleaned = ScoreboardHandler.cleanSB(s);
+				if (sCleaned.contains("The Catacombs")) {
+					inDungeons = true;
+					return;
+				}
+			}
+		}
+		inDungeons = false;
 	}
 	
 	public static String capitalizeString(String string) {
@@ -226,6 +253,152 @@ public class Utils {
 	
 	public static String getColouredBoolean(boolean bool) {
 		return bool ? EnumChatFormatting.GREEN + "On" : EnumChatFormatting.RED + "Off";
+	}
+	
+	public static void draw3DLine(Vec3 pos1, Vec3 pos2, int colourInt, float partialTicks) {
+		Entity render = Minecraft.getMinecraft().getRenderViewEntity();
+		WorldRenderer worldRenderer = Tessellator.getInstance().getWorldRenderer();
+		Color colour = new Color(colourInt);
+		
+		double realX = render.lastTickPosX + (render.posX - render.lastTickPosX) * partialTicks;
+		double realY = render.lastTickPosY + (render.posY - render.lastTickPosY) * partialTicks;
+		double realZ = render.lastTickPosZ + (render.posZ - render.lastTickPosZ) * partialTicks;
+		
+		GlStateManager.pushMatrix();
+		GlStateManager.translate(-realX, -realY, -realZ);
+		GlStateManager.disableTexture2D();
+		GlStateManager.enableBlend();
+		GlStateManager.disableAlpha();
+		GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
+		GL11.glLineWidth(2);
+		GlStateManager.color(colour.getRed() / 255f, colour.getGreen() / 255f, colour.getBlue()/ 255f, colour.getAlpha() / 255f);
+		worldRenderer.begin(GL11.GL_LINE_STRIP, DefaultVertexFormats.POSITION);
+		
+		worldRenderer.pos(pos1.xCoord, pos1.yCoord, pos1.zCoord).endVertex();
+		worldRenderer.pos(pos2.xCoord, pos2.yCoord, pos2.zCoord).endVertex();
+		Tessellator.getInstance().draw();
+
+		GlStateManager.translate(realX, realY, realZ);
+		GlStateManager.disableBlend();
+		GlStateManager.enableAlpha();
+		GlStateManager.enableTexture2D();
+		GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+		GlStateManager.popMatrix();
+	}
+	
+	public static void draw3DString(BlockPos pos, String text, int colour, float partialTicks) {
+		Minecraft mc = Minecraft.getMinecraft();
+		EntityPlayer player = mc.thePlayer;
+		double x = (pos.getX() - player.lastTickPosX) + ((pos.getX() - player.posX) - (pos.getX() - player.lastTickPosX)) * partialTicks;
+		double y = (pos.getY() - player.lastTickPosY) + ((pos.getY() - player.posY) - (pos.getY() - player.lastTickPosY)) * partialTicks;
+		double z = (pos.getZ() - player.lastTickPosZ) + ((pos.getZ() - player.posZ) - (pos.getZ() - player.lastTickPosZ)) * partialTicks;
+		RenderManager renderManager = mc.getRenderManager();
+		
+		float f = 1.6F;
+		float f1 = 0.016666668F * f;
+		int width = mc.fontRendererObj.getStringWidth(text) / 2;
+		GlStateManager.pushMatrix();
+		GlStateManager.translate(x, y, z);
+		GL11.glNormal3f(0f, 1f, 0f);
+		GlStateManager.rotate(-renderManager.playerViewY, 0f, 1f, 0f);
+		GlStateManager.rotate(renderManager.playerViewX, 1f, 0f, 0f);
+		GlStateManager.scale(-f1, -f1, -f1);
+		GlStateManager.enableBlend();
+		GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
+		mc.fontRendererObj.drawString(text, -width, 0, colour);
+		GlStateManager.disableBlend();
+		GlStateManager.popMatrix();
+	}
+	
+	// Yoinked from ForgeHax
+	public static void draw3DBox(AxisAlignedBB aabb, int r, int g, int b, int a, float partialTicks) {
+		Entity render = Minecraft.getMinecraft().getRenderViewEntity();
+		WorldRenderer worldRenderer = Tessellator.getInstance().getWorldRenderer();
+		
+		double realX = render.lastTickPosX + (render.posX - render.lastTickPosX) * partialTicks;
+		double realY = render.lastTickPosY + (render.posY - render.lastTickPosY) * partialTicks;
+		double realZ = render.lastTickPosZ + (render.posZ - render.lastTickPosZ) * partialTicks;
+		
+		GlStateManager.pushMatrix();
+		GlStateManager.translate(-realX, -realY, -realZ);
+		GlStateManager.disableTexture2D();
+		GlStateManager.enableBlend();
+		GlStateManager.disableAlpha();
+		GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
+		GL11.glLineWidth(2);
+		GlStateManager.color(r / 255f, g / 255f, b / 255f, a / 255f);
+		worldRenderer.begin(GL11.GL_LINE_STRIP, DefaultVertexFormats.POSITION);
+		
+		worldRenderer.pos(aabb.minX, aabb.minY, aabb.minZ).endVertex();
+		worldRenderer.pos(aabb.maxX, aabb.minY, aabb.minZ).endVertex();
+		worldRenderer.pos(aabb.maxX, aabb.minY, aabb.maxZ).endVertex();
+		worldRenderer.pos(aabb.minX, aabb.minY, aabb.maxZ).endVertex();
+		worldRenderer.pos(aabb.minX, aabb.minY, aabb.minZ).endVertex();
+		Tessellator.getInstance().draw();
+		worldRenderer.begin(GL11.GL_LINE_STRIP, DefaultVertexFormats.POSITION);
+		worldRenderer.pos(aabb.minX, aabb.maxY, aabb.minZ).endVertex();
+		worldRenderer.pos(aabb.maxX, aabb.maxY, aabb.minZ).endVertex();
+		worldRenderer.pos(aabb.maxX, aabb.maxY, aabb.maxZ).endVertex();
+		worldRenderer.pos(aabb.minX, aabb.maxY, aabb.maxZ).endVertex();
+		worldRenderer.pos(aabb.minX, aabb.maxY, aabb.minZ).endVertex();
+		Tessellator.getInstance().draw();
+		worldRenderer.begin(GL11.GL_LINE_STRIP, DefaultVertexFormats.POSITION);
+		worldRenderer.pos(aabb.minX, aabb.minY, aabb.minZ).endVertex();
+		worldRenderer.pos(aabb.minX, aabb.maxY, aabb.minZ).endVertex();
+		worldRenderer.pos(aabb.maxX, aabb.minY, aabb.minZ).endVertex();
+		worldRenderer.pos(aabb.maxX, aabb.maxY, aabb.minZ).endVertex();
+		worldRenderer.pos(aabb.maxX, aabb.minY, aabb.maxZ).endVertex();
+		worldRenderer.pos(aabb.maxX, aabb.maxY, aabb.maxZ).endVertex();
+		worldRenderer.pos(aabb.minX, aabb.minY, aabb.maxZ).endVertex();
+		worldRenderer.pos(aabb.minX, aabb.maxY, aabb.maxZ).endVertex();
+		Tessellator.getInstance().draw();
+		
+		GlStateManager.translate(realX, realY, realZ);
+		GlStateManager.disableBlend();
+		GlStateManager.enableAlpha();
+		GlStateManager.enableTexture2D();
+		GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+		GlStateManager.popMatrix();
+	}
+	
+	public static BlockPos getFirstBlockPosAfterVectors(Minecraft mc, Vec3 pos1, Vec3 pos2, int strength, int distance) {
+		double x = pos2.xCoord - pos1.xCoord;
+		double y = pos2.yCoord - pos1.yCoord;
+		double z = pos2.zCoord - pos1.zCoord;
+		
+		for (int i = strength; i < distance * strength; i++) { // Start at least 1 strength away
+			double newX = pos1.xCoord + ((x / strength) * i);
+			double newY = pos1.yCoord + ((y / strength) * i);
+			double newZ = pos1.zCoord + ((z / strength) * i);
+			
+			BlockPos newBlock = new BlockPos(newX, newY, newZ);
+			if (mc.theWorld.getBlockState(newBlock).getBlock() != Blocks.air) {
+				return newBlock;
+			}
+		}
+		
+		return null;
+	}
+	
+	public static BlockPos getNearbyBlock(Minecraft mc, BlockPos pos, Block... blockTypes) {
+		if (pos == null) return null;
+		BlockPos pos1 = new BlockPos(pos.getX() - 2, pos.getY() - 3, pos.getZ() - 2);
+		BlockPos pos2 = new BlockPos(pos.getX() + 2, pos.getY() + 3, pos.getZ() + 2);
+		
+		BlockPos closestBlock = null;
+		double closestBlockDistance = 99;
+		Iterable<BlockPos> blocks = BlockPos.getAllInBox(pos1, pos2);
+		
+		for (BlockPos block : blocks) {
+			for (Block blockType : blockTypes) {
+				if (mc.theWorld.getBlockState(block).getBlock() == blockType && block.distanceSq(pos) < closestBlockDistance) {
+					closestBlock = block;
+					closestBlockDistance = block.distanceSq(pos);
+				}
+			}
+		}
+		
+		return closestBlock;
 	}
 	
 }

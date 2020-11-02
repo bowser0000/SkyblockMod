@@ -17,6 +17,7 @@ public class MoveCommand extends CommandBase {
 	public static int[] displayXY = {0, 0};
 	public static int[] dungeonTimerXY = {0, 0};
 	public static int[] skill50XY = {0, 0};
+	public static int[] lividHpXY = {0, 0};
 	
 	@Override
 	public String getCommandName() {
@@ -25,7 +26,7 @@ public class MoveCommand extends CommandBase {
 
 	@Override
 	public String getCommandUsage(ICommandSender arg0) {
-		return "/" + getCommandName() + " <coords/display/dungeontimer/skill50> <x> <y>";
+		return "/" + getCommandName() + " <coords/display/dungeontimer/skill50/lividhp> <x> <y>";
 	}
 	
 	@Override
@@ -36,7 +37,7 @@ public class MoveCommand extends CommandBase {
 	@Override
 	public List<String> addTabCompletionOptions(ICommandSender sender, String[] args, BlockPos pos) {
 		if (args.length == 1) {
-			return getListOfStringsMatchingLastWord(args, "coords", "display", "dungeontimer", "skill50");
+			return getListOfStringsMatchingLastWord(args, "coords", "display", "dungeontimer", "skill50", "lividhp");
 		}
 		return null;
 	}
@@ -75,6 +76,12 @@ public class MoveCommand extends CommandBase {
 			cf.writeIntConfig("locations", "skill50X", skill50XY[0]);
 			cf.writeIntConfig("locations", "skill50Y", skill50XY[1]);
 			player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Skill 50 display has been moved to " + EnumChatFormatting.DARK_GREEN + arg1[1] + ", " + arg1[2]));
+		} else if (arg1[0].equalsIgnoreCase("lividhp")) { 
+			lividHpXY[0] = Integer.parseInt(arg1[1]);
+			lividHpXY[1] = Integer.parseInt(arg1[2]);
+			cf.writeIntConfig("locations", "lividHpX", lividHpXY[0]);
+			cf.writeIntConfig("locations", "lividHpY", lividHpXY[1]);
+			player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Livid HP has been moved to " + EnumChatFormatting.DARK_GREEN + arg1[1] + ", " + arg1[2]));
 		} else {
 			player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Usage: " + getCommandUsage(arg0)));
 		}

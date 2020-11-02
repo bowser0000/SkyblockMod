@@ -6,6 +6,7 @@ Discord Server: https://discord.gg/QsEkNQS
 ## Incompatibilities
 - Old Animations <2.6.4 - Frequent crashes
 - Old Animations 2.6.4 - Pet colors does not work
+- LabyMod + Sidebar Mod Revamp - Displays don't show
 
 ## Current features
 - Guild party desktop notifications (toggleable)
@@ -13,6 +14,7 @@ Discord Server: https://discord.gg/QsEkNQS
 - Golden T10/T6/T4 enchant display (toggleable)
 - Block AOTD ability (toggleable)
 - Disable Spirit Sceptre messages (toggleable)
+- Disable Midas Staff messages (toggleable)
 - Slayer item tracker (with graphic display) (scalable)
 - RNGesus drop alerts (toggleable)
 - Click in chat to open Maddox (toggleable)
@@ -21,6 +23,8 @@ Discord Server: https://discord.gg/QsEkNQS
 - Fishing tracker (with graphic display) (scalable)
 - Expertise kills in fishing rod lore
 - Dungeons tracker (with graphic display) (scalable)
+- Dungeons puzzle solver (Riddle, trivia, blaze, creeper) (toggleable)
+- Find correct Livid (with graphic display of HP) (toggleable)
 - Pet background colors based on level
 - Golem spawning alerts (toggleable)
 - Show total skill xp instead of progress to next level
@@ -30,14 +34,14 @@ Discord Server: https://discord.gg/QsEkNQS
 ## Commands
 - /dhelp - Returns this message in-game.
 - /dsm - Opens the GUI for Danker's Skyblock Mod.
-- /toggle <gparty/coords/golden/slayercount/rngesusalerts/splitfishing/chatmaddox/spiritbearalerts/aotd/sceptremessages/petcolors/dungeontimer/golemalerts/expertiselore/skill50display/outlinetext/list> - Toggles features. /toggle list returns values of every toggle.
+- /toggle <gparty/coords/golden/slayercount/rngesusalerts/splitfishing/chatmaddox/spiritbearalerts/aotd/sceptremessages/petcolors/dungeontimer/golemalerts/expertiselore/skill50display/outlinetext/lividsolver/oruopuzzle/blazepuzzle/creeperpuzzle/list> - Toggles features. /toggle list returns values of every toggle.
 - /setkey <key> - Sets API key.
 - /getkey - Returns key set with /setkey and copies it to your clipboard.
 - /loot <zombie/spider/wolf/fishing/catacombs> [winter/f(1-6)/session] - Returns loot received from slayer quests or fishing stats. /loot fishing winter returns winter sea creatures instead.
 - /display <zombie/spider/wolf/fishing/catacombs/auto/off> [winter/f(1-6)/session] - Text display for trackers. /display fishing winter displays winter sea creatures instead. /display auto automatically displays the loot for the slayer quest you have active.
 - /resetloot <zombie/spider/wolf/fishing/catacombs/confirm/cancel> -  - Resets loot for trackers. /resetloot confirm confirms the reset.
-- /move <coords/display/dungeontimer/skill50> <x> <y> - Moves text display to specified X and Y coordinates.
-- /scale <coords/display/dungeontimer/skill50> <scale (0.1 - 10)> - Scales text display to a specified multipler between 0.1x and 10x.
+- /move <coords/display/dungeontimer/skill50/lividhp> <x> <y> - Moves text display to specified X and Y coordinates.
+- /scale <coords/display/dungeontimer/skill50/lividhp> <scale (0.1 - 10)> - Scales text display to a specified multipler between 0.1x and 10x.
 - /slayer [player] - Uses API to get slayer xp of a person. If no name is provided, it checks yours.
 - /skills [player] - Uses API to get skill levels of a person. If no name is provided, it checks yours.
 - /lobbyskills - Uses API to find the average skills of the lobby, as well the three players with the highest skill average.

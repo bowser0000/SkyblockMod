@@ -17,6 +17,7 @@ public class ScaleCommand extends CommandBase {
 	public static double displayScale;
 	public static double dungeonTimerScale;
 	public static double skill50Scale;
+	public static double lividHpScale;
 	
 	@Override
 	public String getCommandName() {
@@ -25,7 +26,7 @@ public class ScaleCommand extends CommandBase {
 
 	@Override
 	public String getCommandUsage(ICommandSender arg0) {
-		return "/" + getCommandName() + " <coords/display/dungeontimer/skill50> <size (0.1 - 10)>";
+		return "/" + getCommandName() + " <coords/display/dungeontimer/skill50/lividhp> <size (0.1 - 10)>";
 	}
 	
 	@Override
@@ -36,7 +37,7 @@ public class ScaleCommand extends CommandBase {
 	@Override
 	public List<String> addTabCompletionOptions(ICommandSender sender, String[] args, BlockPos pos) {
 		if (args.length == 1) {
-			return getListOfStringsMatchingLastWord(args, "coords", "display", "dungeontimer", "skill50");
+			return getListOfStringsMatchingLastWord(args, "coords", "display", "dungeontimer", "skill50", "lividhp");
 		}
 		return null;
 	}
@@ -72,6 +73,10 @@ public class ScaleCommand extends CommandBase {
 			skill50Scale = scaleAmount;
 			ConfigHandler.writeDoubleConfig("scales", "skill50Scale", skill50Scale);
 			player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Skill 50 display has been scaled to " + EnumChatFormatting.DARK_GREEN + skill50Scale + "x"));
+		} else if (arg1[0].equalsIgnoreCase("lividhp")) {
+			lividHpScale = scaleAmount;
+			ConfigHandler.writeDoubleConfig("scales", "lividHpScale", lividHpScale);
+			player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Livid HP has been scaled to " + EnumChatFormatting.DARK_GREEN + lividHpScale + "x"));
 		} else {
 			player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Usage: " + getCommandUsage(arg0)));
 		}

@@ -26,6 +26,7 @@ public class DankerGui extends GuiScreen {
 	private GuiButton discordLink;
 	private GuiButton changeDisplay;
 	private GuiButton onlySlayer;
+	private GuiButton puzzleSolvers;
 	// Toggles
 	private GuiButton gparty;
 	private GuiButton coords;
@@ -44,6 +45,8 @@ public class DankerGui extends GuiScreen {
 	private GuiButton expertiseLore;
 	private GuiButton skill50Display;
 	private GuiButton outlineText;
+	private GuiButton midasStaffMessages;
+	private GuiButton lividSolver;
 	
 	public DankerGui(int page) {
 		this.page = page;
@@ -72,50 +75,60 @@ public class DankerGui extends GuiScreen {
 		// Page 1
 		changeDisplay = new GuiButton(0, width / 2 - 100, (int) (height * 0.1), "Change Display Settings");
 		onlySlayer = new GuiButton(0, width / 2 - 100, (int) (height * 0.2), "Set Slayer Quest");
-		outlineText = new GuiButton(0, width / 2 - 100, (int) (height * 0.3), "Outline Displayed Text: " + Utils.getColouredBoolean(ToggleCommand.outlineTextToggled));
-		gparty = new GuiButton(0, width / 2 - 100, (int) (height * 0.4), "Guild Party Notifications: " + Utils.getColouredBoolean(ToggleCommand.gpartyToggled));
-		coords = new GuiButton(0, width / 2 - 100, (int) (height * 0.5), "Coordinate/Angle Display: " + Utils.getColouredBoolean(ToggleCommand.coordsToggled));
-		goldenEnch = new GuiButton(0, width / 2 - 100, (int) (height * 0.6), "Golden T10/T6/T4 Enchantments: " + Utils.getColouredBoolean(ToggleCommand.goldenToggled));
-		slayerCount = new GuiButton(0, width / 2 - 100, (int) (height * 0.7), "Count Total 20% Drops: " + Utils.getColouredBoolean(ToggleCommand.slayerCountTotal));
+		puzzleSolvers = new GuiButton(0, width / 2 - 100, (int) (height * 0.3), "Toggle Dungeons Puzzle Solvers");
+		outlineText = new GuiButton(0, width / 2 - 100, (int) (height * 0.4), "Outline Displayed Text: " + Utils.getColouredBoolean(ToggleCommand.outlineTextToggled));
+		splitFishing = new GuiButton(0, width / 2 - 100, (int) (height * 0.5), "Split Fishing Display: " + Utils.getColouredBoolean(ToggleCommand.splitFishing));
+		dungeonTimer = new GuiButton(0, width / 2 - 100, (int) (height * 0.6), "Display Dungeon Timers: " + Utils.getColouredBoolean(ToggleCommand.dungeonTimerToggled));
+		coords = new GuiButton(0, width / 2 - 100, (int) (height * 0.7), "Coordinate/Angle Display: " + Utils.getColouredBoolean(ToggleCommand.coordsToggled));
 		// Page 2
-		aotd = new GuiButton(0, width / 2 - 100, (int) (height * 0.1), "Disable AOTD Ability: " + Utils.getColouredBoolean(ToggleCommand.aotdToggled));
-		lividDagger = new GuiButton(0, width / 2 - 100, (int) (height * 0.2), "Disable Livid Dagger Ability: " + Utils.getColouredBoolean(ToggleCommand.lividDaggerToggled));
-		sceptreMessages = new GuiButton(0, width / 2 - 100, (int) (height * 0.3), "Enable Spirit Sceptre Messages: " + Utils.getColouredBoolean(ToggleCommand.sceptreMessages));
-		petColours = new GuiButton(0, width / 2 - 100, (int) (height * 0.4), "Colour Pet Backgrounds: " + Utils.getColouredBoolean(ToggleCommand.petColoursToggled));
-		dungeonTimer = new GuiButton(0, width / 2 - 100, (int) (height * 0.5), "Display Dungeon Timers: " + Utils.getColouredBoolean(ToggleCommand.dungeonTimerToggled));
-		golemAlerts = new GuiButton(0, width / 2 - 100, (int) (height * 0.6), "Alert When Golem Spawns: " + Utils.getColouredBoolean(ToggleCommand.golemAlertToggled));
-		expertiseLore = new GuiButton(0, width / 2 - 100, (int) (height * 0.7), "Expertise Kills In Lore: " + Utils.getColouredBoolean(ToggleCommand.expertiseLoreToggled));
+		gparty = new GuiButton(0, width / 2 - 100, (int) (height * 0.1), "Guild Party Notifications: " + Utils.getColouredBoolean(ToggleCommand.gpartyToggled));
+		goldenEnch = new GuiButton(0, width / 2 - 100, (int) (height * 0.2), "Golden T10/T6/T4 Enchantments: " + Utils.getColouredBoolean(ToggleCommand.goldenToggled));
+		slayerCount = new GuiButton(0, width / 2 - 100, (int) (height * 0.3), "Count Total 20% Drops: " + Utils.getColouredBoolean(ToggleCommand.slayerCountTotal));
+		chatMaddox = new GuiButton(0, width / 2 - 100, (int) (height * 0.4), "Click Chat to Open Maddox: " + Utils.getColouredBoolean(ToggleCommand.chatMaddoxToggled));
+		spiritBearAlert = new GuiButton(0, width / 2 - 100, (int) (height * 0.5), "Spirit Bear Spawn Alerts: " + Utils.getColouredBoolean(ToggleCommand.spiritBearAlerts));
+		aotd = new GuiButton(0, width / 2 - 100, (int) (height * 0.6), "Disable AOTD Ability: " + Utils.getColouredBoolean(ToggleCommand.aotdToggled));
+		lividDagger = new GuiButton(0, width / 2 - 100, (int) (height * 0.7), "Disable Livid Dagger Ability: " + Utils.getColouredBoolean(ToggleCommand.lividDaggerToggled));
 		// Page 3
-		skill50Display = new GuiButton(0, width / 2 - 100, (int) (height * 0.1), "Display Progress To Skill Level 50: " + Utils.getColouredBoolean(ToggleCommand.skill50DisplayToggled));
+		sceptreMessages = new GuiButton(0, width / 2 - 100, (int) (height * 0.1), "Spirit Sceptre Messages: " + Utils.getColouredBoolean(ToggleCommand.sceptreMessages));
+		midasStaffMessages = new GuiButton(0, width / 2 - 100, (int) (height * 0.2), "Midas Staff Messages: " + Utils.getColouredBoolean(ToggleCommand.midasStaffMessages));
+		petColours = new GuiButton(0, width / 2 - 100, (int) (height * 0.3), "Colour Pet Backgrounds: " + Utils.getColouredBoolean(ToggleCommand.petColoursToggled));
+		golemAlerts = new GuiButton(0, width / 2 - 100, (int) (height * 0.4), "Alert When Golem Spawns: " + Utils.getColouredBoolean(ToggleCommand.golemAlertToggled));
+		expertiseLore = new GuiButton(0, width / 2 - 100, (int) (height * 0.5), "Expertise Kills In Lore: " + Utils.getColouredBoolean(ToggleCommand.expertiseLoreToggled));
+		skill50Display = new GuiButton(0, width / 2 - 100, (int) (height * 0.6), "Display Progress To Skill Level 50: " + Utils.getColouredBoolean(ToggleCommand.skill50DisplayToggled));
+		lividSolver = new GuiButton(0, width / 2 - 100, (int) (height * 0.7), "Find Correct Livid: " + Utils.getColouredBoolean(ToggleCommand.lividSolverToggled));
 		
 		if (page == 1) {
 			this.buttonList.add(changeDisplay);
 			this.buttonList.add(onlySlayer);
+			this.buttonList.add(puzzleSolvers);
 			this.buttonList.add(outlineText);
-			this.buttonList.add(gparty);
+			this.buttonList.add(splitFishing);
+			this.buttonList.add(dungeonTimer);
 			this.buttonList.add(coords);
+			this.buttonList.add(nextPage);
+		} else if (page == 2) {
+			this.buttonList.add(gparty);
 			this.buttonList.add(goldenEnch);
 			this.buttonList.add(slayerCount);
-			this.buttonList.add(nextPage);
-			this.buttonList.add(closeGUI);
-		} else if (page == 2) {
+			this.buttonList.add(chatMaddox);
+			this.buttonList.add(spiritBearAlert);
 			this.buttonList.add(aotd);
 			this.buttonList.add(lividDagger);
-			this.buttonList.add(sceptreMessages);
-			this.buttonList.add(petColours);
-			this.buttonList.add(dungeonTimer);
-			this.buttonList.add(golemAlerts);
-			this.buttonList.add(expertiseLore);
 			this.buttonList.add(nextPage);
 			this.buttonList.add(backPage);
-			this.buttonList.add(closeGUI);
 		} else if (page == 3) {
+			this.buttonList.add(sceptreMessages);
+			this.buttonList.add(midasStaffMessages);
+			this.buttonList.add(petColours);
+			this.buttonList.add(golemAlerts);
+			this.buttonList.add(expertiseLore);
 			this.buttonList.add(skill50Display);
+			this.buttonList.add(lividSolver);
 			this.buttonList.add(backPage);
-			this.buttonList.add(closeGUI);
 		}
 		this.buttonList.add(githubLink);
 		this.buttonList.add(discordLink);
+		this.buttonList.add(closeGUI);
 	}
 	
 	@Override
@@ -148,6 +161,8 @@ public class DankerGui extends GuiScreen {
 			TheMod.guiToOpen = "displaygui";
 		} else if (button == onlySlayer) {
 			TheMod.guiToOpen = "onlyslayergui";
+		} else if (button == puzzleSolvers) { 
+			TheMod.guiToOpen = "puzzlesolvers";
 		} else if (button == outlineText) {
 			ToggleCommand.outlineTextToggled = !ToggleCommand.outlineTextToggled;
 			ConfigHandler.writeBooleanConfig("toggles", "OutlineText", ToggleCommand.outlineTextToggled);
@@ -179,7 +194,7 @@ public class DankerGui extends GuiScreen {
 		} else if (button == sceptreMessages) {
 			ToggleCommand.sceptreMessages = !ToggleCommand.sceptreMessages;
 			ConfigHandler.writeBooleanConfig("toggles", "SceptreMessages", ToggleCommand.sceptreMessages);
-			sceptreMessages.displayString = "Enable Spirit Sceptre Messages: " + Utils.getColouredBoolean(ToggleCommand.sceptreMessages);
+			sceptreMessages.displayString = "Spirit Sceptre Messages: " + Utils.getColouredBoolean(ToggleCommand.sceptreMessages);
 		} else if (button == petColours) {
 			ToggleCommand.petColoursToggled = !ToggleCommand.petColoursToggled;
 			ConfigHandler.writeBooleanConfig("toggles", "PetColors", ToggleCommand.petColoursToggled);
@@ -200,6 +215,26 @@ public class DankerGui extends GuiScreen {
 			ToggleCommand.skill50DisplayToggled = !ToggleCommand.skill50DisplayToggled;
 			ConfigHandler.writeBooleanConfig("toggles", "Skill50Display", ToggleCommand.skill50DisplayToggled);
 			skill50Display.displayString = "Display Progress To Skill Level 50: " + Utils.getColouredBoolean(ToggleCommand.skill50DisplayToggled);
+		} else if (button == splitFishing) {
+			ToggleCommand.splitFishing = !ToggleCommand.splitFishing;
+			ConfigHandler.writeBooleanConfig("toggles", "SplitFishing", ToggleCommand.splitFishing);
+			splitFishing.displayString = "Split Fishing Display: " + Utils.getColouredBoolean(ToggleCommand.splitFishing);
+		} else if (button == chatMaddox) {
+			ToggleCommand.chatMaddoxToggled = !ToggleCommand.chatMaddoxToggled;
+			ConfigHandler.writeBooleanConfig("toggles", "ChatMaddox", ToggleCommand.chatMaddoxToggled);
+			chatMaddox.displayString = "Click Chat to Open Maddox: " + Utils.getColouredBoolean(ToggleCommand.chatMaddoxToggled);
+		} else if (button == spiritBearAlert) {
+			ToggleCommand.spiritBearAlerts = !ToggleCommand.spiritBearAlerts;
+			ConfigHandler.writeBooleanConfig("toggles", "SpiritBearAlerts", ToggleCommand.spiritBearAlerts);
+			spiritBearAlert.displayString = "Spirit Bear Spawn Alerts: " + Utils.getColouredBoolean(ToggleCommand.spiritBearAlerts);
+		} else if (button == midasStaffMessages) {
+			ToggleCommand.midasStaffMessages = !ToggleCommand.midasStaffMessages;
+			ConfigHandler.writeBooleanConfig("toggles", "MidasStaffMessages", ToggleCommand.midasStaffMessages);
+			midasStaffMessages.displayString = "Midas Staff Messages: " + Utils.getColouredBoolean(ToggleCommand.midasStaffMessages);
+		} else if (button == lividSolver) {
+			ToggleCommand.lividSolverToggled = !ToggleCommand.lividSolverToggled;
+			ConfigHandler.writeBooleanConfig("toggles", "LividSolver", ToggleCommand.lividSolverToggled);
+			lividSolver.displayString = "Find Correct Livid: " + Utils.getColouredBoolean(ToggleCommand.lividSolverToggled);
 		}
 	}
 	

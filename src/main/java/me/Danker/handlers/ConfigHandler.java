@@ -2,6 +2,7 @@ package me.Danker.handlers;
 
 import java.io.File;
 
+import me.Danker.TheMod;
 import me.Danker.commands.BlockSlayerCommand;
 import me.Danker.commands.DisplayCommand;
 import me.Danker.commands.LootCommand;
@@ -188,6 +189,13 @@ public class ConfigHandler {
 		if (!hasKey("toggles", "ExpertiseLore")) writeBooleanConfig("toggles", "ExpertiseLore", true);
 		if (!hasKey("toggles", "Skill50Display")) writeBooleanConfig("toggles", "Skill50Display", false);
 		if (!hasKey("toggles", "OutlineText")) writeBooleanConfig("toggles", "OutlineText", false);
+		if (!hasKey("toggles", "MidasStaffMessages")) writeBooleanConfig("toggles", "MidasStaffMessages", true);
+		if (!hasKey("toggles", "LividSolver")) writeBooleanConfig("toggles", "LividSolver", false);
+		// Puzzle Solvers
+		if (!hasKey("toggles", "ThreeManPuzzle")) writeBooleanConfig("toggles", "ThreeManPuzzle", false);
+		if (!hasKey("toggles", "OruoPuzzle")) writeBooleanConfig("toggles", "OruoPuzzle", false);
+		if (!hasKey("toggles", "BlazePuzzle")) writeBooleanConfig("toggles", "BlazePuzzle", false);
+		if (!hasKey("toggles", "CreeperPuzzle")) writeBooleanConfig("toggles", "CreeperPuzzle", false);
 		
 		if (!hasKey("api", "APIKey")) writeStringConfig("api", "APIKey", "");
 		
@@ -265,6 +273,12 @@ public class ConfigHandler {
 		if (!hasKey("fishing", "blueShark")) writeIntConfig("fishing", "blueShark", 0);
 		if (!hasKey("fishing", "tigerShark")) writeIntConfig("fishing", "tigerShark", 0);
 		if (!hasKey("fishing", "greatWhiteShark")) writeIntConfig("fishing", "greatWhiteShark", 0);
+		// Spooky Fishing
+		if (!hasKey("fishing", "scarecrow")) writeIntConfig("fishing", "scarecrow", 0);
+		if (!hasKey("fishing", "nightmare")) writeIntConfig("fishing", "nightmare", 0);
+		if (!hasKey("fishing", "werewolf")) writeIntConfig("fishing", "werewolf", 0);
+		if (!hasKey("fishing", "phantomFisher")) writeIntConfig("fishing", "phantomFisher", 0);
+		if (!hasKey("fishing", "grimReaper")) writeIntConfig("fishing", "grimReaper", 0);
 		
 		// Dungeons
 		if (!hasKey("catacombs", "recombobulator")) writeIntConfig("catacombs", "recombobulator", 0);
@@ -319,6 +333,7 @@ public class ConfigHandler {
 		
 		if (!hasKey("misc", "display")) writeStringConfig("misc", "display", "off");
 		if (!hasKey("misc", "autoDisplay")) writeBooleanConfig("misc", "autoDisplay", false);
+		if (!hasKey("misc", "skill50Time")) writeIntConfig("misc", "skill50Time", 3);
 		
 		ScaledResolution scaled = new ScaledResolution(Minecraft.getMinecraft());
 		int height = scaled.getScaledHeight();
@@ -330,10 +345,13 @@ public class ConfigHandler {
 		if (!hasKey("locations", "dungeonTimerY")) writeIntConfig("locations", "dungeonTimerY", 5);
 		if (!hasKey("locations", "skill50X")) writeIntConfig("locations", "skill50X", 40);
 		if (!hasKey("locations", "skill50Y")) writeIntConfig("locations", "skill50Y", 10);
+		if (!hasKey("locations", "lividHpX")) writeIntConfig("locations", "lividHpX", 40);
+		if (!hasKey("locations", "lividHpY")) writeIntConfig("locations", "lividHpY", 20);
 		if (!hasKey("scales", "coordsScale")) writeDoubleConfig("scales", "coordsScale", 1);
 		if (!hasKey("scales", "displayScale")) writeDoubleConfig("scales", "displayScale", 1);
 		if (!hasKey("scales", "dungeonTimerScale")) writeDoubleConfig("scales", "dungeonTimerScale", 1);
 		if (!hasKey("scales", "skill50Scale")) writeDoubleConfig("scales", "skill50Scale", 1);
+		if (!hasKey("scales", "lividHpScale")) writeDoubleConfig("scales", "lividHpScale", 1);
 		
 		final ToggleCommand tf = new ToggleCommand();
 		tf.gpartyToggled = getBoolean("toggles", "GParty");
@@ -353,6 +371,13 @@ public class ConfigHandler {
 		tf.expertiseLoreToggled = getBoolean("toggles", "ExpertiseLore");
 		tf.skill50DisplayToggled = getBoolean("toggles", "Skill50Display");
 		tf.outlineTextToggled = getBoolean("toggles", "OutlineText");
+		tf.midasStaffMessages = getBoolean("toggles", "MidasStaffMessages");
+		tf.lividSolverToggled = getBoolean("toggles", "LividSolver");
+		// Puzzle Solvers
+		tf.threeManToggled = getBoolean("toggles", "ThreeManPuzzle");
+		tf.oruoToggled = getBoolean("toggles", "OruoPuzzle");
+		tf.blazeToggled = getBoolean("toggles", "BlazePuzzle");
+		tf.creeperToggled = getBoolean("toggles", "CreeperPuzzle");
 		
 		final BlockSlayerCommand bs = new BlockSlayerCommand();
 		String onlySlayer = getString("toggles", "BlockSlayer");
@@ -436,6 +461,12 @@ public class ConfigHandler {
 		lc.blueSharks = getInt("fishing", "blueShark");
 		lc.tigerSharks = getInt("fishing", "tigerShark");
 		lc.greatWhiteSharks = getInt("fishing", "greatWhiteShark");
+		// Spooky Fishing
+		lc.scarecrows = getInt("fishing", "scarecrow");
+		lc.nightmares = getInt("fishing", "nightmare");
+		lc.werewolfs = getInt("fishing", "nightmare");
+		lc.phantomFishers = getInt("fishing", "phantomFisher");
+		lc.grimReapers = getInt("fishing", "grimReaper");
 		
 		// Dungeons
 		lc.recombobulators =  getInt("catacombs", "recombobulator");
@@ -491,6 +522,7 @@ public class ConfigHandler {
 		final DisplayCommand ds = new DisplayCommand();
 		ds.display = getString("misc", "display");
 		ds.auto = getBoolean("misc", "autoDisplay");
+		TheMod.SKILL_TIME = getInt("misc", "skill50Time") * 20;
 		
 		final MoveCommand moc = new MoveCommand();
 		moc.coordsXY[0] = getInt("locations", "coordsX");
@@ -501,12 +533,15 @@ public class ConfigHandler {
 		moc.dungeonTimerXY[1] = getInt("locations", "dungeonTimerY");
 		moc.skill50XY[0] = getInt("locations", "skill50X");
 		moc.skill50XY[1] = getInt("locations", "skill50Y");
+		moc.lividHpXY[0] = getInt("locations", "lividHpX");
+		moc.lividHpXY[1] = getInt("locations", "lividHpY");
 		
 		final ScaleCommand sc = new ScaleCommand();
 		sc.coordsScale = getDouble("scales", "coordsScale");
 		sc.displayScale = getDouble("scales", "displayScale");
 		sc.dungeonTimerScale = getDouble("scales", "dungeonTimerScale");
 		sc.skill50Scale = getDouble("scales", "skill50Scale");
+		sc.lividHpScale = getDouble("scales", "lividHpScale");
 	}
 	
 }

@@ -20,11 +20,15 @@ plugins {
     id "net.minecraftforge.gradle.forge" version "2.0.2"
 }
 */
-version = "1.8"
+version = "1.8.1"
 group= "com.yourname.modid" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "Danker's Skyblock Mod"
 
 sourceCompatibility = targetCompatibility = 1.8
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
 
 minecraft {
     version = "1.8.9-11.15.1.2318-1.8.9"

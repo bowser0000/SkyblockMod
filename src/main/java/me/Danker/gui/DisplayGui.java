@@ -25,6 +25,7 @@ public class DisplayGui extends GuiScreen {
 	private GuiButton fishing;
 	private GuiButton fishingWinter;
 	private GuiButton fishingFestival;
+	private GuiButton spookyFishing;
 	private GuiButton catacombsF1;
 	private GuiButton catacombsF2;
 	private GuiButton catacombsF3;
@@ -53,9 +54,10 @@ public class DisplayGui extends GuiScreen {
 		zombie = new GuiButton(0, width / 2 - 190, (int) (height * 0.3), 110, 20, "Zombie");
 		spider = new GuiButton(0, width / 2 - 55, (int) (height * 0.3), 110, 20, "Spider");
 		wolf = new GuiButton(0, width / 2 + 75, (int) (height * 0.3), 110, 20, "Wolf");
-		fishing = new GuiButton(0, width / 2 - 190, (int) (height * 0.4), 110, 20, "Fishing");
-		fishingWinter = new GuiButton(0, width / 2 - 55, (int) (height * 0.4), 110, 20, "Fishing Winter");
-		fishingFestival = new GuiButton(0, width / 2 + 75, (int) (height * 0.4), 110, 20, "Fishing Festival");
+		fishing = new GuiButton(0, width / 2 - 230, (int) (height * 0.4), 100, 20, "Fishing");
+		fishingWinter = new GuiButton(0, width / 2 - 110, (int) (height * 0.4), 100, 20, "Fishing Winter");
+		fishingFestival = new GuiButton(0, width / 2 + 10, (int) (height * 0.4), 100, 20, "Fishing Festival");
+		spookyFishing = new GuiButton(0, width / 2 + 130, (int) (height * 0.4), 100, 20, "Spooky Fishing");
 		catacombsF1 = new GuiButton(0, width / 2 - 145, (int) (height * 0.55), 50, 20, "F1");
 		catacombsF2 = new GuiButton(0, width / 2 - 85, (int) (height * 0.55), 50, 20, "F2");
 		catacombsF3 = new GuiButton(0, width / 2 - 25, (int) (height * 0.55), 50, 20, "F3");
@@ -72,6 +74,7 @@ public class DisplayGui extends GuiScreen {
 		this.buttonList.add(fishing);
 		this.buttonList.add(fishingWinter);
 		this.buttonList.add(fishingFestival);
+		this.buttonList.add(spookyFishing);
 		this.buttonList.add(catacombsF1);
 		this.buttonList.add(catacombsF2);
 		this.buttonList.add(catacombsF3);
@@ -129,6 +132,8 @@ public class DisplayGui extends GuiScreen {
 			setDisplay("fishing_winter", false);
 		} else if (button == fishingFestival) {
 			setDisplay("fishing_festival", false);
+		} else if (button == spookyFishing) {
+			setDisplay("spooky_fishing", false);
 		} else if (button == catacombsF1) {
 			setDisplay("catacombs_floor_one", false);
 		} else if (button == catacombsF2) {
