@@ -182,6 +182,11 @@ public class ResetLootCommand extends CommandBase {
 		lc.blueSharksSession = 0;
 		lc.tigerSharksSession = 0;
 		lc.greatWhiteSharksSession = 0;
+		lc.scarecrowsSession = 0;
+		lc.nightmaresSession = 0;
+		lc.werewolfsSession = 0;
+		lc.phantomFishersSession = 0;
+		lc.grimReapersSession = 0;
 		cf.deleteCategory("fishing");
 		cf.reloadConfig();
 	}

@@ -222,7 +222,7 @@ public class TheMod
 		triviaSolutions.put("What is the name of the lady of the Nether?", "Elle");
 		triviaSolutions.put("Which villager in the Village gives you a Rogue Sword?", "Jamie");
 		triviaSolutions.put("How many unique minions are there?", "52 Minions");
-		triviaSolutions.put("Which of these enemies does not spawn in the Spider's Den?", "Zombie Spider OR Cave Spider OR Broodfather");
+		triviaSolutions.put("Which of these enemies does not spawn in the Spider's Den?", "Zombie Spider OR Cave Spider OR Broodfather OR Wither Skeleton");
 		triviaSolutions.put("Which of these monsters only spawns at night?", "Zombie Villager OR Ghast");
 		triviaSolutions.put("Which of these is not a dragon in The End?", "Zoomer Dragon OR Weak Dragon OR Stonk Dragon OR Holy Dragon OR Boomer Dragon");
 		
@@ -562,257 +562,154 @@ public class TheMod
 			lc.greatCatches++;
 			lc.greatCatchesSession++;
 			cf.writeIntConfig("fishing", "greatCatch", lc.greatCatches);
-		} else if (message.contains("You caught a lowly Squid")) {
+		} else if (message.contains("A Squid appeared")) {
 			lc.squids++;
-			lc.seaCreatures++;
-			lc.fishingMilestone++;
 			lc.squidsSession++;
-			lc.seaCreaturesSession++;
-			lc.fishingMilestoneSession++;
 			cf.writeIntConfig("fishing", "squid", lc.squids);
-			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
-			cf.writeIntConfig("fishing", "milestone", lc.fishingMilestone);
 			increaseSeaCreatures();
-		} else if (message.contains("From the depths of the waters, you've reeled in a Sea Walker")) {
+		} else if (message.contains("You caught a Sea Walker")) {
 			lc.seaWalkers++;
-			lc.seaCreatures++;
-			lc.fishingMilestone++;
 			lc.seaWalkersSession++;
-			lc.seaCreaturesSession++;
-			lc.fishingMilestoneSession++;
 			cf.writeIntConfig("fishing", "seaWalker", lc.seaWalkers);
-			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
-			cf.writeIntConfig("fishing", "milestone", lc.fishingMilestone);
 			increaseSeaCreatures();
-		} else if (message.contains("Pitch darkness reveals you've caught a")) {
+		} else if (message.contains("Pitch darkness reveals a Night Squid")) {
 			lc.nightSquids++;
-			lc.seaCreatures++;
-			lc.fishingMilestone++;
 			lc.nightSquidsSession++;
-			lc.seaCreaturesSession++;
-			lc.fishingMilestoneSession++;
 			cf.writeIntConfig("fishing", "nightSquid", lc.nightSquids);
-			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
-			cf.writeIntConfig("fishing", "milestone", lc.fishingMilestone);
 			increaseSeaCreatures();
-		} else if (message.contains("You've stumbled upon a patrolling Sea Guardian")) {
+		} else if (message.contains("You stumbled upon a Sea Guardian")) {
 			lc.seaGuardians++;
-			lc.seaCreatures++;
-			lc.fishingMilestone++;
 			lc.seaGuardiansSession++;
-			lc.seaCreaturesSession++;
-			lc.fishingMilestoneSession++;
 			cf.writeIntConfig("fishing", "seaGuardian", lc.seaGuardians);
-			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
-			cf.writeIntConfig("fishing", "milestone", lc.fishingMilestone);
 			increaseSeaCreatures();
 		} else if (message.contains("It looks like you've disrupted the Sea Witch's brewing session. Watch out, she's furious")) {
 			lc.seaWitches++;
-			lc.seaCreatures++;
-			lc.fishingMilestone++;
 			lc.seaWitchesSession++;
-			lc.seaCreaturesSession++;
-			lc.fishingMilestoneSession++;
 			cf.writeIntConfig("fishing", "seaWitch", lc.seaWitches);
-			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
-			cf.writeIntConfig("fishing", "milestone", lc.fishingMilestone);
 			increaseSeaCreatures();
-		} else if (message.contains("From the depths of the waters, you've reeled in a Sea Archer")) {
+		} else if (message.contains("You reeled in a Sea Archer")) {
 			lc.seaArchers++;
-			lc.seaCreatures++;
-			lc.fishingMilestone++;
 			lc.seaArchersSession++;
-			lc.seaCreaturesSession++;
-			lc.fishingMilestoneSession++;
 			cf.writeIntConfig("fishing", "seaArcher", lc.seaArchers);
-			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
-			cf.writeIntConfig("fishing", "milestone", lc.fishingMilestone);
 			increaseSeaCreatures();
-		} else if (message.contains("The Monster of the Deep emerges from the dark depths")) {
+		} else if (message.contains("The Monster of the Deep has emerged")) {
 			lc.monsterOfTheDeeps++;
-			lc.seaCreatures++;
-			lc.fishingMilestone++;
 			lc.monsterOfTheDeepsSession++;
-			lc.seaCreaturesSession++;
-			lc.fishingMilestoneSession++;
 			cf.writeIntConfig("fishing", "monsterOfDeep", lc.monsterOfTheDeeps);
-			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
-			cf.writeIntConfig("fishing", "milestone", lc.fishingMilestone);
 			increaseSeaCreatures();
-		} else if (message.contains("You have found a Catfish, don't let it steal your catches")) {
+		} else if (message.contains("Huh? A Catfish")) {
 			lc.catfishes++;
-			lc.seaCreatures++;
-			lc.fishingMilestone++;
 			lc.catfishesSession++;
-			lc.seaCreaturesSession++;
-			lc.fishingMilestoneSession++;
 			cf.writeIntConfig("fishing", "catfish", lc.catfishes);
-			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
-			cf.writeIntConfig("fishing", "milestone", lc.fishingMilestone);
 			increaseSeaCreatures();
 		} else if (message.contains("Is this even a fish? It's the Carrot King")) {
 			lc.carrotKings++;
-			lc.seaCreatures++;
-			lc.fishingMilestone++;
 			lc.carrotKingsSession++;
-			lc.seaCreaturesSession++;
-			lc.fishingMilestoneSession++;
 			cf.writeIntConfig("fishing", "carrotKing", lc.carrotKings);
-			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
-			cf.writeIntConfig("fishing", "milestone", lc.fishingMilestone);
 			increaseSeaCreatures();
 		} else if (message.contains("Gross! A Sea Leech")) {
 			lc.seaLeeches++;
-			lc.seaCreatures++;
-			lc.fishingMilestone++;
 			lc.seaLeechesSession++;
-			lc.seaCreaturesSession++;
-			lc.fishingMilestoneSession++;
 			cf.writeIntConfig("fishing", "seaLeech", lc.seaLeeches);
-			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
-			cf.writeIntConfig("fishing", "milestone", lc.fishingMilestone);
 			increaseSeaCreatures();
 		} else if (message.contains("You've discovered a Guardian Defender of the sea")) {
 			lc.guardianDefenders++;
-			lc.seaCreatures++;
-			lc.fishingMilestone++;
 			lc.guardianDefendersSession++;
-			lc.seaCreaturesSession++;
-			lc.fishingMilestoneSession++;
 			cf.writeIntConfig("fishing", "guardianDefender", lc.guardianDefenders);
-			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
-			cf.writeIntConfig("fishing", "milestone", lc.fishingMilestone);
 			increaseSeaCreatures();
 		} else if (message.contains("You have awoken the Deep Sea Protector, prepare for a battle")) {
 			lc.deepSeaProtectors++;
-			lc.seaCreatures++;
-			lc.fishingMilestone++;
 			lc.deepSeaProtectorsSession++;
-			lc.seaCreaturesSession++;
-			lc.fishingMilestoneSession++;
 			cf.writeIntConfig("fishing", "deepSeaProtector", lc.deepSeaProtectors);
-			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
-			cf.writeIntConfig("fishing", "milestone", lc.fishingMilestone);
 			increaseSeaCreatures();
 		} else if (message.contains("The Water Hydra has come to test your strength")) {
 			lc.hydras++;
-			lc.seaCreatures++;
-			lc.fishingMilestone++;
 			lc.hydrasSession++;
-			lc.seaCreaturesSession++;
-			lc.fishingMilestoneSession++;
 			cf.writeIntConfig("fishing", "hydra", lc.hydras);
-			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
-			cf.writeIntConfig("fishing", "milestone", lc.fishingMilestone);
 			increaseSeaCreatures();
 		} else if (message.contains("The Sea Emperor arises from the depths")) {
+			increaseSeaCreatures();
+			
 			lc.seaEmperors++;
-			lc.seaCreatures++;
-			lc.fishingMilestone++;
 			lc.empTime = System.currentTimeMillis() / 1000;
 			lc.empSCs = 0;
 			lc.seaEmperorsSession++;
-			lc.seaCreaturesSession++;
-			lc.fishingMilestoneSession++;
 			lc.empTimeSession = System.currentTimeMillis() / 1000;
 			lc.empSCsSession = 0;
 			cf.writeIntConfig("fishing", "seaEmperor", lc.seaEmperors);
-			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
-			cf.writeIntConfig("fishing", "milestone", lc.fishingMilestone);
 			cf.writeDoubleConfig("fishing", "empTime", lc.empTime);
 			cf.writeIntConfig("fishing", "empSC", lc.empSCs);
 		} else if (message.contains("Frozen Steve fell into the pond long ago")) { // Fishing Winter
 			lc.frozenSteves++;
-			lc.seaCreatures++;
-			lc.fishingMilestone++;
 			lc.frozenStevesSession++;
-			lc.seaCreaturesSession++;
-			lc.fishingMilestoneSession++;
 			cf.writeIntConfig("fishing", "frozenSteve", lc.frozenSteves);
-			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
-			cf.writeIntConfig("fishing", "milestone", lc.fishingMilestone);
 			increaseSeaCreatures();
 		} else if (message.contains("It's a snowman! He looks harmless")) {
 			lc.frostyTheSnowmans++;
-			lc.seaCreatures++;
-			lc.fishingMilestone++;
 			lc.frostyTheSnowmansSession++;
-			lc.seaCreaturesSession++;
-			lc.fishingMilestoneSession++;
 			cf.writeIntConfig("fishing", "snowman", lc.frostyTheSnowmans);
-			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
-			cf.writeIntConfig("fishing", "milestone", lc.fishingMilestone);
 			increaseSeaCreatures();
 		} else if (message.contains("stole Jerry's Gifts...get them back")) {
 			lc.grinches++;
-			lc.seaCreatures++;
-			lc.fishingMilestone++;
 			lc.grinchesSession++;
-			lc.seaCreaturesSession++;
-			lc.fishingMilestoneSession++;
 			cf.writeIntConfig("fishing", "grinch", lc.grinches);
-			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
-			cf.writeIntConfig("fishing", "milestone", lc.fishingMilestone);
 			increaseSeaCreatures();
 		} else if (message.contains("What is this creature")) {
+			increaseSeaCreatures();
+			
 			lc.yetis++;
-			lc.seaCreatures++;
-			lc.fishingMilestone++;
 			lc.yetiTime = System.currentTimeMillis() / 1000;
 			lc.yetiSCs = 0;
 			lc.yetisSession++;
-			lc.seaCreaturesSession++;
-			lc.fishingMilestoneSession++;
 			lc.yetiTimeSession = System.currentTimeMillis() / 1000;
 			lc.yetiSCsSession = 0;
 			cf.writeIntConfig("fishing", "yeti", lc.yetis);
 			cf.writeDoubleConfig("fishing", "yetiTime", lc.yetiTime);
 			cf.writeIntConfig("fishing", "yetiSC", lc.yetiSCs);
-			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
-			cf.writeIntConfig("fishing", "milestone", lc.fishingMilestone);
 		} else if (message.contains("A tiny fin emerges from the water, you've caught a Nurse Shark")) { // Fishing Festival
 			lc.nurseSharks++;
-			lc.seaCreatures++;
-			lc.fishingMilestone++;
 			lc.nurseSharksSession++;
-			lc.seaCreaturesSession++;
-			lc.fishingMilestoneSession++;
 			cf.writeIntConfig("fishing", "nurseShark", lc.nurseSharks);
-			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
-			cf.writeIntConfig("fishing", "milestone", lc.fishingMilestone);
 			increaseSeaCreatures();
 		} else if (message.contains("You spot a fin as blue as the water it came from, it's a Blue Shark")) {
 			lc.blueSharks++;
-			lc.seaCreatures++;
-			lc.fishingMilestone++;
 			lc.blueSharksSession++;
-			lc.seaCreaturesSession++;
-			lc.fishingMilestoneSession++;
 			cf.writeIntConfig("fishing", "blueShark", lc.blueSharks);
-			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
-			cf.writeIntConfig("fishing", "milestone", lc.fishingMilestone);
 			increaseSeaCreatures();
 		} else if (message.contains("A striped beast bounds from the depths, the wild Tiger Shark")) {
 			lc.tigerSharks++;
-			lc.seaCreatures++;
-			lc.fishingMilestone++;
 			lc.tigerSharksSession++;
-			lc.seaCreaturesSession++;
-			lc.fishingMilestoneSession++;
 			cf.writeIntConfig("fishing", "tigerShark", lc.tigerSharks);
-			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
-			cf.writeIntConfig("fishing", "milestone", lc.fishingMilestone);
 			increaseSeaCreatures();
 		} else if (message.contains("Hide no longer, a Great White Shark has tracked your scent and thirsts for your blood")) {
 			lc.greatWhiteSharks++;
-			lc.seaCreatures++;
-			lc.fishingMilestone++;
 			lc.greatWhiteSharksSession++;
-			lc.seaCreaturesSession++;
-			lc.fishingMilestoneSession++;
 			cf.writeIntConfig("fishing", "greatWhiteShark", lc.greatWhiteSharks);
-			cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
-			cf.writeIntConfig("fishing", "milestone", lc.fishingMilestone);
+			increaseSeaCreatures();
+		} else if (message.contains("Phew! It's only a Scarecrow")) {
+			lc.scarecrows++;
+			lc.scarecrowsSession++;
+			cf.writeIntConfig("fishing", "scarecrow", lc.werewolfs);
+			increaseSeaCreatures();
+		} else if (message.contains("You hear trotting from beneath the waves, you caught a Nightmare")) {
+			lc.nightmares++;
+			lc.nightmaresSession++;
+			cf.writeIntConfig("fishing", "nightmare", lc.werewolfs);
+			increaseSeaCreatures();
+		} else if (message.contains("It must be a full moon, a Werewolf appears")) {
+			lc.werewolfs++;
+			lc.werewolfsSession++;
+			cf.writeIntConfig("fishing", "werewolf", lc.werewolfs);
+			increaseSeaCreatures();
+		} else if (message.contains("The spirit of a long lost Phantom Fisher has come to haunt you")) {
+			lc.phantomFishers++;
+			lc.phantomFishersSession++;
+			cf.writeIntConfig("fishing", "phantomFisher", lc.werewolfs);
+			increaseSeaCreatures();
+		} else if (message.contains("This can't be! The manifestation of death himself")) {
+			lc.grimReapers++;
+			lc.grimReapersSession++;
+			cf.writeIntConfig("fishing", "grimReaper", lc.werewolfs);
 			increaseSeaCreatures();
 		} else if (message.contains("Dungeon starts in 1 second.")) { // Dungeons Stuff
 		    dungeonStartTime = System.currentTimeMillis() / 1000 + 1;
@@ -1580,6 +1477,44 @@ public class TheMod
 							EnumChatFormatting.BLUE + nf.format(lc.blueSharksSession) + "\n" +
 	    					EnumChatFormatting.GOLD + nf.format(lc.tigerSharksSession) + "\n" +
 							EnumChatFormatting.WHITE + nf.format(lc.greatWhiteSharksSession);
+     		} else if (ds.display.equals("spooky_fishing")) {
+     			dropsText = EnumChatFormatting.AQUA + "Creatures Caught:\n" +
+     						EnumChatFormatting.AQUA + "Fishing Milestone:\n" +
+     						EnumChatFormatting.GOLD + "Good Catches:\n" +
+							EnumChatFormatting.DARK_PURPLE + "Great Catches:\n" +
+     						EnumChatFormatting.BLUE + "Scarecrows:\n" +
+							EnumChatFormatting.GRAY + "Nightmares:\n" +
+     						EnumChatFormatting.DARK_PURPLE + "Werewolves:\n" +
+							EnumChatFormatting.GOLD + "Phantom Fishers:\n" +
+     						EnumChatFormatting.GOLD + "Grim Reapers:";
+     			countText = EnumChatFormatting.AQUA + nf.format(lc.seaCreatures) + "\n" +
+							EnumChatFormatting.AQUA + nf.format(lc.fishingMilestone) + "\n" +
+	    					EnumChatFormatting.GOLD + nf.format(lc.goodCatches) + "\n" +
+							EnumChatFormatting.DARK_PURPLE + nf.format(lc.greatCatches) + "\n" +
+	    					EnumChatFormatting.BLUE + nf.format(lc.scarecrows) + "\n" +
+							EnumChatFormatting.GRAY + nf.format(lc.nightmares) + "\n" +
+	    					EnumChatFormatting.DARK_PURPLE + nf.format(lc.werewolfs) + "\n" +
+							EnumChatFormatting.GOLD + nf.format(lc.phantomFishers) + "\n" +
+	    					EnumChatFormatting.GOLD + nf.format(lc.grimReapers);
+     		} else if (ds.display.equals("spooky_fishing_session")) {
+     			dropsText = EnumChatFormatting.AQUA + "Creatures Caught:\n" +
+	 						EnumChatFormatting.AQUA + "Fishing Milestone:\n" +
+	 						EnumChatFormatting.GOLD + "Good Catches:\n" +
+							EnumChatFormatting.DARK_PURPLE + "Great Catches:\n" +
+	 						EnumChatFormatting.BLUE + "Scarecrows:\n" +
+							EnumChatFormatting.GRAY + "Nightmares:\n" +
+	 						EnumChatFormatting.DARK_PURPLE + "Werewolves:\n" +
+							EnumChatFormatting.GOLD + "Phantom Fishers:\n" +
+	 						EnumChatFormatting.GOLD + "Grim Reapers:";
+	 			countText = EnumChatFormatting.AQUA + nf.format(lc.seaCreaturesSession) + "\n" +
+							EnumChatFormatting.AQUA + nf.format(lc.fishingMilestoneSession) + "\n" +
+	    					EnumChatFormatting.GOLD + nf.format(lc.goodCatchesSession) + "\n" +
+							EnumChatFormatting.DARK_PURPLE + nf.format(lc.greatCatchesSession) + "\n" +
+	    					EnumChatFormatting.BLUE + nf.format(lc.scarecrowsSession) + "\n" +
+							EnumChatFormatting.GRAY + nf.format(lc.nightmaresSession) + "\n" +
+	    					EnumChatFormatting.DARK_PURPLE + nf.format(lc.werewolfsSession) + "\n" +
+							EnumChatFormatting.GOLD + nf.format(lc.phantomFishersSession) + "\n" +
+	    					EnumChatFormatting.GOLD + nf.format(lc.grimReapersSession);
      		} else if (ds.display.equals("catacombs_floor_one")) {
     			dropsText = EnumChatFormatting.GOLD + "Recombobulators:\n" +
     						EnumChatFormatting.DARK_PURPLE + "Fuming Potato Books:\n" +
@@ -2301,6 +2236,12 @@ public class TheMod
     		}
     	}
     	
+		lc.seaCreatures++;
+		lc.fishingMilestone++;
+		lc.seaCreaturesSession++;
+		lc.fishingMilestoneSession++;
+		cf.writeIntConfig("fishing", "seaCreature", lc.seaCreatures);
+		cf.writeIntConfig("fishing", "milestone", lc.fishingMilestone);
     	cf.writeIntConfig("fishing", "empSC", lc.empSCs);
     	cf.writeIntConfig("fishing", "yetiSC", lc.yetiSCs);
     	

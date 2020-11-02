@@ -273,6 +273,12 @@ public class ConfigHandler {
 		if (!hasKey("fishing", "blueShark")) writeIntConfig("fishing", "blueShark", 0);
 		if (!hasKey("fishing", "tigerShark")) writeIntConfig("fishing", "tigerShark", 0);
 		if (!hasKey("fishing", "greatWhiteShark")) writeIntConfig("fishing", "greatWhiteShark", 0);
+		// Spooky Fishing
+		if (!hasKey("fishing", "scarecrow")) writeIntConfig("fishing", "scarecrow", 0);
+		if (!hasKey("fishing", "nightmare")) writeIntConfig("fishing", "nightmare", 0);
+		if (!hasKey("fishing", "werewolf")) writeIntConfig("fishing", "werewolf", 0);
+		if (!hasKey("fishing", "phantomFisher")) writeIntConfig("fishing", "phantomFisher", 0);
+		if (!hasKey("fishing", "grimReaper")) writeIntConfig("fishing", "grimReaper", 0);
 		
 		// Dungeons
 		if (!hasKey("catacombs", "recombobulator")) writeIntConfig("catacombs", "recombobulator", 0);
@@ -455,6 +461,12 @@ public class ConfigHandler {
 		lc.blueSharks = getInt("fishing", "blueShark");
 		lc.tigerSharks = getInt("fishing", "tigerShark");
 		lc.greatWhiteSharks = getInt("fishing", "greatWhiteShark");
+		// Spooky Fishing
+		lc.scarecrows = getInt("fishing", "scarecrow");
+		lc.nightmares = getInt("fishing", "nightmare");
+		lc.werewolfs = getInt("fishing", "nightmare");
+		lc.phantomFishers = getInt("fishing", "phantomFisher");
+		lc.grimReapers = getInt("fishing", "grimReaper");
 		
 		// Dungeons
 		lc.recombobulators =  getInt("catacombs", "recombobulator");

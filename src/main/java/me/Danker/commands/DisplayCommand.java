@@ -22,7 +22,7 @@ public class DisplayCommand extends CommandBase {
 
 	@Override
 	public String getCommandUsage(ICommandSender arg0) {
-		return "/" + getCommandName() + " <zombie/spider/wolf/fishing/catacombs/auto/off> [winter/festival/session/f(1-6)]";
+		return "/" + getCommandName() + " <zombie/spider/wolf/fishing/catacombs/auto/off> [winter/festival/spooky/session/f(1-6)]";
 	}
 
 	@Override
@@ -35,7 +35,7 @@ public class DisplayCommand extends CommandBase {
 		if (args.length == 1) {
 			return getListOfStringsMatchingLastWord(args, "wolf", "spider", "zombie", "fishing", "catacombs", "auto", "off");
 		} else if (args.length == 2 && args[0].equalsIgnoreCase("fishing")) {
-			return getListOfStringsMatchingLastWord(args, "winter", "festival", "session");
+			return getListOfStringsMatchingLastWord(args, "winter", "festival", "spooky", "session");
 		} else if (args.length == 2 && args[0].equalsIgnoreCase("catacombs")) {
 			return getListOfStringsMatchingLastWord(args, "f1", "floor1", "f2", "floor2", "f3", "floor3", "f4", "floor4", "f5", "floor5", "f6", "floor6");
 		} else if (args.length > 1 || (args.length == 3 && args[0].equalsIgnoreCase("fishing") && args[1].equalsIgnoreCase("winter"))) { 
@@ -88,6 +88,12 @@ public class DisplayCommand extends CommandBase {
 					display = "fishing_festival_session";
 				} else {
 					display = "fishing_festival";
+				}
+			} else if (arg1.length > 1 && arg1[1].equalsIgnoreCase("spooky")) { 
+				if (showSession) {
+					display = "spooky_fishing_session";
+				} else {
+					display = "spooky_fishing";
 				}
 			} else {
 				if (showSession) {

@@ -88,6 +88,12 @@ public class LootCommand extends CommandBase {
 	public static int blueSharks;
 	public static int tigerSharks;
 	public static int greatWhiteSharks;
+	// Spooky Fishing
+	public static int scarecrows;
+	public static int nightmares;
+	public static int werewolfs;
+	public static int phantomFishers;
+	public static int grimReapers;
 	
 	// Catacombs Dungeons
 	public static int recombobulators;
@@ -215,6 +221,12 @@ public class LootCommand extends CommandBase {
 	public static int blueSharksSession = 0;
 	public static int tigerSharksSession = 0;
 	public static int greatWhiteSharksSession = 0;
+	// Spooky Fishing
+	public static int scarecrowsSession = 0;
+	public static int nightmaresSession = 0;
+	public static int werewolfsSession = 0;
+	public static int phantomFishersSession = 0;
+	public static int grimReapersSession = 0;
 	
 	// Catacombs Dungeons
 	public static int recombobulatorsSession = 0;
@@ -274,7 +286,7 @@ public class LootCommand extends CommandBase {
 
 	@Override
 	public String getCommandUsage(ICommandSender arg0) {
-		return "/" + getCommandName() + " <zombie/spider/wolf/fishing/catacombs> [winter/festival/f(1-6)/session]";
+		return "/" + getCommandName() + " <zombie/spider/wolf/fishing/catacombs> [winter/festival/spooky/f(1-6)/session]";
 	}
 	
 	@Override
@@ -287,7 +299,7 @@ public class LootCommand extends CommandBase {
 		if (args.length == 1) {
 			return getListOfStringsMatchingLastWord(args, "wolf", "spider", "zombie", "fishing", "catacombs");
 		} else if (args.length == 2 && args[0].equalsIgnoreCase("fishing")) {
-			return getListOfStringsMatchingLastWord(args, "winter", "festival", "session");
+			return getListOfStringsMatchingLastWord(args, "winter", "festival", "spooky", "session");
 		} else if (args.length == 2 && args[0].equalsIgnoreCase("catacombs")) {
 			return getListOfStringsMatchingLastWord(args, "f1", "floor1", "f2", "floor2", "f3", "floor3", "f4", "floor4", "f5", "floor5", "f6", "floor6");
 		} else if (args.length > 1 || (args.length == 3 && args[0].equalsIgnoreCase("fishing") && args[1].equalsIgnoreCase("winter"))) { 
@@ -578,6 +590,27 @@ public class LootCommand extends CommandBase {
 																EnumChatFormatting.GOLD + "    Tiger Sharks: " + nf.format(tigerSharks) + "\n" +
 																EnumChatFormatting.WHITE + "    Great White Sharks: " + nf.format(greatWhiteSharks) + "\n" +
 																EnumChatFormatting.AQUA + EnumChatFormatting.BOLD + " -------------------"));
+				} else if (arg1[1].equalsIgnoreCase("spooky")) {
+					if (showSession) {
+						player.addChatMessage(new ChatComponentText(EnumChatFormatting.AQUA + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+																	EnumChatFormatting.GOLD + EnumChatFormatting.BOLD + " Spooky Fishing Summary (Current Session):\n" +
+																	EnumChatFormatting.BLUE + "    Scarecrows: " + nf.format(scarecrowsSession) + "\n" +
+																	EnumChatFormatting.GRAY + "    Nightmares: " + nf.format(nightmaresSession) + "\n" +
+																	EnumChatFormatting.DARK_PURPLE + "    Werewolves: " + nf.format(werewolfsSession) + "\n" +
+																	EnumChatFormatting.GOLD + "    Phantom Fishers: " + nf.format(phantomFishersSession) + "\n" +
+																	EnumChatFormatting.GOLD + "    Grim Reapers: " + nf.format(grimReapersSession) + "\n" +
+																	EnumChatFormatting.AQUA + "" + EnumChatFormatting.BOLD + "-------------------"));
+						return;
+					}
+					
+					player.addChatMessage(new ChatComponentText(EnumChatFormatting.AQUA + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+																EnumChatFormatting.GOLD + EnumChatFormatting.BOLD + " Spooky Fishing Summary:\n" +
+																EnumChatFormatting.BLUE + "    Scarecrows: " + nf.format(scarecrows) + "\n" +
+																EnumChatFormatting.GRAY + "    Nightmares: " + nf.format(nightmares) + "\n" +
+																EnumChatFormatting.DARK_PURPLE + "    Werewolves: " + nf.format(werewolfs) + "\n" +
+																EnumChatFormatting.GOLD + "    Phantom Fishers: " + nf.format(phantomFishers) + "\n" +
+																EnumChatFormatting.GOLD + "    Grim Reapers: " + nf.format(grimReapers) + "\n" +
+																EnumChatFormatting.AQUA + "" + EnumChatFormatting.BOLD + "-------------------"));
 				}
 			}
 			
