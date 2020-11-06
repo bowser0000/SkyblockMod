@@ -94,35 +94,35 @@ public class SkillsCommand extends CommandBase {
 			
 			if (userObject.has("experience_skill_farming") || userObject.has("experience_skill_mining") || userObject.has("experience_skill_combat") || userObject.has("experience_skill_foraging") || userObject.has("experience_skill_fishing") || userObject.has("experience_skill_enchanting") || userObject.has("experience_skill_alchemy")) {
 				if (userObject.has("experience_skill_farming")) {
-					farmingLevel = Utils.xpToSkillLevel(userObject.get("experience_skill_farming").getAsDouble());
+					farmingLevel = Utils.xpToSkillLevel(userObject.get("experience_skill_farming").getAsDouble(), 60);
 					farmingLevel = (double) Math.round(farmingLevel * 100) / 100;
 				}
 				if (userObject.has("experience_skill_mining")) {
-					miningLevel = Utils.xpToSkillLevel(userObject.get("experience_skill_mining").getAsDouble());
+					miningLevel = Utils.xpToSkillLevel(userObject.get("experience_skill_mining").getAsDouble(), 50);
 					miningLevel = (double) Math.round(miningLevel * 100) / 100;
 				}
 				if (userObject.has("experience_skill_combat")) {
-					combatLevel = Utils.xpToSkillLevel(userObject.get("experience_skill_combat").getAsDouble());
+					combatLevel = Utils.xpToSkillLevel(userObject.get("experience_skill_combat").getAsDouble(), 50);
 					combatLevel = (double) Math.round(combatLevel * 100) / 100;
 				}
 				if (userObject.has("experience_skill_foraging")) {
-					foragingLevel = Utils.xpToSkillLevel(userObject.get("experience_skill_foraging").getAsDouble());
+					foragingLevel = Utils.xpToSkillLevel(userObject.get("experience_skill_foraging").getAsDouble(), 50);
 					foragingLevel = (double) Math.round(foragingLevel * 100) / 100;
 				}
 				if (userObject.has("experience_skill_fishing")) {
-					fishingLevel = Utils.xpToSkillLevel(userObject.get("experience_skill_fishing").getAsDouble());
+					fishingLevel = Utils.xpToSkillLevel(userObject.get("experience_skill_fishing").getAsDouble(), 50);
 					fishingLevel = (double) Math.round(fishingLevel * 100) / 100;
 				}
 				if (userObject.has("experience_skill_enchanting")) {
-					enchantingLevel = Utils.xpToSkillLevel(userObject.get("experience_skill_enchanting").getAsDouble());
+					enchantingLevel = Utils.xpToSkillLevel(userObject.get("experience_skill_enchanting").getAsDouble(), 50);
 					enchantingLevel = (double) Math.round(enchantingLevel * 100) / 100;
 				}
 				if (userObject.has("experience_skill_alchemy")) {
-					alchemyLevel = Utils.xpToSkillLevel(userObject.get("experience_skill_alchemy").getAsDouble());
+					alchemyLevel = Utils.xpToSkillLevel(userObject.get("experience_skill_alchemy").getAsDouble(), 50);
 					alchemyLevel = (double) Math.round(alchemyLevel * 100) / 100;
 				}
 				if (userObject.has("experience_skill_taming")) {
-					tamingLevel = Utils.xpToSkillLevel(userObject.get("experience_skill_taming").getAsDouble());
+					tamingLevel = Utils.xpToSkillLevel(userObject.get("experience_skill_taming").getAsDouble(), 50);
 					tamingLevel = (double) Math.round(tamingLevel * 100) / 100;
 				}
 			} else {

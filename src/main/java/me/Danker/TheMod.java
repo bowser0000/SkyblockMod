@@ -328,12 +328,22 @@ public class TheMod
     					
     					String xpGained = section.substring(section.indexOf("+"), section.indexOf("(") - 1);
     					double currentXp = Double.parseDouble(section.substring(section.indexOf("(") + 1, section.indexOf("/")).replaceAll(",", ""));
-    					int previousXp = Utils.getPastXpEarned(Integer.parseInt(section.substring(section.indexOf("/") + 1, section.indexOf(")")).replaceAll(",", "")));
-    					double percentage = (double) Math.floor(((currentXp + previousXp) / 55172425) * 10000D) / 100D;
+    					int limit;
+    					int totalXp;
+    					if (section.contains("Farming")) {
+    						limit = 60;
+    						totalXp = 111672425;
+    					} else {
+    						limit = 50;
+    						totalXp = 55172425;
+    					}
+    					int previousXp = Utils.getPastXpEarned(Integer.parseInt(section.substring(section.indexOf("/") + 1, section.indexOf(")")).replaceAll(",", "")), limit);
+    					double percentage = (double) Math.floor(((currentXp + previousXp) / totalXp) * 10000D) / 100D;
     					
+    					NumberFormat nf = NumberFormat.getNumberInstance(Locale.US);
     					skillTimer = SKILL_TIME;
     					showSkill = true;
-    					skillText = EnumChatFormatting.AQUA + xpGained + " (" + NumberFormat.getNumberInstance(Locale.US).format(currentXp + previousXp) + "/55,172,425) " + percentage + "%";
+    					skillText = EnumChatFormatting.AQUA + xpGained + " (" + nf.format(currentXp + previousXp) + "/" + nf.format(totalXp) + ") " + percentage + "%";
     				}
     			}
     		}
