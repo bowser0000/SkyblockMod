@@ -11,6 +11,7 @@ import me.Danker.commands.ScaleCommand;
 import me.Danker.commands.ToggleCommand;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.common.config.ConfigCategory;
 import net.minecraftforge.common.config.Configuration;
 
@@ -334,6 +335,7 @@ public class ConfigHandler {
 		if (!hasKey("misc", "display")) writeStringConfig("misc", "display", "off");
 		if (!hasKey("misc", "autoDisplay")) writeBooleanConfig("misc", "autoDisplay", false);
 		if (!hasKey("misc", "skill50Time")) writeIntConfig("misc", "skill50Time", 3);
+		if (!hasKey("misc", "trueChatMaddoxEnabled")) writeBooleanConfig("misc", "trueChatMaddoxEnabled", true);
 		
 		ScaledResolution scaled = new ScaledResolution(Minecraft.getMinecraft());
 		int height = scaled.getScaledHeight();
@@ -352,6 +354,17 @@ public class ConfigHandler {
 		if (!hasKey("scales", "dungeonTimerScale")) writeDoubleConfig("scales", "dungeonTimerScale", 1);
 		if (!hasKey("scales", "skill50Scale")) writeDoubleConfig("scales", "skill50Scale", 1);
 		if (!hasKey("scales", "lividHpScale")) writeDoubleConfig("scales", "lividHpScale", 1);
+		
+		if (!hasKey("colors", "main")) writeStringConfig("colors", "main", "" + EnumChatFormatting.GREEN);
+		if (!hasKey("colors", "secondary")) writeStringConfig("colors", "secondary", "" + EnumChatFormatting.DARK_GREEN);
+		if (!hasKey("colors", "delimiter")) writeStringConfig("colors", "delimiter", "" + EnumChatFormatting.AQUA);
+		if (!hasKey("colors", "error")) writeStringConfig("colors", "error", "" + EnumChatFormatting.RED);
+		if (!hasKey("colors", "type")) writeStringConfig("colors", "type", "" + EnumChatFormatting.GREEN);
+		if (!hasKey("colors", "value")) writeStringConfig("colors", "value", "" + EnumChatFormatting.DARK_GREEN);
+		if (!hasKey("colors", "skillAverage")) writeStringConfig("colors", "skillAverage", "" + EnumChatFormatting.GOLD);
+		if (!hasKey("colors", "answer")) writeStringConfig("colors", "answer", "" + EnumChatFormatting.DARK_GREEN);
+		if (!hasKey("colors", "skill50Display")) writeStringConfig("colors", "skill50Display", "" + EnumChatFormatting.AQUA);
+		if (!hasKey("colors", "coordsDisplay")) writeStringConfig("colors", "coordsDisplay", "" + EnumChatFormatting.WHITE);
 		
 		final ToggleCommand tf = new ToggleCommand();
 		tf.gpartyToggled = getBoolean("toggles", "GParty");
@@ -523,6 +536,7 @@ public class ConfigHandler {
 		ds.display = getString("misc", "display");
 		ds.auto = getBoolean("misc", "autoDisplay");
 		TheMod.SKILL_TIME = getInt("misc", "skill50Time") * 20;
+		tf.trueChatMaddoxEnabled = getBoolean("misc", "trueChatMaddoxEnabled");
 		
 		final MoveCommand moc = new MoveCommand();
 		moc.coordsXY[0] = getInt("locations", "coordsX");
@@ -542,6 +556,17 @@ public class ConfigHandler {
 		sc.dungeonTimerScale = getDouble("scales", "dungeonTimerScale");
 		sc.skill50Scale = getDouble("scales", "skill50Scale");
 		sc.lividHpScale = getDouble("scales", "lividHpScale");
+		
+		TheMod.MAIN_COLOUR = getString("colors", "main");
+		TheMod.SECONDARY_COLOUR = getString("colors", "secondary");
+		TheMod.DELIMITER_COLOUR = getString("colors", "delimiter");
+		TheMod.ERROR_COLOUR = getString("colors", "error");
+		TheMod.TYPE_COLOUR = getString("colors", "type");
+		TheMod.VALUE_COLOUR = getString("colors", "value");
+		TheMod.SKILL_AVERAGE_COLOUR = getString("colors", "skillAverage");
+		TheMod.ANSWER_COLOUR = getString("colors", "answer");
+		TheMod.SKILL_50_COLOUR = getString("colors", "skill50Display");
+		TheMod.COORDS_COLOUR = getString("colors", "coordsDisplay");
 	}
 	
 }

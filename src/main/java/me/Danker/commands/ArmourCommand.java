@@ -9,6 +9,7 @@ import java.util.List;
 
 import com.google.gson.JsonObject;
 
+import me.Danker.TheMod;
 import me.Danker.handlers.APIHandler;
 import me.Danker.handlers.ConfigHandler;
 import me.Danker.utils.Utils;
@@ -74,10 +75,10 @@ public class ArmourCommand extends CommandBase {
 			if (arg1.length == 0) {
 				username = player.getName();
 				uuid = player.getUniqueID().toString().replaceAll("[\\-]", "");
-				player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Checking armour of " + EnumChatFormatting.DARK_GREEN + username));
+				player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Checking armour of " + TheMod.SECONDARY_COLOUR + username));
 			} else {
 				username = arg1[0];
-				player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Checking armour of " + EnumChatFormatting.DARK_GREEN + username));
+				player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Checking armour of " + TheMod.SECONDARY_COLOUR + username));
 				uuid = ah.getUUID(username);
 			}
 			
@@ -90,7 +91,7 @@ public class ArmourCommand extends CommandBase {
 			JsonObject profileResponse = ah.getResponse(profileURL);
 			if (!profileResponse.get("success").getAsBoolean()) {
 				String reason = profileResponse.get("cause").getAsString();
-				player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Failed with reason: " + reason));
+				player.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "Failed with reason: " + reason));
 				return;
 			}
 			
@@ -133,15 +134,15 @@ public class ArmourCommand extends CommandBase {
 				}
 				armourStream.close();
 				
-				player.addChatMessage(new ChatComponentText(EnumChatFormatting.AQUA + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+				player.addChatMessage(new ChatComponentText(TheMod.DELIMITER_COLOUR + "" + EnumChatFormatting.BOLD + "-------------------\n" +
 															EnumChatFormatting.AQUA + " " + username + "'s Armour:\n" +
-															EnumChatFormatting.GREEN + " Helmet:      " + helmet + "\n" +
-															EnumChatFormatting.GREEN + " Chestplate: " + chest + "\n" +
-															EnumChatFormatting.GREEN + " Leggings:   " + legs + "\n" +
-															EnumChatFormatting.GREEN + " Boots:       " + boots + "\n" +
-															EnumChatFormatting.AQUA + " " + EnumChatFormatting.BOLD + "-------------------"));
+															TheMod.TYPE_COLOUR + " Helmet:      " + helmet + "\n" +
+															TheMod.TYPE_COLOUR + " Chestplate: " + chest + "\n" +
+															TheMod.TYPE_COLOUR + " Leggings:   " + legs + "\n" +
+															TheMod.TYPE_COLOUR + " Boots:       " + boots + "\n" +
+															TheMod.DELIMITER_COLOUR + " " + EnumChatFormatting.BOLD + "-------------------"));
 			} catch (IOException ex) {
-				player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "An error has occurred while reading inventory data. See logs for more info."));
+				player.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "An error has occurred while reading inventory data. See logs for more info."));
 				System.err.println(ex);
 			}
 		}).start();

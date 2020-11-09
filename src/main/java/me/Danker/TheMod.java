@@ -148,6 +148,17 @@ public class TheMod
     static int dungeonDeaths = 0;
     static int puzzleFails = 0;
     
+    public static String MAIN_COLOUR;
+    public static String SECONDARY_COLOUR;
+    public static String ERROR_COLOUR;
+    public static String DELIMITER_COLOUR;
+    public static String TYPE_COLOUR;
+    public static String VALUE_COLOUR;
+    public static String SKILL_AVERAGE_COLOUR;
+    public static String ANSWER_COLOUR;
+    public static String SKILL_50_COLOUR;
+    public static String COORDS_COLOUR;
+    
     @EventHandler
     public void init(FMLInitializationEvent event) {
 		FMLCommonHandler.instance().bus().register(this);
@@ -222,7 +233,7 @@ public class TheMod
 		triviaSolutions.put("What is the name of the lady of the Nether?", "Elle");
 		triviaSolutions.put("Which villager in the Village gives you a Rogue Sword?", "Jamie");
 		triviaSolutions.put("How many unique minions are there?", "52 Minions");
-		triviaSolutions.put("Which of these enemies does not spawn in the Spider's Den?", "Zombie Spider OR Cave Spider OR Broodfather OR Wither Skeleton");
+		triviaSolutions.put("Which of these enemies does not spawn in the Spider's Den?", "Zombie Spider OR Cave Spider OR Broodfather OR Wither Skeleton OR Dashing Spooder");
 		triviaSolutions.put("Which of these monsters only spawns at night?", "Zombie Villager OR Ghast");
 		triviaSolutions.put("Which of these is not a dragon in The End?", "Zoomer Dragon OR Weak Dragon OR Stonk Dragon OR Holy Dragon OR Boomer Dragon");
 		
@@ -298,7 +309,7 @@ public class TheMod
 					} catch (InterruptedException ex) {
 						System.err.println(ex);
 					}
-    				player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + MODID + " is outdated. Please update to " + latestTag + ".\n").appendSibling(update));
+    				player.addChatMessage(new ChatComponentText(ERROR_COLOUR + MODID + " is outdated. Please update to " + latestTag + ".\n").appendSibling(update));
     			}
     		}).start();
     	}
@@ -343,7 +354,7 @@ public class TheMod
     					NumberFormat nf = NumberFormat.getNumberInstance(Locale.US);
     					skillTimer = SKILL_TIME;
     					showSkill = true;
-    					skillText = EnumChatFormatting.AQUA + xpGained + " (" + nf.format(currentXp + previousXp) + "/" + nf.format(totalXp) + ") " + percentage + "%";
+    					skillText = SKILL_50_COLOUR + xpGained + " (" + nf.format(currentXp + previousXp) + "/" + nf.format(totalXp) + ") " + percentage + "%";
     				}
     			}
     		}
@@ -352,10 +363,12 @@ public class TheMod
     	
     	// Replace chat messages with Maddox command
         List<IChatComponent> chatSiblings = event.message.getSiblings();
-        for (IChatComponent sibling : chatSiblings) {
-        	if (sibling.getChatStyle().getChatClickEvent() == null) {
-        		sibling.setChatStyle(sibling.getChatStyle().setChatClickEvent(new ClickEvent(Action.RUN_COMMAND, "/dmodopenmaddoxmenu")));
-        	}
+        if (ToggleCommand.trueChatMaddoxEnabled) {
+            for (IChatComponent sibling : chatSiblings) {
+            	if (sibling.getChatStyle().getChatClickEvent() == null) {
+            		sibling.setChatStyle(sibling.getChatStyle().setChatClickEvent(new ClickEvent(Action.RUN_COMMAND, "/dmodopenmaddoxmenu")));
+            	}
+            }
         }
     	
         // Dungeon chat spoken by an NPC, containing :
@@ -363,7 +376,7 @@ public class TheMod
         	for (String solution : riddleSolutions) {
         		if (message.contains(solution)) {
         			String npcName = message.substring(message.indexOf("]") + 2, message.indexOf(":"));
-        			Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_GREEN + "" + EnumChatFormatting.BOLD + npcName + EnumChatFormatting.GREEN + " has the blessing."));
+        			Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(ANSWER_COLOUR + "" + EnumChatFormatting.BOLD + StringUtils.stripControlCodes(npcName) + MAIN_COLOUR + " has the blessing."));
         			break;
         		}
         	}
@@ -381,7 +394,7 @@ public class TheMod
         if (ToggleCommand.oruoToggled && Utils.inDungeons) {
         	for (String question : triviaSolutions.keySet()) {
         		if (message.contains(question)) {
-        			Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Answer: " + EnumChatFormatting.DARK_GREEN + EnumChatFormatting.BOLD + triviaSolutions.get(question)));
+        			Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(MAIN_COLOUR + "Answer: " + ANSWER_COLOUR + EnumChatFormatting.BOLD + triviaSolutions.get(question)));
         			break;
         		}
         	}
@@ -699,12 +712,12 @@ public class TheMod
 		} else if (message.contains("Phew! It's only a Scarecrow")) {
 			lc.scarecrows++;
 			lc.scarecrowsSession++;
-			cf.writeIntConfig("fishing", "scarecrow", lc.werewolfs);
+			cf.writeIntConfig("fishing", "scarecrow", lc.scarecrows);
 			increaseSeaCreatures();
 		} else if (message.contains("You hear trotting from beneath the waves, you caught a Nightmare")) {
 			lc.nightmares++;
 			lc.nightmaresSession++;
-			cf.writeIntConfig("fishing", "nightmare", lc.werewolfs);
+			cf.writeIntConfig("fishing", "nightmare", lc.nightmares);
 			increaseSeaCreatures();
 		} else if (message.contains("It must be a full moon, a Werewolf appears")) {
 			lc.werewolfs++;
@@ -714,12 +727,12 @@ public class TheMod
 		} else if (message.contains("The spirit of a long lost Phantom Fisher has come to haunt you")) {
 			lc.phantomFishers++;
 			lc.phantomFishersSession++;
-			cf.writeIntConfig("fishing", "phantomFisher", lc.werewolfs);
+			cf.writeIntConfig("fishing", "phantomFisher", lc.phantomFishers);
 			increaseSeaCreatures();
 		} else if (message.contains("This can't be! The manifestation of death himself")) {
 			lc.grimReapers++;
 			lc.grimReapersSession++;
-			cf.writeIntConfig("fishing", "grimReaper", lc.werewolfs);
+			cf.writeIntConfig("fishing", "grimReaper", lc.grimReapers);
 			increaseSeaCreatures();
 		} else if (message.contains("Dungeon starts in 1 second.")) { // Dungeons Stuff
 		    dungeonStartTime = System.currentTimeMillis() / 1000 + 1;
@@ -946,7 +959,7 @@ public class TheMod
 					lastMaddoxCommand = sibling.getChatStyle().getChatClickEvent().getValue();
 				}
 			}
-			if (tc.chatMaddoxToggled) Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Click anywhere in chat to open Maddox"));
+			if (tc.chatMaddoxToggled) Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(MAIN_COLOUR + "Click anywhere in chat to open Maddox"));
 		}
 		
 		// Spirit Bear alerts
@@ -994,7 +1007,7 @@ public class TheMod
         	xDir = (double) Math.round(xDir * 10d) / 10d;
         	double yDir = (double) Math.round(player.rotationPitch * 10d) / 10d;
         	
-        	String coordText = (int) player.posX + " / " + (int) player.posY + " / " + (int) player.posZ + " (" + xDir + " / " + yDir + ")";
+        	String coordText = COORDS_COLOUR + (int) player.posX + " / " + (int) player.posY + " / " + (int) player.posZ + " (" + xDir + " / " + yDir + ")";
         	new TextRenderer(Minecraft.getMinecraft(), coordText, moc.coordsXY[0], moc.coordsXY[1], ScaleCommand.coordsScale);
     	}
     	
@@ -1487,7 +1500,7 @@ public class TheMod
 							EnumChatFormatting.BLUE + nf.format(lc.blueSharksSession) + "\n" +
 	    					EnumChatFormatting.GOLD + nf.format(lc.tigerSharksSession) + "\n" +
 							EnumChatFormatting.WHITE + nf.format(lc.greatWhiteSharksSession);
-     		} else if (ds.display.equals("spooky_fishing")) {
+     		} else if (ds.display.equals("fishing_spooky")) {
      			dropsText = EnumChatFormatting.AQUA + "Creatures Caught:\n" +
      						EnumChatFormatting.AQUA + "Fishing Milestone:\n" +
      						EnumChatFormatting.GOLD + "Good Catches:\n" +
@@ -1506,7 +1519,7 @@ public class TheMod
 	    					EnumChatFormatting.DARK_PURPLE + nf.format(lc.werewolfs) + "\n" +
 							EnumChatFormatting.GOLD + nf.format(lc.phantomFishers) + "\n" +
 	    					EnumChatFormatting.GOLD + nf.format(lc.grimReapers);
-     		} else if (ds.display.equals("spooky_fishing_session")) {
+     		} else if (ds.display.equals("fishing_spooky_session")) {
      			dropsText = EnumChatFormatting.AQUA + "Creatures Caught:\n" +
 	 						EnumChatFormatting.AQUA + "Fishing Milestone:\n" +
 	 						EnumChatFormatting.GOLD + "Good Catches:\n" +
@@ -2152,7 +2165,7 @@ public class TheMod
     				if (inventoryName.equals("Slayer")) {
         				if (!item.getDisplayName().contains("Revenant Horror") && !item.getDisplayName().contains("Tarantula Broodfather") && !item.getDisplayName().contains("Sven Packmaster")) return;
         				if (!item.getDisplayName().contains(BlockSlayerCommand.onlySlayerName)) {
-        					Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Danker's Skyblock Mod has stopped you from starting this quest (Set to " + BlockSlayerCommand.onlySlayerName + " " + BlockSlayerCommand.onlySlayerNumber + ")"));
+        					Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(ERROR_COLOUR + "Danker's Skyblock Mod has stopped you from starting this quest (Set to " + BlockSlayerCommand.onlySlayerName + " " + BlockSlayerCommand.onlySlayerNumber + ")"));
         					Minecraft.getMinecraft().thePlayer.playSound("note.bass", 1, (float) 0.5);
         					event.setCanceled(true);
         				}
@@ -2161,7 +2174,7 @@ public class TheMod
         					// Only check number as they passed the above check
         					String slayerNumber = item.getDisplayName().substring(item.getDisplayName().lastIndexOf(" ") + 1, item.getDisplayName().length());
             				if (!slayerNumber.equals(BlockSlayerCommand.onlySlayerNumber)) {
-            					Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Danker's Skyblock Mod has stopped you from starting this quest (Set to " + BlockSlayerCommand.onlySlayerName + " " + BlockSlayerCommand.onlySlayerNumber + ")"));
+            					Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(ERROR_COLOUR + "Danker's Skyblock Mod has stopped you from starting this quest (Set to " + BlockSlayerCommand.onlySlayerName + " " + BlockSlayerCommand.onlySlayerNumber + ")"));
             					Minecraft.getMinecraft().thePlayer.playSound("note.bass", 1, (float) 0.5);
             					event.setCanceled(true);
             				}

@@ -4,6 +4,7 @@ import java.text.NumberFormat;
 import java.util.List;
 import java.util.Locale;
 
+import me.Danker.TheMod;
 import me.Danker.utils.Utils;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
@@ -313,7 +314,7 @@ public class LootCommand extends CommandBase {
 		final EntityPlayer player = (EntityPlayer) arg0;
 		
 		if (arg1.length == 0) {
-			player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Usage: " + getCommandUsage(arg0)));
+			player.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "Usage: " + getCommandUsage(arg0)));
 			return;
 		}
 		
@@ -539,14 +540,14 @@ public class LootCommand extends CommandBase {
 						}
 						
 						player.addChatMessage(new ChatComponentText(EnumChatFormatting.AQUA + "" + EnumChatFormatting.BOLD + "-------------------\n" +
-								EnumChatFormatting.WHITE + EnumChatFormatting.BOLD + "  Winter Fishing Summary (Current Session):\n" +
-								EnumChatFormatting.AQUA + "    Frozen Steves: " + nf.format(frozenStevesSession) + "\n" +
-								EnumChatFormatting.WHITE + "    Snowmans: " + nf.format(frostyTheSnowmansSession) + "\n" +
-								EnumChatFormatting.DARK_GREEN + "    Grinches: " + nf.format(grinchesSession) + "\n" +
-								EnumChatFormatting.GOLD + "    Yetis: " + nf.format(yetisSession) + "\n" +
-								EnumChatFormatting.AQUA + "    Time Since Yeti: " + timeBetween + "\n" +
-								EnumChatFormatting.AQUA + "    Creatures Since Yeti: " + bossesBetween + "\n" +
-								EnumChatFormatting.AQUA + EnumChatFormatting.BOLD + " -------------------"));
+																	EnumChatFormatting.WHITE + EnumChatFormatting.BOLD + "  Winter Fishing Summary (Current Session):\n" +
+																	EnumChatFormatting.AQUA + "    Frozen Steves: " + nf.format(frozenStevesSession) + "\n" +
+																	EnumChatFormatting.WHITE + "    Snowmans: " + nf.format(frostyTheSnowmansSession) + "\n" +
+																	EnumChatFormatting.DARK_GREEN + "    Grinches: " + nf.format(grinchesSession) + "\n" +
+																	EnumChatFormatting.GOLD + "    Yetis: " + nf.format(yetisSession) + "\n" +
+																	EnumChatFormatting.AQUA + "    Time Since Yeti: " + timeBetween + "\n" +
+																	EnumChatFormatting.AQUA + "    Creatures Since Yeti: " + bossesBetween + "\n" +
+																	EnumChatFormatting.AQUA + EnumChatFormatting.BOLD + " -------------------"));
 						return;
 					}
 					
@@ -686,7 +687,7 @@ public class LootCommand extends CommandBase {
 														EnumChatFormatting.DARK_AQUA + EnumChatFormatting.BOLD + " -------------------"));
 		} else if (arg1[0].equalsIgnoreCase("catacombs")) {
 			if (arg1.length == 1) {
-				player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Usage: /loot catacombs <f1/f2/f3/f4>"));
+				player.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "Usage: /loot catacombs <f1/f2/f3/f4>"));
 				return;
 			}
 			if (arg1[1].equalsIgnoreCase("f1") || arg1[1].equalsIgnoreCase("floor1")) {
@@ -856,10 +857,10 @@ public class LootCommand extends CommandBase {
 															EnumChatFormatting.AQUA + "    Time Spent: " + Utils.getTimeBetween(0, f6TimeSpent) + "\n" +
 															EnumChatFormatting.DARK_RED + EnumChatFormatting.BOLD + " -------------------"));
 			} else {
-				player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Usage: /loot catacombs <f1/f2/f3/f4/f5/f6>"));
+				player.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "Usage: /loot catacombs <f1/f2/f3/f4/f5/f6>"));
 			}
 		} else {
-			player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Usage: " + getCommandUsage(arg0)));
+			player.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "Usage: " + getCommandUsage(arg0)));
 		}
 
 	}

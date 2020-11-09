@@ -2,6 +2,7 @@ package me.Danker.commands;
 
 import java.util.List;
 
+import me.Danker.TheMod;
 import me.Danker.handlers.ConfigHandler;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
@@ -47,14 +48,14 @@ public class ResetLootCommand extends CommandBase {
 		final EntityPlayer player = (EntityPlayer) arg0;
 		
 		if (arg1.length == 0) {
-			player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Usage: /resetloot <zombie/spider/wolf/fishing/catacombs>"));
+			player.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "Usage: /resetloot <zombie/spider/wolf/fishing/catacombs>"));
 			return;
 		}
 		
 		if (confirmReset) {
 			if (arg1[0].equalsIgnoreCase("confirm")) {
 				confirmReset = false;
-				player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Resetting " + resetOption + " tracker..."));
+				player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Resetting " + resetOption + " tracker..."));
 				if (resetOption.equalsIgnoreCase("zombie")) {
 					resetZombie();
 				} else if (resetOption.equalsIgnoreCase("spider")) {
@@ -66,10 +67,10 @@ public class ResetLootCommand extends CommandBase {
 				} else if (resetOption.equalsIgnoreCase("catacombs")) {
 					resetCatacombs();
 				}
-				player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Reset complete."));
+				player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Reset complete."));
 			} else if (arg1[0].equalsIgnoreCase("cancel")) {
 				confirmReset = false;
-				player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Reset cancelled."));
+				player.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "Reset cancelled."));
 			} else {
 				player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Please confirm the reset of the " + resetOption + " tracker by using /resetloot confirm." +
 															EnumChatFormatting.RED + " Cancel by using /resetloot cancel."));
@@ -78,13 +79,13 @@ public class ResetLootCommand extends CommandBase {
 			if (arg1[0].equalsIgnoreCase("zombie") || arg1[0].equalsIgnoreCase("spider") || arg1[0].equalsIgnoreCase("wolf") || arg1[0].equalsIgnoreCase("fishing") || arg1[0].equalsIgnoreCase("catacombs")) {
 				resetOption = arg1[0];
 				player.addChatMessage(new ChatComponentText(EnumChatFormatting.YELLOW + "Are you sure you want to reset the " + resetOption + " tracker?" + 
-															" Confirm with " + EnumChatFormatting.GREEN + "/resetloot confirm" + EnumChatFormatting.YELLOW + "." + 
-															" Cancel by using " + EnumChatFormatting.GREEN + "/resetloot cancel" + EnumChatFormatting.YELLOW + "."));
+															" Confirm with " + TheMod.MAIN_COLOUR + "/resetloot confirm" + EnumChatFormatting.YELLOW + "." + 
+															" Cancel by using " + TheMod.MAIN_COLOUR + "/resetloot cancel" + EnumChatFormatting.YELLOW + "."));
 				confirmReset = true;
 			} else if (arg1[0].equalsIgnoreCase("confirm") || arg1[0].equalsIgnoreCase("cancel")) {
-				player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Pick something to reset first."));
+				player.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "Pick something to reset first."));
 			} else {
-				player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Usage: /resetloot <zombie/spider/wolf/fishing/catacombs>"));
+				player.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "Usage: /resetloot <zombie/spider/wolf/fishing/catacombs>"));
 			}
 		}
 	}

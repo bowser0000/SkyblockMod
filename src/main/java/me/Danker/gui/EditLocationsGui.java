@@ -1,5 +1,6 @@
 package me.Danker.gui;
 
+import me.Danker.TheMod;
 import me.Danker.commands.MoveCommand;
 import me.Danker.commands.ScaleCommand;
 import me.Danker.gui.buttons.LocationButton;
@@ -71,8 +72,8 @@ public class EditLocationsGui extends GuiScreen {
 		
 		display = new LocationButton(0, moc.displayXY[0], moc.displayXY[1], 145 * sc.displayScale, 102 * sc.displayScale, sc.displayScale, displayText, displayNums, 110);
 		dungeonTimer = new LocationButton(0, moc.dungeonTimerXY[0], moc.dungeonTimerXY[1], 113 * sc.dungeonTimerScale, 57 * sc.dungeonTimerScale, sc.dungeonTimerScale, dungeonTimerText, dungeonTimerNums, 80);
-		coords = new LocationButton(0, moc.coordsXY[0], moc.coordsXY[1], 141 * sc.coordsScale, 12 * sc.coordsScale, sc.coordsScale, "74 / 14 / -26 (141.1 / 6.7)", null, null);
-		skill50 = new LocationButton(0, moc.skill50XY[0], moc.skill50XY[1], 233 * sc.skill50Scale, 12 * sc.skill50Scale, sc.skill50Scale, EnumChatFormatting.AQUA + "+3.5 Farming (28,882,117.7/55,172,425) 52.34%", null, null);
+		coords = new LocationButton(0, moc.coordsXY[0], moc.coordsXY[1], 141 * sc.coordsScale, 12 * sc.coordsScale, sc.coordsScale, TheMod.COORDS_COLOUR + "74 / 14 / -26 (141.1 / 6.7)", null, null);
+		skill50 = new LocationButton(0, moc.skill50XY[0], moc.skill50XY[1], 233 * sc.skill50Scale, 12 * sc.skill50Scale, sc.skill50Scale, TheMod.SKILL_50_COLOUR + "+3.5 Farming (28,882,117.7/55,172,425) 52.34%", null, null);
 		lividHP = new LocationButton(0, moc.lividHpXY[0], moc.lividHpXY[1], 85 * sc.lividHpScale, 12 * sc.lividHpScale, sc.lividHpScale, EnumChatFormatting.WHITE + "﴾ Livid " + EnumChatFormatting.YELLOW + "6.9M" + EnumChatFormatting.RED + "❤ " + EnumChatFormatting.WHITE + "﴿", null, null);
 		
 		this.buttonList.add(coords);

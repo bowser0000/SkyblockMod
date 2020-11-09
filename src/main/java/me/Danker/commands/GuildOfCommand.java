@@ -6,6 +6,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
+import me.Danker.TheMod;
 import me.Danker.handlers.APIHandler;
 import me.Danker.handlers.ConfigHandler;
 import me.Danker.utils.Utils;
@@ -53,7 +54,7 @@ public class GuildOfCommand extends CommandBase {
 			// Check key
 			String key = cf.getString("api", "APIKey");
 			if (key.equals("")) {
-				player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "API key not set. Use /setkey."));
+				player.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "API key not set. Use /setkey."));
 			}
 			
 			// Get UUID for Hypixel API requests
@@ -62,10 +63,10 @@ public class GuildOfCommand extends CommandBase {
 			if (arg1.length == 0) {
 				username = player.getName();
 				uuid = player.getUniqueID().toString().replaceAll("[\\-]", "");
-				player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Checking guild of " + EnumChatFormatting.DARK_GREEN + username));
+				player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Checking guild of " + TheMod.SECONDARY_COLOUR + username));
 			} else {
 				username = arg1[0];
-				player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Checking guild of " + EnumChatFormatting.DARK_GREEN + username));
+				player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Checking guild of " + TheMod.SECONDARY_COLOUR + username));
 				uuid = ah.getUUID(username);
 			}
 			
@@ -75,7 +76,7 @@ public class GuildOfCommand extends CommandBase {
 			JsonObject guildResponse = ah.getResponse(guildURL);
 			if (!guildResponse.get("success").getAsBoolean()) {
 				String reason = guildResponse.get("cause").getAsString();
-				player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Failed with reason: " + reason));
+				player.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "Failed with reason: " + reason));
 				return;
 			}
 			
@@ -107,12 +108,12 @@ public class GuildOfCommand extends CommandBase {
 				}
 			}
 			
-			player.addChatMessage(new ChatComponentText(EnumChatFormatting.AQUA + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+			player.addChatMessage(new ChatComponentText(TheMod.DELIMITER_COLOUR + "" + EnumChatFormatting.BOLD + "-------------------\n" +
 														EnumChatFormatting.AQUA + " " + username + "'s Guild:\n" +
-														EnumChatFormatting.GREEN + " Guild: " + EnumChatFormatting.DARK_GREEN + EnumChatFormatting.BOLD + guildName + "\n" +
-														EnumChatFormatting.GREEN + " Guildmaster: " + EnumChatFormatting.DARK_GREEN + EnumChatFormatting.BOLD + guildMaster + "\n" +
-														EnumChatFormatting.GREEN + " Members: " + EnumChatFormatting.DARK_GREEN + EnumChatFormatting.BOLD + players + "\n" +
-														EnumChatFormatting.AQUA + " " + EnumChatFormatting.BOLD + "-------------------"));
+														TheMod.TYPE_COLOUR + " Guild: " + TheMod.VALUE_COLOUR + EnumChatFormatting.BOLD + guildName + "\n" +
+														TheMod.TYPE_COLOUR + " Guildmaster: " + TheMod.VALUE_COLOUR + EnumChatFormatting.BOLD + guildMaster + "\n" +
+														TheMod.TYPE_COLOUR + " Members: " + TheMod.VALUE_COLOUR + EnumChatFormatting.BOLD + players + "\n" +
+														TheMod.DELIMITER_COLOUR + " " + EnumChatFormatting.BOLD + "-------------------"));
 		}).start();
 	}
 

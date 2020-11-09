@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
+import me.Danker.TheMod;
 import me.Danker.handlers.APIHandler;
 import me.Danker.handlers.ConfigHandler;
 import me.Danker.utils.Utils;
@@ -53,7 +54,7 @@ public class LobbySkillsCommand extends CommandBase {
 		// Check key
 		String key = cf.getString("api", "APIKey");
 		if (key.equals("")) {
-			playerSP.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "API key not set. Use /setkey."));
+			playerSP.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "API key not set. Use /setkey."));
 			return;
 		}
 
@@ -61,7 +62,7 @@ public class LobbySkillsCommand extends CommandBase {
 			try {
 				// Create deep copy of players to prevent passing reference and ConcurrentModificationException
 				Collection<NetworkPlayerInfo> players = new ArrayList<NetworkPlayerInfo>(Minecraft.getMinecraft().getNetHandler().getPlayerInfoMap());
-				playerSP.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Checking skill average of lobby. Estimated time: " + (int) (players.size() * 1.2 + 1) + " seconds."));
+				playerSP.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Checking skill average of lobby. Estimated time: " + (int) (players.size() * 1.2 + 1) + " seconds."));
 				// Send request every .6 seconds, leaving room for another 20 requests per minute
 				
 				for (final NetworkPlayerInfo player : players) {
@@ -187,7 +188,7 @@ public class LobbySkillsCommand extends CommandBase {
 				String[] sortedSAListKeys = sortedSAList.keySet().toArray(new String[sortedSAList.keySet().size()]);
 				String top3 = "";
 				for (int i = 0; i < 3 && i < sortedSAListKeys.length; i++) {
-					top3 += "\n " + EnumChatFormatting.AQUA + sortedSAListKeys[i] + ": " + EnumChatFormatting.GOLD + EnumChatFormatting.BOLD + sortedSAList.get(sortedSAListKeys[i]);
+					top3 += "\n " + EnumChatFormatting.AQUA + sortedSAListKeys[i] + ": " + TheMod.SKILL_AVERAGE_COLOUR + EnumChatFormatting.BOLD + sortedSAList.get(sortedSAListKeys[i]);
 				}
 				
 				// Get lobby sa
@@ -198,10 +199,10 @@ public class LobbySkillsCommand extends CommandBase {
 				lobbySA = (double) Math.round((lobbySA / lobbySkills.size()) * 100) / 100;
 				
 				// Finally say skill lobby avg and highest SA users
-				playerSP.addChatMessage(new ChatComponentText(EnumChatFormatting.AQUA + "" + EnumChatFormatting.BOLD + "-------------------\n" +
-															  EnumChatFormatting.GREEN + " Lobby Skill Average: " + EnumChatFormatting.GOLD + EnumChatFormatting.BOLD + lobbySA + "\n" +
-															  EnumChatFormatting.GREEN + " Highest Skill Averages:" + top3 + "\n" +
-															  EnumChatFormatting.AQUA + "" + EnumChatFormatting.BOLD + " -------------------"));
+				playerSP.addChatMessage(new ChatComponentText(TheMod.DELIMITER_COLOUR + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+															  TheMod.TYPE_COLOUR + " Lobby Skill Average: " + TheMod.SKILL_AVERAGE_COLOUR + EnumChatFormatting.BOLD + lobbySA + "\n" +
+															  TheMod.TYPE_COLOUR + " Highest Skill Averages:" + top3 + "\n" +
+															  TheMod.DELIMITER_COLOUR + "" + EnumChatFormatting.BOLD + " -------------------"));
 			} catch (InterruptedException ex) {
 				System.out.println("Current skill average list: " + unsortedSAList.toString());
 				Thread.currentThread().interrupt();

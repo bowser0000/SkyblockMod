@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.google.gson.JsonObject;
 
+import me.Danker.TheMod;
 import me.Danker.handlers.APIHandler;
 import me.Danker.handlers.ConfigHandler;
 import me.Danker.utils.Utils;
@@ -51,7 +52,7 @@ public class SkillsCommand extends CommandBase {
 			// Check key
 			String key = cf.getString("api", "APIKey");
 			if (key.equals("")) {
-				player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "API key not set. Use /setkey."));
+				player.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "API key not set. Use /setkey."));
 			}
 			
 			// Get UUID for Hypixel API requests
@@ -60,10 +61,10 @@ public class SkillsCommand extends CommandBase {
 			if (arg1.length == 0) {
 				username = player.getName();
 				uuid = player.getUniqueID().toString().replaceAll("[\\-]", "");
-				player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Checking skills of " + EnumChatFormatting.DARK_GREEN + username));
+				player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Checking skills of " + TheMod.SECONDARY_COLOUR + username));
 			} else {
 				username = arg1[0];
-				player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Checking skills of " + EnumChatFormatting.DARK_GREEN + username));
+				player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Checking skills of " + TheMod.SECONDARY_COLOUR + username));
 				uuid = ah.getUUID(username);
 			}
 			
@@ -76,7 +77,7 @@ public class SkillsCommand extends CommandBase {
 			JsonObject profileResponse = ah.getResponse(profileURL);
 			if (!profileResponse.get("success").getAsBoolean()) {
 				String reason = profileResponse.get("cause").getAsString();
-				player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Failed with reason: " + reason));
+				player.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "Failed with reason: " + reason));
 				return;
 			}
 			
@@ -134,7 +135,7 @@ public class SkillsCommand extends CommandBase {
 				
 				if (!playerObject.get("success").getAsBoolean()) {
 					String reason = profileResponse.get("cause").getAsString();
-					player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Failed with reason: " + reason));
+					player.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "Failed with reason: " + reason));
 					return;
 				}
 				
@@ -169,19 +170,19 @@ public class SkillsCommand extends CommandBase {
 			skillAvg = (double) Math.round(skillAvg * 100) / 100;
 			double trueAvg = (Math.floor(farmingLevel) + Math.floor(miningLevel) + Math.floor(combatLevel) + Math.floor(foragingLevel) + Math.floor(fishingLevel) + Math.floor(enchantingLevel) + Math.floor(alchemyLevel) + Math.floor(tamingLevel)) / 8;
 			
-			player.addChatMessage(new ChatComponentText(EnumChatFormatting.AQUA + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+			player.addChatMessage(new ChatComponentText(TheMod.DELIMITER_COLOUR + "" + EnumChatFormatting.BOLD + "-------------------\n" +
 														EnumChatFormatting.AQUA + " " + username + "'s Skills:\n" +
-														EnumChatFormatting.GREEN + " Farming: " + EnumChatFormatting.DARK_GREEN + EnumChatFormatting.BOLD + farmingLevel + "\n" +
-														EnumChatFormatting.GREEN + " Mining: " + EnumChatFormatting.DARK_GREEN + EnumChatFormatting.BOLD + miningLevel + "\n" +
-														EnumChatFormatting.GREEN + " Combat: " + EnumChatFormatting.DARK_GREEN + EnumChatFormatting.BOLD + combatLevel + "\n" +
-														EnumChatFormatting.GREEN + " Foraging: " + EnumChatFormatting.DARK_GREEN + EnumChatFormatting.BOLD + foragingLevel + "\n" +
-														EnumChatFormatting.GREEN + " Fishing: " + EnumChatFormatting.DARK_GREEN + EnumChatFormatting.BOLD + fishingLevel + "\n" +
-														EnumChatFormatting.GREEN + " Enchanting: " + EnumChatFormatting.DARK_GREEN + EnumChatFormatting.BOLD + enchantingLevel + "\n" +
-														EnumChatFormatting.GREEN + " Alchemy: " + EnumChatFormatting.DARK_GREEN + EnumChatFormatting.BOLD + alchemyLevel + "\n" +
-														EnumChatFormatting.GREEN + " Taming: " + EnumChatFormatting.DARK_GREEN + EnumChatFormatting.BOLD + tamingLevel + "\n" +
-														EnumChatFormatting.AQUA + " Average Skill Level: " + EnumChatFormatting.GOLD + EnumChatFormatting.BOLD + skillAvg + "\n" +
-														EnumChatFormatting.AQUA + " True Average Skill Level: " + EnumChatFormatting.GOLD + EnumChatFormatting.BOLD + trueAvg + "\n" +
-														EnumChatFormatting.AQUA + " " + EnumChatFormatting.BOLD + "-------------------"));
+														TheMod.TYPE_COLOUR + " Farming: " + TheMod.VALUE_COLOUR + EnumChatFormatting.BOLD + farmingLevel + "\n" +
+														TheMod.TYPE_COLOUR + " Mining: " + TheMod.VALUE_COLOUR + EnumChatFormatting.BOLD + miningLevel + "\n" +
+														TheMod.TYPE_COLOUR + " Combat: " + TheMod.VALUE_COLOUR + EnumChatFormatting.BOLD + combatLevel + "\n" +
+														TheMod.TYPE_COLOUR + " Foraging: " + TheMod.VALUE_COLOUR + EnumChatFormatting.BOLD + foragingLevel + "\n" +
+														TheMod.TYPE_COLOUR + " Fishing: " + TheMod.VALUE_COLOUR + EnumChatFormatting.BOLD + fishingLevel + "\n" +
+														TheMod.TYPE_COLOUR + " Enchanting: " + TheMod.VALUE_COLOUR + EnumChatFormatting.BOLD + enchantingLevel + "\n" +
+														TheMod.TYPE_COLOUR + " Alchemy: " + TheMod.VALUE_COLOUR + EnumChatFormatting.BOLD + alchemyLevel + "\n" +
+														TheMod.TYPE_COLOUR + " Taming: " + TheMod.VALUE_COLOUR + EnumChatFormatting.BOLD + tamingLevel + "\n" +
+														EnumChatFormatting.AQUA + " Average Skill Level: " + TheMod.SKILL_AVERAGE_COLOUR + EnumChatFormatting.BOLD + skillAvg + "\n" +
+														EnumChatFormatting.AQUA + " True Average Skill Level: " + TheMod.SKILL_AVERAGE_COLOUR + EnumChatFormatting.BOLD + trueAvg + "\n" +
+														TheMod.DELIMITER_COLOUR + " " + EnumChatFormatting.BOLD + "-------------------"));
 		}).start();
 	}
 

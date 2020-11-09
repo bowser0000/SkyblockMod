@@ -2,6 +2,7 @@ package me.Danker.commands;
 
 import java.util.List;
 
+import me.Danker.TheMod;
 import me.Danker.handlers.ConfigHandler;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
@@ -20,6 +21,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 	public static boolean rngesusAlerts;
 	public static boolean splitFishing;
 	public static boolean chatMaddoxToggled;
+	public static boolean trueChatMaddoxEnabled;
 	public static boolean spiritBearAlerts;
 	public static boolean aotdToggled;
 	public static boolean lividDaggerToggled;
@@ -74,102 +76,102 @@ public class ToggleCommand extends CommandBase implements ICommand {
 		final ConfigHandler cf = new ConfigHandler();
 		
 		if (arg1.length == 0) {
-			player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Usage: " + getCommandUsage(arg0)));
+			player.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "Usage: " + getCommandUsage(arg0)));
 			return;
 		}
 		
 		if (arg1[0].equalsIgnoreCase("gparty")) {
 			gpartyToggled = !gpartyToggled;
 			cf.writeBooleanConfig("toggles", "GParty", gpartyToggled);
-			player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Guild party notifications has been set to " + EnumChatFormatting.DARK_GREEN + gpartyToggled + EnumChatFormatting.GREEN + "."));
+			player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Guild party notifications has been set to " + TheMod.SECONDARY_COLOUR + gpartyToggled + TheMod.MAIN_COLOUR + "."));
 		} else if (arg1[0].equalsIgnoreCase("coords")) {
 			coordsToggled = !coordsToggled;
 			cf.writeBooleanConfig("toggles", "Coords", coordsToggled);
-			player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Coord/Angle display has been set to " + EnumChatFormatting.DARK_GREEN + coordsToggled + EnumChatFormatting.GREEN + "."));
+			player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Coord/Angle display has been set to " + TheMod.SECONDARY_COLOUR + coordsToggled + TheMod.MAIN_COLOUR + "."));
 		} else if (arg1[0].equalsIgnoreCase("golden")) { 
 			goldenToggled = !goldenToggled;
 			cf.writeBooleanConfig("toggles", "Golden", goldenToggled);
-			player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Golden T6 enchants has been set to " + EnumChatFormatting.DARK_GREEN + goldenToggled + EnumChatFormatting.GREEN + "."));
+			player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Golden T6 enchants has been set to " + TheMod.SECONDARY_COLOUR + goldenToggled + TheMod.MAIN_COLOUR + "."));
 		} else if (arg1[0].equalsIgnoreCase("slayercount")) {
 			slayerCountTotal = !slayerCountTotal;
 			cf.writeBooleanConfig("toggles", "SlayerCount", slayerCountTotal);
-			player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Counting total 20% slayer drops has been set to " + EnumChatFormatting.DARK_GREEN + slayerCountTotal + EnumChatFormatting.GREEN + "."));
+			player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Counting total 20% slayer drops has been set to " + TheMod.SECONDARY_COLOUR + slayerCountTotal + TheMod.MAIN_COLOUR + "."));
 		} else if (arg1[0].equalsIgnoreCase("rngesusalerts")) {
 			rngesusAlerts = !rngesusAlerts;
 			cf.writeBooleanConfig("toggles", "RNGesusAlerts", rngesusAlerts);
-			player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Slayer RNGesus alerts has been set to " + EnumChatFormatting.DARK_GREEN + rngesusAlerts + EnumChatFormatting.GREEN + "."));
+			player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Slayer RNGesus alerts has been set to " + TheMod.SECONDARY_COLOUR + rngesusAlerts + TheMod.MAIN_COLOUR + "."));
 		} else if (arg1[0].equalsIgnoreCase("splitfishing")) {
 			splitFishing = !splitFishing;
 			cf.writeBooleanConfig("toggles", "SplitFishing", splitFishing);
-			player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Split fishing display has been set to " + EnumChatFormatting.DARK_GREEN + splitFishing + EnumChatFormatting.GREEN + "."));
+			player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Split fishing display has been set to " + TheMod.SECONDARY_COLOUR + splitFishing + TheMod.MAIN_COLOUR + "."));
 		} else if (arg1[0].equalsIgnoreCase("chatmaddox")) {
 			chatMaddoxToggled = !chatMaddoxToggled;
 			cf.writeBooleanConfig("toggles", "ChatMaddox", chatMaddoxToggled);
-			player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Chat Maddox menu has been set to " + EnumChatFormatting.DARK_GREEN + chatMaddoxToggled + EnumChatFormatting.GREEN + "."));
+			player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Chat Maddox menu has been set to " + TheMod.SECONDARY_COLOUR + chatMaddoxToggled + TheMod.MAIN_COLOUR + "."));
 		} else if (arg1[0].equalsIgnoreCase("spiritbearalerts")) { 
 			spiritBearAlerts = !spiritBearAlerts;
 			cf.writeBooleanConfig("toggles", "SpiritBearAlerts", spiritBearAlerts);
-			player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Spirit Bear alerts have been set to " + EnumChatFormatting.DARK_GREEN + spiritBearAlerts + EnumChatFormatting.GREEN + "."));
+			player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Spirit Bear alerts have been set to " + TheMod.SECONDARY_COLOUR + spiritBearAlerts + TheMod.MAIN_COLOUR + "."));
 		} else if (arg1[0].equalsIgnoreCase("aotd")) {
 			aotdToggled = !aotdToggled;
 			cf.writeBooleanConfig("toggles", "AOTD", aotdToggled);
-			player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Block AOTD ability been set to " + EnumChatFormatting.DARK_GREEN + aotdToggled + EnumChatFormatting.GREEN + "."));
+			player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Block AOTD ability been set to " + TheMod.SECONDARY_COLOUR + aotdToggled + TheMod.MAIN_COLOUR + "."));
 		} else if (arg1[0].equalsIgnoreCase("lividdagger")) {
 			lividDaggerToggled = !lividDaggerToggled;
 			cf.writeBooleanConfig("toggles", "LividDagger", lividDaggerToggled);
-			player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Block Livid Dagger ability been set to " + EnumChatFormatting.DARK_GREEN + lividDaggerToggled + EnumChatFormatting.GREEN + "."));
+			player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Block Livid Dagger ability been set to " + TheMod.SECONDARY_COLOUR + lividDaggerToggled + TheMod.MAIN_COLOUR + "."));
 		} else if (arg1[0].equalsIgnoreCase("sceptremessages")) {
 			sceptreMessages = !sceptreMessages;
 			cf.writeBooleanConfig("toggles", "SceptreMessages", sceptreMessages);
-			player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Spirit Sceptre messages have been set to " + EnumChatFormatting.DARK_GREEN + sceptreMessages + EnumChatFormatting.GREEN + "."));
+			player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Spirit Sceptre messages have been set to " + TheMod.SECONDARY_COLOUR + sceptreMessages + TheMod.MAIN_COLOUR + "."));
 		} else if (arg1[0].equalsIgnoreCase("petcolors") || arg1[0].equalsIgnoreCase("petcolours")) {
 			petColoursToggled = !petColoursToggled;
 			cf.writeBooleanConfig("toggles", "PetColors", petColoursToggled);
-			player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Pet colours have been set to " + EnumChatFormatting.DARK_GREEN + petColoursToggled + EnumChatFormatting.GREEN + "."));
+			player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Pet colours have been set to " + TheMod.SECONDARY_COLOUR + petColoursToggled + TheMod.MAIN_COLOUR + "."));
 		} else if (arg1[0].equalsIgnoreCase("dungeontimer")) {
 			dungeonTimerToggled = !dungeonTimerToggled;
 			cf.writeBooleanConfig("toggles", "DungeonTimer", dungeonTimerToggled);
-			player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Dungeon timer has been set to " + EnumChatFormatting.DARK_GREEN + dungeonTimerToggled + EnumChatFormatting.GREEN + "."));
+			player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Dungeon timer has been set to " + TheMod.SECONDARY_COLOUR + dungeonTimerToggled + TheMod.MAIN_COLOUR + "."));
 		} else if (arg1[0].equalsIgnoreCase("golemalerts")) {
 			golemAlertToggled = !golemAlertToggled;
 			cf.writeBooleanConfig("toggles", "GolemAlerts", golemAlertToggled);
-			player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Golem spawn alerts has been set to " + EnumChatFormatting.DARK_GREEN + golemAlertToggled + EnumChatFormatting.GREEN + "."));
+			player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Golem spawn alerts has been set to " + TheMod.SECONDARY_COLOUR + golemAlertToggled + TheMod.MAIN_COLOUR + "."));
 		} else if (arg1[0].equalsIgnoreCase("expertiselore")) {
 			expertiseLoreToggled = !expertiseLoreToggled;
 			cf.writeBooleanConfig("toggles", "ExpertiseLore", expertiseLoreToggled);
-			player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Expertise in lore has been set to " + EnumChatFormatting.DARK_GREEN + expertiseLoreToggled + EnumChatFormatting.GREEN + "."));
+			player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Expertise in lore has been set to " + TheMod.SECONDARY_COLOUR + expertiseLoreToggled + TheMod.MAIN_COLOUR + "."));
 		} else if (arg1[0].equalsIgnoreCase("skill50display")) {
 			skill50DisplayToggled = !skill50DisplayToggled;
 			cf.writeBooleanConfig("toggles", "Skill50Display", skill50DisplayToggled);
-			player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Skill 50 display has been set to " + EnumChatFormatting.DARK_GREEN + skill50DisplayToggled + EnumChatFormatting.GREEN + "."));
+			player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Skill 50 display has been set to " + TheMod.SECONDARY_COLOUR + skill50DisplayToggled + TheMod.MAIN_COLOUR + "."));
 		} else if (arg1[0].equalsIgnoreCase("outlinetext")) {
 			outlineTextToggled = !outlineTextToggled;
 			cf.writeBooleanConfig("toggles", "OutlineText", outlineTextToggled);
-			player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Outline displayed text has been set to " + EnumChatFormatting.DARK_GREEN + outlineTextToggled + EnumChatFormatting.GREEN + "."));
+			player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Outline displayed text has been set to " + TheMod.SECONDARY_COLOUR + outlineTextToggled + TheMod.MAIN_COLOUR + "."));
 		} else if (arg1[0].equalsIgnoreCase("midasstaffmessages")) {
 			midasStaffMessages = !midasStaffMessages;
 			cf.writeBooleanConfig("toggles", "MidasStaffMessages", midasStaffMessages);
-			player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Midas Staff messages have been set to " + EnumChatFormatting.DARK_GREEN + midasStaffMessages + EnumChatFormatting.GREEN + "."));
+			player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Midas Staff messages have been set to " + TheMod.SECONDARY_COLOUR + midasStaffMessages + TheMod.MAIN_COLOUR + "."));
 		} else if (arg1[0].equalsIgnoreCase("lividsolver")) { 
 			lividSolverToggled = !lividSolverToggled;
 			cf.writeBooleanConfig("toggles", "LividSolver", lividSolverToggled);
-			player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Livid solver has been set to " + EnumChatFormatting.DARK_GREEN + lividSolverToggled + EnumChatFormatting.GREEN + "."));
+			player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Livid solver has been set to " + TheMod.SECONDARY_COLOUR + lividSolverToggled + TheMod.MAIN_COLOUR + "."));
 		} else if (arg1[0].equalsIgnoreCase("threemanpuzzle")) { 
 			threeManToggled = !threeManToggled;
 			cf.writeBooleanConfig("toggles", "ThreeManPuzzle", threeManToggled);
-			player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Three man puzzle solver has been set to " + EnumChatFormatting.DARK_GREEN + threeManToggled + EnumChatFormatting.GREEN + "."));
+			player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Three man puzzle solver has been set to " + TheMod.SECONDARY_COLOUR + threeManToggled + TheMod.MAIN_COLOUR + "."));
 		} else if (arg1[0].equalsIgnoreCase("oruopuzzle")) { 
 			oruoToggled = !oruoToggled;
 			cf.writeBooleanConfig("toggles", "OruoPuzzle", oruoToggled);
-			player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Oruo trivia solver has been set to " + EnumChatFormatting.DARK_GREEN + oruoToggled + EnumChatFormatting.GREEN + "."));
+			player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Oruo trivia solver has been set to " + TheMod.SECONDARY_COLOUR + oruoToggled + TheMod.MAIN_COLOUR + "."));
 		} else if (arg1[0].equalsIgnoreCase("blazepuzzle")) { 
 			blazeToggled = !blazeToggled;
 			cf.writeBooleanConfig("toggles", "BlazePuzzle", blazeToggled);
-			player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Blaze puzzle solver has been set to " + EnumChatFormatting.DARK_GREEN + blazeToggled + EnumChatFormatting.GREEN + "."));
+			player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Blaze puzzle solver has been set to " + TheMod.SECONDARY_COLOUR + blazeToggled + TheMod.MAIN_COLOUR + "."));
 		} else if (arg1[0].equalsIgnoreCase("creeperpuzzle")) {
 			creeperToggled = !creeperToggled;
 			cf.writeBooleanConfig("creeperpuzzle", "CreeperPuzzle", creeperToggled);
-			player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Creeper puzzle solver has been set to " + EnumChatFormatting.DARK_GREEN + creeperToggled + EnumChatFormatting.GREEN + "."));
+			player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Creeper puzzle solver has been set to " + TheMod.SECONDARY_COLOUR + creeperToggled + TheMod.MAIN_COLOUR + "."));
 		} else if (arg1[0].equalsIgnoreCase("list")) {
 			player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Guild party notifications: " + EnumChatFormatting.DARK_GREEN + gpartyToggled + "\n" +
 														EnumChatFormatting.GREEN + " Coord/Angle display: " + EnumChatFormatting.DARK_GREEN + coordsToggled + "\n" +
@@ -195,7 +197,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 														EnumChatFormatting.GREEN + " Blaze puzzle solver: " + EnumChatFormatting.DARK_GREEN + blazeToggled + "\n" +
 														EnumChatFormatting.GREEN + " Creeper puzzle solver: " + EnumChatFormatting.DARK_GREEN + creeperToggled));
 		} else {
-			player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Usage: " + getCommandUsage(arg0)));
+			player.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "Usage: " + getCommandUsage(arg0)));
 		}
 	}
 }

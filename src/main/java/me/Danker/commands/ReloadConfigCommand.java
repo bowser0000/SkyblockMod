@@ -1,5 +1,6 @@
 package me.Danker.commands;
 
+import me.Danker.TheMod;
 import me.Danker.handlers.ConfigHandler;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
@@ -30,7 +31,7 @@ public class ReloadConfigCommand extends CommandBase {
 		final EntityPlayer player = (EntityPlayer)arg0;
 		final ConfigHandler cf = new ConfigHandler();
 		cf.reloadConfig();
-		player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Reloaded config."));
+		player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Reloaded config."));
 	}
 
 }

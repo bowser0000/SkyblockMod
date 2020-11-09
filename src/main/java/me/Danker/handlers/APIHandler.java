@@ -14,6 +14,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
+import me.Danker.TheMod;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ChatComponentText;
@@ -54,16 +55,16 @@ public class APIHandler {
 						return object;
 					}
 				} else if (urlString.startsWith("https://api.mojang.com/users/profiles/minecraft/") && conn.getResponseCode() == 204) {
-					player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Failed with reason: Player does not exist."));
+					player.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "Failed with reason: Player does not exist."));
 				} else {
-					player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Request failed. HTTP Error Code: " + conn.getResponseCode()));
+					player.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "Request failed. HTTP Error Code: " + conn.getResponseCode()));
 				}
 			}
 		} catch (MalformedURLException ex) {
-			player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "An error has occured. See logs for more details."));
+			player.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "An error has occured. See logs for more details."));
 			System.err.println(ex);
 		} catch (IOException ex) {
-			player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "An error has occured. See logs for more details."));
+			player.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "An error has occured. See logs for more details."));
 			System.err.println(ex);
 		}
 		
@@ -94,13 +95,13 @@ public class APIHandler {
 				
 				return array;
 			} else {
-				player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Request failed. HTTP Error Code: " + conn.getResponseCode()));
+				player.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "Request failed. HTTP Error Code: " + conn.getResponseCode()));
 			}
 		} catch (MalformedURLException ex) {
-			player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "An error has occured. See logs for more details."));
+			player.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "An error has occured. See logs for more details."));
 			System.err.println(ex);
 		} catch (IOException ex) {
-			player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "An error has occured. See logs for more details."));
+			player.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "An error has occured. See logs for more details."));
 			System.err.println(ex);
 		}
 		
@@ -125,11 +126,11 @@ public class APIHandler {
 		JsonObject profilesResponse = getResponse("https://api.hypixel.net/skyblock/profiles?uuid=" + UUID + "&key=" + key);
 		if (!profilesResponse.get("success").getAsBoolean()) {
 			String reason = profilesResponse.get("cause").getAsString();
-			player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Failed with reason: " + reason));
+			player.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "Failed with reason: " + reason));
 			return null;
 		}
 		if (profilesResponse.get("profiles").isJsonNull()) {
-			player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "This player doesn't appear to have played SkyBlock."));
+			player.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "This player doesn't appear to have played SkyBlock."));
 			return null;
 		}
 		

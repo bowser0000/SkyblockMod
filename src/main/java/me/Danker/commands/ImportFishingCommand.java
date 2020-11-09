@@ -2,6 +2,7 @@ package me.Danker.commands;
 
 import com.google.gson.JsonObject;
 
+import me.Danker.TheMod;
 import me.Danker.handlers.APIHandler;
 import me.Danker.handlers.ConfigHandler;
 import net.minecraft.command.CommandBase;
@@ -40,10 +41,10 @@ public class ImportFishingCommand extends CommandBase {
 			// Check key
 			String key = cf.getString("api", "APIKey");
 			if (key.equals("")) {
-				player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "API key not set. Use /setkey."));
+				player.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "API key not set. Use /setkey."));
 			}
 						
-			player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Importing your fishing stats..."));
+			player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Importing your fishing stats..."));
 			
 			// Get UUID for Hypixel API requests
 			String username = player.getName();
@@ -57,7 +58,7 @@ public class ImportFishingCommand extends CommandBase {
 			JsonObject profileResponse = ah.getResponse(profileURL);
 			if (!profileResponse.get("success").getAsBoolean()) {
 				String reason = profileResponse.get("cause").getAsString();
-				player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Failed with reason: " + reason));
+				player.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "Failed with reason: " + reason));
 				return;
 			}
 			
@@ -226,6 +227,36 @@ public class ImportFishingCommand extends CommandBase {
 			}
 			lc.seaCreatures += lc.greatWhiteSharks;
 			
+			lc.scarecrows = 0;
+			if (statsObject.has("kills_scarecrow")) {
+				lc.scarecrows = statsObject.get("kills_scarecrow").getAsInt();
+			}
+			lc.seaCreatures += lc.scarecrows;
+			
+			lc.nightmares = 0;
+			if (statsObject.has("kills_nightmare")) {
+				lc.nightmares = statsObject.get("kills_nightmare").getAsInt();
+			}
+			lc.seaCreatures += lc.nightmares;
+			
+			lc.werewolfs = 0;
+			if (statsObject.has("kills_werewolf")) {
+				lc.werewolfs = statsObject.get("kills_werewolf").getAsInt();
+			}
+			lc.seaCreatures += lc.werewolfs;
+			
+			lc.phantomFishers = 0;
+			if (statsObject.has("kills_phantom_fisherman")) {
+				lc.phantomFishers = statsObject.get("kills_phantom_fisherman").getAsInt();
+			}
+			lc.seaCreatures += lc.phantomFishers;
+			
+			lc.grimReapers = 0;
+			if (statsObject.has("kills_grim_reaper")) {
+				lc.grimReapers = statsObject.get("kills_grim_reaper").getAsInt();
+			}
+			lc.seaCreatures += lc.grimReapers;
+			
 			System.out.println("Writing to config...");
 			cf.writeIntConfig("fishing", "goodCatch", lc.goodCatches);
 			cf.writeIntConfig("fishing", "greatCatch", lc.greatCatches);
@@ -253,8 +284,13 @@ public class ImportFishingCommand extends CommandBase {
 			cf.writeIntConfig("fishing", "blueShark", lc.blueSharks);
 			cf.writeIntConfig("fishing", "tigerShark", lc.tigerSharks);
 			cf.writeIntConfig("fishing", "greatWhiteShark", lc.greatWhiteSharks);
+			cf.writeIntConfig("fishing", "scarecrow", lc.scarecrows);
+			cf.writeIntConfig("fishing", "nightmare", lc.nightmares);
+			cf.writeIntConfig("fishing", "werewolf", lc.werewolfs);
+			cf.writeIntConfig("fishing", "phantomFisher", lc.phantomFishers);
+			cf.writeIntConfig("fishing", "grimReaper", lc.grimReapers);
 			
-			player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Fishing stats imported."));
+			player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Fishing stats imported."));
 		}).start();
 	}
 

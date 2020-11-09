@@ -2,6 +2,7 @@ package me.Danker.commands;
 
 import java.util.List;
 
+import me.Danker.TheMod;
 import me.Danker.handlers.ConfigHandler;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
@@ -47,7 +48,7 @@ public class BlockSlayerCommand extends CommandBase {
 		final ConfigHandler cf = new ConfigHandler();
 		
 		if (arg1.length == 0 || (arg1.length == 1 && !arg1[0].equalsIgnoreCase("off"))) {
-			player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Usage: " + getCommandUsage(arg0)));
+			player.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "Usage: " + getCommandUsage(arg0)));
 			return;
 		}
 		
@@ -61,10 +62,10 @@ public class BlockSlayerCommand extends CommandBase {
 			onlySlayerName = "";
 			onlySlayerNumber = "";
 			cf.writeStringConfig("toggles", "BlockSlayer", "");
-			player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Slayer blocking turned off."));
+			player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Slayer blocking turned off."));
 			return;
 		} else {
-			player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Usage: " + getCommandUsage(arg0)));
+			player.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "Usage: " + getCommandUsage(arg0)));
 			return;
 		}
 		
@@ -86,12 +87,12 @@ public class BlockSlayerCommand extends CommandBase {
 			default:
 				onlySlayerName = "";
 				onlySlayerNumber = "";
-				player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Usage: " + getCommandUsage(arg0)));
+				player.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "Usage: " + getCommandUsage(arg0)));
 				return;
 		}
 		
 		cf.writeStringConfig("toggles", "BlockSlayer", onlySlayerName + " " + onlySlayerNumber);
-		player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Slayer blocking set to " + EnumChatFormatting.DARK_GREEN + onlySlayerName + " " + onlySlayerNumber));
+		player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Slayer blocking set to " + TheMod.SECONDARY_COLOUR + onlySlayerName + " " + onlySlayerNumber));
 	}
 
 }

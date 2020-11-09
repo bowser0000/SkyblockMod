@@ -1,5 +1,6 @@
 package me.Danker.commands;
 
+import me.Danker.TheMod;
 import me.Danker.handlers.ConfigHandler;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
@@ -31,13 +32,13 @@ public class SetkeyCommand extends CommandBase implements ICommand {
 		final EntityPlayer player = (EntityPlayer)arg0;
 		
 		if (arg1.length == 0) {
-			player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Usage: " + getCommandUsage(arg0)));
+			player.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "Usage: " + getCommandUsage(arg0)));
 			return;
 		}
 		
 		final ConfigHandler cf = new ConfigHandler();
 		cf.writeStringConfig("api", "APIKey", arg1[0]);
-		player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Set API key to " + EnumChatFormatting.DARK_GREEN + arg1[0]));
+		player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Set API key to " + TheMod.SECONDARY_COLOUR + arg1[0]));
 	}
 
 }

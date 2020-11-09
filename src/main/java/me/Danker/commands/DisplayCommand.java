@@ -2,6 +2,7 @@ package me.Danker.commands;
 
 import java.util.List;
 
+import me.Danker.TheMod;
 import me.Danker.handlers.ConfigHandler;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
@@ -49,7 +50,7 @@ public class DisplayCommand extends CommandBase {
 		final EntityPlayer player = (EntityPlayer) arg0;
 		
 		if (arg1.length == 0) {
-			player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Usage: " + getCommandUsage(arg0)));
+			player.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "Usage: " + getCommandUsage(arg0)));
 			return;
 		}
 		
@@ -91,9 +92,9 @@ public class DisplayCommand extends CommandBase {
 				}
 			} else if (arg1.length > 1 && arg1[1].equalsIgnoreCase("spooky")) { 
 				if (showSession) {
-					display = "spooky_fishing_session";
+					display = "fishing_spooky_session";
 				} else {
-					display = "spooky_fishing";
+					display = "fishing_spooky";
 				}
 			} else {
 				if (showSession) {
@@ -104,7 +105,7 @@ public class DisplayCommand extends CommandBase {
 			} 
 		} else if (arg1[0].equalsIgnoreCase("catacombs")) {
 			if (arg1.length == 1) {
-				player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Usage: /display catacombs <f1/f2/f3/f4>"));
+				player.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "Usage: /display catacombs <f1/f2/f3/f4>"));
 				return;
 			}
 			if (arg1[1].equalsIgnoreCase("f1") || arg1[1].equalsIgnoreCase("floor1")) {
@@ -144,22 +145,22 @@ public class DisplayCommand extends CommandBase {
 					display = "catacombs_floor_six";
 				}
 			} else {
-				player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Usage: /display catacombs <f1/f2/f3/f4/f5/f6>"));
+				player.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "Usage: /display catacombs <f1/f2/f3/f4/f5/f6>"));
 				return;
 			}
 		} else if (arg1[0].equalsIgnoreCase("auto")) {
 			auto = true;
-			player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Display set to " + EnumChatFormatting.DARK_GREEN + "auto" + EnumChatFormatting.GREEN + "."));
+			player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Display set to " + TheMod.SECONDARY_COLOUR + "auto" + TheMod.MAIN_COLOUR + "."));
 			cf.writeBooleanConfig("misc", "autoDisplay", true);
 			return;
 		} else if (arg1[0].equalsIgnoreCase("off")) {
 			display = "off";
 		} else {
-			player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Usage: " + getCommandUsage(arg0)));
+			player.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "Usage: " + getCommandUsage(arg0)));
 			return;
 		}
 		auto = false;
-		player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Display set to " + EnumChatFormatting.DARK_GREEN + display + EnumChatFormatting.GREEN + "."));
+		player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Display set to " + TheMod.SECONDARY_COLOUR + display + TheMod.MAIN_COLOUR + "."));
 		cf.writeBooleanConfig("misc", "autoDisplay", false);
 		cf.writeStringConfig("misc", "display", display);
 	}
