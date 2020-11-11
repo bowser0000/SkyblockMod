@@ -191,6 +191,7 @@ public class ConfigHandler {
 		if (!hasKey("toggles", "Skill50Display")) writeBooleanConfig("toggles", "Skill50Display", false);
 		if (!hasKey("toggles", "OutlineText")) writeBooleanConfig("toggles", "OutlineText", false);
 		if (!hasKey("toggles", "MidasStaffMessages")) writeBooleanConfig("toggles", "MidasStaffMessages", true);
+		if (!hasKey("toggles", "CakeTimer")) writeBooleanConfig("toggles", "CakeTimer", false);
 		if (!hasKey("toggles", "LividSolver")) writeBooleanConfig("toggles", "LividSolver", false);
 		// Puzzle Solvers
 		if (!hasKey("toggles", "ThreeManPuzzle")) writeBooleanConfig("toggles", "ThreeManPuzzle", false);
@@ -336,6 +337,7 @@ public class ConfigHandler {
 		if (!hasKey("misc", "autoDisplay")) writeBooleanConfig("misc", "autoDisplay", false);
 		if (!hasKey("misc", "skill50Time")) writeIntConfig("misc", "skill50Time", 3);
 		if (!hasKey("misc", "trueChatMaddoxEnabled")) writeBooleanConfig("misc", "trueChatMaddoxEnabled", true);
+		if (!hasKey("misc", "cakeTime")) writeDoubleConfig("misc", "cakeTime", 0);
 		
 		ScaledResolution scaled = new ScaledResolution(Minecraft.getMinecraft());
 		int height = scaled.getScaledHeight();
@@ -349,11 +351,14 @@ public class ConfigHandler {
 		if (!hasKey("locations", "skill50Y")) writeIntConfig("locations", "skill50Y", 10);
 		if (!hasKey("locations", "lividHpX")) writeIntConfig("locations", "lividHpX", 40);
 		if (!hasKey("locations", "lividHpY")) writeIntConfig("locations", "lividHpY", 20);
+		if (!hasKey("locations", "cakeTimerX")) writeIntConfig("locations", "cakeTimerX", 40);
+		if (!hasKey("locations", "cakeTimerY")) writeIntConfig("locations", "cakeTimerY", 30);
 		if (!hasKey("scales", "coordsScale")) writeDoubleConfig("scales", "coordsScale", 1);
 		if (!hasKey("scales", "displayScale")) writeDoubleConfig("scales", "displayScale", 1);
 		if (!hasKey("scales", "dungeonTimerScale")) writeDoubleConfig("scales", "dungeonTimerScale", 1);
 		if (!hasKey("scales", "skill50Scale")) writeDoubleConfig("scales", "skill50Scale", 1);
 		if (!hasKey("scales", "lividHpScale")) writeDoubleConfig("scales", "lividHpScale", 1);
+		if (!hasKey("scales", "cakeTimerScale")) writeDoubleConfig("scales", "cakeTimerScale", 1);
 		
 		if (!hasKey("colors", "main")) writeStringConfig("colors", "main", "" + EnumChatFormatting.GREEN);
 		if (!hasKey("colors", "secondary")) writeStringConfig("colors", "secondary", "" + EnumChatFormatting.DARK_GREEN);
@@ -365,6 +370,7 @@ public class ConfigHandler {
 		if (!hasKey("colors", "answer")) writeStringConfig("colors", "answer", "" + EnumChatFormatting.DARK_GREEN);
 		if (!hasKey("colors", "skill50Display")) writeStringConfig("colors", "skill50Display", "" + EnumChatFormatting.AQUA);
 		if (!hasKey("colors", "coordsDisplay")) writeStringConfig("colors", "coordsDisplay", "" + EnumChatFormatting.WHITE);
+		if (!hasKey("colors", "cakeDisplay")) writeStringConfig("colors", "cakeDisplay", "" + EnumChatFormatting.GOLD);
 		
 		final ToggleCommand tf = new ToggleCommand();
 		tf.gpartyToggled = getBoolean("toggles", "GParty");
@@ -385,6 +391,7 @@ public class ConfigHandler {
 		tf.skill50DisplayToggled = getBoolean("toggles", "Skill50Display");
 		tf.outlineTextToggled = getBoolean("toggles", "OutlineText");
 		tf.midasStaffMessages = getBoolean("toggles", "MidasStaffMessages");
+		tf.cakeTimerToggled = getBoolean("toggles", "CakeTimer");
 		tf.lividSolverToggled = getBoolean("toggles", "LividSolver");
 		// Puzzle Solvers
 		tf.threeManToggled = getBoolean("toggles", "ThreeManPuzzle");
@@ -537,6 +544,7 @@ public class ConfigHandler {
 		ds.auto = getBoolean("misc", "autoDisplay");
 		TheMod.SKILL_TIME = getInt("misc", "skill50Time") * 20;
 		tf.trueChatMaddoxEnabled = getBoolean("misc", "trueChatMaddoxEnabled");
+		TheMod.cakeTime = getDouble("misc", "cakeTime");
 		
 		final MoveCommand moc = new MoveCommand();
 		moc.coordsXY[0] = getInt("locations", "coordsX");
@@ -549,6 +557,8 @@ public class ConfigHandler {
 		moc.skill50XY[1] = getInt("locations", "skill50Y");
 		moc.lividHpXY[0] = getInt("locations", "lividHpX");
 		moc.lividHpXY[1] = getInt("locations", "lividHpY");
+		moc.cakeTimerXY[0] = getInt("locations", "cakeTimerX");
+		moc.cakeTimerXY[1] = getInt("locations", "cakeTimerY");
 		
 		final ScaleCommand sc = new ScaleCommand();
 		sc.coordsScale = getDouble("scales", "coordsScale");
@@ -556,6 +566,7 @@ public class ConfigHandler {
 		sc.dungeonTimerScale = getDouble("scales", "dungeonTimerScale");
 		sc.skill50Scale = getDouble("scales", "skill50Scale");
 		sc.lividHpScale = getDouble("scales", "lividHpScale");
+		sc.cakeTimerScale = getDouble("scales", "cakeTimerScale");
 		
 		TheMod.MAIN_COLOUR = getString("colors", "main");
 		TheMod.SECONDARY_COLOUR = getString("colors", "secondary");
@@ -567,6 +578,7 @@ public class ConfigHandler {
 		TheMod.ANSWER_COLOUR = getString("colors", "answer");
 		TheMod.SKILL_50_COLOUR = getString("colors", "skill50Display");
 		TheMod.COORDS_COLOUR = getString("colors", "coordsDisplay");
+		TheMod.CAKE_COLOUR = getString("colors", "cakeDisplay");
 	}
 	
 }

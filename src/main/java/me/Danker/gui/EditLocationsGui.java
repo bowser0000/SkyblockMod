@@ -1,11 +1,14 @@
 package me.Danker.gui;
 
+import org.lwjgl.opengl.GL11;
+
 import me.Danker.TheMod;
 import me.Danker.commands.MoveCommand;
 import me.Danker.commands.ScaleCommand;
 import me.Danker.gui.buttons.LocationButton;
 import me.Danker.handlers.ConfigHandler;
 import me.Danker.utils.Utils;
+import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.EnumChatFormatting;
@@ -21,6 +24,7 @@ public class EditLocationsGui extends GuiScreen {
 	private LocationButton coords;
 	private LocationButton skill50;
 	private LocationButton lividHP;
+	private LocationButton cakeTimer;
 	
 	@Override
 	public boolean doesGuiPauseGame() {
@@ -75,10 +79,12 @@ public class EditLocationsGui extends GuiScreen {
 		coords = new LocationButton(0, moc.coordsXY[0], moc.coordsXY[1], 141 * sc.coordsScale, 12 * sc.coordsScale, sc.coordsScale, TheMod.COORDS_COLOUR + "74 / 14 / -26 (141.1 / 6.7)", null, null);
 		skill50 = new LocationButton(0, moc.skill50XY[0], moc.skill50XY[1], 233 * sc.skill50Scale, 12 * sc.skill50Scale, sc.skill50Scale, TheMod.SKILL_50_COLOUR + "+3.5 Farming (28,882,117.7/55,172,425) 52.34%", null, null);
 		lividHP = new LocationButton(0, moc.lividHpXY[0], moc.lividHpXY[1], 85 * sc.lividHpScale, 12 * sc.lividHpScale, sc.lividHpScale, EnumChatFormatting.WHITE + "﴾ Livid " + EnumChatFormatting.YELLOW + "6.9M" + EnumChatFormatting.RED + "❤ " + EnumChatFormatting.WHITE + "﴿", null, null);
+		cakeTimer = new LocationButton(0, moc.cakeTimerXY[0], moc.cakeTimerXY[1] + 5, 85 * sc.cakeTimerScale, 18 * sc.cakeTimerScale, sc.cakeTimerScale, TheMod.CAKE_COLOUR + "     11h16m", null, null);
 		
 		this.buttonList.add(coords);
 		this.buttonList.add(dungeonTimer);
 		this.buttonList.add(lividHP);
+		this.buttonList.add(cakeTimer);
 		this.buttonList.add(display);
 		this.buttonList.add(skill50);
 	}
@@ -87,6 +93,14 @@ public class EditLocationsGui extends GuiScreen {
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
 		this.drawDefaultBackground();
 		mouseMoved(mouseX, mouseY);
+		
+		double scale = ScaleCommand.cakeTimerScale;
+		double scaleReset = (double) Math.pow(scale, -1);
+		GL11.glScaled(scale, scale, scale);
+		mc.getTextureManager().bindTexture(TheMod.CAKE_ICON);
+		Gui.drawModalRectWithCustomSizedTexture(MoveCommand.cakeTimerXY[0], MoveCommand.cakeTimerXY[1], 0, 0, 16, 16, 16, 16);
+		GL11.glScaled(scaleReset, scaleReset, scaleReset);
+		
 		super.drawScreen(mouseX, mouseY, partialTicks);
 	}
 	
@@ -120,6 +134,11 @@ public class EditLocationsGui extends GuiScreen {
 				MoveCommand.lividHpXY[1] += yMoved;
 				lividHP.xPosition = MoveCommand.lividHpXY[0];
 				lividHP.yPosition = MoveCommand.lividHpXY[1];
+			} else if (moving.equals("cakeTimer")) {
+				MoveCommand.cakeTimerXY[0] += xMoved;
+				MoveCommand.cakeTimerXY[1] += yMoved;
+				cakeTimer.xPosition = MoveCommand.cakeTimerXY[0];
+				cakeTimer.yPosition = MoveCommand.cakeTimerXY[1];
 			}
 			this.buttonList.clear();
 			initGui();
@@ -142,6 +161,8 @@ public class EditLocationsGui extends GuiScreen {
 				moving = "skill50";
 			} else if (button == lividHP) {
 				moving = "lividHP";
+			} else if (button == cakeTimer) {
+				moving = "cakeTimer";
 			}
 		}
 	}
@@ -160,6 +181,8 @@ public class EditLocationsGui extends GuiScreen {
 		ConfigHandler.writeIntConfig("locations", "skill50Y", MoveCommand.skill50XY[1]);
 		ConfigHandler.writeIntConfig("locations", "lividHpX", MoveCommand.lividHpXY[0]);
 		ConfigHandler.writeIntConfig("locations", "lividHpY", MoveCommand.lividHpXY[1]);
+		ConfigHandler.writeIntConfig("locations", "cakeTimerX", MoveCommand.cakeTimerXY[0]);
+		ConfigHandler.writeIntConfig("locations", "cakeTimerY", MoveCommand.cakeTimerXY[1]);
 	}
 	
 }

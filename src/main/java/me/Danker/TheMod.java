@@ -14,6 +14,7 @@ import java.util.regex.Pattern;
 
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
+import org.lwjgl.opengl.GL11;
 
 import com.google.gson.JsonObject;
 
@@ -54,6 +55,7 @@ import me.Danker.utils.Utils;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.inventory.GuiChest;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.Entity;
@@ -73,6 +75,7 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IChatComponent;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StringUtils;
 import net.minecraft.util.Vec3;
 import net.minecraftforge.client.ClientCommandHandler;
@@ -97,7 +100,6 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent.KeyInputEvent;
-import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerChangedDimensionEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.common.network.FMLNetworkEvent.ClientConnectedToServerEvent;
 import net.minecraftforge.fml.common.versioning.DefaultArtifactVersion;
@@ -139,6 +141,9 @@ public class TheMod
 	static List<Vec3[]> creeperLines = new ArrayList<Vec3[]>();
 	static boolean foundLivid = false;
 	static Entity livid = null;
+	public static double cakeTime;
+	
+	public static final ResourceLocation CAKE_ICON = new ResourceLocation("dsm", "icons/cake.png");
     
     static double dungeonStartTime = 0;
     static double bloodOpenTime = 0;
@@ -158,6 +163,7 @@ public class TheMod
     public static String ANSWER_COLOUR;
     public static String SKILL_50_COLOUR;
     public static String COORDS_COLOUR;
+    public static String CAKE_COLOUR;
     
     @EventHandler
     public void init(FMLInitializationEvent event) {
@@ -376,8 +382,8 @@ public class TheMod
         	for (String solution : riddleSolutions) {
         		if (message.contains(solution)) {
         			String npcName = message.substring(message.indexOf("]") + 2, message.indexOf(":"));
-        			Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(ANSWER_COLOUR + "" + EnumChatFormatting.BOLD + StringUtils.stripControlCodes(npcName) + MAIN_COLOUR + " has the blessing."));
-        			break;
+        			Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(ANSWER_COLOUR + EnumChatFormatting.BOLD + StringUtils.stripControlCodes(npcName) + MAIN_COLOUR + " has the blessing."));
+        			return;
         		}
         	}
         }
@@ -421,6 +427,11 @@ public class TheMod
 			if (message.contains("The ground begins to shake as an Endstone Protector rises from below!")) {
 				Utils.createTitle(EnumChatFormatting.RED + "GOLEM SPAWNING!", 3);
 			}
+		}
+		
+		if (message.contains("Yum! You gain +") && message.contains(" for 48 hours!")) {
+			cakeTime = System.currentTimeMillis() / 1000 + 172800; // Add 48 hours
+			ConfigHandler.writeDoubleConfig("misc", "cakeTime", cakeTime);
 		}
 		
 		final LootCommand lc = new LootCommand();
@@ -999,8 +1010,10 @@ public class TheMod
     	
     	if (Minecraft.getMinecraft().currentScreen instanceof EditLocationsGui) return;
     	
+    	Minecraft mc = Minecraft.getMinecraft();
+    	
     	if (tc.coordsToggled) {
-    		EntityPlayer player = Minecraft.getMinecraft().thePlayer;
+    		EntityPlayer player = mc.thePlayer;
     		
         	double xDir = (player.rotationYaw % 360 + 360) % 360;
         	if (xDir > 180) xDir -= 360;
@@ -1008,7 +1021,7 @@ public class TheMod
         	double yDir = (double) Math.round(player.rotationPitch * 10d) / 10d;
         	
         	String coordText = COORDS_COLOUR + (int) player.posX + " / " + (int) player.posY + " / " + (int) player.posZ + " (" + xDir + " / " + yDir + ")";
-        	new TextRenderer(Minecraft.getMinecraft(), coordText, moc.coordsXY[0], moc.coordsXY[1], ScaleCommand.coordsScale);
+        	new TextRenderer(mc, coordText, moc.coordsXY[0], moc.coordsXY[1], ScaleCommand.coordsScale);
     	}
     	
     	if (tc.dungeonTimerToggled && Utils.inDungeons) {
@@ -1024,12 +1037,32 @@ public class TheMod
 								   EnumChatFormatting.BLUE + Utils.getTimeBetween(dungeonStartTime, bossClearTime) + "\n" +
 								   EnumChatFormatting.YELLOW + dungeonDeaths + "\n" +
 								   EnumChatFormatting.YELLOW + puzzleFails;
-    		new TextRenderer(Minecraft.getMinecraft(), dungeonTimerText, moc.dungeonTimerXY[0], moc.dungeonTimerXY[1], ScaleCommand.dungeonTimerScale);
-    		new TextRenderer(Minecraft.getMinecraft(), dungeonTimers, (int) (moc.dungeonTimerXY[0] + (80 * ScaleCommand.dungeonTimerScale)), moc.dungeonTimerXY[1], ScaleCommand.dungeonTimerScale);
+    		new TextRenderer(mc, dungeonTimerText, moc.dungeonTimerXY[0], moc.dungeonTimerXY[1], ScaleCommand.dungeonTimerScale);
+    		new TextRenderer(mc, dungeonTimers, (int) (moc.dungeonTimerXY[0] + (80 * ScaleCommand.dungeonTimerScale)), moc.dungeonTimerXY[1], ScaleCommand.dungeonTimerScale);
     	}
     	
     	if (tc.lividSolverToggled && foundLivid && livid != null) {
-    		new TextRenderer(Minecraft.getMinecraft(), livid.getName().replace("" + EnumChatFormatting.BOLD, ""), moc.lividHpXY[0], moc.lividHpXY[1], ScaleCommand.lividHpScale);
+    		new TextRenderer(mc, livid.getName().replace("" + EnumChatFormatting.BOLD, ""), moc.lividHpXY[0], moc.lividHpXY[1], ScaleCommand.lividHpScale);
+    	}
+    	
+    	if (tc.cakeTimerToggled) {
+    		double scale = ScaleCommand.cakeTimerScale;
+    		double scaleReset = (double) Math.pow(scale, -1);
+    		GL11.glScaled(scale, scale, scale);
+    		
+    		double timeNow = System.currentTimeMillis() / 1000;
+    		mc.getTextureManager().bindTexture(CAKE_ICON);
+    		Gui.drawModalRectWithCustomSizedTexture(moc.cakeTimerXY[0], moc.cakeTimerXY[1], 0, 0, 16, 16, 16, 16);
+    		
+    		String cakeText;
+    		if (cakeTime - timeNow < 0) {
+    			cakeText = EnumChatFormatting.RED + "NONE";
+    		} else {
+    			cakeText = CAKE_COLOUR + Utils.getTimeBetween(timeNow, cakeTime);
+    		}
+    		new TextRenderer(mc, cakeText, moc.cakeTimerXY[0] + 20, moc.cakeTimerXY[1] + 5, 1);
+    		
+    		GL11.glScaled(scaleReset, scaleReset, scaleReset);
     	}
     	
     	if (!ds.display.equals("off")) {
@@ -1335,8 +1368,8 @@ public class TheMod
 									  EnumChatFormatting.AQUA + bossesBetween;
     			
     			if (tc.splitFishing) {
-    				new TextRenderer(Minecraft.getMinecraft(), dropsTextTwo, (int) (moc.displayXY[0] + (160 * ScaleCommand.displayScale)), moc.displayXY[1], ScaleCommand.displayScale);
-        			new TextRenderer(Minecraft.getMinecraft(), countTextTwo, (int) (moc.displayXY[0] + (270 * ScaleCommand.displayScale)), moc.displayXY[1], ScaleCommand.displayScale);
+    				new TextRenderer(mc, dropsTextTwo, (int) (moc.displayXY[0] + (160 * ScaleCommand.displayScale)), moc.displayXY[1], ScaleCommand.displayScale);
+        			new TextRenderer(mc, countTextTwo, (int) (moc.displayXY[0] + (270 * ScaleCommand.displayScale)), moc.displayXY[1], ScaleCommand.displayScale);
     			} else {
     				dropsText += "\n" + dropsTextTwo;
     				countText += "\n" + countTextTwo;
@@ -1396,8 +1429,8 @@ public class TheMod
 									  EnumChatFormatting.AQUA + bossesBetween;
     			
     			if (tc.splitFishing) {
-    				new TextRenderer(Minecraft.getMinecraft(), dropsTextTwo, (int) (moc.displayXY[0] + (160 * ScaleCommand.displayScale)), moc.displayXY[1], ScaleCommand.displayScale);
-        			new TextRenderer(Minecraft.getMinecraft(), countTextTwo, (int) (moc.displayXY[0] + (270 * ScaleCommand.displayScale)), moc.displayXY[1], ScaleCommand.displayScale);
+    				new TextRenderer(mc, dropsTextTwo, (int) (moc.displayXY[0] + (160 * ScaleCommand.displayScale)), moc.displayXY[1], ScaleCommand.displayScale);
+        			new TextRenderer(mc, countTextTwo, (int) (moc.displayXY[0] + (270 * ScaleCommand.displayScale)), moc.displayXY[1], ScaleCommand.displayScale);
     			} else {
     				dropsText += "\n" + dropsTextTwo;
     				countText += "\n" + countTextTwo;
@@ -1769,15 +1802,15 @@ public class TheMod
     			ds.display = "off";
     			cf.writeStringConfig("misc", "display", "off");
     		}
-    		new TextRenderer(Minecraft.getMinecraft(), dropsText, moc.displayXY[0], moc.displayXY[1], ScaleCommand.displayScale);
-    		new TextRenderer(Minecraft.getMinecraft(), countText, (int) (moc.displayXY[0] + (110 * ScaleCommand.displayScale)), moc.displayXY[1], ScaleCommand.displayScale);
+    		new TextRenderer(mc, dropsText, moc.displayXY[0], moc.displayXY[1], ScaleCommand.displayScale);
+    		new TextRenderer(mc, countText, (int) (moc.displayXY[0] + (110 * ScaleCommand.displayScale)), moc.displayXY[1], ScaleCommand.displayScale);
     	}
     	
     	if (showTitle) {
     		Utils.drawTitle(titleText);
     	}
     	if (showSkill) {
-    		new TextRenderer(Minecraft.getMinecraft(), skillText, moc.skill50XY[0], moc.skill50XY[1], ScaleCommand.skill50Scale);
+    		new TextRenderer(mc, skillText, moc.skill50XY[0], moc.skill50XY[1], ScaleCommand.skill50Scale);
     	}
     }
     

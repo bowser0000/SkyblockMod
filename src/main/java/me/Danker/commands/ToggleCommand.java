@@ -33,6 +33,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 	public static boolean skill50DisplayToggled;
 	public static boolean outlineTextToggled;
 	public static boolean midasStaffMessages;
+	public static boolean cakeTimerToggled;
 	public static boolean lividSolverToggled;
 	// Puzzle Solvers
 	public static boolean threeManToggled;
@@ -49,7 +50,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 	public String getCommandUsage(ICommandSender arg0) {
 		return "/" + getCommandName() + " <gparty/coords/golden/slayercount/rngesusalerts/splitfishing/chatmaddox/spiritbearalert/" + 
 										  "aotd/lividdagger/sceptremessages/petcolors/dungeontimer/golemalerts/expertiselore/skill50display/" + 
-										  "outlinetext/midasstaffmessages/lividsolver/threemanpuzzle/oruopuzzle/blazepuzzle/creeperpuzzle/list>";
+										  "outlinetext/midasstaffmessages/caketimer/lividsolver/threemanpuzzle/oruopuzzle/blazepuzzle/creeperpuzzle/list>";
 	}
 
 	@Override
@@ -64,8 +65,8 @@ public class ToggleCommand extends CommandBase implements ICommand {
 														  "splitfishing", "chatmaddox", "spiritbearalerts", "aotd", "lividdagger",
 														  "sceptremessages", "petcolors", "dungeontimer", "golemalerts",
 														  "expertiselore", "skill50display", "outlinetext", "midasstaffmessages",
-														  "lividsolver",  "threemanpuzzle", "oruopuzzle", "blazepuzzle", "creeperpuzzle", 
-														  "list");
+														  "caketimer", "lividsolver",  "threemanpuzzle", "oruopuzzle", "blazepuzzle",
+														  "creeperpuzzle", "list");
 		}
 		return null;
 	}
@@ -152,7 +153,11 @@ public class ToggleCommand extends CommandBase implements ICommand {
 			midasStaffMessages = !midasStaffMessages;
 			cf.writeBooleanConfig("toggles", "MidasStaffMessages", midasStaffMessages);
 			player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Midas Staff messages have been set to " + TheMod.SECONDARY_COLOUR + midasStaffMessages + TheMod.MAIN_COLOUR + "."));
-		} else if (arg1[0].equalsIgnoreCase("lividsolver")) { 
+		} else if (arg1[0].equalsIgnoreCase("caketimer")) { 
+			cakeTimerToggled = !cakeTimerToggled;
+			cf.writeBooleanConfig("toggles", "CakeTimer", cakeTimerToggled);
+			player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Cake timer has been set to " + TheMod.SECONDARY_COLOUR + cakeTimerToggled + TheMod.MAIN_COLOUR + "."));
+		} else if (arg1[0].equalsIgnoreCase("lividsolver")) {
 			lividSolverToggled = !lividSolverToggled;
 			cf.writeBooleanConfig("toggles", "LividSolver", lividSolverToggled);
 			player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Livid solver has been set to " + TheMod.SECONDARY_COLOUR + lividSolverToggled + TheMod.MAIN_COLOUR + "."));
@@ -173,29 +178,30 @@ public class ToggleCommand extends CommandBase implements ICommand {
 			cf.writeBooleanConfig("creeperpuzzle", "CreeperPuzzle", creeperToggled);
 			player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Creeper puzzle solver has been set to " + TheMod.SECONDARY_COLOUR + creeperToggled + TheMod.MAIN_COLOUR + "."));
 		} else if (arg1[0].equalsIgnoreCase("list")) {
-			player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Guild party notifications: " + EnumChatFormatting.DARK_GREEN + gpartyToggled + "\n" +
-														EnumChatFormatting.GREEN + " Coord/Angle display: " + EnumChatFormatting.DARK_GREEN + coordsToggled + "\n" +
-														EnumChatFormatting.GREEN + " Golden T6 enchants: " + EnumChatFormatting.DARK_GREEN + goldenToggled + "\n" +
-														EnumChatFormatting.GREEN + " Counting total 20% slayer drops: " + EnumChatFormatting.DARK_GREEN + slayerCountTotal + "\n" +
-														EnumChatFormatting.GREEN + " Slayer RNGesus alerts: " + EnumChatFormatting.DARK_GREEN + rngesusAlerts + "\n" +
-														EnumChatFormatting.GREEN + " Split fishing display: " + EnumChatFormatting.DARK_GREEN + splitFishing + "\n" +
-														EnumChatFormatting.GREEN + " Chat Maddox menu: " + EnumChatFormatting.DARK_GREEN + chatMaddoxToggled + "\n" +
-														EnumChatFormatting.GREEN + " Spirit Bear alerts: " + EnumChatFormatting.DARK_GREEN + spiritBearAlerts + "\n" +
-														EnumChatFormatting.GREEN + " Block AOTD ability: " + EnumChatFormatting.DARK_GREEN + aotdToggled + "\n" +
-														EnumChatFormatting.GREEN + " Block Livid Dagger ability: " + EnumChatFormatting.DARK_GREEN + lividDaggerToggled + "\n" +
-														EnumChatFormatting.GREEN + " Spirit Sceptre messages: " + EnumChatFormatting.DARK_GREEN + sceptreMessages + "\n" +
-														EnumChatFormatting.GREEN + " Pet colours: " + EnumChatFormatting.DARK_GREEN + petColoursToggled + "\n" +
-														EnumChatFormatting.GREEN + " Dungeon timer: " + EnumChatFormatting.DARK_GREEN + dungeonTimerToggled + "\n" +
-														EnumChatFormatting.GREEN + " Golem spawn alerts: " + EnumChatFormatting.DARK_GREEN + golemAlertToggled + "\n" +
-														EnumChatFormatting.GREEN + " Expertise in lore: " + EnumChatFormatting.DARK_GREEN + expertiseLoreToggled + "\n" +
-														EnumChatFormatting.GREEN + " Skill 50 display: " + EnumChatFormatting.DARK_GREEN + skill50DisplayToggled + "\n" +
-														EnumChatFormatting.GREEN + " Outline displayed text: " + EnumChatFormatting.DARK_GREEN + outlineTextToggled + "\n" +
-														EnumChatFormatting.GREEN + " Midas Staff messages: " + EnumChatFormatting.DARK_GREEN + midasStaffMessages + "\n" +
-														EnumChatFormatting.GREEN + " Livid solver: " + EnumChatFormatting.DARK_GREEN + lividSolverToggled + "\n" +
-														EnumChatFormatting.GREEN + " Three man puzzle solver: " + EnumChatFormatting.DARK_GREEN + threeManToggled + "\n" +
-														EnumChatFormatting.GREEN + " Oruo trivia solver: " + EnumChatFormatting.DARK_GREEN + oruoToggled + "\n" +
-														EnumChatFormatting.GREEN + " Blaze puzzle solver: " + EnumChatFormatting.DARK_GREEN + blazeToggled + "\n" +
-														EnumChatFormatting.GREEN + " Creeper puzzle solver: " + EnumChatFormatting.DARK_GREEN + creeperToggled));
+			player.addChatMessage(new ChatComponentText(TheMod.TYPE_COLOUR + "Guild party notifications: " + TheMod.VALUE_COLOUR + gpartyToggled + "\n" +
+														TheMod.TYPE_COLOUR + " Coord/Angle display: " + TheMod.VALUE_COLOUR + coordsToggled + "\n" +
+														TheMod.TYPE_COLOUR + " Golden T6 enchants: " + TheMod.VALUE_COLOUR + goldenToggled + "\n" +
+														TheMod.TYPE_COLOUR + " Counting total 20% slayer drops: " + TheMod.VALUE_COLOUR + slayerCountTotal + "\n" +
+														TheMod.TYPE_COLOUR + " Slayer RNGesus alerts: " + TheMod.VALUE_COLOUR + rngesusAlerts + "\n" +
+														TheMod.TYPE_COLOUR + " Split fishing display: " + TheMod.VALUE_COLOUR + splitFishing + "\n" +
+														TheMod.TYPE_COLOUR + " Chat Maddox menu: " + TheMod.VALUE_COLOUR + chatMaddoxToggled + "\n" +
+														TheMod.TYPE_COLOUR + " Spirit Bear alerts: " + TheMod.VALUE_COLOUR + spiritBearAlerts + "\n" +
+														TheMod.TYPE_COLOUR + " Block AOTD ability: " + TheMod.VALUE_COLOUR + aotdToggled + "\n" +
+														TheMod.TYPE_COLOUR + " Block Livid Dagger ability: " + TheMod.VALUE_COLOUR + lividDaggerToggled + "\n" +
+														TheMod.TYPE_COLOUR + " Spirit Sceptre messages: " + TheMod.VALUE_COLOUR + sceptreMessages + "\n" +
+														TheMod.TYPE_COLOUR + " Pet colours: " + TheMod.VALUE_COLOUR + petColoursToggled + "\n" +
+														TheMod.TYPE_COLOUR + " Dungeon timer: " + TheMod.VALUE_COLOUR + dungeonTimerToggled + "\n" +
+														TheMod.TYPE_COLOUR + " Golem spawn alerts: " + TheMod.VALUE_COLOUR + golemAlertToggled + "\n" +
+														TheMod.TYPE_COLOUR + " Expertise in lore: " + TheMod.VALUE_COLOUR + expertiseLoreToggled + "\n" +
+														TheMod.TYPE_COLOUR + " Skill 50 display: " + TheMod.VALUE_COLOUR + skill50DisplayToggled + "\n" +
+														TheMod.TYPE_COLOUR + " Outline displayed text: " + TheMod.VALUE_COLOUR + outlineTextToggled + "\n" +
+														TheMod.TYPE_COLOUR + " Midas Staff messages: " + TheMod.VALUE_COLOUR + midasStaffMessages + "\n" +
+														TheMod.TYPE_COLOUR + " Cake timer: " + TheMod.VALUE_COLOUR + cakeTimerToggled + "\n" +
+														TheMod.TYPE_COLOUR + " Livid solver: " + TheMod.VALUE_COLOUR + lividSolverToggled + "\n" +
+														TheMod.TYPE_COLOUR + " Three man puzzle solver: " + TheMod.VALUE_COLOUR + threeManToggled + "\n" +
+														TheMod.TYPE_COLOUR + " Oruo trivia solver: " + TheMod.VALUE_COLOUR + oruoToggled + "\n" +
+														TheMod.TYPE_COLOUR + " Blaze puzzle solver: " + TheMod.VALUE_COLOUR + blazeToggled + "\n" +
+														TheMod.TYPE_COLOUR + " Creeper puzzle solver: " + TheMod.VALUE_COLOUR + creeperToggled));
 		} else {
 			player.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "Usage: " + getCommandUsage(arg0)));
 		}

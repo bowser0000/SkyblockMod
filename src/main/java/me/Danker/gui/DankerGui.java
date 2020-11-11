@@ -8,6 +8,7 @@ import java.net.URISyntaxException;
 import me.Danker.TheMod;
 import me.Danker.commands.ToggleCommand;
 import me.Danker.handlers.ConfigHandler;
+import me.Danker.handlers.TextRenderer;
 import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
@@ -46,6 +47,7 @@ public class DankerGui extends GuiScreen {
 	private GuiButton skill50Display;
 	private GuiButton outlineText;
 	private GuiButton midasStaffMessages;
+	private GuiButton cakeTimer;
 	private GuiButton lividSolver;
 	
 	public DankerGui(int page) {
@@ -81,21 +83,24 @@ public class DankerGui extends GuiScreen {
 		dungeonTimer = new GuiButton(0, width / 2 - 100, (int) (height * 0.6), "Display Dungeon Timers: " + Utils.getColouredBoolean(ToggleCommand.dungeonTimerToggled));
 		coords = new GuiButton(0, width / 2 - 100, (int) (height * 0.7), "Coordinate/Angle Display: " + Utils.getColouredBoolean(ToggleCommand.coordsToggled));
 		// Page 2
-		gparty = new GuiButton(0, width / 2 - 100, (int) (height * 0.1), "Guild Party Notifications: " + Utils.getColouredBoolean(ToggleCommand.gpartyToggled));
-		goldenEnch = new GuiButton(0, width / 2 - 100, (int) (height * 0.2), "Golden T10/T6/T4 Enchantments: " + Utils.getColouredBoolean(ToggleCommand.goldenToggled));
-		slayerCount = new GuiButton(0, width / 2 - 100, (int) (height * 0.3), "Count Total 20% Drops: " + Utils.getColouredBoolean(ToggleCommand.slayerCountTotal));
-		chatMaddox = new GuiButton(0, width / 2 - 100, (int) (height * 0.4), "Click Chat to Open Maddox: " + Utils.getColouredBoolean(ToggleCommand.chatMaddoxToggled));
-		spiritBearAlert = new GuiButton(0, width / 2 - 100, (int) (height * 0.5), "Spirit Bear Spawn Alerts: " + Utils.getColouredBoolean(ToggleCommand.spiritBearAlerts));
+		cakeTimer = new GuiButton(0, width / 2 - 100, (int) (height * 0.1), "Cake Timer: " + Utils.getColouredBoolean(ToggleCommand.cakeTimerToggled));
+		skill50Display = new GuiButton(0, width / 2 - 100, (int) (height * 0.2), "Display Progress To Skill Level 50: " + Utils.getColouredBoolean(ToggleCommand.skill50DisplayToggled));
+		gparty = new GuiButton(0, width / 2 - 100, (int) (height * 0.3), "Guild Party Notifications: " + Utils.getColouredBoolean(ToggleCommand.gpartyToggled));
+		slayerCount = new GuiButton(0, width / 2 - 100, (int) (height * 0.4), "Count Total 20% Drops: " + Utils.getColouredBoolean(ToggleCommand.slayerCountTotal));
+		chatMaddox = new GuiButton(0, width / 2 - 100, (int) (height * 0.5), "Click Chat to Open Maddox: " + Utils.getColouredBoolean(ToggleCommand.chatMaddoxToggled));
 		aotd = new GuiButton(0, width / 2 - 100, (int) (height * 0.6), "Disable AOTD Ability: " + Utils.getColouredBoolean(ToggleCommand.aotdToggled));
 		lividDagger = new GuiButton(0, width / 2 - 100, (int) (height * 0.7), "Disable Livid Dagger Ability: " + Utils.getColouredBoolean(ToggleCommand.lividDaggerToggled));
 		// Page 3
-		sceptreMessages = new GuiButton(0, width / 2 - 100, (int) (height * 0.1), "Spirit Sceptre Messages: " + Utils.getColouredBoolean(ToggleCommand.sceptreMessages));
-		midasStaffMessages = new GuiButton(0, width / 2 - 100, (int) (height * 0.2), "Midas Staff Messages: " + Utils.getColouredBoolean(ToggleCommand.midasStaffMessages));
-		petColours = new GuiButton(0, width / 2 - 100, (int) (height * 0.3), "Colour Pet Backgrounds: " + Utils.getColouredBoolean(ToggleCommand.petColoursToggled));
-		golemAlerts = new GuiButton(0, width / 2 - 100, (int) (height * 0.4), "Alert When Golem Spawns: " + Utils.getColouredBoolean(ToggleCommand.golemAlertToggled));
-		expertiseLore = new GuiButton(0, width / 2 - 100, (int) (height * 0.5), "Expertise Kills In Lore: " + Utils.getColouredBoolean(ToggleCommand.expertiseLoreToggled));
-		skill50Display = new GuiButton(0, width / 2 - 100, (int) (height * 0.6), "Display Progress To Skill Level 50: " + Utils.getColouredBoolean(ToggleCommand.skill50DisplayToggled));
+		spiritBearAlert = new GuiButton(0, width / 2 - 100, (int) (height * 0.1), "Spirit Bear Spawn Alerts: " + Utils.getColouredBoolean(ToggleCommand.spiritBearAlerts));
+		sceptreMessages = new GuiButton(0, width / 2 - 100, (int) (height * 0.2), "Spirit Sceptre Messages: " + Utils.getColouredBoolean(ToggleCommand.sceptreMessages));
+		midasStaffMessages = new GuiButton(0, width / 2 - 100, (int) (height * 0.3), "Midas Staff Messages: " + Utils.getColouredBoolean(ToggleCommand.midasStaffMessages));
+		goldenEnch = new GuiButton(0, width / 2 - 100, (int) (height * 0.4), "Golden T10/T6/T4 Enchantments: " + Utils.getColouredBoolean(ToggleCommand.goldenToggled));
+		petColours = new GuiButton(0, width / 2 - 100, (int) (height * 0.5), "Colour Pet Backgrounds: " + Utils.getColouredBoolean(ToggleCommand.petColoursToggled));
+		expertiseLore = new GuiButton(0, width / 2 - 100, (int) (height * 0.6), "Expertise Kills In Lore: " + Utils.getColouredBoolean(ToggleCommand.expertiseLoreToggled));
 		lividSolver = new GuiButton(0, width / 2 - 100, (int) (height * 0.7), "Find Correct Livid: " + Utils.getColouredBoolean(ToggleCommand.lividSolverToggled));
+		// Page 4
+		golemAlerts = new GuiButton(0, width / 2 - 100, (int) (height * 0.1), "Alert When Golem Spawns: " + Utils.getColouredBoolean(ToggleCommand.golemAlertToggled));
+		rngesusAlert = new GuiButton(0, width / 2 - 100, (int) (height * 0.2), "RNGesus Alerts: " + Utils.getColouredBoolean(ToggleCommand.rngesusAlerts));
 		
 		if (page == 1) {
 			this.buttonList.add(changeDisplay);
@@ -107,25 +112,31 @@ public class DankerGui extends GuiScreen {
 			this.buttonList.add(coords);
 			this.buttonList.add(nextPage);
 		} else if (page == 2) {
+			this.buttonList.add(cakeTimer);
+			this.buttonList.add(skill50Display);
 			this.buttonList.add(gparty);
-			this.buttonList.add(goldenEnch);
 			this.buttonList.add(slayerCount);
 			this.buttonList.add(chatMaddox);
-			this.buttonList.add(spiritBearAlert);
 			this.buttonList.add(aotd);
 			this.buttonList.add(lividDagger);
 			this.buttonList.add(nextPage);
 			this.buttonList.add(backPage);
 		} else if (page == 3) {
+			this.buttonList.add(spiritBearAlert);
 			this.buttonList.add(sceptreMessages);
 			this.buttonList.add(midasStaffMessages);
+			this.buttonList.add(goldenEnch);
 			this.buttonList.add(petColours);
-			this.buttonList.add(golemAlerts);
 			this.buttonList.add(expertiseLore);
-			this.buttonList.add(skill50Display);
 			this.buttonList.add(lividSolver);
+			this.buttonList.add(nextPage);
+			this.buttonList.add(backPage);
+		} else if (page == 4) {
+			this.buttonList.add(golemAlerts);
+			this.buttonList.add(rngesusAlert);
 			this.buttonList.add(backPage);
 		}
+		
 		this.buttonList.add(githubLink);
 		this.buttonList.add(discordLink);
 		this.buttonList.add(closeGUI);
@@ -134,6 +145,9 @@ public class DankerGui extends GuiScreen {
 	@Override
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
 		this.drawDefaultBackground();
+		String pageText = "Page: " + page + "/4";
+		int pageWidth = mc.fontRendererObj.getStringWidth(pageText);
+		new TextRenderer(mc, pageText, width / 2 - pageWidth / 2, 10, 1D);
 		super.drawScreen(mouseX, mouseY, partialTicks);
 	}
 	
@@ -235,6 +249,14 @@ public class DankerGui extends GuiScreen {
 			ToggleCommand.lividSolverToggled = !ToggleCommand.lividSolverToggled;
 			ConfigHandler.writeBooleanConfig("toggles", "LividSolver", ToggleCommand.lividSolverToggled);
 			lividSolver.displayString = "Find Correct Livid: " + Utils.getColouredBoolean(ToggleCommand.lividSolverToggled);
+		} else if (button == rngesusAlert) {
+			ToggleCommand.rngesusAlerts = !ToggleCommand.rngesusAlerts;
+			ConfigHandler.writeBooleanConfig("toggles", "RNGesusAlerts", ToggleCommand.rngesusAlerts);
+			rngesusAlert.displayString = "RNGesus Alerts: " + Utils.getColouredBoolean(ToggleCommand.rngesusAlerts);
+		} else if (button == cakeTimer) {
+			ToggleCommand.cakeTimerToggled = !ToggleCommand.cakeTimerToggled;
+			ConfigHandler.writeBooleanConfig("toggles", "CakeTimer", ToggleCommand.cakeTimerToggled);
+			cakeTimer.displayString = "Cake Timer: " + Utils.getColouredBoolean(ToggleCommand.cakeTimerToggled);
 		}
 	}
 	

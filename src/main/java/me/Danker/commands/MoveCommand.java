@@ -19,6 +19,7 @@ public class MoveCommand extends CommandBase {
 	public static int[] dungeonTimerXY = {0, 0};
 	public static int[] skill50XY = {0, 0};
 	public static int[] lividHpXY = {0, 0};
+	public static int[] cakeTimerXY = {0, 0};
 	
 	@Override
 	public String getCommandName() {
@@ -27,7 +28,7 @@ public class MoveCommand extends CommandBase {
 
 	@Override
 	public String getCommandUsage(ICommandSender arg0) {
-		return "/" + getCommandName() + " <coords/display/dungeontimer/skill50/lividhp> <x> <y>";
+		return "/" + getCommandName() + " <coords/display/dungeontimer/skill50/lividhp/caketimer> <x> <y>";
 	}
 	
 	@Override
@@ -38,7 +39,7 @@ public class MoveCommand extends CommandBase {
 	@Override
 	public List<String> addTabCompletionOptions(ICommandSender sender, String[] args, BlockPos pos) {
 		if (args.length == 1) {
-			return getListOfStringsMatchingLastWord(args, "coords", "display", "dungeontimer", "skill50", "lividhp");
+			return getListOfStringsMatchingLastWord(args, "coords", "display", "dungeontimer", "skill50", "lividhp", "caketimer");
 		}
 		return null;
 	}
@@ -83,6 +84,11 @@ public class MoveCommand extends CommandBase {
 			cf.writeIntConfig("locations", "lividHpX", lividHpXY[0]);
 			cf.writeIntConfig("locations", "lividHpY", lividHpXY[1]);
 			player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Livid HP has been moved to " + TheMod.SECONDARY_COLOUR + arg1[1] + ", " + arg1[2]));
+		} else if (arg1[0].equalsIgnoreCase("caketimer")) { 
+			cakeTimerXY[0] = Integer.parseInt(arg1[1]);
+			cakeTimerXY[1] = Integer.parseInt(arg1[2]);
+			cf.writeIntConfig("locations", "cakeTimerX", cakeTimerXY[0]);
+			cf.writeIntConfig("locations", "cakeTimerY", cakeTimerXY[1]);
 		} else {
 			player.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "Usage: " + getCommandUsage(arg0)));
 		}

@@ -19,6 +19,7 @@ public class ScaleCommand extends CommandBase {
 	public static double dungeonTimerScale;
 	public static double skill50Scale;
 	public static double lividHpScale;
+	public static double cakeTimerScale;
 	
 	@Override
 	public String getCommandName() {
@@ -27,7 +28,7 @@ public class ScaleCommand extends CommandBase {
 
 	@Override
 	public String getCommandUsage(ICommandSender arg0) {
-		return "/" + getCommandName() + " <coords/display/dungeontimer/skill50/lividhp> <size (0.1 - 10)>";
+		return "/" + getCommandName() + " <coords/display/dungeontimer/skill50/lividhp/caketimer> <size (0.1 - 10)>";
 	}
 	
 	@Override
@@ -38,7 +39,7 @@ public class ScaleCommand extends CommandBase {
 	@Override
 	public List<String> addTabCompletionOptions(ICommandSender sender, String[] args, BlockPos pos) {
 		if (args.length == 1) {
-			return getListOfStringsMatchingLastWord(args, "coords", "display", "dungeontimer", "skill50", "lividhp");
+			return getListOfStringsMatchingLastWord(args, "coords", "display", "dungeontimer", "skill50", "lividhp", "caketimer");
 		}
 		return null;
 	}
@@ -78,6 +79,10 @@ public class ScaleCommand extends CommandBase {
 			lividHpScale = scaleAmount;
 			ConfigHandler.writeDoubleConfig("scales", "lividHpScale", lividHpScale);
 			player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Livid HP has been scaled to " + TheMod.SECONDARY_COLOUR + lividHpScale + "x"));
+		} else if (arg1[0].equalsIgnoreCase("caketimer")) { 
+			cakeTimerScale = scaleAmount;
+			ConfigHandler.writeDoubleConfig("scales", "cakeTimerScale", cakeTimerScale);
+			player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Cake timer has been scaled to " + TheMod.SECONDARY_COLOUR + cakeTimerScale + "x"));
 		} else {
 			player.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "Usage: " + getCommandUsage(arg0)));
 		}
