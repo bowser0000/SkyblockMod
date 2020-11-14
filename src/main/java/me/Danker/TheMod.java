@@ -398,6 +398,22 @@ public class TheMod
         
     	if (message.contains(":")) return;
     	
+		// Spirit Sceptre
+		if (!tc.sceptreMessages && message.contains("Your Spirit Sceptre hit ")) {
+			event.setCanceled(true);
+			return;
+		}
+		// Midas Staff
+		if (!tc.midasStaffMessages && message.contains("Your Molten Wave hit ")) {
+			event.setCanceled(true);
+			return;
+		}
+		// Heals
+		if (!tc.healMessages && message.contains(" health!") && (message.contains("You healed ") || message.contains(" healed you for "))) {
+			event.setCanceled(true);
+			return;
+		}
+    	
         if (ToggleCommand.oruoToggled && Utils.inDungeons) {
         	// Don't set every answer to wrong with this question
         	if (message.contains("What SkyBlock year is it?")) triviaAnswers = null;
@@ -996,15 +1012,6 @@ public class TheMod
 		// Spirit Bear alerts
 		if (tc.spiritBearAlerts && message.contains("The Spirit Bear has appeared!")) {
 			Utils.createTitle(EnumChatFormatting.DARK_PURPLE + "SPIRIT BEAR", 2);
-		}
-		
-		// Spirit Sceptre
-		if (!tc.sceptreMessages && message.contains("Your Spirit Sceptre hit ")) {
-			event.setCanceled(true);
-		}
-		// Midas Staff
-		if (!tc.midasStaffMessages && message.contains("Your Molten Wave hit ")) {
-			event.setCanceled(true);
 		}
     }
     

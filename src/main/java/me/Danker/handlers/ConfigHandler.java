@@ -191,6 +191,7 @@ public class ConfigHandler {
 		if (!hasKey("toggles", "Skill50Display")) writeBooleanConfig("toggles", "Skill50Display", false);
 		if (!hasKey("toggles", "OutlineText")) writeBooleanConfig("toggles", "OutlineText", false);
 		if (!hasKey("toggles", "MidasStaffMessages")) writeBooleanConfig("toggles", "MidasStaffMessages", true);
+		if (!hasKey("toggles", "HealMessages")) writeBooleanConfig("toggles", "HealMessages", true);
 		if (!hasKey("toggles", "CakeTimer")) writeBooleanConfig("toggles", "CakeTimer", false);
 		if (!hasKey("toggles", "LividSolver")) writeBooleanConfig("toggles", "LividSolver", false);
 		// Puzzle Solvers
@@ -391,6 +392,7 @@ public class ConfigHandler {
 		tf.skill50DisplayToggled = getBoolean("toggles", "Skill50Display");
 		tf.outlineTextToggled = getBoolean("toggles", "OutlineText");
 		tf.midasStaffMessages = getBoolean("toggles", "MidasStaffMessages");
+		tf.healMessages = getBoolean("toggles", "HealMessages");
 		tf.cakeTimerToggled = getBoolean("toggles", "CakeTimer");
 		tf.lividSolverToggled = getBoolean("toggles", "LividSolver");
 		// Puzzle Solvers

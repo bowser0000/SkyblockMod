@@ -47,6 +47,7 @@ public class DankerGui extends GuiScreen {
 	private GuiButton skill50Display;
 	private GuiButton outlineText;
 	private GuiButton midasStaffMessages;
+	private GuiButton healMessages;
 	private GuiButton cakeTimer;
 	private GuiButton lividSolver;
 	
@@ -94,13 +95,14 @@ public class DankerGui extends GuiScreen {
 		spiritBearAlert = new GuiButton(0, width / 2 - 100, (int) (height * 0.1), "Spirit Bear Spawn Alerts: " + Utils.getColouredBoolean(ToggleCommand.spiritBearAlerts));
 		sceptreMessages = new GuiButton(0, width / 2 - 100, (int) (height * 0.2), "Spirit Sceptre Messages: " + Utils.getColouredBoolean(ToggleCommand.sceptreMessages));
 		midasStaffMessages = new GuiButton(0, width / 2 - 100, (int) (height * 0.3), "Midas Staff Messages: " + Utils.getColouredBoolean(ToggleCommand.midasStaffMessages));
-		goldenEnch = new GuiButton(0, width / 2 - 100, (int) (height * 0.4), "Golden T10/T6/T4 Enchantments: " + Utils.getColouredBoolean(ToggleCommand.goldenToggled));
-		petColours = new GuiButton(0, width / 2 - 100, (int) (height * 0.5), "Colour Pet Backgrounds: " + Utils.getColouredBoolean(ToggleCommand.petColoursToggled));
-		expertiseLore = new GuiButton(0, width / 2 - 100, (int) (height * 0.6), "Expertise Kills In Lore: " + Utils.getColouredBoolean(ToggleCommand.expertiseLoreToggled));
-		lividSolver = new GuiButton(0, width / 2 - 100, (int) (height * 0.7), "Find Correct Livid: " + Utils.getColouredBoolean(ToggleCommand.lividSolverToggled));
+		healMessages = new GuiButton(0, width / 2 - 100, (int) (height * 0.4), "Heal Messages: " + Utils.getColouredBoolean(ToggleCommand.healMessages));
+		goldenEnch = new GuiButton(0, width / 2 - 100, (int) (height * 0.5), "Golden T10/T6/T4 Enchantments: " + Utils.getColouredBoolean(ToggleCommand.goldenToggled));
+		petColours = new GuiButton(0, width / 2 - 100, (int) (height * 0.6), "Colour Pet Backgrounds: " + Utils.getColouredBoolean(ToggleCommand.petColoursToggled));
+		expertiseLore = new GuiButton(0, width / 2 - 100, (int) (height * 0.7), "Expertise Kills In Lore: " + Utils.getColouredBoolean(ToggleCommand.expertiseLoreToggled));
 		// Page 4
-		golemAlerts = new GuiButton(0, width / 2 - 100, (int) (height * 0.1), "Alert When Golem Spawns: " + Utils.getColouredBoolean(ToggleCommand.golemAlertToggled));
-		rngesusAlert = new GuiButton(0, width / 2 - 100, (int) (height * 0.2), "RNGesus Alerts: " + Utils.getColouredBoolean(ToggleCommand.rngesusAlerts));
+		lividSolver = new GuiButton(0, width / 2 - 100, (int) (height * 0.1), "Find Correct Livid: " + Utils.getColouredBoolean(ToggleCommand.lividSolverToggled));
+		golemAlerts = new GuiButton(0, width / 2 - 100, (int) (height * 0.2), "Alert When Golem Spawns: " + Utils.getColouredBoolean(ToggleCommand.golemAlertToggled));
+		rngesusAlert = new GuiButton(0, width / 2 - 100, (int) (height * 0.3), "RNGesus Alerts: " + Utils.getColouredBoolean(ToggleCommand.rngesusAlerts));
 		
 		if (page == 1) {
 			this.buttonList.add(changeDisplay);
@@ -125,13 +127,14 @@ public class DankerGui extends GuiScreen {
 			this.buttonList.add(spiritBearAlert);
 			this.buttonList.add(sceptreMessages);
 			this.buttonList.add(midasStaffMessages);
+			this.buttonList.add(healMessages);
 			this.buttonList.add(goldenEnch);
 			this.buttonList.add(petColours);
 			this.buttonList.add(expertiseLore);
-			this.buttonList.add(lividSolver);
 			this.buttonList.add(nextPage);
 			this.buttonList.add(backPage);
 		} else if (page == 4) {
+			this.buttonList.add(lividSolver);
 			this.buttonList.add(golemAlerts);
 			this.buttonList.add(rngesusAlert);
 			this.buttonList.add(backPage);
@@ -257,6 +260,10 @@ public class DankerGui extends GuiScreen {
 			ToggleCommand.cakeTimerToggled = !ToggleCommand.cakeTimerToggled;
 			ConfigHandler.writeBooleanConfig("toggles", "CakeTimer", ToggleCommand.cakeTimerToggled);
 			cakeTimer.displayString = "Cake Timer: " + Utils.getColouredBoolean(ToggleCommand.cakeTimerToggled);
+		} else if (button == healMessages) {
+			ToggleCommand.healMessages = !ToggleCommand.healMessages;
+			ConfigHandler.writeBooleanConfig("toggles", "HealMessages", ToggleCommand.healMessages);
+			healMessages.displayString = "Heal Messages: " + Utils.getColouredBoolean(ToggleCommand.healMessages);
 		}
 	}
 	
