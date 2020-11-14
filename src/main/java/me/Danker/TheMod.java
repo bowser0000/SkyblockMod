@@ -131,7 +131,8 @@ public class TheMod
     static String[] riddleSolutions = {"The reward is not in my chest!", "At least one of them is lying, and the reward is not in", 
     								   "My chest doesn't have the reward. We are all telling the truth", "My chest has the reward and I'm telling the truth",
     								   "The reward isn't in any of our chests", "Both of them are telling the truth."};
-    static Map<String, String> triviaSolutions = new HashMap<String, String>();
+    static Map<String, String[]> triviaSolutions = new HashMap<String, String[]>();
+    static String[] triviaAnswers = null;
 	static Entity highestBlaze = null;
 	static Entity lowestBlaze = null;
 	// Among Us colours
@@ -208,40 +209,40 @@ public class TheMod
 		t6Enchants.put("9Thunderlord VI", "6Thunderlord VI");
 		t6Enchants.put("9Vampirism VI", "6Vampirism VI");
 		
-		triviaSolutions.put("What is the status of The Watcher?", "Stalker");
-		triviaSolutions.put("What is the status of Bonzo?", "New Necromancer");
-		triviaSolutions.put("What is the status of Scarf?", "Apprentice Necromancer");
-		triviaSolutions.put("What is the status of The Professor?", "Professor");
-		triviaSolutions.put("What is the status of Thorn?", "Shaman Necromancer");
-		triviaSolutions.put("What is the status of Livid?", "Master Necromancer");
-		triviaSolutions.put("What is the status of Sadan?", "Necromancer Lord");
-		triviaSolutions.put("What is the status of Maxor?", "Young Wither");
-		triviaSolutions.put("What is the status of Goldor?", "Wither Soldier");
-		triviaSolutions.put("What is the status of Storm?", "Elementalist");
-		triviaSolutions.put("What is the status of Necron?", "Wither Lord");
-		triviaSolutions.put("How many total Fairy Souls are there?", "209 Fairy Souls");
-		triviaSolutions.put("How many Fairy Souls are there in Spider's Den?", "17 Fairy Souls");
-		triviaSolutions.put("How many Fairy Souls are there in The End?", "12 Fairy Souls");
-		triviaSolutions.put("How many Fairy Souls are there in The Barn?", "7 Fairy Souls");
-		triviaSolutions.put("How many Fairy Souls are there in Mushroom Desert?", "8 Fairy Souls");
-		triviaSolutions.put("How many Fairy Souls are there in Blazing Fortress?", "19 Fairy Souls");
-		triviaSolutions.put("How many Fairy Souls are there in The Park?", "11 Fairy Souls");
-		triviaSolutions.put("How many Fairy Souls are there in Jerry's Workshop?", "5 Fairy Souls");
-		triviaSolutions.put("How many Fairy Souls are there in Hub?", "79 Fairy Souls");
-		triviaSolutions.put("How many Fairy Souls are there in The Hub?", "79 Fairy Souls");
-		triviaSolutions.put("How many Fairy Souls are there in Deep Caverns?", "21 Fairy Souls");
-		triviaSolutions.put("How many Fairy Souls are there in Gold Mine?", "12 Fairy Souls");
-		triviaSolutions.put("How many Fairy Souls are there in Dungeon Hub?", "7 Fairy Souls");
-		triviaSolutions.put("Which brother is on the Spider's Den?", "Rick");
-		triviaSolutions.put("What is the name of Rick's brother?", "Pat");
-		triviaSolutions.put("What is the name of the Painter in the Hub?", "Marco");
-		triviaSolutions.put("What is the name of the person that upgrades pets?", "Kat");
-		triviaSolutions.put("What is the name of the lady of the Nether?", "Elle");
-		triviaSolutions.put("Which villager in the Village gives you a Rogue Sword?", "Jamie");
-		triviaSolutions.put("How many unique minions are there?", "52 Minions");
-		triviaSolutions.put("Which of these enemies does not spawn in the Spider's Den?", "Zombie Spider OR Cave Spider OR Broodfather OR Wither Skeleton OR Dashing Spooder");
-		triviaSolutions.put("Which of these monsters only spawns at night?", "Zombie Villager OR Ghast");
-		triviaSolutions.put("Which of these is not a dragon in The End?", "Zoomer Dragon OR Weak Dragon OR Stonk Dragon OR Holy Dragon OR Boomer Dragon");
+		triviaSolutions.put("What is the status of The Watcher?", new String[]{"Stalker"});
+		triviaSolutions.put("What is the status of Bonzo?", new String[]{"New Necromancer"});
+		triviaSolutions.put("What is the status of Scarf?", new String[]{"Apprentice Necromancer"});
+		triviaSolutions.put("What is the status of The Professor?", new String[]{"Professor"});
+		triviaSolutions.put("What is the status of Thorn?", new String[]{"Shaman Necromancer"});
+		triviaSolutions.put("What is the status of Livid?", new String[]{"Master Necromancer"});
+		triviaSolutions.put("What is the status of Sadan?", new String[]{"Necromancer Lord"});
+		triviaSolutions.put("What is the status of Maxor?", new String[]{"Young Wither"});
+		triviaSolutions.put("What is the status of Goldor?", new String[]{"Wither Soldier"});
+		triviaSolutions.put("What is the status of Storm?", new String[]{"Elementalist"});
+		triviaSolutions.put("What is the status of Necron?", new String[]{"Wither Lord"});
+		triviaSolutions.put("How many total Fairy Souls are there?", new String[]{"209 Fairy Souls"});
+		triviaSolutions.put("How many Fairy Souls are there in Spider's Den?", new String[]{"17 Fairy Souls"});
+		triviaSolutions.put("How many Fairy Souls are there in The End?", new String[]{"12 Fairy Souls"});
+		triviaSolutions.put("How many Fairy Souls are there in The Barn?", new String[]{"7 Fairy Souls"});
+		triviaSolutions.put("How many Fairy Souls are there in Mushroom Desert?", new String[]{"8 Fairy Souls"});
+		triviaSolutions.put("How many Fairy Souls are there in Blazing Fortress?", new String[]{"19 Fairy Souls"});
+		triviaSolutions.put("How many Fairy Souls are there in The Park?", new String[]{"11 Fairy Souls"});
+		triviaSolutions.put("How many Fairy Souls are there in Jerry's Workshop?", new String[]{"5 Fairy Souls"});
+		triviaSolutions.put("How many Fairy Souls are there in Hub?", new String[]{"79 Fairy Souls"});
+		triviaSolutions.put("How many Fairy Souls are there in The Hub?", new String[]{"79 Fairy Souls"});
+		triviaSolutions.put("How many Fairy Souls are there in Deep Caverns?", new String[]{"21 Fairy Souls"});
+		triviaSolutions.put("How many Fairy Souls are there in Gold Mine?", new String[]{"12 Fairy Souls"});
+		triviaSolutions.put("How many Fairy Souls are there in Dungeon Hub?", new String[]{"7 Fairy Souls"});
+		triviaSolutions.put("Which brother is on the Spider's Den?", new String[]{"Rick"});
+		triviaSolutions.put("What is the name of Rick's brother?", new String[]{"Pat"});
+		triviaSolutions.put("What is the name of the Painter in the Hub?", new String[]{"Marco"});
+		triviaSolutions.put("What is the name of the person that upgrades pets?", new String[]{"Kat"});
+		triviaSolutions.put("What is the name of the lady of the Nether?", new String[]{"Elle"});
+		triviaSolutions.put("Which villager in the Village gives you a Rogue Sword?", new String[]{"Jamie"});
+		triviaSolutions.put("How many unique minions are there?", new String[]{"52 Minions"});
+		triviaSolutions.put("Which of these enemies does not spawn in the Spider's Den?", new String[]{"Zombie Spider", "Cave Spider", "Wither Skeleton", "Dashing Spooder", "Broodfather", "Night Spider"});
+		triviaSolutions.put("Which of these monsters only spawns at night?", new String[]{"Zombie Villager", "Ghast"});
+		triviaSolutions.put("Which of these is not a dragon in The End?", new String[]{"Zoomer Dragon", "Weak Dragon", "Stonk Dragon", "Holy Dragon", "Boomer Dragon", "Booger Dragon", "Older Dragon"});
 		
 		String patternString = "(" + String.join("|", t6Enchants.keySet()) + ")";
 		pattern = Pattern.compile(patternString);
@@ -331,7 +332,7 @@ public class TheMod
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void onChat(ClientChatReceivedEvent event) {
     	final ToggleCommand tc = new ToggleCommand();
-    	String message = event.message.getUnformattedText();
+    	String message = StringUtils.stripControlCodes(event.message.getUnformattedText());
     	
     	if (!Utils.inSkyblock) return;
     	
@@ -383,7 +384,7 @@ public class TheMod
         		if (message.contains(solution)) {
         			String npcName = message.substring(message.indexOf("]") + 2, message.indexOf(":"));
         			Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(ANSWER_COLOUR + EnumChatFormatting.BOLD + StringUtils.stripControlCodes(npcName) + MAIN_COLOUR + " has the blessing."));
-        			return;
+        			break;
         		}
         	}
         }
@@ -398,10 +399,29 @@ public class TheMod
     	if (message.contains(":")) return;
     	
         if (ToggleCommand.oruoToggled && Utils.inDungeons) {
+        	// Don't set every answer to wrong with this question
+        	if (message.contains("What SkyBlock year is it?")) triviaAnswers = null;
+        	
         	for (String question : triviaSolutions.keySet()) {
         		if (message.contains(question)) {
-        			Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(MAIN_COLOUR + "Answer: " + ANSWER_COLOUR + EnumChatFormatting.BOLD + triviaSolutions.get(question)));
+        			triviaAnswers = triviaSolutions.get(question);
+        			String answer = String.join(" OR ", triviaSolutions.get(question));
+        			Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(MAIN_COLOUR + "Answer: " + ANSWER_COLOUR + EnumChatFormatting.BOLD + answer));
         			break;
+        		}
+        	}
+        	
+        	// Set wrong answers to red and remove click events
+        	if (triviaAnswers != null && (message.contains("ⓐ") || message.contains("ⓑ") || message.contains("ⓒ"))) {
+        		boolean isSolution = false;
+        		for (String solution : triviaAnswers) {
+        			if (message.contains(solution)) isSolution = true;
+        		}
+        		if (!isSolution) {
+        			char letter = message.charAt(5);
+        			String option = message.substring(6, message.length());
+        			event.message = new ChatComponentText("     " + EnumChatFormatting.GOLD + letter + EnumChatFormatting.RED + option);
+        			return;
         		}
         	}
         }
@@ -1045,7 +1065,7 @@ public class TheMod
     		new TextRenderer(mc, livid.getName().replace("" + EnumChatFormatting.BOLD, ""), moc.lividHpXY[0], moc.lividHpXY[1], ScaleCommand.lividHpScale);
     	}
     	
-    	if (tc.cakeTimerToggled) {
+    	if (tc.cakeTimerToggled && Utils.inSkyblock) {
     		double scale = ScaleCommand.cakeTimerScale;
     		double scaleReset = (double) Math.pow(scale, -1);
     		GL11.glScaled(scale, scale, scale);
@@ -2029,7 +2049,7 @@ public class TheMod
     				if (entity.getName().contains("Blaze") && entity.getName().contains("/")) {
     					String blazeName = StringUtils.stripControlCodes(entity.getName());
     					try {
-    						int health = Integer.parseInt(blazeName.substring(blazeName.indexOf("/") + 1, blazeName.length() - 2));
+    						int health = Integer.parseInt(blazeName.substring(blazeName.indexOf("/") + 1, blazeName.length() - 1));
     						if (health > highestHealth) {
     							highestHealth = health;
     							highestBlaze = entity;
