@@ -78,6 +78,7 @@ import net.minecraft.util.IChatComponent;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StringUtils;
 import net.minecraft.util.Vec3;
+import net.minecraft.world.World;
 import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.client.event.GuiScreenEvent;
@@ -136,10 +137,12 @@ public class TheMod
 	static Entity highestBlaze = null;
 	static Entity lowestBlaze = null;
 	// Among Us colours
-	static int[] creeperLineColours = {0x50EF39, 0xC51111, 0x132ED1, 0x117F2D, 0xED54BA, 0xEF7D0D, 0xF5F557, 0xD6E0F0, 0x6B2FBB, 0x39FEDC};
+	static final int[] CREEPER_COLOURS = {0x50EF39, 0xC51111, 0x132ED1, 0x117F2D, 0xED54BA, 0xEF7D0D, 0xF5F557, 0xD6E0F0, 0x6B2FBB, 0x39FEDC};
 	static boolean drawCreeperLines = false;
 	static Vec3 creeperLocation = new Vec3(0, 0, 0);
 	static List<Vec3[]> creeperLines = new ArrayList<Vec3[]>();
+	static boolean prevInWaterRoom = false;
+	static boolean inWaterRoom = false;
 	static boolean foundLivid = false;
 	static Entity livid = null;
 	public static double cakeTime;
@@ -242,7 +245,7 @@ public class TheMod
 		triviaSolutions.put("How many unique minions are there?", new String[]{"52 Minions"});
 		triviaSolutions.put("Which of these enemies does not spawn in the Spider's Den?", new String[]{"Zombie Spider", "Cave Spider", "Wither Skeleton", "Dashing Spooder", "Broodfather", "Night Spider"});
 		triviaSolutions.put("Which of these monsters only spawns at night?", new String[]{"Zombie Villager", "Ghast"});
-		triviaSolutions.put("Which of these is not a dragon in The End?", new String[]{"Zoomer Dragon", "Weak Dragon", "Stonk Dragon", "Holy Dragon", "Boomer Dragon", "Booger Dragon", "Older Dragon"});
+		triviaSolutions.put("Which of these is not a dragon in The End?", new String[]{"Zoomer Dragon", "Weak Dragon", "Stonk Dragon", "Holy Dragon", "Boomer Dragon", "Booger Dragon", "Older Dragon", "Elder Dragon"});
 		
 		String patternString = "(" + String.join("|", t6Enchants.keySet()) + ")";
 		pattern = Pattern.compile(patternString);
@@ -1930,6 +1933,7 @@ public class TheMod
     @SubscribeEvent
     public void onTick(TickEvent.ClientTickEvent event) {
 		Minecraft mc = Minecraft.getMinecraft();
+		World world = mc.theWorld;
 		EntityPlayerSP player = mc.thePlayer;
 		
     	// Checks every second
@@ -1940,7 +1944,7 @@ public class TheMod
         		Utils.checkForDungeons();
     		}
     		
-    		if (DisplayCommand.auto && mc != null && mc.theWorld != null) {
+    		if (DisplayCommand.auto && mc != null && world != null) {
     			List<String> scoreboard = ScoreboardHandler.getSidebarLines();
     			boolean found = false;
     			for (String s : scoreboard) {
@@ -1975,13 +1979,13 @@ public class TheMod
     			ConfigHandler.writeStringConfig("misc", "display", DisplayCommand.display);
     		}
     		
-    		if (ToggleCommand.creeperToggled && Utils.inDungeons && mc.theWorld != null) {
+    		if (ToggleCommand.creeperToggled && Utils.inDungeons && world != null) {
     	    	double x = player.posX;
     	    	double y = player.posY;
     	    	double z = player.posZ;
     			// Find creepers nearby
     			AxisAlignedBB creeperScan = new AxisAlignedBB(x - 14, y - 8, z - 13, x + 14, y + 8, z + 13); // 28x16x26 cube
-    			List<EntityCreeper> creepers = mc.theWorld.getEntitiesWithinAABB(EntityCreeper.class, creeperScan);
+    			List<EntityCreeper> creepers = world.getEntitiesWithinAABB(EntityCreeper.class, creeperScan);
     			// Check if creeper is nearby
     			if (creepers.size() > 0) {
     				EntityCreeper creeper = creepers.get(0);
@@ -1994,7 +1998,7 @@ public class TheMod
     				BlockPos point2 = new BlockPos(creeper.posX + 14, creeper.posY + 10, creeper.posZ + 13);
     				Iterable<BlockPos> blocks = BlockPos.getAllInBox(point1, point2);
     				for (BlockPos blockPos : blocks) {
-    					Block block = mc.theWorld.getBlockState(blockPos).getBlock();
+    					Block block = world.getBlockState(blockPos).getBlock();
     					if (block == Blocks.sea_lantern || block == Blocks.prismarine) {
     						// Connect block to nearest block on opposite side
     						Vec3 startBlock = new Vec3(blockPos.getX() + 0.5, blockPos.getY() + 0.5, blockPos.getZ() + 0.5);
@@ -2012,7 +2016,112 @@ public class TheMod
     			}
     		}
     		
-    		if (ToggleCommand.lividSolverToggled && Utils.inDungeons && !foundLivid && mc.theWorld != null) {
+    		if (ToggleCommand.waterToggled && Utils.inDungeons && world != null) {
+    			// multi thread block checking
+    			new Thread(() -> {
+    				prevInWaterRoom = inWaterRoom;
+    				inWaterRoom = false;
+    				boolean done = false;
+    				for (int x = (int) (player.posX - 25); x < player.posX + 25; x++) {
+    					for (int z = (int) (player.posZ - 25); z < player.posZ + 25; z++) {
+    						BlockPos blockPos = new BlockPos(x, 82, z);
+    						if (world.getBlockState(blockPos).getBlock() == Blocks.piston_head) {
+    							inWaterRoom = true;
+    							if (!prevInWaterRoom && inWaterRoom) {
+        							boolean foundGold = false;
+        							boolean foundClay = false;
+        							boolean foundEmerald = false;
+        							boolean foundQuartz = false;
+        							boolean foundDiamond = false;
+        							
+        							// Detect first blocks near water stream
+        							BlockPos scan1 = new BlockPos(x + 1, 78, z + 1);
+        							BlockPos scan2 = new BlockPos(x - 1, 77, z - 1);
+        							Iterable<BlockPos> blocks = BlockPos.getAllInBox(scan1, scan2);
+        							for (BlockPos puzzleBlockPos : blocks) {
+        								Block block = world.getBlockState(puzzleBlockPos).getBlock();
+        								if (block == Blocks.gold_block) {
+        									foundGold = true;
+        								} else if (block == Blocks.hardened_clay) {
+        									foundClay = true;
+        								} else if (block == Blocks.emerald_block) {
+        									foundEmerald = true;
+        								} else if (block == Blocks.quartz_block) {
+        									foundQuartz = true;
+        								} else if (block == Blocks.diamond_block) {
+        									foundDiamond = true;
+        								}
+        							}
+        							
+        							int variant = 0;
+        							if (foundGold && foundClay) {
+        								variant = 1;
+        							} else if (foundEmerald && foundQuartz) {
+        								variant = 2;
+        							} else if (foundQuartz && foundDiamond) {
+        								variant = 3;
+        							} else if (foundGold && foundQuartz) {
+        								variant = 4;
+        							}
+        							
+        							// Return solution
+        							String purple = "";
+        							String orange = "";
+        							String blue = "";
+        							String green = "";
+        							String red = "";
+        							switch (variant) {
+    	    							case 1:
+    	    								purple = EnumChatFormatting.WHITE + "Quartz, " + EnumChatFormatting.YELLOW + "Gold, " + EnumChatFormatting.AQUA + "Diamond, " + EnumChatFormatting.RED + "Clay";
+    	    								orange = EnumChatFormatting.YELLOW + "Gold, " + EnumChatFormatting.DARK_GRAY + "Coal, " + EnumChatFormatting.GREEN + "Emerald";
+    	    								blue = EnumChatFormatting.WHITE + "Quartz, " + EnumChatFormatting.YELLOW + "Gold, " + EnumChatFormatting.GREEN + "Emerald" + EnumChatFormatting.RED + "Clay";
+    	    								green = EnumChatFormatting.GREEN + "Emerald";
+    	    								red = EnumChatFormatting.GRAY + "None";
+    	    								break;
+    	    							case 2:
+    	    								purple = EnumChatFormatting.DARK_GRAY + "Coal";
+    	    								orange = EnumChatFormatting.WHITE + "Quartz, " + EnumChatFormatting.YELLOW + "Gold, " + EnumChatFormatting.GREEN + "Emerald, " + EnumChatFormatting.RED + "Clay";
+    	    								blue = EnumChatFormatting.WHITE + "Quartz, " + EnumChatFormatting.AQUA + "Diamond, " + EnumChatFormatting.GREEN + "Emerald";
+    	    								green = EnumChatFormatting.WHITE + "Quartz, " + EnumChatFormatting.GREEN + "Emerald";
+    	    								red = EnumChatFormatting.WHITE + "Quartz, " + EnumChatFormatting.DARK_GRAY + "Coal, " + EnumChatFormatting.GREEN + "Emerald";
+    	    								break;
+    	    							case 3:
+    	    								purple = EnumChatFormatting.WHITE + "Quartz, " + EnumChatFormatting.AQUA + "Diamond";
+    	    								orange = EnumChatFormatting.YELLOW + "Gold, " + EnumChatFormatting.GREEN + "Emerald";
+    	    								blue = EnumChatFormatting.WHITE + "Quartz, " + EnumChatFormatting.YELLOW + "Gold, " + EnumChatFormatting.AQUA + "Diamond";
+    	    								green = EnumChatFormatting.YELLOW + "Gold";
+    	    								red = EnumChatFormatting.GREEN + "Emerald";
+    	    								break;
+    	    							case 4:
+    	    								purple = EnumChatFormatting.WHITE + "Quartz, " + EnumChatFormatting.YELLOW + "Gold, " + EnumChatFormatting.GREEN + "Emerald, " + EnumChatFormatting.RED + "Clay";
+    	    								orange = EnumChatFormatting.YELLOW + "Gold, " + EnumChatFormatting.DARK_GRAY + "Coal";
+    	    								blue = EnumChatFormatting.WHITE + "Quartz, " + EnumChatFormatting.YELLOW + "Gold, " + EnumChatFormatting.DARK_GRAY + "Coal, " + EnumChatFormatting.GREEN + "Emerald, " + EnumChatFormatting.RED + "Clay";
+    	    								green = EnumChatFormatting.YELLOW + "Gold, " + EnumChatFormatting.GREEN + "Emerald";
+    	    								red = EnumChatFormatting.YELLOW + "Gold, " + EnumChatFormatting.AQUA + "Diamond, " + EnumChatFormatting.GREEN + "Emerald, " + EnumChatFormatting.RED + "Clay";
+    	    								break;
+    	    							default:
+    	    								player.addChatMessage(new ChatComponentText(ERROR_COLOUR + "Error detecting water puzzle variant."));
+    	    								break;
+        							}
+        							player.addChatMessage(new ChatComponentText(DELIMITER_COLOUR + EnumChatFormatting.BOLD + "-------------------\n" +
+        																		MAIN_COLOUR + " The following levers must be down:\n " + 
+        																		EnumChatFormatting.DARK_PURPLE + "Purple: " + purple + "\n " + 
+        																		EnumChatFormatting.GOLD + "Orange: " + orange + "\n " + 
+        																		EnumChatFormatting.BLUE + "Blue: " + blue + "\n " + 
+        																		EnumChatFormatting.GREEN + "Green: " + green + "\n " + 
+        																		EnumChatFormatting.RED + "Red: " + red + "\n" +
+        																		DELIMITER_COLOUR + EnumChatFormatting.BOLD + " -------------------"));
+        							done = true;
+        							break;	
+    							}
+    						}
+    					}
+    					if (done) break;
+    				}
+    			}).start();
+    		}
+    		
+    		if (ToggleCommand.lividSolverToggled && Utils.inDungeons && !foundLivid && world != null) {
     			boolean inF5 = false;
     			
     			List<String> scoreboard = ScoreboardHandler.getSidebarLines();
@@ -2026,7 +2135,7 @@ public class TheMod
     			
     			if (inF5) {
     				List<Entity> loadedLivids = new ArrayList<Entity>();
-    				List<Entity> entities = mc.theWorld.getLoadedEntityList();
+    				List<Entity> entities = world.getLoadedEntityList();
     				for (Entity entity : entities) {
     					String name = entity.getName();
     					if (name.contains("Livid") && name.length() > 5 && name.charAt(1) == name.charAt(5) && !loadedLivids.contains(entity)) {
@@ -2045,8 +2154,8 @@ public class TheMod
     	
     	// Checks 5 times per second
     	if (tickAmount % 4 == 0) {
-    		if (ToggleCommand.blazeToggled && Utils.inDungeons && mc.theWorld != null) {
-    			List<Entity> entities = mc.theWorld.getLoadedEntityList();
+    		if (ToggleCommand.blazeToggled && Utils.inDungeons && world != null) {
+    			List<Entity> entities = world.getLoadedEntityList();
     			int highestHealth = 0;
     			highestBlaze = null;
     			int lowestHealth = 99999999;
@@ -2126,7 +2235,7 @@ public class TheMod
     	}
     	if (ToggleCommand.creeperToggled && drawCreeperLines && !creeperLines.isEmpty()) {
     		for (int i = 0; i < creeperLines.size(); i++) {
-    			Utils.draw3DLine(creeperLines.get(i)[0], creeperLines.get(i)[1], creeperLineColours[i % 10], event.partialTicks);
+    			Utils.draw3DLine(creeperLines.get(i)[0], creeperLines.get(i)[1], CREEPER_COLOURS[i % 10], event.partialTicks);
     		}
     	}
     }

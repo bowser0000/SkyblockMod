@@ -144,25 +144,25 @@ public class SkillsCommand extends CommandBase {
 					farmingLevel = achievementObject.get("skyblock_harvester").getAsInt();
 				}
 				if (achievementObject.has("skyblock_excavator")) {
-					miningLevel = achievementObject.get("skyblock_excavator").getAsInt();
+					miningLevel = Math.min(achievementObject.get("skyblock_excavator").getAsInt(), 50);
 				}
 				if (achievementObject.has("skyblock_combat")) {
-					combatLevel = achievementObject.get("skyblock_combat").getAsInt();
+					combatLevel = Math.min(achievementObject.get("skyblock_combat").getAsInt(), 50);
 				}
 				if (achievementObject.has("skyblock_gatherer")) {
-					foragingLevel = achievementObject.get("skyblock_gatherer").getAsInt();
+					foragingLevel = Math.min(achievementObject.get("skyblock_gatherer").getAsInt(), 50);
 				}
 				if (achievementObject.has("skyblock_angler")) {
-					fishingLevel = achievementObject.get("skyblock_angler").getAsInt();
+					fishingLevel = Math.min(achievementObject.get("skyblock_angler").getAsInt(), 50);
 				}
 				if (achievementObject.has("skyblock_augmentation")) {
-					enchantingLevel = achievementObject.get("skyblock_augmentation").getAsInt();
+					enchantingLevel = Math.min(achievementObject.get("skyblock_augmentation").getAsInt(), 50);
 				}
 				if (achievementObject.has("skyblock_concoctor")) {
-					alchemyLevel = achievementObject.get("skyblock_concoctor").getAsInt();
+					alchemyLevel = Math.min(achievementObject.get("skyblock_concoctor").getAsInt(), 50);
 				}
 				if (achievementObject.has("skyblock_domesticator")) {
-					tamingLevel = achievementObject.get("skyblock_domesticator").getAsInt();
+					tamingLevel = Math.min(achievementObject.get("skyblock_domesticator").getAsInt(), 50);
 				}
 			}
 

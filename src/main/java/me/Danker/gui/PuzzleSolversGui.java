@@ -16,6 +16,7 @@ public class PuzzleSolversGui extends GuiScreen {
 	private GuiButton trivia;
 	private GuiButton blaze;
 	private GuiButton creeper;
+	private GuiButton water;
 	
 	@Override
 	public boolean doesGuiPauseGame() {
@@ -34,13 +35,15 @@ public class PuzzleSolversGui extends GuiScreen {
 		riddle = new GuiButton(0, width / 2 - 100, (int) (height * 0.1), "Riddle Solver: " + Utils.getColouredBoolean(ToggleCommand.threeManToggled));
 		trivia = new GuiButton(0, width / 2 - 100, (int) (height * 0.2), "Trivia Solver: " + Utils.getColouredBoolean(ToggleCommand.oruoToggled));
 		blaze = new GuiButton(0, width / 2 - 100, (int) (height * 0.3), "Blaze Solver: " + Utils.getColouredBoolean(ToggleCommand.blazeToggled));
-		creeper = new GuiButton(0, width / 2 - 100, (int) (height * 0.4), "Creeper Solver : " + Utils.getColouredBoolean(ToggleCommand.creeperToggled));
+		creeper = new GuiButton(0, width / 2 - 100, (int) (height * 0.4), "Creeper Solver: " + Utils.getColouredBoolean(ToggleCommand.creeperToggled));
+		water = new GuiButton(0, width / 2 - 100, (int) (height * 0.5), "Water Solver: " + Utils.getColouredBoolean(ToggleCommand.waterToggled));
 		
 		this.buttonList.add(goBack);
 		this.buttonList.add(riddle);
 		this.buttonList.add(trivia);
 		this.buttonList.add(blaze);
 		this.buttonList.add(creeper);
+		this.buttonList.add(water);
 	}
 	
 	@Override
@@ -69,6 +72,10 @@ public class PuzzleSolversGui extends GuiScreen {
 			ToggleCommand.creeperToggled = !ToggleCommand.creeperToggled;
 			ConfigHandler.writeBooleanConfig("toggles", "CreeperPuzzle", ToggleCommand.creeperToggled);
 			creeper.displayString = "Creeper Solver: " + Utils.getColouredBoolean(ToggleCommand.creeperToggled);
+		} else if (button == water) {
+			ToggleCommand.waterToggled = !ToggleCommand.waterToggled;
+			ConfigHandler.writeBooleanConfig("toggles", "WaterPuzzle", ToggleCommand.waterToggled);
+			water.displayString = "Water Solver: " + Utils.getColouredBoolean(ToggleCommand.waterToggled);
 		}
 	}
 	

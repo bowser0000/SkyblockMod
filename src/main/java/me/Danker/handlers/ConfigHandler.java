@@ -199,6 +199,7 @@ public class ConfigHandler {
 		if (!hasKey("toggles", "OruoPuzzle")) writeBooleanConfig("toggles", "OruoPuzzle", false);
 		if (!hasKey("toggles", "BlazePuzzle")) writeBooleanConfig("toggles", "BlazePuzzle", false);
 		if (!hasKey("toggles", "CreeperPuzzle")) writeBooleanConfig("toggles", "CreeperPuzzle", false);
+		if (!hasKey("toggles", "WaterPuzzle")) writeBooleanConfig("toggles", "WaterPuzzle", false);
 		
 		if (!hasKey("api", "APIKey")) writeStringConfig("api", "APIKey", "");
 		
@@ -400,6 +401,7 @@ public class ConfigHandler {
 		tf.oruoToggled = getBoolean("toggles", "OruoPuzzle");
 		tf.blazeToggled = getBoolean("toggles", "BlazePuzzle");
 		tf.creeperToggled = getBoolean("toggles", "CreeperPuzzle");
+		tf.waterToggled = getBoolean("toggles", "WaterPuzzle");
 		
 		final BlockSlayerCommand bs = new BlockSlayerCommand();
 		String onlySlayer = getString("toggles", "BlockSlayer");
