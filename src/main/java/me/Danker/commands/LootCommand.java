@@ -105,6 +105,7 @@ public class LootCommand extends CommandBase {
 	public static double f1TimeSpent;
 	// F2
 	public static int scarfStudies;
+	public static int adaptiveSwords;
 	public static double f2CoinsSpent;
 	public static double f2TimeSpent;
 	// F3
@@ -112,7 +113,6 @@ public class LootCommand extends CommandBase {
 	public static int adaptiveChests;
 	public static int adaptiveLegs;
 	public static int adaptiveBoots;
-	public static int adaptiveSwords;
 	public static double f3CoinsSpent;
 	public static double f3TimeSpent;
 	// F4
@@ -131,6 +131,7 @@ public class LootCommand extends CommandBase {
 	public static int shadowAssChests;
 	public static int shadowAssLegs;
 	public static int shadowAssBoots;
+	public static int lastBreaths;
 	public static int lividDaggers;
 	public static int shadowFurys;
 	public static double f5CoinsSpent;
@@ -238,6 +239,7 @@ public class LootCommand extends CommandBase {
 	public static double f1TimeSpentSession = 0;
 	// F2
 	public static int scarfStudiesSession = 0;
+	public static int adaptiveSwordsSession = 0;
 	public static double f2CoinsSpentSession = 0;
 	public static double f2TimeSpentSession = 0;
 	// F3
@@ -245,7 +247,6 @@ public class LootCommand extends CommandBase {
 	public static int adaptiveChestsSession = 0;
 	public static int adaptiveLegsSession = 0;
 	public static int adaptiveBootsSession = 0;
-	public static int adaptiveSwordsSession = 0;
 	public static double f3CoinsSpentSession = 0;
 	public static double f3TimeSpentSession = 0;
 	// F4
@@ -264,6 +265,7 @@ public class LootCommand extends CommandBase {
 	public static int shadowAssChestsSession = 0;
 	public static int shadowAssLegsSession = 0;
 	public static int shadowAssBootsSession = 0;
+	public static int lastBreathsSession = 0;
 	public static int lividDaggersSession = 0;
 	public static int shadowFurysSession = 0;
 	public static double f5CoinsSpentSession = 0;
@@ -717,6 +719,7 @@ public class LootCommand extends CommandBase {
 																EnumChatFormatting.GOLD + "    Recombobulator 3000s: " + nf.format(recombobulatorsSession) + "\n" +
 																EnumChatFormatting.DARK_PURPLE + "    Fuming Potato Books: " + nf.format(fumingPotatoBooksSession) + "\n" +
 																EnumChatFormatting.BLUE + "    Scarf's Studies: " + nf.format(scarfStudiesSession) + "\n" +
+																EnumChatFormatting.DARK_PURPLE + "    Adaptive Blades: " + nf.format(adaptiveSwordsSession) + "\n" +
 																EnumChatFormatting.AQUA + "    Coins Spent: " + Utils.getMoneySpent(f2CoinsSpentSession) + "\n" +
 																EnumChatFormatting.AQUA + "    Time Spent: " + Utils.getTimeBetween(0, f2TimeSpentSession) + "\n" +
 																EnumChatFormatting.DARK_RED + EnumChatFormatting.BOLD + " -------------------"));
@@ -727,6 +730,7 @@ public class LootCommand extends CommandBase {
 															EnumChatFormatting.GOLD + "    Recombobulator 3000s: " + nf.format(recombobulators) + "\n" +
 															EnumChatFormatting.DARK_PURPLE + "    Fuming Potato Books: " + nf.format(fumingPotatoBooks) + "\n" +
 															EnumChatFormatting.BLUE + "    Scarf's Studies: " + nf.format(scarfStudies) + "\n" +
+															EnumChatFormatting.DARK_PURPLE + "    Adaptive Blades: " + nf.format(adaptiveSwords) + "\n" +
 															EnumChatFormatting.AQUA + "    Coins Spent: " + Utils.getMoneySpent(f2CoinsSpent) + "\n" +
 															EnumChatFormatting.AQUA + "    Time Spent: " + Utils.getTimeBetween(0, f2TimeSpent) + "\n" +
 															EnumChatFormatting.DARK_RED + EnumChatFormatting.BOLD + " -------------------"));
@@ -740,7 +744,6 @@ public class LootCommand extends CommandBase {
 																EnumChatFormatting.DARK_PURPLE + "    Adaptive Chestplates: " + nf.format(adaptiveChestsSession) + "\n" +
 																EnumChatFormatting.DARK_PURPLE + "    Adaptive Leggings: " + nf.format(adaptiveLegsSession) + "\n" +
 																EnumChatFormatting.DARK_PURPLE + "    Adaptive Boots: " + nf.format(adaptiveBootsSession) + "\n" +
-																EnumChatFormatting.DARK_PURPLE + "    Adaptive Blades: " + nf.format(adaptiveSwordsSession) + "\n" +
 																EnumChatFormatting.AQUA + "    Coins Spent: " + Utils.getMoneySpent(f3CoinsSpentSession) + "\n" +
 																EnumChatFormatting.AQUA + "    Time Spent: " + Utils.getTimeBetween(0, f3TimeSpentSession) + "\n" +
 																EnumChatFormatting.DARK_RED + EnumChatFormatting.BOLD + " -------------------"));
@@ -754,7 +757,6 @@ public class LootCommand extends CommandBase {
 															EnumChatFormatting.DARK_PURPLE + "    Adaptive Chestplates: " + nf.format(adaptiveChests) + "\n" +
 															EnumChatFormatting.DARK_PURPLE + "    Adaptive Leggings: " + nf.format(adaptiveLegs) + "\n" +
 															EnumChatFormatting.DARK_PURPLE + "    Adaptive Boots: " + nf.format(adaptiveBoots) + "\n" +
-															EnumChatFormatting.DARK_PURPLE + "    Adaptive Blades: " + nf.format(adaptiveSwords) + "\n" +
 															EnumChatFormatting.AQUA + "    Coins Spent: " + Utils.getMoneySpent(f3CoinsSpent) + "\n" +
 															EnumChatFormatting.AQUA + "    Time Spent: " + Utils.getTimeBetween(0, f3TimeSpent) + "\n" +
 															EnumChatFormatting.DARK_RED + EnumChatFormatting.BOLD + " -------------------"));
@@ -801,6 +803,7 @@ public class LootCommand extends CommandBase {
 																EnumChatFormatting.DARK_PURPLE + "    Shadow Assassin Chests: " + nf.format(shadowAssChestsSession) + "\n" +
 																EnumChatFormatting.DARK_PURPLE + "    Shadow Assassin Legs: " + nf.format(shadowAssLegsSession) + "\n" +
 																EnumChatFormatting.DARK_PURPLE + "    Shadow Assassin Boots: " + nf.format(shadowAssBootsSession) + "\n" +
+																EnumChatFormatting.GOLD + "    Last Breaths: " + nf.format(lastBreathsSession) + "\n" +
 																EnumChatFormatting.GOLD + "    Livid Daggers: " + nf.format(lividDaggersSession) + "\n" +
 																EnumChatFormatting.GOLD + "    Shadow Furys: " + nf.format(shadowFurysSession) + "\n" +
 																EnumChatFormatting.AQUA + "    Coins Spent: " + Utils.getMoneySpent(f5CoinsSpentSession) + "\n" +
@@ -817,6 +820,7 @@ public class LootCommand extends CommandBase {
 															EnumChatFormatting.DARK_PURPLE + "    Shadow Assassin Chests: " + nf.format(shadowAssChests) + "\n" +
 															EnumChatFormatting.DARK_PURPLE + "    Shadow Assassin Legs: " + nf.format(shadowAssLegs) + "\n" +
 															EnumChatFormatting.DARK_PURPLE + "    Shadow Assassin Boots: " + nf.format(shadowAssBoots) + "\n" +
+															EnumChatFormatting.GOLD + "    Last Breaths: " + nf.format(lastBreaths) + "\n" +
 															EnumChatFormatting.GOLD + "    Livid Daggers: " + nf.format(lividDaggers) + "\n" +
 															EnumChatFormatting.GOLD + "    Shadow Furys: " + nf.format(shadowFurys) + "\n" +
 															EnumChatFormatting.AQUA + "    Coins Spent: " + Utils.getMoneySpent(f5CoinsSpent) + "\n" +

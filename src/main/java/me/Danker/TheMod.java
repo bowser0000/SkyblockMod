@@ -21,7 +21,6 @@ import com.google.gson.JsonObject;
 import me.Danker.commands.ArmourCommand;
 import me.Danker.commands.BankCommand;
 import me.Danker.commands.BlockSlayerCommand;
-import me.Danker.commands.ChatMaddoxCommand;
 import me.Danker.commands.DHelpCommand;
 import me.Danker.commands.DankerGuiCommand;
 import me.Danker.commands.DisplayCommand;
@@ -56,6 +55,7 @@ import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.GuiChat;
 import net.minecraft.client.gui.inventory.GuiChest;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.Entity;
@@ -102,6 +102,7 @@ import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent.KeyInputEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.common.network.FMLNetworkEvent.ClientConnectedToServerEvent;
 import net.minecraftforge.fml.common.versioning.DefaultArtifactVersion;
 
@@ -124,7 +125,8 @@ public class TheMod
     public static boolean showSkill = false;
     public static String skillText = "";
     static int tickAmount = 1;
-    public static String lastMaddoxCommand = "/cb placeholdervalue";
+    static String lastMaddoxCommand = "/cb placeholder";
+    static double lastMaddoxTime = 0;
     static KeyBinding[] keyBindings = new KeyBinding[1];
     static int lastMouse = -1;
     static boolean usingLabymod = false;
@@ -134,7 +136,7 @@ public class TheMod
     								   "The reward isn't in any of our chests", "Both of them are telling the truth."};
     static Map<String, String[]> triviaSolutions = new HashMap<String, String[]>();
     static String[] triviaAnswers = null;
-	static Entity highestBlaze = null;
+    static Entity highestBlaze = null;
 	static Entity lowestBlaze = null;
 	// Among Us colours
 	static final int[] CREEPER_COLOURS = {0x50EF39, 0xC51111, 0x132ED1, 0x117F2D, 0xED54BA, 0xEF7D0D, 0xF5F557, 0xD6E0F0, 0x6B2FBB, 0x39FEDC};
@@ -276,7 +278,6 @@ public class TheMod
     	ClientCommandHandler.instance.registerCommand(new ImportFishingCommand());
     	ClientCommandHandler.instance.registerCommand(new ResetLootCommand());
     	ClientCommandHandler.instance.registerCommand(new ScaleCommand());
-    	ClientCommandHandler.instance.registerCommand(new ChatMaddoxCommand());
     	ClientCommandHandler.instance.registerCommand(new SkyblockPlayersCommand());
     	ClientCommandHandler.instance.registerCommand(new BlockSlayerCommand());
     	ClientCommandHandler.instance.registerCommand(new DungeonsCommand());
@@ -370,16 +371,6 @@ public class TheMod
     		}
     		return;
     	}
-    	
-    	// Replace chat messages with Maddox command
-        List<IChatComponent> chatSiblings = event.message.getSiblings();
-        if (ToggleCommand.trueChatMaddoxEnabled) {
-            for (IChatComponent sibling : chatSiblings) {
-            	if (sibling.getChatStyle().getChatClickEvent() == null) {
-            		sibling.setChatStyle(sibling.getChatStyle().setChatClickEvent(new ClickEvent(Action.RUN_COMMAND, "/dmodopenmaddoxmenu")));
-            	}
-            }
-        }
     	
         // Dungeon chat spoken by an NPC, containing :
         if (ToggleCommand.threeManToggled && Utils.inDungeons && message.contains("[NPC]")) {
@@ -1007,9 +998,10 @@ public class TheMod
 			for (IChatComponent sibling : listOfSiblings) {
 				if (sibling.getUnformattedText().contains("[OPEN MENU]")) {
 					lastMaddoxCommand = sibling.getChatStyle().getChatClickEvent().getValue();
+					lastMaddoxTime = System.currentTimeMillis() / 1000;
 				}
 			}
-			if (tc.chatMaddoxToggled) Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(MAIN_COLOUR + "Click anywhere in chat to open Maddox"));
+			if (tc.chatMaddoxToggled) Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(MAIN_COLOUR + "Open chat then click anywhere on-screen to open Maddox"));
 		}
 		
 		// Spirit Bear alerts
@@ -1627,22 +1619,26 @@ public class TheMod
     			dropsText = EnumChatFormatting.GOLD + "Recombobulators:\n" +
 							EnumChatFormatting.DARK_PURPLE + "Fuming Potato Books:\n" +
 							EnumChatFormatting.BLUE + "Scarf's Studies:\n" +
+							EnumChatFormatting.DARK_PURPLE + "Adaptive Blades:\n" +
 		    				EnumChatFormatting.AQUA + "Coins Spent:\n" +
 		    				EnumChatFormatting.AQUA + "Time Spent:";
 				countText = EnumChatFormatting.GOLD + nf.format(lc.recombobulators) + "\n" +
 							EnumChatFormatting.DARK_PURPLE + nf.format(lc.fumingPotatoBooks) + "\n" +
 							EnumChatFormatting.BLUE + nf.format(lc.scarfStudies) + "\n" +
+							EnumChatFormatting.DARK_PURPLE + nf.format(lc.adaptiveSwords) + "\n" +
 							EnumChatFormatting.AQUA + Utils.getMoneySpent(lc.f2CoinsSpent) + "\n" +
 							EnumChatFormatting.AQUA + Utils.getTimeBetween(0, lc.f2TimeSpent);
     		} else if (ds.display.equals("catacombs_floor_two_session")) {
     			dropsText = EnumChatFormatting.GOLD + "Recombobulators:\n" +
 							EnumChatFormatting.DARK_PURPLE + "Fuming Potato Books:\n" +
 							EnumChatFormatting.BLUE + "Scarf's Studies:\n" +
+							EnumChatFormatting.DARK_PURPLE + "Adaptive Blades:\n" +
 		    				EnumChatFormatting.AQUA + "Coins Spent:\n" +
 		    				EnumChatFormatting.AQUA + "Time Spent:";
 				countText = EnumChatFormatting.GOLD + nf.format(lc.recombobulatorsSession) + "\n" +
 							EnumChatFormatting.DARK_PURPLE + nf.format(lc.fumingPotatoBooksSession) + "\n" +
 							EnumChatFormatting.BLUE + nf.format(lc.scarfStudiesSession) + "\n" +
+							EnumChatFormatting.DARK_PURPLE + nf.format(lc.adaptiveSwordsSession) + "\n" +
 							EnumChatFormatting.AQUA + Utils.getMoneySpent(lc.f2CoinsSpentSession) + "\n" +
 							EnumChatFormatting.AQUA + Utils.getTimeBetween(0, lc.f2TimeSpentSession);
     		} else if (ds.display.equals("catacombs_floor_three")) {
@@ -1652,7 +1648,6 @@ public class TheMod
 							EnumChatFormatting.DARK_PURPLE + "Adaptive Chestplates:\n" +
 							EnumChatFormatting.DARK_PURPLE + "Adaptive Leggings:\n" +
 							EnumChatFormatting.DARK_PURPLE + "Adaptive Boots:\n" +
-							EnumChatFormatting.DARK_PURPLE + "Adaptive Blades:\n" +
 		    				EnumChatFormatting.AQUA + "Coins Spent:\n" +
 		    				EnumChatFormatting.AQUA + "Time Spent:";
 				countText = EnumChatFormatting.GOLD + nf.format(lc.recombobulators) + "\n" +
@@ -1661,7 +1656,6 @@ public class TheMod
 							EnumChatFormatting.DARK_PURPLE + nf.format(lc.adaptiveChests) + "\n" +
 							EnumChatFormatting.DARK_PURPLE + nf.format(lc.adaptiveLegs) + "\n" +
 							EnumChatFormatting.DARK_PURPLE + nf.format(lc.adaptiveBoots) + "\n" +
-							EnumChatFormatting.DARK_PURPLE + nf.format(lc.adaptiveSwords) + "\n" +
 							EnumChatFormatting.AQUA + Utils.getMoneySpent(lc.f3CoinsSpent) + "\n" +
 							EnumChatFormatting.AQUA + Utils.getTimeBetween(0, lc.f3TimeSpent);
     		} else if (ds.display.equals("catacombs_floor_three_session")) {
@@ -1671,7 +1665,6 @@ public class TheMod
 							EnumChatFormatting.DARK_PURPLE + "Adaptive Chestplates:\n" +
 							EnumChatFormatting.DARK_PURPLE + "Adaptive Leggings:\n" +
 							EnumChatFormatting.DARK_PURPLE + "Adaptive Boots:\n" +
-							EnumChatFormatting.DARK_PURPLE + "Adaptive Blades:\n" +
 		    				EnumChatFormatting.AQUA + "Coins Spent:\n" +
 		    				EnumChatFormatting.AQUA + "Time Spent:";
 				countText = EnumChatFormatting.GOLD + nf.format(lc.recombobulatorsSession) + "\n" +
@@ -1680,7 +1673,6 @@ public class TheMod
 							EnumChatFormatting.DARK_PURPLE + nf.format(lc.adaptiveChestsSession) + "\n" +
 							EnumChatFormatting.DARK_PURPLE + nf.format(lc.adaptiveLegsSession) + "\n" +
 							EnumChatFormatting.DARK_PURPLE + nf.format(lc.adaptiveBootsSession) + "\n" +
-							EnumChatFormatting.DARK_PURPLE + nf.format(lc.adaptiveSwordsSession) + "\n" +
 							EnumChatFormatting.AQUA + Utils.getMoneySpent(lc.f3CoinsSpentSession) + "\n" +
 							EnumChatFormatting.AQUA + Utils.getTimeBetween(0, lc.f3TimeSpentSession);
     		} else if (ds.display.equals("catacombs_floor_four")) {
@@ -1737,6 +1729,7 @@ public class TheMod
 							EnumChatFormatting.DARK_PURPLE + "Shadow Chestplates:\n" +
 							EnumChatFormatting.DARK_PURPLE + "Shadow Leggings:\n" +
 							EnumChatFormatting.DARK_PURPLE + "Shadow Boots:\n" +
+							EnumChatFormatting.GOLD + "Last Breaths:\n" +
 							EnumChatFormatting.GOLD + "Livid Daggers:\n" +
 							EnumChatFormatting.GOLD + "Shadow Furys:\n" +
 							EnumChatFormatting.AQUA + "Coins Spent:\n" +
@@ -1748,6 +1741,7 @@ public class TheMod
 							EnumChatFormatting.DARK_PURPLE + nf.format(lc.shadowAssChests) + "\n" +
 							EnumChatFormatting.DARK_PURPLE + nf.format(lc.shadowAssLegs) + "\n" +
 							EnumChatFormatting.DARK_PURPLE + nf.format(lc.shadowAssBoots) + "\n" +
+							EnumChatFormatting.GOLD + nf.format(lc.lastBreaths) + "\n" +
 							EnumChatFormatting.GOLD + nf.format(lc.lividDaggers) + "\n" +
 							EnumChatFormatting.GOLD + nf.format(lc.shadowFurys) + "\n" +
 							EnumChatFormatting.AQUA + Utils.getMoneySpent(lc.f5CoinsSpent) + "\n" +
@@ -1760,6 +1754,7 @@ public class TheMod
 							EnumChatFormatting.DARK_PURPLE + "Shadow Chestplates:\n" +
 							EnumChatFormatting.DARK_PURPLE + "Shadow Leggings:\n" +
 							EnumChatFormatting.DARK_PURPLE + "Shadow Boots:\n" +
+							EnumChatFormatting.GOLD + "Last Breaths:\n" +
 							EnumChatFormatting.GOLD + "Livid Daggers:\n" +
 							EnumChatFormatting.GOLD + "Shadow Furys:\n" +
 							EnumChatFormatting.AQUA + "Coins Spent:\n" +
@@ -1771,6 +1766,7 @@ public class TheMod
 							EnumChatFormatting.DARK_PURPLE + nf.format(lc.shadowAssChestsSession) + "\n" +
 							EnumChatFormatting.DARK_PURPLE + nf.format(lc.shadowAssLegsSession) + "\n" +
 							EnumChatFormatting.DARK_PURPLE + nf.format(lc.shadowAssBootsSession) + "\n" +
+							EnumChatFormatting.GOLD + nf.format(lc.lastBreathsSession) + "\n" +
 							EnumChatFormatting.GOLD + nf.format(lc.lividDaggersSession) + "\n" +
 							EnumChatFormatting.GOLD + nf.format(lc.shadowFurysSession) + "\n" +
 							EnumChatFormatting.AQUA + Utils.getMoneySpent(lc.f5CoinsSpentSession) + "\n" +
@@ -1932,6 +1928,8 @@ public class TheMod
     
     @SubscribeEvent
     public void onTick(TickEvent.ClientTickEvent event) {
+    	if (event.phase != Phase.START) return;
+    	
 		Minecraft mc = Minecraft.getMinecraft();
 		World world = mc.theWorld;
 		EntityPlayerSP player = mc.thePlayer;
@@ -2265,10 +2263,9 @@ public class TheMod
     }
     
     @SubscribeEvent
-    public void onGuiMouseInput(GuiScreenEvent.MouseInputEvent.Pre event) {
+    public void onGuiMouseInputPre(GuiScreenEvent.MouseInputEvent.Pre event) {
     	if (!Utils.inSkyblock) return;
     	if (Mouse.getEventButton() == lastMouse) return;
-    	lastMouse = Mouse.getEventButton();
     	if (Mouse.getEventButton() != 0 && Mouse.getEventButton() != 1) return; // Left click or right click
     	
     	if (event.gui instanceof GuiChest) {
@@ -2330,7 +2327,7 @@ public class TheMod
     				}
     			} 
     			
-    			if (!BlockSlayerCommand.onlySlayerName.equals(""))  {
+    			if (!BlockSlayerCommand.onlySlayerName.equals("")) {
     				if (inventoryName.equals("Slayer")) {
         				if (!item.getDisplayName().contains("Revenant Horror") && !item.getDisplayName().contains("Tarantula Broodfather") && !item.getDisplayName().contains("Sven Packmaster")) return;
         				if (!item.getDisplayName().contains(BlockSlayerCommand.onlySlayerName)) {
@@ -2352,6 +2349,19 @@ public class TheMod
     			}
     		}
     	}
+    }
+    
+    @SubscribeEvent
+    public void onMouseInputPost(GuiScreenEvent.MouseInputEvent.Post event) {
+    	if (!Utils.inSkyblock) return;
+    	if (Mouse.getEventButton() == lastMouse) return;
+    	if (Mouse.getEventButton() == 0 && event.gui instanceof GuiChat) {
+    		if (ToggleCommand.chatMaddoxToggled && System.currentTimeMillis() / 1000 - lastMaddoxTime < 10) {
+    			Minecraft.getMinecraft().thePlayer.sendChatMessage(lastMaddoxCommand);
+    		}
+    	}
+    	
+    	lastMouse = Mouse.getEventButton();
     }
     
     @SubscribeEvent

@@ -18,7 +18,7 @@ Discord Server: https://discord.gg/QsEkNQS
 - Disable heal messages (toggleable)
 - Slayer item tracker (with graphic display) (scalable)
 - RNGesus drop alerts (toggleable)
-- Click in chat to open Maddox (toggleable)
+- Click anywhere on-screen to open Maddox (toggleable)
 - Maddox Menu keybind
 - Block starting other slayer quests
 - Fishing tracker (with graphic display) (scalable)

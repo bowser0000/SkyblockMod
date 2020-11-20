@@ -88,7 +88,7 @@ public class DankerGui extends GuiScreen {
 		skill50Display = new GuiButton(0, width / 2 - 100, (int) (height * 0.2), "Display Progress To Skill Level 50: " + Utils.getColouredBoolean(ToggleCommand.skill50DisplayToggled));
 		gparty = new GuiButton(0, width / 2 - 100, (int) (height * 0.3), "Guild Party Notifications: " + Utils.getColouredBoolean(ToggleCommand.gpartyToggled));
 		slayerCount = new GuiButton(0, width / 2 - 100, (int) (height * 0.4), "Count Total 20% Drops: " + Utils.getColouredBoolean(ToggleCommand.slayerCountTotal));
-		chatMaddox = new GuiButton(0, width / 2 - 100, (int) (height * 0.5), "Click Chat to Open Maddox: " + Utils.getColouredBoolean(ToggleCommand.chatMaddoxToggled));
+		chatMaddox = new GuiButton(0, width / 2 - 100, (int) (height * 0.5), "Click On-Screen to Open Maddox: " + Utils.getColouredBoolean(ToggleCommand.chatMaddoxToggled));
 		aotd = new GuiButton(0, width / 2 - 100, (int) (height * 0.6), "Disable AOTD Ability: " + Utils.getColouredBoolean(ToggleCommand.aotdToggled));
 		lividDagger = new GuiButton(0, width / 2 - 100, (int) (height * 0.7), "Disable Livid Dagger Ability: " + Utils.getColouredBoolean(ToggleCommand.lividDaggerToggled));
 		// Page 3
@@ -239,7 +239,7 @@ public class DankerGui extends GuiScreen {
 		} else if (button == chatMaddox) {
 			ToggleCommand.chatMaddoxToggled = !ToggleCommand.chatMaddoxToggled;
 			ConfigHandler.writeBooleanConfig("toggles", "ChatMaddox", ToggleCommand.chatMaddoxToggled);
-			chatMaddox.displayString = "Click Chat to Open Maddox: " + Utils.getColouredBoolean(ToggleCommand.chatMaddoxToggled);
+			chatMaddox.displayString = "Click On-Screen to Open Maddox: " + Utils.getColouredBoolean(ToggleCommand.chatMaddoxToggled);
 		} else if (button == spiritBearAlert) {
 			ToggleCommand.spiritBearAlerts = !ToggleCommand.spiritBearAlerts;
 			ConfigHandler.writeBooleanConfig("toggles", "SpiritBearAlerts", ToggleCommand.spiritBearAlerts);

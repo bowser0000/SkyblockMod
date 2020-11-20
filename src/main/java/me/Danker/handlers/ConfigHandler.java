@@ -319,6 +319,7 @@ public class ConfigHandler {
 		if (!hasKey("catacombs", "shadowAssassinChest")) writeIntConfig("catacombs", "shadowAssassinChest", 0);
 		if (!hasKey("catacombs", "shadowAssassinLegging")) writeIntConfig("catacombs", "shadowAssassinLegging", 0);
 		if (!hasKey("catacombs", "shadowAssassinBoot")) writeIntConfig("catacombs", "shadowAssassinBoot", 0);
+		if (!hasKey("catacombs", "lastBreath")) writeIntConfig("catacombs", "lastBreath", 0);
 		if (!hasKey("catacombs", "lividDagger")) writeIntConfig("catacombs", "lividDagger", 0);
 		if (!hasKey("catacombs", "shadowFury")) writeIntConfig("catacombs", "shadowFury", 0);
 		if (!hasKey("catacombs", "floorFiveCoins")) writeDoubleConfig("catacombs", "floorFiveCoins", 0);
@@ -338,7 +339,6 @@ public class ConfigHandler {
 		if (!hasKey("misc", "display")) writeStringConfig("misc", "display", "off");
 		if (!hasKey("misc", "autoDisplay")) writeBooleanConfig("misc", "autoDisplay", false);
 		if (!hasKey("misc", "skill50Time")) writeIntConfig("misc", "skill50Time", 3);
-		if (!hasKey("misc", "trueChatMaddoxEnabled")) writeBooleanConfig("misc", "trueChatMaddoxEnabled", true);
 		if (!hasKey("misc", "cakeTime")) writeDoubleConfig("misc", "cakeTime", 0);
 		
 		ScaledResolution scaled = new ScaledResolution(Minecraft.getMinecraft());
@@ -527,6 +527,7 @@ public class ConfigHandler {
 		lc.shadowAssChests = getInt("catacombs", "shadowAssassinChest");
 		lc.shadowAssLegs = getInt("catacombs", "shadowAssassinLegging");
 		lc.shadowAssBoots = getInt("catacombs", "shadowAssassinBoot");
+		lc.lastBreaths = getInt("catacombs", "lastBreath");
 		lc.lividDaggers = getInt("catacombs", "lividDagger");
 		lc.shadowFurys = getInt("catacombs", "shadowFury");
 		lc.f5CoinsSpent = getDouble("catacombs", "floorFiveCoins");
@@ -547,7 +548,6 @@ public class ConfigHandler {
 		ds.display = getString("misc", "display");
 		ds.auto = getBoolean("misc", "autoDisplay");
 		TheMod.SKILL_TIME = getInt("misc", "skill50Time") * 20;
-		tf.trueChatMaddoxEnabled = getBoolean("misc", "trueChatMaddoxEnabled");
 		TheMod.cakeTime = getDouble("misc", "cakeTime");
 		
 		final MoveCommand moc = new MoveCommand();

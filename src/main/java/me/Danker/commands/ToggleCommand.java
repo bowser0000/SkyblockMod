@@ -21,7 +21,6 @@ public class ToggleCommand extends CommandBase implements ICommand {
 	public static boolean rngesusAlerts;
 	public static boolean splitFishing;
 	public static boolean chatMaddoxToggled;
-	public static boolean trueChatMaddoxEnabled;
 	public static boolean spiritBearAlerts;
 	public static boolean aotdToggled;
 	public static boolean lividDaggerToggled;
@@ -111,7 +110,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 		} else if (arg1[0].equalsIgnoreCase("chatmaddox")) {
 			chatMaddoxToggled = !chatMaddoxToggled;
 			cf.writeBooleanConfig("toggles", "ChatMaddox", chatMaddoxToggled);
-			player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Chat Maddox menu has been set to " + TheMod.SECONDARY_COLOUR + chatMaddoxToggled + TheMod.MAIN_COLOUR + "."));
+			player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Click screen to open Maddox menu has been set to " + TheMod.SECONDARY_COLOUR + chatMaddoxToggled + TheMod.MAIN_COLOUR + "."));
 		} else if (arg1[0].equalsIgnoreCase("spiritbearalerts")) { 
 			spiritBearAlerts = !spiritBearAlerts;
 			cf.writeBooleanConfig("toggles", "SpiritBearAlerts", spiritBearAlerts);
