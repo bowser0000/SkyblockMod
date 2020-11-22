@@ -47,12 +47,10 @@ public class GuildOfCommand extends CommandBase {
 	public void processCommand(ICommandSender arg0, String[] arg1) throws CommandException {
 		// MULTI THREAD DRIFTING
 		new Thread(() -> {
-			APIHandler ah = new APIHandler();
-			ConfigHandler cf = new ConfigHandler();
 			EntityPlayer player = (EntityPlayer) arg0;
 			
 			// Check key
-			String key = cf.getString("api", "APIKey");
+			String key = ConfigHandler.getString("api", "APIKey");
 			if (key.equals("")) {
 				player.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "API key not set. Use /setkey."));
 			}
@@ -67,13 +65,13 @@ public class GuildOfCommand extends CommandBase {
 			} else {
 				username = arg1[0];
 				player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Checking guild of " + TheMod.SECONDARY_COLOUR + username));
-				uuid = ah.getUUID(username);
+				uuid = APIHandler.getUUID(username);
 			}
 			
 			// Find guild ID
 			System.out.println("Fetching guild...");
 			String guildURL = "https://api.hypixel.net/guild?player=" + uuid + "&key=" + key;
-			JsonObject guildResponse = ah.getResponse(guildURL);
+			JsonObject guildResponse = APIHandler.getResponse(guildURL);
 			if (!guildResponse.get("success").getAsBoolean()) {
 				String reason = guildResponse.get("cause").getAsString();
 				player.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "Failed with reason: " + reason));
@@ -100,7 +98,7 @@ public class GuildOfCommand extends CommandBase {
 						// Get username from UUID
 						String gmUUID = memberObject.get("uuid").getAsString();
 						String gmNameURL = "https://api.mojang.com/user/profiles/" + gmUUID + "/names";
-						JsonArray gmNameResponse = ah.getArrayResponse(gmNameURL);
+						JsonArray gmNameResponse = APIHandler.getArrayResponse(gmNameURL);
 						
 						guildMaster = gmNameResponse.get(gmNameResponse.size() - 1).getAsJsonObject().get("name").getAsString();
 						break;

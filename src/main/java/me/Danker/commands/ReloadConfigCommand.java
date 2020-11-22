@@ -7,7 +7,6 @@ import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.EnumChatFormatting;
 
 public class ReloadConfigCommand extends CommandBase {
 
@@ -29,8 +28,7 @@ public class ReloadConfigCommand extends CommandBase {
 	@Override
 	public void processCommand(ICommandSender arg0, String[] arg1) throws CommandException {
 		final EntityPlayer player = (EntityPlayer)arg0;
-		final ConfigHandler cf = new ConfigHandler();
-		cf.reloadConfig();
+		ConfigHandler.reloadConfig();
 		player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Reloaded config."));
 	}
 

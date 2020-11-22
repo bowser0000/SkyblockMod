@@ -34,9 +34,6 @@ public class EditLocationsGui extends GuiScreen {
 	@Override
 	public void initGui() {
 		super.initGui();
-		// Ease of typing
-		MoveCommand moc = new MoveCommand();
-		ScaleCommand sc = new ScaleCommand();
 		
 		String displayText = EnumChatFormatting.GOLD + "Svens Killed:\n" +
 							 EnumChatFormatting.GREEN + "Wolf Teeth:\n" +
@@ -74,12 +71,12 @@ public class EditLocationsGui extends GuiScreen {
 							      EnumChatFormatting.YELLOW + 2 + "\n" +
 							      EnumChatFormatting.YELLOW + 1;
 		
-		display = new LocationButton(0, moc.displayXY[0], moc.displayXY[1], 145 * sc.displayScale, 102 * sc.displayScale, sc.displayScale, displayText, displayNums, 110);
-		dungeonTimer = new LocationButton(0, moc.dungeonTimerXY[0], moc.dungeonTimerXY[1], 113 * sc.dungeonTimerScale, 57 * sc.dungeonTimerScale, sc.dungeonTimerScale, dungeonTimerText, dungeonTimerNums, 80);
-		coords = new LocationButton(0, moc.coordsXY[0], moc.coordsXY[1], 141 * sc.coordsScale, 12 * sc.coordsScale, sc.coordsScale, TheMod.COORDS_COLOUR + "74 / 14 / -26 (141.1 / 6.7)", null, null);
-		skill50 = new LocationButton(0, moc.skill50XY[0], moc.skill50XY[1], 233 * sc.skill50Scale, 12 * sc.skill50Scale, sc.skill50Scale, TheMod.SKILL_50_COLOUR + "+3.5 Farming (28,882,117.7/55,172,425) 52.34%", null, null);
-		lividHP = new LocationButton(0, moc.lividHpXY[0], moc.lividHpXY[1], 85 * sc.lividHpScale, 12 * sc.lividHpScale, sc.lividHpScale, EnumChatFormatting.WHITE + "﴾ Livid " + EnumChatFormatting.YELLOW + "6.9M" + EnumChatFormatting.RED + "❤ " + EnumChatFormatting.WHITE + "﴿", null, null);
-		cakeTimer = new LocationButton(0, moc.cakeTimerXY[0], moc.cakeTimerXY[1] + 5, 85 * sc.cakeTimerScale, 18 * sc.cakeTimerScale, sc.cakeTimerScale, TheMod.CAKE_COLOUR + "     11h16m", null, null);
+		display = new LocationButton(0, MoveCommand.displayXY[0], MoveCommand.displayXY[1], 145 * ScaleCommand.displayScale, 102 * ScaleCommand.displayScale, ScaleCommand.displayScale, displayText, displayNums, 110);
+		dungeonTimer = new LocationButton(0, MoveCommand.dungeonTimerXY[0], MoveCommand.dungeonTimerXY[1], 113 * ScaleCommand.dungeonTimerScale, 57 * ScaleCommand.dungeonTimerScale, ScaleCommand.dungeonTimerScale, dungeonTimerText, dungeonTimerNums, 80);
+		coords = new LocationButton(0, MoveCommand.coordsXY[0], MoveCommand.coordsXY[1], 141 * ScaleCommand.coordsScale, 12 * ScaleCommand.coordsScale, ScaleCommand.coordsScale, TheMod.COORDS_COLOUR + "74 / 14 / -26 (141.1 / 6.7)", null, null);
+		skill50 = new LocationButton(0, MoveCommand.skill50XY[0], MoveCommand.skill50XY[1], 233 * ScaleCommand.skill50Scale, 12 * ScaleCommand.skill50Scale, ScaleCommand.skill50Scale, TheMod.SKILL_50_COLOUR + "+3.5 Farming (28,882,117.7/55,172,425) 52.34%", null, null);
+		lividHP = new LocationButton(0, MoveCommand.lividHpXY[0], MoveCommand.lividHpXY[1], 85 * ScaleCommand.lividHpScale, 12 * ScaleCommand.lividHpScale, ScaleCommand.lividHpScale, EnumChatFormatting.WHITE + "﴾ Livid " + EnumChatFormatting.YELLOW + "6.9M" + EnumChatFormatting.RED + "❤ " + EnumChatFormatting.WHITE + "﴿", null, null);
+		cakeTimer = new LocationButton(0, MoveCommand.cakeTimerXY[0], MoveCommand.cakeTimerXY[1] + 5, 85 * ScaleCommand.cakeTimerScale, 18 * ScaleCommand.cakeTimerScale, ScaleCommand.cakeTimerScale, TheMod.CAKE_COLOUR + "     11h16m", null, null);
 		
 		this.buttonList.add(coords);
 		this.buttonList.add(dungeonTimer);

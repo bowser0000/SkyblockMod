@@ -46,13 +46,10 @@ public class LobbySkillsCommand extends CommandBase {
 	@Override
 	public void processCommand(ICommandSender arg0, String[] arg1) throws CommandException {
 		EntityPlayer playerSP = (EntityPlayer) arg0;
-		ConfigHandler cf = new ConfigHandler();
-		APIHandler ah = new APIHandler();
-		boolean someErrored = false;
 		Map<String, Double> unsortedSAList = new HashMap<String, Double>();
 		ArrayList<Double> lobbySkills = new ArrayList<Double>();
 		// Check key
-		String key = cf.getString("api", "APIKey");
+		String key = ConfigHandler.getString("api", "APIKey");
 		if (key.equals("")) {
 			playerSP.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "API key not set. Use /setkey."));
 			return;
@@ -72,7 +69,7 @@ public class LobbySkillsCommand extends CommandBase {
 					long biggestLastSave = 0;
 					int profileIndex = -1;
 					Thread.sleep(600);
-					JsonObject profileResponse = ah.getResponse("https://api.hypixel.net/skyblock/profiles?uuid=" + UUID + "&key=" + key);
+					JsonObject profileResponse = APIHandler.getResponse("https://api.hypixel.net/skyblock/profiles?uuid=" + UUID + "&key=" + key);
 					if (!profileResponse.get("success").getAsBoolean()) {
 						String reason = profileResponse.get("cause").getAsString();
 						System.out.println("User " + player.getGameProfile().getName() + " failed with reason: " + reason);
@@ -138,7 +135,7 @@ public class LobbySkillsCommand extends CommandBase {
 					} else {
 						Thread.sleep(600); // Sleep for another request
 						System.out.println("Fetching skills from achievement API");
-						JsonObject playerObject = ah.getResponse("https://api.hypixel.net/player?uuid=" + UUID + "&key=" + key);
+						JsonObject playerObject = APIHandler.getResponse("https://api.hypixel.net/player?uuid=" + UUID + "&key=" + key);
 						
 						if (!playerObject.get("success").getAsBoolean()) {
 							String reason = profileResponse.get("cause").getAsString();

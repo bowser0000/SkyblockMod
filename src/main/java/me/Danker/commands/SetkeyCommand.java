@@ -8,7 +8,6 @@ import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.EnumChatFormatting;
 
 public class SetkeyCommand extends CommandBase implements ICommand {
 
@@ -36,8 +35,7 @@ public class SetkeyCommand extends CommandBase implements ICommand {
 			return;
 		}
 		
-		final ConfigHandler cf = new ConfigHandler();
-		cf.writeStringConfig("api", "APIKey", arg1[0]);
+		ConfigHandler.writeStringConfig("api", "APIKey", arg1[0]);
 		player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Set API key to " + TheMod.SECONDARY_COLOUR + arg1[0]));
 	}
 

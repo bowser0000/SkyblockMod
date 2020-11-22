@@ -10,7 +10,6 @@ import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.EnumChatFormatting;
 
 public class MoveCommand extends CommandBase {
 
@@ -47,7 +46,6 @@ public class MoveCommand extends CommandBase {
 	@Override
 	public void processCommand(ICommandSender arg0, String[] arg1) throws CommandException {
 		final EntityPlayer player = (EntityPlayer)arg0;
-		final ConfigHandler cf = new ConfigHandler();
 		
 		if (arg1.length < 2) {
 			player.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "Usage: " + getCommandUsage(arg0)));
@@ -57,38 +55,38 @@ public class MoveCommand extends CommandBase {
 		if (arg1[0].equalsIgnoreCase("coords")) {
 			coordsXY[0] = Integer.parseInt(arg1[1]);
 			coordsXY[1] = Integer.parseInt(arg1[2]);
-			cf.writeIntConfig("locations", "coordsX", coordsXY[0]);
-			cf.writeIntConfig("locations", "coordsY", coordsXY[1]);
+			ConfigHandler.writeIntConfig("locations", "coordsX", coordsXY[0]);
+			ConfigHandler.writeIntConfig("locations", "coordsY", coordsXY[1]);
 			player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Coords have been moved to " + TheMod.SECONDARY_COLOUR + arg1[1] + ", " + arg1[2]));
 		} else if (arg1[0].equalsIgnoreCase("display")) {
 			displayXY[0] = Integer.parseInt(arg1[1]);
 			displayXY[1] = Integer.parseInt(arg1[2]);
-			cf.writeIntConfig("locations", "displayX", displayXY[0]);
-			cf.writeIntConfig("locations", "displayY", displayXY[1]);
+			ConfigHandler.writeIntConfig("locations", "displayX", displayXY[0]);
+			ConfigHandler.writeIntConfig("locations", "displayY", displayXY[1]);
 			player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Tracker display has been moved to " + TheMod.SECONDARY_COLOUR + arg1[1] + ", " + arg1[2]));
 		} else if (arg1[0].equalsIgnoreCase("dungeontimer")) {
 			dungeonTimerXY[0] = Integer.parseInt(arg1[1]);
 			dungeonTimerXY[1] = Integer.parseInt(arg1[2]);
-			cf.writeIntConfig("locations", "dungeonTimerX", dungeonTimerXY[0]);
-			cf.writeIntConfig("locations", "dungeonTimerY", dungeonTimerXY[1]);
+			ConfigHandler.writeIntConfig("locations", "dungeonTimerX", dungeonTimerXY[0]);
+			ConfigHandler.writeIntConfig("locations", "dungeonTimerY", dungeonTimerXY[1]);
 			player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Dungeon timer has been moved to " + TheMod.SECONDARY_COLOUR + arg1[1] + ", " + arg1[2]));
 		} else if (arg1[0].equalsIgnoreCase("skill50")) {
 			skill50XY[0] = Integer.parseInt(arg1[1]);
 			skill50XY[1] = Integer.parseInt(arg1[2]);
-			cf.writeIntConfig("locations", "skill50X", skill50XY[0]);
-			cf.writeIntConfig("locations", "skill50Y", skill50XY[1]);
+			ConfigHandler.writeIntConfig("locations", "skill50X", skill50XY[0]);
+			ConfigHandler.writeIntConfig("locations", "skill50Y", skill50XY[1]);
 			player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Skill 50 display has been moved to " + TheMod.SECONDARY_COLOUR + arg1[1] + ", " + arg1[2]));
 		} else if (arg1[0].equalsIgnoreCase("lividhp")) { 
 			lividHpXY[0] = Integer.parseInt(arg1[1]);
 			lividHpXY[1] = Integer.parseInt(arg1[2]);
-			cf.writeIntConfig("locations", "lividHpX", lividHpXY[0]);
-			cf.writeIntConfig("locations", "lividHpY", lividHpXY[1]);
+			ConfigHandler.writeIntConfig("locations", "lividHpX", lividHpXY[0]);
+			ConfigHandler.writeIntConfig("locations", "lividHpY", lividHpXY[1]);
 			player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Livid HP has been moved to " + TheMod.SECONDARY_COLOUR + arg1[1] + ", " + arg1[2]));
 		} else if (arg1[0].equalsIgnoreCase("caketimer")) { 
 			cakeTimerXY[0] = Integer.parseInt(arg1[1]);
 			cakeTimerXY[1] = Integer.parseInt(arg1[2]);
-			cf.writeIntConfig("locations", "cakeTimerX", cakeTimerXY[0]);
-			cf.writeIntConfig("locations", "cakeTimerY", cakeTimerXY[1]);
+			ConfigHandler.writeIntConfig("locations", "cakeTimerX", cakeTimerXY[0]);
+			ConfigHandler.writeIntConfig("locations", "cakeTimerY", cakeTimerXY[1]);
 		} else {
 			player.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "Usage: " + getCommandUsage(arg0)));
 		}

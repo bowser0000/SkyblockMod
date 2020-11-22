@@ -10,7 +10,6 @@ import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.EnumChatFormatting;
 
 public class DisplayCommand extends CommandBase {
 	public static String display;
@@ -54,7 +53,6 @@ public class DisplayCommand extends CommandBase {
 			return;
 		}
 		
-		final ConfigHandler cf = new ConfigHandler();
 		boolean showSession = false;
 		
 		if (arg1[arg1.length - 1].equalsIgnoreCase("session")) showSession = true;
@@ -151,7 +149,7 @@ public class DisplayCommand extends CommandBase {
 		} else if (arg1[0].equalsIgnoreCase("auto")) {
 			auto = true;
 			player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Display set to " + TheMod.SECONDARY_COLOUR + "auto" + TheMod.MAIN_COLOUR + "."));
-			cf.writeBooleanConfig("misc", "autoDisplay", true);
+			ConfigHandler.writeBooleanConfig("misc", "autoDisplay", true);
 			return;
 		} else if (arg1[0].equalsIgnoreCase("off")) {
 			display = "off";
@@ -161,8 +159,8 @@ public class DisplayCommand extends CommandBase {
 		}
 		auto = false;
 		player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Display set to " + TheMod.SECONDARY_COLOUR + display + TheMod.MAIN_COLOUR + "."));
-		cf.writeBooleanConfig("misc", "autoDisplay", false);
-		cf.writeStringConfig("misc", "display", display);
+		ConfigHandler.writeBooleanConfig("misc", "autoDisplay", false);
+		ConfigHandler.writeStringConfig("misc", "display", display);
 	}
 
 }

@@ -12,7 +12,6 @@ import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.EnumChatFormatting;
 
 public class GetkeyCommand extends CommandBase implements ICommand {
 
@@ -34,16 +33,15 @@ public class GetkeyCommand extends CommandBase implements ICommand {
 	@Override
 	public void processCommand(ICommandSender arg0, String[] arg1) throws CommandException {
 	    EntityPlayer player = (EntityPlayer)arg0;
-	    ConfigHandler cf = new ConfigHandler();
 	    Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-	    StringSelection stringSelection = new StringSelection(cf.getString("api", "APIKey"));
+	    StringSelection stringSelection = new StringSelection(ConfigHandler.getString("api", "APIKey"));
 	    
-	    if (cf.getString("api", "APIKey").equals("")) {
+	    if (ConfigHandler.getString("api", "APIKey").equals("")) {
 	      player.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "API key not set. Set your API key using /setkey."));
 	    }
 	    
 	    clipboard.setContents(stringSelection, null);
-		player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Your set API key is " + TheMod.SECONDARY_COLOUR + cf.getString("api", "APIKey") + "\n" +
+		player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Your set API key is " + TheMod.SECONDARY_COLOUR + ConfigHandler.getString("api", "APIKey") + "\n" +
 													TheMod.MAIN_COLOUR + " Your set API key has been copied to the clipboard."));
 
 	}

@@ -10,7 +10,6 @@ import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.EnumChatFormatting;
 
 public class BlockSlayerCommand extends CommandBase {
 	
@@ -45,7 +44,6 @@ public class BlockSlayerCommand extends CommandBase {
 	@Override
 	public void processCommand(ICommandSender arg0, String[] arg1) throws CommandException {
 		final EntityPlayer player = (EntityPlayer)arg0;
-		final ConfigHandler cf = new ConfigHandler();
 		
 		if (arg1.length == 0 || (arg1.length == 1 && !arg1[0].equalsIgnoreCase("off"))) {
 			player.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "Usage: " + getCommandUsage(arg0)));
@@ -61,7 +59,7 @@ public class BlockSlayerCommand extends CommandBase {
 		} else if (arg1[0].equalsIgnoreCase("off")) {
 			onlySlayerName = "";
 			onlySlayerNumber = "";
-			cf.writeStringConfig("toggles", "BlockSlayer", "");
+			ConfigHandler.writeStringConfig("toggles", "BlockSlayer", "");
 			player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Slayer blocking turned off."));
 			return;
 		} else {
@@ -91,7 +89,7 @@ public class BlockSlayerCommand extends CommandBase {
 				return;
 		}
 		
-		cf.writeStringConfig("toggles", "BlockSlayer", onlySlayerName + " " + onlySlayerNumber);
+		ConfigHandler.writeStringConfig("toggles", "BlockSlayer", onlySlayerName + " " + onlySlayerNumber);
 		player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Slayer blocking set to " + TheMod.SECONDARY_COLOUR + onlySlayerName + " " + onlySlayerNumber));
 	}
 
