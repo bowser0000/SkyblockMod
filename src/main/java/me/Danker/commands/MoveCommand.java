@@ -19,6 +19,7 @@ public class MoveCommand extends CommandBase {
 	public static int[] skill50XY = {0, 0};
 	public static int[] lividHpXY = {0, 0};
 	public static int[] cakeTimerXY = {0, 0};
+	public static int[] skillTrackerXY = {0, 0};
 	
 	@Override
 	public String getCommandName() {
@@ -27,7 +28,7 @@ public class MoveCommand extends CommandBase {
 
 	@Override
 	public String getCommandUsage(ICommandSender arg0) {
-		return "/" + getCommandName() + " <coords/display/dungeontimer/skill50/lividhp/caketimer> <x> <y>";
+		return "/" + getCommandName() + " <coords/display/dungeontimer/skill50/lividhp/caketimer/skilltracker> <x> <y>";
 	}
 	
 	@Override
@@ -38,7 +39,7 @@ public class MoveCommand extends CommandBase {
 	@Override
 	public List<String> addTabCompletionOptions(ICommandSender sender, String[] args, BlockPos pos) {
 		if (args.length == 1) {
-			return getListOfStringsMatchingLastWord(args, "coords", "display", "dungeontimer", "skill50", "lividhp", "caketimer");
+			return getListOfStringsMatchingLastWord(args, "coords", "display", "dungeontimer", "skill50", "lividhp", "caketimer", "skilltracker");
 		}
 		return null;
 	}
@@ -87,6 +88,13 @@ public class MoveCommand extends CommandBase {
 			cakeTimerXY[1] = Integer.parseInt(arg1[2]);
 			ConfigHandler.writeIntConfig("locations", "cakeTimerX", cakeTimerXY[0]);
 			ConfigHandler.writeIntConfig("locations", "cakeTimerY", cakeTimerXY[1]);
+			player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Cake timer has been moved to " + TheMod.SECONDARY_COLOUR + arg1[1] + ", " + arg1[2]));
+		} else if (arg1[0].equalsIgnoreCase("skilltracker")) {
+			skillTrackerXY[0] = Integer.parseInt(arg1[1]);
+			skillTrackerXY[1] = Integer.parseInt(arg1[2]);
+			ConfigHandler.writeIntConfig("locations", "skillTrackerX", skillTrackerXY[0]);
+			ConfigHandler.writeIntConfig("locations", "skillTrackerY", skillTrackerXY[1]);
+			player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Skill tracker has been moved to " + TheMod.SECONDARY_COLOUR + arg1[1] + ", " + arg1[2]));
 		} else {
 			player.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "Usage: " + getCommandUsage(arg0)));
 		}

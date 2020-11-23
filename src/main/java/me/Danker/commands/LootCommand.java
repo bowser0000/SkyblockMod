@@ -153,6 +153,7 @@ public class LootCommand extends CommandBase {
 	public static int implosions;
 	public static int witherShields;
 	public static int shadowWarps;
+	public static int necronsHandles;
 	public static int autoRecombs;
 	public static int witherHelms;
 	public static int witherChests;
@@ -300,6 +301,7 @@ public class LootCommand extends CommandBase {
 	public static int implosionsSession = 0;
 	public static int witherShieldsSession = 0;
 	public static int shadowWarpsSession = 0;
+	public static int necronsHandlesSession = 0;
 	public static int autoRecombsSession = 0;
 	public static int witherHelmsSession = 0;
 	public static int witherChestsSession = 0;
@@ -897,6 +899,7 @@ public class LootCommand extends CommandBase {
 																EnumChatFormatting.DARK_PURPLE + "    Implosions: " + nf.format(implosionsSession) + "\n" +
 																EnumChatFormatting.DARK_PURPLE + "    Wither Shields: " + nf.format(witherShieldsSession) + "\n" +
 																EnumChatFormatting.DARK_PURPLE + "    Shadow Warps: " + nf.format(shadowWarpsSession) + "\n" +
+																EnumChatFormatting.DARK_PURPLE + "    Necron's Handles: " + nf.format(necronsHandlesSession) + "\n" +
 																EnumChatFormatting.GOLD + "    Auto Recombobulator: " + nf.format(autoRecombsSession) + "\n" +
 																EnumChatFormatting.GOLD + "    Wither Helmets: " + nf.format(witherHelmsSession) + "\n" +
 																EnumChatFormatting.GOLD + "    Wither Chesplates: " + nf.format(witherChestsSession) + "\n" +
@@ -916,6 +919,7 @@ public class LootCommand extends CommandBase {
 															EnumChatFormatting.DARK_PURPLE + "    Implosions: " + nf.format(implosions) + "\n" +
 															EnumChatFormatting.DARK_PURPLE + "    Wither Shields: " + nf.format(witherShields) + "\n" +
 															EnumChatFormatting.DARK_PURPLE + "    Shadow Warps: " + nf.format(shadowWarps) + "\n" +
+															EnumChatFormatting.DARK_PURPLE + "    Necron's Handles: " + nf.format(necronsHandles) + "\n" +
 															EnumChatFormatting.GOLD + "    Auto Recombobulator: " + nf.format(autoRecombs) + "\n" +
 															EnumChatFormatting.GOLD + "    Wither Helmets: " + nf.format(witherHelms) + "\n" +
 															EnumChatFormatting.GOLD + "    Wither Chesplates: " + nf.format(witherChests) + "\n" +

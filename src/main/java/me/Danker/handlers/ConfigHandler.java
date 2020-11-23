@@ -341,6 +341,7 @@ public class ConfigHandler {
 		if (!hasKey("catacombs", "implosion")) writeIntConfig("catacombs", "implosion", 0);
 		if (!hasKey("catacombs", "witherShield")) writeIntConfig("catacombs", "witherShield", 0);
 		if (!hasKey("catacombs", "shadowWarp")) writeIntConfig("catacombs", "shadowWarp", 0);
+		if (!hasKey("catacombs", "necronsHandle")) writeIntConfig("catacombs", "necronsHandle", 0);
 		if (!hasKey("catacombs", "autoRecomb")) writeIntConfig("catacombs", "autoRecomb", 0);
 		if (!hasKey("catacombs", "witherHelm")) writeIntConfig("catacombs", "witherHelm", 0);
 		if (!hasKey("catacombs", "witherChest")) writeIntConfig("catacombs", "witherChest", 0);
@@ -353,6 +354,7 @@ public class ConfigHandler {
 		if (!hasKey("misc", "autoDisplay")) writeBooleanConfig("misc", "autoDisplay", false);
 		if (!hasKey("misc", "skill50Time")) writeIntConfig("misc", "skill50Time", 3);
 		if (!hasKey("misc", "cakeTime")) writeDoubleConfig("misc", "cakeTime", 0);
+		if (!hasKey("misc", "showSkillTracker")) writeBooleanConfig("misc", "showSkillTracker", false);
 		
 		ScaledResolution scaled = new ScaledResolution(Minecraft.getMinecraft());
 		int height = scaled.getScaledHeight();
@@ -368,12 +370,15 @@ public class ConfigHandler {
 		if (!hasKey("locations", "lividHpY")) writeIntConfig("locations", "lividHpY", 20);
 		if (!hasKey("locations", "cakeTimerX")) writeIntConfig("locations", "cakeTimerX", 40);
 		if (!hasKey("locations", "cakeTimerY")) writeIntConfig("locations", "cakeTimerY", 30);
+		if (!hasKey("locations", "skillTrackerX")) writeIntConfig("locations", "skillTrackerX", 40);
+		if (!hasKey("locations", "skillTrackerY")) writeIntConfig("locations", "skillTrackerY", 50);
 		if (!hasKey("scales", "coordsScale")) writeDoubleConfig("scales", "coordsScale", 1);
 		if (!hasKey("scales", "displayScale")) writeDoubleConfig("scales", "displayScale", 1);
 		if (!hasKey("scales", "dungeonTimerScale")) writeDoubleConfig("scales", "dungeonTimerScale", 1);
 		if (!hasKey("scales", "skill50Scale")) writeDoubleConfig("scales", "skill50Scale", 1);
 		if (!hasKey("scales", "lividHpScale")) writeDoubleConfig("scales", "lividHpScale", 1);
 		if (!hasKey("scales", "cakeTimerScale")) writeDoubleConfig("scales", "cakeTimerScale", 1);
+		if (!hasKey("scales", "skillTrackerScale")) writeDoubleConfig("scales", "skillTrackerScale", 1);
 		
 		if (!hasKey("colors", "main")) writeStringConfig("colors", "main", "" + EnumChatFormatting.GREEN);
 		if (!hasKey("colors", "secondary")) writeStringConfig("colors", "secondary", "" + EnumChatFormatting.DARK_GREEN);
@@ -386,6 +391,7 @@ public class ConfigHandler {
 		if (!hasKey("colors", "skill50Display")) writeStringConfig("colors", "skill50Display", "" + EnumChatFormatting.AQUA);
 		if (!hasKey("colors", "coordsDisplay")) writeStringConfig("colors", "coordsDisplay", "" + EnumChatFormatting.WHITE);
 		if (!hasKey("colors", "cakeDisplay")) writeStringConfig("colors", "cakeDisplay", "" + EnumChatFormatting.GOLD);
+		if (!hasKey("colors", "skillTracker")) writeStringConfig("colors", "skillTracker", "" + EnumChatFormatting.AQUA);
 		
 		ToggleCommand.gpartyToggled = getBoolean("toggles", "GParty");
 		ToggleCommand.coordsToggled = getBoolean("toggles", "Coords");
@@ -559,6 +565,7 @@ public class ConfigHandler {
 		LootCommand.implosions = getInt("catacombs", "implosion");
 		LootCommand.witherShields = getInt("catacombs", "witherShield");
 		LootCommand.shadowWarps = getInt("catacombs", "shadowWarp");
+		LootCommand.necronsHandles = getInt("catacombs", "necronsHandle");
 		LootCommand.autoRecombs = getInt("catacombs", "autoRecomb");
 		LootCommand.witherHelms = getInt("catacombs", "witherHelm");
 		LootCommand.witherChests = getInt("catacombs", "witherChest");
@@ -572,6 +579,7 @@ public class ConfigHandler {
 		DisplayCommand.auto = getBoolean("misc", "autoDisplay");
 		TheMod.SKILL_TIME = getInt("misc", "skill50Time") * 20;
 		TheMod.cakeTime = getDouble("misc", "cakeTime");
+		TheMod.showSkillTracker = getBoolean("misc", "showSkillTracker");
 		
 		MoveCommand.coordsXY[0] = getInt("locations", "coordsX");
 		MoveCommand.coordsXY[1] = getInt("locations", "coordsY");
@@ -585,6 +593,8 @@ public class ConfigHandler {
 		MoveCommand.lividHpXY[1] = getInt("locations", "lividHpY");
 		MoveCommand.cakeTimerXY[0] = getInt("locations", "cakeTimerX");
 		MoveCommand.cakeTimerXY[1] = getInt("locations", "cakeTimerY");
+		MoveCommand.skillTrackerXY[0] = getInt("locations", "skillTrackerX");
+		MoveCommand.skillTrackerXY[1] = getInt("locations", "skillTrackerY");
 		
 		ScaleCommand.coordsScale = getDouble("scales", "coordsScale");
 		ScaleCommand.displayScale = getDouble("scales", "displayScale");
@@ -592,6 +602,7 @@ public class ConfigHandler {
 		ScaleCommand.skill50Scale = getDouble("scales", "skill50Scale");
 		ScaleCommand.lividHpScale = getDouble("scales", "lividHpScale");
 		ScaleCommand.cakeTimerScale = getDouble("scales", "cakeTimerScale");
+		ScaleCommand.skillTrackerScale = getDouble("scales", "skillTrackerScale");
 		
 		TheMod.MAIN_COLOUR = getString("colors", "main");
 		TheMod.SECONDARY_COLOUR = getString("colors", "secondary");
@@ -604,6 +615,7 @@ public class ConfigHandler {
 		TheMod.SKILL_50_COLOUR = getString("colors", "skill50Display");
 		TheMod.COORDS_COLOUR = getString("colors", "coordsDisplay");
 		TheMod.CAKE_COLOUR = getString("colors", "cakeDisplay");
+		TheMod.SKILL_TRACKER_COLOUR = getString("colors", "skillTracker");
 	}
 	
 }

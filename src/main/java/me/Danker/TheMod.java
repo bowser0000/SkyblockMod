@@ -12,6 +12,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Pattern;
 
+import org.apache.commons.lang3.time.StopWatch;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
@@ -36,6 +37,7 @@ import me.Danker.commands.ReloadConfigCommand;
 import me.Danker.commands.ResetLootCommand;
 import me.Danker.commands.ScaleCommand;
 import me.Danker.commands.SetkeyCommand;
+import me.Danker.commands.SkillTrackerCommand;
 import me.Danker.commands.SkillsCommand;
 import me.Danker.commands.SkyblockPlayersCommand;
 import me.Danker.commands.SlayerCommand;
@@ -45,6 +47,7 @@ import me.Danker.gui.DisplayGui;
 import me.Danker.gui.EditLocationsGui;
 import me.Danker.gui.OnlySlayerGui;
 import me.Danker.gui.PuzzleSolversGui;
+import me.Danker.gui.SkillTrackerGui;
 import me.Danker.handlers.APIHandler;
 import me.Danker.handlers.ConfigHandler;
 import me.Danker.handlers.PacketHandler;
@@ -126,16 +129,22 @@ public class TheMod
     static int tickAmount = 1;
     static String lastMaddoxCommand = "/cb placeholder";
     static double lastMaddoxTime = 0;
-    static KeyBinding[] keyBindings = new KeyBinding[1];
+    static KeyBinding[] keyBindings = new KeyBinding[2];
     static int lastMouse = -1;
     static boolean usingLabymod = false;
     public static String guiToOpen = null;
+	static boolean foundLivid = false;
+	static Entity livid = null;
+	public static double cakeTime;
+	
+	public static final ResourceLocation CAKE_ICON = new ResourceLocation("dsm", "icons/cake.png");
+    
     static String[] riddleSolutions = {"The reward is not in my chest!", "At least one of them is lying, and the reward is not in", 
-    								   "My chest doesn't have the reward. We are all telling the truth", "My chest has the reward and I'm telling the truth",
-    								   "The reward isn't in any of our chests", "Both of them are telling the truth."};
-    static Map<String, String[]> triviaSolutions = new HashMap<String, String[]>();
-    static String[] triviaAnswers = null;
-    static Entity highestBlaze = null;
+									   "My chest doesn't have the reward. We are all telling the truth", "My chest has the reward and I'm telling the truth",
+									   "The reward isn't in any of our chests", "Both of them are telling the truth."};
+	static Map<String, String[]> triviaSolutions = new HashMap<String, String[]>();
+	static String[] triviaAnswers = null;
+	static Entity highestBlaze = null;
 	static Entity lowestBlaze = null;
 	// Among Us colours
 	static final int[] CREEPER_COLOURS = {0x50EF39, 0xC51111, 0x132ED1, 0x117F2D, 0xED54BA, 0xEF7D0D, 0xF5F557, 0xD6E0F0, 0x6B2FBB, 0x39FEDC};
@@ -144,12 +153,7 @@ public class TheMod
 	static List<Vec3[]> creeperLines = new ArrayList<Vec3[]>();
 	static boolean prevInWaterRoom = false;
 	static boolean inWaterRoom = false;
-	static boolean foundLivid = false;
-	static Entity livid = null;
-	public static double cakeTime;
 	
-	public static final ResourceLocation CAKE_ICON = new ResourceLocation("dsm", "icons/cake.png");
-    
     static double dungeonStartTime = 0;
     static double bloodOpenTime = 0;
     static double watcherClearTime = 0;
@@ -157,6 +161,24 @@ public class TheMod
     static int witherDoors = 0;
     static int dungeonDeaths = 0;
     static int puzzleFails = 0;
+    
+    static String lastSkill = "Farming";
+    public static boolean showSkillTracker;
+    public static StopWatch skillStopwatch = new StopWatch();
+	static double farmingXP = 0;
+	public static double farmingXPGained = 0;
+	static double miningXP = 0;
+	public static double miningXPGained = 0;
+	static double combatXP = 0;
+	public static double combatXPGained = 0;
+	static double foragingXP = 0;
+	public static double foragingXPGained = 0;
+	static double fishingXP = 0;
+	public static double fishingXPGained = 0;
+	static double enchantingXP = 0;
+	public static double enchantingXPGained = 0;
+	static double alchemyXP = 0;
+	public static double alchemyXPGained = 0;
     
     public static String MAIN_COLOUR;
     public static String SECONDARY_COLOUR;
@@ -169,6 +191,7 @@ public class TheMod
     public static String SKILL_50_COLOUR;
     public static String COORDS_COLOUR;
     public static String CAKE_COLOUR;
+    public static String SKILL_TRACKER_COLOUR;
     
     @EventHandler
     public void init(FMLInitializationEvent event) {
@@ -250,6 +273,7 @@ public class TheMod
 		pattern = Pattern.compile(patternString);
 		
 		keyBindings[0] = new KeyBinding("Open Maddox Menu", Keyboard.KEY_M, "Danker's Skyblock Mod");
+		keyBindings[1] = new KeyBinding("Start/Stop Skill Tracker", Keyboard.KEY_NUMPAD5, "Danker's Skyblock Mod");
 		
 		for (int i = 0; i < keyBindings.length; i++) {
 			ClientRegistry.registerKeyBinding(keyBindings[i]);
@@ -279,7 +303,8 @@ public class TheMod
     	ClientCommandHandler.instance.registerCommand(new BlockSlayerCommand());
     	ClientCommandHandler.instance.registerCommand(new DungeonsCommand());
     	ClientCommandHandler.instance.registerCommand(new LobbySkillsCommand());
-    	ClientCommandHandler.instance.registerCommand(new DankerGuiCommand());	
+    	ClientCommandHandler.instance.registerCommand(new DankerGuiCommand());
+    	ClientCommandHandler.instance.registerCommand(new SkillTrackerCommand());
     }
     
     @EventHandler
@@ -339,12 +364,86 @@ public class TheMod
     	if (event.type == 2) {
     		String[] actionBarSections = event.message.getUnformattedText().split(" {3,}");
     		for (String section : actionBarSections) {
-    			if (ToggleCommand.skill50DisplayToggled) {
-    				if (section.contains("+") && section.contains("/") && section.contains("(")) {
-    					if (section.contains("Runecrafting")) return;
-    					
+    			if (section.contains("+") && section.contains("/") && section.contains("(")) {
+    				if (!section.contains("Runecrafting") && !section.contains("Carpentry")) {
+    					int limit = section.contains("Farming") ? 60 : 50;
+    					double currentXP = Double.parseDouble(section.substring(section.indexOf("(") + 1, section.indexOf("/")).replace(",", ""));
+    					int previousXP = Utils.getPastXpEarned(Integer.parseInt(section.substring(section.indexOf("/") + 1, section.indexOf(")")).replaceAll(",", "")), limit);
+    					double totalXP = currentXP + previousXP;
+    					double xpGained = Double.parseDouble(section.substring(section.indexOf("+") + 1, section.indexOf(" ")).replace(",", ""));
+    					String skill = section.substring(section.indexOf(" ") + 1, section.lastIndexOf(" "));
+    					switch (skill) {
+	    					case "Farming":
+	    						lastSkill = "Farming";
+	    						if (farmingXP == 0) {
+	    							farmingXP = totalXP;
+	    						} else {
+	    							if (skillStopwatch.isStarted() && !skillStopwatch.isSuspended()) farmingXPGained += totalXP - farmingXP;
+	    							farmingXP = totalXP;
+	    						}
+	    						break;
+	    					case "Mining":
+	    						lastSkill = "Mining";
+	    						if (miningXP == 0) {
+	    							miningXP = totalXP;
+	    						} else {
+	    							if (skillStopwatch.isStarted() && !skillStopwatch.isSuspended()) miningXPGained += totalXP - miningXP;
+	    							miningXP = totalXP;
+	    						}
+	    						break;
+	    					case "Combat":
+	    						lastSkill = "Combat";
+	    						if (combatXP == 0) {
+	    							combatXP = totalXP;
+	    						} else {
+	    							if (skillStopwatch.isStarted() && !skillStopwatch.isSuspended()) combatXPGained += totalXP - combatXP;
+	    							combatXP = totalXP;
+	    						}
+	    						break;
+	    					case "Foraging":
+	    						lastSkill = "Foraging";
+	    						if (foragingXP == 0) {
+	    							foragingXP = totalXP;
+	    						} else {
+	    							if (skillStopwatch.isStarted() && !skillStopwatch.isSuspended()) foragingXPGained += totalXP - foragingXP;
+	    							foragingXP = totalXP;
+	    						}
+	    						break;
+	    					case "Fishing":
+	    						lastSkill = "Fishing";
+	    						if (fishingXP == 0) {
+	    							fishingXP = totalXP;
+	    						} else {
+	    							if (skillStopwatch.isStarted() && !skillStopwatch.isSuspended()) fishingXPGained += totalXP - fishingXP;
+	    							fishingXP = totalXP;
+	    						}
+	    						break;
+	    					case "Enchanting":
+	    						lastSkill = "Enchanting";
+	    						if (enchantingXP == 0) {
+	    							enchantingXP = totalXP;
+	    						} else {
+	    							if (skillStopwatch.isStarted() && !skillStopwatch.isSuspended()) enchantingXPGained += totalXP - enchantingXP;
+	    							enchantingXP = totalXP;
+	    						}
+	    						break;
+	    					case "Alchemy":
+	    						lastSkill = "Alchemy";
+	    						if (alchemyXP == 0) {
+	    							alchemyXP = totalXP;
+	    						} else {
+	    							if (skillStopwatch.isStarted() && !skillStopwatch.isSuspended()) alchemyXPGained += totalXP - alchemyXP;
+	    							alchemyXP = totalXP;
+	    						}
+	    						break;
+	    					default:
+	    						System.err.println("Unknown skill.");
+    					}
+    				}
+    				
+    				if (ToggleCommand.skill50DisplayToggled && !section.contains("Runecrafting")) {
     					String xpGained = section.substring(section.indexOf("+"), section.indexOf("(") - 1);
-    					double currentXp = Double.parseDouble(section.substring(section.indexOf("(") + 1, section.indexOf("/")).replaceAll(",", ""));
+    					double currentXp = Double.parseDouble(section.substring(section.indexOf("(") + 1, section.indexOf("/")).replace(",", ""));
     					int limit;
     					int totalXp;
     					if (section.contains("Farming")) {
@@ -988,33 +1087,47 @@ public class TheMod
 			} else if (message.contains("Wither Blood")) { // F7
 				LootCommand.witherBloods++;
 				LootCommand.witherBloodsSession++;
+				ConfigHandler.writeIntConfig("catacombs", "witherBlood", LootCommand.witherBloods);
 			} else if (message.contains("Wither Cloak")) {
 				LootCommand.witherCloaks++;
 				LootCommand.witherCloaksSession++;
+				ConfigHandler.writeIntConfig("catacombs", "witherCloak", LootCommand.witherCloaks);
 			} else if (message.contains("Implosion")) {
 				LootCommand.implosions++;
 				LootCommand.implosionsSession++;
+				ConfigHandler.writeIntConfig("catacombs", "implosion", LootCommand.implosions);
 			} else if (message.contains("Wither Shield")) {
 				LootCommand.witherShields++;
 				LootCommand.witherShieldsSession++;
+				ConfigHandler.writeIntConfig("catacombs", "witherShield", LootCommand.witherShields);
 			} else if (message.contains("Shadow Warp")) {
 				LootCommand.shadowWarps++;
 				LootCommand.shadowWarpsSession++;
+				ConfigHandler.writeIntConfig("catacombs", "shadowWarp", LootCommand.shadowWarps);
+			} else if (message.contains("Necron's Handle")) {
+				LootCommand.necronsHandles++;
+				LootCommand.necronsHandlesSession++;
+				ConfigHandler.writeIntConfig("catacombs", "necronsHandle", LootCommand.necronsHandles);
 			} else if (message.contains("Auto Recombobulator")) {
 				LootCommand.autoRecombs++;
 				LootCommand.autoRecombsSession++;
+				ConfigHandler.writeIntConfig("catacombs", "autoRecomb", LootCommand.autoRecombs);
 			} else if (message.contains("Wither Helmet")) {
 				LootCommand.witherHelms++;
 				LootCommand.witherHelmsSession++;
+				ConfigHandler.writeIntConfig("catacombs", "witherHelm", LootCommand.witherHelms);
 			} else if (message.contains("Wither Chestplate")) {
 				LootCommand.witherChests++;
 				LootCommand.witherChestsSession++;
+				ConfigHandler.writeIntConfig("catacombs", "witherChest", LootCommand.witherChests);
 			} else if (message.contains("Wither Leggings")) {
 				LootCommand.witherLegs++;
 				LootCommand.witherLegsSession++;
+				ConfigHandler.writeIntConfig("catacombs", "witherLegging", LootCommand.witherLegs);
 			} else if (message.contains("Wither Boots")) {
 				LootCommand.witherBoots++;
 				LootCommand.witherBootsSession++;
+				ConfigHandler.writeIntConfig("catacombs", "witherBoot", LootCommand.witherBoots);
 			}
 		}
 		
@@ -1107,6 +1220,45 @@ public class TheMod
     		new TextRenderer(mc, cakeText, MoveCommand.cakeTimerXY[0] + 20, MoveCommand.cakeTimerXY[1] + 5, 1);
     		
     		GL11.glScaled(scaleReset, scaleReset, scaleReset);
+    	}
+    	
+    	if (showSkillTracker && Utils.inSkyblock) {
+    		int xpPerHour = 0;
+    		double xpToShow = 0;
+    		switch (lastSkill) {
+	    		case "Farming":
+	    			xpToShow = farmingXPGained;
+	    			break;
+	    		case "Mining":
+	    			xpToShow = miningXPGained;
+	    			break;
+	    		case "Combat":
+	    			xpToShow = combatXPGained;
+	    			break;
+	    		case "Foraging":
+	    			xpToShow = foragingXPGained;
+	    			break;
+	    		case "Fishing":
+	    			xpToShow = fishingXPGained;
+	    			break;
+	    		case "Enchanting":
+	    			xpToShow = enchantingXPGained;
+	    			break;
+	    		case "Alchemy":
+	    			xpToShow = alchemyXPGained;
+	    			break;
+	    		default:
+	    			System.err.println("Unknown skill in rendering.");
+    		}
+			xpPerHour = (int) Math.round(xpToShow / ((skillStopwatch.getTime() + 1) / 3600000d));
+			String skillTrackerText = SKILL_TRACKER_COLOUR + lastSkill + " XP Earned: " + NumberFormat.getNumberInstance(Locale.US).format(xpToShow) + "\n" +
+									  SKILL_TRACKER_COLOUR + "Time Elapsed: " + Utils.getTimeBetween(0, skillStopwatch.getTime() / 1000d) + "\n" +
+									  SKILL_TRACKER_COLOUR + "XP Per Hour: " + NumberFormat.getIntegerInstance(Locale.US).format(xpPerHour);
+			if (!skillStopwatch.isStarted() || skillStopwatch.isSuspended()) {
+				skillTrackerText += "\n" + EnumChatFormatting.RED + "PAUSED";
+			}
+			
+			new TextRenderer(mc, skillTrackerText, MoveCommand.skillTrackerXY[0], MoveCommand.skillTrackerXY[1], ScaleCommand.skillTrackerScale);
     	}
     	
     	if (!DisplayCommand.display.equals("off")) {
@@ -1850,6 +2002,7 @@ public class TheMod
 							EnumChatFormatting.DARK_PURPLE + "Implosions:\n" +
 							EnumChatFormatting.DARK_PURPLE + "Wither Shields:\n" +
 							EnumChatFormatting.DARK_PURPLE + "Shadow Warps:\n" +
+							EnumChatFormatting.DARK_PURPLE + "Necron's Handles:\n" +
 							EnumChatFormatting.GOLD + "Auto Recombobs:\n" +
 							EnumChatFormatting.GOLD + "Wither Helmets:\n" +
 							EnumChatFormatting.GOLD + "Wither Chests:\n" +
@@ -1864,6 +2017,7 @@ public class TheMod
 							EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.implosions) + "\n" +
 							EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.witherShields) + "\n" +
 							EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.shadowWarps) + "\n" +
+							EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.necronsHandles) + "\n" +
 							EnumChatFormatting.GOLD + nf.format(LootCommand.autoRecombs) + "\n" +
 							EnumChatFormatting.GOLD + nf.format(LootCommand.witherHelms) + "\n" +
 							EnumChatFormatting.GOLD + nf.format(LootCommand.witherChests) + "\n" +
@@ -1879,6 +2033,7 @@ public class TheMod
 							EnumChatFormatting.DARK_PURPLE + "Implosions:\n" +
 							EnumChatFormatting.DARK_PURPLE + "Wither Shields:\n" +
 							EnumChatFormatting.DARK_PURPLE + "Shadow Warps:\n" +
+							EnumChatFormatting.DARK_PURPLE + "Necron's Handles:\n" +
 							EnumChatFormatting.GOLD + "Auto Recombobulators:\n" +
 							EnumChatFormatting.GOLD + "Wither Helmets:\n" +
 							EnumChatFormatting.GOLD + "Wither Chests:\n" +
@@ -1893,6 +2048,7 @@ public class TheMod
 							EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.implosionsSession) + "\n" +
 							EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.witherShieldsSession) + "\n" +
 							EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.shadowWarpsSession) + "\n" +
+							EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.necronsHandlesSession) + "\n" +
 							EnumChatFormatting.GOLD + nf.format(LootCommand.autoRecombsSession) + "\n" +
 							EnumChatFormatting.GOLD + nf.format(LootCommand.witherHelmsSession) + "\n" +
 							EnumChatFormatting.GOLD + nf.format(LootCommand.witherChestsSession) + "\n" +
@@ -2157,11 +2313,11 @@ public class TheMod
     	    								red = EnumChatFormatting.WHITE + "Quartz, " + EnumChatFormatting.DARK_GRAY + "Coal, " + EnumChatFormatting.GREEN + "Emerald";
     	    								break;
     	    							case 3:
-    	    								purple = EnumChatFormatting.WHITE + "Quartz, " + EnumChatFormatting.AQUA + "Diamond";
-    	    								orange = EnumChatFormatting.YELLOW + "Gold, " + EnumChatFormatting.GREEN + "Emerald";
-    	    								blue = EnumChatFormatting.WHITE + "Quartz, " + EnumChatFormatting.YELLOW + "Gold, " + EnumChatFormatting.AQUA + "Diamond";
-    	    								green = EnumChatFormatting.YELLOW + "Gold";
-    	    								red = EnumChatFormatting.GREEN + "Emerald";
+    	    								purple = EnumChatFormatting.WHITE + "Quartz, " + EnumChatFormatting.YELLOW + "Gold, " + EnumChatFormatting.AQUA + "Diamond";
+    	    								orange = EnumChatFormatting.GREEN + "Emerald";
+    	    								blue = EnumChatFormatting.WHITE + "Quartz, " + EnumChatFormatting.AQUA + "Diamond";
+    	    								green = EnumChatFormatting.GRAY + "None";
+    	    								red = EnumChatFormatting.YELLOW + "Gold, " + EnumChatFormatting.GREEN + "Emerald";
     	    								break;
     	    							case 4:
     	    								purple = EnumChatFormatting.WHITE + "Quartz, " + EnumChatFormatting.YELLOW + "Gold, " + EnumChatFormatting.GREEN + "Emerald, " + EnumChatFormatting.RED + "Clay";
@@ -2283,6 +2439,8 @@ public class TheMod
         		mc.displayGuiScreen(new EditLocationsGui());
         	} else if (guiToOpen.equals("puzzlesolvers")) {
         		mc.displayGuiScreen(new PuzzleSolversGui());
+        	} else if (guiToOpen.equals("skilltracker")) {
+        		mc.displayGuiScreen(new SkillTrackerGui());
         	}
         	guiToOpen = null;
     	}
@@ -2330,8 +2488,22 @@ public class TheMod
     @SubscribeEvent
     public void onKey(KeyInputEvent event) {
     	if (!Utils.inSkyblock) return;
+    	
+    	EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
     	if (keyBindings[0].isPressed()) {
-    		Minecraft.getMinecraft().thePlayer.sendChatMessage(lastMaddoxCommand);
+    		player.sendChatMessage(lastMaddoxCommand);
+    	}
+    	if (keyBindings[1].isPressed()) {
+    		if (skillStopwatch.isStarted() && skillStopwatch.isSuspended()) {
+    			skillStopwatch.resume();
+				player.addChatMessage(new ChatComponentText(MAIN_COLOUR + "Skill tracker started."));
+    		} else if (!skillStopwatch.isStarted()) {
+    			skillStopwatch.start();
+				player.addChatMessage(new ChatComponentText(MAIN_COLOUR + "Skill tracker started."));
+    		} else if (skillStopwatch.isStarted() && !skillStopwatch.isSuspended()) {
+    			skillStopwatch.suspend();
+				player.addChatMessage(new ChatComponentText(MAIN_COLOUR + "Skill tracker paused."));
+    		}
     	}
     }
     
