@@ -147,6 +147,19 @@ public class LootCommand extends CommandBase {
 	public static int necroSwords;
 	public static double f6CoinsSpent;
 	public static double f6TimeSpent;
+	// F7
+	public static int witherBloods;
+	public static int witherCloaks;
+	public static int implosions;
+	public static int witherShields;
+	public static int shadowWarps;
+	public static int autoRecombs;
+	public static int witherHelms;
+	public static int witherChests;
+	public static int witherLegs;
+	public static int witherBoots;
+	public static double f7CoinsSpent;
+	public static double f7TimeSpent;
 	
 	// Single sessions (No config saves)
 	// Wolf
@@ -281,6 +294,19 @@ public class LootCommand extends CommandBase {
 	public static int necroSwordsSession = 0;
 	public static double f6CoinsSpentSession = 0;
 	public static double f6TimeSpentSession = 0;
+	// F7
+	public static int witherBloodsSession = 0;
+	public static int witherCloaksSession = 0;
+	public static int implosionsSession = 0;
+	public static int witherShieldsSession = 0;
+	public static int shadowWarpsSession = 0;
+	public static int autoRecombsSession = 0;
+	public static int witherHelmsSession = 0;
+	public static int witherChestsSession = 0;
+	public static int witherLegsSession = 0;
+	public static int witherBootsSession = 0;
+	public static double f7CoinsSpentSession = 0;
+	public static double f7TimeSpentSession = 0;
 	
 	@Override
 	public String getCommandName() {
@@ -289,7 +315,7 @@ public class LootCommand extends CommandBase {
 
 	@Override
 	public String getCommandUsage(ICommandSender arg0) {
-		return "/" + getCommandName() + " <zombie/spider/wolf/fishing/catacombs> [winter/festival/spooky/f(1-6)/session]";
+		return "/" + getCommandName() + " <zombie/spider/wolf/fishing/catacombs> [winter/festival/spooky/f(1-7)/session]";
 	}
 	
 	@Override
@@ -304,7 +330,7 @@ public class LootCommand extends CommandBase {
 		} else if (args.length == 2 && args[0].equalsIgnoreCase("fishing")) {
 			return getListOfStringsMatchingLastWord(args, "winter", "festival", "spooky", "session");
 		} else if (args.length == 2 && args[0].equalsIgnoreCase("catacombs")) {
-			return getListOfStringsMatchingLastWord(args, "f1", "floor1", "f2", "floor2", "f3", "floor3", "f4", "floor4", "f5", "floor5", "f6", "floor6");
+			return getListOfStringsMatchingLastWord(args, "f1", "floor1", "f2", "floor2", "f3", "floor3", "f4", "floor4", "f5", "floor5", "f6", "floor6", "f7", "floor7");
 		} else if (args.length > 1 || (args.length == 3 && args[0].equalsIgnoreCase("fishing") && args[1].equalsIgnoreCase("winter"))) { 
 			return getListOfStringsMatchingLastWord(args, "session");
 		}
@@ -859,6 +885,44 @@ public class LootCommand extends CommandBase {
 															EnumChatFormatting.GOLD + "    Necro Swords: " + nf.format(necroSwords) + "\n" +
 															EnumChatFormatting.AQUA + "    Coins Spent: " + Utils.getMoneySpent(f6CoinsSpent) + "\n" +
 															EnumChatFormatting.AQUA + "    Time Spent: " + Utils.getTimeBetween(0, f6TimeSpent) + "\n" +
+															EnumChatFormatting.DARK_RED + EnumChatFormatting.BOLD + " -------------------"));
+			} else if (arg1[1].equalsIgnoreCase("f7") || arg1[1].equalsIgnoreCase("floor7")) {
+				if (showSession) {
+					player.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_RED + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+																EnumChatFormatting.RED + EnumChatFormatting.BOLD + "  Catacombs F7 Summary (Current Session):\n" +
+																EnumChatFormatting.GOLD + "    Recombobulator 3000s: " + nf.format(recombobulatorsSession) + "\n" +
+																EnumChatFormatting.DARK_PURPLE + "    Fuming Potato Books: " + nf.format(fumingPotatoBooksSession) + "\n" +
+																EnumChatFormatting.DARK_PURPLE + "    Wither Bloods: " + nf.format(witherBloodsSession) + "\n" +
+																EnumChatFormatting.DARK_PURPLE + "    Wither Cloaks: " + nf.format(witherCloaksSession) + "\n" +
+																EnumChatFormatting.DARK_PURPLE + "    Implosions: " + nf.format(implosionsSession) + "\n" +
+																EnumChatFormatting.DARK_PURPLE + "    Wither Shields: " + nf.format(witherShieldsSession) + "\n" +
+																EnumChatFormatting.DARK_PURPLE + "    Shadow Warps: " + nf.format(shadowWarpsSession) + "\n" +
+																EnumChatFormatting.GOLD + "    Auto Recombobulator: " + nf.format(autoRecombsSession) + "\n" +
+																EnumChatFormatting.GOLD + "    Wither Helmets: " + nf.format(witherHelmsSession) + "\n" +
+																EnumChatFormatting.GOLD + "    Wither Chesplates: " + nf.format(witherChestsSession) + "\n" +
+																EnumChatFormatting.GOLD + "    Wither Leggings: " + nf.format(witherLegsSession) + "\n" +
+																EnumChatFormatting.GOLD + "    Wither Boots: " + nf.format(witherBootsSession) + "\n" +
+																EnumChatFormatting.AQUA + "    Coins Spent: " + Utils.getMoneySpent(f7CoinsSpentSession) + "\n" +
+																EnumChatFormatting.AQUA + "    Time Spent: " + Utils.getTimeBetween(0, f7TimeSpentSession) + "\n" +
+																EnumChatFormatting.DARK_RED + EnumChatFormatting.BOLD + " -------------------"));
+					return;
+				}
+				player.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_RED + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+															EnumChatFormatting.RED + EnumChatFormatting.BOLD + "  Catacombs F7 Summary:\n" +
+															EnumChatFormatting.GOLD + "    Recombobulator 3000s: " + nf.format(recombobulators) + "\n" +
+															EnumChatFormatting.DARK_PURPLE + "    Fuming Potato Books: " + nf.format(fumingPotatoBooks) + "\n" +
+															EnumChatFormatting.DARK_PURPLE + "    Wither Bloods: " + nf.format(witherBloods) + "\n" +
+															EnumChatFormatting.DARK_PURPLE + "    Wither Cloaks: " + nf.format(witherCloaks) + "\n" +
+															EnumChatFormatting.DARK_PURPLE + "    Implosions: " + nf.format(implosions) + "\n" +
+															EnumChatFormatting.DARK_PURPLE + "    Wither Shields: " + nf.format(witherShields) + "\n" +
+															EnumChatFormatting.DARK_PURPLE + "    Shadow Warps: " + nf.format(shadowWarps) + "\n" +
+															EnumChatFormatting.GOLD + "    Auto Recombobulator: " + nf.format(autoRecombs) + "\n" +
+															EnumChatFormatting.GOLD + "    Wither Helmets: " + nf.format(witherHelms) + "\n" +
+															EnumChatFormatting.GOLD + "    Wither Chesplates: " + nf.format(witherChests) + "\n" +
+															EnumChatFormatting.GOLD + "    Wither Leggings: " + nf.format(witherLegs) + "\n" +
+															EnumChatFormatting.GOLD + "    Wither Boots: " + nf.format(witherBoots) + "\n" +
+															EnumChatFormatting.AQUA + "    Coins Spent: " + Utils.getMoneySpent(f7CoinsSpent) + "\n" +
+															EnumChatFormatting.AQUA + "    Time Spent: " + Utils.getTimeBetween(0, f7TimeSpent) + "\n" +
 															EnumChatFormatting.DARK_RED + EnumChatFormatting.BOLD + " -------------------"));
 			} else {
 				player.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "Usage: /loot catacombs <f1/f2/f3/f4/f5/f6>"));

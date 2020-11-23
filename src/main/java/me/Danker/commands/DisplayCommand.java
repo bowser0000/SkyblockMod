@@ -22,7 +22,7 @@ public class DisplayCommand extends CommandBase {
 
 	@Override
 	public String getCommandUsage(ICommandSender arg0) {
-		return "/" + getCommandName() + " <zombie/spider/wolf/fishing/catacombs/auto/off> [winter/festival/spooky/session/f(1-6)]";
+		return "/" + getCommandName() + " <zombie/spider/wolf/fishing/catacombs/auto/off> [winter/festival/spooky/session/f(1-7)]";
 	}
 
 	@Override
@@ -37,7 +37,7 @@ public class DisplayCommand extends CommandBase {
 		} else if (args.length == 2 && args[0].equalsIgnoreCase("fishing")) {
 			return getListOfStringsMatchingLastWord(args, "winter", "festival", "spooky", "session");
 		} else if (args.length == 2 && args[0].equalsIgnoreCase("catacombs")) {
-			return getListOfStringsMatchingLastWord(args, "f1", "floor1", "f2", "floor2", "f3", "floor3", "f4", "floor4", "f5", "floor5", "f6", "floor6");
+			return getListOfStringsMatchingLastWord(args, "f1", "floor1", "f2", "floor2", "f3", "floor3", "f4", "floor4", "f5", "floor5", "f6", "floor6", "f7", "floor7");
 		} else if (args.length > 1 || (args.length == 3 && args[0].equalsIgnoreCase("fishing") && args[1].equalsIgnoreCase("winter"))) { 
 			return getListOfStringsMatchingLastWord(args, "session");
 		}
@@ -141,6 +141,12 @@ public class DisplayCommand extends CommandBase {
 					display = "catacombs_floor_six_session";
 				} else {
 					display = "catacombs_floor_six";
+				}
+			} else if (arg1[1].equalsIgnoreCase("f7") || arg1[1].equalsIgnoreCase("floor7")) {
+				if (showSession) {
+					display = "catacombs_floor_seven_session";
+				} else {
+					display = "catacombs_floor_seven";
 				}
 			} else {
 				player.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "Usage: /display catacombs <f1/f2/f3/f4/f5/f6>"));

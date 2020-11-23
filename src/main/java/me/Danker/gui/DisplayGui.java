@@ -32,6 +32,7 @@ public class DisplayGui extends GuiScreen {
 	private GuiButton catacombsF4;
 	private GuiButton catacombsF5;
 	private GuiButton catacombsF6;
+	private GuiButton catacombsF7;
 	
 	@Override
 	public boolean doesGuiPauseGame() {
@@ -58,12 +59,13 @@ public class DisplayGui extends GuiScreen {
 		fishingWinter = new GuiButton(0, width / 2 - 110, (int) (height * 0.4), 100, 20, "Fishing Winter");
 		fishingFestival = new GuiButton(0, width / 2 + 10, (int) (height * 0.4), 100, 20, "Fishing Festival");
 		fishingSpooky = new GuiButton(0, width / 2 + 130, (int) (height * 0.4), 100, 20, "Fishing Spooky");
-		catacombsF1 = new GuiButton(0, width / 2 - 145, (int) (height * 0.55), 50, 20, "F1");
-		catacombsF2 = new GuiButton(0, width / 2 - 85, (int) (height * 0.55), 50, 20, "F2");
-		catacombsF3 = new GuiButton(0, width / 2 - 25, (int) (height * 0.55), 50, 20, "F3");
-		catacombsF4 = new GuiButton(0, width / 2 + 35, (int) (height * 0.55), 50, 20, "F4");
-		catacombsF5 = new GuiButton(0, width / 2 + 95, (int) (height * 0.55), 50, 20, "F5");
-		catacombsF6 = new GuiButton(0, width / 2 - 145, (int) (height * 0.63), 50, 20, "F6");
+		catacombsF1 = new GuiButton(0, width / 2 - 205, (int) (height * 0.55), 50, 20, "F1");
+		catacombsF2 = new GuiButton(0, width / 2 - 145, (int) (height * 0.55), 50, 20, "F2");
+		catacombsF3 = new GuiButton(0, width / 2 - 85, (int) (height * 0.55), 50, 20, "F3");
+		catacombsF4 = new GuiButton(0, width / 2 - 25, (int) (height * 0.55), 50, 20, "F4");
+		catacombsF5 = new GuiButton(0, width / 2 + 35, (int) (height * 0.55), 50, 20, "F5");
+		catacombsF6 = new GuiButton(0, width / 2 + 95, (int) (height * 0.55), 50, 20, "F6");
+		catacombsF7 = new GuiButton(0, width / 2 + 155, (int) (height * 0.55), 50, 20, "F7");
 		
 		this.buttonList.add(showSession);
 		this.buttonList.add(off);
@@ -81,6 +83,7 @@ public class DisplayGui extends GuiScreen {
 		this.buttonList.add(catacombsF4);
 		this.buttonList.add(catacombsF5);
 		this.buttonList.add(catacombsF6);
+		this.buttonList.add(catacombsF7);
 		this.buttonList.add(editLocations);
 		this.buttonList.add(goBack);
 	}
@@ -146,6 +149,8 @@ public class DisplayGui extends GuiScreen {
 			setDisplay("catacombs_floor_five", false);
 		} else if (button == catacombsF6) {
 			setDisplay("catacombs_floor_six", false);
+		} else if (button == catacombsF7) {
+			setDisplay("catacombs_floor_seven", false);
 		}
 	}
 	

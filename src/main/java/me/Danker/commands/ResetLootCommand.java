@@ -224,6 +224,18 @@ public class ResetLootCommand extends CommandBase {
 		LootCommand.necroSwordsSession = 0;
 		LootCommand.f6CoinsSpentSession = 0;
 		LootCommand.f6TimeSpentSession = 0;
+		LootCommand.witherBloodsSession = 0;
+		LootCommand.witherCloaksSession = 0;
+		LootCommand.implosionsSession = 0;
+		LootCommand.witherShieldsSession = 0;
+		LootCommand.shadowWarpsSession = 0;
+		LootCommand.autoRecombsSession = 0;
+		LootCommand.witherHelmsSession = 0;
+		LootCommand.witherChestsSession = 0;
+		LootCommand.witherLegsSession = 0;
+		LootCommand.witherBootsSession = 0;
+		LootCommand.f7CoinsSpentSession = 0;
+		LootCommand.f7TimeSpentSession = 0;
 		ConfigHandler.deleteCategory("catacombs");
 		ConfigHandler.reloadConfig();
 	}

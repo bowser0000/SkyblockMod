@@ -39,8 +39,8 @@ Discord Server: https://discord.gg/QsEkNQS
 - /toggle <gparty/coords/golden/slayercount/rngesusalerts/splitfishing/chatmaddox/spiritbearalerts/aotd/sceptremessages/petcolors/dungeontimer/golemalerts/expertiselore/skill50display/outlinetext/midasstaffmessages/healmessages/caketimer/lividsolver/oruopuzzle/blazepuzzle/creeperpuzzle/waterpuzzle/list> - Toggles features. /toggle list returns values of every toggle.
 - /setkey <key> - Sets API key.
 - /getkey - Returns key set with /setkey and copies it to your clipboard.
-- /loot <zombie/spider/wolf/fishing/catacombs> [winter/spooky/f(1-6)/session] - Returns loot received from slayer quests or fishing stats. /loot fishing winter returns winter sea creatures instead.
-- /display <zombie/spider/wolf/fishing/catacombs/auto/off> [winter/spooky/f(1-6)/session] - Text display for trackers. /display fishing winter displays winter sea creatures instead. /display auto automatically displays the loot for the slayer quest you have active.
+- /loot <zombie/spider/wolf/fishing/catacombs> [winter/spooky/f(1-7)/session] - Returns loot received from slayer quests or fishing stats. /loot fishing winter returns winter sea creatures instead.
+- /display <zombie/spider/wolf/fishing/catacombs/auto/off> [winter/spooky/f(1-7)/session] - Text display for trackers. /display fishing winter displays winter sea creatures instead. /display auto automatically displays the loot for the slayer quest you have active.
 - /resetloot <zombie/spider/wolf/fishing/catacombs/confirm/cancel> -  - Resets loot for trackers. /resetloot confirm confirms the reset.
 - /move <coords/display/dungeontimer/skill50/lividhp/caketimer> <x> <y> - Moves text display to specified X and Y coordinates.
 - /scale <coords/display/dungeontimer/skill50/lividhp/caketimer> <scale (0.1 - 10)> - Scales text display to a specified multipler between 0.1x and 10x.

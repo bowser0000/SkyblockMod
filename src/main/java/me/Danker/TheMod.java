@@ -814,6 +814,10 @@ public class TheMod
 						LootCommand.f6TimeSpent = Math.floor(LootCommand.f6TimeSpent + timeToAdd);
 						LootCommand.f6TimeSpentSession = Math.floor(LootCommand.f6TimeSpentSession + timeToAdd);
 						ConfigHandler.writeDoubleConfig("catacombs", "floorSixTime", LootCommand.f6TimeSpent);
+					} else if (sCleaned.contains("F7")) {
+						LootCommand.f7TimeSpent = Math.floor(LootCommand.f7TimeSpent + timeToAdd);
+						LootCommand.f7TimeSpentSession = Math.floor(LootCommand.f7TimeSpentSession + timeToAdd);
+						ConfigHandler.writeDoubleConfig("catacombs", "floorSevenTime", LootCommand.f7TimeSpent);
 					}
 				} else if (sCleaned.contains("Time Elapsed:")) {
 					// Get floor time
@@ -981,6 +985,36 @@ public class TheMod
 				LootCommand.necroSwords++;
 				LootCommand.necroSwordsSession++;
 				ConfigHandler.writeIntConfig("catacombs", "necroSword", LootCommand.necroSwords);
+			} else if (message.contains("Wither Blood")) { // F7
+				LootCommand.witherBloods++;
+				LootCommand.witherBloodsSession++;
+			} else if (message.contains("Wither Cloak")) {
+				LootCommand.witherCloaks++;
+				LootCommand.witherCloaksSession++;
+			} else if (message.contains("Implosion")) {
+				LootCommand.implosions++;
+				LootCommand.implosionsSession++;
+			} else if (message.contains("Wither Shield")) {
+				LootCommand.witherShields++;
+				LootCommand.witherShieldsSession++;
+			} else if (message.contains("Shadow Warp")) {
+				LootCommand.shadowWarps++;
+				LootCommand.shadowWarpsSession++;
+			} else if (message.contains("Auto Recombobulator")) {
+				LootCommand.autoRecombs++;
+				LootCommand.autoRecombsSession++;
+			} else if (message.contains("Wither Helmet")) {
+				LootCommand.witherHelms++;
+				LootCommand.witherHelmsSession++;
+			} else if (message.contains("Wither Chestplate")) {
+				LootCommand.witherChests++;
+				LootCommand.witherChestsSession++;
+			} else if (message.contains("Wither Leggings")) {
+				LootCommand.witherLegs++;
+				LootCommand.witherLegsSession++;
+			} else if (message.contains("Wither Boots")) {
+				LootCommand.witherBoots++;
+				LootCommand.witherBootsSession++;
 			}
 		}
 		
@@ -1808,6 +1842,64 @@ public class TheMod
 							EnumChatFormatting.GOLD + nf.format(LootCommand.necroSwordsSession) + "\n" +
 							EnumChatFormatting.AQUA + Utils.getMoneySpent(LootCommand.f6CoinsSpentSession) + "\n" +
 							EnumChatFormatting.AQUA + Utils.getTimeBetween(0, LootCommand.f6TimeSpentSession);
+    		} else if (DisplayCommand.display.equals("catacombs_floor_seven")) {
+    			dropsText = EnumChatFormatting.GOLD + "Recombobulators:\n" +
+							EnumChatFormatting.DARK_PURPLE + "Fuming Potato Books:\n" +
+							EnumChatFormatting.DARK_PURPLE + "Wither Bloods:\n" +
+							EnumChatFormatting.DARK_PURPLE + "Wither Cloaks:\n" +
+							EnumChatFormatting.DARK_PURPLE + "Implosions:\n" +
+							EnumChatFormatting.DARK_PURPLE + "Wither Shields:\n" +
+							EnumChatFormatting.DARK_PURPLE + "Shadow Warps:\n" +
+							EnumChatFormatting.GOLD + "Auto Recombobs:\n" +
+							EnumChatFormatting.GOLD + "Wither Helmets:\n" +
+							EnumChatFormatting.GOLD + "Wither Chests:\n" +
+							EnumChatFormatting.GOLD + "Wither Leggings:\n" +
+							EnumChatFormatting.GOLD + "Wither Boots:\n" +
+							EnumChatFormatting.AQUA + "Coins Spent:\n" +
+		    				EnumChatFormatting.AQUA + "Time Spent:";
+    			countText = EnumChatFormatting.GOLD + nf.format(LootCommand.recombobulators) + "\n" +
+							EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.fumingPotatoBooks) + "\n" +
+							EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.witherBloods) + "\n" +
+							EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.witherCloaks) + "\n" +
+							EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.implosions) + "\n" +
+							EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.witherShields) + "\n" +
+							EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.shadowWarps) + "\n" +
+							EnumChatFormatting.GOLD + nf.format(LootCommand.autoRecombs) + "\n" +
+							EnumChatFormatting.GOLD + nf.format(LootCommand.witherHelms) + "\n" +
+							EnumChatFormatting.GOLD + nf.format(LootCommand.witherChests) + "\n" +
+							EnumChatFormatting.GOLD + nf.format(LootCommand.witherLegs) + "\n" +
+							EnumChatFormatting.GOLD + nf.format(LootCommand.witherBoots) + "\n" +
+							EnumChatFormatting.AQUA + Utils.getMoneySpent(LootCommand.f7CoinsSpent) + "\n" +
+							EnumChatFormatting.AQUA + Utils.getTimeBetween(0, LootCommand.f7TimeSpent);
+    		} else if (DisplayCommand.display.equals("catacombs_floor_seven_session")) {
+    			dropsText = EnumChatFormatting.GOLD + "Recombobulators:\n" +
+							EnumChatFormatting.DARK_PURPLE + "Fuming Potato Books:\n" +
+							EnumChatFormatting.DARK_PURPLE + "Wither Bloods:\n" +
+							EnumChatFormatting.DARK_PURPLE + "Wither Cloaks:\n" +
+							EnumChatFormatting.DARK_PURPLE + "Implosions:\n" +
+							EnumChatFormatting.DARK_PURPLE + "Wither Shields:\n" +
+							EnumChatFormatting.DARK_PURPLE + "Shadow Warps:\n" +
+							EnumChatFormatting.GOLD + "Auto Recombobulators:\n" +
+							EnumChatFormatting.GOLD + "Wither Helmets:\n" +
+							EnumChatFormatting.GOLD + "Wither Chests:\n" +
+							EnumChatFormatting.GOLD + "Wither Leggings:\n" +
+							EnumChatFormatting.GOLD + "Wither Boots:\n" +
+							EnumChatFormatting.AQUA + "Coins Spent:\n" +
+		    				EnumChatFormatting.AQUA + "Time Spent:";
+    			countText = EnumChatFormatting.GOLD + nf.format(LootCommand.recombobulatorsSession) + "\n" +
+							EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.fumingPotatoBooksSession) + "\n" +
+							EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.witherBloodsSession) + "\n" +
+							EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.witherCloaksSession) + "\n" +
+							EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.implosionsSession) + "\n" +
+							EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.witherShieldsSession) + "\n" +
+							EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.shadowWarpsSession) + "\n" +
+							EnumChatFormatting.GOLD + nf.format(LootCommand.autoRecombsSession) + "\n" +
+							EnumChatFormatting.GOLD + nf.format(LootCommand.witherHelmsSession) + "\n" +
+							EnumChatFormatting.GOLD + nf.format(LootCommand.witherChestsSession) + "\n" +
+							EnumChatFormatting.GOLD + nf.format(LootCommand.witherLegsSession) + "\n" +
+							EnumChatFormatting.GOLD + nf.format(LootCommand.witherBootsSession) + "\n" +
+							EnumChatFormatting.AQUA + Utils.getMoneySpent(LootCommand.f7CoinsSpentSession) + "\n" +
+							EnumChatFormatting.AQUA + Utils.getTimeBetween(0, LootCommand.f7TimeSpentSession);
     		} else {
     			System.out.println("Display was an unknown value, turning off.");
     			DisplayCommand.display = "off";
@@ -1948,6 +2040,8 @@ public class TheMod
     						DisplayCommand.display = "catacombs_floor_five";
     					} else if (sCleaned.contains("F6")) {
     						DisplayCommand.display = "catacombs_floor_six";
+    					} else if (sCleaned.contains("F7")) {
+    						DisplayCommand.display = "catacombs_floor_seven";
     					}
     					found = true;
     				}
@@ -2295,6 +2389,10 @@ public class TheMod
     									LootCommand.f6CoinsSpent += coinsSpent;
     									LootCommand.f6CoinsSpentSession += coinsSpent;
     									ConfigHandler.writeDoubleConfig("catacombs", "floorSixCoins", LootCommand.f6CoinsSpent);
+    								} else if (sCleaned.contains("F7")) {
+    									LootCommand.f7CoinsSpent += coinsSpent;
+    									LootCommand.f7CoinsSpentSession += coinsSpent;
+    									ConfigHandler.writeDoubleConfig("catacombs", "floorSevenCoins", LootCommand.f7CoinsSpent);
     								}
     								break;
     							}

@@ -335,6 +335,19 @@ public class ConfigHandler {
 		if (!hasKey("catacombs", "necroSword")) writeIntConfig("catacombs", "necroSword", 0);
 		if (!hasKey("catacombs", "floorSixCoins")) writeDoubleConfig("catacombs", "floorSixCoins", 0);
 		if (!hasKey("catacombs", "floorSixTime")) writeDoubleConfig("catacombs", "floorSixTime", 0);
+		// F7
+		if (!hasKey("catacombs", "witherBlood")) writeIntConfig("catacombs", "witherBlood", 0);
+		if (!hasKey("catacombs", "witherCloak")) writeIntConfig("catacombs", "witherCloak", 0);
+		if (!hasKey("catacombs", "implosion")) writeIntConfig("catacombs", "implosion", 0);
+		if (!hasKey("catacombs", "witherShield")) writeIntConfig("catacombs", "witherShield", 0);
+		if (!hasKey("catacombs", "shadowWarp")) writeIntConfig("catacombs", "shadowWarp", 0);
+		if (!hasKey("catacombs", "autoRecomb")) writeIntConfig("catacombs", "autoRecomb", 0);
+		if (!hasKey("catacombs", "witherHelm")) writeIntConfig("catacombs", "witherHelm", 0);
+		if (!hasKey("catacombs", "witherChest")) writeIntConfig("catacombs", "witherChest", 0);
+		if (!hasKey("catacombs", "witherLegging")) writeIntConfig("catacombs", "witherLegging", 0);
+		if (!hasKey("catacombs", "witherBoot")) writeIntConfig("catacombs", "witherBoot", 0);
+		if (!hasKey("catacombs", "floorSevenCoins")) writeDoubleConfig("catacombs", "floorSevenCoins", 0);
+		if (!hasKey("catacombs", "floorSevenTime")) writeDoubleConfig("catacombs", "floorSevenTime", 0);
 		
 		if (!hasKey("misc", "display")) writeStringConfig("misc", "display", "off");
 		if (!hasKey("misc", "autoDisplay")) writeBooleanConfig("misc", "autoDisplay", false);
@@ -540,6 +553,19 @@ public class ConfigHandler {
 		LootCommand.necroSwords = getInt("catacombs", "necroSword");
 		LootCommand.f6CoinsSpent = getDouble("catacombs", "floorSixCoins");
 		LootCommand.f6TimeSpent = getDouble("catacombs", "floorSixTime");
+		// F7
+		LootCommand.witherBloods = getInt("catacombs", "witherBlood");
+		LootCommand.witherCloaks = getInt("catacombs", "witherCloak");
+		LootCommand.implosions = getInt("catacombs", "implosion");
+		LootCommand.witherShields = getInt("catacombs", "witherShield");
+		LootCommand.shadowWarps = getInt("catacombs", "shadowWarp");
+		LootCommand.autoRecombs = getInt("catacombs", "autoRecomb");
+		LootCommand.witherHelms = getInt("catacombs", "witherHelm");
+		LootCommand.witherChests = getInt("catacombs", "witherChest");
+		LootCommand.witherLegs = getInt("catacombs", "witherLegging");
+		LootCommand.witherBoots = getInt("catacombs", "witherBoot");
+		LootCommand.f7CoinsSpent = getDouble("catacombs", "floorSevenCoins");
+		LootCommand.f7TimeSpent = getDouble("catacombs", "floorSevenTime");
 		
 		// Misc
 		DisplayCommand.display = getString("misc", "display");
