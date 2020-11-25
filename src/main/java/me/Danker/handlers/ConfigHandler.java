@@ -284,6 +284,18 @@ public class ConfigHandler {
 		if (!hasKey("fishing", "phantomFisher")) writeIntConfig("fishing", "phantomFisher", 0);
 		if (!hasKey("fishing", "grimReaper")) writeIntConfig("fishing", "grimReaper", 0);
 		
+		// Mythological
+		if (!hasKey("mythological", "coins")) writeDoubleConfig("mythological", "coins", 0);
+		if (!hasKey("mythological", "griffinFeather")) writeIntConfig("mythological", "griffinFeather", 0);
+		if (!hasKey("mythological", "crownOfGreed")) writeIntConfig("mythological", "crownOfGreed", 0);
+		if (!hasKey("mythological", "washedUpSouvenir")) writeIntConfig("mythological", "washedUpSouvenir", 0);
+		if (!hasKey("mythological", "minosHunter")) writeIntConfig("mythological", "minosHunter", 0);
+		if (!hasKey("mythological", "siameseLynx")) writeIntConfig("mythological", "siameseLynx", 0);
+		if (!hasKey("mythological", "minotaur")) writeIntConfig("mythological", "minotaur", 0);
+		if (!hasKey("mythological", "gaiaConstruct")) writeIntConfig("mythological", "gaiaConstruct", 0);
+		if (!hasKey("mythological", "minosChampion")) writeIntConfig("mythological", "minosChampion", 0);
+		if (!hasKey("mythological", "minosInquisitor")) writeIntConfig("mythological", "minosInquisitor", 0);
+		
 		// Dungeons
 		if (!hasKey("catacombs", "recombobulator")) writeIntConfig("catacombs", "recombobulator", 0);
 		if (!hasKey("catacombs", "fumingBooks")) writeIntConfig("catacombs", "fumingBooks", 0);
@@ -507,6 +519,18 @@ public class ConfigHandler {
 		LootCommand.werewolfs = getInt("fishing", "nightmare");
 		LootCommand.phantomFishers = getInt("fishing", "phantomFisher");
 		LootCommand.grimReapers = getInt("fishing", "grimReaper");
+		
+		// Mythological
+		LootCommand.mythCoins = getDouble("mythological", "coins");
+		LootCommand.griffinFeathers = getInt("mythological", "griffinFeather");
+		LootCommand.crownOfGreeds = getInt("mythological", "crownOfGreed");
+		LootCommand.washedUpSouvenirs = getInt("mythological", "washedUpSouvenir");
+		LootCommand.minosHunters = getInt("mythological", "minosHunter");
+		LootCommand.siameseLynxes = getInt("mythological", "siameseLynx");
+		LootCommand.minotaurs = getInt("mythological", "minotaur");
+		LootCommand.gaiaConstructs = getInt("mythological", "gaiaConstruct");
+		LootCommand.minosChampions = getInt("mythological", "minosChampion");
+		LootCommand.minosInquisitors = getInt("mythological", "minosInquisitor");
 		
 		// Dungeons
 		LootCommand.recombobulators =  getInt("catacombs", "recombobulator");

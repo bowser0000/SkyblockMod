@@ -50,21 +50,25 @@ public class BlockSlayerCommand extends CommandBase {
 			return;
 		}
 		
-		if (arg1[0].equalsIgnoreCase("zombie")) {
-			onlySlayerName = "Revenant Horror";
-		} else if (arg1[0].equalsIgnoreCase("spider")) {
-			onlySlayerName = "Tarantula Broodfather";
-		} else if (arg1[0].equalsIgnoreCase("wolf")) {
-			onlySlayerName = "Sven Packmaster";
-		} else if (arg1[0].equalsIgnoreCase("off")) {
-			onlySlayerName = "";
-			onlySlayerNumber = "";
-			ConfigHandler.writeStringConfig("toggles", "BlockSlayer", "");
-			player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Slayer blocking turned off."));
-			return;
-		} else {
-			player.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "Usage: " + getCommandUsage(arg0)));
-			return;
+		switch (arg1[0].toLowerCase()) {
+			case "zombie":
+				onlySlayerName = "Revenant Horror";
+				break;
+			case "spider":
+				onlySlayerName = "Tarantula Broodfather";
+				break;
+			case "wolf":
+				onlySlayerName = "Sven Packmaster";
+				break;
+			case "off":
+				onlySlayerName = "";
+				onlySlayerNumber = "";
+				ConfigHandler.writeStringConfig("toggles", "BlockSlayer", "");
+				player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Slayer blocking turned off."));
+				return;
+			default:
+				player.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "Usage: " + getCommandUsage(arg0)));
+				return;
 		}
 		
 		int slayerNumber = Integer.parseInt(arg1[1]);

@@ -26,6 +26,7 @@ public class DisplayGui extends GuiScreen {
 	private GuiButton fishingWinter;
 	private GuiButton fishingFestival;
 	private GuiButton fishingSpooky;
+	private GuiButton mythological;
 	private GuiButton catacombsF1;
 	private GuiButton catacombsF2;
 	private GuiButton catacombsF3;
@@ -59,13 +60,14 @@ public class DisplayGui extends GuiScreen {
 		fishingWinter = new GuiButton(0, width / 2 - 110, (int) (height * 0.4), 100, 20, "Fishing Winter");
 		fishingFestival = new GuiButton(0, width / 2 + 10, (int) (height * 0.4), 100, 20, "Fishing Festival");
 		fishingSpooky = new GuiButton(0, width / 2 + 130, (int) (height * 0.4), 100, 20, "Fishing Spooky");
-		catacombsF1 = new GuiButton(0, width / 2 - 205, (int) (height * 0.55), 50, 20, "F1");
-		catacombsF2 = new GuiButton(0, width / 2 - 145, (int) (height * 0.55), 50, 20, "F2");
-		catacombsF3 = new GuiButton(0, width / 2 - 85, (int) (height * 0.55), 50, 20, "F3");
-		catacombsF4 = new GuiButton(0, width / 2 - 25, (int) (height * 0.55), 50, 20, "F4");
-		catacombsF5 = new GuiButton(0, width / 2 + 35, (int) (height * 0.55), 50, 20, "F5");
-		catacombsF6 = new GuiButton(0, width / 2 + 95, (int) (height * 0.55), 50, 20, "F6");
-		catacombsF7 = new GuiButton(0, width / 2 + 155, (int) (height * 0.55), 50, 20, "F7");
+		mythological = new GuiButton(0, width / 2 - 100, (int) (height * 0.5), 200, 20, "Mythological");
+		catacombsF1 = new GuiButton(0, width / 2 - 205, (int) (height * 0.65), 50, 20, "F1");
+		catacombsF2 = new GuiButton(0, width / 2 - 145, (int) (height * 0.65), 50, 20, "F2");
+		catacombsF3 = new GuiButton(0, width / 2 - 85, (int) (height * 0.65), 50, 20, "F3");
+		catacombsF4 = new GuiButton(0, width / 2 - 25, (int) (height * 0.65), 50, 20, "F4");
+		catacombsF5 = new GuiButton(0, width / 2 + 35, (int) (height * 0.65), 50, 20, "F5");
+		catacombsF6 = new GuiButton(0, width / 2 + 95, (int) (height * 0.65), 50, 20, "F6");
+		catacombsF7 = new GuiButton(0, width / 2 + 155, (int) (height * 0.65), 50, 20, "F7");
 		
 		this.buttonList.add(showSession);
 		this.buttonList.add(off);
@@ -77,6 +79,7 @@ public class DisplayGui extends GuiScreen {
 		this.buttonList.add(fishingWinter);
 		this.buttonList.add(fishingFestival);
 		this.buttonList.add(fishingSpooky);
+		this.buttonList.add(mythological);
 		this.buttonList.add(catacombsF1);
 		this.buttonList.add(catacombsF2);
 		this.buttonList.add(catacombsF3);
@@ -104,7 +107,7 @@ public class DisplayGui extends GuiScreen {
 		
 		String catacombsTitleText = "Catacombs Dungeon";
 		int catacombsTitleWidth = mc.fontRendererObj.getStringWidth(catacombsTitleText);
-		new TextRenderer(mc, catacombsTitleText, width / 2 - catacombsTitleWidth / 2, (int) (height * 0.5), 1D);
+		new TextRenderer(mc, catacombsTitleText, width / 2 - catacombsTitleWidth / 2, (int) (height * 0.6), 1D);
 		
 		super.drawScreen(mouseX, mouseY, partialTicks);
 	}
@@ -137,6 +140,8 @@ public class DisplayGui extends GuiScreen {
 			setDisplay("fishing_festival", false);
 		} else if (button == fishingSpooky) {
 			setDisplay("fishing_spooky", false);
+		} else if (button == mythological) {
+			setDisplay("mythological", false);
 		} else if (button == catacombsF1) {
 			setDisplay("catacombs_floor_one", false);
 		} else if (button == catacombsF2) {

@@ -53,50 +53,58 @@ public class MoveCommand extends CommandBase {
 			return;
 		}
 		
-		if (arg1[0].equalsIgnoreCase("coords")) {
-			coordsXY[0] = Integer.parseInt(arg1[1]);
-			coordsXY[1] = Integer.parseInt(arg1[2]);
-			ConfigHandler.writeIntConfig("locations", "coordsX", coordsXY[0]);
-			ConfigHandler.writeIntConfig("locations", "coordsY", coordsXY[1]);
-			player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Coords have been moved to " + TheMod.SECONDARY_COLOUR + arg1[1] + ", " + arg1[2]));
-		} else if (arg1[0].equalsIgnoreCase("display")) {
-			displayXY[0] = Integer.parseInt(arg1[1]);
-			displayXY[1] = Integer.parseInt(arg1[2]);
-			ConfigHandler.writeIntConfig("locations", "displayX", displayXY[0]);
-			ConfigHandler.writeIntConfig("locations", "displayY", displayXY[1]);
-			player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Tracker display has been moved to " + TheMod.SECONDARY_COLOUR + arg1[1] + ", " + arg1[2]));
-		} else if (arg1[0].equalsIgnoreCase("dungeontimer")) {
-			dungeonTimerXY[0] = Integer.parseInt(arg1[1]);
-			dungeonTimerXY[1] = Integer.parseInt(arg1[2]);
-			ConfigHandler.writeIntConfig("locations", "dungeonTimerX", dungeonTimerXY[0]);
-			ConfigHandler.writeIntConfig("locations", "dungeonTimerY", dungeonTimerXY[1]);
-			player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Dungeon timer has been moved to " + TheMod.SECONDARY_COLOUR + arg1[1] + ", " + arg1[2]));
-		} else if (arg1[0].equalsIgnoreCase("skill50")) {
-			skill50XY[0] = Integer.parseInt(arg1[1]);
-			skill50XY[1] = Integer.parseInt(arg1[2]);
-			ConfigHandler.writeIntConfig("locations", "skill50X", skill50XY[0]);
-			ConfigHandler.writeIntConfig("locations", "skill50Y", skill50XY[1]);
-			player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Skill 50 display has been moved to " + TheMod.SECONDARY_COLOUR + arg1[1] + ", " + arg1[2]));
-		} else if (arg1[0].equalsIgnoreCase("lividhp")) { 
-			lividHpXY[0] = Integer.parseInt(arg1[1]);
-			lividHpXY[1] = Integer.parseInt(arg1[2]);
-			ConfigHandler.writeIntConfig("locations", "lividHpX", lividHpXY[0]);
-			ConfigHandler.writeIntConfig("locations", "lividHpY", lividHpXY[1]);
-			player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Livid HP has been moved to " + TheMod.SECONDARY_COLOUR + arg1[1] + ", " + arg1[2]));
-		} else if (arg1[0].equalsIgnoreCase("caketimer")) { 
-			cakeTimerXY[0] = Integer.parseInt(arg1[1]);
-			cakeTimerXY[1] = Integer.parseInt(arg1[2]);
-			ConfigHandler.writeIntConfig("locations", "cakeTimerX", cakeTimerXY[0]);
-			ConfigHandler.writeIntConfig("locations", "cakeTimerY", cakeTimerXY[1]);
-			player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Cake timer has been moved to " + TheMod.SECONDARY_COLOUR + arg1[1] + ", " + arg1[2]));
-		} else if (arg1[0].equalsIgnoreCase("skilltracker")) {
-			skillTrackerXY[0] = Integer.parseInt(arg1[1]);
-			skillTrackerXY[1] = Integer.parseInt(arg1[2]);
-			ConfigHandler.writeIntConfig("locations", "skillTrackerX", skillTrackerXY[0]);
-			ConfigHandler.writeIntConfig("locations", "skillTrackerY", skillTrackerXY[1]);
-			player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Skill tracker has been moved to " + TheMod.SECONDARY_COLOUR + arg1[1] + ", " + arg1[2]));
-		} else {
-			player.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "Usage: " + getCommandUsage(arg0)));
+		switch (arg1[0].toLowerCase()) {
+			case "coords":
+				coordsXY[0] = Integer.parseInt(arg1[1]);
+				coordsXY[1] = Integer.parseInt(arg1[2]);
+				ConfigHandler.writeIntConfig("locations", "coordsX", coordsXY[0]);
+				ConfigHandler.writeIntConfig("locations", "coordsY", coordsXY[1]);
+				player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Coords have been moved to " + TheMod.SECONDARY_COLOUR + arg1[1] + ", " + arg1[2]));
+				break;
+			case "display":
+				displayXY[0] = Integer.parseInt(arg1[1]);
+				displayXY[1] = Integer.parseInt(arg1[2]);
+				ConfigHandler.writeIntConfig("locations", "displayX", displayXY[0]);
+				ConfigHandler.writeIntConfig("locations", "displayY", displayXY[1]);
+				player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Tracker display has been moved to " + TheMod.SECONDARY_COLOUR + arg1[1] + ", " + arg1[2]));
+				break;
+			case "dungeontimer":
+				dungeonTimerXY[0] = Integer.parseInt(arg1[1]);
+				dungeonTimerXY[1] = Integer.parseInt(arg1[2]);
+				ConfigHandler.writeIntConfig("locations", "dungeonTimerX", dungeonTimerXY[0]);
+				ConfigHandler.writeIntConfig("locations", "dungeonTimerY", dungeonTimerXY[1]);
+				player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Dungeon timer has been moved to " + TheMod.SECONDARY_COLOUR + arg1[1] + ", " + arg1[2]));
+				break;
+			case "skill50":
+				skill50XY[0] = Integer.parseInt(arg1[1]);
+				skill50XY[1] = Integer.parseInt(arg1[2]);
+				ConfigHandler.writeIntConfig("locations", "skill50X", skill50XY[0]);
+				ConfigHandler.writeIntConfig("locations", "skill50Y", skill50XY[1]);
+				player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Skill 50 display has been moved to " + TheMod.SECONDARY_COLOUR + arg1[1] + ", " + arg1[2]));
+				break;
+			case "lividhp":
+				lividHpXY[0] = Integer.parseInt(arg1[1]);
+				lividHpXY[1] = Integer.parseInt(arg1[2]);
+				ConfigHandler.writeIntConfig("locations", "lividHpX", lividHpXY[0]);
+				ConfigHandler.writeIntConfig("locations", "lividHpY", lividHpXY[1]);
+				player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Livid HP has been moved to " + TheMod.SECONDARY_COLOUR + arg1[1] + ", " + arg1[2]));
+				break;
+			case "caketimer":
+				cakeTimerXY[0] = Integer.parseInt(arg1[1]);
+				cakeTimerXY[1] = Integer.parseInt(arg1[2]);
+				ConfigHandler.writeIntConfig("locations", "cakeTimerX", cakeTimerXY[0]);
+				ConfigHandler.writeIntConfig("locations", "cakeTimerY", cakeTimerXY[1]);
+				player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Cake timer has been moved to " + TheMod.SECONDARY_COLOUR + arg1[1] + ", " + arg1[2]));
+				break;
+			case "skilltracker":
+				skillTrackerXY[0] = Integer.parseInt(arg1[1]);
+				skillTrackerXY[1] = Integer.parseInt(arg1[2]);
+				ConfigHandler.writeIntConfig("locations", "skillTrackerX", skillTrackerXY[0]);
+				ConfigHandler.writeIntConfig("locations", "skillTrackerY", skillTrackerXY[1]);
+				player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Skill tracker has been moved to " + TheMod.SECONDARY_COLOUR + arg1[1] + ", " + arg1[2]));
+				break;
+			default:
+				player.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "Usage: " + getCommandUsage(arg0)));
 		}
 	}
 

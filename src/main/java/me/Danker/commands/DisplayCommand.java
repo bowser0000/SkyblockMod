@@ -22,7 +22,7 @@ public class DisplayCommand extends CommandBase {
 
 	@Override
 	public String getCommandUsage(ICommandSender arg0) {
-		return "/" + getCommandName() + " <zombie/spider/wolf/fishing/catacombs/auto/off> [winter/festival/spooky/session/f(1-7)]";
+		return "/" + getCommandName() + " <zombie/spider/wolf/fishing/catacombs/mythological/auto/off> [winter/festival/spooky/session/f(1-7)]";
 	}
 
 	@Override
@@ -33,7 +33,7 @@ public class DisplayCommand extends CommandBase {
 	@Override
 	public List<String> addTabCompletionOptions(ICommandSender sender, String[] args, BlockPos pos) {
 		if (args.length == 1) {
-			return getListOfStringsMatchingLastWord(args, "wolf", "spider", "zombie", "fishing", "catacombs", "auto", "off");
+			return getListOfStringsMatchingLastWord(args, "wolf", "spider", "zombie", "fishing", "catacombs", "mythological", "auto", "off");
 		} else if (args.length == 2 && args[0].equalsIgnoreCase("fishing")) {
 			return getListOfStringsMatchingLastWord(args, "winter", "festival", "spooky", "session");
 		} else if (args.length == 2 && args[0].equalsIgnoreCase("catacombs")) {
@@ -57,42 +57,57 @@ public class DisplayCommand extends CommandBase {
 		
 		if (arg1[arg1.length - 1].equalsIgnoreCase("session")) showSession = true;
 		
-		if (arg1[0].equalsIgnoreCase("wolf")) {
+		switch (arg1[0].toLowerCase()) {
+		case "wolf":
 			if (showSession) {
 				display = "wolf_session";
 			} else {
 				display = "wolf";
 			}
-		} else if (arg1[0].equalsIgnoreCase("spider")) {
+			break;
+		case "spider":
 			if (showSession) {
 				display = "spider_session";
 			} else {
 				display = "spider";
 			}
-		} else if (arg1[0].equalsIgnoreCase("zombie")) {
+		case "zombie":
 			if (showSession) {
 				display = "zombie_session";
 			} else {
 				display = "zombie";
 			}
-		} else if (arg1[0].equalsIgnoreCase("fishing")) {
-			if (arg1.length > 1 && arg1[1].equalsIgnoreCase("winter")) {
-				if (showSession) {
-					display = "fishing_winter_session";
-				} else {
-					display = "fishing_winter";
-				}
-			} else if (arg1.length > 1 && arg1[1].equalsIgnoreCase("festival")) {
-				if (showSession) {
-					display = "fishing_festival_session";
-				} else {
-					display = "fishing_festival";
-				}
-			} else if (arg1.length > 1 && arg1[1].equalsIgnoreCase("spooky")) { 
-				if (showSession) {
-					display = "fishing_spooky_session";
-				} else {
-					display = "fishing_spooky";
+			break;
+		case "fishing":
+			if (arg1.length > 1) {
+				switch (arg1[1].toLowerCase()) {
+					case "winter":
+						if (showSession) {
+							display = "fishing_winter_session";
+						} else {
+							display = "fishing_winter";
+						}
+						break;
+					case "festival":
+						if (showSession) {
+							display = "fishing_festival_session";
+						} else {
+							display = "fishing_festival";
+						}
+						break;
+					case "spooky":
+						if (showSession) {
+							display = "fishing_spooky_session";
+						} else {
+							display = "fishing_spooky";
+						}
+						break;
+					default:
+						if (showSession) {
+							display = "fishing_session";
+						} else {
+							display = "fishing";
+						}
 				}
 			} else {
 				if (showSession) {
@@ -100,69 +115,96 @@ public class DisplayCommand extends CommandBase {
 				} else {
 					display = "fishing";
 				}
-			} 
-		} else if (arg1[0].equalsIgnoreCase("catacombs")) {
-			if (arg1.length == 1) {
-				player.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "Usage: /display catacombs <f1/f2/f3/f4>"));
-				return;
 			}
-			if (arg1[1].equalsIgnoreCase("f1") || arg1[1].equalsIgnoreCase("floor1")) {
-				if (showSession) {
-					display = "catacombs_floor_one_session";
-				} else {
-					display = "catacombs_floor_one";
-				}
-			} else if (arg1[1].equalsIgnoreCase("f2") || arg1[1].equalsIgnoreCase("floor2")) {
-				if (showSession) {
-					display = "catacombs_floor_two_session";
-				} else {
-					display = "catacombs_floor_two";
-				}
-			} else if (arg1[1].equalsIgnoreCase("f3") || arg1[1].equalsIgnoreCase("floor3")) {
-				if (showSession) {
-					display = "catacombs_floor_three_session";
-				} else {
-					display = "catacombs_floor_three";
-				}
-			} else if (arg1[1].equalsIgnoreCase("f4") || arg1[1].equalsIgnoreCase("floor4")) {
-				if (showSession) {
-					display = "catacombs_floor_four_session";
-				} else {
-					display = "catacombs_floor_four";
-				}
-			} else if (arg1[1].equalsIgnoreCase("f5") || arg1[1].equalsIgnoreCase("floor5")) {
-				if (showSession) {
-					display = "catacombs_floor_five_session";
-				} else {
-					display = "catacombs_floor_five";
-				}
-			} else if (arg1[1].equalsIgnoreCase("f6") || arg1[1].equalsIgnoreCase("floor6")) {
-				if (showSession) {
-					display = "catacombs_floor_six_session";
-				} else {
-					display = "catacombs_floor_six";
-				}
-			} else if (arg1[1].equalsIgnoreCase("f7") || arg1[1].equalsIgnoreCase("floor7")) {
-				if (showSession) {
-					display = "catacombs_floor_seven_session";
-				} else {
-					display = "catacombs_floor_seven";
-				}
+			break;
+		case "mythological":
+			if (showSession) {
+				display = "mythological_session";
 			} else {
-				player.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "Usage: /display catacombs <f1/f2/f3/f4/f5/f6>"));
+				display = "mythological";
+			}
+			break;
+		case "catacombs":
+			if (arg1.length == 1) {
+				player.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "Usage: /display catacombs <f1/f2/f3/f4f5/f6/f7>"));
 				return;
 			}
-		} else if (arg1[0].equalsIgnoreCase("auto")) {
+			
+			switch (arg1[1].toLowerCase()) {
+				case "f1":
+				case "floor1":
+					if (showSession) {
+						display = "catacombs_floor_one_session";
+					} else {
+						display = "catacombs_floor_one";
+					}
+					break;
+				case "f2":
+				case "floor2":
+					if (showSession) {
+						display = "catacombs_floor_two_session";
+					} else {
+						display = "catacombs_floor_two";
+					}
+					break;
+				case "f3":
+				case "floor3":
+					if (showSession) {
+						display = "catacombs_floor_three_session";
+					} else {
+						display = "catacombs_floor_three";
+					}
+					break;
+				case "f4":
+				case "floor4":
+					if (showSession) {
+						display = "catacombs_floor_four_session";
+					} else {
+						display = "catacombs_floor_four";
+					}
+					break;
+				case "f5":
+				case "floor5":
+					if (showSession) {
+						display = "catacombs_floor_five_session";
+					} else {
+						display = "catacombs_floor_five";
+					}
+					break;
+				case "f6":
+				case "floor6":
+					if (showSession) {
+						display = "catacombs_floor_six_session";
+					} else {
+						display = "catacombs_floor_six";
+					}
+					break;
+				case "f7":
+				case "floor7":
+					if (showSession) {
+						display = "catacombs_floor_seven_session";
+					} else {
+						display = "catacombs_floor_seven";
+					}
+					break;
+				default:
+					player.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "Usage: /display catacombs <f1/f2/f3/f4/f5/f6/f7>"));
+					return;
+			}
+			break;
+		case "auto":
 			auto = true;
 			player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Display set to " + TheMod.SECONDARY_COLOUR + "auto" + TheMod.MAIN_COLOUR + "."));
 			ConfigHandler.writeBooleanConfig("misc", "autoDisplay", true);
 			return;
-		} else if (arg1[0].equalsIgnoreCase("off")) {
+		case "off":
 			display = "off";
-		} else {
+			break;
+		default:
 			player.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "Usage: " + getCommandUsage(arg0)));
 			return;
 		}
+		
 		auto = false;
 		player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Display set to " + TheMod.SECONDARY_COLOUR + display + TheMod.MAIN_COLOUR + "."));
 		ConfigHandler.writeBooleanConfig("misc", "autoDisplay", false);

@@ -39,7 +39,7 @@ public class ResetLootCommand extends CommandBase {
 		if (confirmReset) {
 			return getListOfStringsMatchingLastWord(args, "confirm", "cancel");
 		} else {
-			return getListOfStringsMatchingLastWord(args, "zombie", "spider", "wolf", "fishing", "catacombs");
+			return getListOfStringsMatchingLastWord(args, "zombie", "spider", "wolf", "fishing", "mythological", "catacombs");
 		}
 	}
 	
@@ -48,44 +48,66 @@ public class ResetLootCommand extends CommandBase {
 		final EntityPlayer player = (EntityPlayer) arg0;
 		
 		if (arg1.length == 0) {
-			player.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "Usage: /resetloot <zombie/spider/wolf/fishing/catacombs>"));
+			player.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "Usage: /resetloot <zombie/spider/wolf/fishing/mythological/catacombs>"));
 			return;
 		}
 		
 		if (confirmReset) {
-			if (arg1[0].equalsIgnoreCase("confirm")) {
-				confirmReset = false;
-				player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Resetting " + resetOption + " tracker..."));
-				if (resetOption.equalsIgnoreCase("zombie")) {
-					resetZombie();
-				} else if (resetOption.equalsIgnoreCase("spider")) {
-					resetSpider();
-				} else if (resetOption.equalsIgnoreCase("wolf")) {
-					resetWolf();
-				} else if (resetOption.equalsIgnoreCase("fishing")) {
-					resetFishing();
-				} else if (resetOption.equalsIgnoreCase("catacombs")) {
-					resetCatacombs();
-				}
-				player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Reset complete."));
-			} else if (arg1[0].equalsIgnoreCase("cancel")) {
-				confirmReset = false;
-				player.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "Reset cancelled."));
-			} else {
-				player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Please confirm the reset of the " + resetOption + " tracker by using /resetloot confirm." +
-															EnumChatFormatting.RED + " Cancel by using /resetloot cancel."));
+			switch (arg1[0].toLowerCase()) {
+				case "confirm":
+					confirmReset = false;
+					player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Resetting " + resetOption + " tracker..."));
+					switch (resetOption.toLowerCase()) {
+						case "zombie":
+							resetZombie();
+							break;
+						case "spider":
+							resetSpider();
+							break;
+						case "wolf":
+							resetWolf();
+							break;
+						case "fishing":
+							resetFishing();
+							break;
+						case "mythological":
+							resetMythological();
+						case "catacombs":
+							resetCatacombs();
+						default:
+							System.err.println("Resetting unknown tracker.");
+							return;
+					}
+					player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Reset complete."));
+					break;
+				case "cancel":
+					confirmReset = false;
+					player.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "Reset cancelled."));
+					break;
+				default:
+					player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Please confirm the reset of the " + resetOption + " tracker by using /resetloot confirm." +
+																EnumChatFormatting.RED + " Cancel by using /resetloot cancel."));
 			}
 		} else {
-			if (arg1[0].equalsIgnoreCase("zombie") || arg1[0].equalsIgnoreCase("spider") || arg1[0].equalsIgnoreCase("wolf") || arg1[0].equalsIgnoreCase("fishing") || arg1[0].equalsIgnoreCase("catacombs")) {
-				resetOption = arg1[0];
-				player.addChatMessage(new ChatComponentText(EnumChatFormatting.YELLOW + "Are you sure you want to reset the " + resetOption + " tracker?" + 
-															" Confirm with " + TheMod.MAIN_COLOUR + "/resetloot confirm" + EnumChatFormatting.YELLOW + "." + 
-															" Cancel by using " + TheMod.MAIN_COLOUR + "/resetloot cancel" + EnumChatFormatting.YELLOW + "."));
-				confirmReset = true;
-			} else if (arg1[0].equalsIgnoreCase("confirm") || arg1[0].equalsIgnoreCase("cancel")) {
-				player.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "Pick something to reset first."));
-			} else {
-				player.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "Usage: /resetloot <zombie/spider/wolf/fishing/catacombs>"));
+			switch (arg1[0].toLowerCase()) {
+				case "zombie":
+				case "spider":
+				case "wolf":
+				case "fishing":
+				case "mythological":
+				case "catacombs":
+					resetOption = arg1[0];
+					player.addChatMessage(new ChatComponentText(EnumChatFormatting.YELLOW + "Are you sure you want to reset the " + resetOption + " tracker?" + 
+																" Confirm with " + TheMod.MAIN_COLOUR + "/resetloot confirm" + EnumChatFormatting.YELLOW + "." + 
+																" Cancel by using " + TheMod.MAIN_COLOUR + "/resetloot cancel" + EnumChatFormatting.YELLOW + "."));
+					confirmReset = true;
+					break;
+				case "confirm":
+				case "cancel":
+					player.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "Pick something to reset first."));
+					break;
+				default:
+					player.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "Usage: " + getCommandUsage(arg0)));
 			}
 		}
 	}
@@ -182,6 +204,21 @@ public class ResetLootCommand extends CommandBase {
 		ConfigHandler.reloadConfig();
 	}
 	
+	static void resetMythological() {
+		LootCommand.mythCoinsSession = 0;
+		LootCommand.griffinFeathersSession = 0;
+		LootCommand.crownOfGreedsSession = 0;
+		LootCommand.washedUpSouvenirsSession = 0;
+		LootCommand.minosHuntersSession = 0;
+		LootCommand.siameseLynxesSession = 0;
+		LootCommand.minotaursSession = 0;
+		LootCommand.gaiaConstructsSession = 0;
+		LootCommand.minosChampionsSession = 0;
+		LootCommand.minosInquisitorsSession = 0;
+		ConfigHandler.deleteCategory("mythological");
+		ConfigHandler.reloadConfig();
+	}
+	
 	static void resetCatacombs() {
 		LootCommand.recombobulatorsSession = 0;
 		LootCommand.fumingPotatoBooksSession = 0;
@@ -229,6 +266,7 @@ public class ResetLootCommand extends CommandBase {
 		LootCommand.implosionsSession = 0;
 		LootCommand.witherShieldsSession = 0;
 		LootCommand.shadowWarpsSession = 0;
+		LootCommand.necronsHandlesSession = 0;
 		LootCommand.autoRecombsSession = 0;
 		LootCommand.witherHelmsSession = 0;
 		LootCommand.witherChestsSession = 0;

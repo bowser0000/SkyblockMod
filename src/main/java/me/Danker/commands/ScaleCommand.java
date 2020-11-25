@@ -59,37 +59,45 @@ public class ScaleCommand extends CommandBase {
 			return;
 		}
 		
-		if (arg1[0].equalsIgnoreCase("coords")) {
-			coordsScale = scaleAmount;
-			ConfigHandler.writeDoubleConfig("scales", "coordsScale", coordsScale);
-			player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Coords have been scaled to " + TheMod.SECONDARY_COLOUR + coordsScale + "x"));
-		} else if (arg1[0].equalsIgnoreCase("display")) {
-			displayScale = scaleAmount;
-			ConfigHandler.writeDoubleConfig("scales", "displayScale", displayScale);
-			player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Display has been scaled to " + TheMod.SECONDARY_COLOUR + displayScale + "x"));
-		} else if (arg1[0].equalsIgnoreCase("dungeontimer")) {
-			dungeonTimerScale = scaleAmount;
-			ConfigHandler.writeDoubleConfig("scales", "dungeonTimerScale", dungeonTimerScale);
-			player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Dungeon timer has been scaled to " + TheMod.SECONDARY_COLOUR + dungeonTimerScale + "x"));
-		} else if (arg1[0].equalsIgnoreCase("skill50")) {
-			skill50Scale = scaleAmount;
-			ConfigHandler.writeDoubleConfig("scales", "skill50Scale", skill50Scale);
-			player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Skill 50 display has been scaled to " + TheMod.SECONDARY_COLOUR + skill50Scale + "x"));
-		} else if (arg1[0].equalsIgnoreCase("lividhp")) {
-			lividHpScale = scaleAmount;
-			ConfigHandler.writeDoubleConfig("scales", "lividHpScale", lividHpScale);
-			player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Livid HP has been scaled to " + TheMod.SECONDARY_COLOUR + lividHpScale + "x"));
-		} else if (arg1[0].equalsIgnoreCase("caketimer")) { 
-			cakeTimerScale = scaleAmount;
-			ConfigHandler.writeDoubleConfig("scales", "cakeTimerScale", cakeTimerScale);
-			player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Cake timer has been scaled to " + TheMod.SECONDARY_COLOUR + cakeTimerScale + "x"));
-		} else if (arg1[0].equalsIgnoreCase("skilltracker")) {
-			skillTrackerScale = scaleAmount;
-			ConfigHandler.writeDoubleConfig("scales", "skillTrackerScale", skillTrackerScale);
-			player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Skill tracker has been scaled to " + TheMod.SECONDARY_COLOUR + skillTrackerScale + "x"));
-		} else {
-			player.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "Usage: " + getCommandUsage(arg0)));
-		}
+		switch (arg1[0].toLowerCase()) {
+			case "coords":
+				coordsScale = scaleAmount;
+				ConfigHandler.writeDoubleConfig("scales", "coordsScale", coordsScale);
+				player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Coords have been scaled to " + TheMod.SECONDARY_COLOUR + coordsScale + "x"));
+				break;
+			case "display":
+				displayScale = scaleAmount;
+				ConfigHandler.writeDoubleConfig("scales", "displayScale", displayScale);
+				player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Display has been scaled to " + TheMod.SECONDARY_COLOUR + displayScale + "x"));
+				break;
+			case "dungeontimer":
+				dungeonTimerScale = scaleAmount;
+				ConfigHandler.writeDoubleConfig("scales", "dungeonTimerScale", dungeonTimerScale);
+				player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Dungeon timer has been scaled to " + TheMod.SECONDARY_COLOUR + dungeonTimerScale + "x"));
+				break;
+			case "skill50":
+				skill50Scale = scaleAmount;
+				ConfigHandler.writeDoubleConfig("scales", "skill50Scale", skill50Scale);
+				player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Skill 50 display has been scaled to " + TheMod.SECONDARY_COLOUR + skill50Scale + "x"));
+				break;
+			case "lividhp":
+				lividHpScale = scaleAmount;
+				ConfigHandler.writeDoubleConfig("scales", "lividHpScale", lividHpScale);
+				player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Livid HP has been scaled to " + TheMod.SECONDARY_COLOUR + lividHpScale + "x"));
+				break;
+			case "caketimer":
+				cakeTimerScale = scaleAmount;
+				ConfigHandler.writeDoubleConfig("scales", "cakeTimerScale", cakeTimerScale);
+				player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Cake timer has been scaled to " + TheMod.SECONDARY_COLOUR + cakeTimerScale + "x"));
+				break;
+			case "skilltracker":
+				skillTrackerScale = scaleAmount;
+				ConfigHandler.writeDoubleConfig("scales", "skillTrackerScale", skillTrackerScale);
+				player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Skill tracker has been scaled to " + TheMod.SECONDARY_COLOUR + skillTrackerScale + "x"));
+				break;
+			default:
+				player.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "Usage: " + getCommandUsage(arg0)));
+		}	
 	}
 
 }

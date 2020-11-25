@@ -9,28 +9,30 @@ Discord Server: https://discord.gg/QsEkNQS
 - LabyMod + Sidebar Mod Revamp - Displays don't show
 
 ## Current features
-- Guild party desktop notifications (toggleable)
-- Coordinate and angle display (toggleable, graphic display) (scalable)
-- Golden T10/T6/T4 enchant display (toggleable)
-- Block AOTD ability (toggleable)
-- Disable Spirit Sceptre messages (toggleable)
-- Disable Midas Staff messages (toggleable)
-- Disable heal messages (toggleable)
-- Slayer item tracker (with graphic display) (scalable)
-- RNGesus drop alerts (toggleable)
-- Click anywhere on-screen to open Maddox (toggleable)
-- Maddox Menu keybind
+- Guild party desktop notifications
+- Coordinate and angle display
+- Golden T10/T6/T4 enchant display
+- Block AOTD ability
+- Block Livid Dagger ability
+- Disable Spirit Sceptre messages
+- Disable Midas Staff messages
+- Disable heal messages
+- Slayer item tracker
+- RNGesus drop alerts
+- Click anywhere on-screen to open Maddox
+- Maddox menu keybind
 - Block starting other slayer quests
-- Fishing tracker (with graphic display) (scalable)
+- Fishing, jerry fishing, fishing festival, spooky fishing trackers
 - Expertise kills in fishing rod lore
-- Dungeons tracker (with graphic display) (scalable)
-- Dungeons puzzle solver (Riddle, trivia, blaze, creeper) (toggleable)
-- Find correct Livid (with graphic display of HP) (toggleable)
+- Catacombs trackers
+- Dungeons puzzle solver (Riddle, trivia, blaze, creeper, water)
+- Find correct Livid (with graphic display of HP)
 - Pet background colors based on level
-- Golem spawning alerts (toggleable)
+- Golem spawning alerts
 - Skill xp/hour tracker
 - Show total skill xp instead of progress to next level
 - Show time until century cakes run out
+- Mythological event (Diana) tracker
 - API commands
 - Update checker
 
