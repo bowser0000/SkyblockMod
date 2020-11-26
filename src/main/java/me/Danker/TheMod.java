@@ -2519,7 +2519,7 @@ public class TheMod
     	
     	// Checks 5 times per second
     	if (tickAmount % 4 == 0) {
-    		if (ToggleCommand.blazeToggled && Utils.inDungeons && world != null) {    			
+    		if (ToggleCommand.blazeToggled && Utils.inDungeons && world != null) {		
     			List<Entity> entities = world.getLoadedEntityList();
     			int highestHealth = 0;
     			highestBlaze = null;
@@ -2559,6 +2559,19 @@ public class TheMod
     						if (lowToHigh) break;
     					}
     				}).start();
+    			}
+    		}
+    	}
+    	
+    	// Checks 10 times per second
+    	if (tickAmount % 2 == 0) {
+    		if (ToggleCommand.lowHealthNotifyToggled && Utils.inDungeons && world != null) {
+    			List<String> scoreboard = ScoreboardHandler.getSidebarLines();
+    			for (String score : scoreboard) {
+    				if (score.endsWith("❤") && score.matches(".*§c\\d.*")) {
+        				Utils.createTitle(EnumChatFormatting.RED + "LOW HEALTH!", 1);
+        				break;
+    				}
     			}
     		}
     	}

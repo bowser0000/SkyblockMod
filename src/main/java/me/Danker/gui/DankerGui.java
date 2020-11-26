@@ -49,6 +49,7 @@ public class DankerGui extends GuiScreen {
 	private GuiButton midasStaffMessages;
 	private GuiButton healMessages;
 	private GuiButton cakeTimer;
+	private GuiButton lowHealthNotify;
 	private GuiButton lividSolver;
 	
 	public DankerGui(int page) {
@@ -104,6 +105,7 @@ public class DankerGui extends GuiScreen {
 		lividSolver = new GuiButton(0, width / 2 - 100, (int) (height * 0.2), "Find Correct Livid: " + Utils.getColouredBoolean(ToggleCommand.lividSolverToggled));
 		golemAlerts = new GuiButton(0, width / 2 - 100, (int) (height * 0.3), "Alert When Golem Spawns: " + Utils.getColouredBoolean(ToggleCommand.golemAlertToggled));
 		rngesusAlert = new GuiButton(0, width / 2 - 100, (int) (height * 0.4), "RNGesus Alerts: " + Utils.getColouredBoolean(ToggleCommand.rngesusAlerts));
+		lowHealthNotify = new GuiButton(0, width / 2 - 100, (int) (height * 0.5), "Low Health Notifications: " + Utils.getColouredBoolean(ToggleCommand.lowHealthNotifyToggled));
 		
 		if (page == 1) {
 			this.buttonList.add(changeDisplay);
@@ -139,6 +141,7 @@ public class DankerGui extends GuiScreen {
 			this.buttonList.add(lividSolver);
 			this.buttonList.add(golemAlerts);
 			this.buttonList.add(rngesusAlert);
+			this.buttonList.add(lowHealthNotify);
 			this.buttonList.add(backPage);
 		}
 		
@@ -268,6 +271,10 @@ public class DankerGui extends GuiScreen {
 			ToggleCommand.healMessages = !ToggleCommand.healMessages;
 			ConfigHandler.writeBooleanConfig("toggles", "HealMessages", ToggleCommand.healMessages);
 			healMessages.displayString = "Heal Messages: " + Utils.getColouredBoolean(ToggleCommand.healMessages);
+		} else if (button == lowHealthNotify) {
+			ToggleCommand.lowHealthNotifyToggled = !ToggleCommand.lowHealthNotifyToggled;
+			ConfigHandler.writeBooleanConfig("toggles", "LowHealthNotify", ToggleCommand.lowHealthNotifyToggled);
+			lowHealthNotify.displayString = "Low Health Notifications: " + Utils.getColouredBoolean(ToggleCommand.lowHealthNotifyToggled);
 		}
 	}
 	

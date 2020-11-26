@@ -33,6 +33,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 	public static boolean midasStaffMessages;
 	public static boolean healMessages;
 	public static boolean cakeTimerToggled;
+	public static boolean lowHealthNotifyToggled;
 	public static boolean lividSolverToggled;
 	// Puzzle Solvers
 	public static boolean threeManToggled;
@@ -50,7 +51,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 	public String getCommandUsage(ICommandSender arg0) {
 		return "/" + getCommandName() + " <gparty/coords/golden/slayercount/rngesusalerts/splitfishing/chatmaddox/spiritbearalert/" + 
 										  "aotd/lividdagger/sceptremessages/petcolors/dungeontimer/golemalerts/expertiselore/skill50display/" + 
-										  "outlinetext/midasstaffmessages/healmessages/caketimer/lividsolver/threemanpuzzle/oruopuzzle/" + 
+										  "outlinetext/midasstaffmessages/healmessages/caketimer/lowhealthnotify/lividsolver/threemanpuzzle/oruopuzzle/" + 
 										  "blazepuzzle/creeperpuzzle/waterpuzzle/list>";
 	}
 
@@ -66,8 +67,8 @@ public class ToggleCommand extends CommandBase implements ICommand {
 														  "splitfishing", "chatmaddox", "spiritbearalerts", "aotd", "lividdagger",
 														  "sceptremessages", "petcolors", "dungeontimer", "golemalerts",
 														  "expertiselore", "skill50display", "outlinetext", "midasstaffmessages",
-														  "healmessages", "caketimer", "lividsolver",  "threemanpuzzle", "oruopuzzle",
-														  "blazepuzzle", "creeperpuzzle", "waterpuzzle", "list");
+														  "healmessages", "caketimer", "lowhealthnotify", "lividsolver", "threemanpuzzle",
+														  "oruopuzzle", "blazepuzzle", "creeperpuzzle", "waterpuzzle", "list");
 		}
 		return null;
 	}
@@ -183,6 +184,11 @@ public class ToggleCommand extends CommandBase implements ICommand {
 				ConfigHandler.writeBooleanConfig("toggles", "CakeTimer", cakeTimerToggled);
 				player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Cake timer has been set to " + TheMod.SECONDARY_COLOUR + cakeTimerToggled + TheMod.MAIN_COLOUR + "."));
 				break;
+			case "lowhealthnotify":
+				lowHealthNotifyToggled = !lowHealthNotifyToggled;
+				ConfigHandler.writeBooleanConfig("toggles", "LowHealthNotify", lowHealthNotifyToggled);
+				player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Low health notify has been set to " + TheMod.SECONDARY_COLOUR + lowHealthNotifyToggled + TheMod.MAIN_COLOUR + "."));
+				break;
 			case "lividsolver":
 				lividSolverToggled = !lividSolverToggled;
 				ConfigHandler.writeBooleanConfig("toggles", "LividSolver", lividSolverToggled);
@@ -234,6 +240,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 															TheMod.TYPE_COLOUR + " Midas Staff messages: " + TheMod.VALUE_COLOUR + midasStaffMessages + "\n" +
 															TheMod.TYPE_COLOUR + " Heal messages: " + TheMod.VALUE_COLOUR + healMessages + "\n" +
 															TheMod.TYPE_COLOUR + " Cake timer: " + TheMod.VALUE_COLOUR + cakeTimerToggled + "\n" +
+															TheMod.TYPE_COLOUR + " Low health notify: " + TheMod.VALUE_COLOUR + lowHealthNotifyToggled + "\n" +
 															TheMod.TYPE_COLOUR + " Livid solver: " + TheMod.VALUE_COLOUR + lividSolverToggled + "\n" +
 															TheMod.TYPE_COLOUR + " Three man puzzle solver: " + TheMod.VALUE_COLOUR + threeManToggled + "\n" +
 															TheMod.TYPE_COLOUR + " Oruo trivia solver: " + TheMod.VALUE_COLOUR + oruoToggled + "\n" +

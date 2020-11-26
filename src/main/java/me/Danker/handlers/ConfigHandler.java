@@ -193,6 +193,7 @@ public class ConfigHandler {
 		if (!hasKey("toggles", "MidasStaffMessages")) writeBooleanConfig("toggles", "MidasStaffMessages", true);
 		if (!hasKey("toggles", "HealMessages")) writeBooleanConfig("toggles", "HealMessages", true);
 		if (!hasKey("toggles", "CakeTimer")) writeBooleanConfig("toggles", "CakeTimer", false);
+		if (!hasKey("toggles", "LowHealthNotify")) writeBooleanConfig("toggles", "LowHealthNotify", false);
 		if (!hasKey("toggles", "LividSolver")) writeBooleanConfig("toggles", "LividSolver", false);
 		// Puzzle Solvers
 		if (!hasKey("toggles", "ThreeManPuzzle")) writeBooleanConfig("toggles", "ThreeManPuzzle", false);
@@ -425,6 +426,7 @@ public class ConfigHandler {
 		ToggleCommand.midasStaffMessages = getBoolean("toggles", "MidasStaffMessages");
 		ToggleCommand.healMessages = getBoolean("toggles", "HealMessages");
 		ToggleCommand.cakeTimerToggled = getBoolean("toggles", "CakeTimer");
+		ToggleCommand.lowHealthNotifyToggled = getBoolean("toggles", "LowHealthNotify");
 		ToggleCommand.lividSolverToggled = getBoolean("toggles", "LividSolver");
 		// Puzzle Solvers
 		ToggleCommand.threeManToggled = getBoolean("toggles", "ThreeManPuzzle");
