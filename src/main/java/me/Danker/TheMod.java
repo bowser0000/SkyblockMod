@@ -146,6 +146,7 @@ public class TheMod
 	static String[] triviaAnswers = null;
 	static Entity highestBlaze = null;
 	static Entity lowestBlaze = null;
+	static boolean lowToHigh = false;
 	// Among Us colours
 	static final int[] CREEPER_COLOURS = {0x50EF39, 0xC51111, 0x132ED1, 0x117F2D, 0xED54BA, 0xEF7D0D, 0xF5F557, 0xD6E0F0, 0x6B2FBB, 0x39FEDC};
 	static boolean drawCreeperLines = false;
@@ -2371,102 +2372,116 @@ public class TheMod
     			new Thread(() -> {
     				prevInWaterRoom = inWaterRoom;
     				inWaterRoom = false;
+    				boolean foundPiston = false;
     				boolean done = false;
-    				for (int x = (int) (player.posX - 25); x < player.posX + 25; x++) {
-    					for (int z = (int) (player.posZ - 25); z < player.posZ + 25; z++) {
-    						BlockPos blockPos = new BlockPos(x, 82, z);
-    						if (world.getBlockState(blockPos).getBlock() == Blocks.piston_head) {
-    							inWaterRoom = true;
-    							if (!prevInWaterRoom && inWaterRoom) {
-        							boolean foundGold = false;
-        							boolean foundClay = false;
-        							boolean foundEmerald = false;
-        							boolean foundQuartz = false;
-        							boolean foundDiamond = false;
-        							
-        							// Detect first blocks near water stream
-        							BlockPos scan1 = new BlockPos(x + 1, 78, z + 1);
-        							BlockPos scan2 = new BlockPos(x - 1, 77, z - 1);
-        							Iterable<BlockPos> blocks = BlockPos.getAllInBox(scan1, scan2);
-        							for (BlockPos puzzleBlockPos : blocks) {
-        								Block block = world.getBlockState(puzzleBlockPos).getBlock();
-        								if (block == Blocks.gold_block) {
-        									foundGold = true;
-        								} else if (block == Blocks.hardened_clay) {
-        									foundClay = true;
-        								} else if (block == Blocks.emerald_block) {
-        									foundEmerald = true;
-        								} else if (block == Blocks.quartz_block) {
-        									foundQuartz = true;
-        								} else if (block == Blocks.diamond_block) {
-        									foundDiamond = true;
-        								}
-        							}
-        							
-        							int variant = 0;
-        							if (foundGold && foundClay) {
-        								variant = 1;
-        							} else if (foundEmerald && foundQuartz) {
-        								variant = 2;
-        							} else if (foundQuartz && foundDiamond) {
-        								variant = 3;
-        							} else if (foundGold && foundQuartz) {
-        								variant = 4;
-        							}
-        							
-        							// Return solution
-        							String purple = "";
-        							String orange = "";
-        							String blue = "";
-        							String green = "";
-        							String red = "";
-        							switch (variant) {
-    	    							case 1:
-    	    								purple = EnumChatFormatting.WHITE + "Quartz, " + EnumChatFormatting.YELLOW + "Gold, " + EnumChatFormatting.AQUA + "Diamond, " + EnumChatFormatting.RED + "Clay";
-    	    								orange = EnumChatFormatting.YELLOW + "Gold, " + EnumChatFormatting.DARK_GRAY + "Coal, " + EnumChatFormatting.GREEN + "Emerald";
-    	    								blue = EnumChatFormatting.WHITE + "Quartz, " + EnumChatFormatting.YELLOW + "Gold, " + EnumChatFormatting.GREEN + "Emerald" + EnumChatFormatting.RED + "Clay";
-    	    								green = EnumChatFormatting.GREEN + "Emerald";
-    	    								red = EnumChatFormatting.GRAY + "None";
-    	    								break;
-    	    							case 2:
-    	    								purple = EnumChatFormatting.DARK_GRAY + "Coal";
-    	    								orange = EnumChatFormatting.WHITE + "Quartz, " + EnumChatFormatting.YELLOW + "Gold, " + EnumChatFormatting.GREEN + "Emerald, " + EnumChatFormatting.RED + "Clay";
-    	    								blue = EnumChatFormatting.WHITE + "Quartz, " + EnumChatFormatting.AQUA + "Diamond, " + EnumChatFormatting.GREEN + "Emerald";
-    	    								green = EnumChatFormatting.WHITE + "Quartz, " + EnumChatFormatting.GREEN + "Emerald";
-    	    								red = EnumChatFormatting.WHITE + "Quartz, " + EnumChatFormatting.DARK_GRAY + "Coal, " + EnumChatFormatting.GREEN + "Emerald";
-    	    								break;
-    	    							case 3:
-    	    								purple = EnumChatFormatting.WHITE + "Quartz, " + EnumChatFormatting.YELLOW + "Gold, " + EnumChatFormatting.AQUA + "Diamond";
-    	    								orange = EnumChatFormatting.GREEN + "Emerald";
-    	    								blue = EnumChatFormatting.WHITE + "Quartz, " + EnumChatFormatting.AQUA + "Diamond";
-    	    								green = EnumChatFormatting.GRAY + "None";
-    	    								red = EnumChatFormatting.YELLOW + "Gold, " + EnumChatFormatting.GREEN + "Emerald";
-    	    								break;
-    	    							case 4:
-    	    								purple = EnumChatFormatting.WHITE + "Quartz, " + EnumChatFormatting.YELLOW + "Gold, " + EnumChatFormatting.GREEN + "Emerald, " + EnumChatFormatting.RED + "Clay";
-    	    								orange = EnumChatFormatting.YELLOW + "Gold, " + EnumChatFormatting.DARK_GRAY + "Coal";
-    	    								blue = EnumChatFormatting.WHITE + "Quartz, " + EnumChatFormatting.YELLOW + "Gold, " + EnumChatFormatting.DARK_GRAY + "Coal, " + EnumChatFormatting.GREEN + "Emerald, " + EnumChatFormatting.RED + "Clay";
-    	    								green = EnumChatFormatting.YELLOW + "Gold, " + EnumChatFormatting.GREEN + "Emerald";
-    	    								red = EnumChatFormatting.YELLOW + "Gold, " + EnumChatFormatting.AQUA + "Diamond, " + EnumChatFormatting.GREEN + "Emerald, " + EnumChatFormatting.RED + "Clay";
-    	    								break;
-    	    							default:
-    	    								player.addChatMessage(new ChatComponentText(ERROR_COLOUR + "Error detecting water puzzle variant."));
-    	    								break;
-        							}
-        							player.addChatMessage(new ChatComponentText(DELIMITER_COLOUR + EnumChatFormatting.BOLD + "-------------------\n" +
-        																		MAIN_COLOUR + " The following levers must be down:\n " + 
-        																		EnumChatFormatting.DARK_PURPLE + "Purple: " + purple + "\n " + 
-        																		EnumChatFormatting.GOLD + "Orange: " + orange + "\n " + 
-        																		EnumChatFormatting.BLUE + "Blue: " + blue + "\n " + 
-        																		EnumChatFormatting.GREEN + "Green: " + green + "\n " + 
-        																		EnumChatFormatting.RED + "Red: " + red + "\n" +
-        																		DELIMITER_COLOUR + EnumChatFormatting.BOLD + " -------------------"));
-        							done = true;
-        							break;	
-    							}
+    				for (int x = (int) (player.posX - 13); x <= player.posX + 13; x++) {
+    					for (int z = (int) (player.posZ - 13); z <= player.posZ + 13; z++) {
+    						BlockPos blockPos = new BlockPos(x, 54, z);
+    						if (world.getBlockState(blockPos).getBlock() == Blocks.sticky_piston) {
+    							foundPiston = true;
+    							break;
     						}
     					}
-    					if (done) break;
+    					if (foundPiston) break;
+    				}
+    				
+    				if (foundPiston) {
+    					for (int x = (int) (player.posX - 25); x <= player.posX + 25; x++) {
+        					for (int z = (int) (player.posZ - 25); z <= player.posZ + 25; z++) {
+        						BlockPos blockPos = new BlockPos(x, 82, z);
+        						if (world.getBlockState(blockPos).getBlock() == Blocks.piston_head) {
+        							inWaterRoom = true;
+        							if (!prevInWaterRoom && inWaterRoom) {
+            							boolean foundGold = false;
+            							boolean foundClay = false;
+            							boolean foundEmerald = false;
+            							boolean foundQuartz = false;
+            							boolean foundDiamond = false;
+            							
+            							// Detect first blocks near water stream
+            							BlockPos scan1 = new BlockPos(x + 1, 78, z + 1);
+            							BlockPos scan2 = new BlockPos(x - 1, 77, z - 1);
+            							Iterable<BlockPos> blocks = BlockPos.getAllInBox(scan1, scan2);
+            							for (BlockPos puzzleBlockPos : blocks) {
+            								Block block = world.getBlockState(puzzleBlockPos).getBlock();
+            								if (block == Blocks.gold_block) {
+            									foundGold = true;
+            								} else if (block == Blocks.hardened_clay) {
+            									foundClay = true;
+            								} else if (block == Blocks.emerald_block) {
+            									foundEmerald = true;
+            								} else if (block == Blocks.quartz_block) {
+            									foundQuartz = true;
+            								} else if (block == Blocks.diamond_block) {
+            									foundDiamond = true;
+            								}
+            							}
+            							
+            							int variant = 0;
+            							if (foundGold && foundClay) {
+            								variant = 1;
+            							} else if (foundEmerald && foundQuartz) {
+            								variant = 2;
+            							} else if (foundQuartz && foundDiamond) {
+            								variant = 3;
+            							} else if (foundGold && foundQuartz) {
+            								variant = 4;
+            							}
+            							
+            							// Return solution
+            							String purple = "";
+            							String orange = "";
+            							String blue = "";
+            							String green = "";
+            							String red = "";
+            							switch (variant) {
+        	    							case 1:
+        	    								purple = EnumChatFormatting.WHITE + "Quartz, " + EnumChatFormatting.YELLOW + "Gold, " + EnumChatFormatting.AQUA + "Diamond, " + EnumChatFormatting.RED + "Clay";
+        	    								orange = EnumChatFormatting.YELLOW + "Gold, " + EnumChatFormatting.DARK_GRAY + "Coal, " + EnumChatFormatting.GREEN + "Emerald";
+        	    								blue = EnumChatFormatting.WHITE + "Quartz, " + EnumChatFormatting.YELLOW + "Gold, " + EnumChatFormatting.GREEN + "Emerald, " + EnumChatFormatting.RED + "Clay";
+        	    								green = EnumChatFormatting.GREEN + "Emerald";
+        	    								red = EnumChatFormatting.GRAY + "None";
+        	    								break;
+        	    							case 2:
+        	    								purple = EnumChatFormatting.DARK_GRAY + "Coal";
+        	    								orange = EnumChatFormatting.WHITE + "Quartz, " + EnumChatFormatting.YELLOW + "Gold, " + EnumChatFormatting.GREEN + "Emerald, " + EnumChatFormatting.RED + "Clay";
+        	    								blue = EnumChatFormatting.WHITE + "Quartz, " + EnumChatFormatting.AQUA + "Diamond, " + EnumChatFormatting.GREEN + "Emerald";
+        	    								green = EnumChatFormatting.WHITE + "Quartz, " + EnumChatFormatting.GREEN + "Emerald";
+        	    								red = EnumChatFormatting.WHITE + "Quartz, " + EnumChatFormatting.DARK_GRAY + "Coal, " + EnumChatFormatting.GREEN + "Emerald";
+        	    								break;
+        	    							case 3:
+        	    								purple = EnumChatFormatting.WHITE + "Quartz, " + EnumChatFormatting.YELLOW + "Gold, " + EnumChatFormatting.AQUA + "Diamond";
+        	    								orange = EnumChatFormatting.GREEN + "Emerald";
+        	    								blue = EnumChatFormatting.WHITE + "Quartz, " + EnumChatFormatting.AQUA + "Diamond";
+        	    								green = EnumChatFormatting.GRAY + "None";
+        	    								red = EnumChatFormatting.YELLOW + "Gold, " + EnumChatFormatting.GREEN + "Emerald";
+        	    								break;
+        	    							case 4:
+        	    								purple = EnumChatFormatting.WHITE + "Quartz, " + EnumChatFormatting.YELLOW + "Gold, " + EnumChatFormatting.GREEN + "Emerald, " + EnumChatFormatting.RED + "Clay";
+        	    								orange = EnumChatFormatting.YELLOW + "Gold, " + EnumChatFormatting.DARK_GRAY + "Coal";
+        	    								blue = EnumChatFormatting.WHITE + "Quartz, " + EnumChatFormatting.YELLOW + "Gold, " + EnumChatFormatting.DARK_GRAY + "Coal, " + EnumChatFormatting.GREEN + "Emerald, " + EnumChatFormatting.RED + "Clay";
+        	    								green = EnumChatFormatting.YELLOW + "Gold, " + EnumChatFormatting.GREEN + "Emerald";
+        	    								red = EnumChatFormatting.YELLOW + "Gold, " + EnumChatFormatting.AQUA + "Diamond, " + EnumChatFormatting.GREEN + "Emerald, " + EnumChatFormatting.RED + "Clay";
+        	    								break;
+        	    							default:
+        	    								purple = orange = blue = green = red = ERROR_COLOUR + "Error detecting water puzzle variant.";
+        	    								break;
+            							}
+            							player.addChatMessage(new ChatComponentText(DELIMITER_COLOUR + EnumChatFormatting.BOLD + "-------------------\n" +
+            																		MAIN_COLOUR + " The following levers must be down:\n " + 
+            																		EnumChatFormatting.DARK_PURPLE + "Purple: " + purple + "\n " + 
+            																		EnumChatFormatting.GOLD + "Orange: " + orange + "\n " + 
+            																		EnumChatFormatting.BLUE + "Blue: " + blue + "\n " + 
+            																		EnumChatFormatting.GREEN + "Green: " + green + "\n " + 
+            																		EnumChatFormatting.RED + "Red: " + red + "\n" +
+            																		DELIMITER_COLOUR + EnumChatFormatting.BOLD + " -------------------"));
+            							done = true;
+            							break;	
+        							}
+        						}
+        					}
+        					if (done) break;
+        				}	
     				}
     			}).start();
     		}
@@ -2504,12 +2519,13 @@ public class TheMod
     	
     	// Checks 5 times per second
     	if (tickAmount % 4 == 0) {
-    		if (ToggleCommand.blazeToggled && Utils.inDungeons && world != null) {
+    		if (ToggleCommand.blazeToggled && Utils.inDungeons && world != null) {    			
     			List<Entity> entities = world.getLoadedEntityList();
     			int highestHealth = 0;
     			highestBlaze = null;
     			int lowestHealth = 99999999;
     			lowestBlaze = null;
+    			lowToHigh = false;
 
     			for (Entity entity : entities) {
     				if (entity.getName().contains("Blaze") && entity.getName().contains("/")) {
@@ -2528,6 +2544,21 @@ public class TheMod
     						System.err.println(ex);
     					}
     				}
+    			}
+    			
+    			if (highestBlaze != null || lowestBlaze != null) {
+    				new Thread(() -> {
+    					for (int x = (int) player.posX - 25; x <= player.posX + 25; x++) {
+    						for (int z = (int) player.posZ - 25; z <= player.posX + 25; z++) {
+    							BlockPos blockPos = new BlockPos(x, 119, z);
+    							if (world.getBlockState(blockPos).getBlock() == Blocks.cobblestone_wall) {
+    								lowToHigh = true;
+    								break;
+    							}
+    						}
+    						if (lowToHigh) break;
+    					}
+    				}).start();
     			}
     		}
     	}
@@ -2580,13 +2611,13 @@ public class TheMod
     @SubscribeEvent
     public void onWorldRender(RenderWorldLastEvent event) {
     	if (ToggleCommand.blazeToggled) {
-    		if (lowestBlaze != null) {
+    		if (lowestBlaze != null && lowToHigh) {
     			BlockPos stringPos = new BlockPos(lowestBlaze.posX, lowestBlaze.posY + 1, lowestBlaze.posZ);
     			Utils.draw3DString(stringPos, EnumChatFormatting.BOLD + "Smallest", 0xFF0000, event.partialTicks);
     			AxisAlignedBB aabb = new AxisAlignedBB(lowestBlaze.posX - 0.5, lowestBlaze.posY - 2, lowestBlaze.posZ - 0.5, lowestBlaze.posX + 0.5, lowestBlaze.posY, lowestBlaze.posZ + 0.5);
     			Utils.draw3DBox(aabb, 0xFF, 0x00, 0x00, 0xFF, event.partialTicks);
     		}
-    		if (highestBlaze != null) {
+    		if (highestBlaze != null && !lowToHigh) {
     			BlockPos stringPos = new BlockPos(highestBlaze.posX, highestBlaze.posY + 1, highestBlaze.posZ);
     			Utils.draw3DString(stringPos, EnumChatFormatting.BOLD + "Biggest", 0x40FF40, event.partialTicks);
     			AxisAlignedBB aabb = new AxisAlignedBB(highestBlaze.posX - 0.5, highestBlaze.posY - 2, highestBlaze.posZ - 0.5, highestBlaze.posX + 0.5, highestBlaze.posY, highestBlaze.posZ + 0.5);
