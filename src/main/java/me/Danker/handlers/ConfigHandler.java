@@ -393,18 +393,21 @@ public class ConfigHandler {
 		if (!hasKey("scales", "cakeTimerScale")) writeDoubleConfig("scales", "cakeTimerScale", 1);
 		if (!hasKey("scales", "skillTrackerScale")) writeDoubleConfig("scales", "skillTrackerScale", 1);
 		
-		if (!hasKey("colors", "main")) writeStringConfig("colors", "main", "" + EnumChatFormatting.GREEN);
-		if (!hasKey("colors", "secondary")) writeStringConfig("colors", "secondary", "" + EnumChatFormatting.DARK_GREEN);
-		if (!hasKey("colors", "delimiter")) writeStringConfig("colors", "delimiter", "" + EnumChatFormatting.AQUA);
-		if (!hasKey("colors", "error")) writeStringConfig("colors", "error", "" + EnumChatFormatting.RED);
-		if (!hasKey("colors", "type")) writeStringConfig("colors", "type", "" + EnumChatFormatting.GREEN);
-		if (!hasKey("colors", "value")) writeStringConfig("colors", "value", "" + EnumChatFormatting.DARK_GREEN);
-		if (!hasKey("colors", "skillAverage")) writeStringConfig("colors", "skillAverage", "" + EnumChatFormatting.GOLD);
-		if (!hasKey("colors", "answer")) writeStringConfig("colors", "answer", "" + EnumChatFormatting.DARK_GREEN);
-		if (!hasKey("colors", "skill50Display")) writeStringConfig("colors", "skill50Display", "" + EnumChatFormatting.AQUA);
-		if (!hasKey("colors", "coordsDisplay")) writeStringConfig("colors", "coordsDisplay", "" + EnumChatFormatting.WHITE);
-		if (!hasKey("colors", "cakeDisplay")) writeStringConfig("colors", "cakeDisplay", "" + EnumChatFormatting.GOLD);
-		if (!hasKey("colors", "skillTracker")) writeStringConfig("colors", "skillTracker", "" + EnumChatFormatting.AQUA);
+		if (!hasKey("colors", "main")) writeStringConfig("colors", "main", EnumChatFormatting.GREEN.toString());
+		if (!hasKey("colors", "secondary")) writeStringConfig("colors", "secondary", EnumChatFormatting.DARK_GREEN.toString());
+		if (!hasKey("colors", "delimiter")) writeStringConfig("colors", "delimiter", EnumChatFormatting.AQUA.toString());
+		if (!hasKey("colors", "error")) writeStringConfig("colors", "error", EnumChatFormatting.RED.toString());
+		if (!hasKey("colors", "type")) writeStringConfig("colors", "type", EnumChatFormatting.GREEN.toString());
+		if (!hasKey("colors", "value")) writeStringConfig("colors", "value", EnumChatFormatting.DARK_GREEN.toString());
+		if (!hasKey("colors", "skillAverage")) writeStringConfig("colors", "skillAverage", EnumChatFormatting.GOLD.toString());
+		if (!hasKey("colors", "answer")) writeStringConfig("colors", "answer", EnumChatFormatting.DARK_GREEN.toString());
+		if (!hasKey("colors", "skill50Display")) writeStringConfig("colors", "skill50Display", EnumChatFormatting.AQUA.toString());
+		if (!hasKey("colors", "coordsDisplay")) writeStringConfig("colors", "coordsDisplay", EnumChatFormatting.WHITE.toString());
+		if (!hasKey("colors", "cakeDisplay")) writeStringConfig("colors", "cakeDisplay", EnumChatFormatting.GOLD.toString());
+		if (!hasKey("colors", "skillTracker")) writeStringConfig("colors", "skillTracker", EnumChatFormatting.AQUA.toString());
+		if (!hasKey("colors", "triviaWrongAnswer")) writeStringConfig("colors", "triviaWrongAnswer", EnumChatFormatting.RED.toString());
+		if (!hasKey("colors", "blazeLowest")) writeIntConfig("colors", "blazeLowest", 0xFF0000);
+		if (!hasKey("colors", "blazeHighest")) writeIntConfig("colors", "blazeHighest", 0x40FF40);
 		
 		ToggleCommand.gpartyToggled = getBoolean("toggles", "GParty");
 		ToggleCommand.coordsToggled = getBoolean("toggles", "Coords");
@@ -642,6 +645,9 @@ public class ConfigHandler {
 		TheMod.COORDS_COLOUR = getString("colors", "coordsDisplay");
 		TheMod.CAKE_COLOUR = getString("colors", "cakeDisplay");
 		TheMod.SKILL_TRACKER_COLOUR = getString("colors", "skillTracker");
+		TheMod.TRIVIA_WRONG_ANSWER_COLOUR = getString("colors", "triviaWrongAnswer");
+		TheMod.LOWEST_BLAZE_COLOUR = getInt("colors", "blazeLowest");
+		TheMod.HIGHEST_BLAZE_COLOUR = getInt("colors", "blazeHighest");
 	}
 	
 }

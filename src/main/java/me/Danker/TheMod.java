@@ -193,6 +193,9 @@ public class TheMod
     public static String COORDS_COLOUR;
     public static String CAKE_COLOUR;
     public static String SKILL_TRACKER_COLOUR;
+    public static String TRIVIA_WRONG_ANSWER_COLOUR;
+    public static int LOWEST_BLAZE_COLOUR;
+    public static int HIGHEST_BLAZE_COLOUR;
     
     @EventHandler
     public void init(FMLInitializationEvent event) {
@@ -512,8 +515,6 @@ public class TheMod
         	for (String question : triviaSolutions.keySet()) {
         		if (message.contains(question)) {
         			triviaAnswers = triviaSolutions.get(question);
-        			String answer = String.join(" OR ", triviaSolutions.get(question));
-        			Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(MAIN_COLOUR + "Answer: " + ANSWER_COLOUR + EnumChatFormatting.BOLD + answer));
         			break;
         		}
         	}
@@ -527,7 +528,7 @@ public class TheMod
         		if (!isSolution) {
         			char letter = message.charAt(5);
         			String option = message.substring(6, message.length());
-        			event.message = new ChatComponentText("     " + EnumChatFormatting.GOLD + letter + EnumChatFormatting.RED + option);
+        			event.message = new ChatComponentText("     " + EnumChatFormatting.GOLD + letter + TRIVIA_WRONG_ANSWER_COLOUR + option);
         			return;
         		}
         	}
@@ -2519,13 +2520,12 @@ public class TheMod
     	
     	// Checks 5 times per second
     	if (tickAmount % 4 == 0) {
-    		if (ToggleCommand.blazeToggled && Utils.inDungeons && world != null) {		
+    		if (ToggleCommand.blazeToggled && Utils.inDungeons && world != null) {
     			List<Entity> entities = world.getLoadedEntityList();
     			int highestHealth = 0;
     			highestBlaze = null;
     			int lowestHealth = 99999999;
     			lowestBlaze = null;
-    			lowToHigh = false;
 
     			for (Entity entity : entities) {
     				if (entity.getName().contains("Blaze") && entity.getName().contains("/")) {
@@ -2548,15 +2548,21 @@ public class TheMod
     			
     			if (highestBlaze != null || lowestBlaze != null) {
     				new Thread(() -> {
+    					boolean wallFound = false;
     					for (int x = (int) player.posX - 25; x <= player.posX + 25; x++) {
     						for (int z = (int) player.posZ - 25; z <= player.posX + 25; z++) {
     							BlockPos blockPos = new BlockPos(x, 119, z);
     							if (world.getBlockState(blockPos).getBlock() == Blocks.cobblestone_wall) {
-    								lowToHigh = true;
+    								wallFound = true;
     								break;
     							}
     						}
-    						if (lowToHigh) break;
+    						if (wallFound) break;
+    					}
+    					if (wallFound) {
+    						lowToHigh = true;
+    					} else {
+    						lowToHigh = false;
     					}
     				}).start();
     			}
@@ -2626,15 +2632,15 @@ public class TheMod
     	if (ToggleCommand.blazeToggled) {
     		if (lowestBlaze != null && lowToHigh) {
     			BlockPos stringPos = new BlockPos(lowestBlaze.posX, lowestBlaze.posY + 1, lowestBlaze.posZ);
-    			Utils.draw3DString(stringPos, EnumChatFormatting.BOLD + "Smallest", 0xFF0000, event.partialTicks);
+    			Utils.draw3DString(stringPos, EnumChatFormatting.BOLD + "Smallest", LOWEST_BLAZE_COLOUR, event.partialTicks);
     			AxisAlignedBB aabb = new AxisAlignedBB(lowestBlaze.posX - 0.5, lowestBlaze.posY - 2, lowestBlaze.posZ - 0.5, lowestBlaze.posX + 0.5, lowestBlaze.posY, lowestBlaze.posZ + 0.5);
-    			Utils.draw3DBox(aabb, 0xFF, 0x00, 0x00, 0xFF, event.partialTicks);
+    			Utils.draw3DBox(aabb, LOWEST_BLAZE_COLOUR, event.partialTicks);
     		}
     		if (highestBlaze != null && !lowToHigh) {
     			BlockPos stringPos = new BlockPos(highestBlaze.posX, highestBlaze.posY + 1, highestBlaze.posZ);
-    			Utils.draw3DString(stringPos, EnumChatFormatting.BOLD + "Biggest", 0x40FF40, event.partialTicks);
+    			Utils.draw3DString(stringPos, EnumChatFormatting.BOLD + "Biggest", HIGHEST_BLAZE_COLOUR, event.partialTicks);
     			AxisAlignedBB aabb = new AxisAlignedBB(highestBlaze.posX - 0.5, highestBlaze.posY - 2, highestBlaze.posZ - 0.5, highestBlaze.posX + 0.5, highestBlaze.posY, highestBlaze.posZ + 0.5);
-    			Utils.draw3DBox(aabb, 0x00, 0xFF, 0x00, 0xFF, event.partialTicks);
+    			Utils.draw3DBox(aabb, HIGHEST_BLAZE_COLOUR, event.partialTicks);
     		}
     	}
     	if (ToggleCommand.creeperToggled && drawCreeperLines && !creeperLines.isEmpty()) {

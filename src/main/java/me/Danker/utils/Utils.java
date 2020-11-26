@@ -312,9 +312,10 @@ public class Utils {
 	}
 	
 	// Yoinked from ForgeHax
-	public static void draw3DBox(AxisAlignedBB aabb, int r, int g, int b, int a, float partialTicks) {
+	public static void draw3DBox(AxisAlignedBB aabb, int colourInt, float partialTicks) {
 		Entity render = Minecraft.getMinecraft().getRenderViewEntity();
 		WorldRenderer worldRenderer = Tessellator.getInstance().getWorldRenderer();
+		Color colour = new Color(colourInt);
 		
 		double realX = render.lastTickPosX + (render.posX - render.lastTickPosX) * partialTicks;
 		double realY = render.lastTickPosY + (render.posY - render.lastTickPosY) * partialTicks;
@@ -327,7 +328,7 @@ public class Utils {
 		GlStateManager.disableAlpha();
 		GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
 		GL11.glLineWidth(2);
-		GlStateManager.color(r / 255f, g / 255f, b / 255f, a / 255f);
+		GlStateManager.color(colour.getRed() / 255f, colour.getGreen() / 255f, colour.getBlue() / 255f, colour.getAlpha() / 255f);
 		worldRenderer.begin(GL11.GL_LINE_STRIP, DefaultVertexFormats.POSITION);
 		
 		worldRenderer.pos(aabb.minX, aabb.minY, aabb.minZ).endVertex();
