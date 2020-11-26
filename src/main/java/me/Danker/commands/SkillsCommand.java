@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.google.gson.JsonObject;
 
+import me.Danker.TheMod;
 import me.Danker.handlers.APIHandler;
 import me.Danker.handlers.ConfigHandler;
 import me.Danker.utils.Utils;
@@ -44,14 +45,12 @@ public class SkillsCommand extends CommandBase {
 	public void processCommand(ICommandSender arg0, String[] arg1) throws CommandException {
 		// MULTI THREAD DRIFTING
 		new Thread(() -> {
-			APIHandler ah = new APIHandler();
-			ConfigHandler cf = new ConfigHandler();
 			EntityPlayer player = (EntityPlayer) arg0;
 			
 			// Check key
-			String key = cf.getString("api", "APIKey");
+			String key = ConfigHandler.getString("api", "APIKey");
 			if (key.equals("")) {
-				player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "API key not set. Use /setkey."));
+				player.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "API key not set. Use /setkey."));
 			}
 			
 			// Get UUID for Hypixel API requests
@@ -60,23 +59,23 @@ public class SkillsCommand extends CommandBase {
 			if (arg1.length == 0) {
 				username = player.getName();
 				uuid = player.getUniqueID().toString().replaceAll("[\\-]", "");
-				player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Checking skills of " + EnumChatFormatting.DARK_GREEN + username));
+				player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Checking skills of " + TheMod.SECONDARY_COLOUR + username));
 			} else {
 				username = arg1[0];
-				player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Checking skills of " + EnumChatFormatting.DARK_GREEN + username));
-				uuid = ah.getUUID(username);
+				player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Checking skills of " + TheMod.SECONDARY_COLOUR + username));
+				uuid = APIHandler.getUUID(username);
 			}
 			
 			// Find stats of latest profile
-			String latestProfile = ah.getLatestProfileID(uuid, key);
+			String latestProfile = APIHandler.getLatestProfileID(uuid, key);
 			if (latestProfile == null) return;
 			
 			String profileURL = "https://api.hypixel.net/skyblock/profile?profile=" + latestProfile + "&key=" + key;
 			System.out.println("Fetching profile...");
-			JsonObject profileResponse = ah.getResponse(profileURL);
+			JsonObject profileResponse = APIHandler.getResponse(profileURL);
 			if (!profileResponse.get("success").getAsBoolean()) {
 				String reason = profileResponse.get("cause").getAsString();
-				player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Failed with reason: " + reason));
+				player.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "Failed with reason: " + reason));
 				return;
 			}
 			
@@ -94,35 +93,35 @@ public class SkillsCommand extends CommandBase {
 			
 			if (userObject.has("experience_skill_farming") || userObject.has("experience_skill_mining") || userObject.has("experience_skill_combat") || userObject.has("experience_skill_foraging") || userObject.has("experience_skill_fishing") || userObject.has("experience_skill_enchanting") || userObject.has("experience_skill_alchemy")) {
 				if (userObject.has("experience_skill_farming")) {
-					farmingLevel = Utils.xpToSkillLevel(userObject.get("experience_skill_farming").getAsDouble());
+					farmingLevel = Utils.xpToSkillLevel(userObject.get("experience_skill_farming").getAsDouble(), 60);
 					farmingLevel = (double) Math.round(farmingLevel * 100) / 100;
 				}
 				if (userObject.has("experience_skill_mining")) {
-					miningLevel = Utils.xpToSkillLevel(userObject.get("experience_skill_mining").getAsDouble());
+					miningLevel = Utils.xpToSkillLevel(userObject.get("experience_skill_mining").getAsDouble(), 50);
 					miningLevel = (double) Math.round(miningLevel * 100) / 100;
 				}
 				if (userObject.has("experience_skill_combat")) {
-					combatLevel = Utils.xpToSkillLevel(userObject.get("experience_skill_combat").getAsDouble());
+					combatLevel = Utils.xpToSkillLevel(userObject.get("experience_skill_combat").getAsDouble(), 50);
 					combatLevel = (double) Math.round(combatLevel * 100) / 100;
 				}
 				if (userObject.has("experience_skill_foraging")) {
-					foragingLevel = Utils.xpToSkillLevel(userObject.get("experience_skill_foraging").getAsDouble());
+					foragingLevel = Utils.xpToSkillLevel(userObject.get("experience_skill_foraging").getAsDouble(), 50);
 					foragingLevel = (double) Math.round(foragingLevel * 100) / 100;
 				}
 				if (userObject.has("experience_skill_fishing")) {
-					fishingLevel = Utils.xpToSkillLevel(userObject.get("experience_skill_fishing").getAsDouble());
+					fishingLevel = Utils.xpToSkillLevel(userObject.get("experience_skill_fishing").getAsDouble(), 50);
 					fishingLevel = (double) Math.round(fishingLevel * 100) / 100;
 				}
 				if (userObject.has("experience_skill_enchanting")) {
-					enchantingLevel = Utils.xpToSkillLevel(userObject.get("experience_skill_enchanting").getAsDouble());
+					enchantingLevel = Utils.xpToSkillLevel(userObject.get("experience_skill_enchanting").getAsDouble(), 50);
 					enchantingLevel = (double) Math.round(enchantingLevel * 100) / 100;
 				}
 				if (userObject.has("experience_skill_alchemy")) {
-					alchemyLevel = Utils.xpToSkillLevel(userObject.get("experience_skill_alchemy").getAsDouble());
+					alchemyLevel = Utils.xpToSkillLevel(userObject.get("experience_skill_alchemy").getAsDouble(), 50);
 					alchemyLevel = (double) Math.round(alchemyLevel * 100) / 100;
 				}
 				if (userObject.has("experience_skill_taming")) {
-					tamingLevel = Utils.xpToSkillLevel(userObject.get("experience_skill_taming").getAsDouble());
+					tamingLevel = Utils.xpToSkillLevel(userObject.get("experience_skill_taming").getAsDouble(), 50);
 					tamingLevel = (double) Math.round(tamingLevel * 100) / 100;
 				}
 			} else {
@@ -130,11 +129,11 @@ public class SkillsCommand extends CommandBase {
 				
 				String playerURL = "https://api.hypixel.net/player?uuid=" + uuid + "&key=" + key;
 				System.out.println("Fetching skills from achievement API");
-				JsonObject playerObject = ah.getResponse(playerURL);
+				JsonObject playerObject = APIHandler.getResponse(playerURL);
 				
 				if (!playerObject.get("success").getAsBoolean()) {
 					String reason = profileResponse.get("cause").getAsString();
-					player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Failed with reason: " + reason));
+					player.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "Failed with reason: " + reason));
 					return;
 				}
 				
@@ -143,25 +142,25 @@ public class SkillsCommand extends CommandBase {
 					farmingLevel = achievementObject.get("skyblock_harvester").getAsInt();
 				}
 				if (achievementObject.has("skyblock_excavator")) {
-					miningLevel = achievementObject.get("skyblock_excavator").getAsInt();
+					miningLevel = Math.min(achievementObject.get("skyblock_excavator").getAsInt(), 50);
 				}
 				if (achievementObject.has("skyblock_combat")) {
-					combatLevel = achievementObject.get("skyblock_combat").getAsInt();
+					combatLevel = Math.min(achievementObject.get("skyblock_combat").getAsInt(), 50);
 				}
 				if (achievementObject.has("skyblock_gatherer")) {
-					foragingLevel = achievementObject.get("skyblock_gatherer").getAsInt();
+					foragingLevel = Math.min(achievementObject.get("skyblock_gatherer").getAsInt(), 50);
 				}
 				if (achievementObject.has("skyblock_angler")) {
-					fishingLevel = achievementObject.get("skyblock_angler").getAsInt();
+					fishingLevel = Math.min(achievementObject.get("skyblock_angler").getAsInt(), 50);
 				}
 				if (achievementObject.has("skyblock_augmentation")) {
-					enchantingLevel = achievementObject.get("skyblock_augmentation").getAsInt();
+					enchantingLevel = Math.min(achievementObject.get("skyblock_augmentation").getAsInt(), 50);
 				}
 				if (achievementObject.has("skyblock_concoctor")) {
-					alchemyLevel = achievementObject.get("skyblock_concoctor").getAsInt();
+					alchemyLevel = Math.min(achievementObject.get("skyblock_concoctor").getAsInt(), 50);
 				}
 				if (achievementObject.has("skyblock_domesticator")) {
-					tamingLevel = achievementObject.get("skyblock_domesticator").getAsInt();
+					tamingLevel = Math.min(achievementObject.get("skyblock_domesticator").getAsInt(), 50);
 				}
 			}
 
@@ -169,19 +168,19 @@ public class SkillsCommand extends CommandBase {
 			skillAvg = (double) Math.round(skillAvg * 100) / 100;
 			double trueAvg = (Math.floor(farmingLevel) + Math.floor(miningLevel) + Math.floor(combatLevel) + Math.floor(foragingLevel) + Math.floor(fishingLevel) + Math.floor(enchantingLevel) + Math.floor(alchemyLevel) + Math.floor(tamingLevel)) / 8;
 			
-			player.addChatMessage(new ChatComponentText(EnumChatFormatting.AQUA + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+			player.addChatMessage(new ChatComponentText(TheMod.DELIMITER_COLOUR + "" + EnumChatFormatting.BOLD + "-------------------\n" +
 														EnumChatFormatting.AQUA + " " + username + "'s Skills:\n" +
-														EnumChatFormatting.GREEN + " Farming: " + EnumChatFormatting.DARK_GREEN + EnumChatFormatting.BOLD + farmingLevel + "\n" +
-														EnumChatFormatting.GREEN + " Mining: " + EnumChatFormatting.DARK_GREEN + EnumChatFormatting.BOLD + miningLevel + "\n" +
-														EnumChatFormatting.GREEN + " Combat: " + EnumChatFormatting.DARK_GREEN + EnumChatFormatting.BOLD + combatLevel + "\n" +
-														EnumChatFormatting.GREEN + " Foraging: " + EnumChatFormatting.DARK_GREEN + EnumChatFormatting.BOLD + foragingLevel + "\n" +
-														EnumChatFormatting.GREEN + " Fishing: " + EnumChatFormatting.DARK_GREEN + EnumChatFormatting.BOLD + fishingLevel + "\n" +
-														EnumChatFormatting.GREEN + " Enchanting: " + EnumChatFormatting.DARK_GREEN + EnumChatFormatting.BOLD + enchantingLevel + "\n" +
-														EnumChatFormatting.GREEN + " Alchemy: " + EnumChatFormatting.DARK_GREEN + EnumChatFormatting.BOLD + alchemyLevel + "\n" +
-														EnumChatFormatting.GREEN + " Taming: " + EnumChatFormatting.DARK_GREEN + EnumChatFormatting.BOLD + tamingLevel + "\n" +
-														EnumChatFormatting.AQUA + " Average Skill Level: " + EnumChatFormatting.GOLD + EnumChatFormatting.BOLD + skillAvg + "\n" +
-														EnumChatFormatting.AQUA + " True Average Skill Level: " + EnumChatFormatting.GOLD + EnumChatFormatting.BOLD + trueAvg + "\n" +
-														EnumChatFormatting.AQUA + " " + EnumChatFormatting.BOLD + "-------------------"));
+														TheMod.TYPE_COLOUR + " Farming: " + TheMod.VALUE_COLOUR + EnumChatFormatting.BOLD + farmingLevel + "\n" +
+														TheMod.TYPE_COLOUR + " Mining: " + TheMod.VALUE_COLOUR + EnumChatFormatting.BOLD + miningLevel + "\n" +
+														TheMod.TYPE_COLOUR + " Combat: " + TheMod.VALUE_COLOUR + EnumChatFormatting.BOLD + combatLevel + "\n" +
+														TheMod.TYPE_COLOUR + " Foraging: " + TheMod.VALUE_COLOUR + EnumChatFormatting.BOLD + foragingLevel + "\n" +
+														TheMod.TYPE_COLOUR + " Fishing: " + TheMod.VALUE_COLOUR + EnumChatFormatting.BOLD + fishingLevel + "\n" +
+														TheMod.TYPE_COLOUR + " Enchanting: " + TheMod.VALUE_COLOUR + EnumChatFormatting.BOLD + enchantingLevel + "\n" +
+														TheMod.TYPE_COLOUR + " Alchemy: " + TheMod.VALUE_COLOUR + EnumChatFormatting.BOLD + alchemyLevel + "\n" +
+														TheMod.TYPE_COLOUR + " Taming: " + TheMod.VALUE_COLOUR + EnumChatFormatting.BOLD + tamingLevel + "\n" +
+														EnumChatFormatting.AQUA + " Average Skill Level: " + TheMod.SKILL_AVERAGE_COLOUR + EnumChatFormatting.BOLD + skillAvg + "\n" +
+														EnumChatFormatting.AQUA + " True Average Skill Level: " + TheMod.SKILL_AVERAGE_COLOUR + EnumChatFormatting.BOLD + trueAvg + "\n" +
+														TheMod.DELIMITER_COLOUR + " " + EnumChatFormatting.BOLD + "-------------------"));
 		}).start();
 	}
 

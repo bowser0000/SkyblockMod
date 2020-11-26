@@ -34,14 +34,14 @@ public class DHelpCommand extends CommandBase {
 													EnumChatFormatting.GOLD + " Commands, " + EnumChatFormatting.GREEN + " Keybinds.\n" +
 													EnumChatFormatting.GOLD + " /dhelp" + EnumChatFormatting.AQUA + " - Returns this message.\n" +
 													EnumChatFormatting.GOLD + " /dsm" + EnumChatFormatting.AQUA + " - Opens the GUI for Danker's Skyblock Mod.\n" +
-													EnumChatFormatting.GOLD + " /toggle <gparty/coords/golden/slayercount/rngesusalerts/splitfishing/chatmaddox/spiritbearalerts/aotd/lividdagger/sceptremessages/petcolors/dungeontimer/golemalerts/expertiselore/skill50display/outlinetext/threemanpuzzle/midasstaffmessages/lividsolver/oruopuzzle/blazepuzzle/creeperpuzzle/list>" + EnumChatFormatting.AQUA + " - Toggles features. /toggle list returns values of every toggle.\n" +
+													EnumChatFormatting.GOLD + " /toggle <gparty/coords/golden/slayercount/rngesusalerts/splitfishing/chatmaddox/spiritbearalerts/aotd/lividdagger/sceptremessages/petcolors/dungeontimer/golemalerts/expertiselore/skill50display/outlinetext/threemanpuzzle/midasstaffmessages/healmessages/caketimer/lowhealthnotify/lividsolver/oruopuzzle/blazepuzzle/creeperpuzzle/waterpuzzle/list>" + EnumChatFormatting.AQUA + " - Toggles features. /toggle list returns values of every toggle.\n" +
 													EnumChatFormatting.GOLD + " /setkey <key>" + EnumChatFormatting.AQUA + " - Sets API key.\n" +
 													EnumChatFormatting.GOLD + " /getkey" + EnumChatFormatting.AQUA + " - Returns key set with /setkey and copies it to your clipboard.\n" +
-													EnumChatFormatting.GOLD + " /loot <zombie/spider/wolf/fishing/catacombs> [winter/festival/spooky/f(1-6)/session]" + EnumChatFormatting.AQUA + " - Returns loot received from slayer quests or fishing stats. /loot fishing winter returns winter sea creatures instead.\n" +
-													EnumChatFormatting.GOLD + " /display <zombie/spider/wolf/fishing/catacombs/auto/off> [winter/festival/spooky/f(1-6)/session]" + EnumChatFormatting.AQUA + " - Text display for trackers. /display fishing winter displays winter sea creatures instead. /display auto automatically displays the loot for the slayer quest you have active.\n" +
-													EnumChatFormatting.GOLD + " /resetloot <zombie/spider/wolf/fishing/catacombs/confirm/cancel>" + EnumChatFormatting.AQUA + " - Resets loot for trackers. /resetloot confirm confirms the reset.\n" +
-													EnumChatFormatting.GOLD + " /move <coords/display/dungeontimer/skill50/lividhp> <x> <y>" + EnumChatFormatting.AQUA + " - Moves text display to specified X and Y coordinates.\n" +
-													EnumChatFormatting.GOLD + " /scale <coords/display/dungeontimer/skill50/lividhp> <scale (0.1 - 10)>" + EnumChatFormatting.AQUA + " - Scales text display to a specified multipler between 0.1x and 10x.\n" +
+													EnumChatFormatting.GOLD + " /loot <zombie/spider/wolf/fishing/catacombs/mythological/> [winter/festival/spooky/f(1-7)/session]" + EnumChatFormatting.AQUA + " - Returns loot received from slayer quests or fishing stats. /loot fishing winter returns winter sea creatures instead.\n" +
+													EnumChatFormatting.GOLD + " /display <zombie/spider/wolf/fishing/catacombs/mythological/auto/off> [winter/festival/spooky/f(1-7)/session]" + EnumChatFormatting.AQUA + " - Text display for trackers. /display fishing winter displays winter sea creatures instead. /display auto automatically displays the loot for the slayer quest you have active.\n" +
+													EnumChatFormatting.GOLD + " /resetloot <zombie/spider/wolf/fishing/catacombs/mythological/confirm/cancel>" + EnumChatFormatting.AQUA + " - Resets loot for trackers. /resetloot confirm confirms the reset.\n" +
+													EnumChatFormatting.GOLD + " /move <coords/display/dungeontimer/skill50/lividhp/caketimer/skilltracker> <x> <y>" + EnumChatFormatting.AQUA + " - Moves text display to specified X and Y coordinates.\n" +
+													EnumChatFormatting.GOLD + " /scale <coords/display/dungeontimer/skill50/lividhp/caketimer/skilltracker> <scale (0.1 - 10)>" + EnumChatFormatting.AQUA + " - Scales text display to a specified multipler between 0.1x and 10x.\n" +
 													EnumChatFormatting.GOLD + " /slayer [player]" + EnumChatFormatting.AQUA + " - Uses API to get slayer xp of a person. If no name is provided, it checks yours.\n" +
 													EnumChatFormatting.GOLD + " /skills [player]" + EnumChatFormatting.AQUA + " - Uses API to get skill levels of a person. If no name is provided, it checks yours.\n" +
 													EnumChatFormatting.GOLD + " /lobbyskills" + EnumChatFormatting.AQUA + " - Uses API to find the average skills of the lobby, as well the three players with the highest skill average.\n" +
@@ -53,7 +53,9 @@ public class DHelpCommand extends CommandBase {
 													EnumChatFormatting.GOLD + " /importfishing" + EnumChatFormatting.AQUA + " - Imports your fishing stats from your latest profile to your fishing tracker using the API.\n" +
 													EnumChatFormatting.GOLD + " /sbplayers" + EnumChatFormatting.AQUA + " - Uses API to find how many players are on each Skyblock island.\n" +
 													EnumChatFormatting.GOLD + " /onlyslayer <zombie/spider/wolf> <1/2/3/4>" + EnumChatFormatting.AQUA + " - Stops you from starting a slayer quest other than the one specified.\n" +
-													EnumChatFormatting.GREEN + " Open Maddox Menu" + EnumChatFormatting.AQUA + " - M by default.\n"));
+													EnumChatFormatting.GOLD + " /skilltracker <start/stop/reset>" + EnumChatFormatting.AQUA + " - Text display for skill xp/hour.\n" +
+													EnumChatFormatting.GREEN + " Open Maddox Menu" + EnumChatFormatting.AQUA + " - M by default.\n" +
+													EnumChatFormatting.GREEN + " Start/Stop Skill Tracker" + EnumChatFormatting.AQUA + " - Numpad 5 by default.\n"));
 	}
 
 }

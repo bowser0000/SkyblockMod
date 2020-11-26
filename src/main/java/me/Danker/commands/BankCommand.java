@@ -7,6 +7,7 @@ import java.util.Locale;
 
 import com.google.gson.JsonObject;
 
+import me.Danker.TheMod;
 import me.Danker.handlers.APIHandler;
 import me.Danker.handlers.ConfigHandler;
 import me.Danker.utils.Utils;
@@ -52,12 +53,10 @@ public class BankCommand extends CommandBase {
 	public void processCommand(ICommandSender arg0, String[] arg1) throws CommandException {
 		// MULTI THREAD DRIFTING
 		new Thread(() -> {
-			APIHandler ah = new APIHandler();
-			ConfigHandler cf = new ConfigHandler();
 			EntityPlayer player = (EntityPlayer) arg0;
 			
 			// Check key
-			String key = cf.getString("api", "APIKey");
+			String key = ConfigHandler.getString("api", "APIKey");
 			if (key.equals("")) {
 				player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "API key not set. Use /setkey."));
 			}
@@ -68,20 +67,20 @@ public class BankCommand extends CommandBase {
 			if (arg1.length == 0) {
 				username = player.getName();
 				uuid = player.getUniqueID().toString().replaceAll("[\\-]", "");
-				player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Checking coins of " + EnumChatFormatting.DARK_GREEN + username));
+				player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Checking coins of " + TheMod.SECONDARY_COLOUR + username));
 			} else {
 				username = arg1[0];
-				player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Checking coins of " + EnumChatFormatting.DARK_GREEN + username));
-				uuid = ah.getUUID(username);
+				player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Checking coins of " + TheMod.SECONDARY_COLOUR + username));
+				uuid = APIHandler.getUUID(username);
 			}
 			
 			// Find stats of latest profile
-			String latestProfile = ah.getLatestProfileID(uuid, key);
+			String latestProfile = APIHandler.getLatestProfileID(uuid, key);
 			if (latestProfile == null) return;
 			
 			String profileURL = "https://api.hypixel.net/skyblock/profile?profile=" + latestProfile + "&key=" + key;
 			System.out.println("Fetching profile...");
-			JsonObject profileResponse = ah.getResponse(profileURL);
+			JsonObject profileResponse = APIHandler.getResponse(profileURL);
 			if (!profileResponse.get("success").getAsBoolean()) {
 				String reason = profileResponse.get("cause").getAsString();
 				player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Failed with reason: " + reason));
@@ -98,17 +97,17 @@ public class BankCommand extends CommandBase {
 				double bankCoins = profileResponse.get("profile").getAsJsonObject().get("banking").getAsJsonObject().get("balance").getAsDouble();
 				bankCoins = (double) Math.floor(bankCoins * 100.0) / 100.0;
 				
-				player.addChatMessage(new ChatComponentText(EnumChatFormatting.AQUA + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+				player.addChatMessage(new ChatComponentText(TheMod.DELIMITER_COLOUR + "" + EnumChatFormatting.BOLD + "-------------------\n" +
 															EnumChatFormatting.AQUA + " " + username + "'s Coins:\n" +
-															EnumChatFormatting.GREEN + " Bank: " + EnumChatFormatting.GOLD + nf.format(bankCoins) + "\n" +
-															EnumChatFormatting.GREEN + " Purse: " + EnumChatFormatting.GOLD + nf.format(purseCoins) + "\n" +
-															EnumChatFormatting.AQUA + " " + EnumChatFormatting.BOLD + "-------------------"));
+															TheMod.TYPE_COLOUR + " Bank: " + EnumChatFormatting.GOLD + nf.format(bankCoins) + "\n" +
+															TheMod.TYPE_COLOUR + " Purse: " + EnumChatFormatting.GOLD + nf.format(purseCoins) + "\n" +
+															TheMod.DELIMITER_COLOUR + " " + EnumChatFormatting.BOLD + "-------------------"));
 			} else {
-				player.addChatMessage(new ChatComponentText(EnumChatFormatting.AQUA + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+				player.addChatMessage(new ChatComponentText(TheMod.DELIMITER_COLOUR + "" + EnumChatFormatting.BOLD + "-------------------\n" +
 															EnumChatFormatting.AQUA + " " + username + "'s Coins:\n" +
-															EnumChatFormatting.GREEN + " Bank: " + EnumChatFormatting.RED + "Bank API disabled.\n" +
-															EnumChatFormatting.GREEN + " Purse: " + EnumChatFormatting.GOLD + nf.format(purseCoins) + "\n" +
-															EnumChatFormatting.AQUA + " " + EnumChatFormatting.BOLD + "-------------------"));
+															TheMod.TYPE_COLOUR + " Bank: " + EnumChatFormatting.RED + "Bank API disabled.\n" +
+															TheMod.TYPE_COLOUR + " Purse: " + EnumChatFormatting.GOLD + nf.format(purseCoins) + "\n" +
+															TheMod.DELIMITER_COLOUR + " " + EnumChatFormatting.BOLD + "-------------------"));
 			}
 		}).start();
 	}

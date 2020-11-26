@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
+import me.Danker.TheMod;
 import me.Danker.handlers.APIHandler;
 import me.Danker.handlers.ConfigHandler;
 import me.Danker.utils.Utils;
@@ -45,15 +46,12 @@ public class LobbySkillsCommand extends CommandBase {
 	@Override
 	public void processCommand(ICommandSender arg0, String[] arg1) throws CommandException {
 		EntityPlayer playerSP = (EntityPlayer) arg0;
-		ConfigHandler cf = new ConfigHandler();
-		APIHandler ah = new APIHandler();
-		boolean someErrored = false;
 		Map<String, Double> unsortedSAList = new HashMap<String, Double>();
 		ArrayList<Double> lobbySkills = new ArrayList<Double>();
 		// Check key
-		String key = cf.getString("api", "APIKey");
+		String key = ConfigHandler.getString("api", "APIKey");
 		if (key.equals("")) {
-			playerSP.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "API key not set. Use /setkey."));
+			playerSP.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "API key not set. Use /setkey."));
 			return;
 		}
 
@@ -61,7 +59,7 @@ public class LobbySkillsCommand extends CommandBase {
 			try {
 				// Create deep copy of players to prevent passing reference and ConcurrentModificationException
 				Collection<NetworkPlayerInfo> players = new ArrayList<NetworkPlayerInfo>(Minecraft.getMinecraft().getNetHandler().getPlayerInfoMap());
-				playerSP.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Checking skill average of lobby. Estimated time: " + (int) (players.size() * 1.2 + 1) + " seconds."));
+				playerSP.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Checking skill average of lobby. Estimated time: " + (int) (players.size() * 1.2 + 1) + " seconds."));
 				// Send request every .6 seconds, leaving room for another 20 requests per minute
 				
 				for (final NetworkPlayerInfo player : players) {
@@ -71,7 +69,7 @@ public class LobbySkillsCommand extends CommandBase {
 					long biggestLastSave = 0;
 					int profileIndex = -1;
 					Thread.sleep(600);
-					JsonObject profileResponse = ah.getResponse("https://api.hypixel.net/skyblock/profiles?uuid=" + UUID + "&key=" + key);
+					JsonObject profileResponse = APIHandler.getResponse("https://api.hypixel.net/skyblock/profiles?uuid=" + UUID + "&key=" + key);
 					if (!profileResponse.get("success").getAsBoolean()) {
 						String reason = profileResponse.get("cause").getAsString();
 						System.out.println("User " + player.getGameProfile().getName() + " failed with reason: " + reason);
@@ -103,41 +101,41 @@ public class LobbySkillsCommand extends CommandBase {
 					
 					if (latestProfile.has("experience_skill_farming") || latestProfile.has("experience_skill_mining") || latestProfile.has("experience_skill_combat") || latestProfile.has("experience_skill_foraging") || latestProfile.has("experience_skill_fishing") || latestProfile.has("experience_skill_enchanting") || latestProfile.has("experience_skill_alchemy")) {
 						if (latestProfile.has("experience_skill_farming")) {
-							farmingLevel = Utils.xpToSkillLevel(latestProfile.get("experience_skill_farming").getAsDouble());
+							farmingLevel = Utils.xpToSkillLevel(latestProfile.get("experience_skill_farming").getAsDouble(), 60);
 							farmingLevel = (double) Math.round(farmingLevel * 100) / 100;
 						}
 						if (latestProfile.has("experience_skill_mining")) {
-							miningLevel = Utils.xpToSkillLevel(latestProfile.get("experience_skill_mining").getAsDouble());
+							miningLevel = Utils.xpToSkillLevel(latestProfile.get("experience_skill_mining").getAsDouble(), 50);
 							miningLevel = (double) Math.round(miningLevel * 100) / 100;
 						}
 						if (latestProfile.has("experience_skill_combat")) {
-							combatLevel = Utils.xpToSkillLevel(latestProfile.get("experience_skill_combat").getAsDouble());
+							combatLevel = Utils.xpToSkillLevel(latestProfile.get("experience_skill_combat").getAsDouble(), 50);
 							combatLevel = (double) Math.round(combatLevel * 100) / 100;
 						}
 						if (latestProfile.has("experience_skill_foraging")) {
-							foragingLevel = Utils.xpToSkillLevel(latestProfile.get("experience_skill_foraging").getAsDouble());
+							foragingLevel = Utils.xpToSkillLevel(latestProfile.get("experience_skill_foraging").getAsDouble(), 50);
 							foragingLevel = (double) Math.round(foragingLevel * 100) / 100;
 						}
 						if (latestProfile.has("experience_skill_fishing")) {
-							fishingLevel = Utils.xpToSkillLevel(latestProfile.get("experience_skill_fishing").getAsDouble());
+							fishingLevel = Utils.xpToSkillLevel(latestProfile.get("experience_skill_fishing").getAsDouble(), 50);
 							fishingLevel = (double) Math.round(fishingLevel * 100) / 100;
 						}
 						if (latestProfile.has("experience_skill_enchanting")) {
-							enchantingLevel = Utils.xpToSkillLevel(latestProfile.get("experience_skill_enchanting").getAsDouble());
+							enchantingLevel = Utils.xpToSkillLevel(latestProfile.get("experience_skill_enchanting").getAsDouble(), 50);
 							enchantingLevel = (double) Math.round(enchantingLevel * 100) / 100;
 						}
 						if (latestProfile.has("experience_skill_alchemy")) {
-							alchemyLevel = Utils.xpToSkillLevel(latestProfile.get("experience_skill_alchemy").getAsDouble());
+							alchemyLevel = Utils.xpToSkillLevel(latestProfile.get("experience_skill_alchemy").getAsDouble(), 50);
 							alchemyLevel = (double) Math.round(alchemyLevel * 100) / 100;
 						}
 						if (latestProfile.has("experience_skill_taming")) {
-							tamingLevel = Utils.xpToSkillLevel(latestProfile.get("experience_skill_taming").getAsDouble());
+							tamingLevel = Utils.xpToSkillLevel(latestProfile.get("experience_skill_taming").getAsDouble(), 50);
 							tamingLevel = (double) Math.round(tamingLevel * 100) / 100;
 						}
 					} else {
 						Thread.sleep(600); // Sleep for another request
 						System.out.println("Fetching skills from achievement API");
-						JsonObject playerObject = ah.getResponse("https://api.hypixel.net/player?uuid=" + UUID + "&key=" + key);
+						JsonObject playerObject = APIHandler.getResponse("https://api.hypixel.net/player?uuid=" + UUID + "&key=" + key);
 						
 						if (!playerObject.get("success").getAsBoolean()) {
 							String reason = profileResponse.get("cause").getAsString();
@@ -187,7 +185,7 @@ public class LobbySkillsCommand extends CommandBase {
 				String[] sortedSAListKeys = sortedSAList.keySet().toArray(new String[sortedSAList.keySet().size()]);
 				String top3 = "";
 				for (int i = 0; i < 3 && i < sortedSAListKeys.length; i++) {
-					top3 += "\n " + EnumChatFormatting.AQUA + sortedSAListKeys[i] + ": " + EnumChatFormatting.GOLD + EnumChatFormatting.BOLD + sortedSAList.get(sortedSAListKeys[i]);
+					top3 += "\n " + EnumChatFormatting.AQUA + sortedSAListKeys[i] + ": " + TheMod.SKILL_AVERAGE_COLOUR + EnumChatFormatting.BOLD + sortedSAList.get(sortedSAListKeys[i]);
 				}
 				
 				// Get lobby sa
@@ -198,10 +196,10 @@ public class LobbySkillsCommand extends CommandBase {
 				lobbySA = (double) Math.round((lobbySA / lobbySkills.size()) * 100) / 100;
 				
 				// Finally say skill lobby avg and highest SA users
-				playerSP.addChatMessage(new ChatComponentText(EnumChatFormatting.AQUA + "" + EnumChatFormatting.BOLD + "-------------------\n" +
-															  EnumChatFormatting.GREEN + " Lobby Skill Average: " + EnumChatFormatting.GOLD + EnumChatFormatting.BOLD + lobbySA + "\n" +
-															  EnumChatFormatting.GREEN + " Highest Skill Averages:" + top3 + "\n" +
-															  EnumChatFormatting.AQUA + "" + EnumChatFormatting.BOLD + " -------------------"));
+				playerSP.addChatMessage(new ChatComponentText(TheMod.DELIMITER_COLOUR + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+															  TheMod.TYPE_COLOUR + " Lobby Skill Average: " + TheMod.SKILL_AVERAGE_COLOUR + EnumChatFormatting.BOLD + lobbySA + "\n" +
+															  TheMod.TYPE_COLOUR + " Highest Skill Averages:" + top3 + "\n" +
+															  TheMod.DELIMITER_COLOUR + "" + EnumChatFormatting.BOLD + " -------------------"));
 			} catch (InterruptedException ex) {
 				System.out.println("Current skill average list: " + unsortedSAList.toString());
 				Thread.currentThread().interrupt();

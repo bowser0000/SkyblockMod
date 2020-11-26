@@ -8,6 +8,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
+import me.Danker.TheMod;
 import me.Danker.handlers.APIHandler;
 import me.Danker.handlers.ConfigHandler;
 import me.Danker.utils.Utils;
@@ -78,14 +79,12 @@ public class PetsCommand extends CommandBase {
 	public void processCommand(ICommandSender arg0, String[] arg1) throws CommandException {
 		// MULTI THREAD DRIFTING
 		new Thread(() -> {
-			APIHandler ah = new APIHandler();
-			ConfigHandler cf = new ConfigHandler();
 			EntityPlayer player = (EntityPlayer) arg0;
 			
 			// Check key
-			String key = cf.getString("api", "APIKey");
+			String key = ConfigHandler.getString("api", "APIKey");
 			if (key.equals("")) {
-				player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "API key not set. Use /setkey."));
+				player.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "API key not set. Use /setkey."));
 			}
 			
 			// Get UUID for Hypixel API requests
@@ -94,30 +93,30 @@ public class PetsCommand extends CommandBase {
 			if (arg1.length == 0) {
 				username = player.getName();
 				uuid = player.getUniqueID().toString().replaceAll("[\\-]", "");
-				player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Checking pets of " + EnumChatFormatting.DARK_GREEN + username));
+				player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Checking pets of " + TheMod.SECONDARY_COLOUR + username));
 			} else {
 				username = arg1[0];
-				player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Checking pets of " + EnumChatFormatting.DARK_GREEN + username));
-				uuid = ah.getUUID(username);
+				player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Checking pets of " + TheMod.SECONDARY_COLOUR + username));
+				uuid = APIHandler.getUUID(username);
 			}
 			
 			// Find stats of latest profile
-			String latestProfile = ah.getLatestProfileID(uuid, key);
+			String latestProfile = APIHandler.getLatestProfileID(uuid, key);
 			if (latestProfile == null) return;
 			
 			String profileURL = "https://api.hypixel.net/skyblock/profile?profile=" + latestProfile + "&key=" + key;
 			System.out.println("Fetching profile...");
-			JsonObject profileResponse = ah.getResponse(profileURL);
+			JsonObject profileResponse = APIHandler.getResponse(profileURL);
 			if (!profileResponse.get("success").getAsBoolean()) {
 				String reason = profileResponse.get("cause").getAsString();
-				player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Failed with reason: " + reason));
+				player.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "Failed with reason: " + reason));
 				return;
 			}
 			
 			System.out.println("Fetching pets...");
 			JsonArray petsArray = profileResponse.get("profile").getAsJsonObject().get("members").getAsJsonObject().get(uuid).getAsJsonObject().get("pets").getAsJsonArray();
 			if (petsArray.size() == 0) {
-				player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + username + " has no pets."));
+				player.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + username + " has no pets."));
 				return;
 			}
 			
@@ -160,7 +159,7 @@ public class PetsCommand extends CommandBase {
 			}
 			
 			int totalPets = commonPets.size() + uncommonPets.size() + rarePets.size() + epicPets.size() + legendaryPets.size();
-			String finalMessage = EnumChatFormatting.AQUA + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+			String finalMessage = TheMod.DELIMITER_COLOUR + "" + EnumChatFormatting.BOLD + "-------------------\n" +
 					  			  EnumChatFormatting.AQUA + " " + username + "'s Pets (" + totalPets + "):\n";
 			
 			// Loop through pet rarities
@@ -234,7 +233,7 @@ public class PetsCommand extends CommandBase {
 				finalMessage += messageToAdd + "\n";
 			}
 			
-			finalMessage += EnumChatFormatting.AQUA + " " + EnumChatFormatting.BOLD + "-------------------";
+			finalMessage += TheMod.DELIMITER_COLOUR + " " + EnumChatFormatting.BOLD + "-------------------";
 			player.addChatMessage(new ChatComponentText(finalMessage));
 				
 		}).start();

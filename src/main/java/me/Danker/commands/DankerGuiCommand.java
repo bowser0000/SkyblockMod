@@ -1,8 +1,6 @@
 package me.Danker.commands;
 
 import me.Danker.TheMod;
-import me.Danker.gui.DankerGui;
-import net.minecraft.client.Minecraft;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;

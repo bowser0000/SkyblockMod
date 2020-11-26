@@ -2,6 +2,7 @@ package me.Danker.commands;
 
 import java.util.List;
 
+import me.Danker.TheMod;
 import me.Danker.handlers.ConfigHandler;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
@@ -9,7 +10,6 @@ import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.EnumChatFormatting;
 
 public class BlockSlayerCommand extends CommandBase {
 	
@@ -44,28 +44,31 @@ public class BlockSlayerCommand extends CommandBase {
 	@Override
 	public void processCommand(ICommandSender arg0, String[] arg1) throws CommandException {
 		final EntityPlayer player = (EntityPlayer)arg0;
-		final ConfigHandler cf = new ConfigHandler();
 		
 		if (arg1.length == 0 || (arg1.length == 1 && !arg1[0].equalsIgnoreCase("off"))) {
-			player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Usage: " + getCommandUsage(arg0)));
+			player.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "Usage: " + getCommandUsage(arg0)));
 			return;
 		}
 		
-		if (arg1[0].equalsIgnoreCase("zombie")) {
-			onlySlayerName = "Revenant Horror";
-		} else if (arg1[0].equalsIgnoreCase("spider")) {
-			onlySlayerName = "Tarantula Broodfather";
-		} else if (arg1[0].equalsIgnoreCase("wolf")) {
-			onlySlayerName = "Sven Packmaster";
-		} else if (arg1[0].equalsIgnoreCase("off")) {
-			onlySlayerName = "";
-			onlySlayerNumber = "";
-			cf.writeStringConfig("toggles", "BlockSlayer", "");
-			player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Slayer blocking turned off."));
-			return;
-		} else {
-			player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Usage: " + getCommandUsage(arg0)));
-			return;
+		switch (arg1[0].toLowerCase()) {
+			case "zombie":
+				onlySlayerName = "Revenant Horror";
+				break;
+			case "spider":
+				onlySlayerName = "Tarantula Broodfather";
+				break;
+			case "wolf":
+				onlySlayerName = "Sven Packmaster";
+				break;
+			case "off":
+				onlySlayerName = "";
+				onlySlayerNumber = "";
+				ConfigHandler.writeStringConfig("toggles", "BlockSlayer", "");
+				player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Slayer blocking turned off."));
+				return;
+			default:
+				player.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "Usage: " + getCommandUsage(arg0)));
+				return;
 		}
 		
 		int slayerNumber = Integer.parseInt(arg1[1]);
@@ -86,12 +89,12 @@ public class BlockSlayerCommand extends CommandBase {
 			default:
 				onlySlayerName = "";
 				onlySlayerNumber = "";
-				player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Usage: " + getCommandUsage(arg0)));
+				player.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "Usage: " + getCommandUsage(arg0)));
 				return;
 		}
 		
-		cf.writeStringConfig("toggles", "BlockSlayer", onlySlayerName + " " + onlySlayerNumber);
-		player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Slayer blocking set to " + EnumChatFormatting.DARK_GREEN + onlySlayerName + " " + onlySlayerNumber));
+		ConfigHandler.writeStringConfig("toggles", "BlockSlayer", onlySlayerName + " " + onlySlayerNumber);
+		player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Slayer blocking set to " + TheMod.SECONDARY_COLOUR + onlySlayerName + " " + onlySlayerNumber));
 	}
 
 }

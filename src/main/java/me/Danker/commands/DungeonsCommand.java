@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.google.gson.JsonObject;
 
+import me.Danker.TheMod;
 import me.Danker.handlers.APIHandler;
 import me.Danker.handlers.ConfigHandler;
 import me.Danker.utils.Utils;
@@ -44,14 +45,12 @@ public class DungeonsCommand extends CommandBase {
 	public void processCommand(ICommandSender arg0, String[] arg1) throws CommandException {
 		// MULTI THREAD DRIFTING
 		new Thread(() -> {
-			APIHandler ah = new APIHandler();
-			ConfigHandler cf = new ConfigHandler();
 			EntityPlayer player = (EntityPlayer) arg0;
 			
 			// Check key
-			String key = cf.getString("api", "APIKey");
+			String key = ConfigHandler.getString("api", "APIKey");
 			if (key.equals("")) {
-				player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "API key not set. Use /setkey."));
+				player.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "API key not set. Use /setkey."));
 			}
 			
 			// Get UUID for Hypixel API requests
@@ -60,30 +59,30 @@ public class DungeonsCommand extends CommandBase {
 			if (arg1.length == 0) {
 				username = player.getName();
 				uuid = player.getUniqueID().toString().replaceAll("[\\-]", "");
-				player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Checking dungeon stats of " + EnumChatFormatting.DARK_GREEN + username));
+				player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Checking dungeon stats of " + TheMod.SECONDARY_COLOUR + username));
 			} else {
 				username = arg1[0];
-				player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Checking dungeon stats of " + EnumChatFormatting.DARK_GREEN + username));
-				uuid = ah.getUUID(username);
+				player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Checking dungeon stats of " + TheMod.SECONDARY_COLOUR + username));
+				uuid = APIHandler.getUUID(username);
 			}
 			
 			// Find stats of latest profile
-			String latestProfile = ah.getLatestProfileID(uuid, key);
+			String latestProfile = APIHandler.getLatestProfileID(uuid, key);
 			if (latestProfile == null) return;
 			
 			String profileURL = "https://api.hypixel.net/skyblock/profile?profile=" + latestProfile + "&key=" + key;
 			System.out.println("Fetching profile...");
-			JsonObject profileResponse = ah.getResponse(profileURL);
+			JsonObject profileResponse = APIHandler.getResponse(profileURL);
 			if (!profileResponse.get("success").getAsBoolean()) {
 				String reason = profileResponse.get("cause").getAsString();
-				player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Failed with reason: " + reason));
+				player.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "Failed with reason: " + reason));
 				return;
 			}
 			
 			System.out.println("Fetching dungeon stats...");
 			JsonObject dungeonsObject = profileResponse.get("profile").getAsJsonObject().get("members").getAsJsonObject().get(uuid).getAsJsonObject().get("dungeons").getAsJsonObject();
 			if (!dungeonsObject.get("dungeon_types").getAsJsonObject().get("catacombs").getAsJsonObject().has("experience")) {
-				player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "This player has not played dungeons."));
+				player.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "This player has not played dungeons."));
 				return;
 			}
 			
@@ -95,7 +94,7 @@ public class DungeonsCommand extends CommandBase {
 			double tank = Utils.xpToDungeonsLevel(dungeonsObject.get("player_classes").getAsJsonObject().get("tank").getAsJsonObject().get("experience").getAsDouble());
 			String selectedClass = Utils.capitalizeString(dungeonsObject.get("selected_dungeon_class").getAsString());
 			
-			player.addChatMessage(new ChatComponentText(EnumChatFormatting.AQUA + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+			player.addChatMessage(new ChatComponentText(TheMod.DELIMITER_COLOUR + "" + EnumChatFormatting.BOLD + "-------------------\n" +
 														EnumChatFormatting.RED + " Catacombs Level: " + catacombs + "\n" +
 														EnumChatFormatting.GOLD + " Selected Class: " + selectedClass + "\n\n" +
 														EnumChatFormatting.YELLOW + " Healer Level: " + healer + "\n" +
@@ -103,7 +102,7 @@ public class DungeonsCommand extends CommandBase {
 														EnumChatFormatting.RED + " Berserk Level: " + berserk + "\n" +
 														EnumChatFormatting.GREEN + " Archer Level: " + archer + "\n" +
 														EnumChatFormatting.BLUE + " Tank Level: " + tank + "\n" +
-														EnumChatFormatting.AQUA + " " + EnumChatFormatting.BOLD + "-------------------"));
+														TheMod.DELIMITER_COLOUR + " " + EnumChatFormatting.BOLD + "-------------------"));
 		}).start();
 	}
 
