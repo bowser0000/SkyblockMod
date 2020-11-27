@@ -39,6 +39,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 	public static boolean threeManToggled;
 	public static boolean oruoToggled;
 	public static boolean blazeToggled;
+	public static boolean onlyShowCorrectBlazeToggled;
 	public static boolean creeperToggled;
 	public static boolean waterToggled;
 	
@@ -52,7 +53,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 		return "/" + getCommandName() + " <gparty/coords/golden/slayercount/rngesusalerts/splitfishing/chatmaddox/spiritbearalert/" + 
 										  "aotd/lividdagger/sceptremessages/petcolors/dungeontimer/golemalerts/expertiselore/skill50display/" + 
 										  "outlinetext/midasstaffmessages/healmessages/caketimer/lowhealthnotify/lividsolver/threemanpuzzle/oruopuzzle/" + 
-										  "blazepuzzle/creeperpuzzle/waterpuzzle/list>";
+										  "blazepuzzle/onlyshowcorrectblaze/creeperpuzzle/waterpuzzle/list>";
 	}
 
 	@Override
@@ -68,7 +69,8 @@ public class ToggleCommand extends CommandBase implements ICommand {
 														  "sceptremessages", "petcolors", "dungeontimer", "golemalerts",
 														  "expertiselore", "skill50display", "outlinetext", "midasstaffmessages",
 														  "healmessages", "caketimer", "lowhealthnotify", "lividsolver", "threemanpuzzle",
-														  "oruopuzzle", "blazepuzzle", "creeperpuzzle", "waterpuzzle", "list");
+														  "oruopuzzle", "blazepuzzle", "onlyshowcorrectblaze", "creeperpuzzle",
+														  "waterpuzzle", "list");
 		}
 		return null;
 	}
@@ -209,14 +211,19 @@ public class ToggleCommand extends CommandBase implements ICommand {
 				ConfigHandler.writeBooleanConfig("toggles", "BlazePuzzle", blazeToggled);
 				player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Blaze puzzle solver has been set to " + TheMod.SECONDARY_COLOUR + blazeToggled + TheMod.MAIN_COLOUR + "."));
 				break;
+			case "onlyshowcorrectblaze":
+				onlyShowCorrectBlazeToggled = !onlyShowCorrectBlazeToggled;
+				ConfigHandler.writeBooleanConfig("toggles", "OnlyShowCorrectBlaze", onlyShowCorrectBlazeToggled);
+				player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Only show correct blaze has been set to " + TheMod.SECONDARY_COLOUR + onlyShowCorrectBlazeToggled + TheMod.MAIN_COLOUR + "."));
+				break;
 			case "creeperpuzzle":
 				creeperToggled = !creeperToggled;
-				ConfigHandler.writeBooleanConfig("creeperpuzzle", "CreeperPuzzle", creeperToggled);
+				ConfigHandler.writeBooleanConfig("toggles", "CreeperPuzzle", creeperToggled);
 				player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Creeper puzzle solver has been set to " + TheMod.SECONDARY_COLOUR + creeperToggled + TheMod.MAIN_COLOUR + "."));
 				break;
 			case "waterpuzzle":
 				waterToggled = !waterToggled;
-				ConfigHandler.writeBooleanConfig("waterpuzzle", "WaterPuzzle", waterToggled);
+				ConfigHandler.writeBooleanConfig("toggles", "WaterPuzzle", waterToggled);
 				player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Water puzzle solver has been set to " + TheMod.SECONDARY_COLOUR + waterToggled + TheMod.MAIN_COLOUR + "."));
 				break;
 			case "list":
@@ -245,6 +252,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 															TheMod.TYPE_COLOUR + " Three man puzzle solver: " + TheMod.VALUE_COLOUR + threeManToggled + "\n" +
 															TheMod.TYPE_COLOUR + " Oruo trivia solver: " + TheMod.VALUE_COLOUR + oruoToggled + "\n" +
 															TheMod.TYPE_COLOUR + " Blaze puzzle solver: " + TheMod.VALUE_COLOUR + blazeToggled + "\n" +
+															TheMod.TYPE_COLOUR + " Only show correct blaze: " + TheMod.VALUE_COLOUR + onlyShowCorrectBlazeToggled + "\n" +
 															TheMod.TYPE_COLOUR + " Creeper puzzle solver: " + TheMod.VALUE_COLOUR + creeperToggled + "\n" +
 															TheMod.TYPE_COLOUR + " Water puzzle solver: " + TheMod.VALUE_COLOUR + waterToggled));
 			default:

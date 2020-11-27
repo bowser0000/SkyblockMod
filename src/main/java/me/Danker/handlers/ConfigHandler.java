@@ -199,6 +199,7 @@ public class ConfigHandler {
 		if (!hasKey("toggles", "ThreeManPuzzle")) writeBooleanConfig("toggles", "ThreeManPuzzle", false);
 		if (!hasKey("toggles", "OruoPuzzle")) writeBooleanConfig("toggles", "OruoPuzzle", false);
 		if (!hasKey("toggles", "BlazePuzzle")) writeBooleanConfig("toggles", "BlazePuzzle", false);
+		if (!hasKey("toggles", "OnlyShowCorrectBlaze")) writeBooleanConfig("toggles", "OnlyShowCorrectBlaze", false);
 		if (!hasKey("toggles", "CreeperPuzzle")) writeBooleanConfig("toggles", "CreeperPuzzle", false);
 		if (!hasKey("toggles", "WaterPuzzle")) writeBooleanConfig("toggles", "WaterPuzzle", false);
 		
@@ -435,6 +436,7 @@ public class ConfigHandler {
 		ToggleCommand.threeManToggled = getBoolean("toggles", "ThreeManPuzzle");
 		ToggleCommand.oruoToggled = getBoolean("toggles", "OruoPuzzle");
 		ToggleCommand.blazeToggled = getBoolean("toggles", "BlazePuzzle");
+		ToggleCommand.onlyShowCorrectBlazeToggled = getBoolean("toggles", "OnlyShowCorrectBlaze");
 		ToggleCommand.creeperToggled = getBoolean("toggles", "CreeperPuzzle");
 		ToggleCommand.waterToggled = getBoolean("toggles", "WaterPuzzle");
 		

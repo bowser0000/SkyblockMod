@@ -15,6 +15,7 @@ public class PuzzleSolversGui extends GuiScreen {
 	private GuiButton riddle;
 	private GuiButton trivia;
 	private GuiButton blaze;
+	private GuiButton onlyShowCorrectBlaze;
 	private GuiButton creeper;
 	private GuiButton water;
 	
@@ -35,13 +36,15 @@ public class PuzzleSolversGui extends GuiScreen {
 		riddle = new GuiButton(0, width / 2 - 100, (int) (height * 0.1), "Riddle Solver: " + Utils.getColouredBoolean(ToggleCommand.threeManToggled));
 		trivia = new GuiButton(0, width / 2 - 100, (int) (height * 0.2), "Trivia Solver: " + Utils.getColouredBoolean(ToggleCommand.oruoToggled));
 		blaze = new GuiButton(0, width / 2 - 100, (int) (height * 0.3), "Blaze Solver: " + Utils.getColouredBoolean(ToggleCommand.blazeToggled));
-		creeper = new GuiButton(0, width / 2 - 100, (int) (height * 0.4), "Creeper Solver: " + Utils.getColouredBoolean(ToggleCommand.creeperToggled));
-		water = new GuiButton(0, width / 2 - 100, (int) (height * 0.5), "Water Solver: " + Utils.getColouredBoolean(ToggleCommand.waterToggled));
+		onlyShowCorrectBlaze = new GuiButton(0, width / 2 - 100, (int) (height * 0.4), "Only Show Correct Blaze Hitbox: " + Utils.getColouredBoolean(ToggleCommand.onlyShowCorrectBlazeToggled));
+		creeper = new GuiButton(0, width / 2 - 100, (int) (height * 0.5), "Creeper Solver: " + Utils.getColouredBoolean(ToggleCommand.creeperToggled));
+		water = new GuiButton(0, width / 2 - 100, (int) (height * 0.6), "Water Solver: " + Utils.getColouredBoolean(ToggleCommand.waterToggled));
 		
 		this.buttonList.add(goBack);
 		this.buttonList.add(riddle);
 		this.buttonList.add(trivia);
 		this.buttonList.add(blaze);
+		this.buttonList.add(onlyShowCorrectBlaze);
 		this.buttonList.add(creeper);
 		this.buttonList.add(water);
 	}
@@ -68,6 +71,10 @@ public class PuzzleSolversGui extends GuiScreen {
 			ToggleCommand.blazeToggled = !ToggleCommand.blazeToggled;
 			ConfigHandler.writeBooleanConfig("toggles", "BlazePuzzle", ToggleCommand.blazeToggled);
 			blaze.displayString = "Blaze Solver: " + Utils.getColouredBoolean(ToggleCommand.blazeToggled);
+		} else if (button == onlyShowCorrectBlaze) {
+			ToggleCommand.onlyShowCorrectBlazeToggled = !ToggleCommand.onlyShowCorrectBlazeToggled;
+			ConfigHandler.writeBooleanConfig("toggles", "OnlyShowCorrectBlaze", ToggleCommand.onlyShowCorrectBlazeToggled);
+			onlyShowCorrectBlaze.displayString = "Only Show Correct Blaze Hitbox: " + Utils.getColouredBoolean(ToggleCommand.onlyShowCorrectBlazeToggled);
 		} else if (button == creeper) {
 			ToggleCommand.creeperToggled = !ToggleCommand.creeperToggled;
 			ConfigHandler.writeBooleanConfig("toggles", "CreeperPuzzle", ToggleCommand.creeperToggled);
