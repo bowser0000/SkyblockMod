@@ -42,6 +42,10 @@ public class ToggleCommand extends CommandBase implements ICommand {
 	public static boolean onlyShowCorrectBlazeToggled;
 	public static boolean creeperToggled;
 	public static boolean waterToggled;
+	// Terminal Helpers
+	public static boolean startsWithToggled;
+	public static boolean selectAllToggled;
+	public static boolean itemFrameOnSeaLanternsToggled;
 	
 	@Override
 	public String getCommandName() {
@@ -53,7 +57,8 @@ public class ToggleCommand extends CommandBase implements ICommand {
 		return "/" + getCommandName() + " <gparty/coords/golden/slayercount/rngesusalerts/splitfishing/chatmaddox/spiritbearalert/" + 
 										  "aotd/lividdagger/sceptremessages/petcolors/dungeontimer/golemalerts/expertiselore/skill50display/" + 
 										  "outlinetext/midasstaffmessages/healmessages/caketimer/lowhealthnotify/lividsolver/threemanpuzzle/oruopuzzle/" + 
-										  "blazepuzzle/onlyshowcorrectblaze/creeperpuzzle/waterpuzzle/list>";
+										  "blazepuzzle/onlyshowcorrectblaze/creeperpuzzle/waterpuzzle/startswithterminal/selectallterminal/" + 
+										  "itemframeonsealanterns/list>";
 	}
 
 	@Override
@@ -70,7 +75,8 @@ public class ToggleCommand extends CommandBase implements ICommand {
 														  "expertiselore", "skill50display", "outlinetext", "midasstaffmessages",
 														  "healmessages", "caketimer", "lowhealthnotify", "lividsolver", "threemanpuzzle",
 														  "oruopuzzle", "blazepuzzle", "onlyshowcorrectblaze", "creeperpuzzle",
-														  "waterpuzzle", "list");
+														  "waterpuzzle", "startswithterminal", "selectallterminal",
+														  "itemframeonsealanterns", "list");
 		}
 		return null;
 	}
@@ -226,6 +232,21 @@ public class ToggleCommand extends CommandBase implements ICommand {
 				ConfigHandler.writeBooleanConfig("toggles", "WaterPuzzle", waterToggled);
 				player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Water puzzle solver has been set to " + TheMod.SECONDARY_COLOUR + waterToggled + TheMod.MAIN_COLOUR + "."));
 				break;
+			case "startswithterminal":
+				startsWithToggled = !startsWithToggled;
+				ConfigHandler.writeBooleanConfig("toggles", "StartsWithTerminal", startsWithToggled);
+				player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Starts with letter terminal solver has been set to " + TheMod.SECONDARY_COLOUR + startsWithToggled + TheMod.MAIN_COLOUR + "."));
+				break;
+			case "selectallterminal":
+				selectAllToggled = !selectAllToggled;
+				ConfigHandler.writeBooleanConfig("toggles", "SelectAllTerminal", selectAllToggled);
+				player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Select all color items terminal solver has been set to " + TheMod.SECONDARY_COLOUR + selectAllToggled + TheMod.MAIN_COLOUR + "."));
+				break;
+			case "itemframeonsealanterns":
+				itemFrameOnSeaLanternsToggled = !itemFrameOnSeaLanternsToggled;
+				ConfigHandler.writeBooleanConfig("toggles", "IgnoreItemFrameOnSeaLanterns", itemFrameOnSeaLanternsToggled);
+				player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Ignore item frames on sea lanterns has been set to " + TheMod.SECONDARY_COLOUR + itemFrameOnSeaLanternsToggled + TheMod.MAIN_COLOUR + "."));
+				break;
 			case "list":
 				player.addChatMessage(new ChatComponentText(TheMod.TYPE_COLOUR + "Guild party notifications: " + TheMod.VALUE_COLOUR + gpartyToggled + "\n" +
 															TheMod.TYPE_COLOUR + " Coord/Angle display: " + TheMod.VALUE_COLOUR + coordsToggled + "\n" +
@@ -254,7 +275,10 @@ public class ToggleCommand extends CommandBase implements ICommand {
 															TheMod.TYPE_COLOUR + " Blaze puzzle solver: " + TheMod.VALUE_COLOUR + blazeToggled + "\n" +
 															TheMod.TYPE_COLOUR + " Only show correct blaze: " + TheMod.VALUE_COLOUR + onlyShowCorrectBlazeToggled + "\n" +
 															TheMod.TYPE_COLOUR + " Creeper puzzle solver: " + TheMod.VALUE_COLOUR + creeperToggled + "\n" +
-															TheMod.TYPE_COLOUR + " Water puzzle solver: " + TheMod.VALUE_COLOUR + waterToggled));
+															TheMod.TYPE_COLOUR + " Water puzzle solver: " + TheMod.VALUE_COLOUR + waterToggled + "\n" +
+															TheMod.TYPE_COLOUR + " Starts with letter terminal solver: " + TheMod.VALUE_COLOUR + startsWithToggled + "\n" +
+															TheMod.TYPE_COLOUR + " Select all color items terminal solver: " + TheMod.VALUE_COLOUR + selectAllToggled + "\n" +
+															TheMod.TYPE_COLOUR + " Ignore item frames on sea lanterns: " + TheMod.VALUE_COLOUR + itemFrameOnSeaLanternsToggled));
 			default:
 				player.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "Usage: " + getCommandUsage(arg0)));
 		}

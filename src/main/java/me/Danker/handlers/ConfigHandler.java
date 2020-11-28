@@ -202,6 +202,9 @@ public class ConfigHandler {
 		if (!hasKey("toggles", "OnlyShowCorrectBlaze")) writeBooleanConfig("toggles", "OnlyShowCorrectBlaze", false);
 		if (!hasKey("toggles", "CreeperPuzzle")) writeBooleanConfig("toggles", "CreeperPuzzle", false);
 		if (!hasKey("toggles", "WaterPuzzle")) writeBooleanConfig("toggles", "WaterPuzzle", false);
+		if (!hasKey("toggles", "StartsWithTerminal")) writeBooleanConfig("toggles", "StartsWithTerminal", false);
+		if (!hasKey("toggles", "SelectAllTerminal")) writeBooleanConfig("toggles", "SelectAllTerminal", false);
+		if (!hasKey("toggles", "IgnoreItemFrameOnSeaLanterns")) writeBooleanConfig("toggles", "IgnoreItemFrameOnSeaLanterns", false);
 		
 		if (!hasKey("api", "APIKey")) writeStringConfig("api", "APIKey", "");
 		
@@ -439,6 +442,9 @@ public class ConfigHandler {
 		ToggleCommand.onlyShowCorrectBlazeToggled = getBoolean("toggles", "OnlyShowCorrectBlaze");
 		ToggleCommand.creeperToggled = getBoolean("toggles", "CreeperPuzzle");
 		ToggleCommand.waterToggled = getBoolean("toggles", "WaterPuzzle");
+		ToggleCommand.startsWithToggled = getBoolean("toggles", "StartsWithTerminal");
+		ToggleCommand.selectAllToggled = getBoolean("toggles", "SelectAllTerminal");
+		ToggleCommand.itemFrameOnSeaLanternsToggled = getBoolean("toggles", "IgnoreItemFrameOnSeaLanterns");
 		
 		String onlySlayer = getString("toggles", "BlockSlayer");
 		if (!onlySlayer.equals("")) {

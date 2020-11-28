@@ -62,11 +62,13 @@ import net.minecraft.client.gui.GuiChat;
 import net.minecraft.client.gui.inventory.GuiChest;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.item.EntityItemFrame;
 import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.event.ClickEvent;
 import net.minecraft.event.ClickEvent.Action;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.ContainerChest;
 import net.minecraft.inventory.IInventory;
@@ -90,6 +92,7 @@ import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.client.event.sound.PlaySoundEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
+import net.minecraftforge.event.entity.player.EntityInteractEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.WorldEvent;
@@ -2616,7 +2619,7 @@ public class TheMod
 	        			mc.displayGuiScreen(new EditLocationsGui());
 	        			break;
         			case "puzzlesolvers":
-	        			mc.displayGuiScreen(new PuzzleSolversGui());
+	        			mc.displayGuiScreen(new PuzzleSolversGui(1));
 	        			break;
 	        		case "skilltracker":
 	        			mc.displayGuiScreen(new SkillTrackerGui());
@@ -2666,6 +2669,22 @@ public class TheMod
     	}
     }
     
+    @SubscribeEvent
+    public void onEntityInteract(EntityInteractEvent event) {
+    	Minecraft mc = Minecraft.getMinecraft();
+    	if (mc.thePlayer != event.entityPlayer) return;
+    	
+    	if (ToggleCommand.itemFrameOnSeaLanternsToggled && Utils.inDungeons && event.target instanceof EntityItemFrame) {
+    		EntityItemFrame itemFrame = (EntityItemFrame) event.target;
+    		ItemStack item = itemFrame.getDisplayedItem();
+    		if (item == null || item.getItem() != Items.arrow) return;
+    		BlockPos blockPos = Utils.getBlockUnderItemFrame(mc.theWorld, itemFrame);
+    		if (mc.theWorld.getBlockState(blockPos).getBlock() == Blocks.sea_lantern) {
+    			event.setCanceled(true);
+    		}
+    	}
+    }
+
     @SubscribeEvent
     public void onKey(KeyInputEvent event) {
     	if (!Utils.inSkyblock) return;
@@ -2794,44 +2813,74 @@ public class TheMod
     
     @SubscribeEvent
     public void onGuiRender(GuiScreenEvent.BackgroundDrawnEvent event) {
-    	if (!Utils.inSkyblock) return;
-    	if (ToggleCommand.petColoursToggled && event.gui instanceof GuiChest) {
+    	//if (!Utils.inSkyblock) return;
+    	if (event.gui instanceof GuiChest) {
     		GuiChest inventory = (GuiChest) event.gui;
-    		List<Slot> invSlots = inventory.inventorySlots.inventorySlots;
-    		Pattern petPattern = Pattern.compile("\\[Lvl [\\d]{1,3}]");
-    		for (Slot slot : invSlots) {
-    			ItemStack item = slot.getStack();
-    			if (item == null) continue;
-    			String name = item.getDisplayName();
-    			if (petPattern.matcher(StringUtils.stripControlCodes(name)).find()) {
-    				if (name.endsWith("aHealer") || name.endsWith("aMage") || name.endsWith("aBerserk") || name.endsWith("aArcher") || name.endsWith("aTank")) continue;
-    				int colour;
-    				int petLevel = Integer.parseInt(item.getDisplayName().substring(item.getDisplayName().indexOf(" ") + 1, item.getDisplayName().indexOf("]")));
-    				if (petLevel == 100) {
-    					colour = 0xBFF2D249; // Gold
-    				} else if (petLevel >= 90) {
-    					colour = 0xBF9E794E; // Brown
-    				} else if (petLevel >= 80) {
-    					colour = 0xBF5C1F35; // idk weird magenta
-    				} else if (petLevel >= 70) {
-    					colour = 0xBFD64FC8; // Pink
-    				} else if (petLevel >= 60) {
-    					colour = 0xBF7E4FC6; // Purple
-    				} else if (petLevel >= 50) {
-    					colour = 0xBF008AD8; // Light Blue
-    				} else if (petLevel >= 40) {
-    					colour = 0xBF0EAC35; // Green
-    				} else if (petLevel >= 30) {
-    					colour = 0xBFFFC400; // Yellow
-    				} else if (petLevel >= 20) {
-    					colour = 0xBFEF5230; // Orange
-    				} else if (petLevel >= 10) {
-    					colour = 0xBFD62440; // Red
-    				} else {
-    					colour = 0xBF999999; // Gray
-    				}
-    				Utils.drawOnSlot(inventory.inventorySlots.inventorySlots.size(), slot.xDisplayPosition, slot.yDisplayPosition, colour);
-    			}
+    		Container containerChest = inventory.inventorySlots;
+    		if (containerChest instanceof ContainerChest) {
+    			List<Slot> invSlots = inventory.inventorySlots.inventorySlots;
+    			String displayName = ((ContainerChest) containerChest).getLowerChestInventory().getDisplayName().getUnformattedText();
+        		int chestSize = inventory.inventorySlots.inventorySlots.size();
+    			
+        		if (ToggleCommand.petColoursToggled) {
+            		Pattern petPattern = Pattern.compile("\\[Lvl [\\d]{1,3}]");
+            		for (Slot slot : invSlots) {
+            			ItemStack item = slot.getStack();
+            			if (item == null) continue;
+            			String name = item.getDisplayName();
+            			if (petPattern.matcher(StringUtils.stripControlCodes(name)).find()) {
+            				if (name.endsWith("aHealer") || name.endsWith("aMage") || name.endsWith("aBerserk") || name.endsWith("aArcher") || name.endsWith("aTank")) continue;
+            				int colour;
+            				int petLevel = Integer.parseInt(item.getDisplayName().substring(item.getDisplayName().indexOf(" ") + 1, item.getDisplayName().indexOf("]")));
+            				if (petLevel == 100) {
+            					colour = 0xBFF2D249; // Gold
+            				} else if (petLevel >= 90) {
+            					colour = 0xBF9E794E; // Brown
+            				} else if (petLevel >= 80) {
+            					colour = 0xBF5C1F35; // idk weird magenta
+            				} else if (petLevel >= 70) {
+            					colour = 0xBFD64FC8; // Pink
+            				} else if (petLevel >= 60) {
+            					colour = 0xBF7E4FC6; // Purple
+            				} else if (petLevel >= 50) {
+            					colour = 0xBF008AD8; // Light Blue
+            				} else if (petLevel >= 40) {
+            					colour = 0xBF0EAC35; // Green
+            				} else if (petLevel >= 30) {
+            					colour = 0xBFFFC400; // Yellow
+            				} else if (petLevel >= 20) {
+            					colour = 0xBFEF5230; // Orange
+            				} else if (petLevel >= 10) {
+            					colour = 0xBFD62440; // Red
+            				} else {
+            					colour = 0xBF999999; // Gray
+            				}
+            				Utils.drawOnSlot(chestSize, slot.xDisplayPosition, slot.yDisplayPosition, colour);
+            			}
+            		}
+        		}
+        		
+        		if (ToggleCommand.startsWithToggled && Utils.inDungeons && displayName.trim().startsWith("What starts with:")) {
+        			char letter = displayName.charAt(displayName.indexOf("'") + 1);
+        			for (Slot slot : invSlots) {
+        				ItemStack item = slot.getStack();
+        				if (item == null) continue;
+        				if (StringUtils.stripControlCodes(item.getDisplayName()).charAt(0) == letter) {
+        					Utils.drawOnSlot(chestSize, slot.xDisplayPosition, slot.yDisplayPosition, 0xBF40FF40);
+        				}
+        			}
+        		}
+        		
+        		if (ToggleCommand.selectAllToggled && Utils.inDungeons && displayName.trim().startsWith("Select all the")) {
+        			String colour = displayName.split(" ")[3];
+        			for (Slot slot : invSlots) {
+        				ItemStack item = slot.getStack();
+        				if (item == null) continue;
+        				if (item.getDisplayName().toUpperCase().contains(colour)) {
+        					Utils.drawOnSlot(chestSize, slot.xDisplayPosition, slot.yDisplayPosition, 0xBF40FF40);
+        				}
+        			}
+        		}
     		}
     	}
     }
