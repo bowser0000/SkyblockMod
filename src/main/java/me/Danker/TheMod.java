@@ -182,6 +182,7 @@ public class TheMod
 	public static double enchantingXPGained = 0;
 	static double alchemyXP = 0;
 	public static double alchemyXPGained = 0;
+	static double xpLeft = 0;
     
     public static String MAIN_COLOUR;
     public static String SECONDARY_COLOUR;
@@ -376,7 +377,9 @@ public class TheMod
     				if (!section.contains("Runecrafting") && !section.contains("Carpentry")) {
     					int limit = section.contains("Farming") ? 60 : 50;
     					double currentXP = Double.parseDouble(section.substring(section.indexOf("(") + 1, section.indexOf("/")).replace(",", ""));
-    					int previousXP = Utils.getPastXpEarned(Integer.parseInt(section.substring(section.indexOf("/") + 1, section.indexOf(")")).replaceAll(",", "")), limit);
+    					int xpToLevelUp = Integer.parseInt(section.substring(section.indexOf("/") + 1, section.indexOf(")")).replaceAll(",", ""));
+    					xpLeft = xpToLevelUp - currentXP;
+    					int previousXP = Utils.getPastXpEarned(xpToLevelUp, limit);
     					double totalXP = currentXP + previousXP;
     					double xpGained = Double.parseDouble(section.substring(section.indexOf("+") + 1, section.indexOf(" ")).replace(",", ""));
     					String skill = section.substring(section.indexOf(" ") + 1, section.lastIndexOf(" "));
@@ -1306,6 +1309,10 @@ public class TheMod
 			String skillTrackerText = SKILL_TRACKER_COLOUR + lastSkill + " XP Earned: " + NumberFormat.getNumberInstance(Locale.US).format(xpToShow) + "\n" +
 									  SKILL_TRACKER_COLOUR + "Time Elapsed: " + Utils.getTimeBetween(0, skillStopwatch.getTime() / 1000d) + "\n" +
 									  SKILL_TRACKER_COLOUR + "XP Per Hour: " + NumberFormat.getIntegerInstance(Locale.US).format(xpPerHour);
+			if (xpLeft >= 0) {
+				String time = xpPerHour == 0 ? "Never" : Utils.getTimeBetween(0, xpLeft / (xpPerHour / 3600D));
+				skillTrackerText += "\n" + SKILL_TRACKER_COLOUR + "Time Until Next Level: " + time;
+			}
 			if (!skillStopwatch.isStarted() || skillStopwatch.isSuspended()) {
 				skillTrackerText += "\n" + EnumChatFormatting.RED + "PAUSED";
 			}
