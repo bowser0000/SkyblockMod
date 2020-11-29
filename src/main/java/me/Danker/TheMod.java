@@ -2303,7 +2303,7 @@ public class TheMod
         		Utils.checkForDungeons();
     		}
     		
-    		if (DisplayCommand.auto && mc != null && world != null) {
+    		if (DisplayCommand.auto && mc != null && world != null && player != null) {
     			List<String> scoreboard = ScoreboardHandler.getSidebarLines();
     			boolean found = false;
     			for (String s : scoreboard) {
@@ -2333,6 +2333,14 @@ public class TheMod
     					} else if (sCleaned.contains("F7")) {
     						DisplayCommand.display = "catacombs_floor_seven";
     					}
+    					found = true;
+    				}
+    			}
+    			for (int i = 0; i < 8; i++) {
+    				ItemStack hotbarItem = player.inventory.getStackInSlot(i);
+    				if (hotbarItem == null) continue;
+    				if (hotbarItem.getDisplayName().contains("Ancestral Spade")) {
+    					DisplayCommand.display = "mythological";
     					found = true;
     				}
     			}
