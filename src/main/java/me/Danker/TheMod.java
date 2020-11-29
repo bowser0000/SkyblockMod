@@ -149,7 +149,6 @@ public class TheMod
 	static String[] triviaAnswers = null;
 	static Entity highestBlaze = null;
 	static Entity lowestBlaze = null;
-	static boolean lowToHigh = false;
 	// Among Us colours
 	static final int[] CREEPER_COLOURS = {0x50EF39, 0xC51111, 0x132ED1, 0x117F2D, 0xED54BA, 0xEF7D0D, 0xF5F557, 0xD6E0F0, 0x6B2FBB, 0x39FEDC};
 	static boolean drawCreeperLines = false;
@@ -2548,27 +2547,6 @@ public class TheMod
     					}
     				}
     			}
-    			
-    			if (ToggleCommand.onlyShowCorrectBlazeToggled && (highestBlaze != null || lowestBlaze != null)) {
-    				new Thread(() -> {
-    					boolean wallFound = false;
-    					for (int x = (int) player.posX - 25; x <= player.posX + 25; x++) {
-    						for (int z = (int) player.posZ - 25; z <= player.posX + 25; z++) {
-    							BlockPos blockPos = new BlockPos(x, 119, z);
-    							if (world.getBlockState(blockPos).getBlock() == Blocks.cobblestone_wall) {
-    								wallFound = true;
-    								break;
-    							}
-    						}
-    						if (wallFound) break;
-    					}
-    					if (wallFound) {
-    						lowToHigh = true;
-    					} else {
-    						lowToHigh = false;
-    					}
-    				}).start();
-    			}
     		}
     	}
     	
@@ -2633,13 +2611,13 @@ public class TheMod
     @SubscribeEvent
     public void onWorldRender(RenderWorldLastEvent event) {
     	if (ToggleCommand.blazeToggled) {
-    		if (lowestBlaze != null && ((lowToHigh && ToggleCommand.onlyShowCorrectBlazeToggled) || !ToggleCommand.onlyShowCorrectBlazeToggled)) {
+    		if (lowestBlaze != null) {
     			BlockPos stringPos = new BlockPos(lowestBlaze.posX, lowestBlaze.posY + 1, lowestBlaze.posZ);
     			Utils.draw3DString(stringPos, EnumChatFormatting.BOLD + "Smallest", LOWEST_BLAZE_COLOUR, event.partialTicks);
     			AxisAlignedBB aabb = new AxisAlignedBB(lowestBlaze.posX - 0.5, lowestBlaze.posY - 2, lowestBlaze.posZ - 0.5, lowestBlaze.posX + 0.5, lowestBlaze.posY, lowestBlaze.posZ + 0.5);
     			Utils.draw3DBox(aabb, LOWEST_BLAZE_COLOUR, event.partialTicks);
     		}
-    		if (highestBlaze != null && ((!lowToHigh && ToggleCommand.onlyShowCorrectBlazeToggled) || !ToggleCommand.onlyShowCorrectBlazeToggled)) {
+    		if (highestBlaze != null) {
     			BlockPos stringPos = new BlockPos(highestBlaze.posX, highestBlaze.posY + 1, highestBlaze.posZ);
     			Utils.draw3DString(stringPos, EnumChatFormatting.BOLD + "Biggest", HIGHEST_BLAZE_COLOUR, event.partialTicks);
     			AxisAlignedBB aabb = new AxisAlignedBB(highestBlaze.posX - 0.5, highestBlaze.posY - 2, highestBlaze.posZ - 0.5, highestBlaze.posX + 0.5, highestBlaze.posY, highestBlaze.posZ + 0.5);

@@ -26,6 +26,7 @@ Discord Server: https://discord.gg/QsEkNQS
 - Expertise kills in fishing rod lore
 - Catacombs trackers
 - Dungeons puzzle solver (Riddle, trivia, blaze, creeper, water)
+- Catacombs F7 Stage 3 solvers (Starts with letter, select all colour, ignore arrows on sea lanterns)
 - Find correct Livid (with graphic display of HP)
 - Pet background colors based on level
 - Golem spawning alerts
@@ -40,7 +41,7 @@ Discord Server: https://discord.gg/QsEkNQS
 ## Commands
 - /dhelp - Returns this message in-game.
 - /dsm - Opens the GUI for Danker's Skyblock Mod.
-- /toggle <gparty/coords/golden/slayercount/rngesusalerts/splitfishing/chatmaddox/spiritbearalerts/aotd/sceptremessages/petcolors/dungeontimer/golemalerts/expertiselore/skill50display/outlinetext/midasstaffmessages/healmessages/caketimer/lividsolver/lowhealthnotify/oruopuzzle/blazepuzzle/onlyshowcorrectblaze/creeperpuzzle/waterpuzzle/list> - Toggles features. /toggle list returns values of every toggle.
+- /toggle <gparty/coords/golden/slayercount/rngesusalerts/splitfishing/chatmaddox/spiritbearalerts/aotd/sceptremessages/petcolors/dungeontimer/golemalerts/expertiselore/skill50display/outlinetext/midasstaffmessages/healmessages/caketimer/lividsolver/lowhealthnotify/oruopuzzle/blazepuzzle/creeperpuzzle/waterpuzzle/startswithterminal/selectallterminal/itemframeonsealanterns/list> - Toggles features. /toggle list returns values of every toggle.
 - /setkey <key> - Sets API key.
 - /getkey - Returns key set with /setkey and copies it to your clipboard.
 - /loot <zombie/spider/wolf/fishing/catacombs> [winter/spooky/f(1-7)/session] - Returns loot received from slayer quests or fishing stats. /loot fishing winter returns winter sea creatures instead.
