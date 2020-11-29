@@ -115,7 +115,7 @@ import net.minecraftforge.fml.common.versioning.DefaultArtifactVersion;
 public class TheMod
 {
     public static final String MODID = "Danker's Skyblock Mod";
-    public static final String VERSION = "1.8.2";
+    public static final String VERSION = "1.8.3";
     
     static double checkItemsNow = 0;
     static double itemsChecked = 0;
