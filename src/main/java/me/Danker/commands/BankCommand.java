@@ -101,6 +101,7 @@ public class BankCommand extends CommandBase {
 															EnumChatFormatting.AQUA + " " + username + "'s Coins:\n" +
 															TheMod.TYPE_COLOUR + " Bank: " + EnumChatFormatting.GOLD + nf.format(bankCoins) + "\n" +
 															TheMod.TYPE_COLOUR + " Purse: " + EnumChatFormatting.GOLD + nf.format(purseCoins) + "\n" +
+															TheMod.TYPE_COLOUR + " Total: " + EnumChatFormatting.GOLD + nf.format(bankCoins + purseCoins) + "\n" +
 															TheMod.DELIMITER_COLOUR + " " + EnumChatFormatting.BOLD + "-------------------"));
 			} else {
 				player.addChatMessage(new ChatComponentText(TheMod.DELIMITER_COLOUR + "" + EnumChatFormatting.BOLD + "-------------------\n" +
