@@ -6,7 +6,6 @@ Discord Server: https://discord.gg/QsEkNQS
 ## Incompatibilities
 - Old Animations <2.6.4 - Frequent crashes
 - Old Animations 2.6.4 - Pet colors does not work
-- LabyMod + Sidebar Mod Revamp - Displays don't show
 
 ## Current features
 - Guild party desktop notifications
