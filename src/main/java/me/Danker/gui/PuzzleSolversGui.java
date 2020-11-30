@@ -11,12 +11,23 @@ import net.minecraft.client.gui.ScaledResolution;
 
 public class PuzzleSolversGui extends GuiScreen {
 
+	private int page;
+	
 	private GuiButton goBack;
+	private GuiButton backPage;
+	private GuiButton nextPage;
 	private GuiButton riddle;
 	private GuiButton trivia;
 	private GuiButton blaze;
 	private GuiButton creeper;
 	private GuiButton water;
+	private GuiButton startsWith;
+	private GuiButton selectAll;
+	private GuiButton itemFrameOnSeaLanterns;
+	
+	public PuzzleSolversGui(int page) {
+		this.page = page;
+	}
 	
 	@Override
 	public boolean doesGuiPauseGame() {
@@ -32,18 +43,37 @@ public class PuzzleSolversGui extends GuiScreen {
 		int width = sr.getScaledWidth();
 		
 		goBack = new GuiButton(0, 2, height - 30, 100, 20, "Go Back");
+		backPage = new GuiButton(0, width / 2 - 100, (int) (height * 0.8), 80, 20, "< Back");
+		nextPage = new GuiButton(0, width / 2 + 20, (int) (height * 0.8), 80, 20, "Next >");
+		
+		// Page 1
 		riddle = new GuiButton(0, width / 2 - 100, (int) (height * 0.1), "Riddle Solver: " + Utils.getColouredBoolean(ToggleCommand.threeManToggled));
 		trivia = new GuiButton(0, width / 2 - 100, (int) (height * 0.2), "Trivia Solver: " + Utils.getColouredBoolean(ToggleCommand.oruoToggled));
 		blaze = new GuiButton(0, width / 2 - 100, (int) (height * 0.3), "Blaze Solver: " + Utils.getColouredBoolean(ToggleCommand.blazeToggled));
 		creeper = new GuiButton(0, width / 2 - 100, (int) (height * 0.4), "Creeper Solver: " + Utils.getColouredBoolean(ToggleCommand.creeperToggled));
 		water = new GuiButton(0, width / 2 - 100, (int) (height * 0.5), "Water Solver: " + Utils.getColouredBoolean(ToggleCommand.waterToggled));
+		startsWith = new GuiButton(0, width / 2 - 100, (int) (height * 0.6), "Starts With Letter Terminal Solver: " + Utils.getColouredBoolean(ToggleCommand.startsWithToggled));
+		selectAll = new GuiButton(0, width / 2 - 100, (int) (height * 0.7), "Select All Color Terminal Solver: " + Utils.getColouredBoolean(ToggleCommand.selectAllToggled));
+		// Page 2
+		itemFrameOnSeaLanterns = new GuiButton(0, width / 2 - 100, (int) (height * 0.1), "Ignore Arrows On Sea Lanterns: " + Utils.getColouredBoolean(ToggleCommand.itemFrameOnSeaLanternsToggled));
 		
+		switch (page) {
+			case 1:
+				this.buttonList.add(riddle);
+				this.buttonList.add(trivia);
+				this.buttonList.add(blaze);
+				this.buttonList.add(creeper);
+				this.buttonList.add(water);
+				this.buttonList.add(startsWith);
+				this.buttonList.add(selectAll);
+				this.buttonList.add(nextPage);
+				break;
+			case 2:
+				this.buttonList.add(itemFrameOnSeaLanterns);
+				this.buttonList.add(backPage);
+				break;
+		}
 		this.buttonList.add(goBack);
-		this.buttonList.add(riddle);
-		this.buttonList.add(trivia);
-		this.buttonList.add(blaze);
-		this.buttonList.add(creeper);
-		this.buttonList.add(water);
 	}
 	
 	@Override
@@ -56,6 +86,10 @@ public class PuzzleSolversGui extends GuiScreen {
 	public void actionPerformed(GuiButton button) {
 		if (button == goBack) {
 			TheMod.guiToOpen = "dankergui1";
+		} else if (button == backPage) {
+			Minecraft.getMinecraft().displayGuiScreen(new PuzzleSolversGui(page - 1));
+		} else if (button == nextPage) {
+			Minecraft.getMinecraft().displayGuiScreen(new PuzzleSolversGui(page + 1));
 		} else if (button == riddle) {
 			ToggleCommand.threeManToggled = !ToggleCommand.threeManToggled;
 			ConfigHandler.writeBooleanConfig("toggles", "ThreeManPuzzle", ToggleCommand.threeManToggled);
@@ -76,6 +110,18 @@ public class PuzzleSolversGui extends GuiScreen {
 			ToggleCommand.waterToggled = !ToggleCommand.waterToggled;
 			ConfigHandler.writeBooleanConfig("toggles", "WaterPuzzle", ToggleCommand.waterToggled);
 			water.displayString = "Water Solver: " + Utils.getColouredBoolean(ToggleCommand.waterToggled);
+		} else if (button == startsWith) {
+			ToggleCommand.startsWithToggled = !ToggleCommand.startsWithToggled;
+			ConfigHandler.writeBooleanConfig("toggle", "StartsWithTerminal", ToggleCommand.startsWithToggled);
+			startsWith.displayString = "Starts With Letter Terminal Solver: " + Utils.getColouredBoolean(ToggleCommand.startsWithToggled);
+		} else if (button == selectAll) {
+			ToggleCommand.selectAllToggled = !ToggleCommand.selectAllToggled;
+			ConfigHandler.writeBooleanConfig("toggle", "SelectAllTerminal", ToggleCommand.selectAllToggled);
+			selectAll.displayString = "Select All Color Terminal Solver: " + Utils.getColouredBoolean(ToggleCommand.selectAllToggled);
+		} else if (button == itemFrameOnSeaLanterns) {
+			ToggleCommand.itemFrameOnSeaLanternsToggled = !ToggleCommand.itemFrameOnSeaLanternsToggled;
+			ConfigHandler.writeBooleanConfig("toggles", "IgnoreItemFrameOnSeaLanterns", ToggleCommand.itemFrameOnSeaLanternsToggled);
+			itemFrameOnSeaLanterns.displayString = "Ignore Arrows On Sea Lanterns: " + Utils.getColouredBoolean(ToggleCommand.itemFrameOnSeaLanternsToggled);
 		}
 	}
 	

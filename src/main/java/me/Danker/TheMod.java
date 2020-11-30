@@ -62,11 +62,13 @@ import net.minecraft.client.gui.GuiChat;
 import net.minecraft.client.gui.inventory.GuiChest;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.item.EntityItemFrame;
 import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.event.ClickEvent;
 import net.minecraft.event.ClickEvent.Action;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.ContainerChest;
 import net.minecraft.inventory.IInventory;
@@ -90,6 +92,7 @@ import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.client.event.sound.PlaySoundEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
+import net.minecraftforge.event.entity.player.EntityInteractEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.WorldEvent;
@@ -112,7 +115,7 @@ import net.minecraftforge.fml.common.versioning.DefaultArtifactVersion;
 public class TheMod
 {
     public static final String MODID = "Danker's Skyblock Mod";
-    public static final String VERSION = "1.8.2";
+    public static final String VERSION = "1.8.3";
     
     static double checkItemsNow = 0;
     static double itemsChecked = 0;
@@ -146,7 +149,6 @@ public class TheMod
 	static String[] triviaAnswers = null;
 	static Entity highestBlaze = null;
 	static Entity lowestBlaze = null;
-	static boolean lowToHigh = false;
 	// Among Us colours
 	static final int[] CREEPER_COLOURS = {0x50EF39, 0xC51111, 0x132ED1, 0x117F2D, 0xED54BA, 0xEF7D0D, 0xF5F557, 0xD6E0F0, 0x6B2FBB, 0x39FEDC};
 	static boolean drawCreeperLines = false;
@@ -180,6 +182,7 @@ public class TheMod
 	public static double enchantingXPGained = 0;
 	static double alchemyXP = 0;
 	public static double alchemyXPGained = 0;
+	static double xpLeft = 0;
     
     public static String MAIN_COLOUR;
     public static String SECONDARY_COLOUR;
@@ -374,7 +377,9 @@ public class TheMod
     				if (!section.contains("Runecrafting") && !section.contains("Carpentry")) {
     					int limit = section.contains("Farming") ? 60 : 50;
     					double currentXP = Double.parseDouble(section.substring(section.indexOf("(") + 1, section.indexOf("/")).replace(",", ""));
-    					int previousXP = Utils.getPastXpEarned(Integer.parseInt(section.substring(section.indexOf("/") + 1, section.indexOf(")")).replaceAll(",", "")), limit);
+    					int xpToLevelUp = Integer.parseInt(section.substring(section.indexOf("/") + 1, section.indexOf(")")).replaceAll(",", ""));
+    					xpLeft = xpToLevelUp - currentXP;
+    					int previousXP = Utils.getPastXpEarned(xpToLevelUp, limit);
     					double totalXP = currentXP + previousXP;
     					double xpGained = Double.parseDouble(section.substring(section.indexOf("+") + 1, section.indexOf(" ")).replace(",", ""));
     					String skill = section.substring(section.indexOf(" ") + 1, section.lastIndexOf(" "));
@@ -981,7 +986,7 @@ public class TheMod
 				LootCommand.minosHunters++;
 				LootCommand.minosHuntersSession++;
 				ConfigHandler.writeIntConfig("mythological", "minosHunter", LootCommand.minosHunters);
-			} else if (message.contains("Siamese Lynxes!!")) {
+			} else if (message.contains("Siamese Lynxes!")) {
 				LootCommand.siameseLynxes++;
 				LootCommand.siameseLynxesSession++;
 				ConfigHandler.writeIntConfig("mythological", "siameseLynx", LootCommand.siameseLynxes);
@@ -1304,6 +1309,10 @@ public class TheMod
 			String skillTrackerText = SKILL_TRACKER_COLOUR + lastSkill + " XP Earned: " + NumberFormat.getNumberInstance(Locale.US).format(xpToShow) + "\n" +
 									  SKILL_TRACKER_COLOUR + "Time Elapsed: " + Utils.getTimeBetween(0, skillStopwatch.getTime() / 1000d) + "\n" +
 									  SKILL_TRACKER_COLOUR + "XP Per Hour: " + NumberFormat.getIntegerInstance(Locale.US).format(xpPerHour);
+			if (xpLeft >= 0) {
+				String time = xpPerHour == 0 ? "Never" : Utils.getTimeBetween(0, xpLeft / (xpPerHour / 3600D));
+				skillTrackerText += "\n" + SKILL_TRACKER_COLOUR + "Time Until Next Level: " + time;
+			}
 			if (!skillStopwatch.isStarted() || skillStopwatch.isSuspended()) {
 				skillTrackerText += "\n" + EnumChatFormatting.RED + "PAUSED";
 			}
@@ -2294,7 +2303,7 @@ public class TheMod
         		Utils.checkForDungeons();
     		}
     		
-    		if (DisplayCommand.auto && mc != null && world != null) {
+    		if (DisplayCommand.auto && mc != null && world != null && player != null) {
     			List<String> scoreboard = ScoreboardHandler.getSidebarLines();
     			boolean found = false;
     			for (String s : scoreboard) {
@@ -2324,6 +2333,14 @@ public class TheMod
     					} else if (sCleaned.contains("F7")) {
     						DisplayCommand.display = "catacombs_floor_seven";
     					}
+    					found = true;
+    				}
+    			}
+    			for (int i = 0; i < 8; i++) {
+    				ItemStack hotbarItem = player.inventory.getStackInSlot(i);
+    				if (hotbarItem == null) continue;
+    				if (hotbarItem.getDisplayName().contains("Ancestral Spade")) {
+    					DisplayCommand.display = "mythological";
     					found = true;
     				}
     			}
@@ -2545,27 +2562,6 @@ public class TheMod
     					}
     				}
     			}
-    			
-    			if (highestBlaze != null || lowestBlaze != null) {
-    				new Thread(() -> {
-    					boolean wallFound = false;
-    					for (int x = (int) player.posX - 25; x <= player.posX + 25; x++) {
-    						for (int z = (int) player.posZ - 25; z <= player.posX + 25; z++) {
-    							BlockPos blockPos = new BlockPos(x, 119, z);
-    							if (world.getBlockState(blockPos).getBlock() == Blocks.cobblestone_wall) {
-    								wallFound = true;
-    								break;
-    							}
-    						}
-    						if (wallFound) break;
-    					}
-    					if (wallFound) {
-    						lowToHigh = true;
-    					} else {
-    						lowToHigh = false;
-    					}
-    				}).start();
-    			}
     		}
     	}
     	
@@ -2616,7 +2612,7 @@ public class TheMod
 	        			mc.displayGuiScreen(new EditLocationsGui());
 	        			break;
         			case "puzzlesolvers":
-	        			mc.displayGuiScreen(new PuzzleSolversGui());
+	        			mc.displayGuiScreen(new PuzzleSolversGui(1));
 	        			break;
 	        		case "skilltracker":
 	        			mc.displayGuiScreen(new SkillTrackerGui());
@@ -2630,13 +2626,13 @@ public class TheMod
     @SubscribeEvent
     public void onWorldRender(RenderWorldLastEvent event) {
     	if (ToggleCommand.blazeToggled) {
-    		if (lowestBlaze != null && lowToHigh) {
+    		if (lowestBlaze != null) {
     			BlockPos stringPos = new BlockPos(lowestBlaze.posX, lowestBlaze.posY + 1, lowestBlaze.posZ);
     			Utils.draw3DString(stringPos, EnumChatFormatting.BOLD + "Smallest", LOWEST_BLAZE_COLOUR, event.partialTicks);
     			AxisAlignedBB aabb = new AxisAlignedBB(lowestBlaze.posX - 0.5, lowestBlaze.posY - 2, lowestBlaze.posZ - 0.5, lowestBlaze.posX + 0.5, lowestBlaze.posY, lowestBlaze.posZ + 0.5);
     			Utils.draw3DBox(aabb, LOWEST_BLAZE_COLOUR, event.partialTicks);
     		}
-    		if (highestBlaze != null && !lowToHigh) {
+    		if (highestBlaze != null) {
     			BlockPos stringPos = new BlockPos(highestBlaze.posX, highestBlaze.posY + 1, highestBlaze.posZ);
     			Utils.draw3DString(stringPos, EnumChatFormatting.BOLD + "Biggest", HIGHEST_BLAZE_COLOUR, event.partialTicks);
     			AxisAlignedBB aabb = new AxisAlignedBB(highestBlaze.posX - 0.5, highestBlaze.posY - 2, highestBlaze.posZ - 0.5, highestBlaze.posX + 0.5, highestBlaze.posY, highestBlaze.posZ + 0.5);
@@ -2666,6 +2662,22 @@ public class TheMod
     	}
     }
     
+    @SubscribeEvent
+    public void onEntityInteract(EntityInteractEvent event) {
+    	Minecraft mc = Minecraft.getMinecraft();
+    	if (mc.thePlayer != event.entityPlayer) return;
+    	
+    	if (ToggleCommand.itemFrameOnSeaLanternsToggled && Utils.inDungeons && event.target instanceof EntityItemFrame) {
+    		EntityItemFrame itemFrame = (EntityItemFrame) event.target;
+    		ItemStack item = itemFrame.getDisplayedItem();
+    		if (item == null || item.getItem() != Items.arrow) return;
+    		BlockPos blockPos = Utils.getBlockUnderItemFrame(mc.theWorld, itemFrame);
+    		if (mc.theWorld.getBlockState(blockPos).getBlock() == Blocks.sea_lantern) {
+    			event.setCanceled(true);
+    		}
+    	}
+    }
+
     @SubscribeEvent
     public void onKey(KeyInputEvent event) {
     	if (!Utils.inSkyblock) return;
@@ -2794,44 +2806,74 @@ public class TheMod
     
     @SubscribeEvent
     public void onGuiRender(GuiScreenEvent.BackgroundDrawnEvent event) {
-    	if (!Utils.inSkyblock) return;
-    	if (ToggleCommand.petColoursToggled && event.gui instanceof GuiChest) {
+    	//if (!Utils.inSkyblock) return;
+    	if (event.gui instanceof GuiChest) {
     		GuiChest inventory = (GuiChest) event.gui;
-    		List<Slot> invSlots = inventory.inventorySlots.inventorySlots;
-    		Pattern petPattern = Pattern.compile("\\[Lvl [\\d]{1,3}]");
-    		for (Slot slot : invSlots) {
-    			ItemStack item = slot.getStack();
-    			if (item == null) continue;
-    			String name = item.getDisplayName();
-    			if (petPattern.matcher(StringUtils.stripControlCodes(name)).find()) {
-    				if (name.endsWith("aHealer") || name.endsWith("aMage") || name.endsWith("aBerserk") || name.endsWith("aArcher") || name.endsWith("aTank")) continue;
-    				int colour;
-    				int petLevel = Integer.parseInt(item.getDisplayName().substring(item.getDisplayName().indexOf(" ") + 1, item.getDisplayName().indexOf("]")));
-    				if (petLevel == 100) {
-    					colour = 0xBFF2D249; // Gold
-    				} else if (petLevel >= 90) {
-    					colour = 0xBF9E794E; // Brown
-    				} else if (petLevel >= 80) {
-    					colour = 0xBF5C1F35; // idk weird magenta
-    				} else if (petLevel >= 70) {
-    					colour = 0xBFD64FC8; // Pink
-    				} else if (petLevel >= 60) {
-    					colour = 0xBF7E4FC6; // Purple
-    				} else if (petLevel >= 50) {
-    					colour = 0xBF008AD8; // Light Blue
-    				} else if (petLevel >= 40) {
-    					colour = 0xBF0EAC35; // Green
-    				} else if (petLevel >= 30) {
-    					colour = 0xBFFFC400; // Yellow
-    				} else if (petLevel >= 20) {
-    					colour = 0xBFEF5230; // Orange
-    				} else if (petLevel >= 10) {
-    					colour = 0xBFD62440; // Red
-    				} else {
-    					colour = 0xBF999999; // Gray
-    				}
-    				Utils.drawOnSlot(inventory.inventorySlots.inventorySlots.size(), slot.xDisplayPosition, slot.yDisplayPosition, colour);
-    			}
+    		Container containerChest = inventory.inventorySlots;
+    		if (containerChest instanceof ContainerChest) {
+    			List<Slot> invSlots = inventory.inventorySlots.inventorySlots;
+    			String displayName = ((ContainerChest) containerChest).getLowerChestInventory().getDisplayName().getUnformattedText();
+        		int chestSize = inventory.inventorySlots.inventorySlots.size();
+    			
+        		if (ToggleCommand.petColoursToggled) {
+            		Pattern petPattern = Pattern.compile("\\[Lvl [\\d]{1,3}]");
+            		for (Slot slot : invSlots) {
+            			ItemStack item = slot.getStack();
+            			if (item == null) continue;
+            			String name = item.getDisplayName();
+            			if (petPattern.matcher(StringUtils.stripControlCodes(name)).find()) {
+            				if (name.endsWith("aHealer") || name.endsWith("aMage") || name.endsWith("aBerserk") || name.endsWith("aArcher") || name.endsWith("aTank")) continue;
+            				int colour;
+            				int petLevel = Integer.parseInt(item.getDisplayName().substring(item.getDisplayName().indexOf(" ") + 1, item.getDisplayName().indexOf("]")));
+            				if (petLevel == 100) {
+            					colour = 0xBFF2D249; // Gold
+            				} else if (petLevel >= 90) {
+            					colour = 0xBF9E794E; // Brown
+            				} else if (petLevel >= 80) {
+            					colour = 0xBF5C1F35; // idk weird magenta
+            				} else if (petLevel >= 70) {
+            					colour = 0xBFD64FC8; // Pink
+            				} else if (petLevel >= 60) {
+            					colour = 0xBF7E4FC6; // Purple
+            				} else if (petLevel >= 50) {
+            					colour = 0xBF008AD8; // Light Blue
+            				} else if (petLevel >= 40) {
+            					colour = 0xBF0EAC35; // Green
+            				} else if (petLevel >= 30) {
+            					colour = 0xBFFFC400; // Yellow
+            				} else if (petLevel >= 20) {
+            					colour = 0xBFEF5230; // Orange
+            				} else if (petLevel >= 10) {
+            					colour = 0xBFD62440; // Red
+            				} else {
+            					colour = 0xBF999999; // Gray
+            				}
+            				Utils.drawOnSlot(chestSize, slot.xDisplayPosition, slot.yDisplayPosition, colour);
+            			}
+            		}
+        		}
+        		
+        		if (ToggleCommand.startsWithToggled && Utils.inDungeons && displayName.trim().startsWith("What starts with:")) {
+        			char letter = displayName.charAt(displayName.indexOf("'") + 1);
+        			for (Slot slot : invSlots) {
+        				ItemStack item = slot.getStack();
+        				if (item == null) continue;
+        				if (StringUtils.stripControlCodes(item.getDisplayName()).charAt(0) == letter) {
+        					Utils.drawOnSlot(chestSize, slot.xDisplayPosition, slot.yDisplayPosition, 0xBF40FF40);
+        				}
+        			}
+        		}
+        		
+        		if (ToggleCommand.selectAllToggled && Utils.inDungeons && displayName.trim().startsWith("Select all the")) {
+        			String colour = displayName.split(" ")[3];
+        			for (Slot slot : invSlots) {
+        				ItemStack item = slot.getStack();
+        				if (item == null) continue;
+        				if (item.getDisplayName().toUpperCase().contains(colour)) {
+        					Utils.drawOnSlot(chestSize, slot.xDisplayPosition, slot.yDisplayPosition, 0xBF40FF40);
+        				}
+        			}
+        		}
     		}
     	}
     }

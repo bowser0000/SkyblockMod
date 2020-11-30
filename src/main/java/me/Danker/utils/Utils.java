@@ -23,6 +23,7 @@ import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.item.EntityItemFrame;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.scoreboard.ScoreObjective;
@@ -31,6 +32,7 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StringUtils;
 import net.minecraft.util.Vec3;
+import net.minecraft.world.World;
 
 public class Utils {
 	
@@ -401,6 +403,21 @@ public class Utils {
 		}
 		
 		return closestBlock;
+	}
+	
+	public static BlockPos getBlockUnderItemFrame(World world, EntityItemFrame itemFrame) {
+		switch (itemFrame.facingDirection) {
+			case NORTH:
+				return new BlockPos(itemFrame.posX, itemFrame.posY, itemFrame.posZ + 1);
+			case EAST:
+				return new BlockPos(itemFrame.posX - 1, itemFrame.posY, itemFrame.posZ - 0.5);
+			case SOUTH:
+				return new BlockPos(itemFrame.posX, itemFrame.posY, itemFrame.posZ - 1);
+			case WEST:
+				return new BlockPos(itemFrame.posX + 1, itemFrame.posY, itemFrame.posZ - 0.5);
+			default:
+				return null;
+		}
 	}
 	
 }

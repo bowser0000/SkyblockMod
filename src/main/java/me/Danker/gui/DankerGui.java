@@ -107,42 +107,47 @@ public class DankerGui extends GuiScreen {
 		rngesusAlert = new GuiButton(0, width / 2 - 100, (int) (height * 0.4), "RNGesus Alerts: " + Utils.getColouredBoolean(ToggleCommand.rngesusAlerts));
 		lowHealthNotify = new GuiButton(0, width / 2 - 100, (int) (height * 0.5), "Low Health Notifications: " + Utils.getColouredBoolean(ToggleCommand.lowHealthNotifyToggled));
 		
-		if (page == 1) {
-			this.buttonList.add(changeDisplay);
-			this.buttonList.add(onlySlayer);
-			this.buttonList.add(puzzleSolvers);
-			this.buttonList.add(skillTracker);
-			this.buttonList.add(outlineText);
-			this.buttonList.add(splitFishing);
-			this.buttonList.add(coords);
-			this.buttonList.add(nextPage);
-		} else if (page == 2) {
-			this.buttonList.add(dungeonTimer);
-			this.buttonList.add(cakeTimer);
-			this.buttonList.add(skill50Display);
-			this.buttonList.add(slayerCount);
-			this.buttonList.add(chatMaddox);
-			this.buttonList.add(aotd);
-			this.buttonList.add(lividDagger);
-			this.buttonList.add(nextPage);
-			this.buttonList.add(backPage);
-		} else if (page == 3) {
-			this.buttonList.add(gparty);
-			this.buttonList.add(spiritBearAlert);
-			this.buttonList.add(sceptreMessages);
-			this.buttonList.add(midasStaffMessages);
-			this.buttonList.add(healMessages);
-			this.buttonList.add(goldenEnch);
-			this.buttonList.add(petColours);
-			this.buttonList.add(nextPage);
-			this.buttonList.add(backPage);
-		} else if (page == 4) {
-			this.buttonList.add(expertiseLore);
-			this.buttonList.add(lividSolver);
-			this.buttonList.add(golemAlerts);
-			this.buttonList.add(rngesusAlert);
-			this.buttonList.add(lowHealthNotify);
-			this.buttonList.add(backPage);
+		switch (page) {
+			case 1:
+				this.buttonList.add(changeDisplay);
+				this.buttonList.add(onlySlayer);
+				this.buttonList.add(puzzleSolvers);
+				this.buttonList.add(skillTracker);
+				this.buttonList.add(outlineText);
+				this.buttonList.add(splitFishing);
+				this.buttonList.add(coords);
+				this.buttonList.add(nextPage);
+				break;
+			case 2:
+				this.buttonList.add(dungeonTimer);
+				this.buttonList.add(cakeTimer);
+				this.buttonList.add(skill50Display);
+				this.buttonList.add(slayerCount);
+				this.buttonList.add(chatMaddox);
+				this.buttonList.add(aotd);
+				this.buttonList.add(lividDagger);
+				this.buttonList.add(nextPage);
+				this.buttonList.add(backPage);
+				break;
+			case 3:
+				this.buttonList.add(gparty);
+				this.buttonList.add(spiritBearAlert);
+				this.buttonList.add(sceptreMessages);
+				this.buttonList.add(midasStaffMessages);
+				this.buttonList.add(healMessages);
+				this.buttonList.add(goldenEnch);
+				this.buttonList.add(petColours);
+				this.buttonList.add(nextPage);
+				this.buttonList.add(backPage);
+				break;
+			case 4:
+				this.buttonList.add(expertiseLore);
+				this.buttonList.add(lividSolver);
+				this.buttonList.add(golemAlerts);
+				this.buttonList.add(rngesusAlert);
+				this.buttonList.add(lowHealthNotify);
+				this.buttonList.add(backPage);
+				break;
 		}
 		
 		this.buttonList.add(githubLink);
