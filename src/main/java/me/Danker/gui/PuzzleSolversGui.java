@@ -112,11 +112,11 @@ public class PuzzleSolversGui extends GuiScreen {
 			water.displayString = "Water Solver: " + Utils.getColouredBoolean(ToggleCommand.waterToggled);
 		} else if (button == startsWith) {
 			ToggleCommand.startsWithToggled = !ToggleCommand.startsWithToggled;
-			ConfigHandler.writeBooleanConfig("toggle", "StartsWithTerminal", ToggleCommand.startsWithToggled);
+			ConfigHandler.writeBooleanConfig("toggles", "StartsWithTerminal", ToggleCommand.startsWithToggled);
 			startsWith.displayString = "Starts With Letter Terminal Solver: " + Utils.getColouredBoolean(ToggleCommand.startsWithToggled);
 		} else if (button == selectAll) {
 			ToggleCommand.selectAllToggled = !ToggleCommand.selectAllToggled;
-			ConfigHandler.writeBooleanConfig("toggle", "SelectAllTerminal", ToggleCommand.selectAllToggled);
+			ConfigHandler.writeBooleanConfig("toggles", "SelectAllTerminal", ToggleCommand.selectAllToggled);
 			selectAll.displayString = "Select All Color Terminal Solver: " + Utils.getColouredBoolean(ToggleCommand.selectAllToggled);
 		} else if (button == itemFrameOnSeaLanterns) {
 			ToggleCommand.itemFrameOnSeaLanternsToggled = !ToggleCommand.itemFrameOnSeaLanternsToggled;
