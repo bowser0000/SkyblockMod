@@ -40,14 +40,15 @@ public class DankerGui extends GuiScreen {
 	private GuiButton aotd;
 	private GuiButton lividDagger;
 	private GuiButton sceptreMessages;
+	private GuiButton midasStaffMessages;
+	private GuiButton implosionMessages;
+	private GuiButton healMessages;
 	private GuiButton petColours;
 	private GuiButton dungeonTimer;
 	private GuiButton golemAlerts;
 	private GuiButton expertiseLore;
 	private GuiButton skill50Display;
 	private GuiButton outlineText;
-	private GuiButton midasStaffMessages;
-	private GuiButton healMessages;
 	private GuiButton cakeTimer;
 	private GuiButton lowHealthNotify;
 	private GuiButton lividSolver;
@@ -97,15 +98,16 @@ public class DankerGui extends GuiScreen {
 		spiritBearAlert = new GuiButton(0, width / 2 - 100, (int) (height * 0.2), "Spirit Bear Spawn Alerts: " + Utils.getColouredBoolean(ToggleCommand.spiritBearAlerts));
 		sceptreMessages = new GuiButton(0, width / 2 - 100, (int) (height * 0.3), "Spirit Sceptre Messages: " + Utils.getColouredBoolean(ToggleCommand.sceptreMessages));
 		midasStaffMessages = new GuiButton(0, width / 2 - 100, (int) (height * 0.4), "Midas Staff Messages: " + Utils.getColouredBoolean(ToggleCommand.midasStaffMessages));
-		healMessages = new GuiButton(0, width / 2 - 100, (int) (height * 0.5), "Heal Messages: " + Utils.getColouredBoolean(ToggleCommand.healMessages));
-		goldenEnch = new GuiButton(0, width / 2 - 100, (int) (height * 0.6), "Golden T10/T6/T4 Enchantments: " + Utils.getColouredBoolean(ToggleCommand.goldenToggled));
-		petColours = new GuiButton(0, width / 2 - 100, (int) (height * 0.7), "Colour Pet Backgrounds: " + Utils.getColouredBoolean(ToggleCommand.petColoursToggled));
+		implosionMessages = new GuiButton(0, width / 2 - 100, (int) (height * 0.5), "Implosion Messages: " + Utils.getColouredBoolean(ToggleCommand.implosionMessages));
+		healMessages = new GuiButton(0, width / 2 - 100, (int) (height * 0.6), "Heal Messages: " + Utils.getColouredBoolean(ToggleCommand.healMessages));
+		goldenEnch = new GuiButton(0, width / 2 - 100, (int) (height * 0.7), "Golden T10/T6/T4 Enchantments: " + Utils.getColouredBoolean(ToggleCommand.goldenToggled));
 		// Page 4
-		expertiseLore = new GuiButton(0, width / 2 - 100, (int) (height * 0.1), "Expertise Kills In Lore: " + Utils.getColouredBoolean(ToggleCommand.expertiseLoreToggled));
-		lividSolver = new GuiButton(0, width / 2 - 100, (int) (height * 0.2), "Find Correct Livid: " + Utils.getColouredBoolean(ToggleCommand.lividSolverToggled));
-		golemAlerts = new GuiButton(0, width / 2 - 100, (int) (height * 0.3), "Alert When Golem Spawns: " + Utils.getColouredBoolean(ToggleCommand.golemAlertToggled));
-		rngesusAlert = new GuiButton(0, width / 2 - 100, (int) (height * 0.4), "RNGesus Alerts: " + Utils.getColouredBoolean(ToggleCommand.rngesusAlerts));
-		lowHealthNotify = new GuiButton(0, width / 2 - 100, (int) (height * 0.5), "Low Health Notifications: " + Utils.getColouredBoolean(ToggleCommand.lowHealthNotifyToggled));
+		petColours = new GuiButton(0, width / 2 - 100, (int) (height * 0.1), "Colour Pet Backgrounds: " + Utils.getColouredBoolean(ToggleCommand.petColoursToggled));
+		expertiseLore = new GuiButton(0, width / 2 - 100, (int) (height * 0.2), "Expertise Kills In Lore: " + Utils.getColouredBoolean(ToggleCommand.expertiseLoreToggled));
+		lividSolver = new GuiButton(0, width / 2 - 100, (int) (height * 0.3), "Find Correct Livid: " + Utils.getColouredBoolean(ToggleCommand.lividSolverToggled));
+		golemAlerts = new GuiButton(0, width / 2 - 100, (int) (height * 0.4), "Alert When Golem Spawns: " + Utils.getColouredBoolean(ToggleCommand.golemAlertToggled));
+		rngesusAlert = new GuiButton(0, width / 2 - 100, (int) (height * 0.5), "RNGesus Alerts: " + Utils.getColouredBoolean(ToggleCommand.rngesusAlerts));
+		lowHealthNotify = new GuiButton(0, width / 2 - 100, (int) (height * 0.6), "Low Health Notifications: " + Utils.getColouredBoolean(ToggleCommand.lowHealthNotifyToggled));
 		
 		switch (page) {
 			case 1:
@@ -134,13 +136,14 @@ public class DankerGui extends GuiScreen {
 				this.buttonList.add(spiritBearAlert);
 				this.buttonList.add(sceptreMessages);
 				this.buttonList.add(midasStaffMessages);
+				this.buttonList.add(implosionMessages);
 				this.buttonList.add(healMessages);
 				this.buttonList.add(goldenEnch);
-				this.buttonList.add(petColours);
 				this.buttonList.add(nextPage);
 				this.buttonList.add(backPage);
 				break;
 			case 4:
+				this.buttonList.add(petColours);
 				this.buttonList.add(expertiseLore);
 				this.buttonList.add(lividSolver);
 				this.buttonList.add(golemAlerts);
@@ -280,6 +283,10 @@ public class DankerGui extends GuiScreen {
 			ToggleCommand.lowHealthNotifyToggled = !ToggleCommand.lowHealthNotifyToggled;
 			ConfigHandler.writeBooleanConfig("toggles", "LowHealthNotify", ToggleCommand.lowHealthNotifyToggled);
 			lowHealthNotify.displayString = "Low Health Notifications: " + Utils.getColouredBoolean(ToggleCommand.lowHealthNotifyToggled);
+		} else if (button == implosionMessages) {
+			ToggleCommand.implosionMessages = !ToggleCommand.implosionMessages;
+			ConfigHandler.writeBooleanConfig("toggles", "ImplosionMessages", ToggleCommand.implosionMessages);
+			implosionMessages.displayString = "Implosion Messages: " + Utils.getColouredBoolean(ToggleCommand.implosionMessages);
 		}
 	}
 	

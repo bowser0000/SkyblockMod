@@ -513,6 +513,13 @@ public class TheMod
 			event.setCanceled(true);
 			return;
 		}
+
+		if (!ToggleCommand.implosionMessages) {
+			if (message.contains("Your Implosion hit ") || message.contains("There are blocks in the way")) {
+				event.setCanceled(true);
+				return;
+			}
+		}
     	
         if (ToggleCommand.oruoToggled && Utils.inDungeons) {
         	// Don't set every answer to wrong with this question

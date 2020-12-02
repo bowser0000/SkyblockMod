@@ -15,6 +15,7 @@ Discord Server: https://discord.gg/QsEkNQS
 - Block Livid Dagger ability
 - Disable Spirit Sceptre messages
 - Disable Midas Staff messages
+- Disable Implosion messages
 - Disable heal messages
 - Slayer item tracker
 - RNGesus drop alerts
@@ -40,7 +41,7 @@ Discord Server: https://discord.gg/QsEkNQS
 ## Commands
 - /dhelp - Returns this message in-game.
 - /dsm - Opens the GUI for Danker's Skyblock Mod.
-- /toggle <gparty/coords/golden/slayercount/rngesusalerts/splitfishing/chatmaddox/spiritbearalerts/aotd/sceptremessages/petcolors/dungeontimer/golemalerts/expertiselore/skill50display/outlinetext/midasstaffmessages/healmessages/caketimer/lividsolver/lowhealthnotify/oruopuzzle/blazepuzzle/creeperpuzzle/waterpuzzle/startswithterminal/selectallterminal/itemframeonsealanterns/list> - Toggles features. /toggle list returns values of every toggle.
+- /toggle <gparty/coords/golden/slayercount/rngesusalerts/splitfishing/chatmaddox/spiritbearalerts/aotd/lividdagger/sceptremessages/midasstaffmessages/implosionmessages/healmessages/petcolors/dungeontimer/golemalerts/expertiselore/skill50display/outlinetext/caketimer/lowhealthnotify/lividsolver/threemanpuzzle/oruopuzzle/blazepuzzle/creeperpuzzle/waterpuzzle/startswithterminal/selectallterminal/itemframeonsealanterns/list> - Toggles features. /toggle list returns values of every toggle.
 - /setkey <key> - Sets API key.
 - /getkey - Returns key set with /setkey and copies it to your clipboard.
 - /loot <zombie/spider/wolf/fishing/catacombs> [winter/spooky/f(1-7)/session] - Returns loot received from slayer quests or fishing stats. /loot fishing winter returns winter sea creatures instead.

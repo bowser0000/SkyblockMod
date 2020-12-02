@@ -31,6 +31,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 	public static boolean skill50DisplayToggled;
 	public static boolean outlineTextToggled;
 	public static boolean midasStaffMessages;
+	public static boolean implosionMessages;
 	public static boolean healMessages;
 	public static boolean cakeTimerToggled;
 	public static boolean lowHealthNotifyToggled;
@@ -55,9 +56,9 @@ public class ToggleCommand extends CommandBase implements ICommand {
 	public String getCommandUsage(ICommandSender arg0) {
 		return "/" + getCommandName() + " <gparty/coords/golden/slayercount/rngesusalerts/splitfishing/chatmaddox/spiritbearalert/" + 
 										  "aotd/lividdagger/sceptremessages/petcolors/dungeontimer/golemalerts/expertiselore/skill50display/" + 
-										  "outlinetext/midasstaffmessages/healmessages/caketimer/lowhealthnotify/lividsolver/threemanpuzzle/oruopuzzle/" + 
-										  "blazepuzzle/creeperpuzzle/waterpuzzle/startswithterminal/selectallterminal/" + 
-										  "itemframeonsealanterns/list>";
+										  "outlinetext/midasstaffmessages/implosionmessages/healmessages/caketimer/lowhealthnotify/" +
+										  "lividsolver/threemanpuzzle/oruopuzzle/blazepuzzle/creeperpuzzle/waterpuzzle/startswithterminal/" +
+										  "selectallterminal/itemframeonsealanterns/list>";
 	}
 
 	@Override
@@ -72,9 +73,10 @@ public class ToggleCommand extends CommandBase implements ICommand {
 														  "splitfishing", "chatmaddox", "spiritbearalerts", "aotd", "lividdagger",
 														  "sceptremessages", "petcolors", "dungeontimer", "golemalerts",
 														  "expertiselore", "skill50display", "outlinetext", "midasstaffmessages",
-														  "healmessages", "caketimer", "lowhealthnotify", "lividsolver", "threemanpuzzle",
-														  "oruopuzzle", "blazepuzzle", "creeperpuzzle", "waterpuzzle", "startswithterminal",
-														  "selectallterminal", "itemframeonsealanterns", "list");
+														  "implosionmessages", "healmessages", "caketimer", "lowhealthnotify",
+														  "lividsolver", "threemanpuzzle", "oruopuzzle", "blazepuzzle",
+														  "creeperpuzzle", "waterpuzzle", "startswithterminal", "selectallterminal",
+														  "itemframeonsealanterns", "list");
 		}
 		return null;
 	}
@@ -144,6 +146,21 @@ public class ToggleCommand extends CommandBase implements ICommand {
 				ConfigHandler.writeBooleanConfig("toggles", "SceptreMessages", sceptreMessages);
 				player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Spirit Sceptre messages have been set to " + TheMod.SECONDARY_COLOUR + sceptreMessages + TheMod.MAIN_COLOUR + "."));
 				break;
+			case "midasstaffmessages":
+				midasStaffMessages = !midasStaffMessages;
+				ConfigHandler.writeBooleanConfig("toggles", "MidasStaffMessages", midasStaffMessages);
+				player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Midas Staff messages have been set to " + TheMod.SECONDARY_COLOUR + midasStaffMessages + TheMod.MAIN_COLOUR + "."));
+				break;
+			case "implosionmessages":
+				implosionMessages = !implosionMessages;
+				ConfigHandler.writeBooleanConfig("toggles", "ImplosionMessages", implosionMessages);
+				player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Implosion messages have been set to " + TheMod.SECONDARY_COLOUR + implosionMessages + TheMod.MAIN_COLOUR + "."));
+				break;
+			case "healmessages":
+				healMessages = !healMessages;
+				ConfigHandler.writeBooleanConfig("toggles", "HealMessages", healMessages);
+				player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Heal messages have been set to " + TheMod.SECONDARY_COLOUR + healMessages + TheMod.MAIN_COLOUR + "."));
+				break;
 			case "petcolors":
 			case "petcolours":
 				petColoursToggled = !petColoursToggled;
@@ -174,16 +191,6 @@ public class ToggleCommand extends CommandBase implements ICommand {
 				outlineTextToggled = !outlineTextToggled;
 				ConfigHandler.writeBooleanConfig("toggles", "OutlineText", outlineTextToggled);
 				player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Outline displayed text has been set to " + TheMod.SECONDARY_COLOUR + outlineTextToggled + TheMod.MAIN_COLOUR + "."));
-				break;
-			case "midasstaffmessages":
-				midasStaffMessages = !midasStaffMessages;
-				ConfigHandler.writeBooleanConfig("toggles", "MidasStaffMessages", midasStaffMessages);
-				player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Midas Staff messages have been set to " + TheMod.SECONDARY_COLOUR + midasStaffMessages + TheMod.MAIN_COLOUR + "."));
-				break;
-			case "healmessages":
-				healMessages = !healMessages;
-				ConfigHandler.writeBooleanConfig("toggles", "HealMessages", healMessages);
-				player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Heal messages have been set to " + TheMod.SECONDARY_COLOUR + healMessages + TheMod.MAIN_COLOUR + "."));
 				break;
 			case "caketimer":
 				cakeTimerToggled = !cakeTimerToggled;
@@ -252,14 +259,15 @@ public class ToggleCommand extends CommandBase implements ICommand {
 															TheMod.TYPE_COLOUR + " Block AOTD ability: " + TheMod.VALUE_COLOUR + aotdToggled + "\n" +
 															TheMod.TYPE_COLOUR + " Block Livid Dagger ability: " + TheMod.VALUE_COLOUR + lividDaggerToggled + "\n" +
 															TheMod.TYPE_COLOUR + " Spirit Sceptre messages: " + TheMod.VALUE_COLOUR + sceptreMessages + "\n" +
+															TheMod.TYPE_COLOUR + " Midas Staff messages: " + TheMod.VALUE_COLOUR + midasStaffMessages + "\n" +
+															TheMod.TYPE_COLOUR + " Implosion messages: " + TheMod.VALUE_COLOUR + implosionMessages + "\n" +
+															TheMod.TYPE_COLOUR + " Heal messages: " + TheMod.VALUE_COLOUR + healMessages + "\n" +
 															TheMod.TYPE_COLOUR + " Pet colours: " + TheMod.VALUE_COLOUR + petColoursToggled + "\n" +
 															TheMod.TYPE_COLOUR + " Dungeon timer: " + TheMod.VALUE_COLOUR + dungeonTimerToggled + "\n" +
 															TheMod.TYPE_COLOUR + " Golem spawn alerts: " + TheMod.VALUE_COLOUR + golemAlertToggled + "\n" +
 															TheMod.TYPE_COLOUR + " Expertise in lore: " + TheMod.VALUE_COLOUR + expertiseLoreToggled + "\n" +
 															TheMod.TYPE_COLOUR + " Skill 50 display: " + TheMod.VALUE_COLOUR + skill50DisplayToggled + "\n" +
 															TheMod.TYPE_COLOUR + " Outline displayed text: " + TheMod.VALUE_COLOUR + outlineTextToggled + "\n" +
-															TheMod.TYPE_COLOUR + " Midas Staff messages: " + TheMod.VALUE_COLOUR + midasStaffMessages + "\n" +
-															TheMod.TYPE_COLOUR + " Heal messages: " + TheMod.VALUE_COLOUR + healMessages + "\n" +
 															TheMod.TYPE_COLOUR + " Cake timer: " + TheMod.VALUE_COLOUR + cakeTimerToggled + "\n" +
 															TheMod.TYPE_COLOUR + " Low health notify: " + TheMod.VALUE_COLOUR + lowHealthNotifyToggled + "\n" +
 															TheMod.TYPE_COLOUR + " Livid solver: " + TheMod.VALUE_COLOUR + lividSolverToggled + "\n" +
@@ -271,6 +279,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 															TheMod.TYPE_COLOUR + " Starts with letter terminal solver: " + TheMod.VALUE_COLOUR + startsWithToggled + "\n" +
 															TheMod.TYPE_COLOUR + " Select all color items terminal solver: " + TheMod.VALUE_COLOUR + selectAllToggled + "\n" +
 															TheMod.TYPE_COLOUR + " Ignore item frames on sea lanterns: " + TheMod.VALUE_COLOUR + itemFrameOnSeaLanternsToggled));
+				break;
 			default:
 				player.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "Usage: " + getCommandUsage(arg0)));
 		}

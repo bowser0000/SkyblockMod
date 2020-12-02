@@ -183,6 +183,9 @@ public class ConfigHandler {
 		if (!hasKey("toggles", "AOTD")) writeBooleanConfig("toggles", "AOTD", false);
 		if (!hasKey("toggles", "LividDagger")) writeBooleanConfig("toggles", "LividDagger", false);
 		if (!hasKey("toggles", "SceptreMessages")) writeBooleanConfig("toggles", "SceptreMessages", true);
+		if (!hasKey("toggles", "MidasStaffMessages")) writeBooleanConfig("toggles", "MidasStaffMessages", true);
+		if (!hasKey("toggles", "ImplosionMessages")) writeBooleanConfig("toggles", "ImplosionMessages", true);
+		if (!hasKey("toggles", "HealMessages")) writeBooleanConfig("toggles", "HealMessages", true);
 		if (!hasKey("toggles", "PetColors")) writeBooleanConfig("toggles", "PetColors", false);
 		if (!hasKey("toggles", "DungeonTimer")) writeBooleanConfig("toggles", "DungeonTimer", false);
 		if (!hasKey("toggles", "BlockSlayer")) writeStringConfig("toggles", "BlockSlayer", "");
@@ -190,8 +193,6 @@ public class ConfigHandler {
 		if (!hasKey("toggles", "ExpertiseLore")) writeBooleanConfig("toggles", "ExpertiseLore", true);
 		if (!hasKey("toggles", "Skill50Display")) writeBooleanConfig("toggles", "Skill50Display", false);
 		if (!hasKey("toggles", "OutlineText")) writeBooleanConfig("toggles", "OutlineText", false);
-		if (!hasKey("toggles", "MidasStaffMessages")) writeBooleanConfig("toggles", "MidasStaffMessages", true);
-		if (!hasKey("toggles", "HealMessages")) writeBooleanConfig("toggles", "HealMessages", true);
 		if (!hasKey("toggles", "CakeTimer")) writeBooleanConfig("toggles", "CakeTimer", false);
 		if (!hasKey("toggles", "LowHealthNotify")) writeBooleanConfig("toggles", "LowHealthNotify", false);
 		if (!hasKey("toggles", "LividSolver")) writeBooleanConfig("toggles", "LividSolver", false);
@@ -423,14 +424,15 @@ public class ConfigHandler {
 		ToggleCommand.aotdToggled = getBoolean("toggles", "AOTD");
 		ToggleCommand.lividDaggerToggled = getBoolean("toggles", "LividDagger");
 		ToggleCommand.sceptreMessages = getBoolean("toggles", "SceptreMessages");
+		ToggleCommand.midasStaffMessages = getBoolean("toggles", "MidasStaffMessages");
+		ToggleCommand.implosionMessages = getBoolean("toggles", "ImplosionMessages");
+		ToggleCommand.healMessages = getBoolean("toggles", "HealMessages");
 		ToggleCommand.petColoursToggled = getBoolean("toggles", "PetColors");
 		ToggleCommand.dungeonTimerToggled = getBoolean("toggles", "DungeonTimer");
 		ToggleCommand.golemAlertToggled = getBoolean("toggles", "GolemAlerts");
 		ToggleCommand.expertiseLoreToggled = getBoolean("toggles", "ExpertiseLore");
 		ToggleCommand.skill50DisplayToggled = getBoolean("toggles", "Skill50Display");
 		ToggleCommand.outlineTextToggled = getBoolean("toggles", "OutlineText");
-		ToggleCommand.midasStaffMessages = getBoolean("toggles", "MidasStaffMessages");
-		ToggleCommand.healMessages = getBoolean("toggles", "HealMessages");
 		ToggleCommand.cakeTimerToggled = getBoolean("toggles", "CakeTimer");
 		ToggleCommand.lowHealthNotifyToggled = getBoolean("toggles", "LowHealthNotify");
 		ToggleCommand.lividSolverToggled = getBoolean("toggles", "LividSolver");
