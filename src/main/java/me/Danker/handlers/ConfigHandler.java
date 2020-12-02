@@ -89,6 +89,7 @@ public class ConfigHandler {
 		config = new Configuration(new File(file));
 		try {
 			config.load();
+			int set = config.get(category, key, value).getInt();
 			config.getCategory(category).get(key).set(value);
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -101,6 +102,7 @@ public class ConfigHandler {
 		config = new Configuration(new File(file));
 		try {
 			config.load();
+			double set = config.get(category, key, value).getDouble();
 			config.getCategory(category).get(key).set(value);
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -113,6 +115,7 @@ public class ConfigHandler {
 		config = new Configuration(new File(file));
 		try {
 			config.load();
+			String set = config.get(category, key, value).getString();
 			config.getCategory(category).get(key).set(value);
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -125,6 +128,7 @@ public class ConfigHandler {
 		config = new Configuration(new File(file));
 		try {
 			config.load();
+			boolean set = config.get(category, key, value).getBoolean();
 			config.getCategory(category).get(key).set(value);
 		} catch (Exception ex) {
 			ex.printStackTrace();
