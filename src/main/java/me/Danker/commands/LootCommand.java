@@ -1,10 +1,6 @@
 package me.Danker.commands;
 
-import java.text.NumberFormat;
-import java.util.List;
-import java.util.Locale;
-
-import me.Danker.TheMod;
+import me.Danker.DankersSkyblockMod;
 import me.Danker.utils.Utils;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
@@ -13,6 +9,10 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
+
+import java.text.NumberFormat;
+import java.util.List;
+import java.util.Locale;
 
 public class LootCommand extends CommandBase {
 	// Wolf
@@ -357,7 +357,7 @@ public class LootCommand extends CommandBase {
 			return getListOfStringsMatchingLastWord(args, "winter", "festival", "spooky", "session");
 		} else if (args.length == 2 && args[0].equalsIgnoreCase("catacombs")) {
 			return getListOfStringsMatchingLastWord(args, "f1", "floor1", "f2", "floor2", "f3", "floor3", "f4", "floor4", "f5", "floor5", "f6", "floor6", "f7", "floor7");
-		} else if (args.length > 1 || (args.length == 3 && args[0].equalsIgnoreCase("fishing") && args[1].equalsIgnoreCase("winter"))) { 
+		} else if (args.length > 1) {
 			return getListOfStringsMatchingLastWord(args, "session");
 		}
 		return null;
@@ -368,7 +368,7 @@ public class LootCommand extends CommandBase {
 		final EntityPlayer player = (EntityPlayer) arg0;
 		
 		if (arg1.length == 0) {
-			player.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "Usage: " + getCommandUsage(arg0)));
+			player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Usage: " + getCommandUsage(arg0)));
 			return;
 		}
 		
@@ -778,7 +778,7 @@ public class LootCommand extends CommandBase {
 				break;
 			case "catacombs":
 				if (arg1.length == 1) {
-					player.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "Usage: /loot catacombs <f1/f2/f3/f4/f5/f6/f7>"));
+					player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Usage: /loot catacombs <f1/f2/f3/f4/f5/f6/f7>"));
 					return;
 				}
 				switch (arg1[1].toLowerCase()) {
@@ -1005,11 +1005,11 @@ public class LootCommand extends CommandBase {
 																	EnumChatFormatting.DARK_RED + EnumChatFormatting.BOLD + " -------------------"));
 						break;
 					default:
-						player.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "Usage: /loot catacombs <f1/f2/f3/f4/f5/f6/f7>"));
+						player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Usage: /loot catacombs <f1/f2/f3/f4/f5/f6/f7>"));
 				}
 				break;
 			default:
-				player.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "Usage: " + getCommandUsage(arg0)));
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Usage: " + getCommandUsage(arg0)));
 		}
 	}
 

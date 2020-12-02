@@ -1,6 +1,6 @@
 package me.Danker.commands;
 
-import me.Danker.TheMod;
+import me.Danker.DankersSkyblockMod;
 import me.Danker.handlers.ConfigHandler;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
@@ -31,12 +31,12 @@ public class SetkeyCommand extends CommandBase implements ICommand {
 		final EntityPlayer player = (EntityPlayer)arg0;
 		
 		if (arg1.length == 0) {
-			player.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "Usage: " + getCommandUsage(arg0)));
+			player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Usage: " + getCommandUsage(arg0)));
 			return;
 		}
 		
 		ConfigHandler.writeStringConfig("api", "APIKey", arg1[0]);
-		player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Set API key to " + TheMod.SECONDARY_COLOUR + arg1[0]));
+		player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Set API key to " + DankersSkyblockMod.SECONDARY_COLOUR + arg1[0]));
 	}
 
 }

@@ -1,14 +1,9 @@
 package me.Danker.commands;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-
-import me.Danker.TheMod;
+import me.Danker.DankersSkyblockMod;
 import me.Danker.handlers.APIHandler;
 import me.Danker.handlers.ConfigHandler;
 import me.Danker.utils.Utils;
@@ -19,6 +14,9 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class PetsCommand extends CommandBase {
 
@@ -33,14 +31,19 @@ public class PetsCommand extends CommandBase {
 							1616700, 1746700, 1886700};
 		
 		int levelOffset = 0;
-		if (rarity.equals("UNCOMMON")) {
-			levelOffset = 6;
-		} else if (rarity.equals("RARE")) {
-			levelOffset = 11;
-		} else if (rarity.equals("EPIC")) {
-			levelOffset = 16;
-		} else if (rarity.equals("LEGENDARY")) {
-			levelOffset = 20;
+		switch (rarity) {
+			case "UNCOMMON":
+				levelOffset = 6;
+				break;
+			case "RARE":
+				levelOffset = 11;
+				break;
+			case "EPIC":
+				levelOffset = 16;
+				break;
+			case "LEGENDARY":
+				levelOffset = 20;
+				break;
 		}
 		
 		for (int i = levelOffset, xpAdded = 0; i < levelOffset + 99; i++) {
@@ -84,7 +87,7 @@ public class PetsCommand extends CommandBase {
 			// Check key
 			String key = ConfigHandler.getString("api", "APIKey");
 			if (key.equals("")) {
-				player.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "API key not set. Use /setkey."));
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "API key not set. Use /setkey."));
 			}
 			
 			// Get UUID for Hypixel API requests
@@ -93,10 +96,10 @@ public class PetsCommand extends CommandBase {
 			if (arg1.length == 0) {
 				username = player.getName();
 				uuid = player.getUniqueID().toString().replaceAll("[\\-]", "");
-				player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Checking pets of " + TheMod.SECONDARY_COLOUR + username));
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Checking pets of " + DankersSkyblockMod.SECONDARY_COLOUR + username));
 			} else {
 				username = arg1[0];
-				player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Checking pets of " + TheMod.SECONDARY_COLOUR + username));
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Checking pets of " + DankersSkyblockMod.SECONDARY_COLOUR + username));
 				uuid = APIHandler.getUUID(username);
 			}
 			
@@ -109,57 +112,63 @@ public class PetsCommand extends CommandBase {
 			JsonObject profileResponse = APIHandler.getResponse(profileURL);
 			if (!profileResponse.get("success").getAsBoolean()) {
 				String reason = profileResponse.get("cause").getAsString();
-				player.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "Failed with reason: " + reason));
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Failed with reason: " + reason));
 				return;
 			}
 			
 			System.out.println("Fetching pets...");
 			JsonArray petsArray = profileResponse.get("profile").getAsJsonObject().get("members").getAsJsonObject().get(uuid).getAsJsonObject().get("pets").getAsJsonArray();
 			if (petsArray.size() == 0) {
-				player.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + username + " has no pets."));
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + username + " has no pets."));
 				return;
 			}
 			
 			System.out.println("Looping through pets...");
 			// Push each pet into list
-			List<JsonElement> sortedPets = new ArrayList<JsonElement>();
+			List<JsonElement> sortedPets = new ArrayList<>();
 			for (JsonElement petElement : petsArray) {
 				sortedPets.add(petElement);
 			}
 			
 			// Sort pets by exp
-			Collections.sort(sortedPets, (pet1, pet2) -> {
+			sortedPets.sort((pet1, pet2) -> {
 				double petXp1 = pet1.getAsJsonObject().get("exp").getAsDouble();
 				double petXp2 = pet2.getAsJsonObject().get("exp").getAsDouble();
 				return -Double.compare(petXp1, petXp2);
 			});
 			
 			// Sort pets into rarities
-			List<JsonObject> commonPets = new ArrayList<JsonObject>();
-			List<JsonObject> uncommonPets = new ArrayList<JsonObject>();
-			List<JsonObject> rarePets = new ArrayList<JsonObject>();
-			List<JsonObject> epicPets = new ArrayList<JsonObject>();
-			List<JsonObject> legendaryPets = new ArrayList<JsonObject>();
+			List<JsonObject> commonPets = new ArrayList<>();
+			List<JsonObject> uncommonPets = new ArrayList<>();
+			List<JsonObject> rarePets = new ArrayList<>();
+			List<JsonObject> epicPets = new ArrayList<>();
+			List<JsonObject> legendaryPets = new ArrayList<>();
 			
 			for (JsonElement petElement : sortedPets) {
 				JsonObject pet = petElement.getAsJsonObject();
 				String rarity = pet.get("tier").getAsString();
-				
-				if (rarity.equals("COMMON")) {
-					commonPets.add(pet);
-				} else if (rarity.equals("UNCOMMON")) {
-					uncommonPets.add(pet);
-				} else if (rarity.equals("RARE")) {
-					rarePets.add(pet);
-				} else if (rarity.equals("EPIC")) {
-					epicPets.add(pet);
-				} else if (rarity.equals("LEGENDARY")) {
-					legendaryPets.add(pet);
+
+				switch (rarity) {
+					case "COMMON":
+						commonPets.add(pet);
+						break;
+					case "UNCOMMON":
+						uncommonPets.add(pet);
+						break;
+					case "RARE":
+						rarePets.add(pet);
+						break;
+					case "EPIC":
+						epicPets.add(pet);
+						break;
+					case "LEGENDARY":
+						legendaryPets.add(pet);
+						break;
 				}
 			}
 			
 			int totalPets = commonPets.size() + uncommonPets.size() + rarePets.size() + epicPets.size() + legendaryPets.size();
-			String finalMessage = TheMod.DELIMITER_COLOUR + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+			String finalMessage = DankersSkyblockMod.DELIMITER_COLOUR + "" + EnumChatFormatting.BOLD + "-------------------\n" +
 					  			  EnumChatFormatting.AQUA + " " + username + "'s Pets (" + totalPets + "):\n";
 			
 			// Loop through pet rarities
@@ -167,7 +176,7 @@ public class PetsCommand extends CommandBase {
 				String petName = Utils.capitalizeString(legPet.get("type").getAsString());
 				int level = petXpToLevel(legPet.get("exp").getAsDouble(), "LEGENDARY");
 				
-				String messageToAdd = "";
+				String messageToAdd;
 				if (legPet.get("active").getAsBoolean()) {
 					messageToAdd = EnumChatFormatting.GOLD + " " + EnumChatFormatting.BOLD + ">>> Legendary " + petName + " (" + level + ") <<<";
 				} else {
@@ -181,7 +190,7 @@ public class PetsCommand extends CommandBase {
 				String petName = Utils.capitalizeString(epicPet.get("type").getAsString());
 				int level = petXpToLevel(epicPet.get("exp").getAsDouble(), "EPIC");
 				
-				String messageToAdd = "";
+				String messageToAdd;
 				if (epicPet.get("active").getAsBoolean()) {
 					messageToAdd = EnumChatFormatting.DARK_PURPLE + " " + EnumChatFormatting.BOLD + ">>> Epic " + petName + " (" + level + ") <<<";
 				} else {
@@ -195,7 +204,7 @@ public class PetsCommand extends CommandBase {
 				String petName = Utils.capitalizeString(rarePet.get("type").getAsString());
 				int level = petXpToLevel(rarePet.get("exp").getAsDouble(), "RARE");
 				
-				String messageToAdd = "";
+				String messageToAdd;
 				if (rarePet.get("active").getAsBoolean()) {
 					messageToAdd = EnumChatFormatting.BLUE + " " + EnumChatFormatting.BOLD + ">>> Rare " + petName + " (" + level + ") <<<";
 				} else {
@@ -209,7 +218,7 @@ public class PetsCommand extends CommandBase {
 				String petName = Utils.capitalizeString(uncommonPet.get("type").getAsString());
 				int level = petXpToLevel(uncommonPet.get("exp").getAsDouble(), "UNCOMMON");
 				
-				String messageToAdd = "";
+				String messageToAdd;
 				if (uncommonPet.get("active").getAsBoolean()) {
 					messageToAdd = EnumChatFormatting.GREEN + " " + EnumChatFormatting.BOLD + ">>> Uncommon " + petName + " (" + level + ") <<<";
 				} else {
@@ -223,7 +232,7 @@ public class PetsCommand extends CommandBase {
 				String petName = Utils.capitalizeString(commonPet.get("type").getAsString());
 				int level = petXpToLevel(commonPet.get("exp").getAsDouble(), "COMMON");
 				
-				String messageToAdd = "";
+				String messageToAdd;
 				if (commonPet.get("active").getAsBoolean()) {
 					messageToAdd = EnumChatFormatting.BOLD + ">>> Common " + petName + " (" + level + ") <<<";
 				} else {
@@ -233,7 +242,7 @@ public class PetsCommand extends CommandBase {
 				finalMessage += messageToAdd + "\n";
 			}
 			
-			finalMessage += TheMod.DELIMITER_COLOUR + " " + EnumChatFormatting.BOLD + "-------------------";
+			finalMessage += DankersSkyblockMod.DELIMITER_COLOUR + " " + EnumChatFormatting.BOLD + "-------------------";
 			player.addChatMessage(new ChatComponentText(finalMessage));
 				
 		}).start();

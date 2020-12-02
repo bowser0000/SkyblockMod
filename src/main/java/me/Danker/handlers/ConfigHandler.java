@@ -1,30 +1,25 @@
 package me.Danker.handlers;
 
-import java.io.File;
-
-import me.Danker.TheMod;
-import me.Danker.commands.BlockSlayerCommand;
-import me.Danker.commands.DisplayCommand;
-import me.Danker.commands.LootCommand;
-import me.Danker.commands.MoveCommand;
-import me.Danker.commands.ScaleCommand;
-import me.Danker.commands.ToggleCommand;
+import me.Danker.DankersSkyblockMod;
+import me.Danker.commands.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.common.config.ConfigCategory;
 import net.minecraftforge.common.config.Configuration;
 
+import java.io.File;
+
 public class ConfigHandler {
 	public static Configuration config;
-	private static String file = "config/Danker's Skyblock Mod.cfg";
+	private final static String file = "config/Danker's Skyblock Mod.cfg";
 	
 	public static void init() {
 		config = new Configuration(new File(file));
 		try {
 			config.load();
 		} catch (Exception ex) {
-			System.err.println(ex);
+			ex.printStackTrace();
 		} finally {
 			config.save();
 		}
@@ -38,7 +33,7 @@ public class ConfigHandler {
 				return config.get(category, key, 0).getInt();
 			}
 		} catch (Exception ex) {
-			System.err.println(ex);
+			ex.printStackTrace();
 		} finally {
 			config.save();
 		}
@@ -53,7 +48,7 @@ public class ConfigHandler {
 				return config.get(category, key, 0D).getDouble();
 			}
 		} catch (Exception ex) {
-			System.err.println(ex);
+			ex.printStackTrace();
 		} finally {
 			config.save();
 		}
@@ -68,7 +63,7 @@ public class ConfigHandler {
 				return config.get(category, key, "").getString();
 			}
 		} catch (Exception ex) {
-			System.err.println(ex);
+			ex.printStackTrace();
 		} finally {
 			config.save();
 		}
@@ -83,7 +78,7 @@ public class ConfigHandler {
 				return config.get(category, key, false).getBoolean();
 			}
 		} catch (Exception ex) {
-			System.err.println(ex);
+			ex.printStackTrace();
 		} finally {
 			config.save();
 		}
@@ -94,10 +89,9 @@ public class ConfigHandler {
 		config = new Configuration(new File(file));
 		try {
 			config.load();
-			int set = config.get(category, key, value).getInt();
 			config.getCategory(category).get(key).set(value);
 		} catch (Exception ex) {
-			System.err.println(ex);
+			ex.printStackTrace();
 		} finally {
 			config.save();
 		}
@@ -107,10 +101,9 @@ public class ConfigHandler {
 		config = new Configuration(new File(file));
 		try {
 			config.load();
-			double set = config.get(category, key, value).getDouble();
 			config.getCategory(category).get(key).set(value);
 		} catch (Exception ex) {
-			System.err.println(ex);
+			ex.printStackTrace();
 		} finally {
 			config.save();
 		}
@@ -120,10 +113,9 @@ public class ConfigHandler {
 		config = new Configuration(new File(file));
 		try {
 			config.load();
-			String set = config.get(category, key, value).getString();
 			config.getCategory(category).get(key).set(value);
 		} catch (Exception ex) {
-			System.err.println(ex);
+			ex.printStackTrace();
 		} finally {
 			config.save();
 		}
@@ -133,10 +125,9 @@ public class ConfigHandler {
 		config = new Configuration(new File(file));
 		try {
 			config.load();
-			boolean set = config.get(category, key, value).getBoolean();
 			config.getCategory(category).get(key).set(value);
 		} catch (Exception ex) {
-			System.err.println(ex);
+			ex.printStackTrace();
 		} finally {
 			config.save();
 		}
@@ -149,7 +140,7 @@ public class ConfigHandler {
 			if (!config.hasCategory(category)) return false;
 			return config.getCategory(category).containsKey(key);
 		} catch (Exception ex) {
-			System.err.println(ex);
+			ex.printStackTrace();
 		} finally {
 			config.save();
 		}
@@ -164,7 +155,7 @@ public class ConfigHandler {
 				config.removeCategory(new ConfigCategory(category));
 			}
 		} catch (Exception ex) {
-			System.err.println(ex);
+			ex.printStackTrace();
 		} finally {
 			config.save();
 		}
@@ -449,7 +440,7 @@ public class ConfigHandler {
 		String onlySlayer = getString("toggles", "BlockSlayer");
 		if (!onlySlayer.equals("")) {
 			BlockSlayerCommand.onlySlayerName = onlySlayer.substring(0, onlySlayer.lastIndexOf(" "));
-			BlockSlayerCommand.onlySlayerNumber = onlySlayer.substring(onlySlayer.lastIndexOf(" ") + 1, onlySlayer.length());
+			BlockSlayerCommand.onlySlayerNumber = onlySlayer.substring(onlySlayer.lastIndexOf(" ") + 1);
 		}
 		
 		// Wolf
@@ -614,9 +605,9 @@ public class ConfigHandler {
 		// Misc
 		DisplayCommand.display = getString("misc", "display");
 		DisplayCommand.auto = getBoolean("misc", "autoDisplay");
-		TheMod.SKILL_TIME = getInt("misc", "skill50Time") * 20;
-		TheMod.cakeTime = getDouble("misc", "cakeTime");
-		TheMod.showSkillTracker = getBoolean("misc", "showSkillTracker");
+		DankersSkyblockMod.SKILL_TIME = getInt("misc", "skill50Time") * 20;
+		DankersSkyblockMod.cakeTime = getDouble("misc", "cakeTime");
+		DankersSkyblockMod.showSkillTracker = getBoolean("misc", "showSkillTracker");
 		
 		MoveCommand.coordsXY[0] = getInt("locations", "coordsX");
 		MoveCommand.coordsXY[1] = getInt("locations", "coordsY");
@@ -641,21 +632,21 @@ public class ConfigHandler {
 		ScaleCommand.cakeTimerScale = getDouble("scales", "cakeTimerScale");
 		ScaleCommand.skillTrackerScale = getDouble("scales", "skillTrackerScale");
 		
-		TheMod.MAIN_COLOUR = getString("colors", "main");
-		TheMod.SECONDARY_COLOUR = getString("colors", "secondary");
-		TheMod.DELIMITER_COLOUR = getString("colors", "delimiter");
-		TheMod.ERROR_COLOUR = getString("colors", "error");
-		TheMod.TYPE_COLOUR = getString("colors", "type");
-		TheMod.VALUE_COLOUR = getString("colors", "value");
-		TheMod.SKILL_AVERAGE_COLOUR = getString("colors", "skillAverage");
-		TheMod.ANSWER_COLOUR = getString("colors", "answer");
-		TheMod.SKILL_50_COLOUR = getString("colors", "skill50Display");
-		TheMod.COORDS_COLOUR = getString("colors", "coordsDisplay");
-		TheMod.CAKE_COLOUR = getString("colors", "cakeDisplay");
-		TheMod.SKILL_TRACKER_COLOUR = getString("colors", "skillTracker");
-		TheMod.TRIVIA_WRONG_ANSWER_COLOUR = getString("colors", "triviaWrongAnswer");
-		TheMod.LOWEST_BLAZE_COLOUR = getInt("colors", "blazeLowest");
-		TheMod.HIGHEST_BLAZE_COLOUR = getInt("colors", "blazeHighest");
+		DankersSkyblockMod.MAIN_COLOUR = getString("colors", "main");
+		DankersSkyblockMod.SECONDARY_COLOUR = getString("colors", "secondary");
+		DankersSkyblockMod.DELIMITER_COLOUR = getString("colors", "delimiter");
+		DankersSkyblockMod.ERROR_COLOUR = getString("colors", "error");
+		DankersSkyblockMod.TYPE_COLOUR = getString("colors", "type");
+		DankersSkyblockMod.VALUE_COLOUR = getString("colors", "value");
+		DankersSkyblockMod.SKILL_AVERAGE_COLOUR = getString("colors", "skillAverage");
+		DankersSkyblockMod.ANSWER_COLOUR = getString("colors", "answer");
+		DankersSkyblockMod.SKILL_50_COLOUR = getString("colors", "skill50Display");
+		DankersSkyblockMod.COORDS_COLOUR = getString("colors", "coordsDisplay");
+		DankersSkyblockMod.CAKE_COLOUR = getString("colors", "cakeDisplay");
+		DankersSkyblockMod.SKILL_TRACKER_COLOUR = getString("colors", "skillTracker");
+		DankersSkyblockMod.TRIVIA_WRONG_ANSWER_COLOUR = getString("colors", "triviaWrongAnswer");
+		DankersSkyblockMod.LOWEST_BLAZE_COLOUR = getInt("colors", "blazeLowest");
+		DankersSkyblockMod.HIGHEST_BLAZE_COLOUR = getInt("colors", "blazeHighest");
 	}
 	
 }

@@ -1,7 +1,5 @@
 package me.Danker.handlers;
 
-import java.lang.reflect.Field;
-
 import io.netty.channel.ChannelDuplexHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelPromise;
@@ -17,6 +15,8 @@ import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.C02PacketUseEntity;
 import net.minecraft.network.play.server.S04PacketEntityEquipment;
 import net.minecraft.util.BlockPos;
+
+import java.lang.reflect.Field;
 
 public class PacketHandler extends ChannelDuplexHandler {
 	
@@ -47,7 +47,7 @@ public class PacketHandler extends ChannelDuplexHandler {
 				EntityItemFrame itemFrame = (EntityItemFrame) entityHit;
 	    		ItemStack item = itemFrame.getDisplayedItem();
 	    		if (item != null && item.getItem() == Items.arrow) {
-		    		BlockPos blockPos = Utils.getBlockUnderItemFrame(mc.theWorld, itemFrame);
+		    		BlockPos blockPos = Utils.getBlockUnderItemFrame(itemFrame);
 		    		if (mc.theWorld.getBlockState(blockPos).getBlock() == Blocks.sea_lantern) {
 		    			return;
 		    		}

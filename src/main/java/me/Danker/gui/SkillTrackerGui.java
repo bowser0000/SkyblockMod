@@ -1,14 +1,13 @@
 package me.Danker.gui;
 
-import org.apache.commons.lang3.time.StopWatch;
-
-import me.Danker.TheMod;
+import me.Danker.DankersSkyblockMod;
 import me.Danker.handlers.ConfigHandler;
 import me.Danker.handlers.TextRenderer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;
+import org.apache.commons.lang3.time.StopWatch;
 
 public class SkillTrackerGui extends GuiScreen {
 
@@ -51,12 +50,12 @@ public class SkillTrackerGui extends GuiScreen {
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
 		this.drawDefaultBackground();
 		String stateText = "";
-		if (TheMod.skillStopwatch.isStarted() && !TheMod.skillStopwatch.isSuspended()) {
+		if (DankersSkyblockMod.skillStopwatch.isStarted() && !DankersSkyblockMod.skillStopwatch.isSuspended()) {
 			stateText = "Timer: Running";
-		} else if (!TheMod.skillStopwatch.isStarted() || TheMod.skillStopwatch.isSuspended()) {
+		} else if (!DankersSkyblockMod.skillStopwatch.isStarted() || DankersSkyblockMod.skillStopwatch.isSuspended()) {
 			stateText = "Timer: Paused";
 		}
-		if (!TheMod.showSkillTracker) {
+		if (!DankersSkyblockMod.showSkillTracker) {
 			stateText += " (Hidden)";
 		}
 		int stateTextWidth = mc.fontRendererObj.getStringWidth(stateText);
@@ -67,31 +66,31 @@ public class SkillTrackerGui extends GuiScreen {
 	@Override
 	public void actionPerformed(GuiButton button) {
 		if (button == goBack) {
-			TheMod.guiToOpen = "dankergui1";
+			DankersSkyblockMod.guiToOpen = "dankergui1";
 		} else if (button == start) {
-			if (TheMod.skillStopwatch.isStarted() && TheMod.skillStopwatch.isSuspended()) {
-				TheMod.skillStopwatch.resume(); 
-			} else if (!TheMod.skillStopwatch.isStarted()) {
-				TheMod.skillStopwatch.start();
+			if (DankersSkyblockMod.skillStopwatch.isStarted() && DankersSkyblockMod.skillStopwatch.isSuspended()) {
+				DankersSkyblockMod.skillStopwatch.resume();
+			} else if (!DankersSkyblockMod.skillStopwatch.isStarted()) {
+				DankersSkyblockMod.skillStopwatch.start();
 			}
 		} else if (button == stop) {
-			if (TheMod.skillStopwatch.isStarted() && !TheMod.skillStopwatch.isSuspended()) {
-				TheMod.skillStopwatch.suspend();
+			if (DankersSkyblockMod.skillStopwatch.isStarted() && !DankersSkyblockMod.skillStopwatch.isSuspended()) {
+				DankersSkyblockMod.skillStopwatch.suspend();
 			}
 		} else if (button == reset) {
-			TheMod.skillStopwatch = new StopWatch();
-			TheMod.farmingXPGained = 0;
-			TheMod.miningXPGained = 0;
-			TheMod.combatXPGained = 0;
-			TheMod.foragingXPGained = 0;
-			TheMod.fishingXPGained = 0;
-			TheMod.enchantingXPGained = 0;
-			TheMod.alchemyXPGained = 0;
+			DankersSkyblockMod.skillStopwatch = new StopWatch();
+			DankersSkyblockMod.farmingXPGained = 0;
+			DankersSkyblockMod.miningXPGained = 0;
+			DankersSkyblockMod.combatXPGained = 0;
+			DankersSkyblockMod.foragingXPGained = 0;
+			DankersSkyblockMod.fishingXPGained = 0;
+			DankersSkyblockMod.enchantingXPGained = 0;
+			DankersSkyblockMod.alchemyXPGained = 0;
 		} else if (button == hide) {
-			TheMod.showSkillTracker = false;
+			DankersSkyblockMod.showSkillTracker = false;
 			ConfigHandler.writeBooleanConfig("misc", "showSkillTracker", false);
 		} else if (button == show) {
-			TheMod.showSkillTracker = true;
+			DankersSkyblockMod.showSkillTracker = true;
 			ConfigHandler.writeBooleanConfig("misc", "showSkillTracker", true);
 		}
 	}

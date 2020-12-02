@@ -1,8 +1,7 @@
 package me.Danker.commands;
 
 import com.google.gson.JsonObject;
-
-import me.Danker.TheMod;
+import me.Danker.DankersSkyblockMod;
 import me.Danker.handlers.APIHandler;
 import me.Danker.handlers.ConfigHandler;
 import net.minecraft.command.CommandBase;
@@ -37,13 +36,12 @@ public class ImportFishingCommand extends CommandBase {
 			// Check key
 			String key = ConfigHandler.getString("api", "APIKey");
 			if (key.equals("")) {
-				player.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "API key not set. Use /setkey."));
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "API key not set. Use /setkey."));
 			}
 						
-			player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Importing your fishing stats..."));
+			player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Importing your fishing stats..."));
 			
 			// Get UUID for Hypixel API requests
-			String username = player.getName();
 			String uuid = player.getUniqueID().toString().replaceAll("[\\-]", "");
 			
 			String latestProfile = APIHandler.getLatestProfileID(uuid, key);
@@ -54,7 +52,7 @@ public class ImportFishingCommand extends CommandBase {
 			JsonObject profileResponse = APIHandler.getResponse(profileURL);
 			if (!profileResponse.get("success").getAsBoolean()) {
 				String reason = profileResponse.get("cause").getAsString();
-				player.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "Failed with reason: " + reason));
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Failed with reason: " + reason));
 				return;
 			}
 			
@@ -286,7 +284,7 @@ public class ImportFishingCommand extends CommandBase {
 			ConfigHandler.writeIntConfig("fishing", "phantomFisher", LootCommand.phantomFishers);
 			ConfigHandler.writeIntConfig("fishing", "grimReaper", LootCommand.grimReapers);
 			
-			player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Fishing stats imported."));
+			player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Fishing stats imported."));
 		}).start();
 	}
 

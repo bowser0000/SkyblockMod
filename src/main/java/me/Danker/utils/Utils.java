@@ -1,14 +1,6 @@
 package me.Danker.utils;
 
-import java.awt.Color;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.regex.Matcher;
-
-import org.lwjgl.opengl.GL11;
-
-import me.Danker.TheMod;
+import me.Danker.DankersSkyblockMod;
 import me.Danker.handlers.ScoreboardHandler;
 import me.Danker.handlers.TextRenderer;
 import net.minecraft.block.Block;
@@ -27,12 +19,14 @@ import net.minecraft.entity.item.EntityItemFrame;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.scoreboard.ScoreObjective;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.StringUtils;
-import net.minecraft.util.Vec3;
-import net.minecraft.world.World;
+import net.minecraft.util.*;
+import org.lwjgl.opengl.GL11;
+
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.regex.Matcher;
 
 public class Utils {
 	
@@ -68,11 +62,11 @@ public class Utils {
     }
     
     public static String returnGoldenEnchants(String line) {
-    	Matcher matcher = TheMod.pattern.matcher(line);
+    	Matcher matcher = DankersSkyblockMod.pattern.matcher(line);
     	StringBuffer out = new StringBuffer();
     	
     	while (matcher.find()) {
-    		matcher.appendReplacement(out, TheMod.t6Enchants.get(matcher.group(1)));
+    		matcher.appendReplacement(out, DankersSkyblockMod.t6Enchants.get(matcher.group(1)));
     	}
     	matcher.appendTail(out);
     	
@@ -96,9 +90,9 @@ public class Utils {
 	
 	public static void createTitle(String text, int seconds) {
 		Minecraft.getMinecraft().thePlayer.playSound("random.orb", 1, (float) 0.5);
-		TheMod.titleTimer = seconds * 20;
-		TheMod.showTitle = true;
-		TheMod.titleText = text;
+		DankersSkyblockMod.titleTimer = seconds * 20;
+		DankersSkyblockMod.showTitle = true;
+		DankersSkyblockMod.titleText = text;
 	}
 	
 	public static void drawTitle(String text) {
@@ -135,7 +129,6 @@ public class Utils {
 	}
 
 	public static void checkForDungeons() {
-		Minecraft mc = Minecraft.getMinecraft();
 		if (inSkyblock) {
 			List<String> scoreboard = ScoreboardHandler.getSidebarLines();
 			for (String s : scoreboard) {
@@ -183,7 +176,7 @@ public class Utils {
 	public static String getTimeBetween(double timeOne, double timeTwo) {
 		double secondsBetween = Math.floor(timeTwo - timeOne);
 		
-		String timeFormatted = "";
+		String timeFormatted;
 		int days;
 		int hours;
 		int minutes;
@@ -405,7 +398,7 @@ public class Utils {
 		return closestBlock;
 	}
 	
-	public static BlockPos getBlockUnderItemFrame(World world, EntityItemFrame itemFrame) {
+	public static BlockPos getBlockUnderItemFrame(EntityItemFrame itemFrame) {
 		switch (itemFrame.facingDirection) {
 			case NORTH:
 				return new BlockPos(itemFrame.posX, itemFrame.posY, itemFrame.posZ + 1);

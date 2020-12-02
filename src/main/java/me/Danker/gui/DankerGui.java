@@ -1,11 +1,6 @@
 package me.Danker.gui;
 
-import java.awt.Desktop;
-import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
-
-import me.Danker.TheMod;
+import me.Danker.DankersSkyblockMod;
 import me.Danker.commands.ToggleCommand;
 import me.Danker.handlers.ConfigHandler;
 import me.Danker.handlers.TextRenderer;
@@ -14,6 +9,11 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;
+
+import java.awt.*;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 public class DankerGui extends GuiScreen {
 
@@ -172,29 +172,29 @@ public class DankerGui extends GuiScreen {
 		if (button == closeGUI) {
 			Minecraft.getMinecraft().thePlayer.closeScreen();
 		} else if (button == nextPage) {
-			TheMod.guiToOpen = "dankergui" + (page + 1);
+			DankersSkyblockMod.guiToOpen = "dankergui" + (page + 1);
 		} else if (button == backPage) {
-			TheMod.guiToOpen = "dankergui" + (page - 1);
+			DankersSkyblockMod.guiToOpen = "dankergui" + (page - 1);
 		} else if (button == githubLink) {
 			try {
 				Desktop.getDesktop().browse(new URI("https://github.com/bowser0000/SkyblockMod"));
 			} catch (IOException | URISyntaxException ex) {
-				System.err.println(ex);
+				ex.printStackTrace();
 			}
 		} else if (button == discordLink) {
 			try {
 				Desktop.getDesktop().browse(new URI("https://discord.gg/QsEkNQS"));
 			} catch (IOException | URISyntaxException ex) {
-				System.err.println(ex);
+				ex.printStackTrace();
 			}
 		} else if (button == changeDisplay) {
-			TheMod.guiToOpen = "displaygui";
+			DankersSkyblockMod.guiToOpen = "displaygui";
 		} else if (button == onlySlayer) {
-			TheMod.guiToOpen = "onlyslayergui";
+			DankersSkyblockMod.guiToOpen = "onlyslayergui";
 		} else if (button == puzzleSolvers) { 
-			TheMod.guiToOpen = "puzzlesolvers";
+			DankersSkyblockMod.guiToOpen = "puzzlesolvers";
 		}  else if (button == skillTracker) {
-			TheMod.guiToOpen = "skilltracker";
+			DankersSkyblockMod.guiToOpen = "skilltracker";
 		} else if (button == outlineText) {
 			ToggleCommand.outlineTextToggled = !ToggleCommand.outlineTextToggled;
 			ConfigHandler.writeBooleanConfig("toggles", "OutlineText", ToggleCommand.outlineTextToggled);

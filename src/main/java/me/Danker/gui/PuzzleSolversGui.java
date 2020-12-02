@@ -1,6 +1,6 @@
 package me.Danker.gui;
 
-import me.Danker.TheMod;
+import me.Danker.DankersSkyblockMod;
 import me.Danker.commands.ToggleCommand;
 import me.Danker.handlers.ConfigHandler;
 import me.Danker.utils.Utils;
@@ -85,7 +85,7 @@ public class PuzzleSolversGui extends GuiScreen {
 	@Override
 	public void actionPerformed(GuiButton button) {
 		if (button == goBack) {
-			TheMod.guiToOpen = "dankergui1";
+			DankersSkyblockMod.guiToOpen = "dankergui1";
 		} else if (button == backPage) {
 			Minecraft.getMinecraft().displayGuiScreen(new PuzzleSolversGui(page - 1));
 		} else if (button == nextPage) {

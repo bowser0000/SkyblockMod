@@ -1,6 +1,6 @@
 package me.Danker.commands;
 
-import me.Danker.TheMod;
+import me.Danker.DankersSkyblockMod;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
@@ -29,7 +29,7 @@ public class DHelpCommand extends CommandBase {
 	public void processCommand(ICommandSender arg0, String[] arg1) throws CommandException {
 		EntityPlayer player = (EntityPlayer) arg0;
 		
-		player.addChatMessage(new ChatComponentText("\n" + EnumChatFormatting.GOLD + " " + TheMod.MODID + " Version " + TheMod.VERSION + "\n" +
+		player.addChatMessage(new ChatComponentText("\n" + EnumChatFormatting.GOLD + " " + DankersSkyblockMod.MODID + " Version " + DankersSkyblockMod.VERSION + "\n" +
 													EnumChatFormatting.AQUA + " <> = Mandatory parameter. [] = Optional parameter.\n" +
 													EnumChatFormatting.GOLD + " Commands, " + EnumChatFormatting.GREEN + " Keybinds.\n" +
 													EnumChatFormatting.GOLD + " /dhelp" + EnumChatFormatting.AQUA + " - Returns this message.\n" +

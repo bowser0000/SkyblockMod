@@ -1,8 +1,6 @@
 package me.Danker.commands;
 
-import java.util.List;
-
-import me.Danker.TheMod;
+import me.Danker.DankersSkyblockMod;
 import me.Danker.handlers.ConfigHandler;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
@@ -10,6 +8,8 @@ import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
+
+import java.util.List;
 
 public class DisplayCommand extends CommandBase {
 	public static String display;
@@ -38,7 +38,7 @@ public class DisplayCommand extends CommandBase {
 			return getListOfStringsMatchingLastWord(args, "winter", "festival", "spooky", "session");
 		} else if (args.length == 2 && args[0].equalsIgnoreCase("catacombs")) {
 			return getListOfStringsMatchingLastWord(args, "f1", "floor1", "f2", "floor2", "f3", "floor3", "f4", "floor4", "f5", "floor5", "f6", "floor6", "f7", "floor7");
-		} else if (args.length > 1 || (args.length == 3 && args[0].equalsIgnoreCase("fishing") && args[1].equalsIgnoreCase("winter"))) { 
+		} else if (args.length > 1) {
 			return getListOfStringsMatchingLastWord(args, "session");
 		}
 		return null;
@@ -49,7 +49,7 @@ public class DisplayCommand extends CommandBase {
 		final EntityPlayer player = (EntityPlayer) arg0;
 		
 		if (arg1.length == 0) {
-			player.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "Usage: " + getCommandUsage(arg0)));
+			player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Usage: " + getCommandUsage(arg0)));
 			return;
 		}
 		
@@ -126,7 +126,7 @@ public class DisplayCommand extends CommandBase {
 			break;
 		case "catacombs":
 			if (arg1.length == 1) {
-				player.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "Usage: /display catacombs <f1/f2/f3/f4f5/f6/f7>"));
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Usage: /display catacombs <f1/f2/f3/f4f5/f6/f7>"));
 				return;
 			}
 			
@@ -188,25 +188,25 @@ public class DisplayCommand extends CommandBase {
 					}
 					break;
 				default:
-					player.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "Usage: /display catacombs <f1/f2/f3/f4/f5/f6/f7>"));
+					player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Usage: /display catacombs <f1/f2/f3/f4/f5/f6/f7>"));
 					return;
 			}
 			break;
 		case "auto":
 			auto = true;
-			player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Display set to " + TheMod.SECONDARY_COLOUR + "auto" + TheMod.MAIN_COLOUR + "."));
+			player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Display set to " + DankersSkyblockMod.SECONDARY_COLOUR + "auto" + DankersSkyblockMod.MAIN_COLOUR + "."));
 			ConfigHandler.writeBooleanConfig("misc", "autoDisplay", true);
 			return;
 		case "off":
 			display = "off";
 			break;
 		default:
-			player.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "Usage: " + getCommandUsage(arg0)));
+			player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Usage: " + getCommandUsage(arg0)));
 			return;
 		}
 		
 		auto = false;
-		player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Display set to " + TheMod.SECONDARY_COLOUR + display + TheMod.MAIN_COLOUR + "."));
+		player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Display set to " + DankersSkyblockMod.SECONDARY_COLOUR + display + DankersSkyblockMod.MAIN_COLOUR + "."));
 		ConfigHandler.writeBooleanConfig("misc", "autoDisplay", false);
 		ConfigHandler.writeStringConfig("misc", "display", display);
 	}

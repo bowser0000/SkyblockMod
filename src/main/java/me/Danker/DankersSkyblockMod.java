@@ -1,58 +1,9 @@
 package me.Danker;
 
-import java.awt.Image;
-import java.awt.SystemTray;
-import java.awt.Toolkit;
-import java.awt.TrayIcon;
-import java.text.NumberFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.regex.Pattern;
-
-import org.apache.commons.lang3.time.StopWatch;
-import org.lwjgl.input.Keyboard;
-import org.lwjgl.input.Mouse;
-import org.lwjgl.opengl.GL11;
-
 import com.google.gson.JsonObject;
-
-import me.Danker.commands.ArmourCommand;
-import me.Danker.commands.BankCommand;
-import me.Danker.commands.BlockSlayerCommand;
-import me.Danker.commands.DHelpCommand;
-import me.Danker.commands.DankerGuiCommand;
-import me.Danker.commands.DisplayCommand;
-import me.Danker.commands.DungeonsCommand;
-import me.Danker.commands.GetkeyCommand;
-import me.Danker.commands.GuildOfCommand;
-import me.Danker.commands.ImportFishingCommand;
-import me.Danker.commands.LobbySkillsCommand;
-import me.Danker.commands.LootCommand;
-import me.Danker.commands.MoveCommand;
-import me.Danker.commands.PetsCommand;
-import me.Danker.commands.ReloadConfigCommand;
-import me.Danker.commands.ResetLootCommand;
-import me.Danker.commands.ScaleCommand;
-import me.Danker.commands.SetkeyCommand;
-import me.Danker.commands.SkillTrackerCommand;
-import me.Danker.commands.SkillsCommand;
-import me.Danker.commands.SkyblockPlayersCommand;
-import me.Danker.commands.SlayerCommand;
-import me.Danker.commands.ToggleCommand;
-import me.Danker.gui.DankerGui;
-import me.Danker.gui.DisplayGui;
-import me.Danker.gui.EditLocationsGui;
-import me.Danker.gui.OnlySlayerGui;
-import me.Danker.gui.PuzzleSolversGui;
-import me.Danker.gui.SkillTrackerGui;
-import me.Danker.handlers.APIHandler;
-import me.Danker.handlers.ConfigHandler;
-import me.Danker.handlers.PacketHandler;
-import me.Danker.handlers.ScoreboardHandler;
-import me.Danker.handlers.TextRenderer;
+import me.Danker.commands.*;
+import me.Danker.gui.*;
+import me.Danker.handlers.*;
 import me.Danker.utils.Utils;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
@@ -75,14 +26,7 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.IChatComponent;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.StringUtils;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.*;
 import net.minecraft.world.World;
 import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.client.GuiIngameForge;
@@ -111,16 +55,26 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.common.network.FMLNetworkEvent.ClientConnectedToServerEvent;
 import net.minecraftforge.fml.common.versioning.DefaultArtifactVersion;
+import org.apache.commons.lang3.time.StopWatch;
+import org.lwjgl.input.Keyboard;
+import org.lwjgl.input.Mouse;
+import org.lwjgl.opengl.GL11;
 
-@Mod(modid = TheMod.MODID, version = TheMod.VERSION, clientSideOnly = true)
-public class TheMod
+import java.awt.*;
+import java.text.NumberFormat;
+import java.util.List;
+import java.util.*;
+import java.util.regex.Pattern;
+
+@Mod(modid = DankersSkyblockMod.MODID, version = DankersSkyblockMod.VERSION, clientSideOnly = true)
+public class DankersSkyblockMod
 {
     public static final String MODID = "Danker's Skyblock Mod";
     public static final String VERSION = "1.8.3";
     
     static double checkItemsNow = 0;
     static double itemsChecked = 0;
-    public static Map<String, String> t6Enchants = new HashMap<String, String>();
+    public static Map<String, String> t6Enchants = new HashMap<>();
     public static Pattern pattern = Pattern.compile("");
     static boolean updateChecked = false;
     public static int titleTimer = -1;
@@ -146,7 +100,7 @@ public class TheMod
     static String[] riddleSolutions = {"The reward is not in my chest!", "At least one of them is lying, and the reward is not in", 
 									   "My chest doesn't have the reward. We are all telling the truth", "My chest has the reward and I'm telling the truth",
 									   "The reward isn't in any of our chests", "Both of them are telling the truth."};
-	static Map<String, String[]> triviaSolutions = new HashMap<String, String[]>();
+	static Map<String, String[]> triviaSolutions = new HashMap<>();
 	static String[] triviaAnswers = null;
 	static Entity highestBlaze = null;
 	static Entity lowestBlaze = null;
@@ -154,7 +108,7 @@ public class TheMod
 	static final int[] CREEPER_COLOURS = {0x50EF39, 0xC51111, 0x132ED1, 0x117F2D, 0xED54BA, 0xEF7D0D, 0xF5F557, 0xD6E0F0, 0x6B2FBB, 0x39FEDC};
 	static boolean drawCreeperLines = false;
 	static Vec3 creeperLocation = new Vec3(0, 0, 0);
-	static List<Vec3[]> creeperLines = new ArrayList<Vec3[]>();
+	static List<Vec3[]> creeperLines = new ArrayList<>();
 	static boolean prevInWaterRoom = false;
 	static boolean inWaterRoom = false;
 	
@@ -284,9 +238,9 @@ public class TheMod
 		
 		keyBindings[0] = new KeyBinding("Open Maddox Menu", Keyboard.KEY_M, "Danker's Skyblock Mod");
 		keyBindings[1] = new KeyBinding("Start/Stop Skill Tracker", Keyboard.KEY_NUMPAD5, "Danker's Skyblock Mod");
-		
-		for (int i = 0; i < keyBindings.length; i++) {
-			ClientRegistry.registerKeyBinding(keyBindings[i]);
+
+		for (KeyBinding keyBinding : keyBindings) {
+			ClientRegistry.registerKeyBinding(keyBinding);
 		}
     }
     
@@ -333,7 +287,7 @@ public class TheMod
     		new Thread(() -> {
     			EntityPlayer player = Minecraft.getMinecraft().thePlayer;	
     			
-    			System.err.println("Checking for updates...");
+    			System.out.println("Checking for updates...");
     			JsonObject latestRelease = APIHandler.getResponse("https://api.github.com/repos/bowser0000/SkyblockMod/releases/latest");
     			
     			String latestTag = latestRelease.get("tag_name").getAsString();
@@ -349,7 +303,7 @@ public class TheMod
     				try {
 						Thread.sleep(2000);
 					} catch (InterruptedException ex) {
-						System.err.println(ex);
+						ex.printStackTrace();
 					}
     				player.addChatMessage(new ChatComponentText(ERROR_COLOUR + MODID + " is outdated. Please update to " + latestTag + ".\n").appendSibling(update));
     			}
@@ -382,71 +336,56 @@ public class TheMod
     					xpLeft = xpToLevelUp - currentXP;
     					int previousXP = Utils.getPastXpEarned(xpToLevelUp, limit);
     					double totalXP = currentXP + previousXP;
-    					double xpGained = Double.parseDouble(section.substring(section.indexOf("+") + 1, section.indexOf(" ")).replace(",", ""));
     					String skill = section.substring(section.indexOf(" ") + 1, section.lastIndexOf(" "));
     					switch (skill) {
 	    					case "Farming":
 	    						lastSkill = "Farming";
-	    						if (farmingXP == 0) {
-	    							farmingXP = totalXP;
-	    						} else {
+	    						if (farmingXP != 0) {
 	    							if (skillStopwatch.isStarted() && !skillStopwatch.isSuspended()) farmingXPGained += totalXP - farmingXP;
-	    							farmingXP = totalXP;
 	    						}
+								farmingXP = totalXP;
 	    						break;
 	    					case "Mining":
 	    						lastSkill = "Mining";
-	    						if (miningXP == 0) {
-	    							miningXP = totalXP;
-	    						} else {
+	    						if (miningXP != 0) {
 	    							if (skillStopwatch.isStarted() && !skillStopwatch.isSuspended()) miningXPGained += totalXP - miningXP;
-	    							miningXP = totalXP;
 	    						}
+								miningXP = totalXP;
 	    						break;
 	    					case "Combat":
 	    						lastSkill = "Combat";
-	    						if (combatXP == 0) {
-	    							combatXP = totalXP;
-	    						} else {
+	    						if (combatXP != 0) {
 	    							if (skillStopwatch.isStarted() && !skillStopwatch.isSuspended()) combatXPGained += totalXP - combatXP;
-	    							combatXP = totalXP;
 	    						}
+								combatXP = totalXP;
 	    						break;
 	    					case "Foraging":
 	    						lastSkill = "Foraging";
-	    						if (foragingXP == 0) {
-	    							foragingXP = totalXP;
-	    						} else {
+	    						if (foragingXP != 0) {
 	    							if (skillStopwatch.isStarted() && !skillStopwatch.isSuspended()) foragingXPGained += totalXP - foragingXP;
-	    							foragingXP = totalXP;
 	    						}
+								foragingXP = totalXP;
 	    						break;
 	    					case "Fishing":
 	    						lastSkill = "Fishing";
-	    						if (fishingXP == 0) {
-	    							fishingXP = totalXP;
-	    						} else {
+	    						if (fishingXP != 0) {
 	    							if (skillStopwatch.isStarted() && !skillStopwatch.isSuspended()) fishingXPGained += totalXP - fishingXP;
-	    							fishingXP = totalXP;
 	    						}
+								fishingXP = totalXP;
 	    						break;
 	    					case "Enchanting":
 	    						lastSkill = "Enchanting";
-	    						if (enchantingXP == 0) {
-	    							enchantingXP = totalXP;
-	    						} else {
+	    						if (enchantingXP != 0) {
 	    							if (skillStopwatch.isStarted() && !skillStopwatch.isSuspended()) enchantingXPGained += totalXP - enchantingXP;
-	    							enchantingXP = totalXP;
 	    						}
+								enchantingXP = totalXP;
 	    						break;
 	    					case "Alchemy":
 	    						lastSkill = "Alchemy";
-	    						if (alchemyXP == 0) {
-	    							alchemyXP = totalXP;
-	    						} else {
+	    						if (alchemyXP != 0) {
 	    							if (skillStopwatch.isStarted() && !skillStopwatch.isSuspended()) alchemyXPGained += totalXP - alchemyXP;
-	    							alchemyXP = totalXP;
 	    						}
+								alchemyXP = totalXP;
 	    						break;
 	    					default:
 	    						System.err.println("Unknown skill.");
@@ -466,7 +405,7 @@ public class TheMod
     						totalXp = 55172425;
     					}
     					int previousXp = Utils.getPastXpEarned(Integer.parseInt(section.substring(section.indexOf("/") + 1, section.indexOf(")")).replaceAll(",", "")), limit);
-    					double percentage = (double) Math.floor(((currentXp + previousXp) / totalXp) * 10000D) / 100D;
+    					double percentage = Math.floor(((currentXp + previousXp) / totalXp) * 10000D) / 100D;
     					
     					NumberFormat nf = NumberFormat.getNumberInstance(Locale.US);
     					skillTimer = SKILL_TIME;
@@ -536,11 +475,14 @@ public class TheMod
         	if (triviaAnswers != null && (message.contains("ⓐ") || message.contains("ⓑ") || message.contains("ⓒ"))) {
         		boolean isSolution = false;
         		for (String solution : triviaAnswers) {
-        			if (message.contains(solution)) isSolution = true;
+        			if (message.contains(solution)) {
+        				isSolution = true;
+        				break;
+					}
         		}
         		if (!isSolution) {
         			char letter = message.charAt(5);
-        			String option = message.substring(6, message.length());
+        			String option = message.substring(6);
         			event.message = new ChatComponentText("     " + EnumChatFormatting.GOLD + letter + TRIVIA_WRONG_ANSWER_COLOUR + option);
         			return;
         		}
@@ -559,7 +501,7 @@ public class TheMod
 					trayIcon.displayMessage("Guild Party", message, TrayIcon.MessageType.INFO);
 					tray.remove(trayIcon);
 				} catch (Exception ex) {
-					System.err.print(ex);
+					ex.printStackTrace();
 				}
 			}
 		}
@@ -1267,7 +1209,7 @@ public class TheMod
     	
     	if (ToggleCommand.cakeTimerToggled && Utils.inSkyblock) {
     		double scale = ScaleCommand.cakeTimerScale;
-    		double scaleReset = (double) Math.pow(scale, -1);
+    		double scaleReset = Math.pow(scale, -1);
     		GL11.glScaled(scale, scale, scale);
     		
     		double timeNow = System.currentTimeMillis() / 1000;
@@ -1286,7 +1228,7 @@ public class TheMod
     	}
     	
     	if (showSkillTracker && Utils.inSkyblock) {
-    		int xpPerHour = 0;
+    		int xpPerHour;
     		double xpToShow = 0;
     		switch (lastSkill) {
 	    		case "Farming":
@@ -1331,10 +1273,10 @@ public class TheMod
     	if (!DisplayCommand.display.equals("off")) {
     		String dropsText = "";
     		String countText = "";
-    		String dropsTextTwo = "";
-    		String countTextTwo = "";
-    		String timeBetween = "Never";
-    		String bossesBetween = "Never";
+    		String dropsTextTwo;
+    		String countTextTwo;
+    		String timeBetween;
+    		String bossesBetween;
     		String drop20;
     		double timeNow = System.currentTimeMillis() / 1000;
     		NumberFormat nf = NumberFormat.getIntegerInstance(Locale.US);
@@ -2311,7 +2253,7 @@ public class TheMod
         		Utils.checkForDungeons();
     		}
     		
-    		if (DisplayCommand.auto && mc != null && world != null && player != null) {
+    		if (DisplayCommand.auto && world != null && player != null) {
     			List<String> scoreboard = ScoreboardHandler.getSidebarLines();
     			boolean found = false;
     			for (String s : scoreboard) {
@@ -2417,7 +2359,7 @@ public class TheMod
         						BlockPos blockPos = new BlockPos(x, 82, z);
         						if (world.getBlockState(blockPos).getBlock() == Blocks.piston_head) {
         							inWaterRoom = true;
-        							if (!prevInWaterRoom && inWaterRoom) {
+        							if (!prevInWaterRoom) {
             							boolean foundGold = false;
             							boolean foundClay = false;
             							boolean foundEmerald = false;
@@ -2455,11 +2397,11 @@ public class TheMod
             							}
             							
             							// Return solution
-            							String purple = "";
-            							String orange = "";
-            							String blue = "";
-            							String green = "";
-            							String red = "";
+            							String purple;
+            							String orange;
+            							String blue;
+            							String green;
+            							String red;
             							switch (variant) {
         	    							case 1:
         	    								purple = EnumChatFormatting.WHITE + "Quartz, " + EnumChatFormatting.YELLOW + "Gold, " + EnumChatFormatting.AQUA + "Diamond, " + EnumChatFormatting.RED + "Clay";
@@ -2525,7 +2467,7 @@ public class TheMod
     			}
     			
     			if (inF5) {
-    				List<Entity> loadedLivids = new ArrayList<Entity>();
+    				List<Entity> loadedLivids = new ArrayList<>();
     				List<Entity> entities = world.getLoadedEntityList();
     				for (Entity entity : entities) {
     					String name = entity.getName();
@@ -2566,7 +2508,7 @@ public class TheMod
     							lowestBlaze = entity;
     						}
     					} catch (NumberFormatException ex) {
-    						System.err.println(ex);
+    						ex.printStackTrace();
     					}
     				}
     			}
@@ -2679,7 +2621,7 @@ public class TheMod
     		EntityItemFrame itemFrame = (EntityItemFrame) event.target;
     		ItemStack item = itemFrame.getDisplayedItem();
     		if (item == null || item.getItem() != Items.arrow) return;
-    		BlockPos blockPos = Utils.getBlockUnderItemFrame(mc.theWorld, itemFrame);
+    		BlockPos blockPos = Utils.getBlockUnderItemFrame(itemFrame);
     		if (mc.theWorld.getBlockState(blockPos).getBlock() == Blocks.sea_lantern) {
     			event.setCanceled(true);
     		}
@@ -2786,7 +2728,7 @@ public class TheMod
         			} else if (inventoryName.equals("Revenant Horror") || inventoryName.equals("Tarantula Broodfather") || inventoryName.equals("Sven Packmaster")) {
         				if (item.getDisplayName().contains("Revenant Horror") || item.getDisplayName().contains("Tarantula Broodfather") || item.getDisplayName().contains("Sven Packmaster")) {
         					// Only check number as they passed the above check
-        					String slayerNumber = item.getDisplayName().substring(item.getDisplayName().lastIndexOf(" ") + 1, item.getDisplayName().length());
+        					String slayerNumber = item.getDisplayName().substring(item.getDisplayName().lastIndexOf(" ") + 1);
             				if (!slayerNumber.equals(BlockSlayerCommand.onlySlayerNumber)) {
             					Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(ERROR_COLOUR + "Danker's Skyblock Mod has stopped you from starting this quest (Set to " + BlockSlayerCommand.onlySlayerName + " " + BlockSlayerCommand.onlySlayerNumber + ")"));
             					Minecraft.getMinecraft().thePlayer.playSound("note.bass", 1, (float) 0.5);
