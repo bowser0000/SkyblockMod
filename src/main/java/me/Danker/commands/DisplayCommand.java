@@ -71,6 +71,7 @@ public class DisplayCommand extends CommandBase {
 			} else {
 				display = "spider";
 			}
+			break;
 		case "zombie":
 			if (showSession) {
 				display = "zombie_session";
