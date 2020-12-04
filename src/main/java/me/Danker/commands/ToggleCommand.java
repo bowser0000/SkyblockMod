@@ -42,6 +42,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 	public static boolean blazeToggled;
 	public static boolean creeperToggled;
 	public static boolean waterToggled;
+	public static boolean ticTacToeToggled;
 	// Terminal Helpers
 	public static boolean startsWithToggled;
 	public static boolean selectAllToggled;
@@ -57,8 +58,8 @@ public class ToggleCommand extends CommandBase implements ICommand {
 		return "/" + getCommandName() + " <gparty/coords/golden/slayercount/rngesusalerts/splitfishing/chatmaddox/spiritbearalert/" + 
 										  "aotd/lividdagger/sceptremessages/petcolors/dungeontimer/golemalerts/expertiselore/skill50display/" + 
 										  "outlinetext/midasstaffmessages/implosionmessages/healmessages/caketimer/lowhealthnotify/" +
-										  "lividsolver/threemanpuzzle/oruopuzzle/blazepuzzle/creeperpuzzle/waterpuzzle/startswithterminal/" +
-										  "selectallterminal/itemframeonsealanterns/list>";
+										  "lividsolver/threemanpuzzle/oruopuzzle/blazepuzzle/creeperpuzzle/waterpuzzle/tictactoepuzzle/" +
+										  "startswithterminal/selectallterminal/itemframeonsealanterns/list>";
 	}
 
 	@Override
@@ -75,8 +76,8 @@ public class ToggleCommand extends CommandBase implements ICommand {
 														  "expertiselore", "skill50display", "outlinetext", "midasstaffmessages",
 														  "implosionmessages", "healmessages", "caketimer", "lowhealthnotify",
 														  "lividsolver", "threemanpuzzle", "oruopuzzle", "blazepuzzle",
-														  "creeperpuzzle", "waterpuzzle", "startswithterminal", "selectallterminal",
-														  "itemframeonsealanterns", "list");
+														  "creeperpuzzle", "waterpuzzle", "tictactoepuzzle", "startswithterminal",
+														  "selectallterminal", "itemframeonsealanterns", "list");
 		}
 		return null;
 	}
@@ -232,6 +233,11 @@ public class ToggleCommand extends CommandBase implements ICommand {
 				ConfigHandler.writeBooleanConfig("toggles", "WaterPuzzle", waterToggled);
 				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Water puzzle solver has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + waterToggled + DankersSkyblockMod.MAIN_COLOUR + "."));
 				break;
+			case "tictactoepuzzle":
+				ticTacToeToggled = !ticTacToeToggled;
+				ConfigHandler.writeBooleanConfig("toggles", "TicTacToePuzzle", ticTacToeToggled);
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Tic tac toe puzzle solver has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + ticTacToeToggled + DankersSkyblockMod.MAIN_COLOUR + "."));
+				break;
 			case "startswithterminal":
 				startsWithToggled = !startsWithToggled;
 				ConfigHandler.writeBooleanConfig("toggles", "StartsWithTerminal", startsWithToggled);
@@ -276,6 +282,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 															DankersSkyblockMod.TYPE_COLOUR + " Blaze puzzle solver: " + DankersSkyblockMod.VALUE_COLOUR + blazeToggled + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Creeper puzzle solver: " + DankersSkyblockMod.VALUE_COLOUR + creeperToggled + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Water puzzle solver: " + DankersSkyblockMod.VALUE_COLOUR + waterToggled + "\n" +
+															DankersSkyblockMod.TYPE_COLOUR + " Tic tac toe puzzle solver: " + DankersSkyblockMod.VALUE_COLOUR + ticTacToeToggled + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Starts with letter terminal solver: " + DankersSkyblockMod.VALUE_COLOUR + startsWithToggled + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Select all color items terminal solver: " + DankersSkyblockMod.VALUE_COLOUR + selectAllToggled + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Ignore item frames on sea lanterns: " + DankersSkyblockMod.VALUE_COLOUR + itemFrameOnSeaLanternsToggled));
