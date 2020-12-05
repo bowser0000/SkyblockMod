@@ -112,7 +112,7 @@ public class SkillsCommand extends CommandBase {
 					fishingLevel = (double) Math.round(fishingLevel * 100) / 100;
 				}
 				if (userObject.has("experience_skill_enchanting")) {
-					enchantingLevel = Utils.xpToSkillLevel(userObject.get("experience_skill_enchanting").getAsDouble(), 50);
+					enchantingLevel = Utils.xpToSkillLevel(userObject.get("experience_skill_enchanting").getAsDouble(), 60);
 					enchantingLevel = (double) Math.round(enchantingLevel * 100) / 100;
 				}
 				if (userObject.has("experience_skill_alchemy")) {
@@ -153,7 +153,7 @@ public class SkillsCommand extends CommandBase {
 					fishingLevel = Math.min(achievementObject.get("skyblock_angler").getAsInt(), 50);
 				}
 				if (achievementObject.has("skyblock_augmentation")) {
-					enchantingLevel = Math.min(achievementObject.get("skyblock_augmentation").getAsInt(), 50);
+					enchantingLevel = achievementObject.get("skyblock_augmentation").getAsInt();
 				}
 				if (achievementObject.has("skyblock_concoctor")) {
 					alchemyLevel = Math.min(achievementObject.get("skyblock_concoctor").getAsInt(), 50);

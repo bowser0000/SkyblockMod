@@ -332,7 +332,7 @@ public class DankersSkyblockMod
     		for (String section : actionBarSections) {
     			if (section.contains("+") && section.contains("/") && section.contains("(")) {
     				if (!section.contains("Runecrafting") && !section.contains("Carpentry")) {
-    					int limit = section.contains("Farming") ? 60 : 50;
+    					int limit = section.contains("Farming") || section.contains("Enchanting") ? 60 : 50;
     					double currentXP = Double.parseDouble(section.substring(section.indexOf("(") + 1, section.indexOf("/")).replace(",", ""));
     					int xpToLevelUp = Integer.parseInt(section.substring(section.indexOf("/") + 1, section.indexOf(")")).replaceAll(",", ""));
     					xpLeft = xpToLevelUp - currentXP;
@@ -399,7 +399,7 @@ public class DankersSkyblockMod
     					double currentXp = Double.parseDouble(section.substring(section.indexOf("(") + 1, section.indexOf("/")).replace(",", ""));
     					int limit;
     					int totalXp;
-    					if (section.contains("Farming")) {
+    					if (section.contains("Farming") || section.contains("Enchanting")) {
     						limit = 60;
     						totalXp = 111672425;
     					} else {
