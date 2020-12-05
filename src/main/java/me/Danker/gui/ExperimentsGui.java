@@ -13,6 +13,7 @@ public class ExperimentsGui extends GuiScreen {
 
     private GuiButton goBack;
     private GuiButton ultrasequencer;
+    private GuiButton chronomatron;
 
     @Override
     public boolean doesGuiPauseGame() {
@@ -29,9 +30,11 @@ public class ExperimentsGui extends GuiScreen {
 
         goBack = new GuiButton(0, 2, height - 30, 100, 20, "Go Back");
         ultrasequencer = new GuiButton(0, width / 2 - 100, (int) (height * 0.1), "Ultrasequencer Solver: " + Utils.getColouredBoolean(ToggleCommand.ultrasequencerToggled));
+        chronomatron = new GuiButton(0, width / 2 - 100, (int) (height * 0.2), "Chronomatron Solver: " + Utils.getColouredBoolean(ToggleCommand.chronomatronToggled));
 
-        this.buttonList.add(ultrasequencer);
         this.buttonList.add(goBack);
+        this.buttonList.add(ultrasequencer);
+        this.buttonList.add(chronomatron);
     }
 
     @Override
@@ -48,6 +51,10 @@ public class ExperimentsGui extends GuiScreen {
             ToggleCommand.ultrasequencerToggled = !ToggleCommand.ultrasequencerToggled;
             ConfigHandler.writeBooleanConfig("toggles", "UltraSequencer", ToggleCommand.ultrasequencerToggled);
             ultrasequencer.displayString = "Ultrasequencer Solver: " + Utils.getColouredBoolean(ToggleCommand.ultrasequencerToggled);
+        } else if (button == chronomatron) {
+            ToggleCommand.chronomatronToggled = !ToggleCommand.chronomatronToggled;
+            ConfigHandler.writeBooleanConfig("toggles", "Chronomatron", ToggleCommand.chronomatronToggled);
+            chronomatron.displayString = "Chronomatron Solver: " + Utils.getColouredBoolean(ToggleCommand.chronomatronToggled);
         }
     }
 

@@ -11,6 +11,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiChat;
+import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.gui.inventory.GuiChest;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.Entity;
@@ -25,6 +26,7 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.ContainerChest;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemMap;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -88,7 +90,6 @@ public class DankersSkyblockMod
     static String lastMaddoxCommand = "/cb placeholder";
     static double lastMaddoxTime = 0;
     static KeyBinding[] keyBindings = new KeyBinding[2];
-    static int lastMouse = -1;
     static boolean usingLabymod = false;
     public static String guiToOpen = null;
 	static boolean foundLivid = false;
@@ -113,6 +114,9 @@ public class DankersSkyblockMod
 	static boolean inWaterRoom = false;
 	static AxisAlignedBB correctTicTacToeButton = null;
 	static List<Slot> clickInOrderSlots = new ArrayList<>();
+	static int lastChronomatronRound = 0;
+	static List<String> chronomatronPattern = new ArrayList<>();
+	static int chronomatronMouseClicks = 0;
 	
     static double dungeonStartTime = 0;
     static double bloodOpenTime = 0;
@@ -2747,8 +2751,8 @@ public class DankersSkyblockMod
     @SubscribeEvent
     public void onGuiMouseInputPre(GuiScreenEvent.MouseInputEvent.Pre event) {
     	if (!Utils.inSkyblock) return;
-    	if (Mouse.getEventButton() == lastMouse) return;
     	if (Mouse.getEventButton() != 0 && Mouse.getEventButton() != 1) return; // Left click or right click
+		if (!Mouse.isButtonDown(0) && !Mouse.isButtonDown(1)) return;
     	
     	if (event.gui instanceof GuiChest) {
     		Container containerChest = ((GuiChest) event.gui).inventorySlots;
@@ -2757,11 +2761,11 @@ public class DankersSkyblockMod
         		GuiChest chest = (GuiChest) event.gui;
     			IInventory inventory = ((ContainerChest) containerChest).getLowerChestInventory();
     			Slot mouseSlot = chest.getSlotUnderMouse();
-    			if (mouseSlot == null || mouseSlot.getStack() == null) return;
+    			if (mouseSlot == null) return;
     			ItemStack item = mouseSlot.getStack();
     			String inventoryName = inventory.getDisplayName().getUnformattedText();
-    			
-    			if (inventoryName.endsWith(" Chest") && item.getDisplayName().contains("Open Reward Chest")) {
+
+    			if (inventoryName.endsWith(" Chest") && item != null && item.getDisplayName().contains("Open Reward Chest")) {
     				List<String> tooltip = item.getTooltip(Minecraft.getMinecraft().thePlayer, Minecraft.getMinecraft().gameSettings.advancedItemTooltips);
     				for (String lineUnclean : tooltip) {
     					String line = StringUtils.stripControlCodes(lineUnclean);
@@ -2809,9 +2813,15 @@ public class DankersSkyblockMod
     						break;
     					}
     				}
-    			} 
+    			}
+
+    			if (ToggleCommand.chronomatronToggled && inventoryName.startsWith("Chronomatron (")) {
+    				if (inventory.getStackInSlot(49).getDisplayName().startsWith("§7Timer: §a") && (item == null || item.getItem() == Item.getItemFromBlock(Blocks.stained_glass) || item.getItem() == Item.getItemFromBlock(Blocks.stained_hardened_clay))) {
+    					chronomatronMouseClicks++;
+					}
+				}
     			
-    			if (!BlockSlayerCommand.onlySlayerName.equals("")) {
+    			if (!BlockSlayerCommand.onlySlayerName.equals("") && item != null) {
     				if (inventoryName.equals("Slayer")) {
         				if (!item.getDisplayName().contains("Revenant Horror") && !item.getDisplayName().contains("Tarantula Broodfather") && !item.getDisplayName().contains("Sven Packmaster")) return;
         				if (!item.getDisplayName().contains(BlockSlayerCommand.onlySlayerName)) {
@@ -2838,19 +2848,19 @@ public class DankersSkyblockMod
     @SubscribeEvent
     public void onMouseInputPost(GuiScreenEvent.MouseInputEvent.Post event) {
     	if (!Utils.inSkyblock) return;
-    	if (Mouse.getEventButton() == lastMouse) return;
     	if (Mouse.getEventButton() == 0 && event.gui instanceof GuiChat) {
     		if (ToggleCommand.chatMaddoxToggled && System.currentTimeMillis() / 1000 - lastMaddoxTime < 10) {
     			Minecraft.getMinecraft().thePlayer.sendChatMessage(lastMaddoxCommand);
     		}
     	}
-    	
-    	lastMouse = Mouse.getEventButton();
     }
 
     @SubscribeEvent
 	public void onGuiOpen(GuiOpenEvent event) {
 		clickInOrderSlots.clear();
+		lastChronomatronRound = 0;
+		chronomatronPattern.clear();
+		chronomatronMouseClicks = 0;
 	}
 
     @SubscribeEvent
@@ -2860,6 +2870,11 @@ public class DankersSkyblockMod
     		GuiChest inventory = (GuiChest) event.gui;
     		Container containerChest = inventory.inventorySlots;
     		if (containerChest instanceof ContainerChest) {
+    			Minecraft mc = Minecraft.getMinecraft();
+				ScaledResolution sr = new ScaledResolution(mc);
+				int guiLeft = (sr.getScaledWidth() - 176) / 2;
+				int guiTop = (sr.getScaledHeight() - 222) / 2;
+
     			List<Slot> invSlots = inventory.inventorySlots.inventorySlots;
     			String displayName = ((ContainerChest) containerChest).getLowerChestInventory().getDisplayName().getUnformattedText().trim();
         		int chestSize = inventory.inventorySlots.inventorySlots.size();
@@ -2968,6 +2983,39 @@ public class DankersSkyblockMod
 							}
 						}
 					}
+				}
+
+        		if (ToggleCommand.chronomatronToggled && displayName.startsWith("Chronomatron (")) {
+					if (invSlots.size() > 48 && invSlots.get(49).getStack() != null) {
+						if (invSlots.get(49).getStack().getDisplayName().startsWith("§7Timer: §a") && invSlots.get(4).getStack() != null) {
+							int round = invSlots.get(4).getStack().stackSize;
+							int timerSeconds = Integer.parseInt(StringUtils.stripControlCodes(invSlots.get(49).getStack().getDisplayName()).replaceAll("[^\\d]", ""));
+							if (round != lastChronomatronRound && timerSeconds == round + 2) {
+								lastChronomatronRound = round;
+								for (int i = 10; i <= 43; i++) {
+									ItemStack stack = invSlots.get(i).getStack();
+									if (stack == null) continue;
+									if (stack.getItem() == Item.getItemFromBlock(Blocks.stained_hardened_clay)) {
+										chronomatronPattern.add(stack.getDisplayName());
+										break;
+									}
+								}
+							}
+							if (chronomatronMouseClicks < chronomatronPattern.size()) {
+								for (int i = 10; i <= 43; i++) {
+									ItemStack glass = invSlots.get(i).getStack();
+									if (glass == null) continue;
+									Slot glassSlot = invSlots.get(i);
+									if (glass.getDisplayName().equals(chronomatronPattern.get(chronomatronMouseClicks))) {
+										Utils.drawOnSlot(chestSize, glassSlot.xDisplayPosition, glassSlot.yDisplayPosition, 0xE540FF40);
+									}
+								}
+							}
+						} else if (invSlots.get(49).getStack().getDisplayName().equals("§aRemember the pattern!")) {
+							chronomatronMouseClicks = 0;
+						}
+					}
+					new TextRenderer(mc, String.join("\n", chronomatronPattern), (int) (guiLeft * 0.8), 10, 1);
 				}
     		}
     	}

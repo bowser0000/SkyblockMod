@@ -5,7 +5,10 @@ Discord Server: https://discord.gg/QsEkNQS
 
 ## Incompatibilities
 - Old Animations <2.6.4 - Frequent crashes
-- Old Animations 2.6.4 - Pet colors does not work
+- Old Animations 2.6.4
+  - Pet colors does not color slots
+  - Catacombs F7 terminal solvers do not color slots
+  - Ultrasequencer solver does not color slots
 
 ## Current features
 - Guild party desktop notifications
