@@ -33,10 +33,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.storage.MapData;
 import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.client.GuiIngameForge;
-import net.minecraftforge.client.event.ClientChatReceivedEvent;
-import net.minecraftforge.client.event.GuiScreenEvent;
-import net.minecraftforge.client.event.RenderGameOverlayEvent;
-import net.minecraftforge.client.event.RenderWorldLastEvent;
+import net.minecraftforge.client.event.*;
 import net.minecraftforge.client.event.sound.PlaySoundEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
@@ -115,6 +112,7 @@ public class DankersSkyblockMod
 	static boolean prevInWaterRoom = false;
 	static boolean inWaterRoom = false;
 	static AxisAlignedBB correctTicTacToeButton = null;
+	static List<Slot> clickInOrderSlots = new ArrayList<>();
 	
     static double dungeonStartTime = 0;
     static double bloodOpenTime = 0;
@@ -2654,6 +2652,9 @@ public class DankersSkyblockMod
         			case "puzzlesolvers":
 	        			mc.displayGuiScreen(new PuzzleSolversGui(1));
 	        			break;
+					case "experimentsolvers":
+						mc.displayGuiScreen(new ExperimentsGui());
+						break;
 	        		case "skilltracker":
 	        			mc.displayGuiScreen(new SkillTrackerGui());
 	        			break;
@@ -2846,16 +2847,21 @@ public class DankersSkyblockMod
     	
     	lastMouse = Mouse.getEventButton();
     }
-    
+
+    @SubscribeEvent
+	public void onGuiOpen(GuiOpenEvent event) {
+		clickInOrderSlots.clear();
+	}
+
     @SubscribeEvent
     public void onGuiRender(GuiScreenEvent.BackgroundDrawnEvent event) {
-    	//if (!Utils.inSkyblock) return;
+    	if (!Utils.inSkyblock) return;
     	if (event.gui instanceof GuiChest) {
     		GuiChest inventory = (GuiChest) event.gui;
     		Container containerChest = inventory.inventorySlots;
     		if (containerChest instanceof ContainerChest) {
     			List<Slot> invSlots = inventory.inventorySlots.inventorySlots;
-    			String displayName = ((ContainerChest) containerChest).getLowerChestInventory().getDisplayName().getUnformattedText();
+    			String displayName = ((ContainerChest) containerChest).getLowerChestInventory().getDisplayName().getUnformattedText().trim();
         		int chestSize = inventory.inventorySlots.inventorySlots.size();
     			
         		if (ToggleCommand.petColoursToggled) {
@@ -2896,7 +2902,7 @@ public class DankersSkyblockMod
             		}
         		}
         		
-        		if (ToggleCommand.startsWithToggled && Utils.inDungeons && displayName.trim().startsWith("What starts with:")) {
+        		if (ToggleCommand.startsWithToggled && Utils.inDungeons && displayName.startsWith("What starts with:")) {
         			char letter = displayName.charAt(displayName.indexOf("'") + 1);
         			for (Slot slot : invSlots) {
         				ItemStack item = slot.getStack();
@@ -2907,7 +2913,7 @@ public class DankersSkyblockMod
         			}
         		}
         		
-        		if (ToggleCommand.selectAllToggled && Utils.inDungeons && displayName.trim().startsWith("Select all the")) {
+        		if (ToggleCommand.selectAllToggled && Utils.inDungeons && displayName.startsWith("Select all the")) {
         			String colour = displayName.split(" ")[3];
         			for (Slot slot : invSlots) {
         				ItemStack item = slot.getStack();
@@ -2917,6 +2923,52 @@ public class DankersSkyblockMod
         				}
         			}
         		}
+
+        		if (ToggleCommand.ultrasequencerToggled && displayName.startsWith("Ultrasequencer (")) {
+        			if (invSlots.size() > 48 && invSlots.get(49).getStack() != null) {
+						if (invSlots.get(49).getStack().getDisplayName().equals("§aRemember the pattern!")) {
+							List<Slot> tempSlots = new ArrayList<>();
+							for (Slot slot : invSlots) {
+								if (slot.getStack() == null) continue;
+								String itemName = StringUtils.stripControlCodes(slot.getStack().getDisplayName());
+								if (itemName.matches("\\d+")) {
+									tempSlots.add(slot);
+								}
+							}
+							tempSlots.sort((slot1, slot2) -> {
+								int number1 = Integer.parseInt(StringUtils.stripControlCodes(slot1.getStack().getDisplayName()));
+								int number2 = Integer.parseInt(StringUtils.stripControlCodes(slot2.getStack().getDisplayName()));
+								return Integer.compare(number1, number2);
+							});
+							// Verify all numbers showed up and are in order
+							boolean correct = true;
+							for (int i = 0; i < tempSlots.size(); i++) {
+								int number = Integer.parseInt(StringUtils.stripControlCodes(tempSlots.get(i).getStack().getDisplayName()));
+								if (i + 1 != number) {
+									correct = false;
+									break;
+								}
+							}
+							if (correct) {
+								clickInOrderSlots = tempSlots;
+							}
+						} else if (invSlots.get(49).getStack().getDisplayName().startsWith("§7Timer: §a")) {
+							int highestClicked = 0;
+							for (Slot slot : clickInOrderSlots) {
+								if (slot.getStack() != null && StringUtils.stripControlCodes(slot.getStack().getDisplayName()).matches("\\d+")) {
+									int number = Integer.parseInt(StringUtils.stripControlCodes(slot.getStack().getDisplayName()));
+									if (number > highestClicked) {
+										highestClicked = number;
+									}
+								}
+							}
+							if (highestClicked < clickInOrderSlots.size()) {
+								Slot nextSlot = clickInOrderSlots.get(highestClicked);
+								Utils.drawOnSlot(chestSize, nextSlot.xDisplayPosition, nextSlot.yDisplayPosition, 0xE540FF40);
+							}
+						}
+					}
+				}
     		}
     	}
     }

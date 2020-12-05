@@ -47,6 +47,9 @@ public class ToggleCommand extends CommandBase implements ICommand {
 	public static boolean startsWithToggled;
 	public static boolean selectAllToggled;
 	public static boolean itemFrameOnSeaLanternsToggled;
+	// Experiments
+	public static boolean ultrasequencerToggled;
+	public static boolean chronomatronToggled;
 	
 	@Override
 	public String getCommandName() {
@@ -59,7 +62,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 										  "aotd/lividdagger/sceptremessages/petcolors/dungeontimer/golemalerts/expertiselore/skill50display/" + 
 										  "outlinetext/midasstaffmessages/implosionmessages/healmessages/caketimer/lowhealthnotify/" +
 										  "lividsolver/threemanpuzzle/oruopuzzle/blazepuzzle/creeperpuzzle/waterpuzzle/tictactoepuzzle/" +
-										  "startswithterminal/selectallterminal/itemframeonsealanterns/list>";
+										  "startswithterminal/selectallterminal/itemframeonsealanterns/ultrasequencer/list>";
 	}
 
 	@Override
@@ -77,7 +80,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 														  "implosionmessages", "healmessages", "caketimer", "lowhealthnotify",
 														  "lividsolver", "threemanpuzzle", "oruopuzzle", "blazepuzzle",
 														  "creeperpuzzle", "waterpuzzle", "tictactoepuzzle", "startswithterminal",
-														  "selectallterminal", "itemframeonsealanterns", "list");
+														  "selectallterminal", "itemframeonsealanterns", "ultrasequencer", "list");
 		}
 		return null;
 	}
@@ -253,6 +256,11 @@ public class ToggleCommand extends CommandBase implements ICommand {
 				ConfigHandler.writeBooleanConfig("toggles", "IgnoreItemFrameOnSeaLanterns", itemFrameOnSeaLanternsToggled);
 				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Ignore item frames on sea lanterns has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + itemFrameOnSeaLanternsToggled + DankersSkyblockMod.MAIN_COLOUR + "."));
 				break;
+			case "ultrasequencer":
+				ultrasequencerToggled = !ultrasequencerToggled;
+				ConfigHandler.writeBooleanConfig("toggles", "UltraSequencer", ultrasequencerToggled);
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Ultrasequencer solver has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + ultrasequencerToggled + DankersSkyblockMod.MAIN_COLOUR + "."));
+				break;
 			case "list":
 				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.TYPE_COLOUR + "Guild party notifications: " + DankersSkyblockMod.VALUE_COLOUR + gpartyToggled + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Coord/Angle display: " + DankersSkyblockMod.VALUE_COLOUR + coordsToggled + "\n" +
@@ -285,7 +293,8 @@ public class ToggleCommand extends CommandBase implements ICommand {
 															DankersSkyblockMod.TYPE_COLOUR + " Tic tac toe puzzle solver: " + DankersSkyblockMod.VALUE_COLOUR + ticTacToeToggled + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Starts with letter terminal solver: " + DankersSkyblockMod.VALUE_COLOUR + startsWithToggled + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Select all color items terminal solver: " + DankersSkyblockMod.VALUE_COLOUR + selectAllToggled + "\n" +
-															DankersSkyblockMod.TYPE_COLOUR + " Ignore item frames on sea lanterns: " + DankersSkyblockMod.VALUE_COLOUR + itemFrameOnSeaLanternsToggled));
+															DankersSkyblockMod.TYPE_COLOUR + " Ignore item frames on sea lanterns: " + DankersSkyblockMod.VALUE_COLOUR + itemFrameOnSeaLanternsToggled + "\n" +
+															DankersSkyblockMod.TYPE_COLOUR + " Ultra sequencer solver: " + DankersSkyblockMod.VALUE_COLOUR + ultrasequencerToggled));
 				break;
 			default:
 				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Usage: " + getCommandUsage(arg0)));

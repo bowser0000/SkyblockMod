@@ -201,7 +201,8 @@ public class ConfigHandler {
 		if (!hasKey("toggles", "StartsWithTerminal")) writeBooleanConfig("toggles", "StartsWithTerminal", false);
 		if (!hasKey("toggles", "SelectAllTerminal")) writeBooleanConfig("toggles", "SelectAllTerminal", false);
 		if (!hasKey("toggles", "IgnoreItemFrameOnSeaLanterns")) writeBooleanConfig("toggles", "IgnoreItemFrameOnSeaLanterns", false);
-		
+		if (!hasKey("toggles", "UltraSequencer")) writeBooleanConfig("toggles", "UltraSequencer", false);
+
 		if (!hasKey("api", "APIKey")) writeStringConfig("api", "APIKey", "");
 		
 		// Wolf Loot
@@ -442,7 +443,8 @@ public class ConfigHandler {
 		ToggleCommand.startsWithToggled = getBoolean("toggles", "StartsWithTerminal");
 		ToggleCommand.selectAllToggled = getBoolean("toggles", "SelectAllTerminal");
 		ToggleCommand.itemFrameOnSeaLanternsToggled = getBoolean("toggles", "IgnoreItemFrameOnSeaLanterns");
-		
+		ToggleCommand.ultrasequencerToggled = getBoolean("toggles", "UltraSequencer");
+
 		String onlySlayer = getString("toggles", "BlockSlayer");
 		if (!onlySlayer.equals("")) {
 			BlockSlayerCommand.onlySlayerName = onlySlayer.substring(0, onlySlayer.lastIndexOf(" "));
