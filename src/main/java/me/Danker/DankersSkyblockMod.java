@@ -2581,51 +2581,28 @@ public class DankersSkyblockMod
     	// Checks 5 times per second
     	if (tickAmount % 4 == 0) {
     		if (ToggleCommand.blazeToggled && Utils.inDungeons && world != null) {
-    			List<Entity> entities = world.getLoadedEntityList();
-    			int highestHealth = 0;
-    			highestBlaze = null;
-    			int lowestHealth = 99999999;
-    			lowestBlaze = null;
+				List<Entity> entities = world.getLoadedEntityList();
+				int highestHealth = 0;
+				highestBlaze = null;
+				int lowestHealth = 99999999;
+				lowestBlaze = null;
 
-    			for (Entity entity : entities) {
-    				if (entity.getName().contains("Blaze") && entity.getName().contains("/")) {
-    					String blazeName = StringUtils.stripControlCodes(entity.getName());
-    					try {
-    						int health = Integer.parseInt(blazeName.substring(blazeName.indexOf("/") + 1, blazeName.length() - 1));
-    						if (health > highestHealth) {
-    							highestHealth = health;
-    							highestBlaze = entity;
-    						}
-    						if (health < lowestHealth) {
-    							lowestHealth = health;
-    							lowestBlaze = entity;
-    						}
-    					} catch (NumberFormatException ex) {
-    						ex.printStackTrace();
-    					}
-    				}
-    			}
-    		}
-			if(mc.currentScreen instanceof GuiChest) {
-				if(player == null) return;
-				ContainerChest chest = (ContainerChest) player.openContainer;
-				IInventory inv = chest.getLowerChestInventory();
-				String chestName = inv.getDisplayName().getUnformattedText();
-				if (ToggleCommand.superpairsToggled && chestName.contains("Superpairs (")) {
-					for (int i = 0; i < 53; i++) {
-						ItemStack itemStack = inv.getStackInSlot(i);
-						if (itemStack == null) continue;
-						String itemName = itemStack.getDisplayName();
-						if (Item.getIdFromItem(itemStack.getItem()) == 95) continue;
-						if (itemName.contains("Instant Find")) continue;
-
-						if (superpairSlots[i] != null) return;
-						superpairSlots[i] = itemStack;
-					}
-					for (int i = 0; i < 53; i++) {
-						ItemStack itemStack = superpairSlots[i];
-						if (itemStack == null) continue;
-						inv.setInventorySlotContents(i, itemStack);
+				for (Entity entity : entities) {
+					if (entity.getName().contains("Blaze") && entity.getName().contains("/")) {
+						String blazeName = StringUtils.stripControlCodes(entity.getName());
+						try {
+							int health = Integer.parseInt(blazeName.substring(blazeName.indexOf("/") + 1, blazeName.length() - 1));
+							if (health > highestHealth) {
+								highestHealth = health;
+								highestBlaze = entity;
+							}
+							if (health < lowestHealth) {
+								lowestHealth = health;
+								lowestBlaze = entity;
+							}
+						} catch (NumberFormatException ex) {
+							ex.printStackTrace();
+						}
 					}
 				}
 			}
@@ -2643,6 +2620,29 @@ public class DankersSkyblockMod
     			}
     		}
     	}
+
+		if(mc.currentScreen instanceof GuiChest) {
+			ContainerChest chest = (ContainerChest) player.openContainer;
+			IInventory inv = chest.getLowerChestInventory();
+			String chestName = inv.getDisplayName().getUnformattedText();
+			if (ToggleCommand.superpairsToggled && chestName.contains("Superpairs (")) {
+				for (int i = 0; i < 53; i++) {
+					ItemStack itemStack = inv.getStackInSlot(i);
+					if (itemStack == null) continue;
+					String itemName = itemStack.getDisplayName();
+					if (Item.getIdFromItem(itemStack.getItem()) == 95 || Item.getIdFromItem(itemStack.getItem()) == 160) continue;
+					if (itemName.contains("Instant Find") || itemName.contains("Click any button!") || itemName.contains("Click a second button!") || itemName.equals(EnumChatFormatting.GRAY + "?")) continue;
+
+					if (superpairSlots[i] != null) continue;
+					superpairSlots[i] = itemStack;
+				}
+				for (int i = 0; i < 53; i++) {
+					ItemStack itemStack = superpairSlots[i];
+					if (itemStack == null) continue;
+					inv.setInventorySlotContents(i, itemStack);
+				}
+			}
+		}
 
 		if (titleTimer >= 0) {
     		if (titleTimer == 0) {
