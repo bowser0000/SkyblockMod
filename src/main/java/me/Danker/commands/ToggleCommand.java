@@ -50,6 +50,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 	// Experiments
 	public static boolean ultrasequencerToggled;
 	public static boolean chronomatronToggled;
+	public static boolean superpairsToggled;
 	
 	@Override
 	public String getCommandName() {
@@ -62,7 +63,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 										  "aotd/lividdagger/sceptremessages/petcolors/dungeontimer/golemalerts/expertiselore/skill50display/" + 
 										  "outlinetext/midasstaffmessages/implosionmessages/healmessages/caketimer/lowhealthnotify/" +
 										  "lividsolver/threemanpuzzle/oruopuzzle/blazepuzzle/creeperpuzzle/waterpuzzle/tictactoepuzzle/" +
-										  "startswithterminal/selectallterminal/itemframeonsealanterns/ultrasequencer/chronomatron/list>";
+										  "startswithterminal/selectallterminal/itemframeonsealanterns/ultrasequencer/chronomatron/superpairs/list>";
 	}
 
 	@Override
@@ -81,7 +82,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 														  "lividsolver", "threemanpuzzle", "oruopuzzle", "blazepuzzle",
 														  "creeperpuzzle", "waterpuzzle", "tictactoepuzzle", "startswithterminal",
 														  "selectallterminal", "itemframeonsealanterns", "ultrasequencer",
-														  "chronomatron", "list");
+														  "chronomatron", "superpairs", "list");
 		}
 		return null;
 	}
@@ -266,6 +267,12 @@ public class ToggleCommand extends CommandBase implements ICommand {
 				chronomatronToggled = !chronomatronToggled;
 				ConfigHandler.writeBooleanConfig("toggles", "Chronomatron", chronomatronToggled);
 				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Chronomatron solver has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + chronomatronToggled + DankersSkyblockMod.MAIN_COLOUR + "."));
+				break;
+			case "superpairs":
+				superpairsToggled = !superpairsToggled;
+				ConfigHandler.writeBooleanConfig("toggles", "Superpairs", superpairsToggled);
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Superpairs solver has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + chronomatronToggled + DankersSkyblockMod.MAIN_COLOUR + "."));
+				break;
 			case "list":
 				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.TYPE_COLOUR + "Guild party notifications: " + DankersSkyblockMod.VALUE_COLOUR + gpartyToggled + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Coord/Angle display: " + DankersSkyblockMod.VALUE_COLOUR + coordsToggled + "\n" +
@@ -300,7 +307,9 @@ public class ToggleCommand extends CommandBase implements ICommand {
 															DankersSkyblockMod.TYPE_COLOUR + " Select all color items terminal solver: " + DankersSkyblockMod.VALUE_COLOUR + selectAllToggled + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Ignore item frames on sea lanterns: " + DankersSkyblockMod.VALUE_COLOUR + itemFrameOnSeaLanternsToggled + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Ultra sequencer solver: " + DankersSkyblockMod.VALUE_COLOUR + ultrasequencerToggled + "\n" +
-															DankersSkyblockMod.TYPE_COLOUR + " Chronomatron solver: " + DankersSkyblockMod.VALUE_COLOUR + chronomatronToggled));
+															DankersSkyblockMod.TYPE_COLOUR + " Chronomatron solver: " + DankersSkyblockMod.VALUE_COLOUR + chronomatronToggled + "\n" +
+															DankersSkyblockMod.TYPE_COLOUR + " Superpairs solver: " + DankersSkyblockMod.VALUE_COLOUR + superpairsToggled
+				));
 				break;
 			default:
 				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Usage: " + getCommandUsage(arg0)));

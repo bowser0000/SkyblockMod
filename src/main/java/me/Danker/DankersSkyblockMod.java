@@ -117,8 +117,9 @@ public class DankersSkyblockMod
 	static int lastChronomatronRound = 0;
 	static List<String> chronomatronPattern = new ArrayList<>();
 	static int chronomatronMouseClicks = 0;
-	
-    static double dungeonStartTime = 0;
+	static ItemStack[] superpairSlots = new ItemStack[53];
+
+	static double dungeonStartTime = 0;
     static double bloodOpenTime = 0;
     static double watcherClearTime = 0;
     static double bossClearTime = 0;
@@ -2605,6 +2606,28 @@ public class DankersSkyblockMod
     				}
     			}
     		}
+			if(mc.currentScreen instanceof GuiChest) {
+				ContainerChest chest = (ContainerChest) mc.thePlayer.openContainer;
+				IInventory inv = chest.getLowerChestInventory();
+				String chestName = inv.getDisplayName().getUnformattedText();
+				if (ToggleCommand.superpairsToggled && chestName.contains("Superpairs (")) {
+					for (int i = 0; i < 53; i++) {
+						ItemStack itemStack = inv.getStackInSlot(i);
+						if (itemStack == null) continue;
+						String itemName = itemStack.getDisplayName();
+						if (Item.getIdFromItem(itemStack.getItem()) == 95) continue;
+						if (itemName.contains("Instant Find")) continue;
+
+						if (superpairSlots[i] != null) return;
+						superpairSlots[i] = itemStack;
+					}
+					for (int i = 0; i < 53; i++) {
+						ItemStack itemStack = superpairSlots[i];
+						if (itemStack == null) continue;
+						inv.setInventorySlotContents(i, itemStack);
+					}
+				}
+			}
     	}
     	
     	// Checks 10 times per second
@@ -2619,8 +2642,8 @@ public class DankersSkyblockMod
     			}
     		}
     	}
-    	
-    	if (titleTimer >= 0) {
+
+		if (titleTimer >= 0) {
     		if (titleTimer == 0) {
     			showTitle = false;
     		}
@@ -2861,6 +2884,7 @@ public class DankersSkyblockMod
 		lastChronomatronRound = 0;
 		chronomatronPattern.clear();
 		chronomatronMouseClicks = 0;
+		superpairSlots = new ItemStack[53];
 	}
 
     @SubscribeEvent
