@@ -2843,7 +2843,7 @@ public class DankersSkyblockMod
     					chronomatronMouseClicks++;
 					}
 				}
-    			
+
     			if (!BlockSlayerCommand.onlySlayerName.equals("") && item != null) {
     				if (inventoryName.equals("Slayer")) {
         				if (!item.getDisplayName().contains("Revenant Horror") && !item.getDisplayName().contains("Tarantula Broodfather") && !item.getDisplayName().contains("Sven Packmaster")) return;

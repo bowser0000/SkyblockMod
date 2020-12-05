@@ -271,7 +271,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 			case "superpairs":
 				superpairsToggled = !superpairsToggled;
 				ConfigHandler.writeBooleanConfig("toggles", "Superpairs", superpairsToggled);
-				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Superpairs solver has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + chronomatronToggled + DankersSkyblockMod.MAIN_COLOUR + "."));
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Superpairs solver has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + superpairsToggled + DankersSkyblockMod.MAIN_COLOUR + "."));
 				break;
 			case "list":
 				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.TYPE_COLOUR + "Guild party notifications: " + DankersSkyblockMod.VALUE_COLOUR + gpartyToggled + "\n" +
