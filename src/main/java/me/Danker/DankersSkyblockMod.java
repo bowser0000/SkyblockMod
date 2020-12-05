@@ -2607,7 +2607,8 @@ public class DankersSkyblockMod
     			}
     		}
 			if(mc.currentScreen instanceof GuiChest) {
-				ContainerChest chest = (ContainerChest) mc.thePlayer.openContainer;
+				if(player == null) return;
+				ContainerChest chest = (ContainerChest) player.openContainer;
 				IInventory inv = chest.getLowerChestInventory();
 				String chestName = inv.getDisplayName().getUnformattedText();
 				if (ToggleCommand.superpairsToggled && chestName.contains("Superpairs (")) {
