@@ -3220,12 +3220,12 @@ public class DankersSkyblockMod
 						new Color(255, 199, 87, 100),
 						new Color(119, 105, 198, 100),
 						new Color(135, 199, 112, 100),
-						new Color(2100, 37, 2100, 100),
+						new Color(240, 37, 240, 100),
 						new Color(178, 132, 190, 100),
 						new Color(63, 135, 163, 100),
 						new Color(146, 74, 10, 100),
 						new Color(255, 255, 255, 100),
-						new Color(217, 252, 1100, 100),
+						new Color(217, 252, 140, 100),
 						new Color(255, 82, 82, 100)
 					};
 
