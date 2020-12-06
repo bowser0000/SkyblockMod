@@ -2674,11 +2674,13 @@ public class DankersSkyblockMod
 					experimentTableSlots[i] = itemStack.copy().setStackDisplayName(itemName);
 				}
 
+				/*
 				for (int i = 0; i < 53; i++) {
 					ItemStack itemStack = experimentTableSlots[i];
 					if (itemStack == null) continue;
 					inv.setInventorySlotContents(i, itemStack);
 				}
+				*/
 
 			}
 		}
