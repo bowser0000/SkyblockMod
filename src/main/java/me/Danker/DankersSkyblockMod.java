@@ -1,7 +1,6 @@
 package me.Danker;
 
 import com.google.gson.JsonObject;
-import com.mojang.realmsclient.util.RealmsUtil;
 import me.Danker.commands.*;
 import me.Danker.gui.*;
 import me.Danker.handlers.*;
@@ -14,7 +13,6 @@ import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiChat;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.gui.inventory.GuiChest;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItemFrame;
@@ -2883,7 +2881,7 @@ public class DankersSkyblockMod
     			if (ToggleCommand.chronomatronToggled && inventoryName.startsWith("Chronomatron (")) {
     				if (inventory.getStackInSlot(49).getDisplayName().startsWith("§7Timer: §a") && (item == null || item.getItem() == Item.getItemFromBlock(Blocks.stained_glass) || item.getItem() == Item.getItemFromBlock(Blocks.stained_hardened_clay))) {
 						if(!item.getDisplayName().equals(chronomatronPattern.get(chronomatronMouseClicks))) {
-							if(event.isCancelable()) event.setCanceled(true);
+							if(event.isCancelable() && !Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) && !Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)) event.setCanceled(true);
 							return;
 						}
     					chronomatronMouseClicks++;
