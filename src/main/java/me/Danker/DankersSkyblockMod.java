@@ -2786,7 +2786,7 @@ public class DankersSkyblockMod
 		if(event.action == PlayerInteractEvent.Action.RIGHT_CLICK_BLOCK) {
 			IBlockState blockState = Minecraft.getMinecraft().theWorld.getBlockState(event.pos);
 			Block block = blockState.getBlock();
-			List<Block> interactables = Arrays.asList(
+			ArrayList<Block> interactables = new ArrayList<>(Arrays.asList(
 					Blocks.acacia_door,
 					Blocks.acacia_fence_gate,
 					Blocks.anvil,
@@ -2825,7 +2825,7 @@ public class DankersSkyblockMod
 					Blocks.stone_button,
 					Blocks.oak_door,
 					Blocks.skull
-			);
+			));
 			if(Utils.inDungeons) {
 				interactables.add(Blocks.coal_block);
 				interactables.add(Blocks.redstone_block);
