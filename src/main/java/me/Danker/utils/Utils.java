@@ -9,6 +9,7 @@ import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.network.NetworkPlayerInfo;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.client.renderer.entity.RenderManager;
@@ -18,6 +19,7 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.item.EntityItemFrame;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemStack;
 import net.minecraft.scoreboard.ScoreObjective;
 import net.minecraft.util.*;
 import org.lwjgl.opengl.GL11;
@@ -362,6 +364,22 @@ public class Utils {
 		GlStateManager.enableTexture2D();
 		GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 		GlStateManager.popMatrix();
+	}
+
+	public static void renderItem(ItemStack item, float x, float y, float z) {
+
+		GlStateManager.enableRescaleNormal();
+		RenderHelper.enableGUIStandardItemLighting();
+		GlStateManager.enableDepth();
+
+		GlStateManager.pushMatrix();
+		GlStateManager.translate(x, y, z);
+		Minecraft.getMinecraft().getRenderItem().renderItemIntoGUI(item, 0, 0);
+		GlStateManager.popMatrix();
+
+		GlStateManager.disableDepth();
+		RenderHelper.disableStandardItemLighting();
+		GlStateManager.disableRescaleNormal();
 	}
 	
 	public static BlockPos getFirstBlockPosAfterVectors(Minecraft mc, Vec3 pos1, Vec3 pos2, int strength, int distance) {
