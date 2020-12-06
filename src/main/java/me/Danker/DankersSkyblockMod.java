@@ -14,6 +14,7 @@ import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiChat;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.gui.inventory.GuiChest;
+import net.minecraft.client.settings.GameSettings;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItemFrame;
@@ -120,6 +121,8 @@ public class DankersSkyblockMod
 	static int chronomatronMouseClicks = 0;
 	static int lastUltraSequencerClicked = 0;
 	static ItemStack[] experimentTableSlots = new ItemStack[54];
+	static int pickBlockBind;
+	static boolean pickBlockBindSwapped = false;
 
 	static double dungeonStartTime = 0;
     static double bloodOpenTime = 0;
@@ -3003,6 +3006,30 @@ public class DankersSkyblockMod
 
     @SubscribeEvent
 	public void onGuiOpen(GuiOpenEvent event) {
+    	Minecraft mc = Minecraft.getMinecraft();
+    	GameSettings gameSettings = mc.gameSettings;
+		if (event.gui instanceof GuiChest) {
+			Container containerChest = ((GuiChest) event.gui).inventorySlots;
+			if (containerChest instanceof ContainerChest) {
+				GuiChest chest = (GuiChest) event.gui;
+				IInventory inventory = ((ContainerChest) containerChest).getLowerChestInventory();
+				String inventoryName = inventory.getDisplayName().getUnformattedText();
+				if(ToggleCommand.swapToPickBlockInExperimentsToggled) {
+					if(inventoryName.startsWith("Chronomatron (") || inventoryName.startsWith("Superpairs (") || inventoryName.startsWith("Ultrasequencer (")) {
+						if(!pickBlockBindSwapped) {
+							pickBlockBind = gameSettings.keyBindPickBlock.getKeyCode();
+							gameSettings.keyBindPickBlock.setKeyCode(-100);
+							pickBlockBindSwapped = true;
+						}
+					} else {
+						if(pickBlockBindSwapped) {
+							gameSettings.keyBindPickBlock.setKeyCode(pickBlockBind);
+							pickBlockBindSwapped = false;
+						}
+					}
+				}
+			}
+		}
 		clickInOrderSlots = new Slot[36];
 		lastChronomatronRound = 0;
 		chronomatronPattern.clear();

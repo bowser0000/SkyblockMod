@@ -204,6 +204,8 @@ public class ConfigHandler {
 		if (!hasKey("toggles", "UltraSequencer")) writeBooleanConfig("toggles", "UltraSequencer", false);
 		if (!hasKey("toggles", "Chronomatron")) writeBooleanConfig("toggles", "Chronomatron", false);
 		if (!hasKey("toggles", "Superpairs")) writeBooleanConfig("toggles", "Superpairs", false);
+		if (!hasKey("toggles", "PickBlockInExperiments")) writeBooleanConfig("toggles", "PickBlockInExperiments", false);
+
 
 		if (!hasKey("api", "APIKey")) writeStringConfig("api", "APIKey", "");
 		
@@ -448,6 +450,7 @@ public class ConfigHandler {
 		ToggleCommand.ultrasequencerToggled = getBoolean("toggles", "UltraSequencer");
 		ToggleCommand.chronomatronToggled = getBoolean("toggles", "Chronomatron");
 		ToggleCommand.superpairsToggled = getBoolean("toggles", "Superpairs");
+		ToggleCommand.swapToPickBlockInExperimentsToggled = getBoolean("toggles", "PickBlockInExperiments");
 
 		String onlySlayer = getString("toggles", "BlockSlayer");
 		if (!onlySlayer.equals("")) {

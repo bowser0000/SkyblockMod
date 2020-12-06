@@ -51,6 +51,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 	public static boolean ultrasequencerToggled;
 	public static boolean chronomatronToggled;
 	public static boolean superpairsToggled;
+	public static boolean swapToPickBlockInExperimentsToggled;
 	
 	@Override
 	public String getCommandName() {
@@ -63,7 +64,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 										  "aotd/lividdagger/sceptremessages/petcolors/dungeontimer/golemalerts/expertiselore/skill50display/" + 
 										  "outlinetext/midasstaffmessages/implosionmessages/healmessages/caketimer/lowhealthnotify/" +
 										  "lividsolver/threemanpuzzle/oruopuzzle/blazepuzzle/creeperpuzzle/waterpuzzle/tictactoepuzzle/" +
-										  "startswithterminal/selectallterminal/itemframeonsealanterns/ultrasequencer/chronomatron/superpairs/list>";
+										  "startswithterminal/selectallterminal/itemframeonsealanterns/ultrasequencer/chronomatron/superpairs/pickblockinexperiments/list>";
 	}
 
 	@Override
@@ -272,6 +273,11 @@ public class ToggleCommand extends CommandBase implements ICommand {
 				superpairsToggled = !superpairsToggled;
 				ConfigHandler.writeBooleanConfig("toggles", "Superpairs", superpairsToggled);
 				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Superpairs solver has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + superpairsToggled + DankersSkyblockMod.MAIN_COLOUR + "."));
+				break;
+			case "pickblockinexperiments":
+				swapToPickBlockInExperimentsToggled = !swapToPickBlockInExperimentsToggled;
+				ConfigHandler.writeBooleanConfig("toggles", "PickBlockInExperiments", superpairsToggled);
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Auto-swap to pick block in experiments has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + swapToPickBlockInExperimentsToggled + DankersSkyblockMod.MAIN_COLOUR + "."));
 				break;
 			case "list":
 				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.TYPE_COLOUR + "Guild party notifications: " + DankersSkyblockMod.VALUE_COLOUR + gpartyToggled + "\n" +
