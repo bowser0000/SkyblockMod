@@ -2896,7 +2896,24 @@ public class DankersSkyblockMod
     			ItemStack item = mouseSlot.getStack();
     			String inventoryName = inventory.getDisplayName().getUnformattedText();
 
-    			if (inventoryName.endsWith(" Chest") && item != null && item.getDisplayName().contains("Open Reward Chest")) {
+				if(ToggleCommand.stopSalvageStarredToggled && inventoryName.startsWith("Salvage")) {
+					if(item == null) return;
+					boolean inSalvageGui = false;
+					if(item.getDisplayName().contains("Salvage") || item.getDisplayName().contains("Essence")) {
+						ItemStack salvageItem = inventory.getStackInSlot(13);
+						if(salvageItem == null) return;
+						item = salvageItem;
+						inSalvageGui = true;
+					}
+					if (item.getDisplayName().contains("✪") && (mouseSlot.slotNumber > 53 || inSalvageGui)) {
+						Minecraft.getMinecraft().thePlayer.playSound("note.bass", 1, 0.5f);
+						Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(ERROR_COLOUR + "Danker's Skyblock Mod has stopped you from salvaging that item!"));
+						event.setCanceled(true);
+						return;
+					}
+				}
+
+				if (inventoryName.endsWith(" Chest") && item != null && item.getDisplayName().contains("Open Reward Chest")) {
     				List<String> tooltip = item.getTooltip(Minecraft.getMinecraft().thePlayer, Minecraft.getMinecraft().gameSettings.advancedItemTooltips);
     				for (String lineUnclean : tooltip) {
     					String line = StringUtils.stripControlCodes(lineUnclean);

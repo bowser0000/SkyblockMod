@@ -36,6 +36,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 	public static boolean cakeTimerToggled;
 	public static boolean lowHealthNotifyToggled;
 	public static boolean lividSolverToggled;
+	public static boolean stopSalvageStarredToggled;
 	// Puzzle Solvers
 	public static boolean threeManToggled;
 	public static boolean oruoToggled;
@@ -63,7 +64,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 		return "/" + getCommandName() + " <gparty/coords/golden/slayercount/rngesusalerts/splitfishing/chatmaddox/spiritbearalert/" + 
 										  "aotd/lividdagger/sceptremessages/petcolors/dungeontimer/golemalerts/expertiselore/skill50display/" + 
 										  "outlinetext/midasstaffmessages/implosionmessages/healmessages/caketimer/lowhealthnotify/" +
-										  "lividsolver/threemanpuzzle/oruopuzzle/blazepuzzle/creeperpuzzle/waterpuzzle/tictactoepuzzle/" +
+										  "lividsolver/stopsalvagestarred/threemanpuzzle/oruopuzzle/blazepuzzle/creeperpuzzle/waterpuzzle/tictactoepuzzle/" +
 										  "startswithterminal/selectallterminal/itemframeonsealanterns/ultrasequencer/chronomatron/superpairs/pickblockinexperiments/list>";
 	}
 
@@ -80,10 +81,10 @@ public class ToggleCommand extends CommandBase implements ICommand {
 														  "sceptremessages", "petcolors", "dungeontimer", "golemalerts",
 														  "expertiselore", "skill50display", "outlinetext", "midasstaffmessages",
 														  "implosionmessages", "healmessages", "caketimer", "lowhealthnotify",
-														  "lividsolver", "threemanpuzzle", "oruopuzzle", "blazepuzzle",
+														  "lividsolver", "stopsalvagestarred", "threemanpuzzle", "oruopuzzle", "blazepuzzle",
 														  "creeperpuzzle", "waterpuzzle", "tictactoepuzzle", "startswithterminal",
 														  "selectallterminal", "itemframeonsealanterns", "ultrasequencer",
-														  "chronomatron", "superpairs", "list");
+														  "chronomatron", "superpairs", "pickblockinexperiments", "list");
 		}
 		return null;
 	}
@@ -213,6 +214,11 @@ public class ToggleCommand extends CommandBase implements ICommand {
 				lividSolverToggled = !lividSolverToggled;
 				ConfigHandler.writeBooleanConfig("toggles", "LividSolver", lividSolverToggled);
 				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Livid solver has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + lividSolverToggled + DankersSkyblockMod.MAIN_COLOUR + "."));
+				break;
+			case "stopsalvagestarred":
+				stopSalvageStarredToggled = !stopSalvageStarredToggled;
+				ConfigHandler.writeBooleanConfig("toggles", "StopSalvageStarred", stopSalvageStarredToggled);
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Stop salvaging starred items has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + stopSalvageStarredToggled + DankersSkyblockMod.MAIN_COLOUR + "."));
 				break;
 			case "threemanpuzzle":
 				threeManToggled = !threeManToggled;
