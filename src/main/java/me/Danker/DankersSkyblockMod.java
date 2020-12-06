@@ -3094,7 +3094,7 @@ public class DankersSkyblockMod
 						int y = guiTop + slot.yDisplayPosition;
 						if (chestSize != 90) y += (6 - (chestSize - 36) / 9) * 9;
 
-						Utils.renderItem(itemStack, x, y, -100);
+						//Utils.renderItem(itemStack, x, y, -100);
 
 						String itemName = itemStack.getDisplayName();
 						matches.computeIfAbsent(itemName, k -> new HashSet<>());
