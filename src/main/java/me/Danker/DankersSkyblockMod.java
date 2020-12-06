@@ -2830,7 +2830,14 @@ public class DankersSkyblockMod
 				interactables.add(Blocks.coal_block);
 				interactables.add(Blocks.redstone_block);
 			}
-			if(!interactables.contains(block)) if(event.isCancelable()) event.setCanceled(true);
+			if(!interactables.contains(block)) {
+				if (ToggleCommand.aotdToggled && item.getDisplayName().contains("Aspect of the Dragons")) {
+					event.setCanceled(true);
+				}
+				if (ToggleCommand.lividDaggerToggled && item.getDisplayName().contains("Livid Dagger")) {
+					event.setCanceled(true);
+				}
+			}
 		}
     }
 
