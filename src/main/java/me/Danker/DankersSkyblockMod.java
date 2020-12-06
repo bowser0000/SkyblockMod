@@ -2266,22 +2266,23 @@ public class DankersSkyblockMod
 
 							return false;
 						});
-						event.toolTip.add(event.toolTip.size(), itemName);
+						event.toolTip.add(itemName);
+						event.toolTip.add(itemStack.getItem().getRegistryName());
 					}
 
 				}
 			}
 
     }
-    
+
     @SubscribeEvent
     public void onTick(TickEvent.ClientTickEvent event) {
     	if (event.phase != Phase.START) return;
-    	
+
 		Minecraft mc = Minecraft.getMinecraft();
 		World world = mc.theWorld;
 		EntityPlayerSP player = mc.thePlayer;
-		
+
     	// Checks every second
     	tickAmount++;
     	if (tickAmount % 20 == 0) {
@@ -2289,7 +2290,7 @@ public class DankersSkyblockMod
         		Utils.checkForSkyblock();
         		Utils.checkForDungeons();
     		}
-    		
+
     		if (DisplayCommand.auto && world != null && player != null) {
     			List<String> scoreboard = ScoreboardHandler.getSidebarLines();
     			boolean found = false;
@@ -2334,7 +2335,7 @@ public class DankersSkyblockMod
     			if (!found) DisplayCommand.display = "off";
     			ConfigHandler.writeStringConfig("misc", "display", DisplayCommand.display);
     		}
-    		
+
     		if (ToggleCommand.creeperToggled && Utils.inDungeons && world != null && player != null) {
     	    	double x = player.posX;
     	    	double y = player.posY;
@@ -2371,7 +2372,7 @@ public class DankersSkyblockMod
     				drawCreeperLines = false;
     			}
     		}
-    		
+
     		if (ToggleCommand.waterToggled && Utils.inDungeons && world != null && player != null) {
     			// multi thread block checking
     			new Thread(() -> {
@@ -2389,7 +2390,7 @@ public class DankersSkyblockMod
     					}
     					if (foundPiston) break;
     				}
-    				
+
     				if (foundPiston) {
     					for (int x = (int) (player.posX - 25); x <= player.posX + 25; x++) {
         					for (int z = (int) (player.posZ - 25); z <= player.posZ + 25; z++) {
@@ -2402,7 +2403,7 @@ public class DankersSkyblockMod
             							boolean foundEmerald = false;
             							boolean foundQuartz = false;
             							boolean foundDiamond = false;
-            							
+
             							// Detect first blocks near water stream
             							BlockPos scan1 = new BlockPos(x + 1, 78, z + 1);
             							BlockPos scan2 = new BlockPos(x - 1, 77, z - 1);
@@ -2421,7 +2422,7 @@ public class DankersSkyblockMod
             									foundDiamond = true;
             								}
             							}
-            							
+
             							int variant = 0;
             							if (foundGold && foundClay) {
             								variant = 1;
@@ -2432,7 +2433,7 @@ public class DankersSkyblockMod
             							} else if (foundGold && foundQuartz) {
             								variant = 4;
             							}
-            							
+
             							// Return solution
             							String purple;
             							String orange;
@@ -2473,27 +2474,27 @@ public class DankersSkyblockMod
         	    								break;
             							}
             							player.addChatMessage(new ChatComponentText(DELIMITER_COLOUR + EnumChatFormatting.BOLD + "-------------------\n" +
-            																		MAIN_COLOUR + " The following levers must be down:\n " + 
-            																		EnumChatFormatting.DARK_PURPLE + "Purple: " + purple + "\n " + 
-            																		EnumChatFormatting.GOLD + "Orange: " + orange + "\n " + 
-            																		EnumChatFormatting.BLUE + "Blue: " + blue + "\n " + 
-            																		EnumChatFormatting.GREEN + "Green: " + green + "\n " + 
+            																		MAIN_COLOUR + " The following levers must be down:\n " +
+            																		EnumChatFormatting.DARK_PURPLE + "Purple: " + purple + "\n " +
+            																		EnumChatFormatting.GOLD + "Orange: " + orange + "\n " +
+            																		EnumChatFormatting.BLUE + "Blue: " + blue + "\n " +
+            																		EnumChatFormatting.GREEN + "Green: " + green + "\n " +
             																		EnumChatFormatting.RED + "Red: " + red + "\n" +
             																		DELIMITER_COLOUR + EnumChatFormatting.BOLD + " -------------------"));
             							done = true;
-            							break;	
+            							break;
         							}
         						}
         					}
         					if (done) break;
-        				}	
+        				}
     				}
     			}).start();
     		}
-    		
+
     		if (ToggleCommand.lividSolverToggled && Utils.inDungeons && !foundLivid && world != null) {
     			boolean inF5 = false;
-    			
+
     			List<String> scoreboard = ScoreboardHandler.getSidebarLines();
     			for (String s : scoreboard) {
     				String sCleaned = ScoreboardHandler.cleanSB(s);
@@ -2502,7 +2503,7 @@ public class DankersSkyblockMod
     					break;
     				}
     			}
-    			
+
     			if (inF5) {
     				List<Entity> loadedLivids = new ArrayList<>();
     				List<Entity> entities = world.getLoadedEntityList();
@@ -2518,7 +2519,7 @@ public class DankersSkyblockMod
     				}
     			}
     		}
-    		
+
     		if (ToggleCommand.ticTacToeToggled && Utils.inDungeons && world != null && player != null) {
     			correctTicTacToeButton = null;
     			AxisAlignedBB aabb = new AxisAlignedBB(player.posX - 6, player.posY - 6, player.posZ - 6, player.posX + 6, player.posY + 6, player.posZ + 6);
@@ -2604,10 +2605,10 @@ public class DankersSkyblockMod
 					}
 				}
     		}
-    		
+
     		tickAmount = 0;
     	}
-    	
+
     	// Checks 5 times per second
     	if (tickAmount % 4 == 0) {
     		if (ToggleCommand.blazeToggled && Utils.inDungeons && world != null) {
@@ -2637,7 +2638,7 @@ public class DankersSkyblockMod
 				}
 			}
     	}
-    	
+
     	// Checks 10 times per second
     	if (tickAmount % 2 == 0) {
     		if (ToggleCommand.lowHealthNotifyToggled && Utils.inDungeons && world != null) {
@@ -2696,7 +2697,7 @@ public class DankersSkyblockMod
     		skillTimer--;
      	}
     }
-    
+
     // Delay GUI by 1 tick
     @SubscribeEvent
     public void onRenderTick(TickEvent.RenderTickEvent event) {
@@ -2730,7 +2731,7 @@ public class DankersSkyblockMod
         	guiToOpen = null;
     	}
     }
-    
+
     @SubscribeEvent
     public void onWorldRender(RenderWorldLastEvent event) {
     	if (ToggleCommand.blazeToggled) {
@@ -2756,13 +2757,13 @@ public class DankersSkyblockMod
     		Utils.draw3DBox(correctTicTacToeButton, 0x40FF40, event.partialTicks);
 		}
     }
-    
+
     @SubscribeEvent
     public void onInteract(PlayerInteractEvent event) {
     	if (!Utils.inSkyblock || Minecraft.getMinecraft().thePlayer != event.entityPlayer) return;
     	ItemStack item = event.entityPlayer.getHeldItem();
     	if (item == null) return;
-    	
+
     	if (event.action == PlayerInteractEvent.Action.RIGHT_CLICK_AIR) {
     		if (ToggleCommand.aotdToggled && item.getDisplayName().contains("Aspect of the Dragons")) {
     			event.setCanceled(true);
@@ -2772,12 +2773,12 @@ public class DankersSkyblockMod
     		}
     	}
     }
-    
+
     @SubscribeEvent
     public void onEntityInteract(EntityInteractEvent event) {
     	Minecraft mc = Minecraft.getMinecraft();
     	if (mc.thePlayer != event.entityPlayer) return;
-    	
+
     	if (ToggleCommand.itemFrameOnSeaLanternsToggled && Utils.inDungeons && event.target instanceof EntityItemFrame) {
     		EntityItemFrame itemFrame = (EntityItemFrame) event.target;
     		ItemStack item = itemFrame.getDisplayedItem();
@@ -2792,7 +2793,7 @@ public class DankersSkyblockMod
     @SubscribeEvent
     public void onKey(KeyInputEvent event) {
     	if (!Utils.inSkyblock) return;
-    	
+
     	EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
     	if (keyBindings[0].isPressed()) {
     		player.sendChatMessage(lastMaddoxCommand);
@@ -2816,7 +2817,7 @@ public class DankersSkyblockMod
     	if (!Utils.inSkyblock) return;
     	if (Mouse.getEventButton() != 0 && Mouse.getEventButton() != 1 && Mouse.getEventButton() != 2) return; // Left click or right click
 		if (!Mouse.isButtonDown(0) && !Mouse.isButtonDown(1) && !Mouse.isButtonDown(2)) return;
-    	
+
     	if (event.gui instanceof GuiChest) {
     		Container containerChest = ((GuiChest) event.gui).inventorySlots;
     		if (containerChest instanceof ContainerChest) {
@@ -2836,7 +2837,7 @@ public class DankersSkyblockMod
     						break;
     					} else if (line.contains(" Coins")) {
     						int coinsSpent = Integer.parseInt(line.substring(0, line.indexOf(" ")).replaceAll(",", ""));
-    						
+
     						List<String> scoreboard = ScoreboardHandler.getSidebarLines();
     						for (String s : scoreboard) {
     							String sCleaned = ScoreboardHandler.cleanSB(s);
@@ -2879,8 +2880,8 @@ public class DankersSkyblockMod
     			}
 
     			if (ToggleCommand.chronomatronToggled && inventoryName.startsWith("Chronomatron (")) {
-    				if (inventory.getStackInSlot(49).getDisplayName().startsWith("§7Timer: §a") && (item == null || item.getItem() == Item.getItemFromBlock(Blocks.stained_glass) || item.getItem() == Item.getItemFromBlock(Blocks.stained_hardened_clay))) {
-						if(chronomatronPattern.size() > 0 && !item.getDisplayName().equals(chronomatronPattern.get(chronomatronMouseClicks))) {
+    				if (inventory.getStackInSlot(49).getDisplayName().startsWith("§7Timer: §a") && item != null && (item.getItem() == Item.getItemFromBlock(Blocks.stained_glass) || item.getItem() == Item.getItemFromBlock(Blocks.stained_hardened_clay))) {
+						if(chronomatronPattern.size() > 0 && chronomatronPattern.size() > chronomatronMouseClicks && item != null && !item.getDisplayName().equals(chronomatronPattern.get(chronomatronMouseClicks))) {
 							if(event.isCancelable() && !Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) && !Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)) event.setCanceled(true);
 							return;
 						}
@@ -2914,7 +2915,7 @@ public class DankersSkyblockMod
     		}
     	}
     }
-    
+
     @SubscribeEvent
     public void onMouseInputPost(GuiScreenEvent.MouseInputEvent.Post event) {
     	if (!Utils.inSkyblock) return;
@@ -2949,7 +2950,7 @@ public class DankersSkyblockMod
     			List<Slot> invSlots = inventory.inventorySlots.inventorySlots;
     			String displayName = ((ContainerChest) containerChest).getLowerChestInventory().getDisplayName().getUnformattedText().trim();
         		int chestSize = inventory.inventorySlots.inventorySlots.size();
-    			
+
         		if (ToggleCommand.petColoursToggled) {
             		Pattern petPattern = Pattern.compile("\\[Lvl [\\d]{1,3}]");
             		for (Slot slot : invSlots) {
@@ -2987,7 +2988,7 @@ public class DankersSkyblockMod
             			}
             		}
         		}
-        		
+
         		if (ToggleCommand.startsWithToggled && Utils.inDungeons && displayName.startsWith("What starts with:")) {
         			char letter = displayName.charAt(displayName.indexOf("'") + 1);
         			for (Slot slot : invSlots) {
@@ -2998,7 +2999,7 @@ public class DankersSkyblockMod
         				}
         			}
         		}
-        		
+
         		if (ToggleCommand.selectAllToggled && Utils.inDungeons && displayName.startsWith("Select all the")) {
         			String colour = displayName.split(" ")[3];
         			for (Slot slot : invSlots) {
@@ -3102,8 +3103,9 @@ public class DankersSkyblockMod
 						//Utils.renderItem(itemStack, x, y, -100);
 
 						String itemName = itemStack.getDisplayName();
-						matches.computeIfAbsent(itemName, k -> new HashSet<>());
-						matches.get(itemName).add(i);
+						String keyName = itemName + itemStack.getUnlocalizedName();
+						matches.computeIfAbsent(keyName, k -> new HashSet<>());
+						matches.get(keyName).add(i);
 					}
 
         			Color[] colors = {
