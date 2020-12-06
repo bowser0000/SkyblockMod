@@ -2788,28 +2788,24 @@ public class DankersSkyblockMod
 			Block block = blockState.getBlock();
 			ArrayList<Block> interactables = new ArrayList<>(Arrays.asList(
 					Blocks.acacia_door,
-					Blocks.acacia_fence_gate,
 					Blocks.anvil,
 					Blocks.beacon,
 					Blocks.bed,
 					Blocks.birch_door,
-					Blocks.birch_fence_gate,
 					Blocks.brewing_stand,
 					Blocks.command_block,
+					Blocks.crafting_table,
 					Blocks.chest,
 					Blocks.dark_oak_door,
-					Blocks.dark_oak_fence_gate,
 					Blocks.daylight_detector,
 					Blocks.daylight_detector_inverted,
 					Blocks.dispenser,
 					Blocks.dropper,
 					Blocks.enchanting_table,
 					Blocks.ender_chest,
-					Blocks.oak_fence_gate,
 					Blocks.furnace,
 					Blocks.hopper,
 					Blocks.jungle_door,
-					Blocks.jungle_fence_gate,
 					Blocks.lever,
 					Blocks.noteblock,
 					Blocks.powered_comparator,
@@ -2820,7 +2816,6 @@ public class DankersSkyblockMod
 					Blocks.wall_sign,
 					Blocks.trapdoor,
 					Blocks.trapped_chest,
-					Blocks.wall_sign,
 					Blocks.wooden_button,
 					Blocks.stone_button,
 					Blocks.oak_door,
@@ -2828,7 +2823,7 @@ public class DankersSkyblockMod
 			));
 			if(Utils.inDungeons) {
 				interactables.add(Blocks.coal_block);
-				interactables.add(Blocks.redstone_block);
+				interactables.add(Blocks.stained_hardened_clay);
 			}
 			if(!interactables.contains(block)) {
 				if (ToggleCommand.aotdToggled && item.getDisplayName().contains("Aspect of the Dragons")) {
