@@ -2882,9 +2882,14 @@ public class DankersSkyblockMod
 
     			if (ToggleCommand.chronomatronToggled && inventoryName.startsWith("Chronomatron (")) {
     				if (inventory.getStackInSlot(49).getDisplayName().startsWith("§7Timer: §a") && (item == null || item.getItem() == Item.getItemFromBlock(Blocks.stained_glass) || item.getItem() == Item.getItemFromBlock(Blocks.stained_hardened_clay))) {
+						if(!item.getDisplayName().equals(chronomatronPattern.get(chronomatronMouseClicks))) {
+							if(event.isCancelable()) event.setCanceled(true);
+							return;
+						}
     					chronomatronMouseClicks++;
 					} else if(inventory.getStackInSlot(49).getDisplayName().startsWith("§aRemember the pattern!")) {
     					if(event.isCancelable()) event.setCanceled(true);
+    					return;
 					}
 				}
 
