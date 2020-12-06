@@ -117,7 +117,7 @@ public class DankersSkyblockMod
 	static int lastChronomatronRound = 0;
 	static List<String> chronomatronPattern = new ArrayList<>();
 	static int chronomatronMouseClicks = 0;
-	static ItemStack[] superpairSlots = new ItemStack[53];
+	static ItemStack[] superpairSlots = new ItemStack[54];
 
 	static double dungeonStartTime = 0;
     static double bloodOpenTime = 0;
