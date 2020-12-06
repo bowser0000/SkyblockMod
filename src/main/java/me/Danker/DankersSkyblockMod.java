@@ -113,8 +113,7 @@ public class DankersSkyblockMod
 	static boolean prevInWaterRoom = false;
 	static boolean inWaterRoom = false;
 	static AxisAlignedBB correctTicTacToeButton = null;
-	static List<Slot> clickInOrderSlots = new ArrayList<>();
-	static Slot[] clickInOrderSlotsTEMP = new Slot[36];
+	static Slot[] clickInOrderSlots = new Slot[36];
 	static int lastChronomatronRound = 0;
 	static List<String> chronomatronPattern = new ArrayList<>();
 	static int chronomatronMouseClicks = 0;
@@ -2652,14 +2651,29 @@ public class DankersSkyblockMod
     		}
     	}
 
+    	// Runs 20 times per second
 		if (mc.currentScreen instanceof GuiChest) {
 			if (player == null) return;
 			ContainerChest chest = (ContainerChest) player.openContainer;
-			IInventory inv = chest.getLowerChestInventory();
-			String chestName = inv.getDisplayName().getUnformattedText();
-			if (ToggleCommand.superpairsToggled && chestName.contains("Superpairs (")) {
+			List<Slot> invSlots = ((GuiChest) mc.currentScreen).inventorySlots.inventorySlots;
+			String chestName = chest.getLowerChestInventory().getDisplayName().getUnformattedText().trim();
+
+			if (ToggleCommand.ultrasequencerToggled && chestName.startsWith("Ultrasequencer (")) {
+				if (invSlots.get(49).getStack() != null && invSlots.get(49).getStack().getDisplayName().equals("§aRemember the pattern!")) {
+					for (int i = 9; i <= 44; i++) {
+						if (invSlots.get(i) == null || invSlots.get(i).getStack() == null) continue;
+						String itemName = StringUtils.stripControlCodes(invSlots.get(i).getStack().getDisplayName());
+						if (itemName.matches("\\d+")) {
+							int number = Integer.parseInt(itemName);
+							clickInOrderSlots[number - 1] = invSlots.get(i);
+						}
+					}
+				}
+			}
+
+			if (ToggleCommand.superpairsToggled && chestName.startsWith("Superpairs (")) {
 				for (int i = 0; i < 53; i++) {
-					ItemStack itemStack = inv.getStackInSlot(i);
+					ItemStack itemStack = invSlots.get(i).getStack();
 					if (itemStack == null) continue;
 					String itemName = itemStack.getDisplayName();
 					if (Item.getIdFromItem(itemStack.getItem()) == 95 || Item.getIdFromItem(itemStack.getItem()) == 160) continue;
@@ -2673,15 +2687,6 @@ public class DankersSkyblockMod
 					if (experimentTableSlots[i] != null) continue;
 					experimentTableSlots[i] = itemStack.copy().setStackDisplayName(itemName);
 				}
-
-				/*
-				for (int i = 0; i < 53; i++) {
-					ItemStack itemStack = experimentTableSlots[i];
-					if (itemStack == null) continue;
-					inv.setInventorySlotContents(i, itemStack);
-				}
-				*/
-
 			}
 		}
 
@@ -2907,7 +2912,7 @@ public class DankersSkyblockMod
 						if (event.isCancelable()) event.setCanceled(true);
 						return;
 					} else if (inventory.getStackInSlot(49).getDisplayName().startsWith("§7Timer: §a")) {
-						if (lastUltraSequencerClicked < clickInOrderSlots.size() && mouseSlot.getSlotIndex() != clickInOrderSlots.get(lastUltraSequencerClicked).getSlotIndex()) {
+						if (clickInOrderSlots[lastUltraSequencerClicked] != null && mouseSlot.getSlotIndex() != clickInOrderSlots[lastUltraSequencerClicked].getSlotIndex()) {
 							if (event.isCancelable() && !Keyboard.isKeyDown(Keyboard.KEY_LCONTROL) && !Keyboard.isKeyDown(Keyboard.KEY_RCONTROL))
 								event.setCanceled(true);
 							return;
@@ -2951,7 +2956,7 @@ public class DankersSkyblockMod
 
     @SubscribeEvent
 	public void onGuiOpen(GuiOpenEvent event) {
-		clickInOrderSlots.clear();
+		clickInOrderSlots = new Slot[36];
 		lastChronomatronRound = 0;
 		chronomatronPattern.clear();
 		chronomatronMouseClicks = 0;
@@ -3036,44 +3041,18 @@ public class DankersSkyblockMod
 
         		if (ToggleCommand.ultrasequencerToggled && displayName.startsWith("Ultrasequencer (")) {
         			if (invSlots.size() > 48 && invSlots.get(49).getStack() != null) {
-						if (invSlots.get(49).getStack().getDisplayName().equals("§aRemember the pattern!")) {
-							List<Slot> tempSlots = new ArrayList<>();
-							for (Slot slot : invSlots) {
-								if (slot.getStack() == null) continue;
-								String itemName = StringUtils.stripControlCodes(slot.getStack().getDisplayName());
-								if (itemName.matches("\\d+")) {
-									tempSlots.add(slot);
-								}
-							}
-							tempSlots.sort((slot1, slot2) -> {
-								int number1 = Integer.parseInt(StringUtils.stripControlCodes(slot1.getStack().getDisplayName()));
-								int number2 = Integer.parseInt(StringUtils.stripControlCodes(slot2.getStack().getDisplayName()));
-								return Integer.compare(number1, number2);
-							});
-							// Verify all numbers showed up and are in order
-							boolean correct = true;
-							for (int i = 0; i < tempSlots.size(); i++) {
-								int number = Integer.parseInt(StringUtils.stripControlCodes(tempSlots.get(i).getStack().getDisplayName()));
-								if (i + 1 != number) {
-									correct = false;
-									break;
-								}
-							}
-							if (correct) {
-								clickInOrderSlots = tempSlots;
-							}
-						} else if (invSlots.get(49).getStack().getDisplayName().startsWith("§7Timer: §a")) {
+						if (invSlots.get(49).getStack().getDisplayName().startsWith("§7Timer: §a")) {
 							lastUltraSequencerClicked = 0;
 							for (Slot slot : clickInOrderSlots) {
-								if (slot.getStack() != null && StringUtils.stripControlCodes(slot.getStack().getDisplayName()).matches("\\d+")) {
+								if (slot != null && slot.getStack() != null && StringUtils.stripControlCodes(slot.getStack().getDisplayName()).matches("\\d+")) {
 									int number = Integer.parseInt(StringUtils.stripControlCodes(slot.getStack().getDisplayName()));
 									if (number > lastUltraSequencerClicked) {
 										lastUltraSequencerClicked = number;
 									}
 								}
 							}
-							if (lastUltraSequencerClicked < clickInOrderSlots.size()) {
-								Slot nextSlot = clickInOrderSlots.get(lastUltraSequencerClicked);
+							if (clickInOrderSlots[lastUltraSequencerClicked] != null) {
+								Slot nextSlot = clickInOrderSlots[lastUltraSequencerClicked];
 								Utils.drawOnSlot(chestSize, nextSlot.xDisplayPosition, nextSlot.yDisplayPosition, 0xE540FF40);
 							}
 						}
