@@ -3213,20 +3213,20 @@ public class DankersSkyblockMod
 					}
 
         			Color[] colors = {
-						new Color(255, 0, 0, 60),
-						new Color(0, 0, 255, 60),
-						new Color(60, 179, 113, 60),
-						new Color(255, 114, 255, 60),
-						new Color(255, 199, 87, 60),
-						new Color(119, 105, 198, 60),
-						new Color(135, 199, 112, 60),
-						new Color(260, 37, 260, 60),
-						new Color(178, 132, 190, 60),
-						new Color(63, 135, 163, 60),
-						new Color(146, 74, 10, 60),
-						new Color(255, 255, 255, 60),
-						new Color(217, 252, 160, 60),
-						new Color(255, 82, 82, 60)
+						new Color(255, 0, 0, 100),
+						new Color(0, 0, 255, 100),
+						new Color(100, 179, 113, 100),
+						new Color(255, 114, 255, 100),
+						new Color(255, 199, 87, 100),
+						new Color(119, 105, 198, 100),
+						new Color(135, 199, 112, 100),
+						new Color(2100, 37, 2100, 100),
+						new Color(178, 132, 190, 100),
+						new Color(63, 135, 163, 100),
+						new Color(146, 74, 10, 100),
+						new Color(255, 255, 255, 100),
+						new Color(217, 252, 1100, 100),
+						new Color(255, 82, 82, 100)
 					};
 
 					Iterator<Color> colorIterator = Arrays.stream(colors).iterator();
