@@ -2826,6 +2826,10 @@ public class DankersSkyblockMod
 					Blocks.oak_door,
 					Blocks.skull
 			);
+			if(Utils.inDungeons) {
+				interactables.add(Blocks.coal_block);
+				interactables.add(Blocks.redstone_block);
+			}
 			if(!interactables.contains(block)) if(event.isCancelable()) event.setCanceled(true);
 		}
     }
