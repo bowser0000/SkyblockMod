@@ -2217,7 +2217,7 @@ public class DankersSkyblockMod
     
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void onTooltip(ItemTooltipEvent event) {
-    	//if (!Utils.inSkyblock) return;
+    	if (!Utils.inSkyblock) return;
     	if (event.toolTip == null) return;
     	
     	ItemStack item = event.itemStack;
@@ -2931,7 +2931,7 @@ public class DankersSkyblockMod
 
     @SubscribeEvent
     public void onGuiRender(GuiScreenEvent.BackgroundDrawnEvent event) {
-    	//if (!Utils.inSkyblock) return;
+    	if (!Utils.inSkyblock) return;
     	if (event.gui instanceof GuiChest) {
     		GuiChest inventory = (GuiChest) event.gui;
     		Container containerChest = inventory.inventorySlots;
