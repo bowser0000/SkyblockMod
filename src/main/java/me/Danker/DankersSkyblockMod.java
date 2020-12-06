@@ -7,6 +7,7 @@ import me.Danker.handlers.*;
 import me.Danker.utils.TicTacToeUtils;
 import me.Danker.utils.Utils;
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.Gui;
@@ -2778,6 +2779,52 @@ public class DankersSkyblockMod
     			event.setCanceled(true);
     		}
     	}
+
+		if(event.action == PlayerInteractEvent.Action.RIGHT_CLICK_BLOCK) {
+			IBlockState blockState = Minecraft.getMinecraft().theWorld.getBlockState(event.pos);
+			Block block = blockState.getBlock();
+			List<Block> interactables = Arrays.asList(
+					Blocks.acacia_door,
+					Blocks.acacia_fence_gate,
+					Blocks.anvil,
+					Blocks.beacon,
+					Blocks.bed,
+					Blocks.birch_door,
+					Blocks.birch_fence_gate,
+					Blocks.brewing_stand,
+					Blocks.command_block,
+					Blocks.chest,
+					Blocks.dark_oak_door,
+					Blocks.dark_oak_fence_gate,
+					Blocks.daylight_detector,
+					Blocks.daylight_detector_inverted,
+					Blocks.dispenser,
+					Blocks.dropper,
+					Blocks.enchanting_table,
+					Blocks.ender_chest,
+					Blocks.oak_fence_gate,
+					Blocks.furnace,
+					Blocks.hopper,
+					Blocks.jungle_door,
+					Blocks.jungle_fence_gate,
+					Blocks.lever,
+					Blocks.noteblock,
+					Blocks.powered_comparator,
+					Blocks.unpowered_comparator,
+					Blocks.powered_repeater,
+					Blocks.unpowered_repeater,
+					Blocks.standing_sign,
+					Blocks.wall_sign,
+					Blocks.trapdoor,
+					Blocks.trapped_chest,
+					Blocks.wall_sign,
+					Blocks.wooden_button,
+					Blocks.stone_button,
+					Blocks.oak_door,
+					Blocks.skull
+			);
+			if(!interactables.contains(block)) if(event.isCancelable()) event.setCanceled(true);
+		}
     }
 
     @SubscribeEvent
