@@ -203,6 +203,7 @@ public class ConfigHandler {
 		if (!hasKey("toggles", "IgnoreItemFrameOnSeaLanterns")) writeBooleanConfig("toggles", "IgnoreItemFrameOnSeaLanterns", false);
 		if (!hasKey("toggles", "UltraSequencer")) writeBooleanConfig("toggles", "UltraSequencer", false);
 		if (!hasKey("toggles", "Chronomatron")) writeBooleanConfig("toggles", "Chronomatron", false);
+		if (!hasKey("toggles", "Superpairs")) writeBooleanConfig("toggles", "Superpairs", false);
 
 		if (!hasKey("api", "APIKey")) writeStringConfig("api", "APIKey", "");
 		
@@ -446,6 +447,7 @@ public class ConfigHandler {
 		ToggleCommand.itemFrameOnSeaLanternsToggled = getBoolean("toggles", "IgnoreItemFrameOnSeaLanterns");
 		ToggleCommand.ultrasequencerToggled = getBoolean("toggles", "UltraSequencer");
 		ToggleCommand.chronomatronToggled = getBoolean("toggles", "Chronomatron");
+		ToggleCommand.superpairsToggled = getBoolean("toggles", "Superpairs");
 
 		String onlySlayer = getString("toggles", "BlockSlayer");
 		if (!onlySlayer.equals("")) {

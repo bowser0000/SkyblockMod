@@ -1,6 +1,7 @@
 package me.Danker;
 
 import com.google.gson.JsonObject;
+import com.mojang.realmsclient.util.RealmsUtil;
 import me.Danker.commands.*;
 import me.Danker.gui.*;
 import me.Danker.handlers.*;
@@ -13,6 +14,7 @@ import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiChat;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.gui.inventory.GuiChest;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItemFrame;
@@ -117,8 +119,9 @@ public class DankersSkyblockMod
 	static int lastChronomatronRound = 0;
 	static List<String> chronomatronPattern = new ArrayList<>();
 	static int chronomatronMouseClicks = 0;
-	
-    static double dungeonStartTime = 0;
+	static ItemStack[] experimentTableSlots = new ItemStack[54];
+
+	static double dungeonStartTime = 0;
     static double bloodOpenTime = 0;
     static double watcherClearTime = 0;
     static double bossClearTime = 0;
@@ -2218,6 +2221,9 @@ public class DankersSkyblockMod
     	if (event.toolTip == null) return;
     	
     	ItemStack item = event.itemStack;
+    	Minecraft mc = Minecraft.getMinecraft();
+    	EntityPlayerSP player = mc.thePlayer;
+
     	if (ToggleCommand.goldenToggled) {
     		for (int i = 0; i < event.toolTip.size(); i++) {
     			event.toolTip.set(i, Utils.returnGoldenEnchants(event.toolTip.get(i)));
@@ -2241,6 +2247,33 @@ public class DankersSkyblockMod
     			}
     		}
     	}
+
+		if(mc.currentScreen instanceof GuiChest) {
+				ContainerChest chest = (ContainerChest) player.openContainer;
+				IInventory inv = chest.getLowerChestInventory();
+				String chestName = inv.getDisplayName().getUnformattedText();
+				if (ToggleCommand.superpairsToggled && chestName.contains("Superpairs (")) {
+					if(Item.getIdFromItem(item.getItem()) != 95) return;
+					if(item.getDisplayName().contains("Click any button") || item.getDisplayName().contains("Click a second button") || item.getDisplayName().contains("Next button is instantly rewarded") || item.getDisplayName().contains("Stained Glass")) {
+						Slot slot = ((GuiChest) mc.currentScreen).getSlotUnderMouse();
+						ItemStack itemStack = experimentTableSlots[slot.getSlotIndex()];
+						if(itemStack == null) return;
+						String itemName = itemStack.getDisplayName();
+
+						if(event.toolTip.stream().anyMatch(x->StringUtils.stripControlCodes(x) == StringUtils.stripControlCodes(itemName))) return;
+						event.toolTip.removeIf(x->{
+							x = StringUtils.stripControlCodes(x);
+							if(x.equals("minecraft:stained_glass")) return true;
+							if(x.startsWith("NBT: ")) return true;
+
+							return false;
+						});
+						event.toolTip.add(event.toolTip.size(), itemName);
+					}
+
+				}
+			}
+
     }
     
     @SubscribeEvent
@@ -2580,31 +2613,31 @@ public class DankersSkyblockMod
     	// Checks 5 times per second
     	if (tickAmount % 4 == 0) {
     		if (ToggleCommand.blazeToggled && Utils.inDungeons && world != null) {
-    			List<Entity> entities = world.getLoadedEntityList();
-    			int highestHealth = 0;
-    			highestBlaze = null;
-    			int lowestHealth = 99999999;
-    			lowestBlaze = null;
+				List<Entity> entities = world.getLoadedEntityList();
+				int highestHealth = 0;
+				highestBlaze = null;
+				int lowestHealth = 99999999;
+				lowestBlaze = null;
 
-    			for (Entity entity : entities) {
-    				if (entity.getName().contains("Blaze") && entity.getName().contains("/")) {
-    					String blazeName = StringUtils.stripControlCodes(entity.getName());
-    					try {
-    						int health = Integer.parseInt(blazeName.substring(blazeName.indexOf("/") + 1, blazeName.length() - 1));
-    						if (health > highestHealth) {
-    							highestHealth = health;
-    							highestBlaze = entity;
-    						}
-    						if (health < lowestHealth) {
-    							lowestHealth = health;
-    							lowestBlaze = entity;
-    						}
-    					} catch (NumberFormatException ex) {
-    						ex.printStackTrace();
-    					}
-    				}
-    			}
-    		}
+				for (Entity entity : entities) {
+					if (entity.getName().contains("Blaze") && entity.getName().contains("/")) {
+						String blazeName = StringUtils.stripControlCodes(entity.getName());
+						try {
+							int health = Integer.parseInt(blazeName.substring(blazeName.indexOf("/") + 1, blazeName.length() - 1));
+							if (health > highestHealth) {
+								highestHealth = health;
+								highestBlaze = entity;
+							}
+							if (health < lowestHealth) {
+								lowestHealth = health;
+								lowestBlaze = entity;
+							}
+						} catch (NumberFormatException ex) {
+							ex.printStackTrace();
+						}
+					}
+				}
+			}
     	}
     	
     	// Checks 10 times per second
@@ -2619,8 +2652,40 @@ public class DankersSkyblockMod
     			}
     		}
     	}
-    	
-    	if (titleTimer >= 0) {
+
+		if(mc.currentScreen instanceof GuiChest) {
+			ContainerChest chest = (ContainerChest) player.openContainer;
+			IInventory inv = chest.getLowerChestInventory();
+			String chestName = inv.getDisplayName().getUnformattedText();
+			if (ToggleCommand.superpairsToggled && chestName.contains("Superpairs (")) {
+				for (int i = 0; i < 53; i++) {
+					ItemStack itemStack = inv.getStackInSlot(i);
+					if (itemStack == null) continue;
+					String itemName = itemStack.getDisplayName();
+					if (Item.getIdFromItem(itemStack.getItem()) == 95 || Item.getIdFromItem(itemStack.getItem()) == 160) continue;
+					if (itemName.contains("Instant Find") || itemName.contains("Gained +")) continue;
+					if(itemName.contains("Enchanted Book")) {
+						itemName = itemStack.getTooltip(mc.thePlayer, false).get(3);
+					}
+					if(itemStack.stackSize > 1) {
+						itemName = itemStack.stackSize + " " + itemName;
+					}
+					if (experimentTableSlots[i] != null) continue;
+					experimentTableSlots[i] = itemStack.copy().setStackDisplayName(itemName);
+				}
+
+				/*
+				for (int i = 0; i < 53; i++) {
+					ItemStack itemStack = experimentTableSlots[i];
+					if (itemStack == null) continue;
+					inv.setInventorySlotContents(i, itemStack);
+				}
+				*/
+
+			}
+		}
+
+		if (titleTimer >= 0) {
     		if (titleTimer == 0) {
     			showTitle = false;
     		}
@@ -2747,12 +2812,12 @@ public class DankersSkyblockMod
     		}
     	}
     }
-    
+
     @SubscribeEvent
     public void onGuiMouseInputPre(GuiScreenEvent.MouseInputEvent.Pre event) {
     	if (!Utils.inSkyblock) return;
-    	if (Mouse.getEventButton() != 0 && Mouse.getEventButton() != 1) return; // Left click or right click
-		if (!Mouse.isButtonDown(0) && !Mouse.isButtonDown(1)) return;
+    	if (Mouse.getEventButton() != 0 && Mouse.getEventButton() != 1 && Mouse.getEventButton() != 2) return; // Left click or right click
+		if (!Mouse.isButtonDown(0) && !Mouse.isButtonDown(1) && !Mouse.isButtonDown(2)) return;
     	
     	if (event.gui instanceof GuiChest) {
     		Container containerChest = ((GuiChest) event.gui).inventorySlots;
@@ -2820,7 +2885,7 @@ public class DankersSkyblockMod
     					chronomatronMouseClicks++;
 					}
 				}
-    			
+
     			if (!BlockSlayerCommand.onlySlayerName.equals("") && item != null) {
     				if (inventoryName.equals("Slayer")) {
         				if (!item.getDisplayName().contains("Revenant Horror") && !item.getDisplayName().contains("Tarantula Broodfather") && !item.getDisplayName().contains("Sven Packmaster")) return;
@@ -2861,6 +2926,7 @@ public class DankersSkyblockMod
 		lastChronomatronRound = 0;
 		chronomatronPattern.clear();
 		chronomatronMouseClicks = 0;
+		experimentTableSlots = new ItemStack[54];
 	}
 
     @SubscribeEvent
@@ -3017,6 +3083,54 @@ public class DankersSkyblockMod
 					}
 					new TextRenderer(mc, String.join("\n", chronomatronPattern), (int) (guiLeft * 0.8), 10, 1);
 				}
+
+        		if(ToggleCommand.superpairsToggled && displayName.contains("Superpairs (")) {
+        			HashMap<String, HashSet<Integer>> matches = new HashMap<>();
+        			for(int i = 0; i<53; i++) {
+        				ItemStack itemStack = experimentTableSlots[i];
+        				if(itemStack == null) continue;
+						Slot slot = invSlots.get(i);
+						int x = guiLeft + slot.xDisplayPosition;
+						int y = guiTop + slot.yDisplayPosition;
+						if (chestSize != 90) y += (6 - (chestSize - 36) / 9) * 9;
+
+						//Utils.renderItem(itemStack, x, y, -100);
+
+						String itemName = itemStack.getDisplayName();
+						matches.computeIfAbsent(itemName, k -> new HashSet<>());
+						matches.get(itemName).add(i);
+					}
+
+        			Color[] colors = {
+						new Color(255, 0, 0, 40),
+						new Color(0, 0, 255, 40),
+						new Color(60, 179, 113, 40),
+						new Color(255, 114, 255, 40),
+						new Color(255, 199, 87, 40),
+						new Color(119, 105, 198, 40),
+						new Color(135, 199, 112, 40),
+						new Color(250, 37, 240, 40),
+						new Color(178, 132, 190, 40),
+						new Color(63, 135, 163, 40),
+						new Color(146, 74, 10, 40),
+						new Color(255, 255, 255, 40),
+						new Color(217, 252, 140, 40),
+						new Color(255, 82, 82, 40)
+					};
+
+					Iterator<Color> colorIterator = Arrays.stream(colors).iterator();
+
+        			matches.forEach((itemName, slotSet)->{
+        				if(slotSet.size() < 2) return;
+        				ArrayList<Slot> slots = new ArrayList();
+        				slotSet.forEach(slotNum->slots.add(invSlots.get(slotNum)));
+        				Color color = colorIterator.next();
+						slots.forEach(slot->{
+							Utils.drawOnSlot(chestSize, slot.xDisplayPosition, slot.yDisplayPosition, color.getRGB());
+						});
+					});
+				}
+
     		}
     	}
     }
