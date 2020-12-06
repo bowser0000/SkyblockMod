@@ -2885,9 +2885,6 @@ public class DankersSkyblockMod
 							return;
 						}
     					chronomatronMouseClicks++;
-					} else if(inventory.getStackInSlot(49).getDisplayName().startsWith("§aRemember the pattern!")) {
-    					if(event.isCancelable()) event.setCanceled(true);
-    					return;
 					}
 				}
 
