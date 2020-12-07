@@ -2881,8 +2881,8 @@ public class DankersSkyblockMod
     @SubscribeEvent
     public void onGuiMouseInputPre(GuiScreenEvent.MouseInputEvent.Pre event) {
     	if (!Utils.inSkyblock) return;
-    	if (Mouse.getEventButton() != 0 && Mouse.getEventButton() != 1 && Mouse.getEventButton() != 2) return; // Left click or right click
-		if (!Mouse.isButtonDown(0) && !Mouse.isButtonDown(1) && !Mouse.isButtonDown(2)) return;
+		if (Mouse.getEventButton() != 0 && Mouse.getEventButton() != 1 && Mouse.getEventButton() != 2) return; // Left click, middle click or right click
+		if (!Mouse.getEventButtonState()) return;
 
     	if (event.gui instanceof GuiChest) {
     		Container containerChest = ((GuiChest) event.gui).inventorySlots;
