@@ -7,12 +7,14 @@ import me.Danker.handlers.*;
 import me.Danker.utils.TicTacToeUtils;
 import me.Danker.utils.Utils;
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiChat;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.gui.inventory.GuiChest;
+import net.minecraft.client.settings.GameSettings;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItemFrame;
@@ -119,6 +121,8 @@ public class DankersSkyblockMod
 	static int chronomatronMouseClicks = 0;
 	static int lastUltraSequencerClicked = 0;
 	static ItemStack[] experimentTableSlots = new ItemStack[54];
+	static int pickBlockBind;
+	static boolean pickBlockBindSwapped = false;
 
 	static double dungeonStartTime = 0;
     static double bloodOpenTime = 0;
@@ -2778,6 +2782,58 @@ public class DankersSkyblockMod
     			event.setCanceled(true);
     		}
     	}
+
+		if(event.action == PlayerInteractEvent.Action.RIGHT_CLICK_BLOCK) {
+			IBlockState blockState = Minecraft.getMinecraft().theWorld.getBlockState(event.pos);
+			Block block = blockState.getBlock();
+			ArrayList<Block> interactables = new ArrayList<>(Arrays.asList(
+					Blocks.acacia_door,
+					Blocks.anvil,
+					Blocks.beacon,
+					Blocks.bed,
+					Blocks.birch_door,
+					Blocks.brewing_stand,
+					Blocks.command_block,
+					Blocks.crafting_table,
+					Blocks.chest,
+					Blocks.dark_oak_door,
+					Blocks.daylight_detector,
+					Blocks.daylight_detector_inverted,
+					Blocks.dispenser,
+					Blocks.dropper,
+					Blocks.enchanting_table,
+					Blocks.ender_chest,
+					Blocks.furnace,
+					Blocks.hopper,
+					Blocks.jungle_door,
+					Blocks.lever,
+					Blocks.noteblock,
+					Blocks.powered_comparator,
+					Blocks.unpowered_comparator,
+					Blocks.powered_repeater,
+					Blocks.unpowered_repeater,
+					Blocks.standing_sign,
+					Blocks.wall_sign,
+					Blocks.trapdoor,
+					Blocks.trapped_chest,
+					Blocks.wooden_button,
+					Blocks.stone_button,
+					Blocks.oak_door,
+					Blocks.skull
+			));
+			if(Utils.inDungeons) {
+				interactables.add(Blocks.coal_block);
+				interactables.add(Blocks.stained_hardened_clay);
+			}
+			if(!interactables.contains(block)) {
+				if (ToggleCommand.aotdToggled && item.getDisplayName().contains("Aspect of the Dragons")) {
+					event.setCanceled(true);
+				}
+				if (ToggleCommand.lividDaggerToggled && item.getDisplayName().contains("Livid Dagger")) {
+					event.setCanceled(true);
+				}
+			}
+		}
     }
 
     @SubscribeEvent
@@ -2835,7 +2891,24 @@ public class DankersSkyblockMod
     			ItemStack item = mouseSlot.getStack();
     			String inventoryName = inventory.getDisplayName().getUnformattedText();
 
-    			if (inventoryName.endsWith(" Chest") && item != null && item.getDisplayName().contains("Open Reward Chest")) {
+				if(ToggleCommand.stopSalvageStarredToggled && inventoryName.startsWith("Salvage")) {
+					if(item == null) return;
+					boolean inSalvageGui = false;
+					if(item.getDisplayName().contains("Salvage") || item.getDisplayName().contains("Essence")) {
+						ItemStack salvageItem = inventory.getStackInSlot(13);
+						if(salvageItem == null) return;
+						item = salvageItem;
+						inSalvageGui = true;
+					}
+					if (item.getDisplayName().contains("✪") && (mouseSlot.slotNumber > 53 || inSalvageGui)) {
+						Minecraft.getMinecraft().thePlayer.playSound("note.bass", 1, 0.5f);
+						Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(ERROR_COLOUR + "Danker's Skyblock Mod has stopped you from salvaging that item!"));
+						event.setCanceled(true);
+						return;
+					}
+				}
+
+				if (inventoryName.endsWith(" Chest") && item != null && item.getDisplayName().contains("Open Reward Chest")) {
     				List<String> tooltip = item.getTooltip(Minecraft.getMinecraft().thePlayer, Minecraft.getMinecraft().gameSettings.advancedItemTooltips);
     				for (String lineUnclean : tooltip) {
     					String line = StringUtils.stripControlCodes(lineUnclean);
@@ -2956,6 +3029,30 @@ public class DankersSkyblockMod
 
     @SubscribeEvent
 	public void onGuiOpen(GuiOpenEvent event) {
+    	Minecraft mc = Minecraft.getMinecraft();
+    	GameSettings gameSettings = mc.gameSettings;
+		if (event.gui instanceof GuiChest) {
+			Container containerChest = ((GuiChest) event.gui).inventorySlots;
+			if (containerChest instanceof ContainerChest) {
+				GuiChest chest = (GuiChest) event.gui;
+				IInventory inventory = ((ContainerChest) containerChest).getLowerChestInventory();
+				String inventoryName = inventory.getDisplayName().getUnformattedText();
+				if(ToggleCommand.swapToPickBlockInExperimentsToggled) {
+					if(inventoryName.startsWith("Chronomatron (") || inventoryName.startsWith("Superpairs (") || inventoryName.startsWith("Ultrasequencer (")) {
+						if(!pickBlockBindSwapped) {
+							pickBlockBind = gameSettings.keyBindPickBlock.getKeyCode();
+							gameSettings.keyBindPickBlock.setKeyCode(-100);
+							pickBlockBindSwapped = true;
+						}
+					} else {
+						if(pickBlockBindSwapped) {
+							gameSettings.keyBindPickBlock.setKeyCode(pickBlockBind);
+							pickBlockBindSwapped = false;
+						}
+					}
+				}
+			}
+		}
 		clickInOrderSlots = new Slot[36];
 		lastChronomatronRound = 0;
 		chronomatronPattern.clear();
@@ -3111,20 +3208,20 @@ public class DankersSkyblockMod
 					}
 
         			Color[] colors = {
-						new Color(255, 0, 0, 40),
-						new Color(0, 0, 255, 40),
-						new Color(60, 179, 113, 40),
-						new Color(255, 114, 255, 40),
-						new Color(255, 199, 87, 40),
-						new Color(119, 105, 198, 40),
-						new Color(135, 199, 112, 40),
-						new Color(250, 37, 240, 40),
-						new Color(178, 132, 190, 40),
-						new Color(63, 135, 163, 40),
-						new Color(146, 74, 10, 40),
-						new Color(255, 255, 255, 40),
-						new Color(217, 252, 140, 40),
-						new Color(255, 82, 82, 40)
+						new Color(255, 0, 0, 100),
+						new Color(0, 0, 255, 100),
+						new Color(100, 179, 113, 100),
+						new Color(255, 114, 255, 100),
+						new Color(255, 199, 87, 100),
+						new Color(119, 105, 198, 100),
+						new Color(135, 199, 112, 100),
+						new Color(240, 37, 240, 100),
+						new Color(178, 132, 190, 100),
+						new Color(63, 135, 163, 100),
+						new Color(146, 74, 10, 100),
+						new Color(255, 255, 255, 100),
+						new Color(217, 252, 140, 100),
+						new Color(255, 82, 82, 100)
 					};
 
 					Iterator<Color> colorIterator = Arrays.stream(colors).iterator();

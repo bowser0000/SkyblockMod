@@ -53,6 +53,7 @@ public class DankerGui extends GuiScreen {
 	private GuiButton cakeTimer;
 	private GuiButton lowHealthNotify;
 	private GuiButton lividSolver;
+	private GuiButton stopSalvageStarred;
 	
 	public DankerGui(int page) {
 		this.page = page;
@@ -110,7 +111,9 @@ public class DankerGui extends GuiScreen {
 		golemAlerts = new GuiButton(0, width / 2 - 100, (int) (height * 0.5), "Alert When Golem Spawns: " + Utils.getColouredBoolean(ToggleCommand.golemAlertToggled));
 		rngesusAlert = new GuiButton(0, width / 2 - 100, (int) (height * 0.6), "RNGesus Alerts: " + Utils.getColouredBoolean(ToggleCommand.rngesusAlerts));
 		lowHealthNotify = new GuiButton(0, width / 2 - 100, (int) (height * 0.7), "Low Health Notifications: " + Utils.getColouredBoolean(ToggleCommand.lowHealthNotifyToggled));
-		
+		// Page 5
+		stopSalvageStarred = new GuiButton(0, width / 2 - 100, (int) (height * 0.1), "Stop Salvaging Starred Items: " + Utils.getColouredBoolean(ToggleCommand.stopSalvageStarredToggled));
+
 		switch (page) {
 			case 1:
 				this.buttonList.add(changeDisplay);
@@ -152,6 +155,11 @@ public class DankerGui extends GuiScreen {
 				this.buttonList.add(golemAlerts);
 				this.buttonList.add(rngesusAlert);
 				this.buttonList.add(lowHealthNotify);
+				this.buttonList.add(nextPage);
+				this.buttonList.add(backPage);
+				break;
+			case 5:
+				this.buttonList.add(stopSalvageStarred);
 				this.buttonList.add(backPage);
 				break;
 		}
@@ -164,7 +172,7 @@ public class DankerGui extends GuiScreen {
 	@Override
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
 		this.drawDefaultBackground();
-		String pageText = "Page: " + page + "/4";
+		String pageText = "Page: " + page + "/5";
 		int pageWidth = mc.fontRendererObj.getStringWidth(pageText);
 		new TextRenderer(mc, pageText, width / 2 - pageWidth / 2, 10, 1D);
 		super.drawScreen(mouseX, mouseY, partialTicks);
@@ -292,6 +300,10 @@ public class DankerGui extends GuiScreen {
 			ToggleCommand.implosionMessages = !ToggleCommand.implosionMessages;
 			ConfigHandler.writeBooleanConfig("toggles", "ImplosionMessages", ToggleCommand.implosionMessages);
 			implosionMessages.displayString = "Implosion Messages: " + Utils.getColouredBoolean(ToggleCommand.implosionMessages);
+		} else if(button == stopSalvageStarred) {
+			ToggleCommand.stopSalvageStarredToggled = !ToggleCommand.stopSalvageStarredToggled;
+			ConfigHandler.writeBooleanConfig("toggles", "StopSalvageStarred", ToggleCommand.stopSalvageStarredToggled);
+			stopSalvageStarred.displayString = "Stop Salvaging Starred Items: " + Utils.getColouredBoolean(ToggleCommand.stopSalvageStarredToggled);
 		}
 	}
 	
