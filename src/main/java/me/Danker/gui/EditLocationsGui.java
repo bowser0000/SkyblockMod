@@ -25,6 +25,7 @@ public class EditLocationsGui extends GuiScreen {
 	private LocationButton lividHP;
 	private LocationButton cakeTimer;
 	private LocationButton skillTracker;
+	private LocationButton waterAnswer;
 	
 	@Override
 	public boolean doesGuiPauseGame() {
@@ -74,7 +75,14 @@ public class EditLocationsGui extends GuiScreen {
 		String skillTrackerText = DankersSkyblockMod.SKILL_TRACKER_COLOUR + "Farming XP Earned: 462,425.3\n" +
 								  DankersSkyblockMod.SKILL_TRACKER_COLOUR + "Time Elapsed: " + Utils.getTimeBetween(0, 3602) + "\n" +
 								  DankersSkyblockMod.SKILL_TRACKER_COLOUR + "XP Per Hour: 462,168";
-		
+
+		String waterAnswerText = DankersSkyblockMod.MAIN_COLOUR + "The following levers must be down:\n" +
+								 EnumChatFormatting.DARK_PURPLE + "Purple: " + EnumChatFormatting.WHITE + "Quartz, " + EnumChatFormatting.YELLOW + "Gold, " + EnumChatFormatting.GREEN + "Emerald, " + EnumChatFormatting.RED + "Clay\n" +
+								 EnumChatFormatting.GOLD + "Orange: " + EnumChatFormatting.YELLOW + "Gold, " + EnumChatFormatting.DARK_GRAY + "Coal\n" +
+								 EnumChatFormatting.BLUE + "Blue: " + EnumChatFormatting.WHITE + "Quartz, " + EnumChatFormatting.YELLOW + "Gold, " + EnumChatFormatting.DARK_GRAY + "Coal, " + EnumChatFormatting.GREEN + "Emerald, " + EnumChatFormatting.RED + "Clay\n" +
+								 EnumChatFormatting.GREEN + "Green: " + EnumChatFormatting.YELLOW + "Gold, " + EnumChatFormatting.GREEN + "Emerald\n" +
+								 EnumChatFormatting.RED + "Red: " + EnumChatFormatting.YELLOW + "Gold, " + EnumChatFormatting.AQUA + "Diamond, " + EnumChatFormatting.GREEN + "Emerald, " + EnumChatFormatting.RED + "Clay";
+
 		display = new LocationButton(0, MoveCommand.displayXY[0], MoveCommand.displayXY[1], 145 * ScaleCommand.displayScale, 102 * ScaleCommand.displayScale, ScaleCommand.displayScale, displayText, displayNums, 110);
 		dungeonTimer = new LocationButton(0, MoveCommand.dungeonTimerXY[0], MoveCommand.dungeonTimerXY[1], 113 * ScaleCommand.dungeonTimerScale, 57 * ScaleCommand.dungeonTimerScale, ScaleCommand.dungeonTimerScale, dungeonTimerText, dungeonTimerNums, 80);
 		coords = new LocationButton(0, MoveCommand.coordsXY[0], MoveCommand.coordsXY[1], 141 * ScaleCommand.coordsScale, 12 * ScaleCommand.coordsScale, ScaleCommand.coordsScale, DankersSkyblockMod.COORDS_COLOUR + "74 / 14 / -26 (141.1 / 6.7)", null, null);
@@ -82,12 +90,14 @@ public class EditLocationsGui extends GuiScreen {
 		lividHP = new LocationButton(0, MoveCommand.lividHpXY[0], MoveCommand.lividHpXY[1], 85 * ScaleCommand.lividHpScale, 12 * ScaleCommand.lividHpScale, ScaleCommand.lividHpScale, EnumChatFormatting.WHITE + "﴾ Livid " + EnumChatFormatting.YELLOW + "6.9M" + EnumChatFormatting.RED + "❤ " + EnumChatFormatting.WHITE + "﴿", null, null);
 		cakeTimer = new LocationButton(0, MoveCommand.cakeTimerXY[0], MoveCommand.cakeTimerXY[1] + 5, 85 * ScaleCommand.cakeTimerScale, 18 * ScaleCommand.cakeTimerScale, ScaleCommand.cakeTimerScale, DankersSkyblockMod.CAKE_COLOUR + "     11h16m", null, null);
 		skillTracker = new LocationButton(0, MoveCommand.skillTrackerXY[0], MoveCommand.skillTrackerXY[1], 150 * ScaleCommand.skillTrackerScale, 28 * ScaleCommand.skillTrackerScale, ScaleCommand.skillTrackerScale, skillTrackerText, null, null);
-		
+		waterAnswer = new LocationButton(0, MoveCommand.waterAnswerXY[0], MoveCommand.waterAnswerXY[1], 190 * ScaleCommand.waterAnswerScale, 54 * ScaleCommand.waterAnswerScale, ScaleCommand.waterAnswerScale, waterAnswerText, null, null);
+
 		this.buttonList.add(coords);
 		this.buttonList.add(dungeonTimer);
 		this.buttonList.add(lividHP);
 		this.buttonList.add(cakeTimer);
 		this.buttonList.add(skillTracker);
+		this.buttonList.add(waterAnswer);
 		this.buttonList.add(display);
 		this.buttonList.add(skill50);
 	}
@@ -155,6 +165,12 @@ public class EditLocationsGui extends GuiScreen {
 					skillTracker.xPosition = MoveCommand.skillTrackerXY[0];
 					skillTracker.yPosition = MoveCommand.skillTrackerXY[1];
 					break;
+				case "waterAnswer":
+					MoveCommand.waterAnswerXY[0] += xMoved;
+					MoveCommand.waterAnswerXY[1] += yMoved;
+					waterAnswer.xPosition = MoveCommand.waterAnswerXY[0];
+					waterAnswer.yPosition = MoveCommand.waterAnswerXY[1];
+					break;
 			}
 			this.buttonList.clear();
 			initGui();
@@ -181,6 +197,8 @@ public class EditLocationsGui extends GuiScreen {
 				moving = "cakeTimer";
 			} else if (button == skillTracker) {
 				moving = "skillTracker";
+			} else if (button == waterAnswer) {
+				moving = "waterAnswer";
 			}
 		}
 	}
@@ -203,6 +221,8 @@ public class EditLocationsGui extends GuiScreen {
 		ConfigHandler.writeIntConfig("locations", "cakeTimerY", MoveCommand.cakeTimerXY[1]);
 		ConfigHandler.writeIntConfig("locations", "skillTrackerX", MoveCommand.skillTrackerXY[0]);
 		ConfigHandler.writeIntConfig("locations", "skillTrackerY", MoveCommand.skillTrackerXY[1]);
+		ConfigHandler.writeIntConfig("locations", "waterAnswerX", MoveCommand.waterAnswerXY[1]);
+		ConfigHandler.writeIntConfig("locations", "waterAnswerY", MoveCommand.waterAnswerXY[1]);
 	}
 	
 }

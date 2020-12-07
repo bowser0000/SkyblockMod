@@ -113,6 +113,7 @@ public class DankersSkyblockMod
 	static List<Vec3[]> creeperLines = new ArrayList<>();
 	static boolean prevInWaterRoom = false;
 	static boolean inWaterRoom = false;
+	static String waterAnswers = null;
 	static AxisAlignedBB correctTicTacToeButton = null;
 	static Slot[] clickInOrderSlots = new Slot[36];
 	static int lastChronomatronRound = 0;
@@ -1280,7 +1281,11 @@ public class DankersSkyblockMod
 			
 			new TextRenderer(mc, skillTrackerText, MoveCommand.skillTrackerXY[0], MoveCommand.skillTrackerXY[1], ScaleCommand.skillTrackerScale);
     	}
-    	
+
+    	if (ToggleCommand.waterToggled && Utils.inDungeons && waterAnswers != null) {
+			new TextRenderer(mc, waterAnswers, MoveCommand.waterAnswerXY[0], MoveCommand.waterAnswerXY[1], ScaleCommand.waterAnswerScale);
+		}
+
     	if (!DisplayCommand.display.equals("off")) {
     		String dropsText = "";
     		String countText = "";
@@ -2475,14 +2480,12 @@ public class DankersSkyblockMod
         	    								purple = orange = blue = green = red = ERROR_COLOUR + "Error detecting water puzzle variant.";
         	    								break;
             							}
-            							player.addChatMessage(new ChatComponentText(DELIMITER_COLOUR + EnumChatFormatting.BOLD + "-------------------\n" +
-            																		MAIN_COLOUR + " The following levers must be down:\n " +
-            																		EnumChatFormatting.DARK_PURPLE + "Purple: " + purple + "\n " +
-            																		EnumChatFormatting.GOLD + "Orange: " + orange + "\n " +
-            																		EnumChatFormatting.BLUE + "Blue: " + blue + "\n " +
-            																		EnumChatFormatting.GREEN + "Green: " + green + "\n " +
-            																		EnumChatFormatting.RED + "Red: " + red + "\n" +
-            																		DELIMITER_COLOUR + EnumChatFormatting.BOLD + " -------------------"));
+										waterAnswers = MAIN_COLOUR + "The following levers must be down:\n" +
+													   EnumChatFormatting.DARK_PURPLE + "Purple: " + purple + "\n" +
+													   EnumChatFormatting.GOLD + "Orange: " + orange + "\n" +
+													   EnumChatFormatting.BLUE + "Blue: " + blue + "\n" +
+													   EnumChatFormatting.GREEN + "Green: " + green + "\n" +
+													   EnumChatFormatting.RED + "Red: " + red;
             							done = true;
             							break;
         							}
@@ -2490,7 +2493,9 @@ public class DankersSkyblockMod
         					}
         					if (done) break;
         				}
-    				}
+    				} else {
+    					waterAnswers = null;
+					}
     			}).start();
     		}
 

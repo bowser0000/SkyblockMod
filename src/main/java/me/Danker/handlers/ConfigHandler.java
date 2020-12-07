@@ -391,6 +391,8 @@ public class ConfigHandler {
 		if (!hasKey("locations", "cakeTimerY")) writeIntConfig("locations", "cakeTimerY", 30);
 		if (!hasKey("locations", "skillTrackerX")) writeIntConfig("locations", "skillTrackerX", 40);
 		if (!hasKey("locations", "skillTrackerY")) writeIntConfig("locations", "skillTrackerY", 50);
+		if (!hasKey("locations", "waterAnswerX")) writeIntConfig("locations", "waterAnswerX", 100);
+		if (!hasKey("locations", "waterAnswerY")) writeIntConfig("locations", "waterAnswerY", 100);
 		if (!hasKey("scales", "coordsScale")) writeDoubleConfig("scales", "coordsScale", 1);
 		if (!hasKey("scales", "displayScale")) writeDoubleConfig("scales", "displayScale", 1);
 		if (!hasKey("scales", "dungeonTimerScale")) writeDoubleConfig("scales", "dungeonTimerScale", 1);
@@ -398,6 +400,7 @@ public class ConfigHandler {
 		if (!hasKey("scales", "lividHpScale")) writeDoubleConfig("scales", "lividHpScale", 1);
 		if (!hasKey("scales", "cakeTimerScale")) writeDoubleConfig("scales", "cakeTimerScale", 1);
 		if (!hasKey("scales", "skillTrackerScale")) writeDoubleConfig("scales", "skillTrackerScale", 1);
+		if (!hasKey("scales", "waterAnswerScale")) writeDoubleConfig("scales", "waterAnswerScale", 1);
 		
 		if (!hasKey("colors", "main")) writeStringConfig("colors", "main", EnumChatFormatting.GREEN.toString());
 		if (!hasKey("colors", "secondary")) writeStringConfig("colors", "secondary", EnumChatFormatting.DARK_GREEN.toString());
@@ -640,6 +643,8 @@ public class ConfigHandler {
 		MoveCommand.cakeTimerXY[1] = getInt("locations", "cakeTimerY");
 		MoveCommand.skillTrackerXY[0] = getInt("locations", "skillTrackerX");
 		MoveCommand.skillTrackerXY[1] = getInt("locations", "skillTrackerY");
+		MoveCommand.waterAnswerXY[0] = getInt("locations", "waterAnswerX");
+		MoveCommand.waterAnswerXY[1] = getInt("locations", "waterAnswerY");
 		
 		ScaleCommand.coordsScale = getDouble("scales", "coordsScale");
 		ScaleCommand.displayScale = getDouble("scales", "displayScale");
@@ -648,7 +653,8 @@ public class ConfigHandler {
 		ScaleCommand.lividHpScale = getDouble("scales", "lividHpScale");
 		ScaleCommand.cakeTimerScale = getDouble("scales", "cakeTimerScale");
 		ScaleCommand.skillTrackerScale = getDouble("scales", "skillTrackerScale");
-		
+		ScaleCommand.waterAnswerScale = getDouble("scales", "waterAnswerScale");
+
 		DankersSkyblockMod.MAIN_COLOUR = getString("colors", "main");
 		DankersSkyblockMod.SECONDARY_COLOUR = getString("colors", "secondary");
 		DankersSkyblockMod.DELIMITER_COLOUR = getString("colors", "delimiter");
