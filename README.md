@@ -29,7 +29,7 @@ Discord Server: https://discord.gg/QsEkNQS
 - Expertise kills in fishing rod lore
 - Catacombs trackers
 - Dungeons puzzle solver (Riddle, trivia, blaze, creeper, water, tic tac toe)
-- Experimentation solvers (Ultrasequencer)
+- Experimentation solvers (Ultrasequencer, Chronomatron, Superpairs)
 - Catacombs F7 Stage 3 solvers (Starts with letter, select all colour, ignore arrows on sea lanterns)
 - Find correct Livid (with graphic display of HP)
 - Pet background colors based on level

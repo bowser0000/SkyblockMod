@@ -103,16 +103,21 @@ public class Utils {
 		
 		int height = scaledResolution.getScaledHeight();
 		int width = scaledResolution.getScaledWidth();
-		int textLength = mc.fontRendererObj.getStringWidth(text);
-		
-		double scale = 4;
-		if (textLength * scale > (width * 0.9F)) {
-			scale = (width * 0.9F) / (float) textLength;
+		int drawHeight = 0;
+		String[] splitText = text.split("\n");
+		for (String title : splitText) {
+			int textLength = mc.fontRendererObj.getStringWidth(title);
+
+			double scale = 4;
+			if (textLength * scale > (width * 0.9F)) {
+				scale = (width * 0.9F) / (float) textLength;
+			}
+
+			int titleX = (int) ((width / 2) - (textLength * scale / 2));
+			int titleY = (int) ((height * 0.45) / scale) + (int) (drawHeight * scale);
+			new TextRenderer(mc, title, titleX, titleY, scale);
+			drawHeight += mc.fontRendererObj.FONT_HEIGHT;
 		}
-		
-		int titleX = (int) ((width / 2) - (textLength * scale / 2));
-		int titleY = (int) ((height * 0.45) / scale);
-		new TextRenderer(mc, text, titleX, titleY, scale);
 	}
 	
 	public static void checkForSkyblock() {

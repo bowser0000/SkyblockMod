@@ -7,7 +7,6 @@ import me.Danker.handlers.*;
 import me.Danker.utils.TicTacToeUtils;
 import me.Danker.utils.Utils;
 import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.Gui;
@@ -2648,7 +2647,8 @@ public class DankersSkyblockMod
     			List<String> scoreboard = ScoreboardHandler.getSidebarLines();
     			for (String score : scoreboard) {
     				if (score.endsWith("❤") && score.matches(".*§c\\d.*")) {
-        				Utils.createTitle(EnumChatFormatting.RED + "LOW HEALTH!", 1);
+    					String name = score.substring(score.indexOf(" ") + 1);
+        				Utils.createTitle(EnumChatFormatting.RED + "LOW HEALTH!\n" + name, 1);
         				break;
     				}
     			}
@@ -2783,9 +2783,8 @@ public class DankersSkyblockMod
     		}
     	}
 
-		if(event.action == PlayerInteractEvent.Action.RIGHT_CLICK_BLOCK) {
-			IBlockState blockState = Minecraft.getMinecraft().theWorld.getBlockState(event.pos);
-			Block block = blockState.getBlock();
+		if (event.action == PlayerInteractEvent.Action.RIGHT_CLICK_BLOCK) {
+			Block block = Minecraft.getMinecraft().theWorld.getBlockState(event.pos).getBlock();
 			ArrayList<Block> interactables = new ArrayList<>(Arrays.asList(
 					Blocks.acacia_door,
 					Blocks.anvil,
@@ -2821,11 +2820,11 @@ public class DankersSkyblockMod
 					Blocks.oak_door,
 					Blocks.skull
 			));
-			if(Utils.inDungeons) {
+			if (Utils.inDungeons) {
 				interactables.add(Blocks.coal_block);
 				interactables.add(Blocks.stained_hardened_clay);
 			}
-			if(!interactables.contains(block)) {
+			if (!interactables.contains(block)) {
 				if (ToggleCommand.aotdToggled && item.getDisplayName().contains("Aspect of the Dragons")) {
 					event.setCanceled(true);
 				}
@@ -2891,12 +2890,12 @@ public class DankersSkyblockMod
     			ItemStack item = mouseSlot.getStack();
     			String inventoryName = inventory.getDisplayName().getUnformattedText();
 
-				if(ToggleCommand.stopSalvageStarredToggled && inventoryName.startsWith("Salvage")) {
-					if(item == null) return;
+				if (ToggleCommand.stopSalvageStarredToggled && inventoryName.startsWith("Salvage")) {
+					if (item == null) return;
 					boolean inSalvageGui = false;
-					if(item.getDisplayName().contains("Salvage") || item.getDisplayName().contains("Essence")) {
+					if (item.getDisplayName().contains("Salvage") || item.getDisplayName().contains("Essence")) {
 						ItemStack salvageItem = inventory.getStackInSlot(13);
-						if(salvageItem == null) return;
+						if (salvageItem == null) return;
 						item = salvageItem;
 						inSalvageGui = true;
 					}
@@ -3037,15 +3036,15 @@ public class DankersSkyblockMod
 				GuiChest chest = (GuiChest) event.gui;
 				IInventory inventory = ((ContainerChest) containerChest).getLowerChestInventory();
 				String inventoryName = inventory.getDisplayName().getUnformattedText();
-				if(ToggleCommand.swapToPickBlockInExperimentsToggled) {
-					if(inventoryName.startsWith("Chronomatron (") || inventoryName.startsWith("Superpairs (") || inventoryName.startsWith("Ultrasequencer (")) {
-						if(!pickBlockBindSwapped) {
+				if (ToggleCommand.swapToPickBlockInExperimentsToggled) {
+					if (inventoryName.startsWith("Chronomatron (") || inventoryName.startsWith("Superpairs (") || inventoryName.startsWith("Ultrasequencer (")) {
+						if (!pickBlockBindSwapped) {
 							pickBlockBind = gameSettings.keyBindPickBlock.getKeyCode();
 							gameSettings.keyBindPickBlock.setKeyCode(-100);
 							pickBlockBindSwapped = true;
 						}
 					} else {
-						if(pickBlockBindSwapped) {
+						if (pickBlockBindSwapped) {
 							gameSettings.keyBindPickBlock.setKeyCode(pickBlockBind);
 							pickBlockBindSwapped = false;
 						}
