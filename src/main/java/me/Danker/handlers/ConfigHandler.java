@@ -192,6 +192,7 @@ public class ConfigHandler {
 		if (!hasKey("toggles", "LowHealthNotify")) writeBooleanConfig("toggles", "LowHealthNotify", false);
 		if (!hasKey("toggles", "LividSolver")) writeBooleanConfig("toggles", "LividSolver", false);
 		if (!hasKey("toggles", "StopSalvageStarred")) writeBooleanConfig("toggles", "StopSalvageStarred", false);
+		if (!hasKey("toggles", "WatcherReadyMessage")) writeBooleanConfig("toggles", "WatcherReadyMessage", false);
 		// Puzzle Solvers
 		if (!hasKey("toggles", "ThreeManPuzzle")) writeBooleanConfig("toggles", "ThreeManPuzzle", false);
 		if (!hasKey("toggles", "OruoPuzzle")) writeBooleanConfig("toggles", "OruoPuzzle", false);
@@ -442,6 +443,7 @@ public class ConfigHandler {
 		ToggleCommand.lowHealthNotifyToggled = getBoolean("toggles", "LowHealthNotify");
 		ToggleCommand.lividSolverToggled = getBoolean("toggles", "LividSolver");
 		ToggleCommand.stopSalvageStarredToggled = getBoolean("toggles", "StopSalvageStarred");
+		ToggleCommand.watcherReadyToggled = getBoolean("toggles", "WatcherReadyMessage");
 		// Puzzle Solvers
 		ToggleCommand.threeManToggled = getBoolean("toggles", "ThreeManPuzzle");
 		ToggleCommand.oruoToggled = getBoolean("toggles", "OruoPuzzle");

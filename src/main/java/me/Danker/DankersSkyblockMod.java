@@ -442,7 +442,10 @@ public class DankersSkyblockMod
         
         if (message.contains("[BOSS] The Watcher: You have proven yourself. You may pass.")) {
         	watcherClearTime = System.currentTimeMillis() / 1000;
-        }
+		}
+		if (message.contains("[BOSS] The Watcher: That will be enough for now.") && ToggleCommand.watcherReadyToggled && Utils.inDungeons) {
+			Utils.createTitle(EnumChatFormatting.RED + "WATCHER READY", 2);
+		}
 		if (message.contains("PUZZLE FAIL! ") || message.contains("chose the wrong answer! I shall never forget this moment")) {
 			puzzleFails++;
 		}
