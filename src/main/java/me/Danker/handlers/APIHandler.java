@@ -1,23 +1,21 @@
 package me.Danker.handlers;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import me.Danker.DankersSkyblockMod;
+import net.minecraft.client.Minecraft;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.ChatComponentText;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Scanner;
-
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-
-import me.Danker.TheMod;
-import net.minecraft.client.Minecraft;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.ChatComponentText;
 
 public class APIHandler {
 	public static JsonObject getResponse(String urlString) {
@@ -31,7 +29,7 @@ public class APIHandler {
 			if (conn.getResponseCode() == HttpURLConnection.HTTP_OK) {
 				BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 				String input;
-				StringBuffer response = new StringBuffer();
+				StringBuilder response = new StringBuilder();
 				
 				while ((input = in.readLine()) != null) {
 					response.append(input);
@@ -39,9 +37,8 @@ public class APIHandler {
 				in.close();
 				
 				Gson gson = new Gson();
-				JsonObject object = gson.fromJson(response.toString(), JsonObject.class);
-				
-				return object;
+
+				return gson.fromJson(response.toString(), JsonObject.class);
 			} else {
 				if (urlString.startsWith("https://api.hypixel.net/")) {
 					InputStream errorStream = conn.getErrorStream();
@@ -50,23 +47,19 @@ public class APIHandler {
 						String error = scanner.next();
 						
 						Gson gson = new Gson();
-						JsonObject object = gson.fromJson(error, JsonObject.class);
-						return object;
+						return gson.fromJson(error, JsonObject.class);
 					}
 				} else if (urlString.startsWith("https://api.mojang.com/users/profiles/minecraft/") && conn.getResponseCode() == 204) {
-					player.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "Failed with reason: Player does not exist."));
+					player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Failed with reason: Player does not exist."));
 				} else {
-					player.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "Request failed. HTTP Error Code: " + conn.getResponseCode()));
+					player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Request failed. HTTP Error Code: " + conn.getResponseCode()));
 				}
 			}
-		} catch (MalformedURLException ex) {
-			player.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "An error has occured. See logs for more details."));
-			System.err.println(ex);
 		} catch (IOException ex) {
-			player.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "An error has occured. See logs for more details."));
-			System.err.println(ex);
+			player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "An error has occured. See logs for more details."));
+			ex.printStackTrace();
 		}
-		
+
 		return new JsonObject();
 	}
 	
@@ -82,7 +75,7 @@ public class APIHandler {
 			if (conn.getResponseCode() == HttpURLConnection.HTTP_OK) {
 				BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 				String input;
-				StringBuffer response = new StringBuffer();
+				StringBuilder response = new StringBuilder();
 				
 				while ((input = in.readLine()) != null) {
 					response.append(input);
@@ -90,33 +83,25 @@ public class APIHandler {
 				in.close();
 				
 				Gson gson = new Gson();
-				JsonArray array = gson.fromJson(response.toString(), JsonArray.class);
-				
-				return array;
+
+				return gson.fromJson(response.toString(), JsonArray.class);
 			} else {
-				player.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "Request failed. HTTP Error Code: " + conn.getResponseCode()));
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Request failed. HTTP Error Code: " + conn.getResponseCode()));
 			}
-		} catch (MalformedURLException ex) {
-			player.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "An error has occured. See logs for more details."));
-			System.err.println(ex);
 		} catch (IOException ex) {
-			player.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "An error has occured. See logs for more details."));
-			System.err.println(ex);
+			player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "An error has occured. See logs for more details."));
+			ex.printStackTrace();
 		}
-		
+
 		return new JsonArray();
 	}
 	
 	public static String getUUID(String username) {
-		Gson gson = new Gson();
-		
 		JsonObject uuidResponse = getResponse("https://api.mojang.com/users/profiles/minecraft/" + username);
-		String UUID = uuidResponse.get("id").getAsString();
-		return UUID;
+		return uuidResponse.get("id").getAsString();
 	}
 	
 	public static String getLatestProfileID(String UUID, String key) {
-		Gson gson = new Gson();
 		EntityPlayer player = Minecraft.getMinecraft().thePlayer;
 		
 		// Get profiles
@@ -125,11 +110,11 @@ public class APIHandler {
 		JsonObject profilesResponse = getResponse("https://api.hypixel.net/skyblock/profiles?uuid=" + UUID + "&key=" + key);
 		if (!profilesResponse.get("success").getAsBoolean()) {
 			String reason = profilesResponse.get("cause").getAsString();
-			player.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "Failed with reason: " + reason));
+			player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Failed with reason: " + reason));
 			return null;
 		}
 		if (profilesResponse.get("profiles").isJsonNull()) {
-			player.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "This player doesn't appear to have played SkyBlock."));
+			player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "This player doesn't appear to have played SkyBlock."));
 			return null;
 		}
 		

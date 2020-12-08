@@ -1,10 +1,7 @@
 package me.Danker.commands;
 
-import java.util.List;
-
 import com.google.gson.JsonObject;
-
-import me.Danker.TheMod;
+import me.Danker.DankersSkyblockMod;
 import me.Danker.handlers.APIHandler;
 import me.Danker.handlers.ConfigHandler;
 import me.Danker.utils.Utils;
@@ -15,6 +12,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
+
+import java.util.List;
 
 public class SkillsCommand extends CommandBase {
 	
@@ -50,7 +49,7 @@ public class SkillsCommand extends CommandBase {
 			// Check key
 			String key = ConfigHandler.getString("api", "APIKey");
 			if (key.equals("")) {
-				player.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "API key not set. Use /setkey."));
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "API key not set. Use /setkey."));
 			}
 			
 			// Get UUID for Hypixel API requests
@@ -59,10 +58,10 @@ public class SkillsCommand extends CommandBase {
 			if (arg1.length == 0) {
 				username = player.getName();
 				uuid = player.getUniqueID().toString().replaceAll("[\\-]", "");
-				player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Checking skills of " + TheMod.SECONDARY_COLOUR + username));
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Checking skills of " + DankersSkyblockMod.SECONDARY_COLOUR + username));
 			} else {
 				username = arg1[0];
-				player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Checking skills of " + TheMod.SECONDARY_COLOUR + username));
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Checking skills of " + DankersSkyblockMod.SECONDARY_COLOUR + username));
 				uuid = APIHandler.getUUID(username);
 			}
 			
@@ -75,7 +74,7 @@ public class SkillsCommand extends CommandBase {
 			JsonObject profileResponse = APIHandler.getResponse(profileURL);
 			if (!profileResponse.get("success").getAsBoolean()) {
 				String reason = profileResponse.get("cause").getAsString();
-				player.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "Failed with reason: " + reason));
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Failed with reason: " + reason));
 				return;
 			}
 			
@@ -113,7 +112,7 @@ public class SkillsCommand extends CommandBase {
 					fishingLevel = (double) Math.round(fishingLevel * 100) / 100;
 				}
 				if (userObject.has("experience_skill_enchanting")) {
-					enchantingLevel = Utils.xpToSkillLevel(userObject.get("experience_skill_enchanting").getAsDouble(), 50);
+					enchantingLevel = Utils.xpToSkillLevel(userObject.get("experience_skill_enchanting").getAsDouble(), 60);
 					enchantingLevel = (double) Math.round(enchantingLevel * 100) / 100;
 				}
 				if (userObject.has("experience_skill_alchemy")) {
@@ -133,7 +132,7 @@ public class SkillsCommand extends CommandBase {
 				
 				if (!playerObject.get("success").getAsBoolean()) {
 					String reason = profileResponse.get("cause").getAsString();
-					player.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "Failed with reason: " + reason));
+					player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Failed with reason: " + reason));
 					return;
 				}
 				
@@ -154,7 +153,7 @@ public class SkillsCommand extends CommandBase {
 					fishingLevel = Math.min(achievementObject.get("skyblock_angler").getAsInt(), 50);
 				}
 				if (achievementObject.has("skyblock_augmentation")) {
-					enchantingLevel = Math.min(achievementObject.get("skyblock_augmentation").getAsInt(), 50);
+					enchantingLevel = achievementObject.get("skyblock_augmentation").getAsInt();
 				}
 				if (achievementObject.has("skyblock_concoctor")) {
 					alchemyLevel = Math.min(achievementObject.get("skyblock_concoctor").getAsInt(), 50);
@@ -168,19 +167,19 @@ public class SkillsCommand extends CommandBase {
 			skillAvg = (double) Math.round(skillAvg * 100) / 100;
 			double trueAvg = (Math.floor(farmingLevel) + Math.floor(miningLevel) + Math.floor(combatLevel) + Math.floor(foragingLevel) + Math.floor(fishingLevel) + Math.floor(enchantingLevel) + Math.floor(alchemyLevel) + Math.floor(tamingLevel)) / 8;
 			
-			player.addChatMessage(new ChatComponentText(TheMod.DELIMITER_COLOUR + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+			player.addChatMessage(new ChatComponentText(DankersSkyblockMod.DELIMITER_COLOUR + "" + EnumChatFormatting.BOLD + "-------------------\n" +
 														EnumChatFormatting.AQUA + " " + username + "'s Skills:\n" +
-														TheMod.TYPE_COLOUR + " Farming: " + TheMod.VALUE_COLOUR + EnumChatFormatting.BOLD + farmingLevel + "\n" +
-														TheMod.TYPE_COLOUR + " Mining: " + TheMod.VALUE_COLOUR + EnumChatFormatting.BOLD + miningLevel + "\n" +
-														TheMod.TYPE_COLOUR + " Combat: " + TheMod.VALUE_COLOUR + EnumChatFormatting.BOLD + combatLevel + "\n" +
-														TheMod.TYPE_COLOUR + " Foraging: " + TheMod.VALUE_COLOUR + EnumChatFormatting.BOLD + foragingLevel + "\n" +
-														TheMod.TYPE_COLOUR + " Fishing: " + TheMod.VALUE_COLOUR + EnumChatFormatting.BOLD + fishingLevel + "\n" +
-														TheMod.TYPE_COLOUR + " Enchanting: " + TheMod.VALUE_COLOUR + EnumChatFormatting.BOLD + enchantingLevel + "\n" +
-														TheMod.TYPE_COLOUR + " Alchemy: " + TheMod.VALUE_COLOUR + EnumChatFormatting.BOLD + alchemyLevel + "\n" +
-														TheMod.TYPE_COLOUR + " Taming: " + TheMod.VALUE_COLOUR + EnumChatFormatting.BOLD + tamingLevel + "\n" +
-														EnumChatFormatting.AQUA + " Average Skill Level: " + TheMod.SKILL_AVERAGE_COLOUR + EnumChatFormatting.BOLD + skillAvg + "\n" +
-														EnumChatFormatting.AQUA + " True Average Skill Level: " + TheMod.SKILL_AVERAGE_COLOUR + EnumChatFormatting.BOLD + trueAvg + "\n" +
-														TheMod.DELIMITER_COLOUR + " " + EnumChatFormatting.BOLD + "-------------------"));
+														DankersSkyblockMod.TYPE_COLOUR + " Farming: " + DankersSkyblockMod.VALUE_COLOUR + EnumChatFormatting.BOLD + farmingLevel + "\n" +
+														DankersSkyblockMod.TYPE_COLOUR + " Mining: " + DankersSkyblockMod.VALUE_COLOUR + EnumChatFormatting.BOLD + miningLevel + "\n" +
+														DankersSkyblockMod.TYPE_COLOUR + " Combat: " + DankersSkyblockMod.VALUE_COLOUR + EnumChatFormatting.BOLD + combatLevel + "\n" +
+														DankersSkyblockMod.TYPE_COLOUR + " Foraging: " + DankersSkyblockMod.VALUE_COLOUR + EnumChatFormatting.BOLD + foragingLevel + "\n" +
+														DankersSkyblockMod.TYPE_COLOUR + " Fishing: " + DankersSkyblockMod.VALUE_COLOUR + EnumChatFormatting.BOLD + fishingLevel + "\n" +
+														DankersSkyblockMod.TYPE_COLOUR + " Enchanting: " + DankersSkyblockMod.VALUE_COLOUR + EnumChatFormatting.BOLD + enchantingLevel + "\n" +
+														DankersSkyblockMod.TYPE_COLOUR + " Alchemy: " + DankersSkyblockMod.VALUE_COLOUR + EnumChatFormatting.BOLD + alchemyLevel + "\n" +
+														DankersSkyblockMod.TYPE_COLOUR + " Taming: " + DankersSkyblockMod.VALUE_COLOUR + EnumChatFormatting.BOLD + tamingLevel + "\n" +
+														EnumChatFormatting.AQUA + " Average Skill Level: " + DankersSkyblockMod.SKILL_AVERAGE_COLOUR + EnumChatFormatting.BOLD + skillAvg + "\n" +
+														EnumChatFormatting.AQUA + " True Average Skill Level: " + DankersSkyblockMod.SKILL_AVERAGE_COLOUR + EnumChatFormatting.BOLD + trueAvg + "\n" +
+														DankersSkyblockMod.DELIMITER_COLOUR + " " + EnumChatFormatting.BOLD + "-------------------"));
 		}).start();
 	}
 

@@ -1,6 +1,6 @@
 package me.Danker.gui;
 
-import me.Danker.TheMod;
+import me.Danker.DankersSkyblockMod;
 import me.Danker.commands.BlockSlayerCommand;
 import me.Danker.handlers.ConfigHandler;
 import me.Danker.handlers.TextRenderer;
@@ -38,14 +38,19 @@ public class OnlySlayerGui extends GuiScreen {
 		int width = sr.getScaledWidth();
 		
 		onlyName = BlockSlayerCommand.onlySlayerName;
-		if (BlockSlayerCommand.onlySlayerNumber.equals("I")) {
-			onlyNumberInt = 1;
-		} else if (BlockSlayerCommand.onlySlayerNumber.equals("II")) {
-			onlyNumberInt = 2;
-		} else if (BlockSlayerCommand.onlySlayerNumber.equals("III")) {
-			onlyNumberInt = 3;
-		} else {
-			onlyNumberInt = 4;
+		switch (BlockSlayerCommand.onlySlayerNumber) {
+			case "I":
+				onlyNumberInt = 1;
+				break;
+			case "II":
+				onlyNumberInt = 2;
+				break;
+			case "III":
+				onlyNumberInt = 3;
+				break;
+			default:
+				onlyNumberInt = 4;
+				break;
 		}
 		
 		goBack = new GuiButton(0, 2, height - 30, 100, 20, "Go Back");
@@ -89,7 +94,7 @@ public class OnlySlayerGui extends GuiScreen {
 	@Override
 	public void actionPerformed(GuiButton button) {
 		if (button == goBack) {
-			TheMod.guiToOpen = "dankergui1";
+			DankersSkyblockMod.guiToOpen = "dankergui1";
 		} else if (button == off) {
 			BlockSlayerCommand.onlySlayerName = "";
 			BlockSlayerCommand.onlySlayerNumber = "";

@@ -1,8 +1,6 @@
 package me.Danker.commands;
 
-import java.util.List;
-
-import me.Danker.TheMod;
+import me.Danker.DankersSkyblockMod;
 import me.Danker.handlers.ConfigHandler;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
@@ -10,6 +8,8 @@ import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
+
+import java.util.List;
 
 public class BlockSlayerCommand extends CommandBase {
 	
@@ -46,7 +46,7 @@ public class BlockSlayerCommand extends CommandBase {
 		final EntityPlayer player = (EntityPlayer)arg0;
 		
 		if (arg1.length == 0 || (arg1.length == 1 && !arg1[0].equalsIgnoreCase("off"))) {
-			player.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "Usage: " + getCommandUsage(arg0)));
+			player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Usage: " + getCommandUsage(arg0)));
 			return;
 		}
 		
@@ -64,10 +64,10 @@ public class BlockSlayerCommand extends CommandBase {
 				onlySlayerName = "";
 				onlySlayerNumber = "";
 				ConfigHandler.writeStringConfig("toggles", "BlockSlayer", "");
-				player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Slayer blocking turned off."));
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Slayer blocking turned off."));
 				return;
 			default:
-				player.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "Usage: " + getCommandUsage(arg0)));
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Usage: " + getCommandUsage(arg0)));
 				return;
 		}
 		
@@ -89,12 +89,12 @@ public class BlockSlayerCommand extends CommandBase {
 			default:
 				onlySlayerName = "";
 				onlySlayerNumber = "";
-				player.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "Usage: " + getCommandUsage(arg0)));
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Usage: " + getCommandUsage(arg0)));
 				return;
 		}
 		
 		ConfigHandler.writeStringConfig("toggles", "BlockSlayer", onlySlayerName + " " + onlySlayerNumber);
-		player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Slayer blocking set to " + TheMod.SECONDARY_COLOUR + onlySlayerName + " " + onlySlayerNumber));
+		player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Slayer blocking set to " + DankersSkyblockMod.SECONDARY_COLOUR + onlySlayerName + " " + onlySlayerNumber));
 	}
 
 }

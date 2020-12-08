@@ -1,6 +1,6 @@
 package me.Danker.gui;
 
-import me.Danker.TheMod;
+import me.Danker.DankersSkyblockMod;
 import me.Danker.commands.ToggleCommand;
 import me.Danker.handlers.ConfigHandler;
 import me.Danker.utils.Utils;
@@ -21,6 +21,7 @@ public class PuzzleSolversGui extends GuiScreen {
 	private GuiButton blaze;
 	private GuiButton creeper;
 	private GuiButton water;
+	private GuiButton ticTacToe;
 	private GuiButton startsWith;
 	private GuiButton selectAll;
 	private GuiButton itemFrameOnSeaLanterns;
@@ -52,10 +53,11 @@ public class PuzzleSolversGui extends GuiScreen {
 		blaze = new GuiButton(0, width / 2 - 100, (int) (height * 0.3), "Blaze Solver: " + Utils.getColouredBoolean(ToggleCommand.blazeToggled));
 		creeper = new GuiButton(0, width / 2 - 100, (int) (height * 0.4), "Creeper Solver: " + Utils.getColouredBoolean(ToggleCommand.creeperToggled));
 		water = new GuiButton(0, width / 2 - 100, (int) (height * 0.5), "Water Solver: " + Utils.getColouredBoolean(ToggleCommand.waterToggled));
-		startsWith = new GuiButton(0, width / 2 - 100, (int) (height * 0.6), "Starts With Letter Terminal Solver: " + Utils.getColouredBoolean(ToggleCommand.startsWithToggled));
-		selectAll = new GuiButton(0, width / 2 - 100, (int) (height * 0.7), "Select All Color Terminal Solver: " + Utils.getColouredBoolean(ToggleCommand.selectAllToggled));
+		ticTacToe = new GuiButton(0, width / 2 - 100, (int) (height * 0.6), "Tic Tac Toe Solver: " + Utils.getColouredBoolean(ToggleCommand.ticTacToeToggled));
+		startsWith = new GuiButton(0, width / 2 - 100, (int) (height * 0.7), "Starts With Letter Terminal Solver: " + Utils.getColouredBoolean(ToggleCommand.startsWithToggled));
 		// Page 2
-		itemFrameOnSeaLanterns = new GuiButton(0, width / 2 - 100, (int) (height * 0.1), "Ignore Arrows On Sea Lanterns: " + Utils.getColouredBoolean(ToggleCommand.itemFrameOnSeaLanternsToggled));
+		selectAll = new GuiButton(0, width / 2 - 100, (int) (height * 0.1), "Select All Color Terminal Solver: " + Utils.getColouredBoolean(ToggleCommand.selectAllToggled));
+		itemFrameOnSeaLanterns = new GuiButton(0, width / 2 - 100, (int) (height * 0.2), "Ignore Arrows On Sea Lanterns: " + Utils.getColouredBoolean(ToggleCommand.itemFrameOnSeaLanternsToggled));
 		
 		switch (page) {
 			case 1:
@@ -64,11 +66,12 @@ public class PuzzleSolversGui extends GuiScreen {
 				this.buttonList.add(blaze);
 				this.buttonList.add(creeper);
 				this.buttonList.add(water);
+				this.buttonList.add(ticTacToe);
 				this.buttonList.add(startsWith);
-				this.buttonList.add(selectAll);
 				this.buttonList.add(nextPage);
 				break;
 			case 2:
+				this.buttonList.add(selectAll);
 				this.buttonList.add(itemFrameOnSeaLanterns);
 				this.buttonList.add(backPage);
 				break;
@@ -85,7 +88,7 @@ public class PuzzleSolversGui extends GuiScreen {
 	@Override
 	public void actionPerformed(GuiButton button) {
 		if (button == goBack) {
-			TheMod.guiToOpen = "dankergui1";
+			DankersSkyblockMod.guiToOpen = "dankergui1";
 		} else if (button == backPage) {
 			Minecraft.getMinecraft().displayGuiScreen(new PuzzleSolversGui(page - 1));
 		} else if (button == nextPage) {
@@ -110,13 +113,17 @@ public class PuzzleSolversGui extends GuiScreen {
 			ToggleCommand.waterToggled = !ToggleCommand.waterToggled;
 			ConfigHandler.writeBooleanConfig("toggles", "WaterPuzzle", ToggleCommand.waterToggled);
 			water.displayString = "Water Solver: " + Utils.getColouredBoolean(ToggleCommand.waterToggled);
+		} else if (button == ticTacToe) {
+			ToggleCommand.ticTacToeToggled = !ToggleCommand.ticTacToeToggled;
+			ConfigHandler.writeBooleanConfig("toggles", "TicTacToePuzzle", ToggleCommand.ticTacToeToggled);
+			ticTacToe.displayString = "Tic Tac Toe Solver: " + Utils.getColouredBoolean(ToggleCommand.ticTacToeToggled);
 		} else if (button == startsWith) {
 			ToggleCommand.startsWithToggled = !ToggleCommand.startsWithToggled;
-			ConfigHandler.writeBooleanConfig("toggle", "StartsWithTerminal", ToggleCommand.startsWithToggled);
+			ConfigHandler.writeBooleanConfig("toggles", "StartsWithTerminal", ToggleCommand.startsWithToggled);
 			startsWith.displayString = "Starts With Letter Terminal Solver: " + Utils.getColouredBoolean(ToggleCommand.startsWithToggled);
 		} else if (button == selectAll) {
 			ToggleCommand.selectAllToggled = !ToggleCommand.selectAllToggled;
-			ConfigHandler.writeBooleanConfig("toggle", "SelectAllTerminal", ToggleCommand.selectAllToggled);
+			ConfigHandler.writeBooleanConfig("toggles", "SelectAllTerminal", ToggleCommand.selectAllToggled);
 			selectAll.displayString = "Select All Color Terminal Solver: " + Utils.getColouredBoolean(ToggleCommand.selectAllToggled);
 		} else if (button == itemFrameOnSeaLanterns) {
 			ToggleCommand.itemFrameOnSeaLanternsToggled = !ToggleCommand.itemFrameOnSeaLanternsToggled;

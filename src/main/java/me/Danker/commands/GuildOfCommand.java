@@ -1,12 +1,9 @@
 package me.Danker.commands;
 
-import java.util.List;
-
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-
-import me.Danker.TheMod;
+import me.Danker.DankersSkyblockMod;
 import me.Danker.handlers.APIHandler;
 import me.Danker.handlers.ConfigHandler;
 import me.Danker.utils.Utils;
@@ -17,6 +14,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
+
+import java.util.List;
 
 public class GuildOfCommand extends CommandBase {
 
@@ -52,7 +51,7 @@ public class GuildOfCommand extends CommandBase {
 			// Check key
 			String key = ConfigHandler.getString("api", "APIKey");
 			if (key.equals("")) {
-				player.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "API key not set. Use /setkey."));
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "API key not set. Use /setkey."));
 			}
 			
 			// Get UUID for Hypixel API requests
@@ -61,10 +60,10 @@ public class GuildOfCommand extends CommandBase {
 			if (arg1.length == 0) {
 				username = player.getName();
 				uuid = player.getUniqueID().toString().replaceAll("[\\-]", "");
-				player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Checking guild of " + TheMod.SECONDARY_COLOUR + username));
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Checking guild of " + DankersSkyblockMod.SECONDARY_COLOUR + username));
 			} else {
 				username = arg1[0];
-				player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Checking guild of " + TheMod.SECONDARY_COLOUR + username));
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Checking guild of " + DankersSkyblockMod.SECONDARY_COLOUR + username));
 				uuid = APIHandler.getUUID(username);
 			}
 			
@@ -74,7 +73,7 @@ public class GuildOfCommand extends CommandBase {
 			JsonObject guildResponse = APIHandler.getResponse(guildURL);
 			if (!guildResponse.get("success").getAsBoolean()) {
 				String reason = guildResponse.get("cause").getAsString();
-				player.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "Failed with reason: " + reason));
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Failed with reason: " + reason));
 				return;
 			}
 			
@@ -106,12 +105,12 @@ public class GuildOfCommand extends CommandBase {
 				}
 			}
 			
-			player.addChatMessage(new ChatComponentText(TheMod.DELIMITER_COLOUR + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+			player.addChatMessage(new ChatComponentText(DankersSkyblockMod.DELIMITER_COLOUR + "" + EnumChatFormatting.BOLD + "-------------------\n" +
 														EnumChatFormatting.AQUA + " " + username + "'s Guild:\n" +
-														TheMod.TYPE_COLOUR + " Guild: " + TheMod.VALUE_COLOUR + EnumChatFormatting.BOLD + guildName + "\n" +
-														TheMod.TYPE_COLOUR + " Guildmaster: " + TheMod.VALUE_COLOUR + EnumChatFormatting.BOLD + guildMaster + "\n" +
-														TheMod.TYPE_COLOUR + " Members: " + TheMod.VALUE_COLOUR + EnumChatFormatting.BOLD + players + "\n" +
-														TheMod.DELIMITER_COLOUR + " " + EnumChatFormatting.BOLD + "-------------------"));
+														DankersSkyblockMod.TYPE_COLOUR + " Guild: " + DankersSkyblockMod.VALUE_COLOUR + EnumChatFormatting.BOLD + guildName + "\n" +
+														DankersSkyblockMod.TYPE_COLOUR + " Guildmaster: " + DankersSkyblockMod.VALUE_COLOUR + EnumChatFormatting.BOLD + guildMaster + "\n" +
+														DankersSkyblockMod.TYPE_COLOUR + " Members: " + DankersSkyblockMod.VALUE_COLOUR + EnumChatFormatting.BOLD + players + "\n" +
+														DankersSkyblockMod.DELIMITER_COLOUR + " " + EnumChatFormatting.BOLD + "-------------------"));
 		}).start();
 	}
 

@@ -1,6 +1,6 @@
 package me.Danker.gui;
 
-import me.Danker.TheMod;
+import me.Danker.DankersSkyblockMod;
 import me.Danker.commands.DisplayCommand;
 import me.Danker.handlers.ConfigHandler;
 import me.Danker.handlers.TextRenderer;
@@ -115,9 +115,9 @@ public class DisplayGui extends GuiScreen {
 	@Override
 	public void actionPerformed(GuiButton button) {
 		if (button == goBack) {
-			TheMod.guiToOpen = "dankergui1";
+			DankersSkyblockMod.guiToOpen = "dankergui1";
 		} else if (button == editLocations) {
-			TheMod.guiToOpen = "editlocations";
+			DankersSkyblockMod.guiToOpen = "editlocations";
 		} else if (button == showSession) {
 			addSession = !addSession;
 			showSession.displayString = "Current Session Only: " + Utils.getColouredBoolean(addSession);

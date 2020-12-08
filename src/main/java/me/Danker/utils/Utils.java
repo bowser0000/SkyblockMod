@@ -1,14 +1,6 @@
 package me.Danker.utils;
 
-import java.awt.Color;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.regex.Matcher;
-
-import org.lwjgl.opengl.GL11;
-
-import me.Danker.TheMod;
+import me.Danker.DankersSkyblockMod;
 import me.Danker.handlers.ScoreboardHandler;
 import me.Danker.handlers.TextRenderer;
 import net.minecraft.block.Block;
@@ -17,6 +9,7 @@ import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.network.NetworkPlayerInfo;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.client.renderer.entity.RenderManager;
@@ -26,13 +19,16 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.item.EntityItemFrame;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemStack;
 import net.minecraft.scoreboard.ScoreObjective;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.StringUtils;
-import net.minecraft.util.Vec3;
-import net.minecraft.world.World;
+import net.minecraft.util.*;
+import org.lwjgl.opengl.GL11;
+
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.regex.Matcher;
 
 public class Utils {
 	
@@ -68,11 +64,11 @@ public class Utils {
     }
     
     public static String returnGoldenEnchants(String line) {
-    	Matcher matcher = TheMod.pattern.matcher(line);
+    	Matcher matcher = DankersSkyblockMod.pattern.matcher(line);
     	StringBuffer out = new StringBuffer();
     	
     	while (matcher.find()) {
-    		matcher.appendReplacement(out, TheMod.t6Enchants.get(matcher.group(1)));
+    		matcher.appendReplacement(out, DankersSkyblockMod.t6Enchants.get(matcher.group(1)));
     	}
     	matcher.appendTail(out);
     	
@@ -96,9 +92,9 @@ public class Utils {
 	
 	public static void createTitle(String text, int seconds) {
 		Minecraft.getMinecraft().thePlayer.playSound("random.orb", 1, (float) 0.5);
-		TheMod.titleTimer = seconds * 20;
-		TheMod.showTitle = true;
-		TheMod.titleText = text;
+		DankersSkyblockMod.titleTimer = seconds * 20;
+		DankersSkyblockMod.showTitle = true;
+		DankersSkyblockMod.titleText = text;
 	}
 	
 	public static void drawTitle(String text) {
@@ -107,16 +103,21 @@ public class Utils {
 		
 		int height = scaledResolution.getScaledHeight();
 		int width = scaledResolution.getScaledWidth();
-		int textLength = mc.fontRendererObj.getStringWidth(text);
-		
-		double scale = 4;
-		if (textLength * scale > (width * 0.9F)) {
-			scale = (width * 0.9F) / (float) textLength;
+		int drawHeight = 0;
+		String[] splitText = text.split("\n");
+		for (String title : splitText) {
+			int textLength = mc.fontRendererObj.getStringWidth(title);
+
+			double scale = 4;
+			if (textLength * scale > (width * 0.9F)) {
+				scale = (width * 0.9F) / (float) textLength;
+			}
+
+			int titleX = (int) ((width / 2) - (textLength * scale / 2));
+			int titleY = (int) ((height * 0.45) / scale) + (int) (drawHeight * scale);
+			new TextRenderer(mc, title, titleX, titleY, scale);
+			drawHeight += mc.fontRendererObj.FONT_HEIGHT;
 		}
-		
-		int titleX = (int) ((width / 2) - (textLength * scale / 2));
-		int titleY = (int) ((height * 0.45) / scale);
-		new TextRenderer(mc, text, titleX, titleY, scale);
 	}
 	
 	public static void checkForSkyblock() {
@@ -135,7 +136,6 @@ public class Utils {
 	}
 
 	public static void checkForDungeons() {
-		Minecraft mc = Minecraft.getMinecraft();
 		if (inSkyblock) {
 			List<String> scoreboard = ScoreboardHandler.getSidebarLines();
 			for (String s : scoreboard) {
@@ -183,7 +183,7 @@ public class Utils {
 	public static String getTimeBetween(double timeOne, double timeTwo) {
 		double secondsBetween = Math.floor(timeTwo - timeOne);
 		
-		String timeFormatted = "";
+		String timeFormatted;
 		int days;
 		int hours;
 		int minutes;
@@ -246,8 +246,14 @@ public class Utils {
 	}
 	
 	public static int getPastXpEarned(int currentLevelXp, int limit) {
-		if (currentLevelXp == 0) return skillXPPerLevel[limit];
-		for (int i = 1, xpAdded = 0; i < limit; i++) {
+		if (currentLevelXp == 0) {
+			int xpAdded = 0;
+			for (int i = 1; i <= limit; i++) {
+				xpAdded += skillXPPerLevel[i];
+			}
+			return xpAdded;
+		}
+		for (int i = 1, xpAdded = 0; i <= limit; i++) {
 			xpAdded += skillXPPerLevel[i - 1];
 			if (currentLevelXp == skillXPPerLevel[i]) return xpAdded;
 		}
@@ -364,6 +370,22 @@ public class Utils {
 		GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 		GlStateManager.popMatrix();
 	}
+
+	public static void renderItem(ItemStack item, float x, float y, float z) {
+
+		GlStateManager.enableRescaleNormal();
+		RenderHelper.enableGUIStandardItemLighting();
+		GlStateManager.enableDepth();
+
+		GlStateManager.pushMatrix();
+		GlStateManager.translate(x, y, z);
+		Minecraft.getMinecraft().getRenderItem().renderItemIntoGUI(item, 0, 0);
+		GlStateManager.popMatrix();
+
+		GlStateManager.disableDepth();
+		RenderHelper.disableStandardItemLighting();
+		GlStateManager.disableRescaleNormal();
+	}
 	
 	public static BlockPos getFirstBlockPosAfterVectors(Minecraft mc, Vec3 pos1, Vec3 pos2, int strength, int distance) {
 		double x = pos2.xCoord - pos1.xCoord;
@@ -405,7 +427,7 @@ public class Utils {
 		return closestBlock;
 	}
 	
-	public static BlockPos getBlockUnderItemFrame(World world, EntityItemFrame itemFrame) {
+	public static BlockPos getBlockUnderItemFrame(EntityItemFrame itemFrame) {
 		switch (itemFrame.facingDirection) {
 			case NORTH:
 				return new BlockPos(itemFrame.posX, itemFrame.posY, itemFrame.posZ + 1);

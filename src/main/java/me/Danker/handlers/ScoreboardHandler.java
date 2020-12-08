@@ -1,19 +1,18 @@
 package me.Danker.handlers;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.stream.Collectors;
-
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.scoreboard.Score;
 import net.minecraft.scoreboard.ScoreObjective;
 import net.minecraft.scoreboard.ScorePlayerTeam;
 import net.minecraft.scoreboard.Scoreboard;
 import net.minecraft.util.StringUtils;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class ScoreboardHandler {
 	
@@ -39,10 +38,10 @@ public class ScoreboardHandler {
 		if (objective == null) return lines;
 		
 		Collection<Score> scores = scoreboard.getSortedScores(objective);
-		List<Score> list = Lists.newArrayList(scores.stream()
+		List<Score> list = scores.stream()
 				.filter(input -> input != null && input.getPlayerName() != null && !input.getPlayerName()
 				.startsWith("#"))
-				.collect(Collectors.toList()));
+				.collect(Collectors.toList());
 		
 		if (list.size() > 15) {
 			scores = Lists.newArrayList(Iterables.skip(list, scores.size() - 15));

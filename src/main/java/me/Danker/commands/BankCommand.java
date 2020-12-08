@@ -1,13 +1,7 @@
 package me.Danker.commands;
 
-import java.text.NumberFormat;
-import java.util.Collections;
-import java.util.List;
-import java.util.Locale;
-
 import com.google.gson.JsonObject;
-
-import me.Danker.TheMod;
+import me.Danker.DankersSkyblockMod;
 import me.Danker.handlers.APIHandler;
 import me.Danker.handlers.ConfigHandler;
 import me.Danker.utils.Utils;
@@ -18,6 +12,11 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
+
+import java.text.NumberFormat;
+import java.util.Collections;
+import java.util.List;
+import java.util.Locale;
 
 public class BankCommand extends CommandBase {
 
@@ -67,10 +66,10 @@ public class BankCommand extends CommandBase {
 			if (arg1.length == 0) {
 				username = player.getName();
 				uuid = player.getUniqueID().toString().replaceAll("[\\-]", "");
-				player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Checking coins of " + TheMod.SECONDARY_COLOUR + username));
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Checking coins of " + DankersSkyblockMod.SECONDARY_COLOUR + username));
 			} else {
 				username = arg1[0];
-				player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Checking coins of " + TheMod.SECONDARY_COLOUR + username));
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Checking coins of " + DankersSkyblockMod.SECONDARY_COLOUR + username));
 				uuid = APIHandler.getUUID(username);
 			}
 			
@@ -89,25 +88,26 @@ public class BankCommand extends CommandBase {
 			
 			System.out.println("Fetching bank + purse coins...");
 			double purseCoins = profileResponse.get("profile").getAsJsonObject().get("members").getAsJsonObject().get(uuid).getAsJsonObject().get("coin_purse").getAsDouble();
-			purseCoins = (double) Math.floor(purseCoins * 100.0) / 100.0;
+			purseCoins = Math.floor(purseCoins * 100.0) / 100.0;
 			NumberFormat nf = NumberFormat.getIntegerInstance(Locale.US);
 			
 			// Check for bank api
 			if (profileResponse.get("profile").getAsJsonObject().has("banking")) {
 				double bankCoins = profileResponse.get("profile").getAsJsonObject().get("banking").getAsJsonObject().get("balance").getAsDouble();
-				bankCoins = (double) Math.floor(bankCoins * 100.0) / 100.0;
+				bankCoins = Math.floor(bankCoins * 100.0) / 100.0;
 				
-				player.addChatMessage(new ChatComponentText(TheMod.DELIMITER_COLOUR + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.DELIMITER_COLOUR + "" + EnumChatFormatting.BOLD + "-------------------\n" +
 															EnumChatFormatting.AQUA + " " + username + "'s Coins:\n" +
-															TheMod.TYPE_COLOUR + " Bank: " + EnumChatFormatting.GOLD + nf.format(bankCoins) + "\n" +
-															TheMod.TYPE_COLOUR + " Purse: " + EnumChatFormatting.GOLD + nf.format(purseCoins) + "\n" +
-															TheMod.DELIMITER_COLOUR + " " + EnumChatFormatting.BOLD + "-------------------"));
+															DankersSkyblockMod.TYPE_COLOUR + " Bank: " + EnumChatFormatting.GOLD + nf.format(bankCoins) + "\n" +
+															DankersSkyblockMod.TYPE_COLOUR + " Purse: " + EnumChatFormatting.GOLD + nf.format(purseCoins) + "\n" +
+															DankersSkyblockMod.TYPE_COLOUR + " Total: " + EnumChatFormatting.GOLD + nf.format(bankCoins + purseCoins) + "\n" +
+															DankersSkyblockMod.DELIMITER_COLOUR + " " + EnumChatFormatting.BOLD + "-------------------"));
 			} else {
-				player.addChatMessage(new ChatComponentText(TheMod.DELIMITER_COLOUR + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.DELIMITER_COLOUR + "" + EnumChatFormatting.BOLD + "-------------------\n" +
 															EnumChatFormatting.AQUA + " " + username + "'s Coins:\n" +
-															TheMod.TYPE_COLOUR + " Bank: " + EnumChatFormatting.RED + "Bank API disabled.\n" +
-															TheMod.TYPE_COLOUR + " Purse: " + EnumChatFormatting.GOLD + nf.format(purseCoins) + "\n" +
-															TheMod.DELIMITER_COLOUR + " " + EnumChatFormatting.BOLD + "-------------------"));
+															DankersSkyblockMod.TYPE_COLOUR + " Bank: " + EnumChatFormatting.RED + "Bank API disabled.\n" +
+															DankersSkyblockMod.TYPE_COLOUR + " Purse: " + EnumChatFormatting.GOLD + nf.format(purseCoins) + "\n" +
+															DankersSkyblockMod.DELIMITER_COLOUR + " " + EnumChatFormatting.BOLD + "-------------------"));
 			}
 		}).start();
 	}

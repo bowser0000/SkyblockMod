@@ -1,30 +1,25 @@
 package me.Danker.handlers;
 
-import java.io.File;
-
-import me.Danker.TheMod;
-import me.Danker.commands.BlockSlayerCommand;
-import me.Danker.commands.DisplayCommand;
-import me.Danker.commands.LootCommand;
-import me.Danker.commands.MoveCommand;
-import me.Danker.commands.ScaleCommand;
-import me.Danker.commands.ToggleCommand;
+import me.Danker.DankersSkyblockMod;
+import me.Danker.commands.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.common.config.ConfigCategory;
 import net.minecraftforge.common.config.Configuration;
 
+import java.io.File;
+
 public class ConfigHandler {
 	public static Configuration config;
-	private static String file = "config/Danker's Skyblock Mod.cfg";
+	private final static String file = "config/Danker's Skyblock Mod.cfg";
 	
 	public static void init() {
 		config = new Configuration(new File(file));
 		try {
 			config.load();
 		} catch (Exception ex) {
-			System.err.println(ex);
+			ex.printStackTrace();
 		} finally {
 			config.save();
 		}
@@ -38,7 +33,7 @@ public class ConfigHandler {
 				return config.get(category, key, 0).getInt();
 			}
 		} catch (Exception ex) {
-			System.err.println(ex);
+			ex.printStackTrace();
 		} finally {
 			config.save();
 		}
@@ -53,7 +48,7 @@ public class ConfigHandler {
 				return config.get(category, key, 0D).getDouble();
 			}
 		} catch (Exception ex) {
-			System.err.println(ex);
+			ex.printStackTrace();
 		} finally {
 			config.save();
 		}
@@ -68,7 +63,7 @@ public class ConfigHandler {
 				return config.get(category, key, "").getString();
 			}
 		} catch (Exception ex) {
-			System.err.println(ex);
+			ex.printStackTrace();
 		} finally {
 			config.save();
 		}
@@ -83,7 +78,7 @@ public class ConfigHandler {
 				return config.get(category, key, false).getBoolean();
 			}
 		} catch (Exception ex) {
-			System.err.println(ex);
+			ex.printStackTrace();
 		} finally {
 			config.save();
 		}
@@ -97,7 +92,7 @@ public class ConfigHandler {
 			int set = config.get(category, key, value).getInt();
 			config.getCategory(category).get(key).set(value);
 		} catch (Exception ex) {
-			System.err.println(ex);
+			ex.printStackTrace();
 		} finally {
 			config.save();
 		}
@@ -110,7 +105,7 @@ public class ConfigHandler {
 			double set = config.get(category, key, value).getDouble();
 			config.getCategory(category).get(key).set(value);
 		} catch (Exception ex) {
-			System.err.println(ex);
+			ex.printStackTrace();
 		} finally {
 			config.save();
 		}
@@ -123,7 +118,7 @@ public class ConfigHandler {
 			String set = config.get(category, key, value).getString();
 			config.getCategory(category).get(key).set(value);
 		} catch (Exception ex) {
-			System.err.println(ex);
+			ex.printStackTrace();
 		} finally {
 			config.save();
 		}
@@ -136,7 +131,7 @@ public class ConfigHandler {
 			boolean set = config.get(category, key, value).getBoolean();
 			config.getCategory(category).get(key).set(value);
 		} catch (Exception ex) {
-			System.err.println(ex);
+			ex.printStackTrace();
 		} finally {
 			config.save();
 		}
@@ -149,7 +144,7 @@ public class ConfigHandler {
 			if (!config.hasCategory(category)) return false;
 			return config.getCategory(category).containsKey(key);
 		} catch (Exception ex) {
-			System.err.println(ex);
+			ex.printStackTrace();
 		} finally {
 			config.save();
 		}
@@ -164,7 +159,7 @@ public class ConfigHandler {
 				config.removeCategory(new ConfigCategory(category));
 			}
 		} catch (Exception ex) {
-			System.err.println(ex);
+			ex.printStackTrace();
 		} finally {
 			config.save();
 		}
@@ -183,6 +178,9 @@ public class ConfigHandler {
 		if (!hasKey("toggles", "AOTD")) writeBooleanConfig("toggles", "AOTD", false);
 		if (!hasKey("toggles", "LividDagger")) writeBooleanConfig("toggles", "LividDagger", false);
 		if (!hasKey("toggles", "SceptreMessages")) writeBooleanConfig("toggles", "SceptreMessages", true);
+		if (!hasKey("toggles", "MidasStaffMessages")) writeBooleanConfig("toggles", "MidasStaffMessages", true);
+		if (!hasKey("toggles", "ImplosionMessages")) writeBooleanConfig("toggles", "ImplosionMessages", true);
+		if (!hasKey("toggles", "HealMessages")) writeBooleanConfig("toggles", "HealMessages", true);
 		if (!hasKey("toggles", "PetColors")) writeBooleanConfig("toggles", "PetColors", false);
 		if (!hasKey("toggles", "DungeonTimer")) writeBooleanConfig("toggles", "DungeonTimer", false);
 		if (!hasKey("toggles", "BlockSlayer")) writeStringConfig("toggles", "BlockSlayer", "");
@@ -190,21 +188,26 @@ public class ConfigHandler {
 		if (!hasKey("toggles", "ExpertiseLore")) writeBooleanConfig("toggles", "ExpertiseLore", true);
 		if (!hasKey("toggles", "Skill50Display")) writeBooleanConfig("toggles", "Skill50Display", false);
 		if (!hasKey("toggles", "OutlineText")) writeBooleanConfig("toggles", "OutlineText", false);
-		if (!hasKey("toggles", "MidasStaffMessages")) writeBooleanConfig("toggles", "MidasStaffMessages", true);
-		if (!hasKey("toggles", "HealMessages")) writeBooleanConfig("toggles", "HealMessages", true);
 		if (!hasKey("toggles", "CakeTimer")) writeBooleanConfig("toggles", "CakeTimer", false);
 		if (!hasKey("toggles", "LowHealthNotify")) writeBooleanConfig("toggles", "LowHealthNotify", false);
 		if (!hasKey("toggles", "LividSolver")) writeBooleanConfig("toggles", "LividSolver", false);
+		if (!hasKey("toggles", "StopSalvageStarred")) writeBooleanConfig("toggles", "StopSalvageStarred", false);
 		// Puzzle Solvers
 		if (!hasKey("toggles", "ThreeManPuzzle")) writeBooleanConfig("toggles", "ThreeManPuzzle", false);
 		if (!hasKey("toggles", "OruoPuzzle")) writeBooleanConfig("toggles", "OruoPuzzle", false);
 		if (!hasKey("toggles", "BlazePuzzle")) writeBooleanConfig("toggles", "BlazePuzzle", false);
 		if (!hasKey("toggles", "CreeperPuzzle")) writeBooleanConfig("toggles", "CreeperPuzzle", false);
 		if (!hasKey("toggles", "WaterPuzzle")) writeBooleanConfig("toggles", "WaterPuzzle", false);
+		if (!hasKey("toggles", "TicTacToePuzzle")) writeBooleanConfig("toggles", "TicTacToePuzzle", false);
 		if (!hasKey("toggles", "StartsWithTerminal")) writeBooleanConfig("toggles", "StartsWithTerminal", false);
 		if (!hasKey("toggles", "SelectAllTerminal")) writeBooleanConfig("toggles", "SelectAllTerminal", false);
 		if (!hasKey("toggles", "IgnoreItemFrameOnSeaLanterns")) writeBooleanConfig("toggles", "IgnoreItemFrameOnSeaLanterns", false);
-		
+		if (!hasKey("toggles", "UltraSequencer")) writeBooleanConfig("toggles", "UltraSequencer", false);
+		if (!hasKey("toggles", "Chronomatron")) writeBooleanConfig("toggles", "Chronomatron", false);
+		if (!hasKey("toggles", "Superpairs")) writeBooleanConfig("toggles", "Superpairs", false);
+		if (!hasKey("toggles", "PickBlockInExperiments")) writeBooleanConfig("toggles", "PickBlockInExperiments", false);
+
+
 		if (!hasKey("api", "APIKey")) writeStringConfig("api", "APIKey", "");
 		
 		// Wolf Loot
@@ -388,6 +391,8 @@ public class ConfigHandler {
 		if (!hasKey("locations", "cakeTimerY")) writeIntConfig("locations", "cakeTimerY", 30);
 		if (!hasKey("locations", "skillTrackerX")) writeIntConfig("locations", "skillTrackerX", 40);
 		if (!hasKey("locations", "skillTrackerY")) writeIntConfig("locations", "skillTrackerY", 50);
+		if (!hasKey("locations", "waterAnswerX")) writeIntConfig("locations", "waterAnswerX", 100);
+		if (!hasKey("locations", "waterAnswerY")) writeIntConfig("locations", "waterAnswerY", 100);
 		if (!hasKey("scales", "coordsScale")) writeDoubleConfig("scales", "coordsScale", 1);
 		if (!hasKey("scales", "displayScale")) writeDoubleConfig("scales", "displayScale", 1);
 		if (!hasKey("scales", "dungeonTimerScale")) writeDoubleConfig("scales", "dungeonTimerScale", 1);
@@ -395,6 +400,7 @@ public class ConfigHandler {
 		if (!hasKey("scales", "lividHpScale")) writeDoubleConfig("scales", "lividHpScale", 1);
 		if (!hasKey("scales", "cakeTimerScale")) writeDoubleConfig("scales", "cakeTimerScale", 1);
 		if (!hasKey("scales", "skillTrackerScale")) writeDoubleConfig("scales", "skillTrackerScale", 1);
+		if (!hasKey("scales", "waterAnswerScale")) writeDoubleConfig("scales", "waterAnswerScale", 1);
 		
 		if (!hasKey("colors", "main")) writeStringConfig("colors", "main", EnumChatFormatting.GREEN.toString());
 		if (!hasKey("colors", "secondary")) writeStringConfig("colors", "secondary", EnumChatFormatting.DARK_GREEN.toString());
@@ -423,31 +429,38 @@ public class ConfigHandler {
 		ToggleCommand.aotdToggled = getBoolean("toggles", "AOTD");
 		ToggleCommand.lividDaggerToggled = getBoolean("toggles", "LividDagger");
 		ToggleCommand.sceptreMessages = getBoolean("toggles", "SceptreMessages");
+		ToggleCommand.midasStaffMessages = getBoolean("toggles", "MidasStaffMessages");
+		ToggleCommand.implosionMessages = getBoolean("toggles", "ImplosionMessages");
+		ToggleCommand.healMessages = getBoolean("toggles", "HealMessages");
 		ToggleCommand.petColoursToggled = getBoolean("toggles", "PetColors");
 		ToggleCommand.dungeonTimerToggled = getBoolean("toggles", "DungeonTimer");
 		ToggleCommand.golemAlertToggled = getBoolean("toggles", "GolemAlerts");
 		ToggleCommand.expertiseLoreToggled = getBoolean("toggles", "ExpertiseLore");
 		ToggleCommand.skill50DisplayToggled = getBoolean("toggles", "Skill50Display");
 		ToggleCommand.outlineTextToggled = getBoolean("toggles", "OutlineText");
-		ToggleCommand.midasStaffMessages = getBoolean("toggles", "MidasStaffMessages");
-		ToggleCommand.healMessages = getBoolean("toggles", "HealMessages");
 		ToggleCommand.cakeTimerToggled = getBoolean("toggles", "CakeTimer");
 		ToggleCommand.lowHealthNotifyToggled = getBoolean("toggles", "LowHealthNotify");
 		ToggleCommand.lividSolverToggled = getBoolean("toggles", "LividSolver");
+		ToggleCommand.stopSalvageStarredToggled = getBoolean("toggles", "StopSalvageStarred");
 		// Puzzle Solvers
 		ToggleCommand.threeManToggled = getBoolean("toggles", "ThreeManPuzzle");
 		ToggleCommand.oruoToggled = getBoolean("toggles", "OruoPuzzle");
 		ToggleCommand.blazeToggled = getBoolean("toggles", "BlazePuzzle");
 		ToggleCommand.creeperToggled = getBoolean("toggles", "CreeperPuzzle");
 		ToggleCommand.waterToggled = getBoolean("toggles", "WaterPuzzle");
+		ToggleCommand.ticTacToeToggled = getBoolean("toggles", "TicTacToePuzzle");
 		ToggleCommand.startsWithToggled = getBoolean("toggles", "StartsWithTerminal");
 		ToggleCommand.selectAllToggled = getBoolean("toggles", "SelectAllTerminal");
 		ToggleCommand.itemFrameOnSeaLanternsToggled = getBoolean("toggles", "IgnoreItemFrameOnSeaLanterns");
-		
+		ToggleCommand.ultrasequencerToggled = getBoolean("toggles", "UltraSequencer");
+		ToggleCommand.chronomatronToggled = getBoolean("toggles", "Chronomatron");
+		ToggleCommand.superpairsToggled = getBoolean("toggles", "Superpairs");
+		ToggleCommand.swapToPickBlockInExperimentsToggled = getBoolean("toggles", "PickBlockInExperiments");
+
 		String onlySlayer = getString("toggles", "BlockSlayer");
 		if (!onlySlayer.equals("")) {
 			BlockSlayerCommand.onlySlayerName = onlySlayer.substring(0, onlySlayer.lastIndexOf(" "));
-			BlockSlayerCommand.onlySlayerNumber = onlySlayer.substring(onlySlayer.lastIndexOf(" ") + 1, onlySlayer.length());
+			BlockSlayerCommand.onlySlayerNumber = onlySlayer.substring(onlySlayer.lastIndexOf(" ") + 1);
 		}
 		
 		// Wolf
@@ -612,9 +625,9 @@ public class ConfigHandler {
 		// Misc
 		DisplayCommand.display = getString("misc", "display");
 		DisplayCommand.auto = getBoolean("misc", "autoDisplay");
-		TheMod.SKILL_TIME = getInt("misc", "skill50Time") * 20;
-		TheMod.cakeTime = getDouble("misc", "cakeTime");
-		TheMod.showSkillTracker = getBoolean("misc", "showSkillTracker");
+		DankersSkyblockMod.SKILL_TIME = getInt("misc", "skill50Time") * 20;
+		DankersSkyblockMod.cakeTime = getDouble("misc", "cakeTime");
+		DankersSkyblockMod.showSkillTracker = getBoolean("misc", "showSkillTracker");
 		
 		MoveCommand.coordsXY[0] = getInt("locations", "coordsX");
 		MoveCommand.coordsXY[1] = getInt("locations", "coordsY");
@@ -630,6 +643,8 @@ public class ConfigHandler {
 		MoveCommand.cakeTimerXY[1] = getInt("locations", "cakeTimerY");
 		MoveCommand.skillTrackerXY[0] = getInt("locations", "skillTrackerX");
 		MoveCommand.skillTrackerXY[1] = getInt("locations", "skillTrackerY");
+		MoveCommand.waterAnswerXY[0] = getInt("locations", "waterAnswerX");
+		MoveCommand.waterAnswerXY[1] = getInt("locations", "waterAnswerY");
 		
 		ScaleCommand.coordsScale = getDouble("scales", "coordsScale");
 		ScaleCommand.displayScale = getDouble("scales", "displayScale");
@@ -638,22 +653,23 @@ public class ConfigHandler {
 		ScaleCommand.lividHpScale = getDouble("scales", "lividHpScale");
 		ScaleCommand.cakeTimerScale = getDouble("scales", "cakeTimerScale");
 		ScaleCommand.skillTrackerScale = getDouble("scales", "skillTrackerScale");
-		
-		TheMod.MAIN_COLOUR = getString("colors", "main");
-		TheMod.SECONDARY_COLOUR = getString("colors", "secondary");
-		TheMod.DELIMITER_COLOUR = getString("colors", "delimiter");
-		TheMod.ERROR_COLOUR = getString("colors", "error");
-		TheMod.TYPE_COLOUR = getString("colors", "type");
-		TheMod.VALUE_COLOUR = getString("colors", "value");
-		TheMod.SKILL_AVERAGE_COLOUR = getString("colors", "skillAverage");
-		TheMod.ANSWER_COLOUR = getString("colors", "answer");
-		TheMod.SKILL_50_COLOUR = getString("colors", "skill50Display");
-		TheMod.COORDS_COLOUR = getString("colors", "coordsDisplay");
-		TheMod.CAKE_COLOUR = getString("colors", "cakeDisplay");
-		TheMod.SKILL_TRACKER_COLOUR = getString("colors", "skillTracker");
-		TheMod.TRIVIA_WRONG_ANSWER_COLOUR = getString("colors", "triviaWrongAnswer");
-		TheMod.LOWEST_BLAZE_COLOUR = getInt("colors", "blazeLowest");
-		TheMod.HIGHEST_BLAZE_COLOUR = getInt("colors", "blazeHighest");
+		ScaleCommand.waterAnswerScale = getDouble("scales", "waterAnswerScale");
+
+		DankersSkyblockMod.MAIN_COLOUR = getString("colors", "main");
+		DankersSkyblockMod.SECONDARY_COLOUR = getString("colors", "secondary");
+		DankersSkyblockMod.DELIMITER_COLOUR = getString("colors", "delimiter");
+		DankersSkyblockMod.ERROR_COLOUR = getString("colors", "error");
+		DankersSkyblockMod.TYPE_COLOUR = getString("colors", "type");
+		DankersSkyblockMod.VALUE_COLOUR = getString("colors", "value");
+		DankersSkyblockMod.SKILL_AVERAGE_COLOUR = getString("colors", "skillAverage");
+		DankersSkyblockMod.ANSWER_COLOUR = getString("colors", "answer");
+		DankersSkyblockMod.SKILL_50_COLOUR = getString("colors", "skill50Display");
+		DankersSkyblockMod.COORDS_COLOUR = getString("colors", "coordsDisplay");
+		DankersSkyblockMod.CAKE_COLOUR = getString("colors", "cakeDisplay");
+		DankersSkyblockMod.SKILL_TRACKER_COLOUR = getString("colors", "skillTracker");
+		DankersSkyblockMod.TRIVIA_WRONG_ANSWER_COLOUR = getString("colors", "triviaWrongAnswer");
+		DankersSkyblockMod.LOWEST_BLAZE_COLOUR = getInt("colors", "blazeLowest");
+		DankersSkyblockMod.HIGHEST_BLAZE_COLOUR = getInt("colors", "blazeHighest");
 	}
 	
 }

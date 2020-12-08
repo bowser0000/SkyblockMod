@@ -1,8 +1,6 @@
 package me.Danker.commands;
 
-import java.util.List;
-
-import me.Danker.TheMod;
+import me.Danker.DankersSkyblockMod;
 import me.Danker.handlers.ConfigHandler;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
@@ -11,6 +9,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
+
+import java.util.List;
 
 public class ResetLootCommand extends CommandBase {
 
@@ -48,7 +48,7 @@ public class ResetLootCommand extends CommandBase {
 		final EntityPlayer player = (EntityPlayer) arg0;
 		
 		if (arg1.length == 0) {
-			player.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "Usage: /resetloot <zombie/spider/wolf/fishing/mythological/catacombs>"));
+			player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Usage: /resetloot <zombie/spider/wolf/fishing/mythological/catacombs>"));
 			return;
 		}
 		
@@ -56,7 +56,7 @@ public class ResetLootCommand extends CommandBase {
 			switch (arg1[0].toLowerCase()) {
 				case "confirm":
 					confirmReset = false;
-					player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Resetting " + resetOption + " tracker..."));
+					player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Resetting " + resetOption + " tracker..."));
 					switch (resetOption.toLowerCase()) {
 						case "zombie":
 							resetZombie();
@@ -78,11 +78,11 @@ public class ResetLootCommand extends CommandBase {
 							System.err.println("Resetting unknown tracker.");
 							return;
 					}
-					player.addChatMessage(new ChatComponentText(TheMod.MAIN_COLOUR + "Reset complete."));
+					player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Reset complete."));
 					break;
 				case "cancel":
 					confirmReset = false;
-					player.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "Reset cancelled."));
+					player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Reset cancelled."));
 					break;
 				default:
 					player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Please confirm the reset of the " + resetOption + " tracker by using /resetloot confirm." +
@@ -98,16 +98,16 @@ public class ResetLootCommand extends CommandBase {
 				case "catacombs":
 					resetOption = arg1[0];
 					player.addChatMessage(new ChatComponentText(EnumChatFormatting.YELLOW + "Are you sure you want to reset the " + resetOption + " tracker?" + 
-																" Confirm with " + TheMod.MAIN_COLOUR + "/resetloot confirm" + EnumChatFormatting.YELLOW + "." + 
-																" Cancel by using " + TheMod.MAIN_COLOUR + "/resetloot cancel" + EnumChatFormatting.YELLOW + "."));
+																" Confirm with " + DankersSkyblockMod.MAIN_COLOUR + "/resetloot confirm" + EnumChatFormatting.YELLOW + "." +
+																" Cancel by using " + DankersSkyblockMod.MAIN_COLOUR + "/resetloot cancel" + EnumChatFormatting.YELLOW + "."));
 					confirmReset = true;
 					break;
 				case "confirm":
 				case "cancel":
-					player.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "Pick something to reset first."));
+					player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Pick something to reset first."));
 					break;
 				default:
-					player.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "Usage: " + getCommandUsage(arg0)));
+					player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Usage: " + getCommandUsage(arg0)));
 			}
 		}
 	}

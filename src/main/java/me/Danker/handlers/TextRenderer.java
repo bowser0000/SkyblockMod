@@ -1,15 +1,14 @@
 package me.Danker.handlers;
 
-import org.lwjgl.opengl.GL11;
-
 import me.Danker.commands.ToggleCommand;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.util.StringUtils;
+import org.lwjgl.opengl.GL11;
 
 public class TextRenderer extends Gui {
 	public TextRenderer(Minecraft mc, String text, int x, int y, double scale) {
-		double scaleReset = (double) Math.pow(scale, -1);
+		double scaleReset = Math.pow(scale, -1);
 		
 		GL11.glScaled(scale, scale, scale);
 		y -= mc.fontRendererObj.FONT_HEIGHT;

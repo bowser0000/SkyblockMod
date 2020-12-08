@@ -1,6 +1,6 @@
 package me.Danker.commands;
 
-import me.Danker.TheMod;
+import me.Danker.DankersSkyblockMod;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
@@ -24,7 +24,7 @@ public class DankerGuiCommand extends CommandBase {
 	
 	@Override
 	public void processCommand(ICommandSender arg0, String[] arg1) throws CommandException {
-		TheMod.guiToOpen = "dankergui1";
+		DankersSkyblockMod.guiToOpen = "dankergui1";
 	}
 
 }

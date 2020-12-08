@@ -1,65 +1,19 @@
 package me.Danker;
 
-import java.awt.Image;
-import java.awt.SystemTray;
-import java.awt.Toolkit;
-import java.awt.TrayIcon;
-import java.text.NumberFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.regex.Pattern;
-
-import org.apache.commons.lang3.time.StopWatch;
-import org.lwjgl.input.Keyboard;
-import org.lwjgl.input.Mouse;
-import org.lwjgl.opengl.GL11;
-
 import com.google.gson.JsonObject;
-
-import me.Danker.commands.ArmourCommand;
-import me.Danker.commands.BankCommand;
-import me.Danker.commands.BlockSlayerCommand;
-import me.Danker.commands.DHelpCommand;
-import me.Danker.commands.DankerGuiCommand;
-import me.Danker.commands.DisplayCommand;
-import me.Danker.commands.DungeonsCommand;
-import me.Danker.commands.GetkeyCommand;
-import me.Danker.commands.GuildOfCommand;
-import me.Danker.commands.ImportFishingCommand;
-import me.Danker.commands.LobbySkillsCommand;
-import me.Danker.commands.LootCommand;
-import me.Danker.commands.MoveCommand;
-import me.Danker.commands.PetsCommand;
-import me.Danker.commands.ReloadConfigCommand;
-import me.Danker.commands.ResetLootCommand;
-import me.Danker.commands.ScaleCommand;
-import me.Danker.commands.SetkeyCommand;
-import me.Danker.commands.SkillTrackerCommand;
-import me.Danker.commands.SkillsCommand;
-import me.Danker.commands.SkyblockPlayersCommand;
-import me.Danker.commands.SlayerCommand;
-import me.Danker.commands.ToggleCommand;
-import me.Danker.gui.DankerGui;
-import me.Danker.gui.DisplayGui;
-import me.Danker.gui.EditLocationsGui;
-import me.Danker.gui.OnlySlayerGui;
-import me.Danker.gui.PuzzleSolversGui;
-import me.Danker.gui.SkillTrackerGui;
-import me.Danker.handlers.APIHandler;
-import me.Danker.handlers.ConfigHandler;
-import me.Danker.handlers.PacketHandler;
-import me.Danker.handlers.ScoreboardHandler;
-import me.Danker.handlers.TextRenderer;
+import me.Danker.commands.*;
+import me.Danker.gui.*;
+import me.Danker.handlers.*;
+import me.Danker.utils.TicTacToeUtils;
 import me.Danker.utils.Utils;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiChat;
+import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.gui.inventory.GuiChest;
+import net.minecraft.client.settings.GameSettings;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItemFrame;
@@ -73,22 +27,16 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.ContainerChest;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemMap;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.IChatComponent;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.StringUtils;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.*;
 import net.minecraft.world.World;
+import net.minecraft.world.storage.MapData;
 import net.minecraftforge.client.ClientCommandHandler;
-import net.minecraftforge.client.event.ClientChatReceivedEvent;
-import net.minecraftforge.client.event.GuiScreenEvent;
-import net.minecraftforge.client.event.RenderGameOverlayEvent;
-import net.minecraftforge.client.event.RenderWorldLastEvent;
+import net.minecraftforge.client.GuiIngameForge;
+import net.minecraftforge.client.event.*;
 import net.minecraftforge.client.event.sound.PlaySoundEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
@@ -110,16 +58,26 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.common.network.FMLNetworkEvent.ClientConnectedToServerEvent;
 import net.minecraftforge.fml.common.versioning.DefaultArtifactVersion;
+import org.apache.commons.lang3.time.StopWatch;
+import org.lwjgl.input.Keyboard;
+import org.lwjgl.input.Mouse;
+import org.lwjgl.opengl.GL11;
 
-@Mod(modid = TheMod.MODID, version = TheMod.VERSION, clientSideOnly = true)
-public class TheMod
+import java.awt.*;
+import java.text.NumberFormat;
+import java.util.List;
+import java.util.*;
+import java.util.regex.Pattern;
+
+@Mod(modid = DankersSkyblockMod.MODID, version = DankersSkyblockMod.VERSION, clientSideOnly = true)
+public class DankersSkyblockMod
 {
     public static final String MODID = "Danker's Skyblock Mod";
-    public static final String VERSION = "1.8.3";
+    public static final String VERSION = "1.8.4";
     
     static double checkItemsNow = 0;
     static double itemsChecked = 0;
-    public static Map<String, String> t6Enchants = new HashMap<String, String>();
+    public static Map<String, String> t6Enchants = new HashMap<>();
     public static Pattern pattern = Pattern.compile("");
     static boolean updateChecked = false;
     public static int titleTimer = -1;
@@ -133,7 +91,6 @@ public class TheMod
     static String lastMaddoxCommand = "/cb placeholder";
     static double lastMaddoxTime = 0;
     static KeyBinding[] keyBindings = new KeyBinding[2];
-    static int lastMouse = -1;
     static boolean usingLabymod = false;
     public static String guiToOpen = null;
 	static boolean foundLivid = false;
@@ -145,7 +102,7 @@ public class TheMod
     static String[] riddleSolutions = {"The reward is not in my chest!", "At least one of them is lying, and the reward is not in", 
 									   "My chest doesn't have the reward. We are all telling the truth", "My chest has the reward and I'm telling the truth",
 									   "The reward isn't in any of our chests", "Both of them are telling the truth."};
-	static Map<String, String[]> triviaSolutions = new HashMap<String, String[]>();
+	static Map<String, String[]> triviaSolutions = new HashMap<>();
 	static String[] triviaAnswers = null;
 	static Entity highestBlaze = null;
 	static Entity lowestBlaze = null;
@@ -153,11 +110,21 @@ public class TheMod
 	static final int[] CREEPER_COLOURS = {0x50EF39, 0xC51111, 0x132ED1, 0x117F2D, 0xED54BA, 0xEF7D0D, 0xF5F557, 0xD6E0F0, 0x6B2FBB, 0x39FEDC};
 	static boolean drawCreeperLines = false;
 	static Vec3 creeperLocation = new Vec3(0, 0, 0);
-	static List<Vec3[]> creeperLines = new ArrayList<Vec3[]>();
+	static List<Vec3[]> creeperLines = new ArrayList<>();
 	static boolean prevInWaterRoom = false;
 	static boolean inWaterRoom = false;
-	
-    static double dungeonStartTime = 0;
+	static String waterAnswers = null;
+	static AxisAlignedBB correctTicTacToeButton = null;
+	static Slot[] clickInOrderSlots = new Slot[36];
+	static int lastChronomatronRound = 0;
+	static List<String> chronomatronPattern = new ArrayList<>();
+	static int chronomatronMouseClicks = 0;
+	static int lastUltraSequencerClicked = 0;
+	static ItemStack[] experimentTableSlots = new ItemStack[54];
+	static int pickBlockBind;
+	static boolean pickBlockBindSwapped = false;
+
+	static double dungeonStartTime = 0;
     static double bloodOpenTime = 0;
     static double watcherClearTime = 0;
     static double bossClearTime = 0;
@@ -283,9 +250,9 @@ public class TheMod
 		
 		keyBindings[0] = new KeyBinding("Open Maddox Menu", Keyboard.KEY_M, "Danker's Skyblock Mod");
 		keyBindings[1] = new KeyBinding("Start/Stop Skill Tracker", Keyboard.KEY_NUMPAD5, "Danker's Skyblock Mod");
-		
-		for (int i = 0; i < keyBindings.length; i++) {
-			ClientRegistry.registerKeyBinding(keyBindings[i]);
+
+		for (KeyBinding keyBinding : keyBindings) {
+			ClientRegistry.registerKeyBinding(keyBinding);
 		}
     }
     
@@ -332,7 +299,7 @@ public class TheMod
     		new Thread(() -> {
     			EntityPlayer player = Minecraft.getMinecraft().thePlayer;	
     			
-    			System.err.println("Checking for updates...");
+    			System.out.println("Checking for updates...");
     			JsonObject latestRelease = APIHandler.getResponse("https://api.github.com/repos/bowser0000/SkyblockMod/releases/latest");
     			
     			String latestTag = latestRelease.get("tag_name").getAsString();
@@ -348,7 +315,7 @@ public class TheMod
     				try {
 						Thread.sleep(2000);
 					} catch (InterruptedException ex) {
-						System.err.println(ex);
+						ex.printStackTrace();
 					}
     				player.addChatMessage(new ChatComponentText(ERROR_COLOUR + MODID + " is outdated. Please update to " + latestTag + ".\n").appendSibling(update));
     			}
@@ -375,77 +342,62 @@ public class TheMod
     		for (String section : actionBarSections) {
     			if (section.contains("+") && section.contains("/") && section.contains("(")) {
     				if (!section.contains("Runecrafting") && !section.contains("Carpentry")) {
-    					int limit = section.contains("Farming") ? 60 : 50;
+    					int limit = section.contains("Farming") || section.contains("Enchanting") ? 60 : 50;
     					double currentXP = Double.parseDouble(section.substring(section.indexOf("(") + 1, section.indexOf("/")).replace(",", ""));
     					int xpToLevelUp = Integer.parseInt(section.substring(section.indexOf("/") + 1, section.indexOf(")")).replaceAll(",", ""));
     					xpLeft = xpToLevelUp - currentXP;
     					int previousXP = Utils.getPastXpEarned(xpToLevelUp, limit);
     					double totalXP = currentXP + previousXP;
-    					double xpGained = Double.parseDouble(section.substring(section.indexOf("+") + 1, section.indexOf(" ")).replace(",", ""));
     					String skill = section.substring(section.indexOf(" ") + 1, section.lastIndexOf(" "));
     					switch (skill) {
 	    					case "Farming":
 	    						lastSkill = "Farming";
-	    						if (farmingXP == 0) {
-	    							farmingXP = totalXP;
-	    						} else {
+	    						if (farmingXP != 0) {
 	    							if (skillStopwatch.isStarted() && !skillStopwatch.isSuspended()) farmingXPGained += totalXP - farmingXP;
-	    							farmingXP = totalXP;
 	    						}
+								farmingXP = totalXP;
 	    						break;
 	    					case "Mining":
 	    						lastSkill = "Mining";
-	    						if (miningXP == 0) {
-	    							miningXP = totalXP;
-	    						} else {
+	    						if (miningXP != 0) {
 	    							if (skillStopwatch.isStarted() && !skillStopwatch.isSuspended()) miningXPGained += totalXP - miningXP;
-	    							miningXP = totalXP;
 	    						}
+								miningXP = totalXP;
 	    						break;
 	    					case "Combat":
 	    						lastSkill = "Combat";
-	    						if (combatXP == 0) {
-	    							combatXP = totalXP;
-	    						} else {
+	    						if (combatXP != 0) {
 	    							if (skillStopwatch.isStarted() && !skillStopwatch.isSuspended()) combatXPGained += totalXP - combatXP;
-	    							combatXP = totalXP;
 	    						}
+								combatXP = totalXP;
 	    						break;
 	    					case "Foraging":
 	    						lastSkill = "Foraging";
-	    						if (foragingXP == 0) {
-	    							foragingXP = totalXP;
-	    						} else {
+	    						if (foragingXP != 0) {
 	    							if (skillStopwatch.isStarted() && !skillStopwatch.isSuspended()) foragingXPGained += totalXP - foragingXP;
-	    							foragingXP = totalXP;
 	    						}
+								foragingXP = totalXP;
 	    						break;
 	    					case "Fishing":
 	    						lastSkill = "Fishing";
-	    						if (fishingXP == 0) {
-	    							fishingXP = totalXP;
-	    						} else {
+	    						if (fishingXP != 0) {
 	    							if (skillStopwatch.isStarted() && !skillStopwatch.isSuspended()) fishingXPGained += totalXP - fishingXP;
-	    							fishingXP = totalXP;
 	    						}
+								fishingXP = totalXP;
 	    						break;
 	    					case "Enchanting":
 	    						lastSkill = "Enchanting";
-	    						if (enchantingXP == 0) {
-	    							enchantingXP = totalXP;
-	    						} else {
+	    						if (enchantingXP != 0) {
 	    							if (skillStopwatch.isStarted() && !skillStopwatch.isSuspended()) enchantingXPGained += totalXP - enchantingXP;
-	    							enchantingXP = totalXP;
 	    						}
+								enchantingXP = totalXP;
 	    						break;
 	    					case "Alchemy":
 	    						lastSkill = "Alchemy";
-	    						if (alchemyXP == 0) {
-	    							alchemyXP = totalXP;
-	    						} else {
+	    						if (alchemyXP != 0) {
 	    							if (skillStopwatch.isStarted() && !skillStopwatch.isSuspended()) alchemyXPGained += totalXP - alchemyXP;
-	    							alchemyXP = totalXP;
 	    						}
+								alchemyXP = totalXP;
 	    						break;
 	    					default:
 	    						System.err.println("Unknown skill.");
@@ -457,7 +409,7 @@ public class TheMod
     					double currentXp = Double.parseDouble(section.substring(section.indexOf("(") + 1, section.indexOf("/")).replace(",", ""));
     					int limit;
     					int totalXp;
-    					if (section.contains("Farming")) {
+    					if (section.contains("Farming") || section.contains("Enchanting")) {
     						limit = 60;
     						totalXp = 111672425;
     					} else {
@@ -465,7 +417,7 @@ public class TheMod
     						totalXp = 55172425;
     					}
     					int previousXp = Utils.getPastXpEarned(Integer.parseInt(section.substring(section.indexOf("/") + 1, section.indexOf(")")).replaceAll(",", "")), limit);
-    					double percentage = (double) Math.floor(((currentXp + previousXp) / totalXp) * 10000D) / 100D;
+    					double percentage = Math.floor(((currentXp + previousXp) / totalXp) * 10000D) / 100D;
     					
     					NumberFormat nf = NumberFormat.getNumberInstance(Locale.US);
     					skillTimer = SKILL_TIME;
@@ -512,6 +464,13 @@ public class TheMod
 			event.setCanceled(true);
 			return;
 		}
+
+		if (!ToggleCommand.implosionMessages) {
+			if (message.contains("Your Implosion hit ") || message.contains("There are blocks in the way")) {
+				event.setCanceled(true);
+				return;
+			}
+		}
     	
         if (ToggleCommand.oruoToggled && Utils.inDungeons) {
         	// Don't set every answer to wrong with this question
@@ -528,11 +487,14 @@ public class TheMod
         	if (triviaAnswers != null && (message.contains("ⓐ") || message.contains("ⓑ") || message.contains("ⓒ"))) {
         		boolean isSolution = false;
         		for (String solution : triviaAnswers) {
-        			if (message.contains(solution)) isSolution = true;
+        			if (message.contains(solution)) {
+        				isSolution = true;
+        				break;
+					}
         		}
         		if (!isSolution) {
         			char letter = message.charAt(5);
-        			String option = message.substring(6, message.length());
+        			String option = message.substring(6);
         			event.message = new ChatComponentText("     " + EnumChatFormatting.GOLD + letter + TRIVIA_WRONG_ANSWER_COLOUR + option);
         			return;
         		}
@@ -551,7 +513,7 @@ public class TheMod
 					trayIcon.displayMessage("Guild Party", message, TrayIcon.MessageType.INFO);
 					tray.remove(trayIcon);
 				} catch (Exception ex) {
-					System.err.print(ex);
+					ex.printStackTrace();
 				}
 			}
 		}
@@ -1206,7 +1168,7 @@ public class TheMod
     
     @SubscribeEvent
     public void renderPlayerInfo(final RenderGameOverlayEvent.Post event) {
-    	if (usingLabymod) return;
+    	if (usingLabymod && !(Minecraft.getMinecraft().ingameGUI instanceof GuiIngameForge)) return;
     	if (event.type != RenderGameOverlayEvent.ElementType.EXPERIENCE && event.type != RenderGameOverlayEvent.ElementType.JUMPBAR) return;
     	renderEverything();
     }
@@ -1259,7 +1221,7 @@ public class TheMod
     	
     	if (ToggleCommand.cakeTimerToggled && Utils.inSkyblock) {
     		double scale = ScaleCommand.cakeTimerScale;
-    		double scaleReset = (double) Math.pow(scale, -1);
+    		double scaleReset = Math.pow(scale, -1);
     		GL11.glScaled(scale, scale, scale);
     		
     		double timeNow = System.currentTimeMillis() / 1000;
@@ -1278,7 +1240,7 @@ public class TheMod
     	}
     	
     	if (showSkillTracker && Utils.inSkyblock) {
-    		int xpPerHour = 0;
+    		int xpPerHour;
     		double xpToShow = 0;
     		switch (lastSkill) {
 	    		case "Farming":
@@ -1319,14 +1281,18 @@ public class TheMod
 			
 			new TextRenderer(mc, skillTrackerText, MoveCommand.skillTrackerXY[0], MoveCommand.skillTrackerXY[1], ScaleCommand.skillTrackerScale);
     	}
-    	
+
+    	if (ToggleCommand.waterToggled && Utils.inDungeons && waterAnswers != null) {
+			new TextRenderer(mc, waterAnswers, MoveCommand.waterAnswerXY[0], MoveCommand.waterAnswerXY[1], ScaleCommand.waterAnswerScale);
+		}
+
     	if (!DisplayCommand.display.equals("off")) {
     		String dropsText = "";
     		String countText = "";
-    		String dropsTextTwo = "";
-    		String countTextTwo = "";
-    		String timeBetween = "Never";
-    		String bossesBetween = "Never";
+    		String dropsTextTwo;
+    		String countTextTwo;
+    		String timeBetween;
+    		String bossesBetween;
     		String drop20;
     		double timeNow = System.currentTimeMillis() / 1000;
     		NumberFormat nf = NumberFormat.getIntegerInstance(Locale.US);
@@ -2262,6 +2228,9 @@ public class TheMod
     	if (event.toolTip == null) return;
     	
     	ItemStack item = event.itemStack;
+    	Minecraft mc = Minecraft.getMinecraft();
+    	EntityPlayerSP player = mc.thePlayer;
+
     	if (ToggleCommand.goldenToggled) {
     		for (int i = 0; i < event.toolTip.size(); i++) {
     			event.toolTip.set(i, Utils.returnGoldenEnchants(event.toolTip.get(i)));
@@ -2285,16 +2254,42 @@ public class TheMod
     			}
     		}
     	}
+
+		if (mc.currentScreen instanceof GuiChest) {
+				ContainerChest chest = (ContainerChest) player.openContainer;
+				IInventory inv = chest.getLowerChestInventory();
+				String chestName = inv.getDisplayName().getUnformattedText();
+				if (ToggleCommand.superpairsToggled && chestName.contains("Superpairs (")) {
+					if (Item.getIdFromItem(item.getItem()) != 95) return;
+					if (item.getDisplayName().contains("Click any button") || item.getDisplayName().contains("Click a second button") || item.getDisplayName().contains("Next button is instantly rewarded") || item.getDisplayName().contains("Stained Glass")) {
+						Slot slot = ((GuiChest) mc.currentScreen).getSlotUnderMouse();
+						ItemStack itemStack = experimentTableSlots[slot.getSlotIndex()];
+						if (itemStack == null) return;
+						String itemName = itemStack.getDisplayName();
+
+						if (event.toolTip.stream().anyMatch(x->StringUtils.stripControlCodes(x).equals(StringUtils.stripControlCodes(itemName)))) return;
+						event.toolTip.removeIf(x -> {
+							x = StringUtils.stripControlCodes(x);
+							if (x.equals("minecraft:stained_glass")) return true;
+							return x.startsWith("NBT: ");
+						});
+						event.toolTip.add(itemName);
+						event.toolTip.add(itemStack.getItem().getRegistryName());
+					}
+
+				}
+			}
+
     }
-    
+
     @SubscribeEvent
     public void onTick(TickEvent.ClientTickEvent event) {
     	if (event.phase != Phase.START) return;
-    	
+
 		Minecraft mc = Minecraft.getMinecraft();
 		World world = mc.theWorld;
 		EntityPlayerSP player = mc.thePlayer;
-		
+
     	// Checks every second
     	tickAmount++;
     	if (tickAmount % 20 == 0) {
@@ -2302,8 +2297,8 @@ public class TheMod
         		Utils.checkForSkyblock();
         		Utils.checkForDungeons();
     		}
-    		
-    		if (DisplayCommand.auto && mc != null && world != null && player != null) {
+
+    		if (DisplayCommand.auto && world != null && player != null) {
     			List<String> scoreboard = ScoreboardHandler.getSidebarLines();
     			boolean found = false;
     			for (String s : scoreboard) {
@@ -2347,8 +2342,8 @@ public class TheMod
     			if (!found) DisplayCommand.display = "off";
     			ConfigHandler.writeStringConfig("misc", "display", DisplayCommand.display);
     		}
-    		
-    		if (ToggleCommand.creeperToggled && Utils.inDungeons && world != null) {
+
+    		if (ToggleCommand.creeperToggled && Utils.inDungeons && world != null && player != null) {
     	    	double x = player.posX;
     	    	double y = player.posY;
     	    	double z = player.posZ;
@@ -2384,8 +2379,8 @@ public class TheMod
     				drawCreeperLines = false;
     			}
     		}
-    		
-    		if (ToggleCommand.waterToggled && Utils.inDungeons && world != null) {
+
+    		if (ToggleCommand.waterToggled && Utils.inDungeons && world != null && player != null) {
     			// multi thread block checking
     			new Thread(() -> {
     				prevInWaterRoom = inWaterRoom;
@@ -2402,20 +2397,20 @@ public class TheMod
     					}
     					if (foundPiston) break;
     				}
-    				
+
     				if (foundPiston) {
     					for (int x = (int) (player.posX - 25); x <= player.posX + 25; x++) {
         					for (int z = (int) (player.posZ - 25); z <= player.posZ + 25; z++) {
         						BlockPos blockPos = new BlockPos(x, 82, z);
         						if (world.getBlockState(blockPos).getBlock() == Blocks.piston_head) {
         							inWaterRoom = true;
-        							if (!prevInWaterRoom && inWaterRoom) {
+        							if (!prevInWaterRoom) {
             							boolean foundGold = false;
             							boolean foundClay = false;
             							boolean foundEmerald = false;
             							boolean foundQuartz = false;
             							boolean foundDiamond = false;
-            							
+
             							// Detect first blocks near water stream
             							BlockPos scan1 = new BlockPos(x + 1, 78, z + 1);
             							BlockPos scan2 = new BlockPos(x - 1, 77, z - 1);
@@ -2434,7 +2429,7 @@ public class TheMod
             									foundDiamond = true;
             								}
             							}
-            							
+
             							int variant = 0;
             							if (foundGold && foundClay) {
             								variant = 1;
@@ -2445,13 +2440,13 @@ public class TheMod
             							} else if (foundGold && foundQuartz) {
             								variant = 4;
             							}
-            							
+
             							// Return solution
-            							String purple = "";
-            							String orange = "";
-            							String blue = "";
-            							String green = "";
-            							String red = "";
+            							String purple;
+            							String orange;
+            							String blue;
+            							String green;
+            							String red;
             							switch (variant) {
         	    							case 1:
         	    								purple = EnumChatFormatting.WHITE + "Quartz, " + EnumChatFormatting.YELLOW + "Gold, " + EnumChatFormatting.AQUA + "Diamond, " + EnumChatFormatting.RED + "Clay";
@@ -2485,28 +2480,28 @@ public class TheMod
         	    								purple = orange = blue = green = red = ERROR_COLOUR + "Error detecting water puzzle variant.";
         	    								break;
             							}
-            							player.addChatMessage(new ChatComponentText(DELIMITER_COLOUR + EnumChatFormatting.BOLD + "-------------------\n" +
-            																		MAIN_COLOUR + " The following levers must be down:\n " + 
-            																		EnumChatFormatting.DARK_PURPLE + "Purple: " + purple + "\n " + 
-            																		EnumChatFormatting.GOLD + "Orange: " + orange + "\n " + 
-            																		EnumChatFormatting.BLUE + "Blue: " + blue + "\n " + 
-            																		EnumChatFormatting.GREEN + "Green: " + green + "\n " + 
-            																		EnumChatFormatting.RED + "Red: " + red + "\n" +
-            																		DELIMITER_COLOUR + EnumChatFormatting.BOLD + " -------------------"));
+										waterAnswers = MAIN_COLOUR + "The following levers must be down:\n" +
+													   EnumChatFormatting.DARK_PURPLE + "Purple: " + purple + "\n" +
+													   EnumChatFormatting.GOLD + "Orange: " + orange + "\n" +
+													   EnumChatFormatting.BLUE + "Blue: " + blue + "\n" +
+													   EnumChatFormatting.GREEN + "Green: " + green + "\n" +
+													   EnumChatFormatting.RED + "Red: " + red;
             							done = true;
-            							break;	
+            							break;
         							}
         						}
         					}
         					if (done) break;
-        				}	
-    				}
+        				}
+    				} else {
+    					waterAnswers = null;
+					}
     			}).start();
     		}
-    		
+
     		if (ToggleCommand.lividSolverToggled && Utils.inDungeons && !foundLivid && world != null) {
     			boolean inF5 = false;
-    			
+
     			List<String> scoreboard = ScoreboardHandler.getSidebarLines();
     			for (String s : scoreboard) {
     				String sCleaned = ScoreboardHandler.cleanSB(s);
@@ -2515,9 +2510,9 @@ public class TheMod
     					break;
     				}
     			}
-    			
+
     			if (inF5) {
-    				List<Entity> loadedLivids = new ArrayList<Entity>();
+    				List<Entity> loadedLivids = new ArrayList<>();
     				List<Entity> entities = world.getLoadedEntityList();
     				for (Entity entity : entities) {
     					String name = entity.getName();
@@ -2531,54 +2526,180 @@ public class TheMod
     				}
     			}
     		}
-    		
+
+    		if (ToggleCommand.ticTacToeToggled && Utils.inDungeons && world != null && player != null) {
+    			correctTicTacToeButton = null;
+    			AxisAlignedBB aabb = new AxisAlignedBB(player.posX - 6, player.posY - 6, player.posZ - 6, player.posX + 6, player.posY + 6, player.posZ + 6);
+				List<EntityItemFrame> itemFrames = world.getEntitiesWithinAABB(EntityItemFrame.class, aabb);
+				List<EntityItemFrame> itemFramesWithMaps = new ArrayList<>();
+				// Find how many item frames have maps already placed
+				for (EntityItemFrame itemFrame : itemFrames) {
+					ItemStack item = itemFrame.getDisplayedItem();
+					if (item == null || !(item.getItem() instanceof ItemMap)) continue;
+					MapData mapData = ((ItemMap) item.getItem()).getMapData(item, world);
+					if (mapData == null) continue;
+
+					itemFramesWithMaps.add(itemFrame);
+				}
+
+				// Only run when it's your turn
+				if (itemFramesWithMaps.size() != 9 && itemFramesWithMaps.size() % 2 == 1) {
+					char[][] board = new char[3][3];
+					BlockPos leftmostRow = null;
+					int sign = 1;
+					char facing = 'X';
+					for (EntityItemFrame itemFrame : itemFramesWithMaps) {
+						ItemStack map = itemFrame.getDisplayedItem();
+						MapData mapData = ((ItemMap) map.getItem()).getMapData(map, world);
+
+						// Find position on board
+						int row = 0;
+						int column;
+						sign = 1;
+
+						if (itemFrame.facingDirection == EnumFacing.SOUTH || itemFrame.facingDirection == EnumFacing.WEST) {
+							sign = -1;
+						}
+
+						BlockPos itemFramePos = new BlockPos(itemFrame.posX, Math.floor(itemFrame.posY), itemFrame.posZ);
+						for (int i = 2; i >= 0; i--) {
+							int realI = i * sign;
+							BlockPos blockPos = itemFramePos;
+							if (itemFrame.posX % 0.5 == 0) {
+								blockPos = itemFramePos.add(realI, 0, 0);
+							} else if (itemFrame.posZ % 0.5 == 0) {
+								blockPos = itemFramePos.add(0, 0, realI);
+								facing = 'Z';
+							}
+							Block block = world.getBlockState(blockPos).getBlock();
+							if (block == Blocks.air || block == Blocks.stone_button) {
+								leftmostRow = blockPos;
+								row = i;
+								break;
+							}
+						}
+
+						if (itemFrame.posY == 72.5) {
+							column = 0;
+						} else if (itemFrame.posY == 71.5) {
+							column = 1;
+						} else if (itemFrame.posY == 70.5) {
+							column = 2;
+						} else {
+							continue;
+						}
+
+						// Get colour
+						// Middle pixel = 64*128 + 64 = 8256
+						int colourInt = mapData.colors[8256] & 255;
+						if (colourInt == 114) {
+							board[column][row] = 'X';
+						} else if (colourInt == 33) {
+							board[column][row] = 'O';
+						}
+					}
+					System.out.println("Board: " + Arrays.deepToString(board));
+
+					// Draw best move
+					int bestMove = TicTacToeUtils.getBestMove(board) - 1;
+					System.out.println("Best move slot: " + bestMove);
+					if (leftmostRow != null) {
+						double drawX = facing == 'X' ? leftmostRow.getX() - sign * (bestMove % 3) : leftmostRow.getX();
+						double drawY = 72 - Math.floor(bestMove / 3);
+						double drawZ = facing == 'Z' ? leftmostRow.getZ() - sign * (bestMove % 3) : leftmostRow.getZ();
+
+						correctTicTacToeButton = new AxisAlignedBB(drawX, drawY, drawZ, drawX + 1, drawY + 1, drawZ + 1);
+					}
+				}
+    		}
+
     		tickAmount = 0;
     	}
-    	
+
     	// Checks 5 times per second
     	if (tickAmount % 4 == 0) {
     		if (ToggleCommand.blazeToggled && Utils.inDungeons && world != null) {
-    			List<Entity> entities = world.getLoadedEntityList();
-    			int highestHealth = 0;
-    			highestBlaze = null;
-    			int lowestHealth = 99999999;
-    			lowestBlaze = null;
+				List<Entity> entities = world.getLoadedEntityList();
+				int highestHealth = 0;
+				highestBlaze = null;
+				int lowestHealth = 99999999;
+				lowestBlaze = null;
 
-    			for (Entity entity : entities) {
-    				if (entity.getName().contains("Blaze") && entity.getName().contains("/")) {
-    					String blazeName = StringUtils.stripControlCodes(entity.getName());
-    					try {
-    						int health = Integer.parseInt(blazeName.substring(blazeName.indexOf("/") + 1, blazeName.length() - 1));
-    						if (health > highestHealth) {
-    							highestHealth = health;
-    							highestBlaze = entity;
-    						}
-    						if (health < lowestHealth) {
-    							lowestHealth = health;
-    							lowestBlaze = entity;
-    						}
-    					} catch (NumberFormatException ex) {
-    						System.err.println(ex);
-    					}
-    				}
-    			}
-    		}
+				for (Entity entity : entities) {
+					if (entity.getName().contains("Blaze") && entity.getName().contains("/")) {
+						String blazeName = StringUtils.stripControlCodes(entity.getName());
+						try {
+							int health = Integer.parseInt(blazeName.substring(blazeName.indexOf("/") + 1, blazeName.length() - 1));
+							if (health > highestHealth) {
+								highestHealth = health;
+								highestBlaze = entity;
+							}
+							if (health < lowestHealth) {
+								lowestHealth = health;
+								lowestBlaze = entity;
+							}
+						} catch (NumberFormatException ex) {
+							ex.printStackTrace();
+						}
+					}
+				}
+			}
     	}
-    	
+
     	// Checks 10 times per second
     	if (tickAmount % 2 == 0) {
     		if (ToggleCommand.lowHealthNotifyToggled && Utils.inDungeons && world != null) {
     			List<String> scoreboard = ScoreboardHandler.getSidebarLines();
     			for (String score : scoreboard) {
     				if (score.endsWith("❤") && score.matches(".*§c\\d.*")) {
-        				Utils.createTitle(EnumChatFormatting.RED + "LOW HEALTH!", 1);
+    					String name = score.substring(score.indexOf(" ") + 1);
+        				Utils.createTitle(EnumChatFormatting.RED + "LOW HEALTH!\n" + name, 1);
         				break;
     				}
     			}
     		}
     	}
-    	
-    	if (titleTimer >= 0) {
+
+    	// Runs 20 times per second
+		if (mc.currentScreen instanceof GuiChest) {
+			if (player == null) return;
+			ContainerChest chest = (ContainerChest) player.openContainer;
+			List<Slot> invSlots = ((GuiChest) mc.currentScreen).inventorySlots.inventorySlots;
+			String chestName = chest.getLowerChestInventory().getDisplayName().getUnformattedText().trim();
+
+			if (ToggleCommand.ultrasequencerToggled && chestName.startsWith("Ultrasequencer (")) {
+				if (invSlots.get(49).getStack() != null && invSlots.get(49).getStack().getDisplayName().equals("§aRemember the pattern!")) {
+					for (int i = 9; i <= 44; i++) {
+						if (invSlots.get(i) == null || invSlots.get(i).getStack() == null) continue;
+						String itemName = StringUtils.stripControlCodes(invSlots.get(i).getStack().getDisplayName());
+						if (itemName.matches("\\d+")) {
+							int number = Integer.parseInt(itemName);
+							clickInOrderSlots[number - 1] = invSlots.get(i);
+						}
+					}
+				}
+			}
+
+			if (ToggleCommand.superpairsToggled && chestName.startsWith("Superpairs (")) {
+				for (int i = 0; i < 53; i++) {
+					ItemStack itemStack = invSlots.get(i).getStack();
+					if (itemStack == null) continue;
+					String itemName = itemStack.getDisplayName();
+					if (Item.getIdFromItem(itemStack.getItem()) == 95 || Item.getIdFromItem(itemStack.getItem()) == 160) continue;
+					if (itemName.contains("Instant Find") || itemName.contains("Gained +")) continue;
+					if (itemName.contains("Enchanted Book")) {
+						itemName = itemStack.getTooltip(mc.thePlayer, false).get(3);
+					}
+					if (itemStack.stackSize > 1) {
+						itemName = itemStack.stackSize + " " + itemName;
+					}
+					if (experimentTableSlots[i] != null) continue;
+					experimentTableSlots[i] = itemStack.copy().setStackDisplayName(itemName);
+				}
+			}
+		}
+
+		if (titleTimer >= 0) {
     		if (titleTimer == 0) {
     			showTitle = false;
     		}
@@ -2591,7 +2712,7 @@ public class TheMod
     		skillTimer--;
      	}
     }
-    
+
     // Delay GUI by 1 tick
     @SubscribeEvent
     public void onRenderTick(TickEvent.RenderTickEvent event) {
@@ -2614,6 +2735,9 @@ public class TheMod
         			case "puzzlesolvers":
 	        			mc.displayGuiScreen(new PuzzleSolversGui(1));
 	        			break;
+					case "experimentsolvers":
+						mc.displayGuiScreen(new ExperimentsGui());
+						break;
 	        		case "skilltracker":
 	        			mc.displayGuiScreen(new SkillTrackerGui());
 	        			break;
@@ -2622,7 +2746,7 @@ public class TheMod
         	guiToOpen = null;
     	}
     }
-    
+
     @SubscribeEvent
     public void onWorldRender(RenderWorldLastEvent event) {
     	if (ToggleCommand.blazeToggled) {
@@ -2644,14 +2768,17 @@ public class TheMod
     			Utils.draw3DLine(creeperLines.get(i)[0], creeperLines.get(i)[1], CREEPER_COLOURS[i % 10], event.partialTicks);
     		}
     	}
+    	if (ToggleCommand.ticTacToeToggled && correctTicTacToeButton != null) {
+    		Utils.draw3DBox(correctTicTacToeButton, 0x40FF40, event.partialTicks);
+		}
     }
-    
+
     @SubscribeEvent
     public void onInteract(PlayerInteractEvent event) {
     	if (!Utils.inSkyblock || Minecraft.getMinecraft().thePlayer != event.entityPlayer) return;
     	ItemStack item = event.entityPlayer.getHeldItem();
     	if (item == null) return;
-    	
+
     	if (event.action == PlayerInteractEvent.Action.RIGHT_CLICK_AIR) {
     		if (ToggleCommand.aotdToggled && item.getDisplayName().contains("Aspect of the Dragons")) {
     			event.setCanceled(true);
@@ -2660,18 +2787,69 @@ public class TheMod
     			event.setCanceled(true);
     		}
     	}
+
+		if (event.action == PlayerInteractEvent.Action.RIGHT_CLICK_BLOCK) {
+			Block block = Minecraft.getMinecraft().theWorld.getBlockState(event.pos).getBlock();
+			ArrayList<Block> interactables = new ArrayList<>(Arrays.asList(
+					Blocks.acacia_door,
+					Blocks.anvil,
+					Blocks.beacon,
+					Blocks.bed,
+					Blocks.birch_door,
+					Blocks.brewing_stand,
+					Blocks.command_block,
+					Blocks.crafting_table,
+					Blocks.chest,
+					Blocks.dark_oak_door,
+					Blocks.daylight_detector,
+					Blocks.daylight_detector_inverted,
+					Blocks.dispenser,
+					Blocks.dropper,
+					Blocks.enchanting_table,
+					Blocks.ender_chest,
+					Blocks.furnace,
+					Blocks.hopper,
+					Blocks.jungle_door,
+					Blocks.lever,
+					Blocks.noteblock,
+					Blocks.powered_comparator,
+					Blocks.unpowered_comparator,
+					Blocks.powered_repeater,
+					Blocks.unpowered_repeater,
+					Blocks.standing_sign,
+					Blocks.wall_sign,
+					Blocks.trapdoor,
+					Blocks.trapped_chest,
+					Blocks.wooden_button,
+					Blocks.stone_button,
+					Blocks.oak_door,
+					Blocks.skull
+			));
+			if (Utils.inDungeons) {
+				interactables.add(Blocks.coal_block);
+				interactables.add(Blocks.stained_hardened_clay);
+			}
+			if (!interactables.contains(block)) {
+				if (ToggleCommand.aotdToggled && item.getDisplayName().contains("Aspect of the Dragons")) {
+					event.setCanceled(true);
+				}
+				if (ToggleCommand.lividDaggerToggled && item.getDisplayName().contains("Livid Dagger")) {
+					event.setCanceled(true);
+				}
+			}
+		}
     }
-    
+
     @SubscribeEvent
     public void onEntityInteract(EntityInteractEvent event) {
     	Minecraft mc = Minecraft.getMinecraft();
     	if (mc.thePlayer != event.entityPlayer) return;
-    	
+
     	if (ToggleCommand.itemFrameOnSeaLanternsToggled && Utils.inDungeons && event.target instanceof EntityItemFrame) {
     		EntityItemFrame itemFrame = (EntityItemFrame) event.target;
     		ItemStack item = itemFrame.getDisplayedItem();
     		if (item == null || item.getItem() != Items.arrow) return;
-    		BlockPos blockPos = Utils.getBlockUnderItemFrame(mc.theWorld, itemFrame);
+    		BlockPos blockPos = Utils.getBlockUnderItemFrame(itemFrame);
     		if (mc.theWorld.getBlockState(blockPos).getBlock() == Blocks.sea_lantern) {
     			event.setCanceled(true);
     		}
@@ -2681,7 +2859,7 @@ public class TheMod
     @SubscribeEvent
     public void onKey(KeyInputEvent event) {
     	if (!Utils.inSkyblock) return;
-    	
+
     	EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
     	if (keyBindings[0].isPressed()) {
     		player.sendChatMessage(lastMaddoxCommand);
@@ -2699,13 +2877,13 @@ public class TheMod
     		}
     	}
     }
-    
+
     @SubscribeEvent
     public void onGuiMouseInputPre(GuiScreenEvent.MouseInputEvent.Pre event) {
     	if (!Utils.inSkyblock) return;
-    	if (Mouse.getEventButton() == lastMouse) return;
-    	if (Mouse.getEventButton() != 0 && Mouse.getEventButton() != 1) return; // Left click or right click
-    	
+		if (Mouse.getEventButton() != 0 && Mouse.getEventButton() != 1 && Mouse.getEventButton() != 2) return; // Left click, middle click or right click
+		if (!Mouse.getEventButtonState()) return;
+
     	if (event.gui instanceof GuiChest) {
     		Container containerChest = ((GuiChest) event.gui).inventorySlots;
     		if (containerChest instanceof ContainerChest) {
@@ -2713,11 +2891,28 @@ public class TheMod
         		GuiChest chest = (GuiChest) event.gui;
     			IInventory inventory = ((ContainerChest) containerChest).getLowerChestInventory();
     			Slot mouseSlot = chest.getSlotUnderMouse();
-    			if (mouseSlot == null || mouseSlot.getStack() == null) return;
+    			if (mouseSlot == null) return;
     			ItemStack item = mouseSlot.getStack();
     			String inventoryName = inventory.getDisplayName().getUnformattedText();
-    			
-    			if (inventoryName.endsWith(" Chest") && item.getDisplayName().contains("Open Reward Chest")) {
+
+				if (ToggleCommand.stopSalvageStarredToggled && inventoryName.startsWith("Salvage")) {
+					if (item == null) return;
+					boolean inSalvageGui = false;
+					if (item.getDisplayName().contains("Salvage") || item.getDisplayName().contains("Essence")) {
+						ItemStack salvageItem = inventory.getStackInSlot(13);
+						if (salvageItem == null) return;
+						item = salvageItem;
+						inSalvageGui = true;
+					}
+					if (item.getDisplayName().contains("✪") && (mouseSlot.slotNumber > 53 || inSalvageGui)) {
+						Minecraft.getMinecraft().thePlayer.playSound("note.bass", 1, 0.5f);
+						Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(ERROR_COLOUR + "Danker's Skyblock Mod has stopped you from salvaging that item!"));
+						event.setCanceled(true);
+						return;
+					}
+				}
+
+				if (inventoryName.endsWith(" Chest") && item != null && item.getDisplayName().contains("Open Reward Chest")) {
     				List<String> tooltip = item.getTooltip(Minecraft.getMinecraft().thePlayer, Minecraft.getMinecraft().gameSettings.advancedItemTooltips);
     				for (String lineUnclean : tooltip) {
     					String line = StringUtils.stripControlCodes(lineUnclean);
@@ -2725,7 +2920,7 @@ public class TheMod
     						break;
     					} else if (line.contains(" Coins")) {
     						int coinsSpent = Integer.parseInt(line.substring(0, line.indexOf(" ")).replaceAll(",", ""));
-    						
+
     						List<String> scoreboard = ScoreboardHandler.getSidebarLines();
     						for (String s : scoreboard) {
     							String sCleaned = ScoreboardHandler.cleanSB(s);
@@ -2765,9 +2960,44 @@ public class TheMod
     						break;
     					}
     				}
-    			} 
-    			
-    			if (!BlockSlayerCommand.onlySlayerName.equals("")) {
+    			}
+
+    			if (ToggleCommand.chronomatronToggled && inventoryName.startsWith("Chronomatron (")) {
+    				if (item == null) {
+						if (event.isCancelable() && !Keyboard.isKeyDown(Keyboard.KEY_LCONTROL) && !Keyboard.isKeyDown(Keyboard.KEY_RCONTROL)) event.setCanceled(true);
+						return;
+					}
+    				if (inventory.getStackInSlot(49).getDisplayName().startsWith("§7Timer: §a") && (item.getItem() == Item.getItemFromBlock(Blocks.stained_glass) || item.getItem() == Item.getItemFromBlock(Blocks.stained_hardened_clay))) {
+						if (chronomatronPattern.size() > chronomatronMouseClicks && !item.getDisplayName().equals(chronomatronPattern.get(chronomatronMouseClicks))) {
+							if (event.isCancelable() && !Keyboard.isKeyDown(Keyboard.KEY_LCONTROL) && !Keyboard.isKeyDown(Keyboard.KEY_RCONTROL)) event.setCanceled(true);
+							return;
+						}
+    					chronomatronMouseClicks++;
+					} else if (inventory.getStackInSlot(49).getDisplayName().startsWith("§aRemember the pattern!")) {
+    					if (event.isCancelable()) event.setCanceled(true);
+    					return;
+					}
+				}
+
+				if (ToggleCommand.ultrasequencerToggled && inventoryName.startsWith("Ultrasequencer (")) {
+					if (item == null) {
+						if (event.isCancelable() && !Keyboard.isKeyDown(Keyboard.KEY_LCONTROL) && !Keyboard.isKeyDown(Keyboard.KEY_RCONTROL))
+							event.setCanceled(true);
+						return;
+					}
+					if (inventory.getStackInSlot(49).getDisplayName().equals("§aRemember the pattern!")) {
+						if (event.isCancelable()) event.setCanceled(true);
+						return;
+					} else if (inventory.getStackInSlot(49).getDisplayName().startsWith("§7Timer: §a")) {
+						if (clickInOrderSlots[lastUltraSequencerClicked] != null && mouseSlot.getSlotIndex() != clickInOrderSlots[lastUltraSequencerClicked].getSlotIndex()) {
+							if (event.isCancelable() && !Keyboard.isKeyDown(Keyboard.KEY_LCONTROL) && !Keyboard.isKeyDown(Keyboard.KEY_RCONTROL))
+								event.setCanceled(true);
+							return;
+						}
+					}
+				}
+
+    			if (!BlockSlayerCommand.onlySlayerName.equals("") && item != null) {
     				if (inventoryName.equals("Slayer")) {
         				if (!item.getDisplayName().contains("Revenant Horror") && !item.getDisplayName().contains("Tarantula Broodfather") && !item.getDisplayName().contains("Sven Packmaster")) return;
         				if (!item.getDisplayName().contains(BlockSlayerCommand.onlySlayerName)) {
@@ -2778,7 +3008,7 @@ public class TheMod
         			} else if (inventoryName.equals("Revenant Horror") || inventoryName.equals("Tarantula Broodfather") || inventoryName.equals("Sven Packmaster")) {
         				if (item.getDisplayName().contains("Revenant Horror") || item.getDisplayName().contains("Tarantula Broodfather") || item.getDisplayName().contains("Sven Packmaster")) {
         					// Only check number as they passed the above check
-        					String slayerNumber = item.getDisplayName().substring(item.getDisplayName().lastIndexOf(" ") + 1, item.getDisplayName().length());
+        					String slayerNumber = item.getDisplayName().substring(item.getDisplayName().lastIndexOf(" ") + 1);
             				if (!slayerNumber.equals(BlockSlayerCommand.onlySlayerNumber)) {
             					Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(ERROR_COLOUR + "Danker's Skyblock Mod has stopped you from starting this quest (Set to " + BlockSlayerCommand.onlySlayerName + " " + BlockSlayerCommand.onlySlayerNumber + ")"));
             					Minecraft.getMinecraft().thePlayer.playSound("note.bass", 1, (float) 0.5);
@@ -2790,31 +3020,66 @@ public class TheMod
     		}
     	}
     }
-    
+
     @SubscribeEvent
     public void onMouseInputPost(GuiScreenEvent.MouseInputEvent.Post event) {
     	if (!Utils.inSkyblock) return;
-    	if (Mouse.getEventButton() == lastMouse) return;
     	if (Mouse.getEventButton() == 0 && event.gui instanceof GuiChat) {
     		if (ToggleCommand.chatMaddoxToggled && System.currentTimeMillis() / 1000 - lastMaddoxTime < 10) {
     			Minecraft.getMinecraft().thePlayer.sendChatMessage(lastMaddoxCommand);
     		}
     	}
-    	
-    	lastMouse = Mouse.getEventButton();
     }
-    
+
+    @SubscribeEvent
+	public void onGuiOpen(GuiOpenEvent event) {
+    	Minecraft mc = Minecraft.getMinecraft();
+    	GameSettings gameSettings = mc.gameSettings;
+		if (event.gui instanceof GuiChest) {
+			Container containerChest = ((GuiChest) event.gui).inventorySlots;
+			if (containerChest instanceof ContainerChest) {
+				GuiChest chest = (GuiChest) event.gui;
+				IInventory inventory = ((ContainerChest) containerChest).getLowerChestInventory();
+				String inventoryName = inventory.getDisplayName().getUnformattedText();
+				if (ToggleCommand.swapToPickBlockInExperimentsToggled) {
+					if (inventoryName.startsWith("Chronomatron (") || inventoryName.startsWith("Superpairs (") || inventoryName.startsWith("Ultrasequencer (")) {
+						if (!pickBlockBindSwapped) {
+							pickBlockBind = gameSettings.keyBindPickBlock.getKeyCode();
+							gameSettings.keyBindPickBlock.setKeyCode(-100);
+							pickBlockBindSwapped = true;
+						}
+					} else {
+						if (pickBlockBindSwapped) {
+							gameSettings.keyBindPickBlock.setKeyCode(pickBlockBind);
+							pickBlockBindSwapped = false;
+						}
+					}
+				}
+			}
+		}
+		clickInOrderSlots = new Slot[36];
+		lastChronomatronRound = 0;
+		chronomatronPattern.clear();
+		chronomatronMouseClicks = 0;
+		experimentTableSlots = new ItemStack[54];
+	}
+
     @SubscribeEvent
     public void onGuiRender(GuiScreenEvent.BackgroundDrawnEvent event) {
-    	//if (!Utils.inSkyblock) return;
+    	if (!Utils.inSkyblock) return;
     	if (event.gui instanceof GuiChest) {
     		GuiChest inventory = (GuiChest) event.gui;
     		Container containerChest = inventory.inventorySlots;
     		if (containerChest instanceof ContainerChest) {
+    			Minecraft mc = Minecraft.getMinecraft();
+				ScaledResolution sr = new ScaledResolution(mc);
+				int guiLeft = (sr.getScaledWidth() - 176) / 2;
+				int guiTop = (sr.getScaledHeight() - 222) / 2;
+
     			List<Slot> invSlots = inventory.inventorySlots.inventorySlots;
-    			String displayName = ((ContainerChest) containerChest).getLowerChestInventory().getDisplayName().getUnformattedText();
+    			String displayName = ((ContainerChest) containerChest).getLowerChestInventory().getDisplayName().getUnformattedText().trim();
         		int chestSize = inventory.inventorySlots.inventorySlots.size();
-    			
+
         		if (ToggleCommand.petColoursToggled) {
             		Pattern petPattern = Pattern.compile("\\[Lvl [\\d]{1,3}]");
             		for (Slot slot : invSlots) {
@@ -2852,8 +3117,8 @@ public class TheMod
             			}
             		}
         		}
-        		
-        		if (ToggleCommand.startsWithToggled && Utils.inDungeons && displayName.trim().startsWith("What starts with:")) {
+
+        		if (ToggleCommand.startsWithToggled && Utils.inDungeons && displayName.startsWith("What starts with:")) {
         			char letter = displayName.charAt(displayName.indexOf("'") + 1);
         			for (Slot slot : invSlots) {
         				ItemStack item = slot.getStack();
@@ -2863,8 +3128,8 @@ public class TheMod
         				}
         			}
         		}
-        		
-        		if (ToggleCommand.selectAllToggled && Utils.inDungeons && displayName.trim().startsWith("Select all the")) {
+
+        		if (ToggleCommand.selectAllToggled && Utils.inDungeons && displayName.startsWith("Select all the")) {
         			String colour = displayName.split(" ")[3];
         			for (Slot slot : invSlots) {
         				ItemStack item = slot.getStack();
@@ -2874,6 +3139,108 @@ public class TheMod
         				}
         			}
         		}
+
+        		if (ToggleCommand.ultrasequencerToggled && displayName.startsWith("Ultrasequencer (")) {
+        			if (invSlots.size() > 48 && invSlots.get(49).getStack() != null) {
+						if (invSlots.get(49).getStack().getDisplayName().startsWith("§7Timer: §a")) {
+							lastUltraSequencerClicked = 0;
+							for (Slot slot : clickInOrderSlots) {
+								if (slot != null && slot.getStack() != null && StringUtils.stripControlCodes(slot.getStack().getDisplayName()).matches("\\d+")) {
+									int number = Integer.parseInt(StringUtils.stripControlCodes(slot.getStack().getDisplayName()));
+									if (number > lastUltraSequencerClicked) {
+										lastUltraSequencerClicked = number;
+									}
+								}
+							}
+							if (clickInOrderSlots[lastUltraSequencerClicked] != null) {
+								Slot nextSlot = clickInOrderSlots[lastUltraSequencerClicked];
+								Utils.drawOnSlot(chestSize, nextSlot.xDisplayPosition, nextSlot.yDisplayPosition, 0xE540FF40);
+							}
+						}
+					}
+				}
+
+        		if (ToggleCommand.chronomatronToggled && displayName.startsWith("Chronomatron (")) {
+					if (invSlots.size() > 48 && invSlots.get(49).getStack() != null) {
+						if (invSlots.get(49).getStack().getDisplayName().startsWith("§7Timer: §a") && invSlots.get(4).getStack() != null) {
+							int round = invSlots.get(4).getStack().stackSize;
+							int timerSeconds = Integer.parseInt(StringUtils.stripControlCodes(invSlots.get(49).getStack().getDisplayName()).replaceAll("[^\\d]", ""));
+							if (round != lastChronomatronRound && timerSeconds == round + 2) {
+								lastChronomatronRound = round;
+								for (int i = 10; i <= 43; i++) {
+									ItemStack stack = invSlots.get(i).getStack();
+									if (stack == null) continue;
+									if (stack.getItem() == Item.getItemFromBlock(Blocks.stained_hardened_clay)) {
+										chronomatronPattern.add(stack.getDisplayName());
+										break;
+									}
+								}
+							}
+							if (chronomatronMouseClicks < chronomatronPattern.size()) {
+								for (int i = 10; i <= 43; i++) {
+									ItemStack glass = invSlots.get(i).getStack();
+									if (glass == null) continue;
+									Slot glassSlot = invSlots.get(i);
+									if (glass.getDisplayName().equals(chronomatronPattern.get(chronomatronMouseClicks))) {
+										Utils.drawOnSlot(chestSize, glassSlot.xDisplayPosition, glassSlot.yDisplayPosition, 0xE540FF40);
+									}
+								}
+							}
+						} else if (invSlots.get(49).getStack().getDisplayName().equals("§aRemember the pattern!")) {
+							chronomatronMouseClicks = 0;
+						}
+					}
+					new TextRenderer(mc, String.join("\n", chronomatronPattern), (int) (guiLeft * 0.8), 10, 1);
+				}
+
+        		if (ToggleCommand.superpairsToggled && displayName.contains("Superpairs (")) {
+        			HashMap<String, HashSet<Integer>> matches = new HashMap<>();
+        			for(int i = 0; i<53; i++) {
+        				ItemStack itemStack = experimentTableSlots[i];
+        				if (itemStack == null) continue;
+						Slot slot = invSlots.get(i);
+						int x = guiLeft + slot.xDisplayPosition;
+						int y = guiTop + slot.yDisplayPosition;
+						if (chestSize != 90) y += (6 - (chestSize - 36) / 9) * 9;
+
+						//Utils.renderItem(itemStack, x, y, -100);
+
+						String itemName = itemStack.getDisplayName();
+						String keyName = itemName + itemStack.getUnlocalizedName();
+						matches.computeIfAbsent(keyName, k -> new HashSet<>());
+						matches.get(keyName).add(i);
+					}
+
+        			Color[] colors = {
+						new Color(255, 0, 0, 100),
+						new Color(0, 0, 255, 100),
+						new Color(100, 179, 113, 100),
+						new Color(255, 114, 255, 100),
+						new Color(255, 199, 87, 100),
+						new Color(119, 105, 198, 100),
+						new Color(135, 199, 112, 100),
+						new Color(240, 37, 240, 100),
+						new Color(178, 132, 190, 100),
+						new Color(63, 135, 163, 100),
+						new Color(146, 74, 10, 100),
+						new Color(255, 255, 255, 100),
+						new Color(217, 252, 140, 100),
+						new Color(255, 82, 82, 100)
+					};
+
+					Iterator<Color> colorIterator = Arrays.stream(colors).iterator();
+
+        			matches.forEach((itemName, slotSet)->{
+        				if (slotSet.size() < 2) return;
+        				ArrayList<Slot> slots = new ArrayList<>();
+        				slotSet.forEach(slotNum->slots.add(invSlots.get(slotNum)));
+        				Color color = colorIterator.next();
+						slots.forEach(slot->{
+							Utils.drawOnSlot(chestSize, slot.xDisplayPosition, slot.yDisplayPosition, color.getRGB());
+						});
+					});
+				}
+
     		}
     	}
     }

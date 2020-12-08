@@ -1,13 +1,7 @@
 package me.Danker.commands;
 
-import java.text.NumberFormat;
-import java.util.Collections;
-import java.util.List;
-import java.util.Locale;
-
 import com.google.gson.JsonObject;
-
-import me.Danker.TheMod;
+import me.Danker.DankersSkyblockMod;
 import me.Danker.handlers.APIHandler;
 import me.Danker.handlers.ConfigHandler;
 import me.Danker.utils.Utils;
@@ -17,6 +11,11 @@ import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
+
+import java.text.NumberFormat;
+import java.util.Collections;
+import java.util.List;
+import java.util.Locale;
 
 public class SkyblockPlayersCommand extends CommandBase {
 
@@ -49,7 +48,7 @@ public class SkyblockPlayersCommand extends CommandBase {
 			// Check key
 			String key = ConfigHandler.getString("api", "APIKey");
 			if (key.equals("")) {
-				player.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "API key not set. Use /setkey."));
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "API key not set. Use /setkey."));
 			}
 			
 			String playersURL = "https://api.hypixel.net/gameCounts?key=" + key;
@@ -57,7 +56,7 @@ public class SkyblockPlayersCommand extends CommandBase {
 			JsonObject playersResponse = APIHandler.getResponse(playersURL);
 			if (!playersResponse.get("success").getAsBoolean()) {
 				String reason = playersResponse.get("cause").getAsString();
-				player.addChatMessage(new ChatComponentText(TheMod.ERROR_COLOUR + "Failed with reason: " + reason));
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Failed with reason: " + reason));
 				return;
 			}
 			
@@ -126,24 +125,24 @@ public class SkyblockPlayersCommand extends CommandBase {
 			}
 			
 			NumberFormat nf = NumberFormat.getIntegerInstance(Locale.US);
-			player.addChatMessage(new ChatComponentText(TheMod.DELIMITER_COLOUR + "" + EnumChatFormatting.BOLD + "-------------------\n" +
-														TheMod.TYPE_COLOUR + " Hypixel: " + TheMod.VALUE_COLOUR + nf.format(totalPlayers) + "\n" +
-														TheMod.TYPE_COLOUR + " Skyblock: " + TheMod.VALUE_COLOUR + nf.format(skyblockTotalPlayers) + " / " + Utils.getPercentage(skyblockTotalPlayers, totalPlayers) + "%\n" +
-														TheMod.TYPE_COLOUR + " Private Island: " + TheMod.VALUE_COLOUR + nf.format(privateIsland) + " / " + Utils.getPercentage(privateIsland, skyblockTotalPlayers) + "%\n" +
-														TheMod.TYPE_COLOUR + " Hub: " + TheMod.VALUE_COLOUR + nf.format(hub) + " / " + Utils.getPercentage(hub, skyblockTotalPlayers) + "%\n" +
-														TheMod.TYPE_COLOUR + " Barn: " + TheMod.VALUE_COLOUR + nf.format(barn) + " / " + Utils.getPercentage(barn, skyblockTotalPlayers) + "%\n" +
-														TheMod.TYPE_COLOUR + " Mushroom Desert: " + TheMod.VALUE_COLOUR + nf.format(mushroomDesert) + " / " + Utils.getPercentage(mushroomDesert, skyblockTotalPlayers) + "%\n" +
-														TheMod.TYPE_COLOUR + " Park: " + TheMod.VALUE_COLOUR + nf.format(park) + " / " + Utils.getPercentage(park, skyblockTotalPlayers) + "%\n" +
-														TheMod.TYPE_COLOUR + " Gold Mine: " + TheMod.VALUE_COLOUR + nf.format(goldMine) + " / " + Utils.getPercentage(goldMine, skyblockTotalPlayers) + "%\n" +
-														TheMod.TYPE_COLOUR + " Deep Caverns: " + TheMod.VALUE_COLOUR + nf.format(deepCaverns) + " / " + Utils.getPercentage(deepCaverns, skyblockTotalPlayers) + "%\n" +
-														TheMod.TYPE_COLOUR + " Spider's Den: " + TheMod.VALUE_COLOUR + nf.format(spidersDen) + " / " + Utils.getPercentage(spidersDen, skyblockTotalPlayers) + "%\n" +
-														TheMod.TYPE_COLOUR + " Blazing Fortress: " + TheMod.VALUE_COLOUR + nf.format(blazingFortress) + " / " + Utils.getPercentage(blazingFortress, skyblockTotalPlayers) + "%\n" +
-														TheMod.TYPE_COLOUR + " The End: " + TheMod.VALUE_COLOUR + nf.format(end) + " / " + Utils.getPercentage(end, skyblockTotalPlayers) + "%\n" +
-														TheMod.TYPE_COLOUR + " Dungeons Hub: " + TheMod.VALUE_COLOUR + nf.format(dungeonsHub) + " / " + Utils.getPercentage(dungeonsHub, skyblockTotalPlayers) + "%\n" +
-														TheMod.TYPE_COLOUR + " Dungeons: " + TheMod.VALUE_COLOUR + nf.format(dungeons) + " / " + Utils.getPercentage(dungeons, skyblockTotalPlayers) + "%\n" +
-														TheMod.TYPE_COLOUR + " Dark Auction: " + TheMod.VALUE_COLOUR + nf.format(darkAuction) + " / " + Utils.getPercentage(darkAuction, skyblockTotalPlayers) + "%\n" +
-														TheMod.TYPE_COLOUR + " Jerry's Workshop: " + TheMod.VALUE_COLOUR + nf.format(jerry) + " / " + Utils.getPercentage(jerry, skyblockTotalPlayers) + "%\n" +
-														TheMod.DELIMITER_COLOUR + EnumChatFormatting.BOLD + " -------------------"));
+			player.addChatMessage(new ChatComponentText(DankersSkyblockMod.DELIMITER_COLOUR + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+														DankersSkyblockMod.TYPE_COLOUR + " Hypixel: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(totalPlayers) + "\n" +
+														DankersSkyblockMod.TYPE_COLOUR + " Skyblock: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(skyblockTotalPlayers) + " / " + Utils.getPercentage(skyblockTotalPlayers, totalPlayers) + "%\n" +
+														DankersSkyblockMod.TYPE_COLOUR + " Private Island: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(privateIsland) + " / " + Utils.getPercentage(privateIsland, skyblockTotalPlayers) + "%\n" +
+														DankersSkyblockMod.TYPE_COLOUR + " Hub: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(hub) + " / " + Utils.getPercentage(hub, skyblockTotalPlayers) + "%\n" +
+														DankersSkyblockMod.TYPE_COLOUR + " Barn: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(barn) + " / " + Utils.getPercentage(barn, skyblockTotalPlayers) + "%\n" +
+														DankersSkyblockMod.TYPE_COLOUR + " Mushroom Desert: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(mushroomDesert) + " / " + Utils.getPercentage(mushroomDesert, skyblockTotalPlayers) + "%\n" +
+														DankersSkyblockMod.TYPE_COLOUR + " Park: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(park) + " / " + Utils.getPercentage(park, skyblockTotalPlayers) + "%\n" +
+														DankersSkyblockMod.TYPE_COLOUR + " Gold Mine: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(goldMine) + " / " + Utils.getPercentage(goldMine, skyblockTotalPlayers) + "%\n" +
+														DankersSkyblockMod.TYPE_COLOUR + " Deep Caverns: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(deepCaverns) + " / " + Utils.getPercentage(deepCaverns, skyblockTotalPlayers) + "%\n" +
+														DankersSkyblockMod.TYPE_COLOUR + " Spider's Den: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(spidersDen) + " / " + Utils.getPercentage(spidersDen, skyblockTotalPlayers) + "%\n" +
+														DankersSkyblockMod.TYPE_COLOUR + " Blazing Fortress: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(blazingFortress) + " / " + Utils.getPercentage(blazingFortress, skyblockTotalPlayers) + "%\n" +
+														DankersSkyblockMod.TYPE_COLOUR + " The End: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(end) + " / " + Utils.getPercentage(end, skyblockTotalPlayers) + "%\n" +
+														DankersSkyblockMod.TYPE_COLOUR + " Dungeons Hub: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(dungeonsHub) + " / " + Utils.getPercentage(dungeonsHub, skyblockTotalPlayers) + "%\n" +
+														DankersSkyblockMod.TYPE_COLOUR + " Dungeons: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(dungeons) + " / " + Utils.getPercentage(dungeons, skyblockTotalPlayers) + "%\n" +
+														DankersSkyblockMod.TYPE_COLOUR + " Dark Auction: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(darkAuction) + " / " + Utils.getPercentage(darkAuction, skyblockTotalPlayers) + "%\n" +
+														DankersSkyblockMod.TYPE_COLOUR + " Jerry's Workshop: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(jerry) + " / " + Utils.getPercentage(jerry, skyblockTotalPlayers) + "%\n" +
+														DankersSkyblockMod.DELIMITER_COLOUR + EnumChatFormatting.BOLD + " -------------------"));
 		}).start();
 	}
 

@@ -1,8 +1,6 @@
 package me.Danker.gui;
 
-import org.lwjgl.opengl.GL11;
-
-import me.Danker.TheMod;
+import me.Danker.DankersSkyblockMod;
 import me.Danker.commands.MoveCommand;
 import me.Danker.commands.ScaleCommand;
 import me.Danker.gui.buttons.LocationButton;
@@ -12,6 +10,7 @@ import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.EnumChatFormatting;
+import org.lwjgl.opengl.GL11;
 
 public class EditLocationsGui extends GuiScreen {
 
@@ -26,6 +25,7 @@ public class EditLocationsGui extends GuiScreen {
 	private LocationButton lividHP;
 	private LocationButton cakeTimer;
 	private LocationButton skillTracker;
+	private LocationButton waterAnswer;
 	
 	@Override
 	public boolean doesGuiPauseGame() {
@@ -72,23 +72,32 @@ public class EditLocationsGui extends GuiScreen {
 							      EnumChatFormatting.YELLOW + 2 + "\n" +
 							      EnumChatFormatting.YELLOW + 1;
 		
-		String skillTrackerText = TheMod.SKILL_TRACKER_COLOUR + "Farming XP Earned: 462,425.3\n" +
-								  TheMod.SKILL_TRACKER_COLOUR + "Time Elapsed: " + Utils.getTimeBetween(0, 3602) + "\n" +
-								  TheMod.SKILL_TRACKER_COLOUR + "XP Per Hour: 462,168";
-		
+		String skillTrackerText = DankersSkyblockMod.SKILL_TRACKER_COLOUR + "Farming XP Earned: 462,425.3\n" +
+								  DankersSkyblockMod.SKILL_TRACKER_COLOUR + "Time Elapsed: " + Utils.getTimeBetween(0, 3602) + "\n" +
+								  DankersSkyblockMod.SKILL_TRACKER_COLOUR + "XP Per Hour: 462,168";
+
+		String waterAnswerText = DankersSkyblockMod.MAIN_COLOUR + "The following levers must be down:\n" +
+								 EnumChatFormatting.DARK_PURPLE + "Purple: " + EnumChatFormatting.WHITE + "Quartz, " + EnumChatFormatting.YELLOW + "Gold, " + EnumChatFormatting.GREEN + "Emerald, " + EnumChatFormatting.RED + "Clay\n" +
+								 EnumChatFormatting.GOLD + "Orange: " + EnumChatFormatting.YELLOW + "Gold, " + EnumChatFormatting.DARK_GRAY + "Coal\n" +
+								 EnumChatFormatting.BLUE + "Blue: " + EnumChatFormatting.WHITE + "Quartz, " + EnumChatFormatting.YELLOW + "Gold, " + EnumChatFormatting.DARK_GRAY + "Coal, " + EnumChatFormatting.GREEN + "Emerald, " + EnumChatFormatting.RED + "Clay\n" +
+								 EnumChatFormatting.GREEN + "Green: " + EnumChatFormatting.YELLOW + "Gold, " + EnumChatFormatting.GREEN + "Emerald\n" +
+								 EnumChatFormatting.RED + "Red: " + EnumChatFormatting.YELLOW + "Gold, " + EnumChatFormatting.AQUA + "Diamond, " + EnumChatFormatting.GREEN + "Emerald, " + EnumChatFormatting.RED + "Clay";
+
 		display = new LocationButton(0, MoveCommand.displayXY[0], MoveCommand.displayXY[1], 145 * ScaleCommand.displayScale, 102 * ScaleCommand.displayScale, ScaleCommand.displayScale, displayText, displayNums, 110);
 		dungeonTimer = new LocationButton(0, MoveCommand.dungeonTimerXY[0], MoveCommand.dungeonTimerXY[1], 113 * ScaleCommand.dungeonTimerScale, 57 * ScaleCommand.dungeonTimerScale, ScaleCommand.dungeonTimerScale, dungeonTimerText, dungeonTimerNums, 80);
-		coords = new LocationButton(0, MoveCommand.coordsXY[0], MoveCommand.coordsXY[1], 141 * ScaleCommand.coordsScale, 12 * ScaleCommand.coordsScale, ScaleCommand.coordsScale, TheMod.COORDS_COLOUR + "74 / 14 / -26 (141.1 / 6.7)", null, null);
-		skill50 = new LocationButton(0, MoveCommand.skill50XY[0], MoveCommand.skill50XY[1], 233 * ScaleCommand.skill50Scale, 12 * ScaleCommand.skill50Scale, ScaleCommand.skill50Scale, TheMod.SKILL_50_COLOUR + "+3.5 Farming (28,882,117.7/55,172,425) 52.34%", null, null);
+		coords = new LocationButton(0, MoveCommand.coordsXY[0], MoveCommand.coordsXY[1], 141 * ScaleCommand.coordsScale, 12 * ScaleCommand.coordsScale, ScaleCommand.coordsScale, DankersSkyblockMod.COORDS_COLOUR + "74 / 14 / -26 (141.1 / 6.7)", null, null);
+		skill50 = new LocationButton(0, MoveCommand.skill50XY[0], MoveCommand.skill50XY[1], 233 * ScaleCommand.skill50Scale, 12 * ScaleCommand.skill50Scale, ScaleCommand.skill50Scale, DankersSkyblockMod.SKILL_50_COLOUR + "+3.5 Farming (28,882,117.7/55,172,425) 52.34%", null, null);
 		lividHP = new LocationButton(0, MoveCommand.lividHpXY[0], MoveCommand.lividHpXY[1], 85 * ScaleCommand.lividHpScale, 12 * ScaleCommand.lividHpScale, ScaleCommand.lividHpScale, EnumChatFormatting.WHITE + "﴾ Livid " + EnumChatFormatting.YELLOW + "6.9M" + EnumChatFormatting.RED + "❤ " + EnumChatFormatting.WHITE + "﴿", null, null);
-		cakeTimer = new LocationButton(0, MoveCommand.cakeTimerXY[0], MoveCommand.cakeTimerXY[1] + 5, 85 * ScaleCommand.cakeTimerScale, 18 * ScaleCommand.cakeTimerScale, ScaleCommand.cakeTimerScale, TheMod.CAKE_COLOUR + "     11h16m", null, null);
+		cakeTimer = new LocationButton(0, MoveCommand.cakeTimerXY[0], MoveCommand.cakeTimerXY[1] + 5, 85 * ScaleCommand.cakeTimerScale, 18 * ScaleCommand.cakeTimerScale, ScaleCommand.cakeTimerScale, DankersSkyblockMod.CAKE_COLOUR + "     11h16m", null, null);
 		skillTracker = new LocationButton(0, MoveCommand.skillTrackerXY[0], MoveCommand.skillTrackerXY[1], 150 * ScaleCommand.skillTrackerScale, 28 * ScaleCommand.skillTrackerScale, ScaleCommand.skillTrackerScale, skillTrackerText, null, null);
-		
+		waterAnswer = new LocationButton(0, MoveCommand.waterAnswerXY[0], MoveCommand.waterAnswerXY[1], 190 * ScaleCommand.waterAnswerScale, 54 * ScaleCommand.waterAnswerScale, ScaleCommand.waterAnswerScale, waterAnswerText, null, null);
+
 		this.buttonList.add(coords);
 		this.buttonList.add(dungeonTimer);
 		this.buttonList.add(lividHP);
 		this.buttonList.add(cakeTimer);
 		this.buttonList.add(skillTracker);
+		this.buttonList.add(waterAnswer);
 		this.buttonList.add(display);
 		this.buttonList.add(skill50);
 	}
@@ -99,9 +108,9 @@ public class EditLocationsGui extends GuiScreen {
 		mouseMoved(mouseX, mouseY);
 		
 		double scale = ScaleCommand.cakeTimerScale;
-		double scaleReset = (double) Math.pow(scale, -1);
+		double scaleReset = Math.pow(scale, -1);
 		GL11.glScaled(scale, scale, scale);
-		mc.getTextureManager().bindTexture(TheMod.CAKE_ICON);
+		mc.getTextureManager().bindTexture(DankersSkyblockMod.CAKE_ICON);
 		Gui.drawModalRectWithCustomSizedTexture(MoveCommand.cakeTimerXY[0], MoveCommand.cakeTimerXY[1], 0, 0, 16, 16, 16, 16);
 		GL11.glScaled(scaleReset, scaleReset, scaleReset);
 		
@@ -113,41 +122,55 @@ public class EditLocationsGui extends GuiScreen {
 		int yMoved = mouseY - lastMouseY;
 		
 		if (moving != null) {
-			if (moving.equals("display")) {
-				MoveCommand.displayXY[0] += xMoved;
-				MoveCommand.displayXY[1] += yMoved;
-				display.xPosition = MoveCommand.displayXY[0];
-				display.yPosition = MoveCommand.displayXY[1];
-			} else if (moving.equals("dungeonTimer")) {
-				MoveCommand.dungeonTimerXY[0] += xMoved;
-				MoveCommand.dungeonTimerXY[1] += yMoved;
-				dungeonTimer.xPosition = MoveCommand.dungeonTimerXY[0];
-				dungeonTimer.yPosition = MoveCommand.dungeonTimerXY[1];
-			} else if (moving.equals("coords")) {
-				MoveCommand.coordsXY[0] += xMoved;
-				MoveCommand.coordsXY[1] += yMoved;
-				coords.xPosition = MoveCommand.coordsXY[0];
-				coords.yPosition = MoveCommand.coordsXY[1];
-			} else if (moving.equals("skill50")) {
-				MoveCommand.skill50XY[0] += xMoved;
-				MoveCommand.skill50XY[1] += yMoved;
-				skill50.xPosition = MoveCommand.skill50XY[0];
-				skill50.yPosition = MoveCommand.skill50XY[1];
-			} else if (moving.equals("lividHP")) {
-				MoveCommand.lividHpXY[0] += xMoved;
-				MoveCommand.lividHpXY[1] += yMoved;
-				lividHP.xPosition = MoveCommand.lividHpXY[0];
-				lividHP.yPosition = MoveCommand.lividHpXY[1];
-			} else if (moving.equals("cakeTimer")) {
-				MoveCommand.cakeTimerXY[0] += xMoved;
-				MoveCommand.cakeTimerXY[1] += yMoved;
-				cakeTimer.xPosition = MoveCommand.cakeTimerXY[0];
-				cakeTimer.yPosition = MoveCommand.cakeTimerXY[1];
-			} else if (moving.equals("skillTracker")) {
-				MoveCommand.skillTrackerXY[0] += xMoved;
-				MoveCommand.skillTrackerXY[1] += yMoved;
-				skillTracker.xPosition = MoveCommand.skillTrackerXY[0];
-				skillTracker.yPosition = MoveCommand.skillTrackerXY[1];
+			switch (moving) {
+				case "display":
+					MoveCommand.displayXY[0] += xMoved;
+					MoveCommand.displayXY[1] += yMoved;
+					display.xPosition = MoveCommand.displayXY[0];
+					display.yPosition = MoveCommand.displayXY[1];
+					break;
+				case "dungeonTimer":
+					MoveCommand.dungeonTimerXY[0] += xMoved;
+					MoveCommand.dungeonTimerXY[1] += yMoved;
+					dungeonTimer.xPosition = MoveCommand.dungeonTimerXY[0];
+					dungeonTimer.yPosition = MoveCommand.dungeonTimerXY[1];
+					break;
+				case "coords":
+					MoveCommand.coordsXY[0] += xMoved;
+					MoveCommand.coordsXY[1] += yMoved;
+					coords.xPosition = MoveCommand.coordsXY[0];
+					coords.yPosition = MoveCommand.coordsXY[1];
+					break;
+				case "skill50":
+					MoveCommand.skill50XY[0] += xMoved;
+					MoveCommand.skill50XY[1] += yMoved;
+					skill50.xPosition = MoveCommand.skill50XY[0];
+					skill50.yPosition = MoveCommand.skill50XY[1];
+					break;
+				case "lividHP":
+					MoveCommand.lividHpXY[0] += xMoved;
+					MoveCommand.lividHpXY[1] += yMoved;
+					lividHP.xPosition = MoveCommand.lividHpXY[0];
+					lividHP.yPosition = MoveCommand.lividHpXY[1];
+					break;
+				case "cakeTimer":
+					MoveCommand.cakeTimerXY[0] += xMoved;
+					MoveCommand.cakeTimerXY[1] += yMoved;
+					cakeTimer.xPosition = MoveCommand.cakeTimerXY[0];
+					cakeTimer.yPosition = MoveCommand.cakeTimerXY[1];
+					break;
+				case "skillTracker":
+					MoveCommand.skillTrackerXY[0] += xMoved;
+					MoveCommand.skillTrackerXY[1] += yMoved;
+					skillTracker.xPosition = MoveCommand.skillTrackerXY[0];
+					skillTracker.yPosition = MoveCommand.skillTrackerXY[1];
+					break;
+				case "waterAnswer":
+					MoveCommand.waterAnswerXY[0] += xMoved;
+					MoveCommand.waterAnswerXY[1] += yMoved;
+					waterAnswer.xPosition = MoveCommand.waterAnswerXY[0];
+					waterAnswer.yPosition = MoveCommand.waterAnswerXY[1];
+					break;
 			}
 			this.buttonList.clear();
 			initGui();
@@ -174,6 +197,8 @@ public class EditLocationsGui extends GuiScreen {
 				moving = "cakeTimer";
 			} else if (button == skillTracker) {
 				moving = "skillTracker";
+			} else if (button == waterAnswer) {
+				moving = "waterAnswer";
 			}
 		}
 	}
@@ -196,6 +221,8 @@ public class EditLocationsGui extends GuiScreen {
 		ConfigHandler.writeIntConfig("locations", "cakeTimerY", MoveCommand.cakeTimerXY[1]);
 		ConfigHandler.writeIntConfig("locations", "skillTrackerX", MoveCommand.skillTrackerXY[0]);
 		ConfigHandler.writeIntConfig("locations", "skillTrackerY", MoveCommand.skillTrackerXY[1]);
+		ConfigHandler.writeIntConfig("locations", "waterAnswerX", MoveCommand.waterAnswerXY[1]);
+		ConfigHandler.writeIntConfig("locations", "waterAnswerY", MoveCommand.waterAnswerXY[1]);
 	}
 	
 }

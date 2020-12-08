@@ -34,12 +34,11 @@ public class LocationButton extends GuiButton {
 		} else {
 			splitText = text2.split("\n");
 		}
-		int index = 0;
+
 		int longestText = -1;
-		for (int i = 0; i < splitText.length; i++) {
-			int stringLength = mc.fontRendererObj.getStringWidth(splitText[i]);
+		for (String s : splitText) {
+			int stringLength = mc.fontRendererObj.getStringWidth(s);
 			if (stringLength > longestText) {
-				index = i;
 				longestText = stringLength;
 			}
 		}
