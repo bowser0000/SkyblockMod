@@ -37,6 +37,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 	public static boolean lowHealthNotifyToggled;
 	public static boolean lividSolverToggled;
 	public static boolean stopSalvageStarredToggled;
+	public static boolean watcherReadyToggled;
 	// Puzzle Solvers
 	public static boolean threeManToggled;
 	public static boolean oruoToggled;
@@ -65,7 +66,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 										  "aotd/lividdagger/sceptremessages/petcolors/dungeontimer/golemalerts/expertiselore/skill50display/" + 
 										  "outlinetext/midasstaffmessages/implosionmessages/healmessages/caketimer/lowhealthnotify/" +
 										  "lividsolver/stopsalvagestarred/threemanpuzzle/oruopuzzle/blazepuzzle/creeperpuzzle/waterpuzzle/tictactoepuzzle/" +
-										  "startswithterminal/selectallterminal/itemframeonsealanterns/ultrasequencer/chronomatron/superpairs/pickblockinexperiments/list>";
+										  "startswithterminal/selectallterminal/itemframeonsealanterns/ultrasequencer/chronomatron/superpairs/pickblockinexperiments/watchermessage/list>";
 	}
 
 	@Override
@@ -84,7 +85,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 														  "lividsolver", "stopsalvagestarred", "threemanpuzzle", "oruopuzzle", "blazepuzzle",
 														  "creeperpuzzle", "waterpuzzle", "tictactoepuzzle", "startswithterminal",
 														  "selectallterminal", "itemframeonsealanterns", "ultrasequencer",
-														  "chronomatron", "superpairs", "pickblockinexperiments", "list");
+														  "chronomatron", "superpairs", "pickblockinexperiments", "watchermessage", "list");
 		}
 		return null;
 	}
@@ -285,6 +286,11 @@ public class ToggleCommand extends CommandBase implements ICommand {
 				ConfigHandler.writeBooleanConfig("toggles", "PickBlockInExperiments", superpairsToggled);
 				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Auto-swap to pick block in experiments has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + swapToPickBlockInExperimentsToggled + DankersSkyblockMod.MAIN_COLOUR + "."));
 				break;
+			case "watchermessage":
+				watcherReadyToggled = !watcherReadyToggled;
+				ConfigHandler.writeBooleanConfig("toggles", "WatcherReadyMessage", watcherReadyToggled);
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Display Watcher ready message has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + watcherReadyToggled + DankersSkyblockMod.MAIN_COLOUR + "."));
+				break;
 			case "list":
 				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.TYPE_COLOUR + "Guild party notifications: " + DankersSkyblockMod.VALUE_COLOUR + gpartyToggled + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Coord/Angle display: " + DankersSkyblockMod.VALUE_COLOUR + coordsToggled + "\n" +
@@ -320,7 +326,8 @@ public class ToggleCommand extends CommandBase implements ICommand {
 															DankersSkyblockMod.TYPE_COLOUR + " Ignore item frames on sea lanterns: " + DankersSkyblockMod.VALUE_COLOUR + itemFrameOnSeaLanternsToggled + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Ultra sequencer solver: " + DankersSkyblockMod.VALUE_COLOUR + ultrasequencerToggled + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Chronomatron solver: " + DankersSkyblockMod.VALUE_COLOUR + chronomatronToggled + "\n" +
-															DankersSkyblockMod.TYPE_COLOUR + " Superpairs solver: " + DankersSkyblockMod.VALUE_COLOUR + superpairsToggled
+															DankersSkyblockMod.TYPE_COLOUR + " Superpairs solver: " + DankersSkyblockMod.VALUE_COLOUR + superpairsToggled + "\n" +
+															DankersSkyblockMod.TYPE_COLOUR + " Watcher ready message: " + DankersSkyblockMod.VALUE_COLOUR + watcherReadyToggled
 				));
 				break;
 			default:
