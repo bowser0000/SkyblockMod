@@ -166,6 +166,17 @@ public class DankersSkyblockMod
     public static String TRIVIA_WRONG_ANSWER_COLOUR;
     public static int LOWEST_BLAZE_COLOUR;
     public static int HIGHEST_BLAZE_COLOUR;
+    public static int PET_1_TO_9;
+    public static int PET_10_TO_19;
+    public static int PET_20_TO_29;
+    public static int PET_30_TO_39;
+    public static int PET_40_TO_49;
+    public static int PET_50_TO_59;
+    public static int PET_60_TO_69;
+    public static int PET_70_TO_79;
+    public static int PET_80_TO_89;
+    public static int PET_90_TO_99;
+    public static int PET_100;
     
     @EventHandler
     public void init(FMLInitializationEvent event) {
@@ -3091,29 +3102,29 @@ public class DankersSkyblockMod
             				int colour;
             				int petLevel = Integer.parseInt(item.getDisplayName().substring(item.getDisplayName().indexOf(" ") + 1, item.getDisplayName().indexOf("]")));
             				if (petLevel == 100) {
-            					colour = 0xBFF2D249; // Gold
+            					colour = PET_100;
             				} else if (petLevel >= 90) {
-            					colour = 0xBF9E794E; // Brown
+            					colour = PET_90_TO_99;
             				} else if (petLevel >= 80) {
-            					colour = 0xBF5C1F35; // idk weird magenta
+            					colour = PET_80_TO_89;
             				} else if (petLevel >= 70) {
-            					colour = 0xBFD64FC8; // Pink
+            					colour = PET_70_TO_79;
             				} else if (petLevel >= 60) {
-            					colour = 0xBF7E4FC6; // Purple
+            					colour = PET_60_TO_69;
             				} else if (petLevel >= 50) {
-            					colour = 0xBF008AD8; // Light Blue
+            					colour = PET_50_TO_59;
             				} else if (petLevel >= 40) {
-            					colour = 0xBF0EAC35; // Green
+            					colour = PET_40_TO_49;
             				} else if (petLevel >= 30) {
-            					colour = 0xBFFFC400; // Yellow
+            					colour = PET_30_TO_39;
             				} else if (petLevel >= 20) {
-            					colour = 0xBFEF5230; // Orange
+            					colour = PET_20_TO_29;
             				} else if (petLevel >= 10) {
-            					colour = 0xBFD62440; // Red
+            					colour = PET_10_TO_19;
             				} else {
-            					colour = 0xBF999999; // Gray
+            					colour = PET_1_TO_9;
             				}
-            				Utils.drawOnSlot(chestSize, slot.xDisplayPosition, slot.yDisplayPosition, colour);
+            				Utils.drawOnSlot(chestSize, slot.xDisplayPosition, slot.yDisplayPosition, colour + 0xBF000000);
             			}
             		}
         		}

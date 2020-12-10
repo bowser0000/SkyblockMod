@@ -417,6 +417,17 @@ public class ConfigHandler {
 		if (!hasKey("colors", "triviaWrongAnswer")) writeStringConfig("colors", "triviaWrongAnswer", EnumChatFormatting.RED.toString());
 		if (!hasKey("colors", "blazeLowest")) writeIntConfig("colors", "blazeLowest", 0xFF0000);
 		if (!hasKey("colors", "blazeHighest")) writeIntConfig("colors", "blazeHighest", 0x40FF40);
+		if (!hasKey("colors", "pet1To9")) writeIntConfig("colors", "pet1To9", 0x999999); // Gray
+		if (!hasKey("colors", "pet10To19")) writeIntConfig("colors", "pet10To19", 0xD62440); // Red
+		if (!hasKey("colors", "pet20To29")) writeIntConfig("colors", "pet20To29", 0xEF5230); // Orange
+		if (!hasKey("colors", "pet30To39")) writeIntConfig("colors", "pet30To39", 0xFFC400); // Yellow
+		if (!hasKey("colors", "pet40To49")) writeIntConfig("colors", "pet40To49", 0x0EAC35); // Green
+		if (!hasKey("colors", "pet50To59")) writeIntConfig("colors", "pet50To59", 0x008AD8); // Light Blue
+		if (!hasKey("colors", "pet60To69")) writeIntConfig("colors", "pet60To69", 0x7E4FC6); // Purple
+		if (!hasKey("colors", "pet70To79")) writeIntConfig("colors", "pet70To79", 0xD64FC8); // Pink
+		if (!hasKey("colors", "pet80To89")) writeIntConfig("colors", "pet80To89", 0x5C1F35); // idk weird magenta
+		if (!hasKey("colors", "pet90To99")) writeIntConfig("colors", "pet90To99", 0x9E794E); // Brown
+		if (!hasKey("colors", "pet100")) writeIntConfig("colors", "pet100", 0xF2D249); // Gold
 		
 		ToggleCommand.gpartyToggled = getBoolean("toggles", "GParty");
 		ToggleCommand.coordsToggled = getBoolean("toggles", "Coords");
@@ -670,6 +681,17 @@ public class ConfigHandler {
 		DankersSkyblockMod.TRIVIA_WRONG_ANSWER_COLOUR = getString("colors", "triviaWrongAnswer");
 		DankersSkyblockMod.LOWEST_BLAZE_COLOUR = getInt("colors", "blazeLowest");
 		DankersSkyblockMod.HIGHEST_BLAZE_COLOUR = getInt("colors", "blazeHighest");
+		DankersSkyblockMod.PET_1_TO_9 = getInt("colors", "pet1To9");
+		DankersSkyblockMod.PET_10_TO_19 = getInt("colors", "pet10To19");
+		DankersSkyblockMod.PET_20_TO_29 = getInt("colors", "pet20To29");
+		DankersSkyblockMod.PET_30_TO_39 = getInt("colors", "pet30To39");
+		DankersSkyblockMod.PET_40_TO_49 = getInt("colors", "pet40To49");
+		DankersSkyblockMod.PET_50_TO_59 = getInt("colors", "pet50To59");
+		DankersSkyblockMod.PET_60_TO_69 = getInt("colors", "pet60To69");
+		DankersSkyblockMod.PET_70_TO_79 = getInt("colors", "pet70To79");
+		DankersSkyblockMod.PET_80_TO_89 = getInt("colors", "pet80To89");
+		DankersSkyblockMod.PET_90_TO_99 = getInt("colors", "pet90To99");
+		DankersSkyblockMod.PET_100 = getInt("colors", "pet100");
 	}
 	
 }
