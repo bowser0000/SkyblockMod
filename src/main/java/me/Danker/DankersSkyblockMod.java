@@ -2256,12 +2256,17 @@ public class DankersSkyblockMod
     				}
     			}
     		}
-    	}
+		}
 
 		if (mc.currentScreen instanceof GuiChest) {
 				ContainerChest chest = (ContainerChest) player.openContainer;
 				IInventory inv = chest.getLowerChestInventory();
 				String chestName = inv.getDisplayName().getUnformattedText();
+
+				if (ToggleCommand.hideTooltipsInExperimentAddonsToggled && (chestName.startsWith("Ultrasequencer (") || chestName.startsWith("Chronomatron ("))) {
+					event.toolTip.clear();
+				}
+
 				if (ToggleCommand.superpairsToggled && chestName.contains("Superpairs (")) {
 					if (Item.getIdFromItem(item.getItem()) != 95) return;
 					if (item.getDisplayName().contains("Click any button") || item.getDisplayName().contains("Click a second button") || item.getDisplayName().contains("Next button is instantly rewarded") || item.getDisplayName().contains("Stained Glass")) {
@@ -3159,6 +3164,12 @@ public class DankersSkyblockMod
 								Slot nextSlot = clickInOrderSlots[lastUltraSequencerClicked];
 								Utils.drawOnSlot(chestSize, nextSlot.xDisplayPosition, nextSlot.yDisplayPosition, 0xE540FF40);
 							}
+							if (lastUltraSequencerClicked + 1 < clickInOrderSlots.length) {
+								if (clickInOrderSlots[lastUltraSequencerClicked + 1] != null) {
+									Slot nextSlot = clickInOrderSlots[lastUltraSequencerClicked + 1];
+									Utils.drawOnSlot(chestSize, nextSlot.xDisplayPosition, nextSlot.yDisplayPosition, 0xD740DAE6);
+								}
+							}
 						}
 					}
 				}
@@ -3183,8 +3194,23 @@ public class DankersSkyblockMod
 								for (int i = 10; i <= 43; i++) {
 									ItemStack glass = invSlots.get(i).getStack();
 									if (glass == null) continue;
+
 									Slot glassSlot = invSlots.get(i);
-									if (glass.getDisplayName().equals(chronomatronPattern.get(chronomatronMouseClicks))) {
+									
+									if (chronomatronMouseClicks + 1 < chronomatronPattern.size()) {
+										if (chronomatronPattern.get(chronomatronMouseClicks).equals(chronomatronPattern.get(chronomatronMouseClicks + 1))) {
+											if (glass.getDisplayName().equals(chronomatronPattern.get(chronomatronMouseClicks))) {
+												Utils.drawOnSlot(chestSize, glassSlot.xDisplayPosition, glassSlot.yDisplayPosition, 0xE540FF40);
+											}
+										}
+										else if (glass.getDisplayName().equals(chronomatronPattern.get(chronomatronMouseClicks))) {
+											Utils.drawOnSlot(chestSize, glassSlot.xDisplayPosition, glassSlot.yDisplayPosition, 0xE540FF40);
+										}
+										else if (glass.getDisplayName().equals(chronomatronPattern.get(chronomatronMouseClicks + 1))) {
+											Utils.drawOnSlot(chestSize, glassSlot.xDisplayPosition, glassSlot.yDisplayPosition, 0xBE40DAE6);
+										}
+									}
+									else if (glass.getDisplayName().equals(chronomatronPattern.get(chronomatronMouseClicks))) {
 										Utils.drawOnSlot(chestSize, glassSlot.xDisplayPosition, glassSlot.yDisplayPosition, 0xE540FF40);
 									}
 								}

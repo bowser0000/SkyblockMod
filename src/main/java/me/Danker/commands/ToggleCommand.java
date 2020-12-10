@@ -54,6 +54,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 	public static boolean chronomatronToggled;
 	public static boolean superpairsToggled;
 	public static boolean swapToPickBlockInExperimentsToggled;
+	public static boolean hideTooltipsInExperimentAddonsToggled;
 	
 	@Override
 	public String getCommandName() {
@@ -66,7 +67,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 										  "aotd/lividdagger/sceptremessages/petcolors/dungeontimer/golemalerts/expertiselore/skill50display/" + 
 										  "outlinetext/midasstaffmessages/implosionmessages/healmessages/caketimer/lowhealthnotify/" +
 										  "lividsolver/stopsalvagestarred/threemanpuzzle/oruopuzzle/blazepuzzle/creeperpuzzle/waterpuzzle/tictactoepuzzle/" +
-										  "startswithterminal/selectallterminal/itemframeonsealanterns/ultrasequencer/chronomatron/superpairs/pickblockinexperiments/watchermessage/list>";
+										  "startswithterminal/selectallterminal/itemframeonsealanterns/ultrasequencer/chronomatron/superpairs/pickblockinexperiments/hidetooltipsinaddons/watchermessage/list>";
 	}
 
 	@Override
@@ -85,7 +86,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 														  "lividsolver", "stopsalvagestarred", "threemanpuzzle", "oruopuzzle", "blazepuzzle",
 														  "creeperpuzzle", "waterpuzzle", "tictactoepuzzle", "startswithterminal",
 														  "selectallterminal", "itemframeonsealanterns", "ultrasequencer",
-														  "chronomatron", "superpairs", "pickblockinexperiments", "watchermessage", "list");
+														  "chronomatron", "superpairs", "pickblockinexperiments", "hidetooltipsinaddons", "watchermessage", "list");
 		}
 		return null;
 	}
@@ -283,8 +284,13 @@ public class ToggleCommand extends CommandBase implements ICommand {
 				break;
 			case "pickblockinexperiments":
 				swapToPickBlockInExperimentsToggled = !swapToPickBlockInExperimentsToggled;
-				ConfigHandler.writeBooleanConfig("toggles", "PickBlockInExperiments", superpairsToggled);
+				ConfigHandler.writeBooleanConfig("toggles", "PickBlockInExperiments", swapToPickBlockInExperimentsToggled);
 				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Auto-swap to pick block in experiments has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + swapToPickBlockInExperimentsToggled + DankersSkyblockMod.MAIN_COLOUR + "."));
+				break;
+			case "hidetooltipsinaddons":
+				hideTooltipsInExperimentAddonsToggled = !hideTooltipsInExperimentAddonsToggled;
+				ConfigHandler.writeBooleanConfig("toggles", "HideTooltipsInExperimentAddons", hideTooltipsInExperimentAddonsToggled);
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Hide tooltips in ultrasequencer and chronomatron has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + hideTooltipsInExperimentAddonsToggled + DankersSkyblockMod.MAIN_COLOUR + "."));
 				break;
 			case "watchermessage":
 				watcherReadyToggled = !watcherReadyToggled;
@@ -327,6 +333,8 @@ public class ToggleCommand extends CommandBase implements ICommand {
 															DankersSkyblockMod.TYPE_COLOUR + " Ultra sequencer solver: " + DankersSkyblockMod.VALUE_COLOUR + ultrasequencerToggled + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Chronomatron solver: " + DankersSkyblockMod.VALUE_COLOUR + chronomatronToggled + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Superpairs solver: " + DankersSkyblockMod.VALUE_COLOUR + superpairsToggled + "\n" +
+															DankersSkyblockMod.TYPE_COLOUR + " Auto-swap to pick block in experiments: " + DankersSkyblockMod.VALUE_COLOUR + swapToPickBlockInExperimentsToggled + "\n" +
+															DankersSkyblockMod.TYPE_COLOUR + " Hide tooltips in experiment addons: " + DankersSkyblockMod.VALUE_COLOUR + hideTooltipsInExperimentAddonsToggled + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Watcher ready message: " + DankersSkyblockMod.VALUE_COLOUR + watcherReadyToggled
 				));
 				break;
