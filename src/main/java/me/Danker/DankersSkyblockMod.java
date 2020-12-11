@@ -74,7 +74,7 @@ import java.util.regex.Pattern;
 public class DankersSkyblockMod
 {
     public static final String MODID = "Danker's Skyblock Mod";
-    public static final String VERSION = "1.8.5-beta2";
+    public static final String VERSION = "1.8.5-beta3";
     
     static double checkItemsNow = 0;
     static double itemsChecked = 0;
@@ -2277,10 +2277,6 @@ public class DankersSkyblockMod
 				IInventory inv = chest.getLowerChestInventory();
 				String chestName = inv.getDisplayName().getUnformattedText();
 
-				if (ToggleCommand.hideTooltipsInExperimentAddonsToggled && (chestName.startsWith("Ultrasequencer (") || chestName.startsWith("Chronomatron ("))) {
-					event.toolTip.clear();
-				}
-
 				if (ToggleCommand.superpairsToggled && chestName.contains("Superpairs (")) {
 					if (Item.getIdFromItem(item.getItem()) != 95) return;
 					if (item.getDisplayName().contains("Click any button") || item.getDisplayName().contains("Click a second button") || item.getDisplayName().contains("Next button is instantly rewarded") || item.getDisplayName().contains("Stained Glass")) {
@@ -2300,9 +2296,27 @@ public class DankersSkyblockMod
 					}
 
 				}
-			}
-
+		}
     }
+
+    @SubscribeEvent(priority = EventPriority.LOW)
+	public void onTooltipLow(ItemTooltipEvent event) {
+		if (!Utils.inSkyblock) return;
+		if (event.toolTip == null) return;
+
+		Minecraft mc = Minecraft.getMinecraft();
+		EntityPlayerSP player = mc.thePlayer;
+
+		if (mc.currentScreen instanceof GuiChest) {
+			ContainerChest chest = (ContainerChest) player.openContainer;
+			IInventory inv = chest.getLowerChestInventory();
+			String chestName = inv.getDisplayName().getUnformattedText();
+
+			if (ToggleCommand.hideTooltipsInExperimentAddonsToggled && (chestName.startsWith("Ultrasequencer (") || chestName.startsWith("Chronomatron ("))) {
+				event.toolTip.clear();
+			}
+		}
+	}
 
     @SubscribeEvent
     public void onTick(TickEvent.ClientTickEvent event) {
