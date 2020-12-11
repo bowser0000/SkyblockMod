@@ -74,7 +74,7 @@ import java.util.regex.Pattern;
 public class DankersSkyblockMod
 {
     public static final String MODID = "Danker's Skyblock Mod";
-    public static final String VERSION = "1.8.5-beta1";
+    public static final String VERSION = "1.8.5-beta2";
     
     static double checkItemsNow = 0;
     static double itemsChecked = 0;
@@ -456,7 +456,10 @@ public class DankersSkyblockMod
         
         if (message.contains("[BOSS] The Watcher: You have proven yourself. You may pass.")) {
         	watcherClearTime = System.currentTimeMillis() / 1000;
-        }
+		}
+		if (message.contains("[BOSS] The Watcher: That will be enough for now.")) {
+			if (ToggleCommand.watcherReadyToggled) Utils.createTitle(EnumChatFormatting.RED + "WATCHER READY", 2);
+		}
 		if (message.contains("PUZZLE FAIL! ") || message.contains("chose the wrong answer! I shall never forget this moment")) {
 			puzzleFails++;
 		}
@@ -478,7 +481,7 @@ public class DankersSkyblockMod
 			event.setCanceled(true);
 			return;
 		}
-
+		// Implosion
 		if (!ToggleCommand.implosionMessages) {
 			if (message.contains("Your Implosion hit ") || message.contains("There are blocks in the way")) {
 				event.setCanceled(true);
@@ -2267,12 +2270,17 @@ public class DankersSkyblockMod
     				}
     			}
     		}
-    	}
+		}
 
 		if (mc.currentScreen instanceof GuiChest) {
 				ContainerChest chest = (ContainerChest) player.openContainer;
 				IInventory inv = chest.getLowerChestInventory();
 				String chestName = inv.getDisplayName().getUnformattedText();
+
+				if (ToggleCommand.hideTooltipsInExperimentAddonsToggled && (chestName.startsWith("Ultrasequencer (") || chestName.startsWith("Chronomatron ("))) {
+					event.toolTip.clear();
+				}
+
 				if (ToggleCommand.superpairsToggled && chestName.contains("Superpairs (")) {
 					if (Item.getIdFromItem(item.getItem()) != 95) return;
 					if (item.getDisplayName().contains("Click any button") || item.getDisplayName().contains("Click a second button") || item.getDisplayName().contains("Next button is instantly rewarded") || item.getDisplayName().contains("Stained Glass")) {
@@ -3055,8 +3063,8 @@ public class DankersSkyblockMod
 				GuiChest chest = (GuiChest) event.gui;
 				IInventory inventory = ((ContainerChest) containerChest).getLowerChestInventory();
 				String inventoryName = inventory.getDisplayName().getUnformattedText();
-				if (ToggleCommand.swapToPickBlockInExperimentsToggled) {
-					if (inventoryName.startsWith("Chronomatron (") || inventoryName.startsWith("Superpairs (") || inventoryName.startsWith("Ultrasequencer (")) {
+				if (ToggleCommand.swapToPickBlockToggled) {
+					if (inventoryName.startsWith("Chronomatron (") || inventoryName.startsWith("Superpairs (") || inventoryName.startsWith("Ultrasequencer (") || inventoryName.startsWith("What starts with:") || inventoryName.startsWith("Select all the") || inventoryName.startsWith("Harp -")) {
 						if (!pickBlockBindSwapped) {
 							pickBlockBind = gameSettings.keyBindPickBlock.getKeyCode();
 							gameSettings.keyBindPickBlock.setKeyCode(-100);
@@ -3157,8 +3165,8 @@ public class DankersSkyblockMod
         				String itemName = StringUtils.stripControlCodes(item.getDisplayName()).toUpperCase();
         				if (itemName.contains(colour) || (colour.equals("SILVER") && itemName.contains("LIGHT GRAY")) || (colour.equals("WHITE") && itemName.equals("WOOL"))) {
         					Utils.drawOnSlot(chestSize, slot.xDisplayPosition, slot.yDisplayPosition, 0xBF40FF40);
-        				}
-        			}
+						}
+					}
         		}
 
         		if (ToggleCommand.ultrasequencerToggled && displayName.startsWith("Ultrasequencer (")) {
@@ -3176,6 +3184,12 @@ public class DankersSkyblockMod
 							if (clickInOrderSlots[lastUltraSequencerClicked] != null) {
 								Slot nextSlot = clickInOrderSlots[lastUltraSequencerClicked];
 								Utils.drawOnSlot(chestSize, nextSlot.xDisplayPosition, nextSlot.yDisplayPosition, 0xE540FF40);
+							}
+							if (lastUltraSequencerClicked + 1 < clickInOrderSlots.length) {
+								if (clickInOrderSlots[lastUltraSequencerClicked + 1] != null) {
+									Slot nextSlot = clickInOrderSlots[lastUltraSequencerClicked + 1];
+									Utils.drawOnSlot(chestSize, nextSlot.xDisplayPosition, nextSlot.yDisplayPosition, 0xD740DAE6);
+								}
 							}
 						}
 					}
@@ -3201,8 +3215,23 @@ public class DankersSkyblockMod
 								for (int i = 10; i <= 43; i++) {
 									ItemStack glass = invSlots.get(i).getStack();
 									if (glass == null) continue;
+
 									Slot glassSlot = invSlots.get(i);
-									if (glass.getDisplayName().equals(chronomatronPattern.get(chronomatronMouseClicks))) {
+									
+									if (chronomatronMouseClicks + 1 < chronomatronPattern.size()) {
+										if (chronomatronPattern.get(chronomatronMouseClicks).equals(chronomatronPattern.get(chronomatronMouseClicks + 1))) {
+											if (glass.getDisplayName().equals(chronomatronPattern.get(chronomatronMouseClicks))) {
+												Utils.drawOnSlot(chestSize, glassSlot.xDisplayPosition, glassSlot.yDisplayPosition, 0xE540FF40);
+											}
+										}
+										else if (glass.getDisplayName().equals(chronomatronPattern.get(chronomatronMouseClicks))) {
+											Utils.drawOnSlot(chestSize, glassSlot.xDisplayPosition, glassSlot.yDisplayPosition, 0xE540FF40);
+										}
+										else if (glass.getDisplayName().equals(chronomatronPattern.get(chronomatronMouseClicks + 1))) {
+											Utils.drawOnSlot(chestSize, glassSlot.xDisplayPosition, glassSlot.yDisplayPosition, 0xBE40DAE6);
+										}
+									}
+									else if (glass.getDisplayName().equals(chronomatronPattern.get(chronomatronMouseClicks))) {
 										Utils.drawOnSlot(chestSize, glassSlot.xDisplayPosition, glassSlot.yDisplayPosition, 0xE540FF40);
 									}
 								}
