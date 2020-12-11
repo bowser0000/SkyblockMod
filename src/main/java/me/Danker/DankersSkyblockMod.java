@@ -67,6 +67,7 @@ import java.awt.*;
 import java.text.NumberFormat;
 import java.util.List;
 import java.util.*;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
@@ -74,12 +75,13 @@ import java.util.regex.Matcher;
 public class DankersSkyblockMod
 {
     public static final String MODID = "Danker's Skyblock Mod";
-    public static final String VERSION = "1.8.4";
+    public static final String VERSION = "1.8.5-beta1";
     
     static double checkItemsNow = 0;
     static double itemsChecked = 0;
     public static Map<String, String> t6Enchants = new HashMap<>();
-    public static Pattern pattern = Pattern.compile("");
+    public static Pattern t6EnchantPattern = Pattern.compile("");
+	static Pattern petPattern = Pattern.compile("\\[Lvl [\\d]{1,3}]");
     static boolean updateChecked = false;
     public static int titleTimer = -1;
     public static boolean showTitle = false;
@@ -116,6 +118,7 @@ public class DankersSkyblockMod
 	static boolean inWaterRoom = false;
 	static String waterAnswers = null;
 	static AxisAlignedBB correctTicTacToeButton = null;
+	static Pattern startsWithTerminalPattern = Pattern.compile("[A-Z]{2,}");
 	static Slot[] clickInOrderSlots = new Slot[36];
 	static int lastChronomatronRound = 0;
 	static List<String> chronomatronPattern = new ArrayList<>();
@@ -167,6 +170,17 @@ public class DankersSkyblockMod
     public static String TRIVIA_WRONG_ANSWER_COLOUR;
     public static int LOWEST_BLAZE_COLOUR;
     public static int HIGHEST_BLAZE_COLOUR;
+    public static int PET_1_TO_9;
+    public static int PET_10_TO_19;
+    public static int PET_20_TO_29;
+    public static int PET_30_TO_39;
+    public static int PET_40_TO_49;
+    public static int PET_50_TO_59;
+    public static int PET_60_TO_69;
+    public static int PET_70_TO_79;
+    public static int PET_80_TO_89;
+    public static int PET_90_TO_99;
+    public static int PET_100;
     
     @EventHandler
     public void init(FMLInitializationEvent event) {
@@ -247,7 +261,7 @@ public class DankersSkyblockMod
 																					   "Booger Dragon", "Older Dragon", "Elder Dragon", "Stable Dragon", "Professor Dragon"});
 		
 		String patternString = "(" + String.join("|", t6Enchants.keySet()) + ")";
-		pattern = Pattern.compile(patternString);
+		t6EnchantPattern = Pattern.compile(patternString);
 		
 		keyBindings[0] = new KeyBinding("Open Maddox Menu", Keyboard.KEY_M, "Danker's Skyblock Mod");
 		keyBindings[1] = new KeyBinding("Start/Stop Skill Tracker", Keyboard.KEY_NUMPAD5, "Danker's Skyblock Mod");
@@ -3090,7 +3104,6 @@ public class DankersSkyblockMod
         		int chestSize = inventory.inventorySlots.inventorySlots.size();
 
         		if (ToggleCommand.petColoursToggled) {
-            		Pattern petPattern = Pattern.compile("\\[Lvl [\\d]{1,3}]");
             		for (Slot slot : invSlots) {
             			ItemStack item = slot.getStack();
             			if (item == null) continue;
@@ -3100,29 +3113,29 @@ public class DankersSkyblockMod
             				int colour;
             				int petLevel = Integer.parseInt(item.getDisplayName().substring(item.getDisplayName().indexOf(" ") + 1, item.getDisplayName().indexOf("]")));
             				if (petLevel == 100) {
-            					colour = 0xBFF2D249; // Gold
+            					colour = PET_100;
             				} else if (petLevel >= 90) {
-            					colour = 0xBF9E794E; // Brown
+            					colour = PET_90_TO_99;
             				} else if (petLevel >= 80) {
-            					colour = 0xBF5C1F35; // idk weird magenta
+            					colour = PET_80_TO_89;
             				} else if (petLevel >= 70) {
-            					colour = 0xBFD64FC8; // Pink
+            					colour = PET_70_TO_79;
             				} else if (petLevel >= 60) {
-            					colour = 0xBF7E4FC6; // Purple
+            					colour = PET_60_TO_69;
             				} else if (petLevel >= 50) {
-            					colour = 0xBF008AD8; // Light Blue
+            					colour = PET_50_TO_59;
             				} else if (petLevel >= 40) {
-            					colour = 0xBF0EAC35; // Green
+            					colour = PET_40_TO_49;
             				} else if (petLevel >= 30) {
-            					colour = 0xBFFFC400; // Yellow
+            					colour = PET_30_TO_39;
             				} else if (petLevel >= 20) {
-            					colour = 0xBFEF5230; // Orange
+            					colour = PET_20_TO_29;
             				} else if (petLevel >= 10) {
-            					colour = 0xBFD62440; // Red
+            					colour = PET_10_TO_19;
             				} else {
-            					colour = 0xBF999999; // Gray
+            					colour = PET_1_TO_9;
             				}
-            				Utils.drawOnSlot(chestSize, slot.xDisplayPosition, slot.yDisplayPosition, colour);
+            				Utils.drawOnSlot(chestSize, slot.xDisplayPosition, slot.yDisplayPosition, colour + 0xBF000000);
             			}
             		}
         		}
@@ -3139,10 +3152,19 @@ public class DankersSkyblockMod
         		}
 
         		if (ToggleCommand.selectAllToggled && Utils.inDungeons && displayName.startsWith("Select all the")) {
-					for (Slot slot : invSlots) {
+        			String colour;
+        			List<String> colourParts = new ArrayList<>();
+					Matcher colourMatcher = startsWithTerminalPattern.matcher(displayName);
+        			while (colourMatcher.find()) {
+						colourParts.add(colourMatcher.group());
+					}
+        			colour = String.join(" ", colourParts);
+
+        			for (Slot slot : invSlots) {
         				ItemStack item = slot.getStack();
         				if (item == null) continue;
-        				if (item.getDisplayName().toUpperCase().contains(colour)) {
+        				String itemName = StringUtils.stripControlCodes(item.getDisplayName()).toUpperCase();
+        				if (itemName.contains(colour) || (colour.equals("SILVER") && itemName.contains("LIGHT GRAY")) || (colour.equals("WHITE") && itemName.equals("WOOL"))) {
         					Utils.drawOnSlot(chestSize, slot.xDisplayPosition, slot.yDisplayPosition, 0xBF40FF40);
 						}
 					}

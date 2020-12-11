@@ -64,7 +64,7 @@ public class Utils {
     }
     
     public static String returnGoldenEnchants(String line) {
-    	Matcher matcher = DankersSkyblockMod.pattern.matcher(line);
+    	Matcher matcher = DankersSkyblockMod.t6EnchantPattern.matcher(line);
     	StringBuffer out = new StringBuffer();
     	
     	while (matcher.find()) {
