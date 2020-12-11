@@ -67,6 +67,7 @@ import java.awt.*;
 import java.text.NumberFormat;
 import java.util.List;
 import java.util.*;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @Mod(modid = DankersSkyblockMod.MODID, version = DankersSkyblockMod.VERSION, clientSideOnly = true)
@@ -78,7 +79,8 @@ public class DankersSkyblockMod
     static double checkItemsNow = 0;
     static double itemsChecked = 0;
     public static Map<String, String> t6Enchants = new HashMap<>();
-    public static Pattern pattern = Pattern.compile("");
+    public static Pattern t6EnchantPattern = Pattern.compile("");
+	static Pattern petPattern = Pattern.compile("\\[Lvl [\\d]{1,3}]");
     static boolean updateChecked = false;
     public static int titleTimer = -1;
     public static boolean showTitle = false;
@@ -115,6 +117,7 @@ public class DankersSkyblockMod
 	static boolean inWaterRoom = false;
 	static String waterAnswers = null;
 	static AxisAlignedBB correctTicTacToeButton = null;
+	static Pattern startsWithTerminalPattern = Pattern.compile("[A-Z]{2,}");
 	static Slot[] clickInOrderSlots = new Slot[36];
 	static int lastChronomatronRound = 0;
 	static List<String> chronomatronPattern = new ArrayList<>();
@@ -257,7 +260,7 @@ public class DankersSkyblockMod
 																					   "Booger Dragon", "Older Dragon", "Elder Dragon", "Stable Dragon", "Professor Dragon"});
 		
 		String patternString = "(" + String.join("|", t6Enchants.keySet()) + ")";
-		pattern = Pattern.compile(patternString);
+		t6EnchantPattern = Pattern.compile(patternString);
 		
 		keyBindings[0] = new KeyBinding("Open Maddox Menu", Keyboard.KEY_M, "Danker's Skyblock Mod");
 		keyBindings[1] = new KeyBinding("Start/Stop Skill Tracker", Keyboard.KEY_NUMPAD5, "Danker's Skyblock Mod");
@@ -3092,7 +3095,6 @@ public class DankersSkyblockMod
         		int chestSize = inventory.inventorySlots.inventorySlots.size();
 
         		if (ToggleCommand.petColoursToggled) {
-            		Pattern petPattern = Pattern.compile("\\[Lvl [\\d]{1,3}]");
             		for (Slot slot : invSlots) {
             			ItemStack item = slot.getStack();
             			if (item == null) continue;
@@ -3141,11 +3143,19 @@ public class DankersSkyblockMod
         		}
 
         		if (ToggleCommand.selectAllToggled && Utils.inDungeons && displayName.startsWith("Select all the")) {
-        			String colour = displayName.split(" ")[3];
+        			String colour;
+        			List<String> colourParts = new ArrayList<>();
+					Matcher colourMatcher = startsWithTerminalPattern.matcher(displayName);
+        			while (colourMatcher.find()) {
+						colourParts.add(colourMatcher.group());
+					}
+        			colour = String.join(" ", colourParts);
+
         			for (Slot slot : invSlots) {
         				ItemStack item = slot.getStack();
         				if (item == null) continue;
-        				if (item.getDisplayName().toUpperCase().contains(colour)) {
+        				String itemName = StringUtils.stripControlCodes(item.getDisplayName()).toUpperCase();
+        				if (itemName.contains(colour) || (colour.equals("SILVER") && itemName.contains("LIGHT GRAY")) || (colour.equals("WHITE") && itemName.equals("WOOL"))) {
         					Utils.drawOnSlot(chestSize, slot.xDisplayPosition, slot.yDisplayPosition, 0xBF40FF40);
         				}
         			}
