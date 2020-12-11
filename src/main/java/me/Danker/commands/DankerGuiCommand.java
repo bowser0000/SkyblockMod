@@ -70,7 +70,8 @@ public class DankerGuiCommand extends CommandBase {
 			debug.append("[ultrasequencer][").append(ToggleCommand.ultrasequencerToggled).append("]\n");
 			debug.append("[chronomatron][").append(ToggleCommand.chronomatronToggled).append("]\n");
 			debug.append("[superpairs][").append(ToggleCommand.superpairsToggled).append("]\n");
-			debug.append("[pickblockinexperiments][").append(ToggleCommand.swapToPickBlockInExperimentsToggled).append("]\n");
+			debug.append("[pickblock][").append(ToggleCommand.swapToPickBlockToggled).append("]\n");
+			debug.append("[watchermessage][").append(ToggleCommand.watcherReadyToggled).append("]\n");
 			debug.append("# Locations\n");
 			debug.append("[coords][").append(MoveCommand.coordsXY[0]).append(", ").append(MoveCommand.coordsXY[1]).append("]\n");
 			debug.append("[display][").append(MoveCommand.displayXY[0]).append(", ").append(MoveCommand.displayXY[1]).append("]\n");
