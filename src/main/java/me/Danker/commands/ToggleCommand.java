@@ -23,17 +23,21 @@ public class ToggleCommand extends CommandBase implements ICommand {
 	public static boolean spiritBearAlerts;
 	public static boolean aotdToggled;
 	public static boolean lividDaggerToggled;
-	public static boolean sceptreMessages;
 	public static boolean petColoursToggled;
 	public static boolean dungeonTimerToggled;
 	public static boolean golemAlertToggled;
 	public static boolean expertiseLoreToggled;
 	public static boolean skill50DisplayToggled;
 	public static boolean outlineTextToggled;
+	public static boolean cakeTimerToggled;
+	// Chat Messages
+	public static boolean sceptreMessages;
 	public static boolean midasStaffMessages;
 	public static boolean implosionMessages;
 	public static boolean healMessages;
-	public static boolean cakeTimerToggled;
+	public static boolean cooldownMessages;
+	public static boolean manaMessages;
+	// Dungeons Messages
 	public static boolean lowHealthNotifyToggled;
 	public static boolean lividSolverToggled;
 	public static boolean stopSalvageStarredToggled;
@@ -53,7 +57,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 	public static boolean chronomatronToggled;
 	public static boolean superpairsToggled;
 	public static boolean swapToPickBlockInExperimentsToggled;
-	
+
 	@Override
 	public String getCommandName() {
 		return "toggle";
@@ -61,43 +65,43 @@ public class ToggleCommand extends CommandBase implements ICommand {
 
 	@Override
 	public String getCommandUsage(ICommandSender arg0) {
-		return "/" + getCommandName() + " <gparty/coords/golden/slayercount/rngesusalerts/splitfishing/chatmaddox/spiritbearalert/" + 
-										  "aotd/lividdagger/sceptremessages/petcolors/dungeontimer/golemalerts/expertiselore/skill50display/" + 
-										  "outlinetext/midasstaffmessages/implosionmessages/healmessages/caketimer/lowhealthnotify/" +
-										  "lividsolver/stopsalvagestarred/threemanpuzzle/oruopuzzle/blazepuzzle/creeperpuzzle/waterpuzzle/tictactoepuzzle/" +
-										  "startswithterminal/selectallterminal/itemframeonsealanterns/ultrasequencer/chronomatron/superpairs/pickblockinexperiments/list>";
+		return "/" + getCommandName() + " <gparty/coords/golden/slayercount/rngesusalerts/splitfishing/chatmaddox/spiritbearalert/" +
+				"aotd/lividdagger/petcolors/dungeontimer/golemalerts/expertiselore/skill50display/" +
+				"outlinetext/sceptremessages/midasstaffmessages/implosionmessages/healmessages/manamessages/cooldownmessages/caketimer/" +
+				"lowhealthnotify/lividsolver/stopsalvagestarred/threemanpuzzle/oruopuzzle/blazepuzzle/creeperpuzzle/waterpuzzle/tictactoepuzzle/" +
+				"startswithterminal/selectallterminal/itemframeonsealanterns/ultrasequencer/chronomatron/superpairs/pickblockinexperiments/list>";
 	}
 
 	@Override
 	public int getRequiredPermissionLevel() {
 		return 0;
 	}
-	
+
 	@Override
 	public List<String> addTabCompletionOptions(ICommandSender sender, String[] args, BlockPos pos) {
 		if (args.length == 1) {
 			return getListOfStringsMatchingLastWord(args, "gparty", "coords", "golden", "slayercount", "rngesusalerts",
-														  "splitfishing", "chatmaddox", "spiritbearalerts", "aotd", "lividdagger",
-														  "sceptremessages", "petcolors", "dungeontimer", "golemalerts",
-														  "expertiselore", "skill50display", "outlinetext", "midasstaffmessages",
-														  "implosionmessages", "healmessages", "caketimer", "lowhealthnotify",
-														  "lividsolver", "stopsalvagestarred", "threemanpuzzle", "oruopuzzle", "blazepuzzle",
-														  "creeperpuzzle", "waterpuzzle", "tictactoepuzzle", "startswithterminal",
-														  "selectallterminal", "itemframeonsealanterns", "ultrasequencer",
-														  "chronomatron", "superpairs", "pickblockinexperiments", "list");
+					"splitfishing", "chatmaddox", "spiritbearalerts", "aotd", "lividdagger",
+					"petcolors", "dungeontimer", "golemalerts", "expertiselore",
+					"skill50display", "outlinetext","sceptremessages",  "midasstaffmessages",
+					"implosionmessages", "healmessages", "manamessages", "cooldownmessages","caketimer",
+					"lowhealthnotify", "lividsolver", "stopsalvagestarred", "threemanpuzzle", "oruopuzzle", "blazepuzzle",
+					"creeperpuzzle", "waterpuzzle", "tictactoepuzzle", "startswithterminal",
+					"selectallterminal", "itemframeonsealanterns", "ultrasequencer",
+					"chronomatron", "superpairs", "pickblockinexperiments", "list");
 		}
 		return null;
 	}
-	
+
 	@Override
 	public void processCommand(ICommandSender arg0, String[] arg1) throws CommandException {
 		final EntityPlayer player = (EntityPlayer)arg0;
-		
+
 		if (arg1.length == 0) {
 			player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Usage: " + getCommandUsage(arg0)));
 			return;
 		}
-		
+
 		switch (arg1[0].toLowerCase()) {
 			case "gparty":
 				gpartyToggled = !gpartyToggled;
@@ -109,7 +113,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 				ConfigHandler.writeBooleanConfig("toggles", "Coords", coordsToggled);
 				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Coord/Angle display has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + coordsToggled + DankersSkyblockMod.MAIN_COLOUR + "."));
 				break;
-			case "golden": 
+			case "golden":
 				goldenToggled = !goldenToggled;
 				ConfigHandler.writeBooleanConfig("toggles", "Golden", goldenToggled);
 				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Golden T6 enchants has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + goldenToggled + DankersSkyblockMod.MAIN_COLOUR + "."));
@@ -168,6 +172,16 @@ public class ToggleCommand extends CommandBase implements ICommand {
 				healMessages = !healMessages;
 				ConfigHandler.writeBooleanConfig("toggles", "HealMessages", healMessages);
 				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Heal messages have been set to " + DankersSkyblockMod.SECONDARY_COLOUR + healMessages + DankersSkyblockMod.MAIN_COLOUR + "."));
+				break;
+			case "cooldownmessages":
+				cooldownMessages = !cooldownMessages;
+				ConfigHandler.writeBooleanConfig("toggles", "CooldownMessages", cooldownMessages);
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Ability cooldown messages has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + cooldownMessages + DankersSkyblockMod.MAIN_COLOUR + "."));
+				break;
+			case "manamessages":
+				manaMessages = !manaMessages;
+				ConfigHandler.writeBooleanConfig("toggles", "ManaMessages", manaMessages);
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Out of mana messages has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + manaMessages + DankersSkyblockMod.MAIN_COLOUR + "."));
 				break;
 			case "petcolors":
 			case "petcolours":
@@ -287,40 +301,42 @@ public class ToggleCommand extends CommandBase implements ICommand {
 				break;
 			case "list":
 				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.TYPE_COLOUR + "Guild party notifications: " + DankersSkyblockMod.VALUE_COLOUR + gpartyToggled + "\n" +
-															DankersSkyblockMod.TYPE_COLOUR + " Coord/Angle display: " + DankersSkyblockMod.VALUE_COLOUR + coordsToggled + "\n" +
-															DankersSkyblockMod.TYPE_COLOUR + " Golden T6 enchants: " + DankersSkyblockMod.VALUE_COLOUR + goldenToggled + "\n" +
-															DankersSkyblockMod.TYPE_COLOUR + " Counting total 20% slayer drops: " + DankersSkyblockMod.VALUE_COLOUR + slayerCountTotal + "\n" +
-															DankersSkyblockMod.TYPE_COLOUR + " Slayer RNGesus alerts: " + DankersSkyblockMod.VALUE_COLOUR + rngesusAlerts + "\n" +
-															DankersSkyblockMod.TYPE_COLOUR + " Split fishing display: " + DankersSkyblockMod.VALUE_COLOUR + splitFishing + "\n" +
-															DankersSkyblockMod.TYPE_COLOUR + " Chat Maddox menu: " + DankersSkyblockMod.VALUE_COLOUR + chatMaddoxToggled + "\n" +
-															DankersSkyblockMod.TYPE_COLOUR + " Spirit Bear alerts: " + DankersSkyblockMod.VALUE_COLOUR + spiritBearAlerts + "\n" +
-															DankersSkyblockMod.TYPE_COLOUR + " Block AOTD ability: " + DankersSkyblockMod.VALUE_COLOUR + aotdToggled + "\n" +
-															DankersSkyblockMod.TYPE_COLOUR + " Block Livid Dagger ability: " + DankersSkyblockMod.VALUE_COLOUR + lividDaggerToggled + "\n" +
-															DankersSkyblockMod.TYPE_COLOUR + " Spirit Sceptre messages: " + DankersSkyblockMod.VALUE_COLOUR + sceptreMessages + "\n" +
-															DankersSkyblockMod.TYPE_COLOUR + " Midas Staff messages: " + DankersSkyblockMod.VALUE_COLOUR + midasStaffMessages + "\n" +
-															DankersSkyblockMod.TYPE_COLOUR + " Implosion messages: " + DankersSkyblockMod.VALUE_COLOUR + implosionMessages + "\n" +
-															DankersSkyblockMod.TYPE_COLOUR + " Heal messages: " + DankersSkyblockMod.VALUE_COLOUR + healMessages + "\n" +
-															DankersSkyblockMod.TYPE_COLOUR + " Pet colours: " + DankersSkyblockMod.VALUE_COLOUR + petColoursToggled + "\n" +
-															DankersSkyblockMod.TYPE_COLOUR + " Dungeon timer: " + DankersSkyblockMod.VALUE_COLOUR + dungeonTimerToggled + "\n" +
-															DankersSkyblockMod.TYPE_COLOUR + " Golem spawn alerts: " + DankersSkyblockMod.VALUE_COLOUR + golemAlertToggled + "\n" +
-															DankersSkyblockMod.TYPE_COLOUR + " Expertise in lore: " + DankersSkyblockMod.VALUE_COLOUR + expertiseLoreToggled + "\n" +
-															DankersSkyblockMod.TYPE_COLOUR + " Skill 50 display: " + DankersSkyblockMod.VALUE_COLOUR + skill50DisplayToggled + "\n" +
-															DankersSkyblockMod.TYPE_COLOUR + " Outline displayed text: " + DankersSkyblockMod.VALUE_COLOUR + outlineTextToggled + "\n" +
-															DankersSkyblockMod.TYPE_COLOUR + " Cake timer: " + DankersSkyblockMod.VALUE_COLOUR + cakeTimerToggled + "\n" +
-															DankersSkyblockMod.TYPE_COLOUR + " Low health notify: " + DankersSkyblockMod.VALUE_COLOUR + lowHealthNotifyToggled + "\n" +
-															DankersSkyblockMod.TYPE_COLOUR + " Livid solver: " + DankersSkyblockMod.VALUE_COLOUR + lividSolverToggled + "\n" +
-															DankersSkyblockMod.TYPE_COLOUR + " Three man puzzle solver: " + DankersSkyblockMod.VALUE_COLOUR + threeManToggled + "\n" +
-															DankersSkyblockMod.TYPE_COLOUR + " Oruo trivia solver: " + DankersSkyblockMod.VALUE_COLOUR + oruoToggled + "\n" +
-															DankersSkyblockMod.TYPE_COLOUR + " Blaze puzzle solver: " + DankersSkyblockMod.VALUE_COLOUR + blazeToggled + "\n" +
-															DankersSkyblockMod.TYPE_COLOUR + " Creeper puzzle solver: " + DankersSkyblockMod.VALUE_COLOUR + creeperToggled + "\n" +
-															DankersSkyblockMod.TYPE_COLOUR + " Water puzzle solver: " + DankersSkyblockMod.VALUE_COLOUR + waterToggled + "\n" +
-															DankersSkyblockMod.TYPE_COLOUR + " Tic tac toe puzzle solver: " + DankersSkyblockMod.VALUE_COLOUR + ticTacToeToggled + "\n" +
-															DankersSkyblockMod.TYPE_COLOUR + " Starts with letter terminal solver: " + DankersSkyblockMod.VALUE_COLOUR + startsWithToggled + "\n" +
-															DankersSkyblockMod.TYPE_COLOUR + " Select all color items terminal solver: " + DankersSkyblockMod.VALUE_COLOUR + selectAllToggled + "\n" +
-															DankersSkyblockMod.TYPE_COLOUR + " Ignore item frames on sea lanterns: " + DankersSkyblockMod.VALUE_COLOUR + itemFrameOnSeaLanternsToggled + "\n" +
-															DankersSkyblockMod.TYPE_COLOUR + " Ultra sequencer solver: " + DankersSkyblockMod.VALUE_COLOUR + ultrasequencerToggled + "\n" +
-															DankersSkyblockMod.TYPE_COLOUR + " Chronomatron solver: " + DankersSkyblockMod.VALUE_COLOUR + chronomatronToggled + "\n" +
-															DankersSkyblockMod.TYPE_COLOUR + " Superpairs solver: " + DankersSkyblockMod.VALUE_COLOUR + superpairsToggled
+						DankersSkyblockMod.TYPE_COLOUR + " Coord/Angle display: " + DankersSkyblockMod.VALUE_COLOUR + coordsToggled + "\n" +
+						DankersSkyblockMod.TYPE_COLOUR + " Golden T6 enchants: " + DankersSkyblockMod.VALUE_COLOUR + goldenToggled + "\n" +
+						DankersSkyblockMod.TYPE_COLOUR + " Counting total 20% slayer drops: " + DankersSkyblockMod.VALUE_COLOUR + slayerCountTotal + "\n" +
+						DankersSkyblockMod.TYPE_COLOUR + " Slayer RNGesus alerts: " + DankersSkyblockMod.VALUE_COLOUR + rngesusAlerts + "\n" +
+						DankersSkyblockMod.TYPE_COLOUR + " Split fishing display: " + DankersSkyblockMod.VALUE_COLOUR + splitFishing + "\n" +
+						DankersSkyblockMod.TYPE_COLOUR + " Chat Maddox menu: " + DankersSkyblockMod.VALUE_COLOUR + chatMaddoxToggled + "\n" +
+						DankersSkyblockMod.TYPE_COLOUR + " Spirit Bear alerts: " + DankersSkyblockMod.VALUE_COLOUR + spiritBearAlerts + "\n" +
+						DankersSkyblockMod.TYPE_COLOUR + " Block AOTD ability: " + DankersSkyblockMod.VALUE_COLOUR + aotdToggled + "\n" +
+						DankersSkyblockMod.TYPE_COLOUR + " Block Livid Dagger ability: " + DankersSkyblockMod.VALUE_COLOUR + lividDaggerToggled + "\n" +
+						DankersSkyblockMod.TYPE_COLOUR + " Spirit Sceptre messages: " + DankersSkyblockMod.VALUE_COLOUR + sceptreMessages + "\n" +
+						DankersSkyblockMod.TYPE_COLOUR + " Midas Staff messages: " + DankersSkyblockMod.VALUE_COLOUR + midasStaffMessages + "\n" +
+						DankersSkyblockMod.TYPE_COLOUR + " Implosion messages: " + DankersSkyblockMod.VALUE_COLOUR + implosionMessages + "\n" +
+						DankersSkyblockMod.TYPE_COLOUR + " Heal messages: " + DankersSkyblockMod.VALUE_COLOUR + healMessages + "\n" +
+						DankersSkyblockMod.TYPE_COLOUR + " Ability cooldown messages: " + DankersSkyblockMod.VALUE_COLOUR + cooldownMessages + "\n" +
+						DankersSkyblockMod.TYPE_COLOUR + " Out of mana messages: " + DankersSkyblockMod.VALUE_COLOUR + manaMessages + "\n" +
+						DankersSkyblockMod.TYPE_COLOUR + " Pet colours: " + DankersSkyblockMod.VALUE_COLOUR + petColoursToggled + "\n" +
+						DankersSkyblockMod.TYPE_COLOUR + " Dungeon timer: " + DankersSkyblockMod.VALUE_COLOUR + dungeonTimerToggled + "\n" +
+						DankersSkyblockMod.TYPE_COLOUR + " Golem spawn alerts: " + DankersSkyblockMod.VALUE_COLOUR + golemAlertToggled + "\n" +
+						DankersSkyblockMod.TYPE_COLOUR + " Expertise in lore: " + DankersSkyblockMod.VALUE_COLOUR + expertiseLoreToggled + "\n" +
+						DankersSkyblockMod.TYPE_COLOUR + " Skill 50 display: " + DankersSkyblockMod.VALUE_COLOUR + skill50DisplayToggled + "\n" +
+						DankersSkyblockMod.TYPE_COLOUR + " Outline displayed text: " + DankersSkyblockMod.VALUE_COLOUR + outlineTextToggled + "\n" +
+						DankersSkyblockMod.TYPE_COLOUR + " Cake timer: " + DankersSkyblockMod.VALUE_COLOUR + cakeTimerToggled + "\n" +
+						DankersSkyblockMod.TYPE_COLOUR + " Low health notify: " + DankersSkyblockMod.VALUE_COLOUR + lowHealthNotifyToggled + "\n" +
+						DankersSkyblockMod.TYPE_COLOUR + " Livid solver: " + DankersSkyblockMod.VALUE_COLOUR + lividSolverToggled + "\n" +
+						DankersSkyblockMod.TYPE_COLOUR + " Three man puzzle solver: " + DankersSkyblockMod.VALUE_COLOUR + threeManToggled + "\n" +
+						DankersSkyblockMod.TYPE_COLOUR + " Oruo trivia solver: " + DankersSkyblockMod.VALUE_COLOUR + oruoToggled + "\n" +
+						DankersSkyblockMod.TYPE_COLOUR + " Blaze puzzle solver: " + DankersSkyblockMod.VALUE_COLOUR + blazeToggled + "\n" +
+						DankersSkyblockMod.TYPE_COLOUR + " Creeper puzzle solver: " + DankersSkyblockMod.VALUE_COLOUR + creeperToggled + "\n" +
+						DankersSkyblockMod.TYPE_COLOUR + " Water puzzle solver: " + DankersSkyblockMod.VALUE_COLOUR + waterToggled + "\n" +
+						DankersSkyblockMod.TYPE_COLOUR + " Tic tac toe puzzle solver: " + DankersSkyblockMod.VALUE_COLOUR + ticTacToeToggled + "\n" +
+						DankersSkyblockMod.TYPE_COLOUR + " Starts with letter terminal solver: " + DankersSkyblockMod.VALUE_COLOUR + startsWithToggled + "\n" +
+						DankersSkyblockMod.TYPE_COLOUR + " Select all color items terminal solver: " + DankersSkyblockMod.VALUE_COLOUR + selectAllToggled + "\n" +
+						DankersSkyblockMod.TYPE_COLOUR + " Ignore item frames on sea lanterns: " + DankersSkyblockMod.VALUE_COLOUR + itemFrameOnSeaLanternsToggled + "\n" +
+						DankersSkyblockMod.TYPE_COLOUR + " Ultra sequencer solver: " + DankersSkyblockMod.VALUE_COLOUR + ultrasequencerToggled + "\n" +
+						DankersSkyblockMod.TYPE_COLOUR + " Chronomatron solver: " + DankersSkyblockMod.VALUE_COLOUR + chronomatronToggled + "\n" +
+						DankersSkyblockMod.TYPE_COLOUR + " Superpairs solver: " + DankersSkyblockMod.VALUE_COLOUR + superpairsToggled
 				));
 				break;
 			default:

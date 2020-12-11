@@ -13,7 +13,7 @@ import java.io.File;
 public class ConfigHandler {
 	public static Configuration config;
 	private final static String file = "config/Danker's Skyblock Mod.cfg";
-	
+
 	public static void init() {
 		config = new Configuration(new File(file));
 		try {
@@ -24,7 +24,7 @@ public class ConfigHandler {
 			config.save();
 		}
 	}
-	
+
 	public static int getInt(String category, String key) {
 		config = new Configuration(new File(file));
 		try {
@@ -39,7 +39,7 @@ public class ConfigHandler {
 		}
 		return 0;
 	}
-	
+
 	public static double getDouble(String category, String key) {
 		config = new Configuration(new File(file));
 		try {
@@ -54,7 +54,7 @@ public class ConfigHandler {
 		}
 		return 0D;
 	}
-	
+
 	public static String getString(String category, String key) {
 		config = new Configuration(new File(file));
 		try {
@@ -69,7 +69,7 @@ public class ConfigHandler {
 		}
 		return "";
 	}
-	
+
 	public static boolean getBoolean(String category, String key) {
 		config = new Configuration(new File(file));
 		try {
@@ -84,7 +84,7 @@ public class ConfigHandler {
 		}
 		return true;
 	}
-	
+
 	public static void writeIntConfig(String category, String key, int value) {
 		config = new Configuration(new File(file));
 		try {
@@ -97,7 +97,7 @@ public class ConfigHandler {
 			config.save();
 		}
 	}
-	
+
 	public static void writeDoubleConfig(String category, String key, double value) {
 		config = new Configuration(new File(file));
 		try {
@@ -110,7 +110,7 @@ public class ConfigHandler {
 			config.save();
 		}
 	}
-	
+
 	public static void writeStringConfig(String category, String key, String value) {
 		config = new Configuration(new File(file));
 		try {
@@ -123,7 +123,7 @@ public class ConfigHandler {
 			config.save();
 		}
 	}
-	
+
 	public static void writeBooleanConfig(String category, String key, boolean value) {
 		config = new Configuration(new File(file));
 		try {
@@ -136,7 +136,7 @@ public class ConfigHandler {
 			config.save();
 		}
 	}
-	
+
 	public static boolean hasKey(String category, String key) {
 		config = new Configuration(new File(file));
 		try {
@@ -150,7 +150,7 @@ public class ConfigHandler {
 		}
 		return false;
 	}
-	
+
 	public static void deleteCategory(String category) {
 		config = new Configuration(new File(file));
 		try {
@@ -164,7 +164,7 @@ public class ConfigHandler {
 			config.save();
 		}
 	}
-	
+
 	public static void reloadConfig() {
 		// Config init
 		if (!hasKey("toggles", "GParty")) writeBooleanConfig("toggles", "GParty", false);
@@ -177,18 +177,22 @@ public class ConfigHandler {
 		if (!hasKey("toggles", "SpiritBearAlerts")) writeBooleanConfig("toggles", "SpiritBearAlerts", true);
 		if (!hasKey("toggles", "AOTD")) writeBooleanConfig("toggles", "AOTD", false);
 		if (!hasKey("toggles", "LividDagger")) writeBooleanConfig("toggles", "LividDagger", false);
-		if (!hasKey("toggles", "SceptreMessages")) writeBooleanConfig("toggles", "SceptreMessages", true);
-		if (!hasKey("toggles", "MidasStaffMessages")) writeBooleanConfig("toggles", "MidasStaffMessages", true);
-		if (!hasKey("toggles", "ImplosionMessages")) writeBooleanConfig("toggles", "ImplosionMessages", true);
-		if (!hasKey("toggles", "HealMessages")) writeBooleanConfig("toggles", "HealMessages", true);
 		if (!hasKey("toggles", "PetColors")) writeBooleanConfig("toggles", "PetColors", false);
-		if (!hasKey("toggles", "DungeonTimer")) writeBooleanConfig("toggles", "DungeonTimer", false);
 		if (!hasKey("toggles", "BlockSlayer")) writeStringConfig("toggles", "BlockSlayer", "");
 		if (!hasKey("toggles", "GolemAlerts")) writeBooleanConfig("toggles", "GolemAlerts", false);
 		if (!hasKey("toggles", "ExpertiseLore")) writeBooleanConfig("toggles", "ExpertiseLore", true);
 		if (!hasKey("toggles", "Skill50Display")) writeBooleanConfig("toggles", "Skill50Display", false);
 		if (!hasKey("toggles", "OutlineText")) writeBooleanConfig("toggles", "OutlineText", false);
 		if (!hasKey("toggles", "CakeTimer")) writeBooleanConfig("toggles", "CakeTimer", false);
+		// Chat Messages
+		if (!hasKey("toggles", "SceptreMessages")) writeBooleanConfig("toggles", "SceptreMessages", true);
+		if (!hasKey("toggles", "MidasStaffMessages")) writeBooleanConfig("toggles", "MidasStaffMessages", true);
+		if (!hasKey("toggles", "ImplosionMessages")) writeBooleanConfig("toggles", "ImplosionMessages", true);
+		if (!hasKey("toggles", "HealMessages")) writeBooleanConfig("toggles", "HealMessages", true);
+		if (!hasKey("toggles", "CooldownMessages")) writeBooleanConfig("toggles","CooldownMessages",true);
+		if (!hasKey("toggles", "ManaMessages")) writeBooleanConfig("toggles","ManaMessages",true);
+		// Dungeons
+		if (!hasKey("toggles", "DungeonTimer")) writeBooleanConfig("toggles", "DungeonTimer", false);
 		if (!hasKey("toggles", "LowHealthNotify")) writeBooleanConfig("toggles", "LowHealthNotify", false);
 		if (!hasKey("toggles", "LividSolver")) writeBooleanConfig("toggles", "LividSolver", false);
 		if (!hasKey("toggles", "StopSalvageStarred")) writeBooleanConfig("toggles", "StopSalvageStarred", false);
@@ -209,7 +213,7 @@ public class ConfigHandler {
 
 
 		if (!hasKey("api", "APIKey")) writeStringConfig("api", "APIKey", "");
-		
+
 		// Wolf Loot
 		if (!hasKey("wolf", "svens")) writeIntConfig("wolf", "svens", 0);
 		if (!hasKey("wolf", "teeth")) writeIntConfig("wolf", "teeth", 0);
@@ -250,7 +254,7 @@ public class ConfigHandler {
 		if (!hasKey("zombie", "scythe")) writeIntConfig("zombie", "scythe", 0);
 		if (!hasKey("zombie", "timeRNG")) writeDoubleConfig("zombie", "timeRNG", -1);
 		if (!hasKey("zombie", "bossRNG")) writeIntConfig("zombie", "bossRNG", -1);
-		
+
 		// Fishing
 		if (!hasKey("fishing", "seaCreature")) writeIntConfig("fishing", "seaCreature", 0);
 		if (!hasKey("fishing", "goodCatch")) writeIntConfig("fishing", "goodCatch", 0);
@@ -290,7 +294,7 @@ public class ConfigHandler {
 		if (!hasKey("fishing", "werewolf")) writeIntConfig("fishing", "werewolf", 0);
 		if (!hasKey("fishing", "phantomFisher")) writeIntConfig("fishing", "phantomFisher", 0);
 		if (!hasKey("fishing", "grimReaper")) writeIntConfig("fishing", "grimReaper", 0);
-		
+
 		// Mythological
 		if (!hasKey("mythological", "coins")) writeDoubleConfig("mythological", "coins", 0);
 		if (!hasKey("mythological", "griffinFeather")) writeIntConfig("mythological", "griffinFeather", 0);
@@ -302,7 +306,7 @@ public class ConfigHandler {
 		if (!hasKey("mythological", "gaiaConstruct")) writeIntConfig("mythological", "gaiaConstruct", 0);
 		if (!hasKey("mythological", "minosChampion")) writeIntConfig("mythological", "minosChampion", 0);
 		if (!hasKey("mythological", "minosInquisitor")) writeIntConfig("mythological", "minosInquisitor", 0);
-		
+
 		// Dungeons
 		if (!hasKey("catacombs", "recombobulator")) writeIntConfig("catacombs", "recombobulator", 0);
 		if (!hasKey("catacombs", "fumingBooks")) writeIntConfig("catacombs", "fumingBooks", 0);
@@ -368,13 +372,13 @@ public class ConfigHandler {
 		if (!hasKey("catacombs", "witherBoot")) writeIntConfig("catacombs", "witherBoot", 0);
 		if (!hasKey("catacombs", "floorSevenCoins")) writeDoubleConfig("catacombs", "floorSevenCoins", 0);
 		if (!hasKey("catacombs", "floorSevenTime")) writeDoubleConfig("catacombs", "floorSevenTime", 0);
-		
+
 		if (!hasKey("misc", "display")) writeStringConfig("misc", "display", "off");
 		if (!hasKey("misc", "autoDisplay")) writeBooleanConfig("misc", "autoDisplay", false);
 		if (!hasKey("misc", "skill50Time")) writeIntConfig("misc", "skill50Time", 3);
 		if (!hasKey("misc", "cakeTime")) writeDoubleConfig("misc", "cakeTime", 0);
 		if (!hasKey("misc", "showSkillTracker")) writeBooleanConfig("misc", "showSkillTracker", false);
-		
+
 		ScaledResolution scaled = new ScaledResolution(Minecraft.getMinecraft());
 		int height = scaled.getScaledHeight();
 		if (!hasKey("locations", "coordsX")) writeIntConfig("locations", "coordsX", 5);
@@ -401,7 +405,7 @@ public class ConfigHandler {
 		if (!hasKey("scales", "cakeTimerScale")) writeDoubleConfig("scales", "cakeTimerScale", 1);
 		if (!hasKey("scales", "skillTrackerScale")) writeDoubleConfig("scales", "skillTrackerScale", 1);
 		if (!hasKey("scales", "waterAnswerScale")) writeDoubleConfig("scales", "waterAnswerScale", 1);
-		
+
 		if (!hasKey("colors", "main")) writeStringConfig("colors", "main", EnumChatFormatting.GREEN.toString());
 		if (!hasKey("colors", "secondary")) writeStringConfig("colors", "secondary", EnumChatFormatting.DARK_GREEN.toString());
 		if (!hasKey("colors", "delimiter")) writeStringConfig("colors", "delimiter", EnumChatFormatting.AQUA.toString());
@@ -417,7 +421,7 @@ public class ConfigHandler {
 		if (!hasKey("colors", "triviaWrongAnswer")) writeStringConfig("colors", "triviaWrongAnswer", EnumChatFormatting.RED.toString());
 		if (!hasKey("colors", "blazeLowest")) writeIntConfig("colors", "blazeLowest", 0xFF0000);
 		if (!hasKey("colors", "blazeHighest")) writeIntConfig("colors", "blazeHighest", 0x40FF40);
-		
+
 		ToggleCommand.gpartyToggled = getBoolean("toggles", "GParty");
 		ToggleCommand.coordsToggled = getBoolean("toggles", "Coords");
 		ToggleCommand.goldenToggled = getBoolean("toggles", "Golden");
@@ -428,17 +432,21 @@ public class ConfigHandler {
 		ToggleCommand.spiritBearAlerts = getBoolean("toggles", "SpiritBearAlerts");
 		ToggleCommand.aotdToggled = getBoolean("toggles", "AOTD");
 		ToggleCommand.lividDaggerToggled = getBoolean("toggles", "LividDagger");
-		ToggleCommand.sceptreMessages = getBoolean("toggles", "SceptreMessages");
-		ToggleCommand.midasStaffMessages = getBoolean("toggles", "MidasStaffMessages");
-		ToggleCommand.implosionMessages = getBoolean("toggles", "ImplosionMessages");
-		ToggleCommand.healMessages = getBoolean("toggles", "HealMessages");
 		ToggleCommand.petColoursToggled = getBoolean("toggles", "PetColors");
-		ToggleCommand.dungeonTimerToggled = getBoolean("toggles", "DungeonTimer");
 		ToggleCommand.golemAlertToggled = getBoolean("toggles", "GolemAlerts");
 		ToggleCommand.expertiseLoreToggled = getBoolean("toggles", "ExpertiseLore");
 		ToggleCommand.skill50DisplayToggled = getBoolean("toggles", "Skill50Display");
 		ToggleCommand.outlineTextToggled = getBoolean("toggles", "OutlineText");
 		ToggleCommand.cakeTimerToggled = getBoolean("toggles", "CakeTimer");
+		// Chat Messages
+		ToggleCommand.sceptreMessages = getBoolean("toggles", "SceptreMessages");
+		ToggleCommand.midasStaffMessages = getBoolean("toggles", "MidasStaffMessages");
+		ToggleCommand.implosionMessages = getBoolean("toggles", "ImplosionMessages");
+		ToggleCommand.healMessages = getBoolean("toggles", "HealMessages");
+		ToggleCommand.cooldownMessages = getBoolean("toggles", "CooldownMessages");
+		ToggleCommand.manaMessages = getBoolean("toggles", "ManaMessages");
+		//Dungeons
+		ToggleCommand.dungeonTimerToggled = getBoolean("toggles", "DungeonTimer");
 		ToggleCommand.lowHealthNotifyToggled = getBoolean("toggles", "LowHealthNotify");
 		ToggleCommand.lividSolverToggled = getBoolean("toggles", "LividSolver");
 		ToggleCommand.stopSalvageStarredToggled = getBoolean("toggles", "StopSalvageStarred");
@@ -462,7 +470,7 @@ public class ConfigHandler {
 			BlockSlayerCommand.onlySlayerName = onlySlayer.substring(0, onlySlayer.lastIndexOf(" "));
 			BlockSlayerCommand.onlySlayerNumber = onlySlayer.substring(onlySlayer.lastIndexOf(" ") + 1);
 		}
-		
+
 		// Wolf
 		LootCommand.wolfSvens = getInt("wolf", "svens");
 		LootCommand.wolfTeeth = getInt("wolf", "teeth");
@@ -503,7 +511,7 @@ public class ConfigHandler {
 		LootCommand.zombieScythes = getInt("zombie", "scythe");
 		LootCommand.zombieTime = getDouble("zombie", "timeRNG");
 		LootCommand.zombieBosses = getInt("zombie", "bossRNG");
-		
+
 		// Fishing
 		LootCommand.seaCreatures = getInt("fishing", "seaCreature");
 		LootCommand.goodCatches = getInt("fishing", "goodCatch");
@@ -543,7 +551,7 @@ public class ConfigHandler {
 		LootCommand.werewolfs = getInt("fishing", "nightmare");
 		LootCommand.phantomFishers = getInt("fishing", "phantomFisher");
 		LootCommand.grimReapers = getInt("fishing", "grimReaper");
-		
+
 		// Mythological
 		LootCommand.mythCoins = getDouble("mythological", "coins");
 		LootCommand.griffinFeathers = getInt("mythological", "griffinFeather");
@@ -555,7 +563,7 @@ public class ConfigHandler {
 		LootCommand.gaiaConstructs = getInt("mythological", "gaiaConstruct");
 		LootCommand.minosChampions = getInt("mythological", "minosChampion");
 		LootCommand.minosInquisitors = getInt("mythological", "minosInquisitor");
-		
+
 		// Dungeons
 		LootCommand.recombobulators =  getInt("catacombs", "recombobulator");
 		LootCommand.fumingPotatoBooks = getInt("catacombs", "fumingBooks");
@@ -621,14 +629,14 @@ public class ConfigHandler {
 		LootCommand.witherBoots = getInt("catacombs", "witherBoot");
 		LootCommand.f7CoinsSpent = getDouble("catacombs", "floorSevenCoins");
 		LootCommand.f7TimeSpent = getDouble("catacombs", "floorSevenTime");
-		
+
 		// Misc
 		DisplayCommand.display = getString("misc", "display");
 		DisplayCommand.auto = getBoolean("misc", "autoDisplay");
 		DankersSkyblockMod.SKILL_TIME = getInt("misc", "skill50Time") * 20;
 		DankersSkyblockMod.cakeTime = getDouble("misc", "cakeTime");
 		DankersSkyblockMod.showSkillTracker = getBoolean("misc", "showSkillTracker");
-		
+
 		MoveCommand.coordsXY[0] = getInt("locations", "coordsX");
 		MoveCommand.coordsXY[1] = getInt("locations", "coordsY");
 		MoveCommand.displayXY[0] = getInt("locations", "displayX");
@@ -645,7 +653,7 @@ public class ConfigHandler {
 		MoveCommand.skillTrackerXY[1] = getInt("locations", "skillTrackerY");
 		MoveCommand.waterAnswerXY[0] = getInt("locations", "waterAnswerX");
 		MoveCommand.waterAnswerXY[1] = getInt("locations", "waterAnswerY");
-		
+
 		ScaleCommand.coordsScale = getDouble("scales", "coordsScale");
 		ScaleCommand.displayScale = getDouble("scales", "displayScale");
 		ScaleCommand.dungeonTimerScale = getDouble("scales", "dungeonTimerScale");
@@ -671,5 +679,5 @@ public class ConfigHandler {
 		DankersSkyblockMod.LOWEST_BLAZE_COLOUR = getInt("colors", "blazeLowest");
 		DankersSkyblockMod.HIGHEST_BLAZE_COLOUR = getInt("colors", "blazeHighest");
 	}
-	
+
 }
