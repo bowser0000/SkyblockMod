@@ -55,6 +55,7 @@ public class DankerGui extends GuiScreen {
 	private GuiButton lividSolver;
 	private GuiButton stopSalvageStarred;
 	private GuiButton watcherReadyMessage;
+	private GuiButton pickBlock;
 	
 	public DankerGui(int page) {
 		this.page = page;
@@ -87,7 +88,7 @@ public class DankerGui extends GuiScreen {
 		experimentationTableSolvers = new GuiButton(0, width / 2 - 100, (int) (height * 0.4), "Toggle Experimentation Table Solvers");
 		skillTracker = new GuiButton(0, width / 2 - 100, (int) (height * 0.5), "Toggle Skill XP/Hour Tracking");
 		outlineText = new GuiButton(0, width / 2 - 100, (int) (height * 0.6), "Outline Displayed Text: " + Utils.getColouredBoolean(ToggleCommand.outlineTextToggled));
-		splitFishing = new GuiButton(0, width / 2 - 100, (int) (height * 0.7), "Split Fishing Display: " + Utils.getColouredBoolean(ToggleCommand.splitFishing));
+		pickBlock = new GuiButton(0, width / 2 - 100, (int) (height * 0.7), "Auto-Swap to Pick Block: " + Utils.getColouredBoolean(ToggleCommand.swapToPickBlockToggled));
 		// Page 2
 		coords = new GuiButton(0, width / 2 - 100, (int) (height * 0.1), "Coordinate/Angle Display: " + Utils.getColouredBoolean(ToggleCommand.coordsToggled));
 		dungeonTimer = new GuiButton(0, width / 2 - 100, (int) (height * 0.2), "Display Dungeon Timers: " + Utils.getColouredBoolean(ToggleCommand.dungeonTimerToggled));
@@ -115,7 +116,7 @@ public class DankerGui extends GuiScreen {
 		// Page 5
 		stopSalvageStarred = new GuiButton(0, width / 2 - 100, (int) (height * 0.1), "Stop Salvaging Starred Items: " + Utils.getColouredBoolean(ToggleCommand.stopSalvageStarredToggled));
 		watcherReadyMessage = new GuiButton(0, width / 2 - 100, (int) (height * 0.2), "Display Watcher Ready Message: " + Utils.getColouredBoolean(ToggleCommand.watcherReadyToggled));
-
+		splitFishing = new GuiButton(0, width / 2 - 100, (int) (height * 0.3), "Split Fishing Display: " + Utils.getColouredBoolean(ToggleCommand.splitFishing));
 		switch (page) {
 			case 1:
 				this.buttonList.add(changeDisplay);
@@ -124,7 +125,7 @@ public class DankerGui extends GuiScreen {
 				this.buttonList.add(experimentationTableSolvers);
 				this.buttonList.add(skillTracker);
 				this.buttonList.add(outlineText);
-				this.buttonList.add(splitFishing);
+				this.buttonList.add(pickBlock);
 				this.buttonList.add(nextPage);
 				break;
 			case 2:
@@ -163,6 +164,7 @@ public class DankerGui extends GuiScreen {
 			case 5:
 				this.buttonList.add(stopSalvageStarred);
 				this.buttonList.add(watcherReadyMessage);
+				this.buttonList.add(splitFishing);
 				this.buttonList.add(backPage);
 				break;
 		}
@@ -311,6 +313,10 @@ public class DankerGui extends GuiScreen {
 			ToggleCommand.watcherReadyToggled = !ToggleCommand.watcherReadyToggled;
 			ConfigHandler.writeBooleanConfig("toggles", "WatcherReadyMessage", ToggleCommand.watcherReadyToggled);
 			watcherReadyMessage.displayString = "Display Watcher Ready Message: " + Utils.getColouredBoolean(ToggleCommand.watcherReadyToggled);
+		} else if (button == pickBlock) {
+			ToggleCommand.swapToPickBlockToggled = !ToggleCommand.swapToPickBlockToggled;
+			ConfigHandler.writeBooleanConfig("toggles", "PickBlock", ToggleCommand.swapToPickBlockToggled);
+			pickBlock.displayString = "Auto-Swap to Pick Block: " + Utils.getColouredBoolean(ToggleCommand.swapToPickBlockToggled);
 		}
 	}
 	

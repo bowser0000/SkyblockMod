@@ -68,6 +68,7 @@ import java.text.NumberFormat;
 import java.util.List;
 import java.util.*;
 import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 
 @Mod(modid = DankersSkyblockMod.MODID, version = DankersSkyblockMod.VERSION, clientSideOnly = true)
 public class DankersSkyblockMod
@@ -443,8 +444,8 @@ public class DankersSkyblockMod
         if (message.contains("[BOSS] The Watcher: You have proven yourself. You may pass.")) {
         	watcherClearTime = System.currentTimeMillis() / 1000;
 		}
-		if (message.contains("[BOSS] The Watcher: That will be enough for now.") && ToggleCommand.watcherReadyToggled && Utils.inDungeons) {
-			Utils.createTitle(EnumChatFormatting.RED + "WATCHER READY", 2);
+		if (message.contains("[BOSS] The Watcher: That will be enough for now.")) {
+			if (ToggleCommand.watcherReadyToggled) Utils.createTitle(EnumChatFormatting.RED + "WATCHER READY", 2);
 		}
 		if (message.contains("PUZZLE FAIL! ") || message.contains("chose the wrong answer! I shall never forget this moment")) {
 			puzzleFails++;
@@ -467,7 +468,7 @@ public class DankersSkyblockMod
 			event.setCanceled(true);
 			return;
 		}
-
+		// Implosion
 		if (!ToggleCommand.implosionMessages) {
 			if (message.contains("Your Implosion hit ") || message.contains("There are blocks in the way")) {
 				event.setCanceled(true);
@@ -3049,8 +3050,8 @@ public class DankersSkyblockMod
 				GuiChest chest = (GuiChest) event.gui;
 				IInventory inventory = ((ContainerChest) containerChest).getLowerChestInventory();
 				String inventoryName = inventory.getDisplayName().getUnformattedText();
-				if (ToggleCommand.swapToPickBlockInExperimentsToggled) {
-					if (inventoryName.startsWith("Chronomatron (") || inventoryName.startsWith("Superpairs (") || inventoryName.startsWith("Ultrasequencer (")) {
+				if (ToggleCommand.swapToPickBlockToggled) {
+					if (inventoryName.startsWith("Chronomatron (") || inventoryName.startsWith("Superpairs (") || inventoryName.startsWith("Ultrasequencer (") || inventoryName.startsWith("What starts with:") || inventoryName.startsWith("Select all the") || inventoryName.startsWith("Harp -")) {
 						if (!pickBlockBindSwapped) {
 							pickBlockBind = gameSettings.keyBindPickBlock.getKeyCode();
 							gameSettings.keyBindPickBlock.setKeyCode(-100);
@@ -3138,14 +3139,15 @@ public class DankersSkyblockMod
         		}
 
         		if (ToggleCommand.selectAllToggled && Utils.inDungeons && displayName.startsWith("Select all the")) {
-        			String colour = displayName.split(" ")[3];
+					String colour = displayName.split(" ")[3];
+
         			for (Slot slot : invSlots) {
         				ItemStack item = slot.getStack();
         				if (item == null) continue;
         				if (item.getDisplayName().toUpperCase().contains(colour)) {
         					Utils.drawOnSlot(chestSize, slot.xDisplayPosition, slot.yDisplayPosition, 0xBF40FF40);
-        				}
-        			}
+						}
+					}
         		}
 
         		if (ToggleCommand.ultrasequencerToggled && displayName.startsWith("Ultrasequencer (")) {

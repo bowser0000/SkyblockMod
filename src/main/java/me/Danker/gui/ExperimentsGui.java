@@ -15,7 +15,6 @@ public class ExperimentsGui extends GuiScreen {
     private GuiButton ultrasequencer;
     private GuiButton chronomatron;
     private GuiButton superpairs;
-    private GuiButton pickBlock;
     private GuiButton hideTooltips;
 
     @Override
@@ -35,14 +34,12 @@ public class ExperimentsGui extends GuiScreen {
         ultrasequencer = new GuiButton(0, width / 2 - 100, (int) (height * 0.1), "Ultrasequencer Solver: " + Utils.getColouredBoolean(ToggleCommand.ultrasequencerToggled));
         chronomatron = new GuiButton(0, width / 2 - 100, (int) (height * 0.2), "Chronomatron Solver: " + Utils.getColouredBoolean(ToggleCommand.chronomatronToggled));
         superpairs = new GuiButton(0, width / 2 - 100, (int) (height * 0.3), "Superpairs Solver: " + Utils.getColouredBoolean(ToggleCommand.superpairsToggled));
-        pickBlock = new GuiButton(0, width / 2 - 100, (int) (height * 0.4), "Auto-Swap to Pick Block: " + Utils.getColouredBoolean(ToggleCommand.swapToPickBlockInExperimentsToggled));
-        hideTooltips = new GuiButton(0, width / 2 - 100, (int) (height * 0.5), "Hide Tooltips in Addons: " + Utils.getColouredBoolean(ToggleCommand.hideTooltipsInExperimentAddonsToggled));
+        hideTooltips = new GuiButton(0, width / 2 - 100, (int) (height * 0.4), "Hide Tooltips in Addons: " + Utils.getColouredBoolean(ToggleCommand.hideTooltipsInExperimentAddonsToggled));
 
         this.buttonList.add(goBack);
         this.buttonList.add(ultrasequencer);
         this.buttonList.add(chronomatron);
         this.buttonList.add(superpairs);
-        this.buttonList.add(pickBlock);
         this.buttonList.add(hideTooltips);
     }
 
@@ -68,10 +65,6 @@ public class ExperimentsGui extends GuiScreen {
             ToggleCommand.superpairsToggled = !ToggleCommand.superpairsToggled;
             ConfigHandler.writeBooleanConfig("toggles", "Superpairs", ToggleCommand.superpairsToggled);
             superpairs.displayString = "Superpairs Solver: " + Utils.getColouredBoolean(ToggleCommand.superpairsToggled);
-        } else if (button == pickBlock) {
-            ToggleCommand.swapToPickBlockInExperimentsToggled = !ToggleCommand.swapToPickBlockInExperimentsToggled;
-            ConfigHandler.writeBooleanConfig("toggles", "PickBlockInExperiments", ToggleCommand.swapToPickBlockInExperimentsToggled);
-            pickBlock.displayString = "Auto-Swap to Pick Block: " + Utils.getColouredBoolean(ToggleCommand.swapToPickBlockInExperimentsToggled);
         } else if (button == hideTooltips) {
             ToggleCommand.hideTooltipsInExperimentAddonsToggled = !ToggleCommand.hideTooltipsInExperimentAddonsToggled;
             ConfigHandler.writeBooleanConfig("toggles", "HideTooltipsInExperimentAddons", ToggleCommand.hideTooltipsInExperimentAddonsToggled);
