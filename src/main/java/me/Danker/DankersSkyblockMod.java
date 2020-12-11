@@ -3139,9 +3139,7 @@ public class DankersSkyblockMod
         		}
 
         		if (ToggleCommand.selectAllToggled && Utils.inDungeons && displayName.startsWith("Select all the")) {
-					String colour = displayName.split(" ")[3];
-
-        			for (Slot slot : invSlots) {
+					for (Slot slot : invSlots) {
         				ItemStack item = slot.getStack();
         				if (item == null) continue;
         				if (item.getDisplayName().toUpperCase().contains(colour)) {
