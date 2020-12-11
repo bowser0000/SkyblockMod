@@ -23,17 +23,21 @@ public class ToggleCommand extends CommandBase implements ICommand {
 	public static boolean spiritBearAlerts;
 	public static boolean aotdToggled;
 	public static boolean lividDaggerToggled;
-	public static boolean sceptreMessages;
 	public static boolean petColoursToggled;
 	public static boolean dungeonTimerToggled;
 	public static boolean golemAlertToggled;
 	public static boolean expertiseLoreToggled;
 	public static boolean skill50DisplayToggled;
 	public static boolean outlineTextToggled;
+	public static boolean cakeTimerToggled;
+	// Chat Messages
+	public static boolean sceptreMessages;
 	public static boolean midasStaffMessages;
 	public static boolean implosionMessages;
 	public static boolean healMessages;
-	public static boolean cakeTimerToggled;
+	public static boolean cooldownMessages;
+	public static boolean manaMessages;
+	// Dungeons Messages
 	public static boolean lowHealthNotifyToggled;
 	public static boolean lividSolverToggled;
 	public static boolean stopSalvageStarredToggled;
@@ -61,30 +65,30 @@ public class ToggleCommand extends CommandBase implements ICommand {
 
 	@Override
 	public String getCommandUsage(ICommandSender arg0) {
-		return "/" + getCommandName() + " <gparty/coords/golden/slayercount/rngesusalerts/splitfishing/chatmaddox/spiritbearalert/" + 
-										  "aotd/lividdagger/sceptremessages/petcolors/dungeontimer/golemalerts/expertiselore/skill50display/" + 
-										  "outlinetext/midasstaffmessages/implosionmessages/healmessages/caketimer/lowhealthnotify/" +
-										  "lividsolver/stopsalvagestarred/threemanpuzzle/oruopuzzle/blazepuzzle/creeperpuzzle/waterpuzzle/tictactoepuzzle/" +
-										  "startswithterminal/selectallterminal/itemframeonsealanterns/ultrasequencer/chronomatron/superpairs/pickblockinexperiments/list>";
+		return "/" + getCommandName() + " <gparty/coords/golden/slayercount/rngesusalerts/splitfishing/chatmaddox/spiritbearalert/" +
+												"aotd/lividdagger/petcolors/dungeontimer/golemalerts/expertiselore/skill50display/" +
+												"outlinetext/sceptremessages/midasstaffmessages/implosionmessages/healmessages/manamessages/cooldownmessages/caketimer/" +
+												"lowhealthnotify/lividsolver/stopsalvagestarred/threemanpuzzle/oruopuzzle/blazepuzzle/creeperpuzzle/waterpuzzle/tictactoepuzzle/" +
+												"startswithterminal/selectallterminal/itemframeonsealanterns/ultrasequencer/chronomatron/superpairs/pickblockinexperiments/list>";
 	}
 
 	@Override
 	public int getRequiredPermissionLevel() {
 		return 0;
 	}
-	
+
 	@Override
 	public List<String> addTabCompletionOptions(ICommandSender sender, String[] args, BlockPos pos) {
 		if (args.length == 1) {
 			return getListOfStringsMatchingLastWord(args, "gparty", "coords", "golden", "slayercount", "rngesusalerts",
-														  "splitfishing", "chatmaddox", "spiritbearalerts", "aotd", "lividdagger",
-														  "sceptremessages", "petcolors", "dungeontimer", "golemalerts",
-														  "expertiselore", "skill50display", "outlinetext", "midasstaffmessages",
-														  "implosionmessages", "healmessages", "caketimer", "lowhealthnotify",
-														  "lividsolver", "stopsalvagestarred", "threemanpuzzle", "oruopuzzle", "blazepuzzle",
-														  "creeperpuzzle", "waterpuzzle", "tictactoepuzzle", "startswithterminal",
-														  "selectallterminal", "itemframeonsealanterns", "ultrasequencer",
-														  "chronomatron", "superpairs", "pickblockinexperiments", "list");
+												"splitfishing", "chatmaddox", "spiritbearalerts", "aotd", "lividdagger",
+												"petcolors", "dungeontimer", "golemalerts", "expertiselore",
+												"skill50display", "outlinetext","sceptremessages",  "midasstaffmessages",
+												"implosionmessages", "healmessages", "manamessages", "cooldownmessages","caketimer",
+												"lowhealthnotify", "lividsolver", "stopsalvagestarred", "threemanpuzzle", "oruopuzzle", "blazepuzzle",
+												"creeperpuzzle", "waterpuzzle", "tictactoepuzzle", "startswithterminal",
+												"selectallterminal", "itemframeonsealanterns", "ultrasequencer",
+												"chronomatron", "superpairs", "pickblockinexperiments", "list");
 		}
 		return null;
 	}
@@ -168,6 +172,16 @@ public class ToggleCommand extends CommandBase implements ICommand {
 				healMessages = !healMessages;
 				ConfigHandler.writeBooleanConfig("toggles", "HealMessages", healMessages);
 				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Heal messages have been set to " + DankersSkyblockMod.SECONDARY_COLOUR + healMessages + DankersSkyblockMod.MAIN_COLOUR + "."));
+				break;
+			case "cooldownmessages":
+				cooldownMessages = !cooldownMessages;
+				ConfigHandler.writeBooleanConfig("toggles", "CooldownMessages", cooldownMessages);
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Ability cooldown messages has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + cooldownMessages + DankersSkyblockMod.MAIN_COLOUR + "."));
+				break;
+			case "manamessages":
+				manaMessages = !manaMessages;
+				ConfigHandler.writeBooleanConfig("toggles", "ManaMessages", manaMessages);
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Out of mana messages has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + manaMessages + DankersSkyblockMod.MAIN_COLOUR + "."));
 				break;
 			case "petcolors":
 			case "petcolours":
@@ -300,6 +314,8 @@ public class ToggleCommand extends CommandBase implements ICommand {
 															DankersSkyblockMod.TYPE_COLOUR + " Midas Staff messages: " + DankersSkyblockMod.VALUE_COLOUR + midasStaffMessages + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Implosion messages: " + DankersSkyblockMod.VALUE_COLOUR + implosionMessages + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Heal messages: " + DankersSkyblockMod.VALUE_COLOUR + healMessages + "\n" +
+															DankersSkyblockMod.TYPE_COLOUR + " Ability cooldown messages: " + DankersSkyblockMod.VALUE_COLOUR + cooldownMessages + "\n" +
+															DankersSkyblockMod.TYPE_COLOUR + " Out of mana messages: " + DankersSkyblockMod.VALUE_COLOUR + manaMessages + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Pet colours: " + DankersSkyblockMod.VALUE_COLOUR + petColoursToggled + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Dungeon timer: " + DankersSkyblockMod.VALUE_COLOUR + dungeonTimerToggled + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Golem spawn alerts: " + DankersSkyblockMod.VALUE_COLOUR + golemAlertToggled + "\n" +

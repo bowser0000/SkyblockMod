@@ -464,6 +464,16 @@ public class DankersSkyblockMod
 			event.setCanceled(true);
 			return;
 		}
+		// Ability Cooldown
+		if (!ToggleCommand.cooldownMessages && message.contains("This ability is currently on cooldown for") && message.contains("more second")) {
+			event.setCanceled(true);
+			return;
+		}
+		// Out of mana messages
+		if (!ToggleCommand.manaMessages && message.contains("You do not have enough mana to do this!")) {
+			event.setCanceled(true);
+			return;
+		}
 
 		if (!ToggleCommand.implosionMessages) {
 			if (message.contains("Your Implosion hit ") || message.contains("There are blocks in the way")) {
