@@ -7,6 +7,7 @@ import me.Danker.handlers.*;
 import me.Danker.utils.TicTacToeUtils;
 import me.Danker.utils.Utils;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockColored;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.Gui;
@@ -3033,6 +3034,96 @@ public class DankersSkyblockMod
 					}
 				}
 
+				if (ToggleCommand.blockWrongTerminalClicksToggled && Utils.inDungeons) {
+					boolean shouldCancel = false;
+
+					if (item == null) return;
+
+					//most of these are extra but who cares
+
+					switch(inventoryName) {
+						case "Correct all the panes!":
+							shouldCancel = !StringUtils.stripControlCodes(item.getDisplayName()).startsWith("Off");
+							break;
+						case "Navigate the maze!":
+							if((item.getItem() != Item.getItemFromBlock(Blocks.stained_glass_pane))) {
+								shouldCancel = true;
+								break;
+							}
+
+							if(item.getItemDamage() != 0) {
+								shouldCancel = true;
+								break;
+							}
+
+							boolean isValid = false;
+
+							int slotIndex = mouseSlot.getSlotIndex();
+
+							if(slotIndex % 9 != 0 && slotIndex != 53) {
+								ItemStack itemStack = inventory.getStackInSlot(slotIndex + 1);
+								if(itemStack.getItemDamage() == 5) isValid = true;
+							}
+
+							if(!isValid && slotIndex % 9 != 8 && slotIndex != 0) {
+								ItemStack itemStack = inventory.getStackInSlot(slotIndex - 1);
+								if(itemStack.getItemDamage() == 5) isValid = true;
+							}
+
+							if(!isValid && slotIndex <= 44) {
+								ItemStack itemStack = inventory.getStackInSlot(slotIndex + 9);
+								if(itemStack.getItemDamage() == 5) isValid = true;
+							}
+
+							if(!isValid && slotIndex >= 9) {
+								ItemStack itemStack = inventory.getStackInSlot(slotIndex - 9);
+								if(itemStack.getItemDamage() == 5) isValid = true;
+							}
+
+							shouldCancel = !isValid;
+
+							break;
+						case "Click in order!":
+							if((item.getItem() != Item.getItemFromBlock(Blocks.stained_glass_pane))) {
+								shouldCancel = true;
+								break;
+							}
+							if(item.getItemDamage() != 14) {
+								shouldCancel = true;
+								break;
+							}
+							int needed = 0;
+							for(int i = 10; i <= 25; i++) {
+								if(i == 17 || i == 18) continue;
+								ItemStack itemStack = inventory.getStackInSlot(i);
+								if(!itemStack.getDisplayName().contains(EnumChatFormatting.GREEN.toString())) continue;
+								if(itemStack.stackSize > needed) needed = itemStack.stackSize;
+							}
+							shouldCancel = item.stackSize != needed;
+							break;
+					}
+
+					if(!shouldCancel) {
+						if(inventoryName.startsWith("What starts with:")) {
+							char letter = inventoryName.charAt(inventoryName.indexOf("'") + 1);
+							shouldCancel = !(StringUtils.stripControlCodes(item.getDisplayName()).charAt(0) == letter);
+						} else if(inventoryName.startsWith("Select all the")) {
+							String colour;
+							List<String> colourParts = new ArrayList<>();
+							Matcher colourMatcher = startsWithTerminalPattern.matcher(inventoryName);
+							while (colourMatcher.find()) {
+								colourParts.add(colourMatcher.group());
+							}
+							colour = String.join(" ", colourParts);
+
+							String itemName = StringUtils.stripControlCodes(item.getDisplayName()).toUpperCase();
+							shouldCancel = !(itemName.contains(colour) || (colour.equals("SILVER") && itemName.contains("LIGHT GRAY")) || (colour.equals("WHITE") && itemName.equals("WOOL")));
+						}
+					}
+
+					event.setCanceled(shouldCancel && !Keyboard.isKeyDown(Keyboard.KEY_LCONTROL) && !Keyboard.isKeyDown(Keyboard.KEY_RCONTROL));
+				}
+
     			if (!BlockSlayerCommand.onlySlayerName.equals("") && item != null) {
     				if (inventoryName.equals("Slayer")) {
         				if (!item.getDisplayName().contains("Revenant Horror") && !item.getDisplayName().contains("Tarantula Broodfather") && !item.getDisplayName().contains("Sven Packmaster")) return;
@@ -3078,7 +3169,7 @@ public class DankersSkyblockMod
 				IInventory inventory = ((ContainerChest) containerChest).getLowerChestInventory();
 				String inventoryName = inventory.getDisplayName().getUnformattedText();
 				if (ToggleCommand.swapToPickBlockToggled) {
-					if (inventoryName.startsWith("Chronomatron (") || inventoryName.startsWith("Superpairs (") || inventoryName.startsWith("Ultrasequencer (") || inventoryName.startsWith("What starts with:") || inventoryName.startsWith("Select all the") || inventoryName.startsWith("Harp -")) {
+					if (inventoryName.startsWith("Chronomatron (") || inventoryName.startsWith("Superpairs (") || inventoryName.startsWith("Ultrasequencer (") || inventoryName.startsWith("What starts with:") || inventoryName.startsWith("Select all the") || inventoryName.startsWith("Navigate the maze!") || inventoryName.startsWith("Correct all the panes!") || inventoryName.startsWith("Click in order!") || inventoryName.startsWith("Harp -")) {
 						if (!pickBlockBindSwapped) {
 							pickBlockBind = gameSettings.keyBindPickBlock.getKeyCode();
 							gameSettings.keyBindPickBlock.setKeyCode(-100);
@@ -3091,6 +3182,11 @@ public class DankersSkyblockMod
 						}
 					}
 				}
+			}
+		} else {
+			if (pickBlockBindSwapped) {
+				gameSettings.keyBindPickBlock.setKeyCode(pickBlockBind);
+				pickBlockBindSwapped = false;
 			}
 		}
 		clickInOrderSlots = new Slot[36];

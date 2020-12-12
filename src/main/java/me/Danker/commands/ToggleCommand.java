@@ -49,6 +49,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 	// Terminal Helpers
 	public static boolean startsWithToggled;
 	public static boolean selectAllToggled;
+	public static  boolean blockWrongTerminalClicksToggled;
 	public static boolean itemFrameOnSeaLanternsToggled;
 	// Experiments
 	public static boolean ultrasequencerToggled;
@@ -67,7 +68,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 										  "aotd/lividdagger/sceptremessages/petcolors/dungeontimer/golemalerts/expertiselore/skill50display/" + 
 										  "outlinetext/midasstaffmessages/implosionmessages/healmessages/caketimer/lowhealthnotify/" +
 										  "lividsolver/stopsalvagestarred/threemanpuzzle/oruopuzzle/blazepuzzle/creeperpuzzle/waterpuzzle/tictactoepuzzle/" +
-										  "watchermessage/startswithterminal/selectallterminal/itemframeonsealanterns/ultrasequencer/chronomatron/superpairs/hidetooltipsinaddons/pickblock/list>";
+										  "watchermessage/startswithterminal/selectallterminal/blockterminalclicks/itemframeonsealanterns/ultrasequencer/chronomatron/superpairs/hidetooltipsinaddons/pickblock/list>";
 	}
 
 	@Override
@@ -85,7 +86,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 														  "implosionmessages", "healmessages", "caketimer", "lowhealthnotify",
 														  "lividsolver", "stopsalvagestarred", "threemanpuzzle", "oruopuzzle", "blazepuzzle",
 														  "creeperpuzzle", "waterpuzzle", "tictactoepuzzle", "watchermessage", "startswithterminal",
-														  "selectallterminal", "itemframeonsealanterns", "ultrasequencer",
+														  "selectallterminal", "blockterminalclicks", "itemframeonsealanterns", "ultrasequencer",
 														  "chronomatron", "superpairs", "hidetooltipsinaddons", "pickblock", "list");
 		}
 		return null;
@@ -266,6 +267,11 @@ public class ToggleCommand extends CommandBase implements ICommand {
 				selectAllToggled = !selectAllToggled;
 				ConfigHandler.writeBooleanConfig("toggles", "SelectAllTerminal", selectAllToggled);
 				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Select all color items terminal solver has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + selectAllToggled + DankersSkyblockMod.MAIN_COLOUR + "."));
+				break;
+			case "blockterminalclicks":
+				blockWrongTerminalClicksToggled = !blockWrongTerminalClicksToggled;
+				ConfigHandler.writeBooleanConfig("toggles", "BlockTerminalClicks", blockWrongTerminalClicksToggled);
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Block wrong clicks on terminals has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + blockWrongTerminalClicksToggled + DankersSkyblockMod.MAIN_COLOUR + "."));
 				break;
 			case "itemframeonsealanterns":
 				itemFrameOnSeaLanternsToggled = !itemFrameOnSeaLanternsToggled;
