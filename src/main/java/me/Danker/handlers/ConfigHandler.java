@@ -192,6 +192,8 @@ public class ConfigHandler {
 		if (!hasKey("toggles", "LowHealthNotify")) writeBooleanConfig("toggles", "LowHealthNotify", false);
 		if (!hasKey("toggles", "LividSolver")) writeBooleanConfig("toggles", "LividSolver", false);
 		if (!hasKey("toggles", "StopSalvageStarred")) writeBooleanConfig("toggles", "StopSalvageStarred", false);
+		if (!hasKey("toggles", "WatcherReadyMessage")) writeBooleanConfig("toggles", "WatcherReadyMessage", false);
+		if (!hasKey("toggles", "PickBlock")) writeBooleanConfig("toggles", "PickBlock", false);
 		// Puzzle Solvers
 		if (!hasKey("toggles", "ThreeManPuzzle")) writeBooleanConfig("toggles", "ThreeManPuzzle", false);
 		if (!hasKey("toggles", "OruoPuzzle")) writeBooleanConfig("toggles", "OruoPuzzle", false);
@@ -202,10 +204,11 @@ public class ConfigHandler {
 		if (!hasKey("toggles", "StartsWithTerminal")) writeBooleanConfig("toggles", "StartsWithTerminal", false);
 		if (!hasKey("toggles", "SelectAllTerminal")) writeBooleanConfig("toggles", "SelectAllTerminal", false);
 		if (!hasKey("toggles", "IgnoreItemFrameOnSeaLanterns")) writeBooleanConfig("toggles", "IgnoreItemFrameOnSeaLanterns", false);
+		// Experiment Solvers
 		if (!hasKey("toggles", "UltraSequencer")) writeBooleanConfig("toggles", "UltraSequencer", false);
 		if (!hasKey("toggles", "Chronomatron")) writeBooleanConfig("toggles", "Chronomatron", false);
 		if (!hasKey("toggles", "Superpairs")) writeBooleanConfig("toggles", "Superpairs", false);
-		if (!hasKey("toggles", "PickBlockInExperiments")) writeBooleanConfig("toggles", "PickBlockInExperiments", false);
+		if (!hasKey("toggles", "HideTooltipsInExperimentAddons")) writeBooleanConfig("toggles", "HideTooltipsInExperimentAddons", false);
 
 
 		if (!hasKey("api", "APIKey")) writeStringConfig("api", "APIKey", "");
@@ -391,6 +394,8 @@ public class ConfigHandler {
 		if (!hasKey("locations", "cakeTimerY")) writeIntConfig("locations", "cakeTimerY", 30);
 		if (!hasKey("locations", "skillTrackerX")) writeIntConfig("locations", "skillTrackerX", 40);
 		if (!hasKey("locations", "skillTrackerY")) writeIntConfig("locations", "skillTrackerY", 50);
+		if (!hasKey("locations", "waterAnswerX")) writeIntConfig("locations", "waterAnswerX", 100);
+		if (!hasKey("locations", "waterAnswerY")) writeIntConfig("locations", "waterAnswerY", 100);
 		if (!hasKey("scales", "coordsScale")) writeDoubleConfig("scales", "coordsScale", 1);
 		if (!hasKey("scales", "displayScale")) writeDoubleConfig("scales", "displayScale", 1);
 		if (!hasKey("scales", "dungeonTimerScale")) writeDoubleConfig("scales", "dungeonTimerScale", 1);
@@ -398,6 +403,7 @@ public class ConfigHandler {
 		if (!hasKey("scales", "lividHpScale")) writeDoubleConfig("scales", "lividHpScale", 1);
 		if (!hasKey("scales", "cakeTimerScale")) writeDoubleConfig("scales", "cakeTimerScale", 1);
 		if (!hasKey("scales", "skillTrackerScale")) writeDoubleConfig("scales", "skillTrackerScale", 1);
+		if (!hasKey("scales", "waterAnswerScale")) writeDoubleConfig("scales", "waterAnswerScale", 1);
 		
 		if (!hasKey("colors", "main")) writeStringConfig("colors", "main", EnumChatFormatting.GREEN.toString());
 		if (!hasKey("colors", "secondary")) writeStringConfig("colors", "secondary", EnumChatFormatting.DARK_GREEN.toString());
@@ -414,6 +420,17 @@ public class ConfigHandler {
 		if (!hasKey("colors", "triviaWrongAnswer")) writeStringConfig("colors", "triviaWrongAnswer", EnumChatFormatting.RED.toString());
 		if (!hasKey("colors", "blazeLowest")) writeIntConfig("colors", "blazeLowest", 0xFF0000);
 		if (!hasKey("colors", "blazeHighest")) writeIntConfig("colors", "blazeHighest", 0x40FF40);
+		if (!hasKey("colors", "pet1To9")) writeIntConfig("colors", "pet1To9", 0x999999); // Gray
+		if (!hasKey("colors", "pet10To19")) writeIntConfig("colors", "pet10To19", 0xD62440); // Red
+		if (!hasKey("colors", "pet20To29")) writeIntConfig("colors", "pet20To29", 0xEF5230); // Orange
+		if (!hasKey("colors", "pet30To39")) writeIntConfig("colors", "pet30To39", 0xFFC400); // Yellow
+		if (!hasKey("colors", "pet40To49")) writeIntConfig("colors", "pet40To49", 0x0EAC35); // Green
+		if (!hasKey("colors", "pet50To59")) writeIntConfig("colors", "pet50To59", 0x008AD8); // Light Blue
+		if (!hasKey("colors", "pet60To69")) writeIntConfig("colors", "pet60To69", 0x7E4FC6); // Purple
+		if (!hasKey("colors", "pet70To79")) writeIntConfig("colors", "pet70To79", 0xD64FC8); // Pink
+		if (!hasKey("colors", "pet80To89")) writeIntConfig("colors", "pet80To89", 0x5C1F35); // idk weird magenta
+		if (!hasKey("colors", "pet90To99")) writeIntConfig("colors", "pet90To99", 0x9E794E); // Brown
+		if (!hasKey("colors", "pet100")) writeIntConfig("colors", "pet100", 0xF2D249); // Gold
 		
 		ToggleCommand.gpartyToggled = getBoolean("toggles", "GParty");
 		ToggleCommand.coordsToggled = getBoolean("toggles", "Coords");
@@ -439,6 +456,8 @@ public class ConfigHandler {
 		ToggleCommand.lowHealthNotifyToggled = getBoolean("toggles", "LowHealthNotify");
 		ToggleCommand.lividSolverToggled = getBoolean("toggles", "LividSolver");
 		ToggleCommand.stopSalvageStarredToggled = getBoolean("toggles", "StopSalvageStarred");
+		ToggleCommand.watcherReadyToggled = getBoolean("toggles", "WatcherReadyMessage");
+		ToggleCommand.swapToPickBlockToggled = getBoolean("toggles", "PickBlock");
 		// Puzzle Solvers
 		ToggleCommand.threeManToggled = getBoolean("toggles", "ThreeManPuzzle");
 		ToggleCommand.oruoToggled = getBoolean("toggles", "OruoPuzzle");
@@ -449,10 +468,11 @@ public class ConfigHandler {
 		ToggleCommand.startsWithToggled = getBoolean("toggles", "StartsWithTerminal");
 		ToggleCommand.selectAllToggled = getBoolean("toggles", "SelectAllTerminal");
 		ToggleCommand.itemFrameOnSeaLanternsToggled = getBoolean("toggles", "IgnoreItemFrameOnSeaLanterns");
+		// Experiment Solvers
 		ToggleCommand.ultrasequencerToggled = getBoolean("toggles", "UltraSequencer");
 		ToggleCommand.chronomatronToggled = getBoolean("toggles", "Chronomatron");
 		ToggleCommand.superpairsToggled = getBoolean("toggles", "Superpairs");
-		ToggleCommand.swapToPickBlockInExperimentsToggled = getBoolean("toggles", "PickBlockInExperiments");
+		ToggleCommand.hideTooltipsInExperimentAddonsToggled = getBoolean("toggles", "HideTooltipsInExperimentAddons");
 
 		String onlySlayer = getString("toggles", "BlockSlayer");
 		if (!onlySlayer.equals("")) {
@@ -640,6 +660,8 @@ public class ConfigHandler {
 		MoveCommand.cakeTimerXY[1] = getInt("locations", "cakeTimerY");
 		MoveCommand.skillTrackerXY[0] = getInt("locations", "skillTrackerX");
 		MoveCommand.skillTrackerXY[1] = getInt("locations", "skillTrackerY");
+		MoveCommand.waterAnswerXY[0] = getInt("locations", "waterAnswerX");
+		MoveCommand.waterAnswerXY[1] = getInt("locations", "waterAnswerY");
 		
 		ScaleCommand.coordsScale = getDouble("scales", "coordsScale");
 		ScaleCommand.displayScale = getDouble("scales", "displayScale");
@@ -648,7 +670,8 @@ public class ConfigHandler {
 		ScaleCommand.lividHpScale = getDouble("scales", "lividHpScale");
 		ScaleCommand.cakeTimerScale = getDouble("scales", "cakeTimerScale");
 		ScaleCommand.skillTrackerScale = getDouble("scales", "skillTrackerScale");
-		
+		ScaleCommand.waterAnswerScale = getDouble("scales", "waterAnswerScale");
+
 		DankersSkyblockMod.MAIN_COLOUR = getString("colors", "main");
 		DankersSkyblockMod.SECONDARY_COLOUR = getString("colors", "secondary");
 		DankersSkyblockMod.DELIMITER_COLOUR = getString("colors", "delimiter");
@@ -664,6 +687,17 @@ public class ConfigHandler {
 		DankersSkyblockMod.TRIVIA_WRONG_ANSWER_COLOUR = getString("colors", "triviaWrongAnswer");
 		DankersSkyblockMod.LOWEST_BLAZE_COLOUR = getInt("colors", "blazeLowest");
 		DankersSkyblockMod.HIGHEST_BLAZE_COLOUR = getInt("colors", "blazeHighest");
+		DankersSkyblockMod.PET_1_TO_9 = getInt("colors", "pet1To9");
+		DankersSkyblockMod.PET_10_TO_19 = getInt("colors", "pet10To19");
+		DankersSkyblockMod.PET_20_TO_29 = getInt("colors", "pet20To29");
+		DankersSkyblockMod.PET_30_TO_39 = getInt("colors", "pet30To39");
+		DankersSkyblockMod.PET_40_TO_49 = getInt("colors", "pet40To49");
+		DankersSkyblockMod.PET_50_TO_59 = getInt("colors", "pet50To59");
+		DankersSkyblockMod.PET_60_TO_69 = getInt("colors", "pet60To69");
+		DankersSkyblockMod.PET_70_TO_79 = getInt("colors", "pet70To79");
+		DankersSkyblockMod.PET_80_TO_89 = getInt("colors", "pet80To89");
+		DankersSkyblockMod.PET_90_TO_99 = getInt("colors", "pet90To99");
+		DankersSkyblockMod.PET_100 = getInt("colors", "pet100");
 	}
 	
 }

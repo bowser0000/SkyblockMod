@@ -8,6 +8,7 @@ import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
+import sun.security.krb5.Config;
 
 import java.util.List;
 
@@ -20,6 +21,7 @@ public class ScaleCommand extends CommandBase {
 	public static double lividHpScale;
 	public static double cakeTimerScale;
 	public static double skillTrackerScale;
+	public static double waterAnswerScale;
 	
 	@Override
 	public String getCommandName() {
@@ -28,7 +30,7 @@ public class ScaleCommand extends CommandBase {
 
 	@Override
 	public String getCommandUsage(ICommandSender arg0) {
-		return "/" + getCommandName() + " <coords/display/dungeontimer/skill50/lividhp/caketimer/skilltracker> <size (0.1 - 10)>";
+		return "/" + getCommandName() + " <coords/display/dungeontimer/skill50/lividhp/caketimer/skilltracker/wateranswer> <size (0.1 - 10)>";
 	}
 	
 	@Override
@@ -39,7 +41,7 @@ public class ScaleCommand extends CommandBase {
 	@Override
 	public List<String> addTabCompletionOptions(ICommandSender sender, String[] args, BlockPos pos) {
 		if (args.length == 1) {
-			return getListOfStringsMatchingLastWord(args, "coords", "display", "dungeontimer", "skill50", "lividhp", "caketimer", "skilltracker");
+			return getListOfStringsMatchingLastWord(args, "coords", "display", "dungeontimer", "skill50", "lividhp", "caketimer", "skilltracker", "wateranswer");
 		}
 		return null;
 	}
@@ -94,6 +96,11 @@ public class ScaleCommand extends CommandBase {
 				skillTrackerScale = scaleAmount;
 				ConfigHandler.writeDoubleConfig("scales", "skillTrackerScale", skillTrackerScale);
 				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Skill tracker has been scaled to " + DankersSkyblockMod.SECONDARY_COLOUR + skillTrackerScale + "x"));
+				break;
+			case "wateranswer":
+				waterAnswerScale = scaleAmount;
+				ConfigHandler.writeDoubleConfig("scales", "waterAnswerScale", waterAnswerScale);
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Water solver answer has been scaled to " + DankersSkyblockMod.SECONDARY_COLOUR + waterAnswerScale + "x"));
 				break;
 			default:
 				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Usage: " + getCommandUsage(arg0)));

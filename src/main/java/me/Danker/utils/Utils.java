@@ -64,7 +64,7 @@ public class Utils {
     }
     
     public static String returnGoldenEnchants(String line) {
-    	Matcher matcher = DankersSkyblockMod.pattern.matcher(line);
+    	Matcher matcher = DankersSkyblockMod.t6EnchantPattern.matcher(line);
     	StringBuffer out = new StringBuffer();
     	
     	while (matcher.find()) {
@@ -103,16 +103,21 @@ public class Utils {
 		
 		int height = scaledResolution.getScaledHeight();
 		int width = scaledResolution.getScaledWidth();
-		int textLength = mc.fontRendererObj.getStringWidth(text);
-		
-		double scale = 4;
-		if (textLength * scale > (width * 0.9F)) {
-			scale = (width * 0.9F) / (float) textLength;
+		int drawHeight = 0;
+		String[] splitText = text.split("\n");
+		for (String title : splitText) {
+			int textLength = mc.fontRendererObj.getStringWidth(title);
+
+			double scale = 4;
+			if (textLength * scale > (width * 0.9F)) {
+				scale = (width * 0.9F) / (float) textLength;
+			}
+
+			int titleX = (int) ((width / 2) - (textLength * scale / 2));
+			int titleY = (int) ((height * 0.45) / scale) + (int) (drawHeight * scale);
+			new TextRenderer(mc, title, titleX, titleY, scale);
+			drawHeight += mc.fontRendererObj.FONT_HEIGHT;
 		}
-		
-		int titleX = (int) ((width / 2) - (textLength * scale / 2));
-		int titleY = (int) ((height * 0.45) / scale);
-		new TextRenderer(mc, text, titleX, titleY, scale);
 	}
 	
 	public static void checkForSkyblock() {
@@ -275,7 +280,7 @@ public class Utils {
 		GlStateManager.disableAlpha();
 		GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
 		GL11.glLineWidth(2);
-		GlStateManager.color(colour.getRed() / 255f, colour.getGreen() / 255f, colour.getBlue()/ 255f, colour.getAlpha() / 255f);
+		GlStateManager.color(colour.getRed() / 255f, colour.getGreen() / 255f, colour.getBlue() / 255f, colour.getAlpha() / 255f);
 		worldRenderer.begin(GL11.GL_LINE_STRIP, DefaultVertexFormats.POSITION);
 		
 		worldRenderer.pos(pos1.xCoord, pos1.yCoord, pos1.zCoord).endVertex();
