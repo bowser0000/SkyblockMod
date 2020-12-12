@@ -66,10 +66,10 @@ public class ToggleCommand extends CommandBase implements ICommand {
 	@Override
 	public String getCommandUsage(ICommandSender arg0) {
 		return "/" + getCommandName() + " <gparty/coords/golden/slayercount/rngesusalerts/splitfishing/chatmaddox/spiritbearalert/" +
-												"aotd/lividdagger/petcolors/dungeontimer/golemalerts/expertiselore/skill50display/" +
-												"outlinetext/sceptremessages/midasstaffmessages/implosionmessages/healmessages/manamessages/cooldownmessages/caketimer/" +
-												"lowhealthnotify/lividsolver/stopsalvagestarred/threemanpuzzle/oruopuzzle/blazepuzzle/creeperpuzzle/waterpuzzle/tictactoepuzzle/" +
-												"startswithterminal/selectallterminal/itemframeonsealanterns/ultrasequencer/chronomatron/superpairs/pickblockinexperiments/list>";
+			"aotd/lividdagger/sceptremessages/petcolors/dungeontimer/golemalerts/expertiselore/skill50display/" +
+			"outlinetext/midasstaffmessages/implosionmessages/healmessages/cooldownmessages/manamessages/caketimer/lowhealthnotify/" +
+			"lividsolver/stopsalvagestarred/threemanpuzzle/oruopuzzle/blazepuzzle/creeperpuzzle/waterpuzzle/tictactoepuzzle/" +
+			"watchermessage/startswithterminal/selectallterminal/itemframeonsealanterns/ultrasequencer/chronomatron/superpairs/hidetooltipsinaddons/pickblock/list>";
 	}
 
 	@Override
@@ -81,14 +81,14 @@ public class ToggleCommand extends CommandBase implements ICommand {
 	public List<String> addTabCompletionOptions(ICommandSender sender, String[] args, BlockPos pos) {
 		if (args.length == 1) {
 			return getListOfStringsMatchingLastWord(args, "gparty", "coords", "golden", "slayercount", "rngesusalerts",
-												"splitfishing", "chatmaddox", "spiritbearalerts", "aotd", "lividdagger",
-												"petcolors", "dungeontimer", "golemalerts", "expertiselore",
-												"skill50display", "outlinetext","sceptremessages",  "midasstaffmessages",
-												"implosionmessages", "healmessages", "manamessages", "cooldownmessages","caketimer",
-												"lowhealthnotify", "lividsolver", "stopsalvagestarred", "threemanpuzzle", "oruopuzzle", "blazepuzzle",
-												"creeperpuzzle", "waterpuzzle", "tictactoepuzzle", "startswithterminal",
-												"selectallterminal", "itemframeonsealanterns", "ultrasequencer",
-												"chronomatron", "superpairs", "pickblockinexperiments", "list");
+					"splitfishing", "chatmaddox", "spiritbearalerts", "aotd", "lividdagger",
+					"sceptremessages", "petcolors", "dungeontimer", "golemalerts",
+					"expertiselore", "skill50display", "outlinetext", "midasstaffmessages",
+					"implosionmessages", "healmessages", "cooldownmessages", "manamessages", "caketimer", "lowhealthnotify",
+					"lividsolver", "stopsalvagestarred", "threemanpuzzle", "oruopuzzle", "blazepuzzle",
+					"creeperpuzzle", "waterpuzzle", "tictactoepuzzle", "watchermessage", "startswithterminal",
+					"selectallterminal", "itemframeonsealanterns", "ultrasequencer",
+					"chronomatron", "superpairs", "hidetooltipsinaddons", "pickblock", "list");
 		}
 		return null;
 	}

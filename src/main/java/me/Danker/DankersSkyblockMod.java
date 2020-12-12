@@ -474,7 +474,7 @@ public class DankersSkyblockMod
 			event.setCanceled(true);
 			return;
 		}
-
+		// Implosion
 		if (!ToggleCommand.implosionMessages) {
 			if (message.contains("Your Implosion hit ") || message.contains("There are blocks in the way")) {
 				event.setCanceled(true);
