@@ -68,7 +68,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 										  "aotd/lividdagger/sceptremessages/petcolors/dungeontimer/golemalerts/expertiselore/skill50display/" + 
 										  "outlinetext/midasstaffmessages/implosionmessages/healmessages/caketimer/lowhealthnotify/" +
 										  "lividsolver/stopsalvagestarred/threemanpuzzle/oruopuzzle/blazepuzzle/creeperpuzzle/waterpuzzle/tictactoepuzzle/" +
-										  "watchermessage/startswithterminal/selectallterminal/blockterminalclicks/itemframeonsealanterns/ultrasequencer/chronomatron/superpairs/hidetooltipsinaddons/pickblock/list>";
+										  "watchermessage/startswithterminal/selectallterminal/blockwrongterminalclicks/itemframeonsealanterns/ultrasequencer/chronomatron/superpairs/hidetooltipsinaddons/pickblock/list>";
 	}
 
 	@Override
@@ -86,7 +86,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 														  "implosionmessages", "healmessages", "caketimer", "lowhealthnotify",
 														  "lividsolver", "stopsalvagestarred", "threemanpuzzle", "oruopuzzle", "blazepuzzle",
 														  "creeperpuzzle", "waterpuzzle", "tictactoepuzzle", "watchermessage", "startswithterminal",
-														  "selectallterminal", "blockterminalclicks", "itemframeonsealanterns", "ultrasequencer",
+														  "selectallterminal", "blockwrongterminalclicks", "itemframeonsealanterns", "ultrasequencer",
 														  "chronomatron", "superpairs", "hidetooltipsinaddons", "pickblock", "list");
 		}
 		return null;
@@ -268,9 +268,9 @@ public class ToggleCommand extends CommandBase implements ICommand {
 				ConfigHandler.writeBooleanConfig("toggles", "SelectAllTerminal", selectAllToggled);
 				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Select all color items terminal solver has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + selectAllToggled + DankersSkyblockMod.MAIN_COLOUR + "."));
 				break;
-			case "blockterminalclicks":
+			case "blockwrongterminalclicks":
 				blockWrongTerminalClicksToggled = !blockWrongTerminalClicksToggled;
-				ConfigHandler.writeBooleanConfig("toggles", "BlockTerminalClicks", blockWrongTerminalClicksToggled);
+				ConfigHandler.writeBooleanConfig("toggles", "BlockWrongTerminalClicks", blockWrongTerminalClicksToggled);
 				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Block wrong clicks on terminals has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + blockWrongTerminalClicksToggled + DankersSkyblockMod.MAIN_COLOUR + "."));
 				break;
 			case "itemframeonsealanterns":

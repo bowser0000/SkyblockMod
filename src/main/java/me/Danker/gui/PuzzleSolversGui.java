@@ -130,7 +130,7 @@ public class PuzzleSolversGui extends GuiScreen {
 			selectAll.displayString = "Select All Color Terminal Solver: " + Utils.getColouredBoolean(ToggleCommand.selectAllToggled);
 		} else if (button == blockClicks) {
 			ToggleCommand.blockWrongTerminalClicksToggled = !ToggleCommand.blockWrongTerminalClicksToggled;
-			ConfigHandler.writeBooleanConfig("toggles", "BlockTerminalClicks", ToggleCommand.blockWrongTerminalClicksToggled);
+			ConfigHandler.writeBooleanConfig("toggles", "BlockWrongTerminalClicks", ToggleCommand.blockWrongTerminalClicksToggled);
 			blockClicks.displayString = "Block Wrong Clicks on Terminals: " + Utils.getColouredBoolean(ToggleCommand.blockWrongTerminalClicksToggled);
 		} else if (button == itemFrameOnSeaLanterns) {
 			ToggleCommand.itemFrameOnSeaLanternsToggled = !ToggleCommand.itemFrameOnSeaLanternsToggled;

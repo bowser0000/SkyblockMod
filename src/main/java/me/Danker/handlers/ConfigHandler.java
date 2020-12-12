@@ -203,7 +203,7 @@ public class ConfigHandler {
 		if (!hasKey("toggles", "TicTacToePuzzle")) writeBooleanConfig("toggles", "TicTacToePuzzle", false);
 		if (!hasKey("toggles", "StartsWithTerminal")) writeBooleanConfig("toggles", "StartsWithTerminal", false);
 		if (!hasKey("toggles", "SelectAllTerminal")) writeBooleanConfig("toggles", "SelectAllTerminal", false);
-		if (!hasKey("toggles", "BlockTerminalClicks")) writeBooleanConfig("toggles", "BlockTerminalClicks", false);
+		if (!hasKey("toggles", "BlockWrongTerminalClicks")) writeBooleanConfig("toggles", "BlockWrongTerminalClicks", false);
 		if (!hasKey("toggles", "IgnoreItemFrameOnSeaLanterns")) writeBooleanConfig("toggles", "IgnoreItemFrameOnSeaLanterns", false);
 		// Experiment Solvers
 		if (!hasKey("toggles", "UltraSequencer")) writeBooleanConfig("toggles", "UltraSequencer", false);
@@ -468,7 +468,7 @@ public class ConfigHandler {
 		ToggleCommand.ticTacToeToggled = getBoolean("toggles", "TicTacToePuzzle");
 		ToggleCommand.startsWithToggled = getBoolean("toggles", "StartsWithTerminal");
 		ToggleCommand.selectAllToggled = getBoolean("toggles", "SelectAllTerminal");
-		ToggleCommand.blockWrongTerminalClicksToggled = getBoolean("toggles", "BlockTerminalClicks");
+		ToggleCommand.blockWrongTerminalClicksToggled = getBoolean("toggles", "BlockWrongTerminalClicks");
 		ToggleCommand.itemFrameOnSeaLanternsToggled = getBoolean("toggles", "IgnoreItemFrameOnSeaLanterns");
 		// Experiment Solvers
 		ToggleCommand.ultrasequencerToggled = getBoolean("toggles", "UltraSequencer");
