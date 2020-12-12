@@ -67,18 +67,20 @@ import java.awt.*;
 import java.text.NumberFormat;
 import java.util.List;
 import java.util.*;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @Mod(modid = DankersSkyblockMod.MODID, version = DankersSkyblockMod.VERSION, clientSideOnly = true)
 public class DankersSkyblockMod
 {
     public static final String MODID = "Danker's Skyblock Mod";
-    public static final String VERSION = "1.8.4";
+    public static final String VERSION = "1.8.5-beta3";
     
     static double checkItemsNow = 0;
     static double itemsChecked = 0;
     public static Map<String, String> t6Enchants = new HashMap<>();
-    public static Pattern pattern = Pattern.compile("");
+    public static Pattern t6EnchantPattern = Pattern.compile("");
+	static Pattern petPattern = Pattern.compile("\\[Lvl [\\d]{1,3}]");
     static boolean updateChecked = false;
     public static int titleTimer = -1;
     public static boolean showTitle = false;
@@ -115,6 +117,7 @@ public class DankersSkyblockMod
 	static boolean inWaterRoom = false;
 	static String waterAnswers = null;
 	static AxisAlignedBB correctTicTacToeButton = null;
+	static Pattern startsWithTerminalPattern = Pattern.compile("[A-Z]{2,}");
 	static Slot[] clickInOrderSlots = new Slot[36];
 	static int lastChronomatronRound = 0;
 	static List<String> chronomatronPattern = new ArrayList<>();
@@ -166,6 +169,17 @@ public class DankersSkyblockMod
     public static String TRIVIA_WRONG_ANSWER_COLOUR;
     public static int LOWEST_BLAZE_COLOUR;
     public static int HIGHEST_BLAZE_COLOUR;
+    public static int PET_1_TO_9;
+    public static int PET_10_TO_19;
+    public static int PET_20_TO_29;
+    public static int PET_30_TO_39;
+    public static int PET_40_TO_49;
+    public static int PET_50_TO_59;
+    public static int PET_60_TO_69;
+    public static int PET_70_TO_79;
+    public static int PET_80_TO_89;
+    public static int PET_90_TO_99;
+    public static int PET_100;
     
     @EventHandler
     public void init(FMLInitializationEvent event) {
@@ -246,7 +260,7 @@ public class DankersSkyblockMod
 																					   "Booger Dragon", "Older Dragon", "Elder Dragon", "Stable Dragon", "Professor Dragon"});
 		
 		String patternString = "(" + String.join("|", t6Enchants.keySet()) + ")";
-		pattern = Pattern.compile(patternString);
+		t6EnchantPattern = Pattern.compile(patternString);
 		
 		keyBindings[0] = new KeyBinding("Open Maddox Menu", Keyboard.KEY_M, "Danker's Skyblock Mod");
 		keyBindings[1] = new KeyBinding("Start/Stop Skill Tracker", Keyboard.KEY_NUMPAD5, "Danker's Skyblock Mod");
@@ -442,7 +456,10 @@ public class DankersSkyblockMod
         
         if (message.contains("[BOSS] The Watcher: You have proven yourself. You may pass.")) {
         	watcherClearTime = System.currentTimeMillis() / 1000;
-        }
+		}
+		if (message.contains("[BOSS] The Watcher: That will be enough for now.")) {
+			if (ToggleCommand.watcherReadyToggled) Utils.createTitle(EnumChatFormatting.RED + "WATCHER READY", 2);
+		}
 		if (message.contains("PUZZLE FAIL! ") || message.contains("chose the wrong answer! I shall never forget this moment")) {
 			puzzleFails++;
 		}
@@ -2263,12 +2280,13 @@ public class DankersSkyblockMod
     				}
     			}
     		}
-    	}
+		}
 
 		if (mc.currentScreen instanceof GuiChest) {
 				ContainerChest chest = (ContainerChest) player.openContainer;
 				IInventory inv = chest.getLowerChestInventory();
 				String chestName = inv.getDisplayName().getUnformattedText();
+
 				if (ToggleCommand.superpairsToggled && chestName.contains("Superpairs (")) {
 					if (Item.getIdFromItem(item.getItem()) != 95) return;
 					if (item.getDisplayName().contains("Click any button") || item.getDisplayName().contains("Click a second button") || item.getDisplayName().contains("Next button is instantly rewarded") || item.getDisplayName().contains("Stained Glass")) {
@@ -2288,9 +2306,27 @@ public class DankersSkyblockMod
 					}
 
 				}
-			}
-
+		}
     }
+
+    @SubscribeEvent(priority = EventPriority.LOW)
+	public void onTooltipLow(ItemTooltipEvent event) {
+		if (!Utils.inSkyblock) return;
+		if (event.toolTip == null) return;
+
+		Minecraft mc = Minecraft.getMinecraft();
+		EntityPlayerSP player = mc.thePlayer;
+
+		if (mc.currentScreen instanceof GuiChest) {
+			ContainerChest chest = (ContainerChest) player.openContainer;
+			IInventory inv = chest.getLowerChestInventory();
+			String chestName = inv.getDisplayName().getUnformattedText();
+
+			if (ToggleCommand.hideTooltipsInExperimentAddonsToggled && (chestName.startsWith("Ultrasequencer (") || chestName.startsWith("Chronomatron ("))) {
+				event.toolTip.clear();
+			}
+		}
+	}
 
     @SubscribeEvent
     public void onTick(TickEvent.ClientTickEvent event) {
@@ -3051,8 +3087,8 @@ public class DankersSkyblockMod
 				GuiChest chest = (GuiChest) event.gui;
 				IInventory inventory = ((ContainerChest) containerChest).getLowerChestInventory();
 				String inventoryName = inventory.getDisplayName().getUnformattedText();
-				if (ToggleCommand.swapToPickBlockInExperimentsToggled) {
-					if (inventoryName.startsWith("Chronomatron (") || inventoryName.startsWith("Superpairs (") || inventoryName.startsWith("Ultrasequencer (")) {
+				if (ToggleCommand.swapToPickBlockToggled) {
+					if (inventoryName.startsWith("Chronomatron (") || inventoryName.startsWith("Superpairs (") || inventoryName.startsWith("Ultrasequencer (") || inventoryName.startsWith("What starts with:") || inventoryName.startsWith("Select all the") || inventoryName.startsWith("Harp -")) {
 						if (!pickBlockBindSwapped) {
 							pickBlockBind = gameSettings.keyBindPickBlock.getKeyCode();
 							gameSettings.keyBindPickBlock.setKeyCode(-100);
@@ -3091,7 +3127,6 @@ public class DankersSkyblockMod
         		int chestSize = inventory.inventorySlots.inventorySlots.size();
 
         		if (ToggleCommand.petColoursToggled) {
-            		Pattern petPattern = Pattern.compile("\\[Lvl [\\d]{1,3}]");
             		for (Slot slot : invSlots) {
             			ItemStack item = slot.getStack();
             			if (item == null) continue;
@@ -3101,29 +3136,29 @@ public class DankersSkyblockMod
             				int colour;
             				int petLevel = Integer.parseInt(item.getDisplayName().substring(item.getDisplayName().indexOf(" ") + 1, item.getDisplayName().indexOf("]")));
             				if (petLevel == 100) {
-            					colour = 0xBFF2D249; // Gold
+            					colour = PET_100;
             				} else if (petLevel >= 90) {
-            					colour = 0xBF9E794E; // Brown
+            					colour = PET_90_TO_99;
             				} else if (petLevel >= 80) {
-            					colour = 0xBF5C1F35; // idk weird magenta
+            					colour = PET_80_TO_89;
             				} else if (petLevel >= 70) {
-            					colour = 0xBFD64FC8; // Pink
+            					colour = PET_70_TO_79;
             				} else if (petLevel >= 60) {
-            					colour = 0xBF7E4FC6; // Purple
+            					colour = PET_60_TO_69;
             				} else if (petLevel >= 50) {
-            					colour = 0xBF008AD8; // Light Blue
+            					colour = PET_50_TO_59;
             				} else if (petLevel >= 40) {
-            					colour = 0xBF0EAC35; // Green
+            					colour = PET_40_TO_49;
             				} else if (petLevel >= 30) {
-            					colour = 0xBFFFC400; // Yellow
+            					colour = PET_30_TO_39;
             				} else if (petLevel >= 20) {
-            					colour = 0xBFEF5230; // Orange
+            					colour = PET_20_TO_29;
             				} else if (petLevel >= 10) {
-            					colour = 0xBFD62440; // Red
+            					colour = PET_10_TO_19;
             				} else {
-            					colour = 0xBF999999; // Gray
+            					colour = PET_1_TO_9;
             				}
-            				Utils.drawOnSlot(chestSize, slot.xDisplayPosition, slot.yDisplayPosition, colour);
+            				Utils.drawOnSlot(chestSize, slot.xDisplayPosition, slot.yDisplayPosition, colour + 0xBF000000);
             			}
             		}
         		}
@@ -3140,14 +3175,22 @@ public class DankersSkyblockMod
         		}
 
         		if (ToggleCommand.selectAllToggled && Utils.inDungeons && displayName.startsWith("Select all the")) {
-        			String colour = displayName.split(" ")[3];
+        			String colour;
+        			List<String> colourParts = new ArrayList<>();
+					Matcher colourMatcher = startsWithTerminalPattern.matcher(displayName);
+        			while (colourMatcher.find()) {
+						colourParts.add(colourMatcher.group());
+					}
+        			colour = String.join(" ", colourParts);
+
         			for (Slot slot : invSlots) {
         				ItemStack item = slot.getStack();
         				if (item == null) continue;
-        				if (item.getDisplayName().toUpperCase().contains(colour)) {
+        				String itemName = StringUtils.stripControlCodes(item.getDisplayName()).toUpperCase();
+        				if (itemName.contains(colour) || (colour.equals("SILVER") && itemName.contains("LIGHT GRAY")) || (colour.equals("WHITE") && itemName.equals("WOOL"))) {
         					Utils.drawOnSlot(chestSize, slot.xDisplayPosition, slot.yDisplayPosition, 0xBF40FF40);
-        				}
-        			}
+						}
+					}
         		}
 
         		if (ToggleCommand.ultrasequencerToggled && displayName.startsWith("Ultrasequencer (")) {
@@ -3165,6 +3208,12 @@ public class DankersSkyblockMod
 							if (clickInOrderSlots[lastUltraSequencerClicked] != null) {
 								Slot nextSlot = clickInOrderSlots[lastUltraSequencerClicked];
 								Utils.drawOnSlot(chestSize, nextSlot.xDisplayPosition, nextSlot.yDisplayPosition, 0xE540FF40);
+							}
+							if (lastUltraSequencerClicked + 1 < clickInOrderSlots.length) {
+								if (clickInOrderSlots[lastUltraSequencerClicked + 1] != null) {
+									Slot nextSlot = clickInOrderSlots[lastUltraSequencerClicked + 1];
+									Utils.drawOnSlot(chestSize, nextSlot.xDisplayPosition, nextSlot.yDisplayPosition, 0xD740DAE6);
+								}
 							}
 						}
 					}
@@ -3190,8 +3239,23 @@ public class DankersSkyblockMod
 								for (int i = 10; i <= 43; i++) {
 									ItemStack glass = invSlots.get(i).getStack();
 									if (glass == null) continue;
+
 									Slot glassSlot = invSlots.get(i);
-									if (glass.getDisplayName().equals(chronomatronPattern.get(chronomatronMouseClicks))) {
+									
+									if (chronomatronMouseClicks + 1 < chronomatronPattern.size()) {
+										if (chronomatronPattern.get(chronomatronMouseClicks).equals(chronomatronPattern.get(chronomatronMouseClicks + 1))) {
+											if (glass.getDisplayName().equals(chronomatronPattern.get(chronomatronMouseClicks))) {
+												Utils.drawOnSlot(chestSize, glassSlot.xDisplayPosition, glassSlot.yDisplayPosition, 0xE540FF40);
+											}
+										}
+										else if (glass.getDisplayName().equals(chronomatronPattern.get(chronomatronMouseClicks))) {
+											Utils.drawOnSlot(chestSize, glassSlot.xDisplayPosition, glassSlot.yDisplayPosition, 0xE540FF40);
+										}
+										else if (glass.getDisplayName().equals(chronomatronPattern.get(chronomatronMouseClicks + 1))) {
+											Utils.drawOnSlot(chestSize, glassSlot.xDisplayPosition, glassSlot.yDisplayPosition, 0xBE40DAE6);
+										}
+									}
+									else if (glass.getDisplayName().equals(chronomatronPattern.get(chronomatronMouseClicks))) {
 										Utils.drawOnSlot(chestSize, glassSlot.xDisplayPosition, glassSlot.yDisplayPosition, 0xE540FF40);
 									}
 								}

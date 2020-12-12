@@ -64,7 +64,7 @@ public class Utils {
     }
     
     public static String returnGoldenEnchants(String line) {
-    	Matcher matcher = DankersSkyblockMod.pattern.matcher(line);
+    	Matcher matcher = DankersSkyblockMod.t6EnchantPattern.matcher(line);
     	StringBuffer out = new StringBuffer();
     	
     	while (matcher.find()) {
@@ -280,7 +280,7 @@ public class Utils {
 		GlStateManager.disableAlpha();
 		GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
 		GL11.glLineWidth(2);
-		GlStateManager.color(colour.getRed() / 255f, colour.getGreen() / 255f, colour.getBlue()/ 255f, colour.getAlpha() / 255f);
+		GlStateManager.color(colour.getRed() / 255f, colour.getGreen() / 255f, colour.getBlue() / 255f, colour.getAlpha() / 255f);
 		worldRenderer.begin(GL11.GL_LINE_STRIP, DefaultVertexFormats.POSITION);
 		
 		worldRenderer.pos(pos1.xCoord, pos1.yCoord, pos1.zCoord).endVertex();

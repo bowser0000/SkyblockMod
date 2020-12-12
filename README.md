@@ -31,9 +31,11 @@ Discord Server: https://discord.gg/QsEkNQS
 - Expertise kills in fishing rod lore
 - Catacombs trackers
 - Dungeons puzzle solver (Riddle, trivia, blaze, creeper, water, tic tac toe)
-- Experimentation solvers (Ultrasequencer, Chronomatron, Superpairs)
+- Dungeons timer (watcher, boss, deaths, and puzzle fails)
+- Watcher ready message
 - Catacombs F7 Stage 3 solvers (Starts with letter, select all colour, ignore arrows on sea lanterns)
 - Find correct Livid (with graphic display of HP)
+- Experimentation solvers (Ultrasequencer, Chronomatron, Superpairs)
 - Pet background colors based on level
 - Golem spawning alerts
 - Skill xp/hour tracker
