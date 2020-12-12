@@ -3062,22 +3062,22 @@ public class DankersSkyblockMod
 
 							if(slotIndex % 9 != 0 && slotIndex != 53) {
 								ItemStack itemStack = inventory.getStackInSlot(slotIndex + 1);
-								if(itemStack.getItemDamage() == 5) isValid = true;
+								if(itemStack != null && itemStack.getItemDamage() == 5) isValid = true;
 							}
 
 							if(!isValid && slotIndex % 9 != 8 && slotIndex != 0) {
 								ItemStack itemStack = inventory.getStackInSlot(slotIndex - 1);
-								if(itemStack.getItemDamage() == 5) isValid = true;
+								if(itemStack != null && itemStack.getItemDamage() == 5) isValid = true;
 							}
 
 							if(!isValid && slotIndex <= 44) {
 								ItemStack itemStack = inventory.getStackInSlot(slotIndex + 9);
-								if(itemStack.getItemDamage() == 5) isValid = true;
+								if(itemStack != null && itemStack.getItemDamage() == 5) isValid = true;
 							}
 
 							if(!isValid && slotIndex >= 9) {
 								ItemStack itemStack = inventory.getStackInSlot(slotIndex - 9);
-								if(itemStack.getItemDamage() == 5) isValid = true;
+								if(itemStack != null && itemStack.getItemDamage() == 5) isValid = true;
 							}
 
 							shouldCancel = !isValid;
