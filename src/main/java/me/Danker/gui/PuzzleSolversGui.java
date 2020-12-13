@@ -59,7 +59,7 @@ public class PuzzleSolversGui extends GuiScreen {
 		startsWith = new GuiButton(0, width / 2 - 100, (int) (height * 0.7), "Starts With Letter Terminal Solver: " + Utils.getColouredBoolean(ToggleCommand.startsWithToggled));
 		// Page 2
 		selectAll = new GuiButton(0, width / 2 - 100, (int) (height * 0.1), "Select All Color Terminal Solver: " + Utils.getColouredBoolean(ToggleCommand.selectAllToggled));
-		clickOrder = new GuiButton(0, width / 2 - 100, (int) (height * 0.2), "Click in Order Terminal Solver: " + Utils.getColouredBoolean(ToggleCommand.clickInOrderToggled));
+		clickOrder = new GuiButton(0, width / 2 - 100, (int) (height * 0.2), "Click in Order Terminal Helper: " + Utils.getColouredBoolean(ToggleCommand.clickInOrderToggled));
 		blockClicks = new GuiButton(0, width / 2 - 100, (int) (height * 0.3), "Block Wrong Clicks on Terminals: " + Utils.getColouredBoolean(ToggleCommand.blockWrongTerminalClicksToggled));
 		itemFrameOnSeaLanterns = new GuiButton(0, width / 2 - 100, (int) (height * 0.4), "Ignore Arrows On Sea Lanterns: " + Utils.getColouredBoolean(ToggleCommand.itemFrameOnSeaLanternsToggled));
 		
@@ -134,7 +134,7 @@ public class PuzzleSolversGui extends GuiScreen {
 		} else if (button == clickOrder) {
 			ToggleCommand.clickInOrderToggled = !ToggleCommand.clickInOrderToggled;
 			ConfigHandler.writeBooleanConfig("toggles", "ClickInOrderTerminal", ToggleCommand.clickInOrderToggled);
-			clickOrder.displayString = "Click in Order Terminal Solver: " + Utils.getColouredBoolean(ToggleCommand.clickInOrderToggled);
+			clickOrder.displayString = "Click in Order Terminal Helper: " + Utils.getColouredBoolean(ToggleCommand.clickInOrderToggled);
 		} else if (button == blockClicks) {
 			ToggleCommand.blockWrongTerminalClicksToggled = !ToggleCommand.blockWrongTerminalClicksToggled;
 			ConfigHandler.writeBooleanConfig("toggles", "BlockWrongTerminalClicks", ToggleCommand.blockWrongTerminalClicksToggled);

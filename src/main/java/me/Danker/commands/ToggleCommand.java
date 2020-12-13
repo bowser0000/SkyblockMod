@@ -272,7 +272,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 			case "clickinorderterminal":
 				clickInOrderToggled = !clickInOrderToggled;
 				ConfigHandler.writeBooleanConfig("toggles", "ClickInOrderTerminal", clickInOrderToggled);
-				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Click in order terminal solver has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + selectAllToggled + DankersSkyblockMod.MAIN_COLOUR + "."));
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Click in order terminal helper has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + selectAllToggled + DankersSkyblockMod.MAIN_COLOUR + "."));
 				break;
 			case "blockwrongterminalclicks":
 				blockWrongTerminalClicksToggled = !blockWrongTerminalClicksToggled;
