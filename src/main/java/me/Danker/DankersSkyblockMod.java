@@ -3041,17 +3041,17 @@ public class DankersSkyblockMod
 
 					//most of these are extra but who cares
 
-					switch(inventoryName) {
+					switch (inventoryName) {
 						case "Correct all the panes!":
 							shouldCancel = !StringUtils.stripControlCodes(item.getDisplayName()).startsWith("Off");
 							break;
 						case "Navigate the maze!":
-							if((item.getItem() != Item.getItemFromBlock(Blocks.stained_glass_pane))) {
+							if (item.getItem() != Item.getItemFromBlock(Blocks.stained_glass_pane)) {
 								shouldCancel = true;
 								break;
 							}
 
-							if(item.getItemDamage() != 0) {
+							if (item.getItemDamage() != 0) {
 								shouldCancel = true;
 								break;
 							}
@@ -3060,12 +3060,12 @@ public class DankersSkyblockMod
 
 							int slotIndex = mouseSlot.getSlotIndex();
 
-							if(slotIndex % 9 != 8 && slotIndex != 53) {
+							if (slotIndex % 9 != 8 && slotIndex != 53) {
 								ItemStack itemStack = inventory.getStackInSlot(slotIndex + 1);
 								if(itemStack != null && itemStack.getItemDamage() == 5) isValid = true;
 							}
 
-							if(!isValid && slotIndex % 9 != 0 && slotIndex != 0) {
+							if (!isValid && slotIndex % 9 != 0 && slotIndex != 0) {
 								ItemStack itemStack = inventory.getStackInSlot(slotIndex - 1);
 								if(itemStack != null && itemStack.getItemDamage() == 5) isValid = true;
 							}
@@ -3094,19 +3094,22 @@ public class DankersSkyblockMod
 							}
 							int needed = -1;
 							for(int i = 10; i <= 25; i++) {
-								if(i == 17 || i == 18) continue;
+								if (i == 17 || i == 18) continue;
 								ItemStack itemStack = inventory.getStackInSlot(i);
-								if(itemStack.stackSize > needed) needed = itemStack.stackSize;
+								if (itemStack == null) continue;
+								if (itemStack.getItem() != Item.getItemFromBlock(Blocks.stained_glass_pane)) continue;
+								if (itemStack.getItemDamage() != 14) continue;
+								if (itemStack.stackSize > needed) needed = itemStack.stackSize;
 							}
 							shouldCancel = needed != -1 && item.stackSize != needed ;
 							break;
 					}
 
-					if(!shouldCancel) {
-						if(inventoryName.startsWith("What starts with:")) {
+					if (!shouldCancel) {
+						if (inventoryName.startsWith("What starts with:")) {
 							char letter = inventoryName.charAt(inventoryName.indexOf("'") + 1);
 							shouldCancel = !(StringUtils.stripControlCodes(item.getDisplayName()).charAt(0) == letter);
-						} else if(inventoryName.startsWith("Select all the")) {
+						} else if (inventoryName.startsWith("Select all the")) {
 							String colour;
 							List<String> colourParts = new ArrayList<>();
 							Matcher colourMatcher = startsWithTerminalPattern.matcher(inventoryName);
