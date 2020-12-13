@@ -307,11 +307,11 @@ public class DankerGui extends GuiScreen {
 			healMessages.displayString = "Heal Messages: " + Utils.getColouredBoolean(ToggleCommand.healMessages);
 		} else if (button == cooldownMessages) {
 			ToggleCommand.cooldownMessages = !ToggleCommand.cooldownMessages;
-			ConfigHandler.writeBooleanConfig("toggles", "cooldownMessages", ToggleCommand.cooldownMessages);
+			ConfigHandler.writeBooleanConfig("toggles", "CooldownMessages", ToggleCommand.cooldownMessages);
 			cooldownMessages.displayString = "Cooldown Messages: " + Utils.getColouredBoolean(ToggleCommand.cooldownMessages);
 		} else if (button == manaMessages) {
 			ToggleCommand.manaMessages = !ToggleCommand.manaMessages;
-			ConfigHandler.writeBooleanConfig("toggles", "manaMessages", ToggleCommand.manaMessages);
+			ConfigHandler.writeBooleanConfig("toggles", "ManaMessages", ToggleCommand.manaMessages);
 			manaMessages.displayString = "Mana Messages: " + Utils.getColouredBoolean(ToggleCommand.manaMessages);
 		} else if (button == lowHealthNotify) {
 			ToggleCommand.lowHealthNotifyToggled = !ToggleCommand.lowHealthNotifyToggled;
