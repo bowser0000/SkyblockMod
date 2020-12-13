@@ -7,7 +7,6 @@ import me.Danker.handlers.*;
 import me.Danker.utils.TicTacToeUtils;
 import me.Danker.utils.Utils;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockColored;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.Gui;
@@ -127,6 +126,8 @@ public class DankersSkyblockMod
 	static ItemStack[] experimentTableSlots = new ItemStack[54];
 	static int pickBlockBind;
 	static boolean pickBlockBindSwapped = false;
+	static String terminalColorNeeded;
+	static int[] terminalNumberNeeded = new int[2];
 
 	static double dungeonStartTime = 0;
     static double bloodOpenTime = 0;
@@ -3092,15 +3093,8 @@ public class DankersSkyblockMod
 								shouldCancel = true;
 								break;
 							}
-							int needed = -1;
-							for(int i = 10; i <= 25; i++) {
-								if (i == 17 || i == 18) continue;
-								ItemStack itemStack = inventory.getStackInSlot(i);
-								if (itemStack == null) continue;
-								if (itemStack.getItem() != Item.getItemFromBlock(Blocks.stained_glass_pane)) continue;
-								if (itemStack.getItemDamage() != 14) continue;
-								if (itemStack.stackSize > needed) needed = itemStack.stackSize;
-							}
+							int needed = terminalNumberNeeded[1];
+							if(needed == 0) break;
 							shouldCancel = needed != -1 && item.stackSize != needed ;
 							break;
 					}
@@ -3110,16 +3104,9 @@ public class DankersSkyblockMod
 							char letter = inventoryName.charAt(inventoryName.indexOf("'") + 1);
 							shouldCancel = !(StringUtils.stripControlCodes(item.getDisplayName()).charAt(0) == letter);
 						} else if (inventoryName.startsWith("Select all the")) {
-							String colour;
-							List<String> colourParts = new ArrayList<>();
-							Matcher colourMatcher = startsWithTerminalPattern.matcher(inventoryName);
-							while (colourMatcher.find()) {
-								colourParts.add(colourMatcher.group());
-							}
-							colour = String.join(" ", colourParts);
-
+							if(terminalColorNeeded == null) return;
 							String itemName = StringUtils.stripControlCodes(item.getDisplayName()).toUpperCase();
-							shouldCancel = !(itemName.contains(colour) || (colour.equals("SILVER") && itemName.contains("LIGHT GRAY")) || (colour.equals("WHITE") && itemName.equals("WOOL")));
+							shouldCancel = !(itemName.contains(terminalColorNeeded) || (terminalColorNeeded.equals("SILVER") && itemName.contains("LIGHT GRAY")) || (terminalColorNeeded.equals("WHITE") && itemName.equals("WOOL")));
 						}
 					}
 
@@ -3196,6 +3183,8 @@ public class DankersSkyblockMod
 		chronomatronPattern.clear();
 		chronomatronMouseClicks = 0;
 		experimentTableSlots = new ItemStack[54];
+		terminalColorNeeded = null;
+		terminalNumberNeeded = new int[2];
 	}
 
     @SubscribeEvent
@@ -3270,6 +3259,7 @@ public class DankersSkyblockMod
 						colourParts.add(colourMatcher.group());
 					}
         			colour = String.join(" ", colourParts);
+					terminalColorNeeded = colour;
 
         			for (Slot slot : invSlots) {
         				ItemStack item = slot.getStack();
@@ -3280,6 +3270,23 @@ public class DankersSkyblockMod
 						}
 					}
         		}
+
+        		if(ToggleCommand.clickInOrderToggled && displayName.equals("Click in order!")) {
+					for(int i = 10; i <= 25; i++) {
+						if (i == 17 || i == 18) continue;
+						ItemStack itemStack = invSlots.get(i).getStack();
+						if (itemStack == null) continue;
+						if (itemStack.getItem() != Item.getItemFromBlock(Blocks.stained_glass_pane)) continue;
+						if (itemStack.getItemDamage() != 14) continue;
+						if (itemStack.stackSize > terminalNumberNeeded[0]) {
+							terminalNumberNeeded[0] = itemStack.stackSize;
+							terminalNumberNeeded[1] = i;
+						}
+					}
+					if(terminalNumberNeeded[0] == 0) return;
+					Slot slot = invSlots.get(terminalNumberNeeded[0]);
+					Utils.drawOnSlot(chestSize, slot.xDisplayPosition, slot.yDisplayPosition, 0xBF40FF40);
+				}
 
         		if (ToggleCommand.ultrasequencerToggled && displayName.startsWith("Ultrasequencer (")) {
         			if (invSlots.size() > 48 && invSlots.get(49).getStack() != null) {
