@@ -3093,7 +3093,7 @@ public class DankersSkyblockMod
 								shouldCancel = true;
 								break;
 							}
-							int needed = terminalNumberNeeded[1];
+							int needed = terminalNumberNeeded[0];
 							if(needed == 0) break;
 							shouldCancel = needed != -1 && item.stackSize != needed ;
 							break;
@@ -3278,13 +3278,13 @@ public class DankersSkyblockMod
 						if (itemStack == null) continue;
 						if (itemStack.getItem() != Item.getItemFromBlock(Blocks.stained_glass_pane)) continue;
 						if (itemStack.getItemDamage() != 14) continue;
-						if (itemStack.stackSize > terminalNumberNeeded[0]) {
+						if (itemStack.stackSize < terminalNumberNeeded[0]) {
 							terminalNumberNeeded[0] = itemStack.stackSize;
 							terminalNumberNeeded[1] = i;
 						}
 					}
 					if(terminalNumberNeeded[0] == 0) return;
-					Slot slot = invSlots.get(terminalNumberNeeded[0]);
+					Slot slot = invSlots.get(terminalNumberNeeded[1]);
 					Utils.drawOnSlot(chestSize, slot.xDisplayPosition, slot.yDisplayPosition, 0xBF40FF40);
 				}
 
