@@ -3060,12 +3060,12 @@ public class DankersSkyblockMod
 
 							int slotIndex = mouseSlot.getSlotIndex();
 
-							if(slotIndex % 9 != 0 && slotIndex != 53) {
+							if(slotIndex % 9 != 8 && slotIndex != 53) {
 								ItemStack itemStack = inventory.getStackInSlot(slotIndex + 1);
 								if(itemStack != null && itemStack.getItemDamage() == 5) isValid = true;
 							}
 
-							if(!isValid && slotIndex % 9 != 8 && slotIndex != 0) {
+							if(!isValid && slotIndex % 9 != 0 && slotIndex != 0) {
 								ItemStack itemStack = inventory.getStackInSlot(slotIndex - 1);
 								if(itemStack != null && itemStack.getItemDamage() == 5) isValid = true;
 							}
@@ -3092,14 +3092,13 @@ public class DankersSkyblockMod
 								shouldCancel = true;
 								break;
 							}
-							int needed = 0;
+							int needed = -1;
 							for(int i = 10; i <= 25; i++) {
 								if(i == 17 || i == 18) continue;
 								ItemStack itemStack = inventory.getStackInSlot(i);
-								if(!itemStack.getDisplayName().contains(EnumChatFormatting.GREEN.toString())) continue;
 								if(itemStack.stackSize > needed) needed = itemStack.stackSize;
 							}
-							shouldCancel = item.stackSize != needed;
+							shouldCancel = needed != -1 && item.stackSize != needed ;
 							break;
 					}
 
