@@ -18,6 +18,9 @@ import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItemFrame;
 import net.minecraft.entity.monster.EntityCreeper;
+import net.minecraft.entity.monster.EntitySpider;
+import net.minecraft.entity.monster.EntityZombie;
+import net.minecraft.entity.passive.EntityWolf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.event.ClickEvent;
 import net.minecraft.event.ClickEvent.Action;
@@ -40,6 +43,7 @@ import net.minecraftforge.client.event.*;
 import net.minecraftforge.client.event.sound.PlaySoundEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
+import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.event.entity.player.EntityInteractEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -2877,6 +2881,21 @@ public class DankersSkyblockMod
 			}
 		}
     }
+
+    @SubscribeEvent
+	public void onAttackingEntity(AttackEntityEvent event) {
+    	if (ToggleCommand.notifySlayerSlainToggled && (event.target instanceof EntityZombie || event.target instanceof EntitySpider || event.target instanceof EntityWolf)) {
+			List<String> scoreboard = ScoreboardHandler.getSidebarLines();
+
+			for (String line : scoreboard) {
+				String cleanedLine = ScoreboardHandler.cleanSB(line);
+				if (cleanedLine.contains("Boss slain!")) {
+					Utils.createTitle(EnumChatFormatting.RED + "Boss slain!", 2);
+					break;
+				}
+			}
+		}
+	}
 
     @SubscribeEvent
     public void onEntityInteract(EntityInteractEvent event) {
