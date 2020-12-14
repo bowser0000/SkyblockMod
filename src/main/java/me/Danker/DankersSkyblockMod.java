@@ -13,9 +13,14 @@ import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiChat;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.gui.inventory.GuiChest;
+import net.minecraft.client.renderer.EntityRenderer;
+import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.item.EntityArmorStand;
 import net.minecraft.entity.item.EntityItemFrame;
 import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.monster.EntitySpider;
@@ -52,6 +57,8 @@ import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
+import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
+import net.minecraftforge.fml.common.asm.transformers.deobf.FMLDeobfuscatingRemapper;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -62,12 +69,16 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.common.network.FMLNetworkEvent.ClientConnectedToServerEvent;
 import net.minecraftforge.fml.common.versioning.DefaultArtifactVersion;
+import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import org.apache.commons.lang3.time.StopWatch;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.text.NumberFormat;
 import java.util.List;
 import java.util.*;
@@ -2812,6 +2823,9 @@ public class DankersSkyblockMod
 
     @SubscribeEvent
     public void onWorldRender(RenderWorldLastEvent event) {
+
+    	Minecraft mc = Minecraft.getMinecraft();
+
     	if (ToggleCommand.blazeToggled) {
     		if (lowestBlaze != null) {
     			BlockPos stringPos = new BlockPos(lowestBlaze.posX, lowestBlaze.posY + 1, lowestBlaze.posZ);
@@ -2834,6 +2848,73 @@ public class DankersSkyblockMod
     	if (ToggleCommand.ticTacToeToggled && correctTicTacToeButton != null) {
     		Utils.draw3DBox(correctTicTacToeButton, 0x40FF40, event.partialTicks);
 		}
+
+    	if(ToggleCommand.traceInactiveTerminalsToggled && Utils.inDungeons && ScoreboardHandler.getSidebarLines().stream().anyMatch(l->ScoreboardHandler.cleanSB(l).contains("The Catacombs (F7)"))) {
+			for (Entity e : mc.theWorld.getLoadedEntityList()) {
+				if (e instanceof EntityArmorStand) {
+					EntityArmorStand entity = (EntityArmorStand) e;
+					if(!e.hasCustomName()) continue;
+					if(!e.getCustomNameTag().contains("Inactive")) continue;
+
+					float distance = mc.thePlayer.getDistanceToEntity(entity);
+
+					float[] fractions = new float[]{0.0F, 0.5F, 1.0F};
+					Color[] colors = new Color[]{Color.RED, Color.YELLOW, Color.GREEN};
+					float progress = distance * 1.25F * 0.01F;
+
+					Color color = Utils.blendColors(fractions, colors, progress).brighter();
+					float width = 1.0f;
+					float partialTicks = event.partialTicks;
+
+					float r = ((float) 1 / 255) * color.getRed();
+					float g = ((float) 1 / 255) * color.getGreen();
+					float b = ((float) 1 / 255) * color.getBlue();
+					GL11.glPushMatrix();
+
+					GL11.glLoadIdentity();
+
+					Method orientCamera = ReflectionHelper.findMethod(EntityRenderer.class, mc.entityRenderer, new String[]{"orientCamera"}, float.class);
+					try {
+						//mc.entityRenderer.orientCamera(partialTicks);
+						orientCamera.invoke(mc.entityRenderer, partialTicks);
+					} catch (IllegalAccessException illegalAccessException) {
+						illegalAccessException.printStackTrace();
+					} catch (InvocationTargetException invocationTargetException) {
+						invocationTargetException.printStackTrace();
+					}
+
+					GL11.glDisable(2929);
+					GL11.glDisable(3553);
+					GL11.glEnable(3042);
+					GL11.glBlendFunc(770, 771);
+
+					GL11.glEnable(GL11.GL_LINE_SMOOTH);
+
+					double x = Utils.interpolate(entity.posX, entity.lastTickPosX, partialTicks) - mc.getRenderManager().viewerPosX;
+					double y = Utils.interpolate(entity.posY + entity.getEyeHeight(), entity.lastTickPosY + entity.getEyeHeight(), partialTicks) - mc.getRenderManager().viewerPosY;
+					double z = Utils.interpolate(entity.posZ, entity.lastTickPosZ, partialTicks) - mc.getRenderManager().viewerPosZ;
+
+					GL11.glLineWidth(width);
+
+					GL11.glBegin(GL11.GL_LINE_STRIP);
+					{
+						GL11.glColor3d(r, g, b);
+						GL11.glVertex3d(x, y, z);
+						GL11.glVertex3d(0.0, mc.thePlayer.getEyeHeight(), 0.0);
+						GL11.glEnd();
+						GL11.glDisable(GL11.GL_LINE_SMOOTH);
+
+						GL11.glDisable(3042);
+						GL11.glEnable(3553);
+						GL11.glEnable(2929);
+
+						GL11.glPopMatrix();
+					}
+
+				}
+			}
+		}
+
     }
 
     @SubscribeEvent

@@ -202,6 +202,7 @@ public class ConfigHandler {
 		if (!hasKey("toggles", "CreeperPuzzle")) writeBooleanConfig("toggles", "CreeperPuzzle", false);
 		if (!hasKey("toggles", "WaterPuzzle")) writeBooleanConfig("toggles", "WaterPuzzle", false);
 		if (!hasKey("toggles", "TicTacToePuzzle")) writeBooleanConfig("toggles", "TicTacToePuzzle", false);
+		if (!hasKey("toggles", "TraceInactiveTerminals")) writeBooleanConfig("toggles", "TraceInactiveTerminals", false);
 		if (!hasKey("toggles", "StartsWithTerminal")) writeBooleanConfig("toggles", "StartsWithTerminal", false);
 		if (!hasKey("toggles", "SelectAllTerminal")) writeBooleanConfig("toggles", "SelectAllTerminal", false);
 		if (!hasKey("toggles", "ClickInOrderTerminal")) writeBooleanConfig("toggles", "ClickInOrderTerminal", false);
@@ -469,6 +470,7 @@ public class ConfigHandler {
 		ToggleCommand.creeperToggled = getBoolean("toggles", "CreeperPuzzle");
 		ToggleCommand.waterToggled = getBoolean("toggles", "WaterPuzzle");
 		ToggleCommand.ticTacToeToggled = getBoolean("toggles", "TicTacToePuzzle");
+		ToggleCommand.traceInactiveTerminalsToggled = getBoolean("toggles", "TraceInactiveTerminals");
 		ToggleCommand.startsWithToggled = getBoolean("toggles", "StartsWithTerminal");
 		ToggleCommand.selectAllToggled = getBoolean("toggles", "SelectAllTerminal");
 		ToggleCommand.clickInOrderToggled = getBoolean("toggles", "ClickInOrderTerminal");

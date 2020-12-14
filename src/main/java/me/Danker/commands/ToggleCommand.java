@@ -48,6 +48,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 	public static boolean waterToggled;
 	public static boolean ticTacToeToggled;
 	// Terminal Helpers
+	public static boolean traceInactiveTerminalsToggled;
 	public static boolean startsWithToggled;
 	public static boolean selectAllToggled;
 	public static boolean clickInOrderToggled;
@@ -70,7 +71,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 										  "aotd/lividdagger/sceptremessages/petcolors/dungeontimer/golemalerts/expertiselore/skill50display/" + 
 										  "outlinetext/midasstaffmessages/implosionmessages/healmessages/caketimer/lowhealthnotify/" +
 										  "lividsolver/stopsalvagestarred/notifyslayerslain/threemanpuzzle/oruopuzzle/blazepuzzle/creeperpuzzle/waterpuzzle/tictactoepuzzle/" +
-										  "watchermessage/startswithterminal/selectallterminal/clickinorderterminal/blockwrongterminalclicks/itemframeonsealanterns/ultrasequencer/chronomatron/superpairs/hidetooltipsinaddons/pickblock/list>";
+										  "watchermessage/traceinactiveterminals/startswithterminal/selectallterminal/clickinorderterminal/blockwrongterminalclicks/itemframeonsealanterns/ultrasequencer/chronomatron/superpairs/hidetooltipsinaddons/pickblock/list>";
 	}
 
 	@Override
@@ -87,7 +88,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 														  "expertiselore", "skill50display", "outlinetext", "midasstaffmessages",
 														  "implosionmessages", "healmessages", "caketimer", "lowhealthnotify",
 														  "lividsolver", "stopsalvagestarred", "notifyslayerslain", "threemanpuzzle", "oruopuzzle", "blazepuzzle",
-														  "creeperpuzzle", "waterpuzzle", "tictactoepuzzle", "watchermessage", "startswithterminal",
+														  "creeperpuzzle", "waterpuzzle", "tictactoepuzzle", "watchermessage", "traceinactiveterminals", "startswithterminal",
 														  "selectallterminal", "clickinorderterminal", "blockwrongterminalclicks", "itemframeonsealanterns", "ultrasequencer",
 														  "chronomatron", "superpairs", "hidetooltipsinaddons", "pickblock", "list");
 		}
@@ -264,7 +265,12 @@ public class ToggleCommand extends CommandBase implements ICommand {
 				watcherReadyToggled = !watcherReadyToggled;
 				ConfigHandler.writeBooleanConfig("toggles", "WatcherReadyMessage", watcherReadyToggled);
 				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Display Watcher ready message has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + watcherReadyToggled + DankersSkyblockMod.MAIN_COLOUR + "."));
-				break;	
+				break;
+			case "traceinactiveterminals":
+				traceInactiveTerminalsToggled = !traceInactiveTerminalsToggled;
+				ConfigHandler.writeBooleanConfig("toggles", "TraceInactiveTerminals", traceInactiveTerminalsToggled);
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Trace inactive terminals has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + traceInactiveTerminalsToggled + DankersSkyblockMod.MAIN_COLOUR + "."));
+				break;
 			case "startswithterminal":
 				startsWithToggled = !startsWithToggled;
 				ConfigHandler.writeBooleanConfig("toggles", "StartsWithTerminal", startsWithToggled);
