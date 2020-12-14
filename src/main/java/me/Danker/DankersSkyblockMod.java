@@ -3264,6 +3264,7 @@ public class DankersSkyblockMod
         			for (Slot slot : invSlots) {
         				ItemStack item = slot.getStack();
         				if (item == null) continue;
+        				if (item.isItemEnchanted()) continue;
         				if (StringUtils.stripControlCodes(item.getDisplayName()).charAt(0) == letter) {
         					Utils.drawOnSlot(chestSize, slot.xDisplayPosition, slot.yDisplayPosition, 0xBF40FF40);
         				}
@@ -3283,7 +3284,8 @@ public class DankersSkyblockMod
         			for (Slot slot : invSlots) {
         				ItemStack item = slot.getStack();
         				if (item == null) continue;
-        				String itemName = StringUtils.stripControlCodes(item.getDisplayName()).toUpperCase();
+                        if (item.isItemEnchanted()) continue;
+                        String itemName = StringUtils.stripControlCodes(item.getDisplayName()).toUpperCase();
         				if (itemName.contains(colour) || (colour.equals("SILVER") && itemName.contains("LIGHT GRAY")) || (colour.equals("WHITE") && itemName.equals("WOOL"))) {
         					Utils.drawOnSlot(chestSize, slot.xDisplayPosition, slot.yDisplayPosition, 0xBF40FF40);
 						}
@@ -3297,7 +3299,7 @@ public class DankersSkyblockMod
 						if (itemStack == null) continue;
 						if (itemStack.getItem() != Item.getItemFromBlock(Blocks.stained_glass_pane)) continue;
 						if (itemStack.getItemDamage() != 5) continue;
-						if (itemStack.stackSize >= terminalNumberNeeded[0]) {
+						if (itemStack.stackSize > terminalNumberNeeded[0]) {
 							terminalNumberNeeded[0] = itemStack.stackSize + 1;
 							terminalNumberNeeded[1] = i;
 						}
