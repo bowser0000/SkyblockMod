@@ -2739,6 +2739,27 @@ public class DankersSkyblockMod
 					experimentTableSlots[i] = itemStack.copy().setStackDisplayName(itemName);
 				}
 			}
+
+			if (ToggleCommand.clickInOrderToggled && chestName.equals("Click in order!")) {
+				if(terminalNumberNeeded[0] == 0) terminalNumberNeeded[0] = 14;
+				for(int i = 10; i <= 25; i++) {
+					if (i == 17 || i == 18) continue;
+					ItemStack prevStack = invSlots.get(terminalNumberNeeded[1]).getStack();
+					if (prevStack == null) terminalNumberNeeded[0] = 14;
+					else if (prevStack.getItem() != Item.getItemFromBlock(Blocks.stained_glass_pane)) terminalNumberNeeded[0] = 14;
+					else if (prevStack.getItemDamage() == 5) terminalNumberNeeded[0] = 14;
+
+					ItemStack itemStack = invSlots.get(i).getStack();
+					if (itemStack == null) continue;
+					if (itemStack.getItem() != Item.getItemFromBlock(Blocks.stained_glass_pane)) continue;
+					if (itemStack.getItemDamage() != 14) continue;
+					if (itemStack.stackSize < terminalNumberNeeded[0]) {
+						terminalNumberNeeded[0] = itemStack.stackSize;
+						terminalNumberNeeded[1] = i;
+					}
+				}
+			}
+
 		}
 
 		if (titleTimer >= 0) {
@@ -3292,19 +3313,7 @@ public class DankersSkyblockMod
 					}
         		}
 
-        		if(ToggleCommand.clickInOrderToggled && displayName.equals("Click in order!")) {
-					for(int i = 10; i <= 25; i++) {
-						if (i == 17 || i == 18) continue;
-						ItemStack itemStack = invSlots.get(i).getStack();
-						if (itemStack == null) continue;
-						if (itemStack.getItem() != Item.getItemFromBlock(Blocks.stained_glass_pane)) continue;
-						if (itemStack.getItemDamage() != 5) continue;
-						if (itemStack.stackSize > terminalNumberNeeded[0]) {
-							terminalNumberNeeded[0] = itemStack.stackSize + 1;
-							terminalNumberNeeded[1] = i;
-						}
-					}
-					if(terminalNumberNeeded[0] == 0) return;
+				if(ToggleCommand.clickInOrderToggled && displayName.equals("Click in order!")) {
 					Slot slot = invSlots.get(terminalNumberNeeded[1]);
 					Utils.drawOnSlot(chestSize, slot.xDisplayPosition, slot.yDisplayPosition, 0xBF40FF40);
 				}
