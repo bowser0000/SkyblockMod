@@ -3296,9 +3296,9 @@ public class DankersSkyblockMod
 						ItemStack itemStack = invSlots.get(i).getStack();
 						if (itemStack == null) continue;
 						if (itemStack.getItem() != Item.getItemFromBlock(Blocks.stained_glass_pane)) continue;
-						if (itemStack.getItemDamage() != 14) continue;
-						if (itemStack.stackSize < terminalNumberNeeded[0]) {
-							terminalNumberNeeded[0] = itemStack.stackSize;
+						if (itemStack.getItemDamage() != 5) continue;
+						if (itemStack.stackSize >= terminalNumberNeeded[0]) {
+							terminalNumberNeeded[0] = itemStack.stackSize + 1;
 							terminalNumberNeeded[1] = i;
 						}
 					}
