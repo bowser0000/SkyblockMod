@@ -22,7 +22,6 @@ public class PuzzleSolversGui extends GuiScreen {
 	private GuiButton creeper;
 	private GuiButton water;
 	private GuiButton ticTacToe;
-	private GuiButton traceInactive;
 	private GuiButton startsWith;
 	private GuiButton selectAll;
 	private GuiButton clickOrder;
@@ -57,14 +56,12 @@ public class PuzzleSolversGui extends GuiScreen {
 		creeper = new GuiButton(0, width / 2 - 100, (int) (height * 0.4), "Creeper Solver: " + Utils.getColouredBoolean(ToggleCommand.creeperToggled));
 		water = new GuiButton(0, width / 2 - 100, (int) (height * 0.5), "Water Solver: " + Utils.getColouredBoolean(ToggleCommand.waterToggled));
 		ticTacToe = new GuiButton(0, width / 2 - 100, (int) (height * 0.6), "Tic Tac Toe Solver: " + Utils.getColouredBoolean(ToggleCommand.ticTacToeToggled));
-		traceInactive = new GuiButton(0, width / 2 - 100, (int) (height * 0.7), "Trace Inactive Terminals: " + Utils.getColouredBoolean(ToggleCommand.traceInactiveTerminalsToggled));
-
+		startsWith = new GuiButton(0, width / 2 - 100, (int) (height * 0.7), "Starts With Letter Terminal Solver: " + Utils.getColouredBoolean(ToggleCommand.startsWithToggled));
 		// Page 2
-		startsWith = new GuiButton(0, width / 2 - 100, (int) (height * 0.1), "Starts With Letter Terminal Solver: " + Utils.getColouredBoolean(ToggleCommand.startsWithToggled));
-		selectAll = new GuiButton(0, width / 2 - 100, (int) (height * 0.2), "Select All Color Terminal Solver: " + Utils.getColouredBoolean(ToggleCommand.selectAllToggled));
-		clickOrder = new GuiButton(0, width / 2 - 100, (int) (height * 0.3), "Click in Order Terminal Helper: " + Utils.getColouredBoolean(ToggleCommand.clickInOrderToggled));
-		blockClicks = new GuiButton(0, width / 2 - 100, (int) (height * 0.4), "Block Wrong Clicks on Terminals: " + Utils.getColouredBoolean(ToggleCommand.blockWrongTerminalClicksToggled));
-		itemFrameOnSeaLanterns = new GuiButton(0, width / 2 - 100, (int) (height * 0.5), "Ignore Arrows On Sea Lanterns: " + Utils.getColouredBoolean(ToggleCommand.itemFrameOnSeaLanternsToggled));
+		selectAll = new GuiButton(0, width / 2 - 100, (int) (height * 0.1), "Select All Color Terminal Solver: " + Utils.getColouredBoolean(ToggleCommand.selectAllToggled));
+		clickOrder = new GuiButton(0, width / 2 - 100, (int) (height * 0.2), "Click in Order Terminal Helper: " + Utils.getColouredBoolean(ToggleCommand.clickInOrderToggled));
+		blockClicks = new GuiButton(0, width / 2 - 100, (int) (height * 0.3), "Block Wrong Clicks on Terminals: " + Utils.getColouredBoolean(ToggleCommand.blockWrongTerminalClicksToggled));
+		itemFrameOnSeaLanterns = new GuiButton(0, width / 2 - 100, (int) (height * 0.4), "Ignore Arrows On Sea Lanterns: " + Utils.getColouredBoolean(ToggleCommand.itemFrameOnSeaLanternsToggled));
 		
 		switch (page) {
 			case 1:
@@ -74,11 +71,10 @@ public class PuzzleSolversGui extends GuiScreen {
 				this.buttonList.add(creeper);
 				this.buttonList.add(water);
 				this.buttonList.add(ticTacToe);
-				this.buttonList.add(traceInactive);
+				this.buttonList.add(startsWith);
 				this.buttonList.add(nextPage);
 				break;
 			case 2:
-				this.buttonList.add(startsWith);
 				this.buttonList.add(selectAll);
 				this.buttonList.add(clickOrder);
 				this.buttonList.add(blockClicks);
@@ -127,10 +123,6 @@ public class PuzzleSolversGui extends GuiScreen {
 			ToggleCommand.ticTacToeToggled = !ToggleCommand.ticTacToeToggled;
 			ConfigHandler.writeBooleanConfig("toggles", "TicTacToePuzzle", ToggleCommand.ticTacToeToggled);
 			ticTacToe.displayString = "Tic Tac Toe Solver: " + Utils.getColouredBoolean(ToggleCommand.ticTacToeToggled);
-		} else if (button == traceInactive) {
-			ToggleCommand.traceInactiveTerminalsToggled = !ToggleCommand.traceInactiveTerminalsToggled;
-			ConfigHandler.writeBooleanConfig("toggles", "TraceInactiveTerminals", ToggleCommand.traceInactiveTerminalsToggled);
-			traceInactive.displayString = "Trace Inactive Terminals: " + Utils.getColouredBoolean(ToggleCommand.traceInactiveTerminalsToggled);
 		} else if (button == startsWith) {
 			ToggleCommand.startsWithToggled = !ToggleCommand.startsWithToggled;
 			ConfigHandler.writeBooleanConfig("toggles", "StartsWithTerminal", ToggleCommand.startsWithToggled);
