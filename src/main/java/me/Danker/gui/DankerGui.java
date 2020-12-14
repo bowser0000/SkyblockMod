@@ -24,6 +24,7 @@ public class DankerGui extends GuiScreen {
 	private GuiButton nextPage;
 	private GuiButton githubLink;
 	private GuiButton discordLink;
+	private GuiButton editLocations;
 	private GuiButton changeDisplay;
 	private GuiButton onlySlayer;
 	private GuiButton puzzleSolvers;
@@ -80,6 +81,7 @@ public class DankerGui extends GuiScreen {
 		nextPage = new GuiButton(0, width / 2 + 20, (int) (height * 0.8), 80, 20, "Next >");
 		githubLink = new GuiButton(0, 2, height - 50, 80, 20, "GitHub");
 		discordLink = new GuiButton(0, 2, height - 30, 80, 20, "Discord");
+		editLocations = new GuiButton(0, 2, 5, 100, 20, "Edit Locations");
 		
 		// Page 1
 		changeDisplay = new GuiButton(0, width / 2 - 100, (int) (height * 0.1), "Change Display Settings");
@@ -117,6 +119,7 @@ public class DankerGui extends GuiScreen {
 		stopSalvageStarred = new GuiButton(0, width / 2 - 100, (int) (height * 0.1), "Stop Salvaging Starred Items: " + Utils.getColouredBoolean(ToggleCommand.stopSalvageStarredToggled));
 		watcherReadyMessage = new GuiButton(0, width / 2 - 100, (int) (height * 0.2), "Display Watcher Ready Message: " + Utils.getColouredBoolean(ToggleCommand.watcherReadyToggled));
 		splitFishing = new GuiButton(0, width / 2 - 100, (int) (height * 0.3), "Split Fishing Display: " + Utils.getColouredBoolean(ToggleCommand.splitFishing));
+		
 		switch (page) {
 			case 1:
 				this.buttonList.add(changeDisplay);
@@ -172,6 +175,7 @@ public class DankerGui extends GuiScreen {
 		this.buttonList.add(githubLink);
 		this.buttonList.add(discordLink);
 		this.buttonList.add(closeGUI);
+		this.buttonList.add(editLocations);
 	}
 	
 	@Override
@@ -191,6 +195,8 @@ public class DankerGui extends GuiScreen {
 			DankersSkyblockMod.guiToOpen = "dankergui" + (page + 1);
 		} else if (button == backPage) {
 			DankersSkyblockMod.guiToOpen = "dankergui" + (page - 1);
+		} else if (button == editLocations) {
+			DankersSkyblockMod.guiToOpen = "editlocations";
 		} else if (button == githubLink) {
 			try {
 				Desktop.getDesktop().browse(new URI("https://github.com/bowser0000/SkyblockMod"));

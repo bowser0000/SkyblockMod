@@ -15,7 +15,6 @@ public class DisplayGui extends GuiScreen {
 	private boolean addSession = false;
 	
 	private GuiButton goBack;
-	private GuiButton editLocations;
 	private GuiButton off;
 	private GuiButton showSession;
 	private GuiButton zombie;
@@ -49,7 +48,6 @@ public class DisplayGui extends GuiScreen {
 		int width = sr.getScaledWidth();
 		
 		goBack = new GuiButton(0, 2, height - 30, 100, 20, "Go Back");
-		editLocations = new GuiButton(0, 2, height - 55, 100, 20, "Edit Locations");
 		showSession = new GuiButton(0, width / 2 - 100, (int) (height * 0.1), "Current Session Only: " + Utils.getColouredBoolean(addSession));
 		off = new GuiButton(0, width / 2 - 210, (int) (height * 0.2), "Off");
 		auto = new GuiButton(0, width / 2 + 10, (int) (height * 0.2), "Auto");
@@ -87,7 +85,6 @@ public class DisplayGui extends GuiScreen {
 		this.buttonList.add(catacombsF5);
 		this.buttonList.add(catacombsF6);
 		this.buttonList.add(catacombsF7);
-		this.buttonList.add(editLocations);
 		this.buttonList.add(goBack);
 	}
 	
@@ -116,8 +113,6 @@ public class DisplayGui extends GuiScreen {
 	public void actionPerformed(GuiButton button) {
 		if (button == goBack) {
 			DankersSkyblockMod.guiToOpen = "dankergui1";
-		} else if (button == editLocations) {
-			DankersSkyblockMod.guiToOpen = "editlocations";
 		} else if (button == showSession) {
 			addSession = !addSession;
 			showSession.displayString = "Current Session Only: " + Utils.getColouredBoolean(addSession);
