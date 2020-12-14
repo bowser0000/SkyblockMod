@@ -47,7 +47,6 @@ Discord Server: https://discord.gg/QsEkNQS
 ## Commands
 - /dhelp - Returns this message in-game.
 - /dsm - Opens the GUI for Danker's Skyblock Mod.
-- /dsm debug - Copies the debug stats to your clipboard.
 - /toggle <gparty/coords/golden/slayercount/rngesusalerts/splitfishing/chatmaddox/spiritbearalerts/aotd/lividdagger/sceptremessages/midasstaffmessages/implosionmessages/healmessages/petcolors/dungeontimer/golemalerts/expertiselore/skill50display/outlinetext/caketimer/lowhealthnotify/lividsolver/threemanpuzzle/oruopuzzle/blazepuzzle/creeperpuzzle/waterpuzzle/tictactoepuzzle/startswithterminal/selectallterminal/itemframeonsealanterns/ultrasequencer/watchermessage/list> - Toggles features. /toggle list returns values of every toggle.
 - /setkey <key> - Sets API key.
 - /getkey - Returns key set with /setkey and copies it to your clipboard.
