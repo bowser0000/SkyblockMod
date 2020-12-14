@@ -2861,6 +2861,11 @@ public class DankersSkyblockMod
 					Blocks.oak_door,
 					Blocks.skull
 			));
+			ArrayList<Block> flowerPlaceable = new ArrayList<>(Arrays.asList(
+					Blocks.grass,
+					Blocks.dirt,
+					Blocks.flower_pot
+			));
 			if (Utils.inDungeons) {
 				interactables.add(Blocks.coal_block);
 				interactables.add(Blocks.stained_hardened_clay);
@@ -2870,6 +2875,14 @@ public class DankersSkyblockMod
 					event.setCanceled(true);
 				}
 				if (ToggleCommand.lividDaggerToggled && item.getDisplayName().contains("Livid Dagger")) {
+					event.setCanceled(true);
+				}
+			}
+			if(flowerPlaceable.contains(block)){
+				if (ToggleCommand.flowerWeaponsToggled && item.getDisplayName().contains("Flower of Truth")) {
+					event.setCanceled(true);
+				}
+				if (ToggleCommand.flowerWeaponsToggled && item.getDisplayName().contains("Spirit Sceptre")) {
 					event.setCanceled(true);
 				}
 			}
