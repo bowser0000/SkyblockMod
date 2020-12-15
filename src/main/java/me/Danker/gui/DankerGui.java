@@ -56,6 +56,7 @@ public class DankerGui extends GuiScreen {
 	private GuiButton stopSalvageStarred;
 	private GuiButton watcherReadyMessage;
 	private GuiButton pickBlock;
+	private GuiButton notifySlayerSlain;
 	
 	public DankerGui(int page) {
 		this.page = page;
@@ -117,6 +118,8 @@ public class DankerGui extends GuiScreen {
 		stopSalvageStarred = new GuiButton(0, width / 2 - 100, (int) (height * 0.1), "Stop Salvaging Starred Items: " + Utils.getColouredBoolean(ToggleCommand.stopSalvageStarredToggled));
 		watcherReadyMessage = new GuiButton(0, width / 2 - 100, (int) (height * 0.2), "Display Watcher Ready Message: " + Utils.getColouredBoolean(ToggleCommand.watcherReadyToggled));
 		splitFishing = new GuiButton(0, width / 2 - 100, (int) (height * 0.3), "Split Fishing Display: " + Utils.getColouredBoolean(ToggleCommand.splitFishing));
+		notifySlayerSlain = new GuiButton(0, width / 2 - 100, (int) (height * 0.4), "Notify when Slayer Slain: " + Utils.getColouredBoolean(ToggleCommand.notifySlayerSlainToggled));
+
 		switch (page) {
 			case 1:
 				this.buttonList.add(changeDisplay);
@@ -165,6 +168,7 @@ public class DankerGui extends GuiScreen {
 				this.buttonList.add(stopSalvageStarred);
 				this.buttonList.add(watcherReadyMessage);
 				this.buttonList.add(splitFishing);
+				this.buttonList.add(notifySlayerSlain);
 				this.buttonList.add(backPage);
 				break;
 		}
@@ -313,6 +317,10 @@ public class DankerGui extends GuiScreen {
 			ToggleCommand.watcherReadyToggled = !ToggleCommand.watcherReadyToggled;
 			ConfigHandler.writeBooleanConfig("toggles", "WatcherReadyMessage", ToggleCommand.watcherReadyToggled);
 			watcherReadyMessage.displayString = "Display Watcher Ready Message: " + Utils.getColouredBoolean(ToggleCommand.watcherReadyToggled);
+		} else if (button == notifySlayerSlain) {
+			ToggleCommand.notifySlayerSlainToggled = !ToggleCommand.notifySlayerSlainToggled;
+			ConfigHandler.writeBooleanConfig("toggles", "NotifySlayerSlain", ToggleCommand.notifySlayerSlainToggled);
+			notifySlayerSlain.displayString = "Notify when Slayer Slain: " + Utils.getColouredBoolean(ToggleCommand.notifySlayerSlainToggled);
 		} else if (button == pickBlock) {
 			ToggleCommand.swapToPickBlockToggled = !ToggleCommand.swapToPickBlockToggled;
 			ConfigHandler.writeBooleanConfig("toggles", "PickBlock", ToggleCommand.swapToPickBlockToggled);

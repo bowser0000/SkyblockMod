@@ -58,6 +58,7 @@ public class DankerGuiCommand extends CommandBase {
 			debug.append("[lowhealthnotify][").append(ToggleCommand.lowHealthNotifyToggled).append("]\n");
 			debug.append("[lividsolver][").append(ToggleCommand.lividSolverToggled).append("]\n");
 			debug.append("[stopsalvagestarred][").append(ToggleCommand.stopSalvageStarredToggled).append("]\n");
+			debug.append("[notifyslayerslain][").append(ToggleCommand.notifySlayerSlainToggled).append("]\n");
 			debug.append("[threemanpuzzle][").append(ToggleCommand.threeManToggled).append("]\n");
 			debug.append("[oruopuzzle][").append(ToggleCommand.oruoToggled).append("]\n");
 			debug.append("[blazepuzzle][").append(ToggleCommand.blazeToggled).append("]\n");
@@ -66,6 +67,8 @@ public class DankerGuiCommand extends CommandBase {
 			debug.append("[tictactoepuzzle][").append(ToggleCommand.ticTacToeToggled).append("]\n");
 			debug.append("[startswithterminal][").append(ToggleCommand.startsWithToggled).append("]\n");
 			debug.append("[selectallterminal][").append(ToggleCommand.selectAllToggled).append("]\n");
+			debug.append("[clickinorderterminal][").append(ToggleCommand.clickInOrderToggled).append("]\n");
+			debug.append("[blockwrongterminalclicks][").append(ToggleCommand.blockWrongTerminalClicksToggled).append("]\n");
 			debug.append("[itemframeonsealanterns][").append(ToggleCommand.itemFrameOnSeaLanternsToggled).append("]\n");
 			debug.append("[ultrasequencer][").append(ToggleCommand.ultrasequencerToggled).append("]\n");
 			debug.append("[chronomatron][").append(ToggleCommand.chronomatronToggled).append("]\n");
