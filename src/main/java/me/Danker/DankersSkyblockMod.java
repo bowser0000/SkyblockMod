@@ -2741,13 +2741,13 @@ public class DankersSkyblockMod
 			}
 
 			if (ToggleCommand.clickInOrderToggled && chestName.equals("Click in order!")) {
-				if(terminalNumberNeeded[0] == 0) terminalNumberNeeded[0] = 14;
+				if(terminalNumberNeeded[0] == 0) terminalNumberNeeded[0] = 15;
 				for(int i = 10; i <= 25; i++) {
 					if (i == 17 || i == 18) continue;
 					ItemStack prevStack = invSlots.get(terminalNumberNeeded[1]).getStack();
-					if (prevStack == null) terminalNumberNeeded[0] = 14;
-					else if (prevStack.getItem() != Item.getItemFromBlock(Blocks.stained_glass_pane)) terminalNumberNeeded[0] = 14;
-					else if (prevStack.getItemDamage() == 5) terminalNumberNeeded[0] = 14;
+					if (prevStack == null) terminalNumberNeeded[0] = 15;
+					else if (prevStack.getItem() != Item.getItemFromBlock(Blocks.stained_glass_pane)) terminalNumberNeeded[0] = 15;
+					else if (prevStack.getItemDamage() == 5) terminalNumberNeeded[0] = 15;
 
 					ItemStack itemStack = invSlots.get(i).getStack();
 					if (itemStack == null) continue;
