@@ -120,7 +120,7 @@ public class DankerGui extends GuiScreen {
 		watcherReadyMessage = new GuiButton(0, width / 2 - 100, (int) (height * 0.2), "Display Watcher Ready Message: " + Utils.getColouredBoolean(ToggleCommand.watcherReadyToggled));
 		splitFishing = new GuiButton(0, width / 2 - 100, (int) (height * 0.3), "Split Fishing Display: " + Utils.getColouredBoolean(ToggleCommand.splitFishing));
 		notifySlayerSlain = new GuiButton(0, width / 2 - 100, (int) (height * 0.4), "Notify when Slayer Slain: " + Utils.getColouredBoolean(ToggleCommand.notifySlayerSlainToggled));
-    flowerWeapons = new GuiButton(0, width / 2 - 100, (int) (height * 0.5), "Prevent Placing FoT/Spirit Sceptre: " + Utils.getColouredBoolean(ToggleCommand.flowerWeaponsToggled));
+    		flowerWeapons = new GuiButton(0, width / 2 - 100, (int) (height * 0.5), "Prevent Placing FoT/Spirit Sceptre: " + Utils.getColouredBoolean(ToggleCommand.flowerWeaponsToggled));
 
 		switch (page) {
 			case 1:
