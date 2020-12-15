@@ -24,6 +24,8 @@ public class PuzzleSolversGui extends GuiScreen {
 	private GuiButton ticTacToe;
 	private GuiButton startsWith;
 	private GuiButton selectAll;
+	private GuiButton clickOrder;
+	private GuiButton blockClicks;
 	private GuiButton itemFrameOnSeaLanterns;
 	
 	public PuzzleSolversGui(int page) {
@@ -57,7 +59,9 @@ public class PuzzleSolversGui extends GuiScreen {
 		startsWith = new GuiButton(0, width / 2 - 100, (int) (height * 0.7), "Starts With Letter Terminal Solver: " + Utils.getColouredBoolean(ToggleCommand.startsWithToggled));
 		// Page 2
 		selectAll = new GuiButton(0, width / 2 - 100, (int) (height * 0.1), "Select All Color Terminal Solver: " + Utils.getColouredBoolean(ToggleCommand.selectAllToggled));
-		itemFrameOnSeaLanterns = new GuiButton(0, width / 2 - 100, (int) (height * 0.2), "Ignore Arrows On Sea Lanterns: " + Utils.getColouredBoolean(ToggleCommand.itemFrameOnSeaLanternsToggled));
+		clickOrder = new GuiButton(0, width / 2 - 100, (int) (height * 0.2), "Click in Order Terminal Helper: " + Utils.getColouredBoolean(ToggleCommand.clickInOrderToggled));
+		blockClicks = new GuiButton(0, width / 2 - 100, (int) (height * 0.3), "Block Wrong Clicks on Terminals: " + Utils.getColouredBoolean(ToggleCommand.blockWrongTerminalClicksToggled));
+		itemFrameOnSeaLanterns = new GuiButton(0, width / 2 - 100, (int) (height * 0.4), "Ignore Arrows On Sea Lanterns: " + Utils.getColouredBoolean(ToggleCommand.itemFrameOnSeaLanternsToggled));
 		
 		switch (page) {
 			case 1:
@@ -72,6 +76,8 @@ public class PuzzleSolversGui extends GuiScreen {
 				break;
 			case 2:
 				this.buttonList.add(selectAll);
+				this.buttonList.add(clickOrder);
+				this.buttonList.add(blockClicks);
 				this.buttonList.add(itemFrameOnSeaLanterns);
 				this.buttonList.add(backPage);
 				break;
@@ -125,6 +131,14 @@ public class PuzzleSolversGui extends GuiScreen {
 			ToggleCommand.selectAllToggled = !ToggleCommand.selectAllToggled;
 			ConfigHandler.writeBooleanConfig("toggles", "SelectAllTerminal", ToggleCommand.selectAllToggled);
 			selectAll.displayString = "Select All Color Terminal Solver: " + Utils.getColouredBoolean(ToggleCommand.selectAllToggled);
+		} else if (button == clickOrder) {
+			ToggleCommand.clickInOrderToggled = !ToggleCommand.clickInOrderToggled;
+			ConfigHandler.writeBooleanConfig("toggles", "ClickInOrderTerminal", ToggleCommand.clickInOrderToggled);
+			clickOrder.displayString = "Click in Order Terminal Helper: " + Utils.getColouredBoolean(ToggleCommand.clickInOrderToggled);
+		} else if (button == blockClicks) {
+			ToggleCommand.blockWrongTerminalClicksToggled = !ToggleCommand.blockWrongTerminalClicksToggled;
+			ConfigHandler.writeBooleanConfig("toggles", "BlockWrongTerminalClicks", ToggleCommand.blockWrongTerminalClicksToggled);
+			blockClicks.displayString = "Block Wrong Clicks on Terminals: " + Utils.getColouredBoolean(ToggleCommand.blockWrongTerminalClicksToggled);
 		} else if (button == itemFrameOnSeaLanterns) {
 			ToggleCommand.itemFrameOnSeaLanternsToggled = !ToggleCommand.itemFrameOnSeaLanternsToggled;
 			ConfigHandler.writeBooleanConfig("toggles", "IgnoreItemFrameOnSeaLanterns", ToggleCommand.itemFrameOnSeaLanternsToggled);
