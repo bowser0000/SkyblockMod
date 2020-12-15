@@ -18,6 +18,9 @@ import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItemFrame;
 import net.minecraft.entity.monster.EntityCreeper;
+import net.minecraft.entity.monster.EntitySpider;
+import net.minecraft.entity.monster.EntityZombie;
+import net.minecraft.entity.passive.EntityWolf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.event.ClickEvent;
 import net.minecraft.event.ClickEvent.Action;
@@ -40,6 +43,7 @@ import net.minecraftforge.client.event.*;
 import net.minecraftforge.client.event.sound.PlaySoundEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
+import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.event.entity.player.EntityInteractEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -126,6 +130,8 @@ public class DankersSkyblockMod
 	static ItemStack[] experimentTableSlots = new ItemStack[54];
 	static int pickBlockBind;
 	static boolean pickBlockBindSwapped = false;
+	static String terminalColorNeeded;
+	static int[] terminalNumberNeeded = new int[2];
 
 	static double dungeonStartTime = 0;
     static double bloodOpenTime = 0;
@@ -2743,6 +2749,27 @@ public class DankersSkyblockMod
 					experimentTableSlots[i] = itemStack.copy().setStackDisplayName(itemName);
 				}
 			}
+
+			if (ToggleCommand.clickInOrderToggled && chestName.equals("Click in order!")) {
+				if(terminalNumberNeeded[0] == 0) terminalNumberNeeded[0] = 15;
+				for(int i = 10; i <= 25; i++) {
+					if (i == 17 || i == 18) continue;
+					ItemStack prevStack = invSlots.get(terminalNumberNeeded[1]).getStack();
+					if (prevStack == null) terminalNumberNeeded[0] = 15;
+					else if (prevStack.getItem() != Item.getItemFromBlock(Blocks.stained_glass_pane)) terminalNumberNeeded[0] = 15;
+					else if (prevStack.getItemDamage() == 5) terminalNumberNeeded[0] = 15;
+
+					ItemStack itemStack = invSlots.get(i).getStack();
+					if (itemStack == null) continue;
+					if (itemStack.getItem() != Item.getItemFromBlock(Blocks.stained_glass_pane)) continue;
+					if (itemStack.getItemDamage() != 14) continue;
+					if (itemStack.stackSize < terminalNumberNeeded[0]) {
+						terminalNumberNeeded[0] = itemStack.stackSize;
+						terminalNumberNeeded[1] = i;
+					}
+				}
+			}
+
 		}
 
 		if (titleTimer >= 0) {
@@ -2885,6 +2912,21 @@ public class DankersSkyblockMod
 			}
 		}
     }
+
+    @SubscribeEvent
+	public void onAttackingEntity(AttackEntityEvent event) {
+    	if (ToggleCommand.notifySlayerSlainToggled && (event.target instanceof EntityZombie || event.target instanceof EntitySpider || event.target instanceof EntityWolf)) {
+			List<String> scoreboard = ScoreboardHandler.getSidebarLines();
+
+			for (String line : scoreboard) {
+				String cleanedLine = ScoreboardHandler.cleanSB(line);
+				if (cleanedLine.contains("Boss slain!")) {
+					Utils.createTitle(EnumChatFormatting.RED + "Boss slain!", 2);
+					break;
+				}
+			}
+		}
+	}
 
     @SubscribeEvent
     public void onEntityInteract(EntityInteractEvent event) {
@@ -3043,6 +3085,84 @@ public class DankersSkyblockMod
 					}
 				}
 
+				if (ToggleCommand.blockWrongTerminalClicksToggled && Utils.inDungeons) {
+					boolean shouldCancel = false;
+
+					if (item == null) return;
+
+					//most of these are extra but who cares
+
+					switch (inventoryName) {
+						case "Correct all the panes!":
+							shouldCancel = !StringUtils.stripControlCodes(item.getDisplayName()).startsWith("Off");
+							break;
+						case "Navigate the maze!":
+							if (item.getItem() != Item.getItemFromBlock(Blocks.stained_glass_pane)) {
+								shouldCancel = true;
+								break;
+							}
+
+							if (item.getItemDamage() != 0) {
+								shouldCancel = true;
+								break;
+							}
+
+							boolean isValid = false;
+
+							int slotIndex = mouseSlot.getSlotIndex();
+
+							if (slotIndex % 9 != 8 && slotIndex != 53) {
+								ItemStack itemStack = inventory.getStackInSlot(slotIndex + 1);
+								if(itemStack != null && itemStack.getItemDamage() == 5) isValid = true;
+							}
+
+							if (!isValid && slotIndex % 9 != 0 && slotIndex != 0) {
+								ItemStack itemStack = inventory.getStackInSlot(slotIndex - 1);
+								if(itemStack != null && itemStack.getItemDamage() == 5) isValid = true;
+							}
+
+							if(!isValid && slotIndex <= 44) {
+								ItemStack itemStack = inventory.getStackInSlot(slotIndex + 9);
+								if(itemStack != null && itemStack.getItemDamage() == 5) isValid = true;
+							}
+
+							if(!isValid && slotIndex >= 9) {
+								ItemStack itemStack = inventory.getStackInSlot(slotIndex - 9);
+								if(itemStack != null && itemStack.getItemDamage() == 5) isValid = true;
+							}
+
+							shouldCancel = !isValid;
+
+							break;
+						case "Click in order!":
+							if((item.getItem() != Item.getItemFromBlock(Blocks.stained_glass_pane))) {
+								shouldCancel = true;
+								break;
+							}
+							if(item.getItemDamage() != 14) {
+								shouldCancel = true;
+								break;
+							}
+							int needed = terminalNumberNeeded[0];
+							if(needed == 0) break;
+							shouldCancel = needed != -1 && item.stackSize != needed ;
+							break;
+					}
+
+					if (!shouldCancel) {
+						if (inventoryName.startsWith("What starts with:")) {
+							char letter = inventoryName.charAt(inventoryName.indexOf("'") + 1);
+							shouldCancel = !(StringUtils.stripControlCodes(item.getDisplayName()).charAt(0) == letter);
+						} else if (inventoryName.startsWith("Select all the")) {
+							if(terminalColorNeeded == null) return;
+							String itemName = StringUtils.stripControlCodes(item.getDisplayName()).toUpperCase();
+							shouldCancel = !(itemName.contains(terminalColorNeeded) || (terminalColorNeeded.equals("SILVER") && itemName.contains("LIGHT GRAY")) || (terminalColorNeeded.equals("WHITE") && itemName.equals("WOOL")));
+						}
+					}
+
+					event.setCanceled(shouldCancel && !Keyboard.isKeyDown(Keyboard.KEY_LCONTROL) && !Keyboard.isKeyDown(Keyboard.KEY_RCONTROL));
+				}
+
     			if (!BlockSlayerCommand.onlySlayerName.equals("") && item != null) {
     				if (inventoryName.equals("Slayer")) {
         				if (!item.getDisplayName().contains("Revenant Horror") && !item.getDisplayName().contains("Tarantula Broodfather") && !item.getDisplayName().contains("Sven Packmaster")) return;
@@ -3088,7 +3208,7 @@ public class DankersSkyblockMod
 				IInventory inventory = ((ContainerChest) containerChest).getLowerChestInventory();
 				String inventoryName = inventory.getDisplayName().getUnformattedText();
 				if (ToggleCommand.swapToPickBlockToggled) {
-					if (inventoryName.startsWith("Chronomatron (") || inventoryName.startsWith("Superpairs (") || inventoryName.startsWith("Ultrasequencer (") || inventoryName.startsWith("What starts with:") || inventoryName.startsWith("Select all the") || inventoryName.startsWith("Harp -")) {
+					if (inventoryName.startsWith("Chronomatron (") || inventoryName.startsWith("Superpairs (") || inventoryName.startsWith("Ultrasequencer (") || inventoryName.startsWith("What starts with:") || inventoryName.startsWith("Select all the") || inventoryName.startsWith("Navigate the maze!") || inventoryName.startsWith("Correct all the panes!") || inventoryName.startsWith("Click in order!") || inventoryName.startsWith("Harp -")) {
 						if (!pickBlockBindSwapped) {
 							pickBlockBind = gameSettings.keyBindPickBlock.getKeyCode();
 							gameSettings.keyBindPickBlock.setKeyCode(-100);
@@ -3102,12 +3222,19 @@ public class DankersSkyblockMod
 					}
 				}
 			}
+		} else {
+			if (pickBlockBindSwapped) {
+				gameSettings.keyBindPickBlock.setKeyCode(pickBlockBind);
+				pickBlockBindSwapped = false;
+			}
 		}
 		clickInOrderSlots = new Slot[36];
 		lastChronomatronRound = 0;
 		chronomatronPattern.clear();
 		chronomatronMouseClicks = 0;
 		experimentTableSlots = new ItemStack[54];
+		terminalColorNeeded = null;
+		terminalNumberNeeded = new int[2];
 	}
 
     @SubscribeEvent
@@ -3168,6 +3295,7 @@ public class DankersSkyblockMod
         			for (Slot slot : invSlots) {
         				ItemStack item = slot.getStack();
         				if (item == null) continue;
+        				if (item.isItemEnchanted()) continue;
         				if (StringUtils.stripControlCodes(item.getDisplayName()).charAt(0) == letter) {
         					Utils.drawOnSlot(chestSize, slot.xDisplayPosition, slot.yDisplayPosition, 0xBF40FF40);
         				}
@@ -3182,16 +3310,23 @@ public class DankersSkyblockMod
 						colourParts.add(colourMatcher.group());
 					}
         			colour = String.join(" ", colourParts);
+					terminalColorNeeded = colour;
 
         			for (Slot slot : invSlots) {
         				ItemStack item = slot.getStack();
         				if (item == null) continue;
-        				String itemName = StringUtils.stripControlCodes(item.getDisplayName()).toUpperCase();
+                        if (item.isItemEnchanted()) continue;
+                        String itemName = StringUtils.stripControlCodes(item.getDisplayName()).toUpperCase();
         				if (itemName.contains(colour) || (colour.equals("SILVER") && itemName.contains("LIGHT GRAY")) || (colour.equals("WHITE") && itemName.equals("WOOL"))) {
         					Utils.drawOnSlot(chestSize, slot.xDisplayPosition, slot.yDisplayPosition, 0xBF40FF40);
 						}
 					}
         		}
+
+				if(ToggleCommand.clickInOrderToggled && displayName.equals("Click in order!")) {
+					Slot slot = invSlots.get(terminalNumberNeeded[1]);
+					Utils.drawOnSlot(chestSize, slot.xDisplayPosition, slot.yDisplayPosition, 0xBF40FF40);
+				}
 
         		if (ToggleCommand.ultrasequencerToggled && displayName.startsWith("Ultrasequencer (")) {
         			if (invSlots.size() > 48 && invSlots.get(49).getStack() != null) {
