@@ -463,7 +463,9 @@ public class ConfigHandler {
 		ToggleCommand.stopSalvageStarredToggled = getBoolean("toggles", "StopSalvageStarred");
 		ToggleCommand.watcherReadyToggled = getBoolean("toggles", "WatcherReadyMessage");
 		ToggleCommand.notifySlayerSlainToggled = getBoolean("toggles", "NotifySlayerSlain");
+		ToggleCommand.necronNotificationsToggled = getBoolean("toggles", "NecronNotifications");
 		ToggleCommand.swapToPickBlockToggled = getBoolean("toggles", "PickBlock");
+
 		// Puzzle Solvers
 		ToggleCommand.threeManToggled = getBoolean("toggles", "ThreeManPuzzle");
 		ToggleCommand.oruoToggled = getBoolean("toggles", "OruoPuzzle");
