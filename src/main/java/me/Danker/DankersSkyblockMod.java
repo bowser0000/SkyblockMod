@@ -3315,7 +3315,7 @@ public class DankersSkyblockMod
 
 				if(ToggleCommand.clickInOrderToggled && displayName.equals("Click in order!")) {
 					Slot slot = invSlots.get(terminalNumberNeeded[1]);
-					Utils.drawOnSlot(chestSize, slot.xDisplayPosition, slot.yDisplayPosition, 0xBF40FF40);
+					Utils.drawOnSlot(chestSize, slot.xDisplayPosition, slot.yDisplayPosition, new Color(255, 0, 221, 255).getRGB());
 				}
 
         		if (ToggleCommand.ultrasequencerToggled && displayName.startsWith("Ultrasequencer (")) {
