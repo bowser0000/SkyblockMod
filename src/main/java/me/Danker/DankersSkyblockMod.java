@@ -2400,6 +2400,11 @@ public class DankersSkyblockMod
 			if (ToggleCommand.hideTooltipsInExperimentAddonsToggled && (chestName.startsWith("Ultrasequencer (") || chestName.startsWith("Chronomatron ("))) {
 				event.toolTip.clear();
 			}
+
+			if (ToggleCommand.clickInOrderToggled && chestName.equals("Click in order!")) {
+				event.toolTip.clear();
+			}
+
 		}
 	}
 
