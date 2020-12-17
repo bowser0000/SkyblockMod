@@ -78,7 +78,7 @@ import java.util.regex.Pattern;
 public class DankersSkyblockMod
 {
     public static final String MODID = "Danker's Skyblock Mod";
-    public static final String VERSION = "1.8.5-beta3";
+    public static final String VERSION = "1.8.5-beta5";
     
     static double checkItemsNow = 0;
     static double itemsChecked = 0;
