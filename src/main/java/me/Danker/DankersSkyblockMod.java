@@ -46,9 +46,7 @@ import net.minecraftforge.client.event.sound.PlaySoundEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
-import net.minecraftforge.event.entity.player.EntityInteractEvent;
-import net.minecraftforge.event.entity.player.ItemTooltipEvent;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.event.entity.player.*;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Loader;
@@ -2939,9 +2937,7 @@ public class DankersSkyblockMod
 						String line = ScoreboardHandler.cleanSB(x);
 						return Arrays.stream(new String[]{"Howling Cave", "Ruins", "Graveyard", "Coal Mine", "Spider's Den"}).anyMatch(line::contains);
 					})) {
-						if (item.getItem() == Items.bow) {
-							Utils.createTitle(EnumChatFormatting.RED + "Boss slain!", 2);
-						} else if (Utils.hasRightClickAbility(item)) {
+						if (Utils.hasRightClickAbility(item)) {
 							List<String> lore = Utils.getItemLore(item);
 
 							int abilityLine = -1;
@@ -3012,6 +3008,22 @@ public class DankersSkyblockMod
 			}
 		}
     }
+
+    @SubscribeEvent
+	public void onArrowNock(ArrowNockEvent event) {
+		if (!Utils.inSkyblock || Minecraft.getMinecraft().thePlayer != event.entityPlayer) return;
+
+		if (ToggleCommand.notifySlayerSlainToggled) {
+			if (ScoreboardHandler.getSidebarLines().stream().anyMatch(x->ScoreboardHandler.cleanSB(x).contains("Boss slain!"))) {
+				if (ScoreboardHandler.getSidebarLines().stream().anyMatch(x->{
+					String line = ScoreboardHandler.cleanSB(x);
+					return Arrays.stream(new String[]{"Howling Cave", "Ruins", "Graveyard", "Coal Mine", "Spider's Den"}).anyMatch(line::contains);
+				})) {
+					Utils.createTitle(EnumChatFormatting.RED + "Boss slain!", 2);
+				}
+			}
+		}
+	}
 
     @SubscribeEvent
 	public void onAttackingEntity(AttackEntityEvent event) {
