@@ -59,6 +59,7 @@ public class DankerGui extends GuiScreen {
 	private GuiButton lividSolver;
 	private GuiButton stopSalvageStarred;
 	private GuiButton watcherReadyMessage;
+	private GuiButton flowerWeapons;
 	private GuiButton pickBlock;
 	private GuiButton notifySlayerSlain;
 	
@@ -125,6 +126,7 @@ public class DankerGui extends GuiScreen {
 		stopSalvageStarred = new GuiButton(0, width / 2 - 100, (int) (height * 0.4), "Stop Salvaging Starred Items: " + Utils.getColouredBoolean(ToggleCommand.stopSalvageStarredToggled));
 		watcherReadyMessage = new GuiButton(0, width / 2 - 100, (int) (height * 0.5), "Display Watcher Ready Message: " + Utils.getColouredBoolean(ToggleCommand.watcherReadyToggled));
 		notifySlayerSlain = new GuiButton(0, width / 2 - 100, (int) (height * 0.6), "Notify when Slayer Slain: " + Utils.getColouredBoolean(ToggleCommand.notifySlayerSlainToggled));
+    flowerWeapons = new GuiButton(0, width / 2 - 100, (int) (height * 0.5), "Prevent Placing FoT/Spirit Sceptre: " + Utils.getColouredBoolean(ToggleCommand.flowerWeaponsToggled));
 		switch (page) {
 			case 1:
 				this.buttonList.add(changeDisplay);
@@ -176,6 +178,7 @@ public class DankerGui extends GuiScreen {
 				this.buttonList.add(stopSalvageStarred);
 				this.buttonList.add(watcherReadyMessage);
 				this.buttonList.add(notifySlayerSlain);
+     		this.buttonList.add(flowerWeapons);
 				this.buttonList.add(backPage);
 				break;
 		}
@@ -340,6 +343,10 @@ public class DankerGui extends GuiScreen {
 			ToggleCommand.swapToPickBlockToggled = !ToggleCommand.swapToPickBlockToggled;
 			ConfigHandler.writeBooleanConfig("toggles", "PickBlock", ToggleCommand.swapToPickBlockToggled);
 			pickBlock.displayString = "Auto-Swap to Pick Block: " + Utils.getColouredBoolean(ToggleCommand.swapToPickBlockToggled);
+		} else if (button == flowerWeapons) {
+			ToggleCommand.flowerWeaponsToggled = !ToggleCommand.flowerWeaponsToggled;
+			ConfigHandler.writeBooleanConfig("toggles", "FlowerWeapons", ToggleCommand.flowerWeaponsToggled);
+			flowerWeapons.displayString = "Prevent Placing FoT/Spirit Sceptre: " + Utils.getColouredBoolean(ToggleCommand.flowerWeaponsToggled);
 		}
 	}
 	
