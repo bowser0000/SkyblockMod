@@ -16,7 +16,7 @@ Discord Server: https://discord.gg/QsEkNQS
 - Golden T10/T6/T4 enchant display
 - Block AOTD ability
 - Block Livid Dagger ability
-- Block placing Flower of Truth/Spirit Sceptre on dirt/grass
+- Block placing Flower of Truth/Spirit Sceptre
 - Disable Spirit Sceptre messages
 - Disable Midas Staff messages
 - Disable Implosion messages

@@ -1206,7 +1206,7 @@ public class DankersSkyblockMod
     
     public void renderEverything() {
     	if (Minecraft.getMinecraft().currentScreen instanceof EditLocationsGui) return;
-    	
+
     	Minecraft mc = Minecraft.getMinecraft();
     	
     	if (ToggleCommand.coordsToggled) {
@@ -2891,7 +2891,9 @@ public class DankersSkyblockMod
 			ArrayList<Block> flowerPlaceable = new ArrayList<>(Arrays.asList(
 					Blocks.grass,
 					Blocks.dirt,
-					Blocks.flower_pot
+					Blocks.flower_pot,
+					Blocks.tallgrass,
+					Blocks.double_plant
 			));
 			if (Utils.inDungeons) {
 				interactables.add(Blocks.coal_block);
