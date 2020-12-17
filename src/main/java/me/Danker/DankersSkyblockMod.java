@@ -1362,23 +1362,28 @@ public class DankersSkyblockMod
     	}
 
     	if (ToggleCommand.bonzoTimerToggled && Utils.inDungeons) {
-			double scale = ScaleCommand.bonzoTimerScale;
-			double scaleReset = Math.pow(scale, -1);
-			GL11.glScaled(scale, scale, scale);
 
-			double timeNow = System.currentTimeMillis() / 1000;
-			mc.getTextureManager().bindTexture(BONZO_ICON);
-			Gui.drawModalRectWithCustomSizedTexture(MoveCommand.bonzoTimerXY[0], MoveCommand.bonzoTimerXY[1], 0, 0, 16, 16, 16, 16);
+			ItemStack helmetSlot = mc.thePlayer.getCurrentArmor(3);
+			if ((helmetSlot != null && helmetSlot.getDisplayName().contains("Bonzo's Mask")) || nextBonzoUse > 0) {
 
-			String bonzoText;
-			if (nextBonzoUse - timeNow < 0) {
-				bonzoText = EnumChatFormatting.GREEN + "READY";
-			} else {
-				bonzoText = BONZO_COLOR + Utils.getTimeBetween(timeNow, nextBonzoUse);
+				double scale = ScaleCommand.bonzoTimerScale;
+				double scaleReset = Math.pow(scale, -1);
+				GL11.glScaled(scale, scale, scale);
+
+				double timeNow = System.currentTimeMillis() / 1000;
+				mc.getTextureManager().bindTexture(BONZO_ICON);
+				Gui.drawModalRectWithCustomSizedTexture(MoveCommand.bonzoTimerXY[0], MoveCommand.bonzoTimerXY[1], 0, 0, 16, 16, 16, 16);
+
+				String bonzoText;
+				if (nextBonzoUse - timeNow < 0) {
+					bonzoText = EnumChatFormatting.GREEN + "READY";
+				} else {
+					bonzoText = BONZO_COLOR + Utils.getTimeBetween(timeNow, nextBonzoUse);
+				}
+				new TextRenderer(mc, bonzoText, MoveCommand.bonzoTimerXY[0] + 20, MoveCommand.bonzoTimerXY[1] + 5, 1);
+
+				GL11.glScaled(scaleReset, scaleReset, scaleReset);
 			}
-			new TextRenderer(mc, bonzoText, MoveCommand.bonzoTimerXY[0] + 20, MoveCommand.bonzoTimerXY[1] + 5, 1);
-
-			GL11.glScaled(scaleReset, scaleReset, scaleReset);
 		}
     	
     	if (showSkillTracker && Utils.inSkyblock) {
