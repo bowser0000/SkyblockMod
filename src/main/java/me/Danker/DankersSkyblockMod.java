@@ -1,5 +1,6 @@
 package me.Danker;
 
+import akka.event.Logging;
 import com.google.gson.JsonObject;
 import me.Danker.commands.*;
 import me.Danker.gui.*;
@@ -9,9 +10,7 @@ import me.Danker.utils.Utils;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
-import net.minecraft.client.gui.Gui;
-import net.minecraft.client.gui.GuiChat;
-import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.gui.*;
 import net.minecraft.client.gui.inventory.GuiChest;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraft.client.settings.KeyBinding;
@@ -68,6 +67,7 @@ import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
+import java.net.URLDecoder;
 import java.text.NumberFormat;
 import java.util.List;
 import java.util.*;
@@ -98,6 +98,8 @@ public class DankersSkyblockMod
     static double lastMaddoxTime = 0;
     static KeyBinding[] keyBindings = new KeyBinding[2];
     static boolean usingLabymod = false;
+    static boolean usingOAM = false;
+    static boolean OAMWarning = false;
     public static String guiToOpen = null;
 	static boolean foundLivid = false;
 	static Entity livid = null;
@@ -305,9 +307,33 @@ public class DankersSkyblockMod
     
     @EventHandler
     public void postInit(final FMLPostInitializationEvent event) {
+		Package[] packages = Package.getPackages();
+		for(Package p : packages){
+			if(p.getName().startsWith("com.spiderfrog.gadgets")){
+				usingOAM = true;
+				break;
+			}
+		}
+		System.out.println("OAM detection: " + usingOAM);
+
+
     	usingLabymod = Loader.isModLoaded("labymod");
     	System.out.println("LabyMod detection: " + usingLabymod);
     }
+
+    @SubscribeEvent
+	public void onGuiOpenEvent(GuiOpenEvent event){
+		if(event.gui instanceof GuiMainMenu && usingOAM && !OAMWarning){
+			System.out.println("Gui opened: Instance of GuiMainMenu.");
+			if(!(event.gui instanceof WarningGui)){
+				System.out.println("No instance of WarningGui");
+				event.gui = new WarningGuiRedirect(new WarningGui());
+				OAMWarning = true;
+			}else{
+				System.out.println("Instance of WarningGui");
+			}
+		}
+	}
     
     // Update checker
     @SubscribeEvent
