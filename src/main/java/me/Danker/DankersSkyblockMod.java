@@ -103,10 +103,12 @@ public class DankersSkyblockMod
 	static boolean foundLivid = false;
 	static Entity livid = null;
 	public static double cakeTime;
+	public static double nextBonzoUse = 0;
 	
 	public static final ResourceLocation CAKE_ICON = new ResourceLocation("dsm", "icons/cake.png");
-    
-    static String[] riddleSolutions = {"The reward is not in my chest!", "At least one of them is lying, and the reward is not in", 
+	public static final ResourceLocation BONZO_ICON = new ResourceLocation("dsm", "icons/bonzo.png");
+
+	static String[] riddleSolutions = {"The reward is not in my chest!", "At least one of them is lying, and the reward is not in",
 									   "My chest doesn't have the reward. We are all telling the truth", "My chest has the reward and I'm telling the truth",
 									   "The reward isn't in any of our chests", "Both of them are telling the truth."};
 	static Map<String, String[]> triviaSolutions = new HashMap<>();
@@ -174,6 +176,7 @@ public class DankersSkyblockMod
     public static String CAKE_COLOUR;
     public static String SKILL_TRACKER_COLOUR;
     public static String TRIVIA_WRONG_ANSWER_COLOUR;
+    public static String BONZO_COLOR;
     public static int LOWEST_BLAZE_COLOUR;
     public static int HIGHEST_BLAZE_COLOUR;
     public static int PET_1_TO_9;
@@ -375,6 +378,7 @@ public class DankersSkyblockMod
     public void onWorldChange(WorldEvent.Load event) {
     	foundLivid = false;
     	livid = null;
+    	nextBonzoUse = 0;
     }
     
     // It randomly broke, so I had to make it the highest priority
@@ -476,17 +480,35 @@ public class DankersSkyblockMod
     		}
     		return;
     	}
+
+    	if (ToggleCommand.bonzoTimerToggled && Utils.inDungeons && message.contains("Bonzo's Mask") && message.contains("saved your life!")) {
+    		double usedTime = System.currentTimeMillis() / 1000;
+    		Minecraft mc = Minecraft.getMinecraft();
+    		EntityPlayerSP player = mc.thePlayer;
+    		ItemStack bonzoMask = player.getCurrentArmor(3);
+    		if (bonzoMask != null && bonzoMask.getItem() == Items.skull) {
+    			int cooldownSeconds = 0;
+    			for(String line : Utils.getItemLore(bonzoMask)) {
+    				String stripped = StringUtils.stripControlCodes(line);
+    				if (stripped.startsWith("Cooldown: "))
+						cooldownSeconds = Integer.parseInt(stripped.replaceAll("[^\\d]", ""));
+				}
+				System.out.println("Parsed Bonzo Mask Cooldown: " + cooldownSeconds);
+    			if (cooldownSeconds > 0)
+    				nextBonzoUse = usedTime + cooldownSeconds;
+			}
+    	}
     	
         // Dungeon chat spoken by an NPC, containing :
         if (ToggleCommand.threeManToggled && Utils.inDungeons && message.contains("[NPC]")) {
-        	for (String solution : riddleSolutions) {
-        		if (message.contains(solution)) {
-        			String npcName = message.substring(message.indexOf("]") + 2, message.indexOf(":"));
-        			Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(ANSWER_COLOUR + EnumChatFormatting.BOLD + StringUtils.stripControlCodes(npcName) + MAIN_COLOUR + " has the blessing."));
-        			break;
-        		}
-        	}
-        }
+			for (String solution : riddleSolutions) {
+				if (message.contains(solution)) {
+					String npcName = message.substring(message.indexOf("]") + 2, message.indexOf(":"));
+					Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(ANSWER_COLOUR + EnumChatFormatting.BOLD + StringUtils.stripControlCodes(npcName) + MAIN_COLOUR + " has the blessing."));
+					break;
+				}
+			}
+		}
 
         if (ToggleCommand.necronNotificationsToggled && Utils.inDungeons && message.contains("[BOSS] Necron:")) {
 			Minecraft mc = Minecraft.getMinecraft();
@@ -1338,6 +1360,26 @@ public class DankersSkyblockMod
     		
     		GL11.glScaled(scaleReset, scaleReset, scaleReset);
     	}
+
+    	if (ToggleCommand.bonzoTimerToggled && Utils.inDungeons) {
+			double scale = ScaleCommand.bonzoTimerScale;
+			double scaleReset = Math.pow(scale, -1);
+			GL11.glScaled(scale, scale, scale);
+
+			double timeNow = System.currentTimeMillis() / 1000;
+			mc.getTextureManager().bindTexture(BONZO_ICON);
+			Gui.drawModalRectWithCustomSizedTexture(MoveCommand.bonzoTimerXY[0], MoveCommand.bonzoTimerXY[1], 0, 0, 16, 16, 16, 16);
+
+			String bonzoText;
+			if (nextBonzoUse - timeNow < 0) {
+				bonzoText = EnumChatFormatting.GREEN + "READY";
+			} else {
+				bonzoText = BONZO_COLOR + Utils.getTimeBetween(timeNow, nextBonzoUse);
+			}
+			new TextRenderer(mc, bonzoText, MoveCommand.bonzoTimerXY[0] + 20, MoveCommand.bonzoTimerXY[1] + 5, 1);
+
+			GL11.glScaled(scaleReset, scaleReset, scaleReset);
+		}
     	
     	if (showSkillTracker && Utils.inSkyblock) {
     		int xpPerHour;

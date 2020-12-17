@@ -58,6 +58,7 @@ public class DankerGui extends GuiScreen {
 	private GuiButton pickBlock;
 	private GuiButton notifySlayerSlain;
 	private GuiButton necronNotifications;
+	private GuiButton bonzoTimer;
 	
 	public DankerGui(int page) {
 		this.page = page;
@@ -121,6 +122,7 @@ public class DankerGui extends GuiScreen {
 		splitFishing = new GuiButton(0, width / 2 - 100, (int) (height * 0.3), "Split Fishing Display: " + Utils.getColouredBoolean(ToggleCommand.splitFishing));
 		notifySlayerSlain = new GuiButton(0, width / 2 - 100, (int) (height * 0.4), "Notify when Slayer Slain: " + Utils.getColouredBoolean(ToggleCommand.notifySlayerSlainToggled));
 		necronNotifications = new GuiButton(0, width / 2 - 100, (int) (height * 0.5), "Necron Phase Notifications: " + Utils.getColouredBoolean(ToggleCommand.necronNotificationsToggled));
+		bonzoTimer = new GuiButton(0, width / 2 - 100, (int) (height * 0.6), "Bonzo's Mask Timer: " + Utils.getColouredBoolean(ToggleCommand.bonzoTimerToggled));
 
 		switch (page) {
 			case 1:
@@ -172,6 +174,7 @@ public class DankerGui extends GuiScreen {
 				this.buttonList.add(splitFishing);
 				this.buttonList.add(notifySlayerSlain);
 				this.buttonList.add(necronNotifications);
+				this.buttonList.add(bonzoTimer);
 				this.buttonList.add(backPage);
 				break;
 		}
@@ -328,6 +331,10 @@ public class DankerGui extends GuiScreen {
 			ToggleCommand.necronNotificationsToggled = !ToggleCommand.necronNotificationsToggled;
 			ConfigHandler.writeBooleanConfig("toggles", "NecronNotifications", ToggleCommand.necronNotificationsToggled);
 			necronNotifications.displayString = "Necron Phase Notifications: " + Utils.getColouredBoolean(ToggleCommand.necronNotificationsToggled);
+		} else if (button == bonzoTimer) {
+			ToggleCommand.bonzoTimerToggled = !ToggleCommand.bonzoTimerToggled;
+			ConfigHandler.writeBooleanConfig("toggles", "BonzoTimer", ToggleCommand.bonzoTimerToggled);
+			bonzoTimer.displayString = "Bonzo's Mask Timer: " + Utils.getColouredBoolean(ToggleCommand.bonzoTimerToggled);
 		} else if (button == pickBlock) {
 			ToggleCommand.swapToPickBlockToggled = !ToggleCommand.swapToPickBlockToggled;
 			ConfigHandler.writeBooleanConfig("toggles", "PickBlock", ToggleCommand.swapToPickBlockToggled);
