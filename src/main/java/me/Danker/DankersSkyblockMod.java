@@ -2933,6 +2933,32 @@ public class DankersSkyblockMod
     		if (ToggleCommand.lividDaggerToggled && item.getDisplayName().contains("Livid Dagger")) {
     			event.setCanceled(true);
     		}
+    		if (ToggleCommand.notifySlayerSlainToggled) {
+    			if (ScoreboardHandler.getSidebarLines().stream().anyMatch(x->ScoreboardHandler.cleanSB(x).contains("Boss slain!"))) {
+					if (ScoreboardHandler.getSidebarLines().stream().anyMatch(x->{
+						String line = ScoreboardHandler.cleanSB(x);
+						return Arrays.stream(new String[]{"Howling Cave", "Ruins", "Graveyard", "Coal Mine", "Spider's Den"}).anyMatch(line::contains);
+					})) {
+						if (item.getItem() == Items.bow) {
+							Utils.createTitle(EnumChatFormatting.RED + "Boss slain!", 2);
+						} else if (Utils.hasRightClickAbility(item)) {
+							List<String> lore = Utils.getItemLore(item);
+
+							int abilityLine = -1;
+							for (int i = 0; i < lore.size(); i++) {
+								String line = StringUtils.stripControlCodes(lore.get(i));
+								if (line.startsWith("Item Ability:")) abilityLine = i;
+								if (abilityLine != -1 && i > abilityLine) {
+									if (line.toLowerCase().contains("damage")) {
+										Utils.createTitle(EnumChatFormatting.RED + "Boss slain!", 2);
+										break;
+									}
+								}
+							}
+						}
+					}
+				}
+			}
     	}
 
 		if (event.action == PlayerInteractEvent.Action.RIGHT_CLICK_BLOCK) {
