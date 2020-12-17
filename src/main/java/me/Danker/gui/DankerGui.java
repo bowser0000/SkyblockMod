@@ -55,6 +55,7 @@ public class DankerGui extends GuiScreen {
 	private GuiButton lividSolver;
 	private GuiButton stopSalvageStarred;
 	private GuiButton watcherReadyMessage;
+	private GuiButton flowerWeapons;
 	private GuiButton pickBlock;
 	private GuiButton notifySlayerSlain;
 	
@@ -119,6 +120,7 @@ public class DankerGui extends GuiScreen {
 		watcherReadyMessage = new GuiButton(0, width / 2 - 100, (int) (height * 0.2), "Display Watcher Ready Message: " + Utils.getColouredBoolean(ToggleCommand.watcherReadyToggled));
 		splitFishing = new GuiButton(0, width / 2 - 100, (int) (height * 0.3), "Split Fishing Display: " + Utils.getColouredBoolean(ToggleCommand.splitFishing));
 		notifySlayerSlain = new GuiButton(0, width / 2 - 100, (int) (height * 0.4), "Notify when Slayer Slain: " + Utils.getColouredBoolean(ToggleCommand.notifySlayerSlainToggled));
+    		flowerWeapons = new GuiButton(0, width / 2 - 100, (int) (height * 0.5), "Prevent Placing FoT/Spirit Sceptre: " + Utils.getColouredBoolean(ToggleCommand.flowerWeaponsToggled));
 
 		switch (page) {
 			case 1:
@@ -169,6 +171,7 @@ public class DankerGui extends GuiScreen {
 				this.buttonList.add(watcherReadyMessage);
 				this.buttonList.add(splitFishing);
 				this.buttonList.add(notifySlayerSlain);
+     				this.buttonList.add(flowerWeapons);
 				this.buttonList.add(backPage);
 				break;
 		}
@@ -325,6 +328,10 @@ public class DankerGui extends GuiScreen {
 			ToggleCommand.swapToPickBlockToggled = !ToggleCommand.swapToPickBlockToggled;
 			ConfigHandler.writeBooleanConfig("toggles", "PickBlock", ToggleCommand.swapToPickBlockToggled);
 			pickBlock.displayString = "Auto-Swap to Pick Block: " + Utils.getColouredBoolean(ToggleCommand.swapToPickBlockToggled);
+		} else if (button == flowerWeapons) {
+			ToggleCommand.flowerWeaponsToggled = !ToggleCommand.flowerWeaponsToggled;
+			ConfigHandler.writeBooleanConfig("toggles", "FlowerWeapons", ToggleCommand.flowerWeaponsToggled);
+			flowerWeapons.displayString = "Prevent Placing FoT/Spirit Sceptre: " + Utils.getColouredBoolean(ToggleCommand.flowerWeaponsToggled);
 		}
 	}
 	
