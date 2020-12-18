@@ -47,6 +47,7 @@ Discord Server: https://discord.gg/QsEkNQS
 - Low health alert in dungeons
 - API commands
 - Update checker
+- Reparty Function on Key press
 
 ## Commands
 - /dhelp - Returns this message in-game.
@@ -71,10 +72,13 @@ Discord Server: https://discord.gg/QsEkNQS
 - /sbplayers - Uses API to find how many players are on each Skyblock island.
 - /onlyslayer <zombie/spider/wolf> <1/2/3/4> - Stops you from starting a slayer quest other than the one specified.
 - /skilltracker <start/stop/reset> - Text display for skill xp/hour.
+- /setparty <party members> - Sets the players to reparty after disbanding.
+- /reparty - Disbands the party and reinvites the listed players.
 
 ## Keybinds
 - Open Maddox menu - M by default.
 - Start/Stop Skill Tracker - Numpad 5 by default.
+- Reparty - P by default
 
 ### Notes
 - Slayer tracker for token drops and 20% chance drops uses a 12x12x12 bounding box centered on the player to detect the drops. If you are out of the range of the item drop, it will not count on the tracker.
