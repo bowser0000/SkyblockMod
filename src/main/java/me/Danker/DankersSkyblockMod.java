@@ -134,7 +134,7 @@ public class DankersSkyblockMod
 	static int pickBlockBind;
 	static boolean pickBlockBindSwapped = false;
 	static String terminalColorNeeded;
-	static int[] terminalNumberNeeded = new int[2];
+	static int[] terminalNumberNeeded = new int[4];
 
 	static double dungeonStartTime = 0;
     static double bloodOpenTime = 0;
@@ -2871,6 +2871,7 @@ public class DankersSkyblockMod
 
 			if (ToggleCommand.clickInOrderToggled && chestName.equals("Click in order!")) {
 				if(terminalNumberNeeded[0] == 0) terminalNumberNeeded[0] = 15;
+				if(terminalNumberNeeded[2] == 0) terminalNumberNeeded[2] = 15;
 				for(int i = 10; i <= 25; i++) {
 					if (i == 17 || i == 18) continue;
 					ItemStack prevStack = invSlots.get(terminalNumberNeeded[1]).getStack();
@@ -2885,6 +2886,9 @@ public class DankersSkyblockMod
 					if (itemStack.stackSize < terminalNumberNeeded[0]) {
 						terminalNumberNeeded[0] = itemStack.stackSize;
 						terminalNumberNeeded[1] = i;
+					} else if (itemStack.stackSize == terminalNumberNeeded[0] + 1) {
+						terminalNumberNeeded[2] = itemStack.stackSize;
+						terminalNumberNeeded[3] = i;
 					}
 				}
 			}
@@ -3309,6 +3313,11 @@ public class DankersSkyblockMod
 
 							break;
 						case "Click in order!":
+
+							if (mouseSlot.getSlotIndex() > 35) {
+								break;
+							}
+
 							if((item.getItem() != Item.getItemFromBlock(Blocks.stained_glass_pane))) {
 								shouldCancel = true;
 								break;
@@ -3408,7 +3417,7 @@ public class DankersSkyblockMod
 		chronomatronMouseClicks = 0;
 		experimentTableSlots = new ItemStack[54];
 		terminalColorNeeded = null;
-		terminalNumberNeeded = new int[2];
+		terminalNumberNeeded = new int[4];
 	}
 
     @SubscribeEvent
@@ -3500,6 +3509,10 @@ public class DankersSkyblockMod
 				if(ToggleCommand.clickInOrderToggled && displayName.equals("Click in order!")) {
 					Slot slot = invSlots.get(terminalNumberNeeded[1]);
 					Utils.drawOnSlot(chestSize, slot.xDisplayPosition, slot.yDisplayPosition, new Color(255, 0, 221, 255).getRGB());
+					Slot nextSlot = invSlots.get(terminalNumberNeeded[3]);
+		 			if (nextSlot != slot && nextSlot.getSlotIndex() != 0) {
+						Utils.drawOnSlot(chestSize, nextSlot.xDisplayPosition, nextSlot.yDisplayPosition, new Color(11, 239, 231, 255).getRGB());
+					}
 				}
 
         		if (ToggleCommand.ultrasequencerToggled && displayName.startsWith("Ultrasequencer (")) {
