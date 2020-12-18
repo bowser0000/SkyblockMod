@@ -46,13 +46,15 @@ public class RepartyCommand extends CommandBase implements ICommand {
             Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Party unset! use " + SetPartyCommand.getUsage()));
             return;
         }
-        try{
-            Minecraft.getMinecraft().thePlayer.sendChatMessage("/p disband");
-            Thread.sleep(210);
-            Minecraft.getMinecraft().thePlayer.sendChatMessage("/p " + String.join(" ",players));
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        (new Thread(() -> {
+            try{
+                Minecraft.getMinecraft().thePlayer.sendChatMessage("/p disband");
+                Thread.sleep(210);
+                Minecraft.getMinecraft().thePlayer.sendChatMessage("/p " + String.join(" ",players));
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        })).start();
 
     }
 }
