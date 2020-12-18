@@ -7,6 +7,7 @@ import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.StringUtils;
 
 import java.awt.*;
 import java.awt.datatransfer.StringSelection;
@@ -75,6 +76,7 @@ public class DankerGuiCommand extends CommandBase {
 			debug.append("[ultrasequencer][").append(ToggleCommand.ultrasequencerToggled).append("]\n");
 			debug.append("[chronomatron][").append(ToggleCommand.chronomatronToggled).append("]\n");
 			debug.append("[superpairs][").append(ToggleCommand.superpairsToggled).append("]\n");
+			debug.append("[hidetooltipsinaddons][").append(ToggleCommand.hideTooltipsInExperimentAddonsToggled).append("]\n");
 			debug.append("[pickblock][").append(ToggleCommand.swapToPickBlockToggled).append("]\n");
 			debug.append("[watchermessage][").append(ToggleCommand.watcherReadyToggled).append("]\n");
 			debug.append("# Locations\n");
@@ -95,8 +97,7 @@ public class DankerGuiCommand extends CommandBase {
 				debug.append("<None>\n");
 			} else {
 				for (ResourcePackRepository.Entry resource : Minecraft.getMinecraft().getResourcePackRepository().getRepositoryEntries()) {
-					debug.append("< ").append(resource.getResourcePackName()).append(" >\n");
-				}
+					debug.append("< ").append(StringUtils.stripControlCodes(resource.getResourcePackName())).append(" >\n");				}
 			}
 			debug.append("```");
 			StringSelection clipboard = new StringSelection(debug.toString());

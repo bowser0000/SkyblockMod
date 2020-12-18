@@ -78,7 +78,7 @@ import java.util.regex.Pattern;
 public class DankersSkyblockMod
 {
     public static final String MODID = "Danker's Skyblock Mod";
-    public static final String VERSION = "1.8.5-beta3";
+    public static final String VERSION = "1.8.5-beta5";
     
     static double checkItemsNow = 0;
     static double itemsChecked = 0;
@@ -1305,7 +1305,7 @@ public class DankersSkyblockMod
     
     public void renderEverything() {
     	if (Minecraft.getMinecraft().currentScreen instanceof EditLocationsGui) return;
-    	
+
     	Minecraft mc = Minecraft.getMinecraft();
     	
     	if (ToggleCommand.coordsToggled) {
@@ -3041,9 +3041,24 @@ public class DankersSkyblockMod
 					Blocks.oak_door,
 					Blocks.skull
 			));
+			ArrayList<Block> flowerPlaceable = new ArrayList<>(Arrays.asList(
+					Blocks.grass,
+					Blocks.dirt,
+					Blocks.flower_pot,
+					Blocks.tallgrass,
+					Blocks.double_plant
+			));
 			if (Utils.inDungeons) {
 				interactables.add(Blocks.coal_block);
 				interactables.add(Blocks.stained_hardened_clay);
+			}
+			if(flowerPlaceable.contains(block)){
+				if (ToggleCommand.flowerWeaponsToggled && item.getDisplayName().contains("Flower of Truth")) {
+					event.setCanceled(true);
+				}
+				if (ToggleCommand.flowerWeaponsToggled && item.getDisplayName().contains("Spirit Sceptre")) {
+					event.setCanceled(true);
+				}
 			}
 			if (!interactables.contains(block)) {
 				if (ToggleCommand.aotdToggled && item.getDisplayName().contains("Aspect of the Dragons")) {
