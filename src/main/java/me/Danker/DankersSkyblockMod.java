@@ -26,6 +26,7 @@ import net.minecraft.entity.passive.EntityWolf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.event.ClickEvent;
 import net.minecraft.event.ClickEvent.Action;
+import net.minecraft.event.HoverEvent;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.Container;
@@ -104,6 +105,7 @@ public class DankersSkyblockMod
 	static Entity livid = null;
 	public static double cakeTime;
 	public static double nextBonzoUse = 0;
+	public static boolean firstLaunch = false;
 	
 	public static final ResourceLocation CAKE_ICON = new ResourceLocation("dsm", "icons/cake.png");
 	public static final ResourceLocation BONZO_ICON = new ResourceLocation("dsm", "icons/bonzo.png");
@@ -323,6 +325,33 @@ public class DankersSkyblockMod
     // Update checker
     @SubscribeEvent
     public void onJoin(EntityJoinWorldEvent event) {
+
+		if (firstLaunch) {
+			firstLaunch = false;
+			ConfigHandler.writeBooleanConfig("misc", "firstLaunch", false);
+
+			IChatComponent chatComponent = new ChatComponentText(
+					EnumChatFormatting.GOLD + "Thank you for downloading Danker's Skyblock Mod.\n" +
+							"To get started, run the command " + EnumChatFormatting.GOLD + "/dsm" + EnumChatFormatting.RESET + " to view all the mod features."
+			);
+			chatComponent.setChatStyle(chatComponent.getChatStyle().setChatHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ChatComponentText("Click to open the DSM menu."))).setChatClickEvent(new ClickEvent(Action.RUN_COMMAND, "/dsm")));
+
+			new Thread(()->{
+				while (true) {
+					if (Minecraft.getMinecraft().thePlayer == null) {
+						try {
+							Thread.sleep(500);
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+						continue;
+					}
+					Minecraft.getMinecraft().thePlayer.addChatMessage(chatComponent);
+					break;
+				}
+			}).start();
+		}
+
     	if (!updateChecked) {
 			updateChecked = true;
 

@@ -385,7 +385,9 @@ public class ConfigHandler {
 		if (!hasKey("misc", "skill50Time")) writeIntConfig("misc", "skill50Time", 3);
 		if (!hasKey("misc", "cakeTime")) writeDoubleConfig("misc", "cakeTime", 0);
 		if (!hasKey("misc", "showSkillTracker")) writeBooleanConfig("misc", "showSkillTracker", false);
-		
+		if (!hasKey("misc", "firstLaunch")) writeBooleanConfig("misc", "firstLaunch", true);
+
+
 		ScaledResolution scaled = new ScaledResolution(Minecraft.getMinecraft());
 		int height = scaled.getScaledHeight();
 		if (!hasKey("locations", "coordsX")) writeIntConfig("locations", "coordsX", 5);
@@ -666,7 +668,8 @@ public class ConfigHandler {
 		DankersSkyblockMod.SKILL_TIME = getInt("misc", "skill50Time") * 20;
 		DankersSkyblockMod.cakeTime = getDouble("misc", "cakeTime");
 		DankersSkyblockMod.showSkillTracker = getBoolean("misc", "showSkillTracker");
-		
+		DankersSkyblockMod.firstLaunch = getBoolean("misc", "firstLaunch");
+
 		MoveCommand.coordsXY[0] = getInt("locations", "coordsX");
 		MoveCommand.coordsXY[1] = getInt("locations", "coordsY");
 		MoveCommand.displayXY[0] = getInt("locations", "displayX");
