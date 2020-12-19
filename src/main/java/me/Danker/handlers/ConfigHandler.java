@@ -577,7 +577,7 @@ public class ConfigHandler {
 		// Spooky Fishing
 		LootCommand.scarecrows = getInt("fishing", "scarecrow");
 		LootCommand.nightmares = getInt("fishing", "nightmare");
-		LootCommand.werewolfs = getInt("fishing", "nightmare");
+		LootCommand.werewolfs = getInt("fishing", "werewolf");
 		LootCommand.phantomFishers = getInt("fishing", "phantomFisher");
 		LootCommand.grimReapers = getInt("fishing", "grimReaper");
 		
