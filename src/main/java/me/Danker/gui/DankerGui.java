@@ -60,6 +60,7 @@ public class DankerGui extends GuiScreen {
 	private GuiButton notifySlayerSlain;
 	private GuiButton necronNotifications;
 	private GuiButton bonzoTimer;
+	private GuiButton blockBreakingFarms;
 	
 	public DankerGui(int page) {
 		this.page = page;
@@ -125,6 +126,8 @@ public class DankerGui extends GuiScreen {
 		flowerWeapons = new GuiButton(0, width / 2 - 100, (int) (height * 0.5), "Prevent Placing FoT/Spirit Sceptre: " + Utils.getColouredBoolean(ToggleCommand.flowerWeaponsToggled));
 		necronNotifications = new GuiButton(0, width / 2 - 100, (int) (height * 0.6), "Necron Phase Notifications: " + Utils.getColouredBoolean(ToggleCommand.necronNotificationsToggled));
 		bonzoTimer = new GuiButton(0, width / 2 - 100, (int) (height * 0.7), "Bonzo's Mask Timer: " + Utils.getColouredBoolean(ToggleCommand.bonzoTimerToggled));
+		//Page 6
+		blockBreakingFarms = new GuiButton(0, width / 2 - 100, (int) (height * 0.1), "Prevent Breaking Farms: " + Utils.getColouredBoolean(ToggleCommand.blockBreakingFarmsToggled));
 
 		switch (page) {
 			case 1:
@@ -178,6 +181,11 @@ public class DankerGui extends GuiScreen {
 				this.buttonList.add(flowerWeapons);
 				this.buttonList.add(necronNotifications);
 				this.buttonList.add(bonzoTimer);
+				this.buttonList.add(nextPage);
+				this.buttonList.add(backPage);
+				break;
+			case 6:
+				this.buttonList.add(blockBreakingFarms);
 				this.buttonList.add(backPage);
 				break;
 		}
@@ -190,7 +198,7 @@ public class DankerGui extends GuiScreen {
 	@Override
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
 		this.drawDefaultBackground();
-		String pageText = "Page: " + page + "/5";
+		String pageText = "Page: " + page + "/6";
 		int pageWidth = mc.fontRendererObj.getStringWidth(pageText);
 		new TextRenderer(mc, pageText, width / 2 - pageWidth / 2, 10, 1D);
 		super.drawScreen(mouseX, mouseY, partialTicks);
@@ -338,6 +346,10 @@ public class DankerGui extends GuiScreen {
 			ToggleCommand.bonzoTimerToggled = !ToggleCommand.bonzoTimerToggled;
 			ConfigHandler.writeBooleanConfig("toggles", "BonzoTimer", ToggleCommand.bonzoTimerToggled);
 			bonzoTimer.displayString = "Bonzo's Mask Timer: " + Utils.getColouredBoolean(ToggleCommand.bonzoTimerToggled);
+		} else if (button == blockBreakingFarms) {
+			ToggleCommand.blockBreakingFarmsToggled = !ToggleCommand.blockBreakingFarmsToggled;
+			ConfigHandler.writeBooleanConfig("toggles", "BlockBreakingFarms", ToggleCommand.blockBreakingFarmsToggled);
+			blockBreakingFarms.displayString = "Prevent Breaking Farms: " + Utils.getColouredBoolean(ToggleCommand.blockBreakingFarmsToggled);
 		} else if (button == pickBlock) {
 			ToggleCommand.swapToPickBlockToggled = !ToggleCommand.swapToPickBlockToggled;
 			ConfigHandler.writeBooleanConfig("toggles", "PickBlock", ToggleCommand.swapToPickBlockToggled);

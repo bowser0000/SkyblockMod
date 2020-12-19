@@ -3003,8 +3003,9 @@ public class DankersSkyblockMod
     	if (!Utils.inSkyblock || Minecraft.getMinecraft().thePlayer != event.entityPlayer) return;
     	ItemStack item = event.entityPlayer.getHeldItem();
     	if (item == null) return;
+		Block block = Minecraft.getMinecraft().theWorld.getBlockState(event.pos).getBlock();
 
-    	if (event.action == PlayerInteractEvent.Action.RIGHT_CLICK_AIR) {
+		if (event.action == PlayerInteractEvent.Action.RIGHT_CLICK_AIR) {
     		if (ToggleCommand.aotdToggled && item.getDisplayName().contains("Aspect of the Dragons")) {
     			event.setCanceled(true);
     		}
@@ -3037,8 +3038,7 @@ public class DankersSkyblockMod
 			}
     	}
 
-		if (event.action == PlayerInteractEvent.Action.RIGHT_CLICK_BLOCK) {
-			Block block = Minecraft.getMinecraft().theWorld.getBlockState(event.pos).getBlock();
+		else if (event.action == PlayerInteractEvent.Action.RIGHT_CLICK_BLOCK) {
 			ArrayList<Block> interactables = new ArrayList<>(Arrays.asList(
 					Blocks.acacia_door,
 					Blocks.anvil,
@@ -3102,6 +3102,37 @@ public class DankersSkyblockMod
 				}
 			}
 		}
+		
+		else if (event.action == PlayerInteractEvent.Action.LEFT_CLICK_BLOCK) {
+			if (ToggleCommand.blockBreakingFarmsToggled) {
+				ArrayList tools = new ArrayList(Arrays.asList(
+						Items.wooden_hoe,
+						Items.stone_hoe,
+						Items.iron_hoe,
+						Items.golden_hoe,
+						Items.diamond_hoe,
+						Items.wooden_axe,
+						Items.stone_axe,
+						Items.iron_axe,
+						Items.golden_axe,
+						Items.diamond_axe
+				));
+
+				ArrayList farmBlocks = new ArrayList(Arrays.asList(
+						Blocks.dirt,
+						Blocks.farmland,
+						Blocks.carpet,
+						Blocks.glowstone,
+						Blocks.sea_lantern
+				));
+
+				if (tools.contains(item) && farmBlocks.contains(block)) {
+					event.setCanceled(true);
+				}
+
+			}
+		}
+		
     }
 
     @SubscribeEvent
