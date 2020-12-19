@@ -10,9 +10,14 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 
+import java.util.Arrays;
+
 public class SetPartyCommand extends CommandBase implements ICommand {
 
     public static boolean set = false;
+    public static int delimiter = 0;
+    public static boolean gettingParty;
+    public static String partyResponse = "";
 
     @Override
     public String getCommandName() { return "setparty"; }
@@ -42,5 +47,20 @@ public class SetPartyCommand extends CommandBase implements ICommand {
                 DankersSkyblockMod.DELIMITER_COLOUR + "" + EnumChatFormatting.BOLD + "-------------------"));
 
         set = true;
+    }
+
+    public static void getParty() {
+        gettingParty = true;
+        partyResponse = "";
+        Minecraft.getMinecraft().thePlayer.sendChatMessage("/pl");
+        (new Thread(() ->{
+            try{
+                Thread.sleep(500);
+                RepartyCommand.players = Arrays.stream(partyResponse.split(" ")).filter(e -> !e.contains("[") && !e.contains("●")).toArray(String[]::new);
+                set = true;
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        })).start();
     }
 }

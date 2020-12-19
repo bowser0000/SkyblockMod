@@ -38,5 +38,4 @@ public class SetkeyCommand extends CommandBase implements ICommand {
 		ConfigHandler.writeStringConfig("api", "APIKey", arg1[0]);
 		player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Set API key to " + DankersSkyblockMod.SECONDARY_COLOUR + arg1[0]));
 	}
-
 }

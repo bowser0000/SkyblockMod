@@ -97,7 +97,7 @@ public class DankersSkyblockMod
     static int tickAmount = 1;
     static String lastMaddoxCommand = "/cb placeholder";
     static double lastMaddoxTime = 0;
-    static KeyBinding[] keyBindings = new KeyBinding[3];
+    static KeyBinding[] keyBindings = new KeyBinding[4];
     static boolean usingLabymod = false;
     static boolean usingOAM = false;
     static boolean OAMWarning = false;
@@ -274,6 +274,7 @@ public class DankersSkyblockMod
 		keyBindings[0] = new KeyBinding("Open Maddox Menu", Keyboard.KEY_M, "Danker's Skyblock Mod");
 		keyBindings[1] = new KeyBinding("Start/Stop Skill Tracker", Keyboard.KEY_NUMPAD5, "Danker's Skyblock Mod");
 		keyBindings[2] = new KeyBinding("Reparty", Keyboard.KEY_P,"Danker's Skyblock Mod");
+		keyBindings[3] = new KeyBinding("Get Party", Keyboard.KEY_O, "Danker's Skyblock Mod");
 
 		for (KeyBinding keyBinding : keyBindings) {
 			ClientRegistry.registerKeyBinding(keyBinding);
@@ -383,6 +384,39 @@ public class DankersSkyblockMod
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void onChat(ClientChatReceivedEvent event) {
     	String message = StringUtils.stripControlCodes(event.message.getUnformattedText());
+
+    	if(SetPartyCommand.gettingParty){
+    		if(message.contains("-----------------------------")){
+    			switch(SetPartyCommand.delimiter){
+					case 0:
+						System.out.println("Delimiter Cancelled");
+						SetPartyCommand.delimiter++;
+						event.setCanceled(true);
+						return;
+					case 1:
+						System.out.println("Done Querying Party");
+						SetPartyCommand.gettingParty = false;
+						SetPartyCommand.delimiter = 0;
+						event.setCanceled(true);
+						return;
+				}
+			} else if(message.contains("Party M")){
+				// Looks for number between parentheses
+				Matcher members = (Pattern.compile("^.*?\\([^\\d]*(\\d+)[^\\d]*\\).*$")).matcher(message);
+				if(members.find()){
+					System.out.println("Number of members read: " + members.group(1));
+					event.setCanceled(true);
+					return;
+				}
+				System.out.println("Reading Party");
+				SetPartyCommand.partyResponse += message.substring(message.indexOf(":") + 2);
+				event.setCanceled(true);
+				return;
+			} else if (message.contains("Party Leader")){
+    			event.setCanceled(true);
+    			return;
+			}
+		}
 
     	if (!Utils.inSkyblock) return;
 
@@ -2994,6 +3028,11 @@ public class DankersSkyblockMod
 
 
 		EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
+
+		//Check for pressing O to read party
+		if(keyBindings[3].isPressed()){
+			SetPartyCommand.getParty();
+		}
 
 		// Check for pressing P for reparty
 		if (keyBindings[2].isPressed()) {
