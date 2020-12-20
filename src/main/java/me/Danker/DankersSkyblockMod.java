@@ -3536,7 +3536,8 @@ public class DankersSkyblockMod
         		if (ToggleCommand.startsWithToggled && Utils.inDungeons && displayName.startsWith("What starts with:")) {
         			char letter = displayName.charAt(displayName.indexOf("'") + 1);
         			for (Slot slot : invSlots) {
-        				ItemStack item = slot.getStack();
+						if (slot.getSlotIndex() > 53) continue;
+						ItemStack item = slot.getStack();
         				if (item == null) continue;
         				if (item.isItemEnchanted()) continue;
         				if (StringUtils.stripControlCodes(item.getDisplayName()).charAt(0) == letter) {
@@ -3556,6 +3557,7 @@ public class DankersSkyblockMod
 					terminalColorNeeded = colour;
 
         			for (Slot slot : invSlots) {
+        				if (slot.getSlotIndex() > 53) continue;
         				ItemStack item = slot.getStack();
         				if (item == null) continue;
                         if (item.isItemEnchanted()) continue;
