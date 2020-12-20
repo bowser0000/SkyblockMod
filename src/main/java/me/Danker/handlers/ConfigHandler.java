@@ -198,7 +198,7 @@ public class ConfigHandler {
 		if (!hasKey("toggles", "NotifySlayerSlain")) writeBooleanConfig("toggles", "NotifySlayerSlain", false);
 		if (!hasKey("toggles", "NecronNotifications")) writeBooleanConfig("toggles", "NecronNotifications", false);
 		if (!hasKey("toggles", "BonzoTimer")) writeBooleanConfig("toggles", "BonzoTimer", false);
-		if (!hasKey("toggles", "BlockBreakingFarms")) writeBooleanConfig("toggles", "BlockBreakingFarms", true);
+		if (!hasKey("toggles", "BlockBreakingFarms")) writeBooleanConfig("toggles", "BlockBreakingFarms", false);
 
 
 		// Puzzle Solvers
