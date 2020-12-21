@@ -3,6 +3,7 @@ package me.Danker.handlers;
 import me.Danker.commands.ToggleCommand;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.StringUtils;
 import org.lwjgl.opengl.GL11;
 
@@ -26,5 +27,6 @@ public class TextRenderer extends Gui {
 			}
 		}
 		GL11.glScaled(scaleReset, scaleReset, scaleReset);
+		GlStateManager.color(1, 1, 1, 1);
 	}
 }
