@@ -27,19 +27,24 @@ public class RepartyCommand extends CommandBase implements ICommand {
     public static double callTime = 0;
 
     @Override
-    public String getCommandName() { return "reparty"; }
+    public String getCommandName() { 
+        return "reparty"; 
+    }
 
     @Override
-    public String getCommandUsage(ICommandSender sender) { return "/" + getCommandName(); }
+    public String getCommandUsage(ICommandSender sender) { 
+        return "/" + getCommandName(); 
+    }
 
     @Override
-    public int getRequiredPermissionLevel() { return 0; }
+    public int getRequiredPermissionLevel() { 
+        return 0; 
+    }
 
     @Override
     public void processCommand(ICommandSender sender, String[] args) throws CommandException {
         // MULTI THREAD DRIFTING
 		new Thread(() -> {
-            final EntityPlayer player_unused = (EntityPlayer) sender;
             EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
             callTime = System.currentTimeMillis() / 1000;
             
@@ -69,8 +74,7 @@ public class RepartyCommand extends CommandBase implements ICommand {
                 }
 
                 DankersSkyblockMod.partyList.clear();
-            }
-            catch (InterruptedException e) {
+            } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }).start();
