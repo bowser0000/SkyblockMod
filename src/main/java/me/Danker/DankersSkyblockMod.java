@@ -345,6 +345,11 @@ public class DankersSkyblockMod {
                         }
                         continue;
                     }
+                    try {
+                        Thread.sleep(2000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                     Minecraft.getMinecraft().thePlayer.addChatMessage(chatComponent);
                     break;
                 }
@@ -364,6 +369,11 @@ public class DankersSkyblockMod {
                                 e.printStackTrace();
                             }
                         } else {
+                            try {
+                                Thread.sleep(2000);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
                             Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.RED +
                                     "You are using spiderfrog's OldAnimationsMod.\n" +
                                     "Danker's Skyblock Mod is incompatible with OldAnimationsMod.\n" +
