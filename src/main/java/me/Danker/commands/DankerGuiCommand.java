@@ -45,6 +45,7 @@ public class DankerGuiCommand extends CommandBase {
 			debug.append("[spiritbearalerts][").append(ToggleCommand.spiritBearAlerts).append("]\n");
 			debug.append("[aotd][").append(ToggleCommand.aotdToggled).append("]\n");
 			debug.append("[lividdagger][").append(ToggleCommand.lividDaggerToggled).append("]\n");
+			debug.append("[flowerweapons][").append(ToggleCommand.flowerWeaponsToggled).append("]\n");
 			debug.append("[sceptremessages][").append(ToggleCommand.sceptreMessages).append("]\n");
 			debug.append("[petcolors][").append(ToggleCommand.petColoursToggled).append("]\n");
 			debug.append("[dungeontimer][").append(ToggleCommand.dungeonTimerToggled).append("]\n");
@@ -69,6 +70,7 @@ public class DankerGuiCommand extends CommandBase {
 			debug.append("[creeperpuzzle][").append(ToggleCommand.creeperToggled).append("]\n");
 			debug.append("[waterpuzzle][").append(ToggleCommand.waterToggled).append("]\n");
 			debug.append("[tictactoepuzzle][").append(ToggleCommand.ticTacToeToggled).append("]\n");
+			debug.append("[watchermessage][").append(ToggleCommand.watcherReadyToggled).append("]\n");
 			debug.append("[startswithterminal][").append(ToggleCommand.startsWithToggled).append("]\n");
 			debug.append("[selectallterminal][").append(ToggleCommand.selectAllToggled).append("]\n");
 			debug.append("[clickinorderterminal][").append(ToggleCommand.clickInOrderToggled).append("]\n");
@@ -79,7 +81,6 @@ public class DankerGuiCommand extends CommandBase {
 			debug.append("[superpairs][").append(ToggleCommand.superpairsToggled).append("]\n");
 			debug.append("[hidetooltipsinaddons][").append(ToggleCommand.hideTooltipsInExperimentAddonsToggled).append("]\n");
 			debug.append("[pickblock][").append(ToggleCommand.swapToPickBlockToggled).append("]\n");
-			debug.append("[watchermessage][").append(ToggleCommand.watcherReadyToggled).append("]\n");
 			debug.append("# Locations\n");
 			debug.append("[coords][").append(MoveCommand.coordsXY[0]).append(", ").append(MoveCommand.coordsXY[1]).append("]\n");
 			debug.append("[display][").append(MoveCommand.displayXY[0]).append(", ").append(MoveCommand.displayXY[1]).append("]\n");
@@ -98,7 +99,8 @@ public class DankerGuiCommand extends CommandBase {
 				debug.append("<None>\n");
 			} else {
 				for (ResourcePackRepository.Entry resource : Minecraft.getMinecraft().getResourcePackRepository().getRepositoryEntries()) {
-					debug.append("< ").append(StringUtils.stripControlCodes(resource.getResourcePackName())).append(" >\n");				}
+					debug.append("< ").append(StringUtils.stripControlCodes(resource.getResourcePackName())).append(" >\n");
+				}
 			}
 			debug.append("```");
 			StringSelection clipboard = new StringSelection(debug.toString());
