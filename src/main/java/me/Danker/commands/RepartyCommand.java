@@ -61,9 +61,9 @@ public class RepartyCommand extends CommandBase implements ICommand {
                 player.sendChatMessage("/p disband");
                 Thread.sleep(250);
                 
-                String members = String.join(DankersSkyblockMod.SECONDARY_COLOUR + "\n- " + EnumChatFormatting.GOLD, party);
+                String members = String.join(EnumChatFormatting.WHITE + "\n- " + EnumChatFormatting.GOLD, party);
                 player.addChatMessage(new ChatComponentText(DankersSkyblockMod.DELIMITER_COLOUR + "-----------------------------\n" +
-                                                            DankersSkyblockMod.MAIN_COLOUR + "Repartying:" + DankersSkyblockMod.SECONDARY_COLOUR + "\n- " +
+                                                            DankersSkyblockMod.MAIN_COLOUR + "Repartying:" + EnumChatFormatting.WHITE + "\n- " +
                                                             EnumChatFormatting.GOLD + members + "\n" +
                                                             DankersSkyblockMod.DELIMITER_COLOUR + "-----------------------------\n"));
                 Thread.sleep(250);
