@@ -185,7 +185,9 @@ public class DankersSkyblockMod
     public static int PET_70_TO_79;
     public static int PET_80_TO_89;
     public static int PET_90_TO_99;
-    public static int PET_100;
+	public static int PET_100;
+	
+	public static List<String> partyList = new ArrayList<>();
     
     @EventHandler
     public void init(FMLInitializationEvent event) {
@@ -300,7 +302,8 @@ public class DankersSkyblockMod
     	ClientCommandHandler.instance.registerCommand(new DungeonsCommand());
     	ClientCommandHandler.instance.registerCommand(new LobbySkillsCommand());
     	ClientCommandHandler.instance.registerCommand(new DankerGuiCommand());
-    	ClientCommandHandler.instance.registerCommand(new SkillTrackerCommand());
+		ClientCommandHandler.instance.registerCommand(new SkillTrackerCommand());
+		ClientCommandHandler.instance.registerCommand(new RepartyCommand());
     }
     
     @EventHandler
@@ -353,7 +356,42 @@ public class DankersSkyblockMod
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void onChat(ClientChatReceivedEvent event) {
     	String message = StringUtils.stripControlCodes(event.message.getUnformattedText());
-    	
+		
+		// Reparty command
+		if (System.currentTimeMillis() / 1000 - RepartyCommand.callTime <= 1.5) {
+			if (!(message.contains("----") || message.contains("disbanded") || message.contains("seconds to accept") || message.contains("●") || message.contains("Party Members"))) {
+				return;
+			}
+			
+			EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
+			
+			Pattern party_start_pattern = Pattern.compile("^Party Members \\((\\d+)\\)$");
+            Pattern leader_pattern = Pattern.compile("^Party Leader: (?:\\[.+?] )?(\\w+) ●$");
+            Pattern members_pattern = Pattern.compile(" (?:\\[.+?] )?(\\w+) ●");
+
+            Matcher party_start = party_start_pattern.matcher(message);
+            Matcher leader = leader_pattern.matcher(message);
+            Matcher members = members_pattern.matcher(message);
+			
+			
+			if (party_start.matches() && Integer.parseInt(party_start.group(1)) == 1) {
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "You cannot reparty yourself."));
+			}
+            else if (leader.matches() && !(leader.group(1).equals(player.getName()))) {
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "You are not party leader."));
+			}
+			else {
+				while (members.find()) {
+					String partyMember = members.group(1);
+					if (!partyMember.equals(player.getName())) {
+						partyList.add(partyMember);
+					}
+				}
+			}
+
+			event.setCanceled(true);
+        }
+
     	if (!Utils.inSkyblock) return;
     	
     	// Action Bar
@@ -540,7 +578,7 @@ public class DankersSkyblockMod
 				}
 			}
 		}
-		
+
 		if (ToggleCommand.golemAlertToggled) {
 			if (message.contains("The ground begins to shake as an Endstone Protector rises from below!")) {
 				Utils.createTitle(EnumChatFormatting.RED + "GOLEM SPAWNING!", 3);

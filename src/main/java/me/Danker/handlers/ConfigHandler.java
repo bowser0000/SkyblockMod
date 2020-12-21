@@ -411,7 +411,8 @@ public class ConfigHandler {
 		
 		if (!hasKey("colors", "main")) writeStringConfig("colors", "main", EnumChatFormatting.GREEN.toString());
 		if (!hasKey("colors", "secondary")) writeStringConfig("colors", "secondary", EnumChatFormatting.DARK_GREEN.toString());
-		if (!hasKey("colors", "delimiter")) writeStringConfig("colors", "delimiter", EnumChatFormatting.AQUA.toString());
+		if (!hasKey("colors", "delimiter")) writeStringConfig("colors", "delimiter", EnumChatFormatting.AQUA.toString() + EnumChatFormatting.STRIKETHROUGH.toString());
+		if (!getString("colors", "delimiter").contains(EnumChatFormatting.STRIKETHROUGH.toString())) writeStringConfig("colors", "delimiter", getString("colors", "delimiter") + EnumChatFormatting.STRIKETHROUGH.toString());
 		if (!hasKey("colors", "error")) writeStringConfig("colors", "error", EnumChatFormatting.RED.toString());
 		if (!hasKey("colors", "type")) writeStringConfig("colors", "type", EnumChatFormatting.GREEN.toString());
 		if (!hasKey("colors", "value")) writeStringConfig("colors", "value", EnumChatFormatting.DARK_GREEN.toString());
