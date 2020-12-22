@@ -424,6 +424,12 @@ public class DankersSkyblockMod {
     public void onChat(ClientChatReceivedEvent event) {
         String message = StringUtils.stripControlCodes(event.message.getUnformattedText());
 
+        if (message.startsWith("Your new API key is ") && Utils.isOnHypixel()) {
+            String apiKey = event.message.getSiblings().get(0).getChatStyle().getChatClickEvent().getValue();
+            ConfigHandler.writeStringConfig("api", "APIKey", apiKey);
+            Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Set API key to " + DankersSkyblockMod.SECONDARY_COLOUR + apiKey));
+        }
+
         if (!Utils.inSkyblock) return;
 
         // Action Bar

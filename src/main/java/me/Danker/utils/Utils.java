@@ -27,9 +27,7 @@ import net.minecraft.util.*;
 import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
+import java.util.*;
 import java.util.List;
 import java.util.regex.Matcher;
 
@@ -122,7 +120,15 @@ public class Utils {
 			drawHeight += mc.fontRendererObj.FONT_HEIGHT;
 		}
 	}
-	
+
+	public static boolean isOnHypixel () {
+		Minecraft mc = Minecraft.getMinecraft();
+		if (mc != null && mc.theWorld != null && !mc.isSingleplayer()) {
+			return mc.getCurrentServerData().serverIP.toLowerCase().contains("hypixel");
+		}
+		return false;
+	}
+
 	public static void checkForSkyblock() {
 		Minecraft mc = Minecraft.getMinecraft();
 		if (mc != null && mc.theWorld != null && !mc.isSingleplayer()) {
