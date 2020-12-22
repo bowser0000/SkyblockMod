@@ -98,7 +98,6 @@ public class DankersSkyblockMod {
     static double lastMaddoxTime = 0;
     static KeyBinding[] keyBindings = new KeyBinding[2];
     static boolean usingLabymod = false;
-    static boolean usingSpiderFrogOldAnimationsMod = false;
     public static String guiToOpen = null;
     static boolean foundLivid = false;
     static Entity livid = null;
@@ -312,13 +311,6 @@ public class DankersSkyblockMod {
     public void postInit(final FMLPostInitializationEvent event) {
         usingLabymod = Loader.isModLoaded("labymod");
         System.out.println("LabyMod detection: " + usingLabymod);
-        try {
-            Class clazz = Class.forName("com.spiderfrog.oldanimations.OldAnimationsMod");
-            usingSpiderFrogOldAnimationsMod = true;
-        } catch (Exception var1) {
-            usingSpiderFrogOldAnimationsMod = false;
-        }
-        System.out.println("OldAnimationsMod detection: " + usingSpiderFrogOldAnimationsMod);
     }
 
     // Update checker
@@ -358,31 +350,6 @@ public class DankersSkyblockMod {
 
         if (!updateChecked) {
             updateChecked = true;
-
-            if (usingSpiderFrogOldAnimationsMod) {
-                new Thread(() -> {
-                    while (true) {
-                        if (Minecraft.getMinecraft().thePlayer == null) {
-                            try {
-                                Thread.sleep(500);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
-                        } else {
-                            try {
-                                Thread.sleep(2000);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
-                            Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.RED +
-                                    "You are using spiderfrog's OldAnimationsMod.\n" +
-                                    "Danker's Skyblock Mod is incompatible with OldAnimationsMod.\n" +
-                                    "Please remove OldAnimationsMod or you may experience crashes or other issues."));
-                            break;
-                        }
-                    }
-                }).start();
-            }
 
             // MULTI THREAD DRIFTING
             new Thread(() -> {
