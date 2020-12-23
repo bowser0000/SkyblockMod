@@ -103,6 +103,9 @@ public class DankersSkyblockMod
 	static Entity livid = null;
 	public static double cakeTime;
 	
+	public static List<String> partyList = new ArrayList<>();
+	public static List<String> repartyFailList = new ArrayList<>();
+	
 	public static final ResourceLocation CAKE_ICON = new ResourceLocation("dsm", "icons/cake.png");
     
     static String[] riddleSolutions = {"The reward is not in my chest!", "At least one of them is lying, and the reward is not in", 
@@ -159,6 +162,7 @@ public class DankersSkyblockMod
 	static double alchemyXP = 0;
 	public static double alchemyXPGained = 0;
 	static double xpLeft = 0;
+	static double timeSinceGained = 0;
     
     public static String MAIN_COLOUR;
     public static String SECONDARY_COLOUR;
@@ -186,8 +190,6 @@ public class DankersSkyblockMod
     public static int PET_80_TO_89;
     public static int PET_90_TO_99;
 	public static int PET_100;
-	
-	public static List<String> partyList = new ArrayList<>();
     
     @EventHandler
     public void init(FMLInitializationEvent event) {
@@ -358,7 +360,7 @@ public class DankersSkyblockMod
     	String message = StringUtils.stripControlCodes(event.message.getUnformattedText());
 		
 		// Reparty command
-		if (System.currentTimeMillis() / 1000 - RepartyCommand.callTime <= 1.5) {
+		if (System.currentTimeMillis() / 1000 - RepartyCommand.callTime <= 3) {
 			if (!(message.contains("----") || message.contains("disbanded") || message.contains("seconds to accept") || message.contains("●") || message.contains("Party Members"))) {
 				return;
 			}
@@ -367,7 +369,7 @@ public class DankersSkyblockMod
 			
 			Pattern party_start_pattern = Pattern.compile("^Party Members \\((\\d+)\\)$");
             Pattern leader_pattern = Pattern.compile("^Party Leader: (?:\\[.+?] )?(\\w+) ●$");
-            Pattern members_pattern = Pattern.compile(" (?:\\[.+?] )?(\\w+) ●");
+			Pattern members_pattern = Pattern.compile(" (?:\\[.+?] )?(\\w+) ●");
 
             Matcher party_start = party_start_pattern.matcher(message);
             Matcher leader = leader_pattern.matcher(message);
@@ -396,16 +398,30 @@ public class DankersSkyblockMod
     	
     	// Action Bar
     	if (event.type == 2) {
-    		String[] actionBarSections = event.message.getUnformattedText().split(" {3,}");
-    		for (String section : actionBarSections) {
+			EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
+			String[] actionBarSections = event.message.getUnformattedText().split(" {3,}");
+			
+			for (String section : actionBarSections) {
     			if (section.contains("+") && section.contains("/") && section.contains("(")) {
     				if (!section.contains("Runecrafting") && !section.contains("Carpentry")) {
-    					int limit = section.contains("Farming") || section.contains("Enchanting") ? 60 : 50;
-    					double currentXP = Double.parseDouble(section.substring(section.indexOf("(") + 1, section.indexOf("/")).replace(",", ""));
+						if (ToggleCommand.autoSkillTrackerToggled && System.currentTimeMillis() / 1000 - timeSinceGained <= 2) {
+							if (skillStopwatch.isStarted() && skillStopwatch.isSuspended()) {
+								skillStopwatch.resume();
+								player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Skill tracker started."));
+							} else if (!skillStopwatch.isStarted()) {
+								skillStopwatch.start();
+								player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Skill tracker started."));
+							}
+						}
+						timeSinceGained = System.currentTimeMillis() / 1000;
+						
+						int limit = section.contains("Farming") || section.contains("Enchanting") ? 60 : 50;
+						double currentXP = Double.parseDouble(section.substring(section.indexOf("(") + 1, section.indexOf("/")).replace(",", ""));
     					int xpToLevelUp = Integer.parseInt(section.substring(section.indexOf("/") + 1, section.indexOf(")")).replaceAll(",", ""));
     					xpLeft = xpToLevelUp - currentXP;
     					int previousXP = Utils.getPastXpEarned(xpToLevelUp, limit);
-    					double totalXP = currentXP + previousXP;
+						double totalXP = currentXP + previousXP;
+						
     					String skill = section.substring(section.indexOf(" ") + 1, section.lastIndexOf(" "));
     					switch (skill) {
 	    					case "Farming":
@@ -2377,7 +2393,7 @@ public class DankersSkyblockMod
         		Utils.checkForSkyblock();
         		Utils.checkForDungeons();
     		}
-
+			
     		if (DisplayCommand.auto && world != null && player != null) {
     			List<String> scoreboard = ScoreboardHandler.getSidebarLines();
     			boolean found = false;
@@ -2691,7 +2707,7 @@ public class DankersSkyblockMod
 						correctTicTacToeButton = new AxisAlignedBB(drawX, drawY, drawZ, drawX + 1, drawY + 1, drawZ + 1);
 					}
 				}
-    		}
+			}
 
     		tickAmount = 0;
     	}
@@ -3250,6 +3266,7 @@ public class DankersSkyblockMod
 				GuiChest chest = (GuiChest) event.gui;
 				IInventory inventory = ((ContainerChest) containerChest).getLowerChestInventory();
 				String inventoryName = inventory.getDisplayName().getUnformattedText();
+				
 				if (ToggleCommand.swapToPickBlockToggled) {
 					if (inventoryName.startsWith("Chronomatron (") || inventoryName.startsWith("Superpairs (") || inventoryName.startsWith("Ultrasequencer (") || inventoryName.startsWith("What starts with:") || inventoryName.startsWith("Select all the") || inventoryName.startsWith("Navigate the maze!") || inventoryName.startsWith("Correct all the panes!") || inventoryName.startsWith("Click in order!") || inventoryName.startsWith("Harp -")) {
 						if (!pickBlockBindSwapped) {
@@ -3271,6 +3288,14 @@ public class DankersSkyblockMod
 				pickBlockBindSwapped = false;
 			}
 		}
+		
+		if (ToggleCommand.autoSkillTrackerToggled) {
+			if (skillStopwatch.isStarted() && !skillStopwatch.isSuspended()) {
+				skillStopwatch.suspend();
+				mc.thePlayer.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Skill tracker paused."));
+			}
+		}
+		
 		clickInOrderSlots = new Slot[36];
 		lastChronomatronRound = 0;
 		chronomatronPattern.clear();
