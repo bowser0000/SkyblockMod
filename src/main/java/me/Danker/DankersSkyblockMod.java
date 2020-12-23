@@ -33,7 +33,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemMap;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.play.client.C01PacketChatMessage;
 import net.minecraft.util.*;
 import net.minecraft.world.World;
 import net.minecraft.world.storage.MapData;
@@ -79,8 +78,8 @@ import java.util.regex.Pattern;
 public class DankersSkyblockMod
 {
     public static final String MODID = "Danker's Skyblock Mod";
-    public static final String VERSION = "1.8.5-beta6";
-
+    public static final String VERSION = "1.8.5-beta5";
+    
     static double checkItemsNow = 0;
     static double itemsChecked = 0;
     public static Map<String, String> t6Enchants = new HashMap<>();
@@ -97,7 +96,7 @@ public class DankersSkyblockMod
     static int tickAmount = 1;
     static String lastMaddoxCommand = "/cb placeholder";
     static double lastMaddoxTime = 0;
-    static KeyBinding[] keyBindings = new KeyBinding[4];
+    static KeyBinding[] keyBindings = new KeyBinding[2];
     static boolean usingLabymod = false;
     static boolean usingOAM = false;
     static boolean OAMWarning = false;
@@ -105,10 +104,10 @@ public class DankersSkyblockMod
 	static boolean foundLivid = false;
 	static Entity livid = null;
 	public static double cakeTime;
-
+	
 	public static final ResourceLocation CAKE_ICON = new ResourceLocation("dsm", "icons/cake.png");
-
-    static String[] riddleSolutions = {"The reward is not in my chest!", "At least one of them is lying, and the reward is not in",
+    
+    static String[] riddleSolutions = {"The reward is not in my chest!", "At least one of them is lying, and the reward is not in", 
 									   "My chest doesn't have the reward. We are all telling the truth", "My chest has the reward and I'm telling the truth",
 									   "The reward isn't in any of our chests", "Both of them are telling the truth."};
 	static Map<String, String[]> triviaSolutions = new HashMap<>();
@@ -143,7 +142,7 @@ public class DankersSkyblockMod
     static int witherDoors = 0;
     static int dungeonDeaths = 0;
     static int puzzleFails = 0;
-
+    
     static String lastSkill = "Farming";
     public static boolean showSkillTracker;
     public static StopWatch skillStopwatch = new StopWatch();
@@ -162,7 +161,7 @@ public class DankersSkyblockMod
 	static double alchemyXP = 0;
 	public static double alchemyXPGained = 0;
 	static double xpLeft = 0;
-
+    
     public static String MAIN_COLOUR;
     public static String SECONDARY_COLOUR;
     public static String ERROR_COLOUR;
@@ -189,14 +188,14 @@ public class DankersSkyblockMod
     public static int PET_80_TO_89;
     public static int PET_90_TO_99;
     public static int PET_100;
-
+    
     @EventHandler
     public void init(FMLInitializationEvent event) {
 		MinecraftForge.EVENT_BUS.register(this);
 		MinecraftForge.EVENT_BUS.register(new PacketHandler());
-
+		
 		ConfigHandler.reloadConfig();
-
+		
 		// For golden enchants
 		t6Enchants.put("9Angler VI", "6Angler VI");
 		t6Enchants.put("9Bane of Arthropods VI", "6Bane of Arthropods VI");
@@ -213,7 +212,7 @@ public class DankersSkyblockMod
 		t6Enchants.put("9Giant Killer VI", "6Giant Killer VI");
 		t6Enchants.put("9Growth VI", "6Growth VI");
 		t6Enchants.put("9Infinite Quiver X", "6Infinite Quiver X");
-		t6Enchants.put("9Lethality VI", "6Lethality VI");
+		t6Enchants.put("9Lethality VI", "6Lethality VI"); 
 		t6Enchants.put("9Life Steal IV", "6Life Steal IV");
 		t6Enchants.put("9Looting IV", "6Looting IV");
 		t6Enchants.put("9Luck VI", "6Luck VI");
@@ -230,7 +229,7 @@ public class DankersSkyblockMod
 		t6Enchants.put("9Spiked Hook VI", "6Spiked Hook VI");
 		t6Enchants.put("9Thunderlord VI", "6Thunderlord VI");
 		t6Enchants.put("9Vampirism VI", "6Vampirism VI");
-
+		
 		triviaSolutions.put("What is the status of The Watcher?", new String[]{"Stalker"});
 		triviaSolutions.put("What is the status of Bonzo?", new String[]{"New Necromancer"});
 		triviaSolutions.put("What is the status of Scarf?", new String[]{"Apprentice Necromancer"});
@@ -267,20 +266,18 @@ public class DankersSkyblockMod
 		triviaSolutions.put("Which of these monsters only spawns at night?", new String[]{"Zombie Villager", "Ghast"});
 		triviaSolutions.put("Which of these is not a dragon in The End?", new String[]{"Zoomer Dragon", "Weak Dragon", "Stonk Dragon", "Holy Dragon", "Boomer Dragon",
 																					   "Booger Dragon", "Older Dragon", "Elder Dragon", "Stable Dragon", "Professor Dragon"});
-
+		
 		String patternString = "(" + String.join("|", t6Enchants.keySet()) + ")";
 		t6EnchantPattern = Pattern.compile(patternString);
-
+		
 		keyBindings[0] = new KeyBinding("Open Maddox Menu", Keyboard.KEY_M, "Danker's Skyblock Mod");
 		keyBindings[1] = new KeyBinding("Start/Stop Skill Tracker", Keyboard.KEY_NUMPAD5, "Danker's Skyblock Mod");
-		keyBindings[2] = new KeyBinding("Reparty", Keyboard.KEY_P,"Danker's Skyblock Mod");
-		keyBindings[3] = new KeyBinding("Get Party", Keyboard.KEY_O, "Danker's Skyblock Mod");
 
 		for (KeyBinding keyBinding : keyBindings) {
 			ClientRegistry.registerKeyBinding(keyBinding);
 		}
     }
-
+    
     @EventHandler
     public void preInit(final FMLPreInitializationEvent event) {
     	ClientCommandHandler.instance.registerCommand(new ToggleCommand());
@@ -306,10 +303,8 @@ public class DankersSkyblockMod
     	ClientCommandHandler.instance.registerCommand(new LobbySkillsCommand());
     	ClientCommandHandler.instance.registerCommand(new DankerGuiCommand());
     	ClientCommandHandler.instance.registerCommand(new SkillTrackerCommand());
-    	ClientCommandHandler.instance.registerCommand(new SetPartyCommand());
-    	ClientCommandHandler.instance.registerCommand(new RepartyCommand());
     }
-
+    
     @EventHandler
     public void postInit(final FMLPostInitializationEvent event) {
 		Package[] packages = Package.getPackages();
@@ -339,30 +334,30 @@ public class DankersSkyblockMod
 			}
 		}
 	}
-
+    
     // Update checker
     @SubscribeEvent
     public void onJoin(EntityJoinWorldEvent event) {
     	if (!updateChecked) {
 			updateChecked = true;
-
+			
     		// MULTI THREAD DRIFTING
     		new Thread(() -> {
-    			EntityPlayer player = Minecraft.getMinecraft().thePlayer;
-
+    			EntityPlayer player = Minecraft.getMinecraft().thePlayer;	
+    			
     			System.out.println("Checking for updates...");
     			JsonObject latestRelease = APIHandler.getResponse("https://api.github.com/repos/bowser0000/SkyblockMod/releases/latest");
-
+    			
     			String latestTag = latestRelease.get("tag_name").getAsString();
     			DefaultArtifactVersion currentVersion = new DefaultArtifactVersion(VERSION);
     			DefaultArtifactVersion latestVersion = new DefaultArtifactVersion(latestTag.substring(1));
-
+    			
     			if (currentVersion.compareTo(latestVersion) < 0) {
     				String releaseURL = latestRelease.get("html_url").getAsString();
-
+    				
     				ChatComponentText update = new ChatComponentText(EnumChatFormatting.GREEN + "" + EnumChatFormatting.BOLD + "  [UPDATE]  ");
     				update.setChatStyle(update.getChatStyle().setChatClickEvent(new ClickEvent(Action.OPEN_URL, releaseURL)));
-
+    					
     				try {
 						Thread.sleep(2000);
 					} catch (InterruptedException ex) {
@@ -373,53 +368,20 @@ public class DankersSkyblockMod
     		}).start();
     	}
     }
-
+    
     @SubscribeEvent
     public void onWorldChange(WorldEvent.Load event) {
     	foundLivid = false;
     	livid = null;
     }
-
+    
     // It randomly broke, so I had to make it the highest priority
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void onChat(ClientChatReceivedEvent event) {
     	String message = StringUtils.stripControlCodes(event.message.getUnformattedText());
-
-    	if(SetPartyCommand.gettingParty){
-    		if(message.contains("-----------------------------")){
-    			switch(SetPartyCommand.delimiter){
-					case 0:
-						System.out.println("Delimiter Cancelled");
-						SetPartyCommand.delimiter++;
-						event.setCanceled(true);
-						return;
-					case 1:
-						System.out.println("Done Querying Party");
-						SetPartyCommand.gettingParty = false;
-						SetPartyCommand.delimiter = 0;
-						event.setCanceled(true);
-						return;
-				}
-			} else if(message.contains("Party M")){
-				// Looks for number between parentheses
-				Matcher members = (Pattern.compile("^.*?\\([^\\d]*(\\d+)[^\\d]*\\).*$")).matcher(message);
-				if(members.find()){
-					System.out.println("Number of members read: " + members.group(1));
-					event.setCanceled(true);
-					return;
-				}
-				System.out.println("Reading Party");
-				SetPartyCommand.partyResponse += message.substring(message.indexOf(":") + 2);
-				event.setCanceled(true);
-				return;
-			} else if (message.contains("Party Leader")){
-    			event.setCanceled(true);
-    			return;
-			}
-		}
-
+    	
     	if (!Utils.inSkyblock) return;
-
+    	
     	// Action Bar
     	if (event.type == 2) {
     		String[] actionBarSections = event.message.getUnformattedText().split(" {3,}");
@@ -487,7 +449,7 @@ public class DankersSkyblockMod
 	    						System.err.println("Unknown skill.");
     					}
     				}
-
+    				
     				if (ToggleCommand.skill50DisplayToggled && !section.contains("Runecrafting")) {
     					String xpGained = section.substring(section.indexOf("+"), section.indexOf("(") - 1);
     					double currentXp = Double.parseDouble(section.substring(section.indexOf("(") + 1, section.indexOf("/")).replace(",", ""));
@@ -502,7 +464,7 @@ public class DankersSkyblockMod
     					}
     					int previousXp = Utils.getPastXpEarned(Integer.parseInt(section.substring(section.indexOf("/") + 1, section.indexOf(")")).replaceAll(",", "")), limit);
     					double percentage = Math.floor(((currentXp + previousXp) / totalXp) * 10000D) / 100D;
-
+    					
     					NumberFormat nf = NumberFormat.getNumberInstance(Locale.US);
     					skillTimer = SKILL_TIME;
     					showSkill = true;
@@ -512,7 +474,7 @@ public class DankersSkyblockMod
     		}
     		return;
     	}
-
+    	
         // Dungeon chat spoken by an NPC, containing :
         if (ToggleCommand.threeManToggled && Utils.inDungeons && message.contains("[NPC]")) {
         	for (String solution : riddleSolutions) {
@@ -523,7 +485,7 @@ public class DankersSkyblockMod
         		}
         	}
         }
-
+        
         if (message.contains("[BOSS] The Watcher: You have proven yourself. You may pass.")) {
         	watcherClearTime = System.currentTimeMillis() / 1000;
 		}
@@ -533,9 +495,9 @@ public class DankersSkyblockMod
 		if (message.contains("PUZZLE FAIL! ") || message.contains("chose the wrong answer! I shall never forget this moment")) {
 			puzzleFails++;
 		}
-
+        
     	if (message.contains(":")) return;
-
+    	
 		// Spirit Sceptre
 		if (!ToggleCommand.sceptreMessages && message.contains("Your Spirit Sceptre hit ")) {
 			event.setCanceled(true);
@@ -568,18 +530,18 @@ public class DankersSkyblockMod
 				return;
 			}
 		}
-
+    	
         if (ToggleCommand.oruoToggled && Utils.inDungeons) {
         	// Don't set every answer to wrong with this question
         	if (message.contains("What SkyBlock year is it?")) triviaAnswers = null;
-
+        	
         	for (String question : triviaSolutions.keySet()) {
         		if (message.contains(question)) {
         			triviaAnswers = triviaSolutions.get(question);
         			break;
         		}
         	}
-
+        	
         	// Set wrong answers to red and remove click events
         	if (triviaAnswers != null && (message.contains("ⓐ") || message.contains("ⓑ") || message.contains("ⓒ"))) {
         		boolean isSolution = false;
@@ -597,7 +559,7 @@ public class DankersSkyblockMod
         		}
         	}
         }
-
+    	
 		if (ToggleCommand.gpartyToggled) {
 			if (message.contains(" has invited all members of ")) {
 				try {
@@ -614,18 +576,18 @@ public class DankersSkyblockMod
 				}
 			}
 		}
-
+		
 		if (ToggleCommand.golemAlertToggled) {
 			if (message.contains("The ground begins to shake as an Endstone Protector rises from below!")) {
 				Utils.createTitle(EnumChatFormatting.RED + "GOLEM SPAWNING!", 3);
 			}
 		}
-
+		
 		if (message.contains("Yum! You gain +") && message.contains(" for 48 hours!")) {
 			cakeTime = System.currentTimeMillis() / 1000 + 172800; // Add 48 hours
 			ConfigHandler.writeDoubleConfig("misc", "cakeTime", cakeTime);
 		}
-
+		
 		boolean wolfRNG = false;
 		boolean spiderRNG = false;
 		boolean zombieRNG = false;
@@ -853,7 +815,7 @@ public class DankersSkyblockMod
 			increaseSeaCreatures();
 		} else if (message.contains("The Sea Emperor arises from the depths")) {
 			increaseSeaCreatures();
-
+			
 			LootCommand.seaEmperors++;
 			LootCommand.empTime = System.currentTimeMillis() / 1000;
 			LootCommand.empSCs = 0;
@@ -996,7 +958,7 @@ public class DankersSkyblockMod
 				}
 			}
 		}
-
+		
 		if (wolfRNG) {
 			LootCommand.wolfTime = System.currentTimeMillis() / 1000;
 			LootCommand.wolfBosses = 0;
@@ -1021,7 +983,7 @@ public class DankersSkyblockMod
 			ConfigHandler.writeDoubleConfig("zombie", "timeRNG", LootCommand.zombieTime);
 			ConfigHandler.writeIntConfig("zombie", "bossRNG", 0);
 		}
-
+		
 		// Mythological Tracker
 		if (message.contains("You dug out")) {
 			if (message.contains(" coins!")) {
@@ -1067,7 +1029,7 @@ public class DankersSkyblockMod
 				ConfigHandler.writeIntConfig("mythological", "minosInquisitor", LootCommand.minosInquisitors);
 			}
 		}
-
+		
 		// Dungeons Trackers
 		if (message.contains("    ")) {
 			if (message.contains("Recombobulator 3000")) {
@@ -1129,7 +1091,7 @@ public class DankersSkyblockMod
 					LootCommand.legSpiritPets++;
 					LootCommand.legSpiritPetsSession++;
 					ConfigHandler.writeIntConfig("catacombs", "spiritPetLeg", LootCommand.legSpiritPets);
-				}
+				} 
 			} else if (message.contains("Spirit Sword")) {
 				LootCommand.spiritSwords++;
 				LootCommand.spiritSwordsSession++;
@@ -1244,7 +1206,7 @@ public class DankersSkyblockMod
 				ConfigHandler.writeIntConfig("catacombs", "witherBoot", LootCommand.witherBoots);
 			}
 		}
-
+		
 		// Chat Maddox
 		if (message.contains("[OPEN MENU]")) {
 			List<IChatComponent> listOfSiblings = event.message.getSiblings();
@@ -1256,20 +1218,20 @@ public class DankersSkyblockMod
 			}
 			if (ToggleCommand.chatMaddoxToggled) Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(MAIN_COLOUR + "Open chat then click anywhere on-screen to open Maddox"));
 		}
-
+		
 		// Spirit Bear alerts
 		if (ToggleCommand.spiritBearAlerts && message.contains("The Spirit Bear has appeared!")) {
 			Utils.createTitle(EnumChatFormatting.DARK_PURPLE + "SPIRIT BEAR", 2);
 		}
     }
-
+    
     @SubscribeEvent
     public void renderPlayerInfo(final RenderGameOverlayEvent.Post event) {
     	if (usingLabymod && !(Minecraft.getMinecraft().ingameGUI instanceof GuiIngameForge)) return;
     	if (event.type != RenderGameOverlayEvent.ElementType.EXPERIENCE && event.type != RenderGameOverlayEvent.ElementType.JUMPBAR) return;
     	renderEverything();
     }
-
+    
     // LabyMod Support
     @SubscribeEvent
     public void renderPlayerInfoLabyMod(final RenderGameOverlayEvent event) {
@@ -1277,24 +1239,24 @@ public class DankersSkyblockMod
     	if (event.type != null) return;
     	renderEverything();
     }
-
+    
     public void renderEverything() {
     	if (Minecraft.getMinecraft().currentScreen instanceof EditLocationsGui) return;
 
     	Minecraft mc = Minecraft.getMinecraft();
-
+    	
     	if (ToggleCommand.coordsToggled) {
     		EntityPlayer player = mc.thePlayer;
-
+    		
         	double xDir = (player.rotationYaw % 360 + 360) % 360;
         	if (xDir > 180) xDir -= 360;
         	xDir = (double) Math.round(xDir * 10d) / 10d;
         	double yDir = (double) Math.round(player.rotationPitch * 10d) / 10d;
-
+        	
         	String coordText = COORDS_COLOUR + (int) player.posX + " / " + (int) player.posY + " / " + (int) player.posZ + " (" + xDir + " / " + yDir + ")";
         	new TextRenderer(mc, coordText, MoveCommand.coordsXY[0], MoveCommand.coordsXY[1], ScaleCommand.coordsScale);
     	}
-
+    	
     	if (ToggleCommand.dungeonTimerToggled && Utils.inDungeons) {
     		String dungeonTimerText = EnumChatFormatting.GRAY + "Wither Doors:\n" +
     								  EnumChatFormatting.DARK_RED + "Blood Open:\n" +
@@ -1311,20 +1273,20 @@ public class DankersSkyblockMod
     		new TextRenderer(mc, dungeonTimerText, MoveCommand.dungeonTimerXY[0], MoveCommand.dungeonTimerXY[1], ScaleCommand.dungeonTimerScale);
     		new TextRenderer(mc, dungeonTimers, (int) (MoveCommand.dungeonTimerXY[0] + (80 * ScaleCommand.dungeonTimerScale)), MoveCommand.dungeonTimerXY[1], ScaleCommand.dungeonTimerScale);
     	}
-
+    	
     	if (ToggleCommand.lividSolverToggled && foundLivid && livid != null) {
     		new TextRenderer(mc, livid.getName().replace("" + EnumChatFormatting.BOLD, ""), MoveCommand.lividHpXY[0], MoveCommand.lividHpXY[1], ScaleCommand.lividHpScale);
     	}
-
+    	
     	if (ToggleCommand.cakeTimerToggled && Utils.inSkyblock) {
     		double scale = ScaleCommand.cakeTimerScale;
     		double scaleReset = Math.pow(scale, -1);
     		GL11.glScaled(scale, scale, scale);
-
+    		
     		double timeNow = System.currentTimeMillis() / 1000;
     		mc.getTextureManager().bindTexture(CAKE_ICON);
     		Gui.drawModalRectWithCustomSizedTexture(MoveCommand.cakeTimerXY[0], MoveCommand.cakeTimerXY[1], 0, 0, 16, 16, 16, 16);
-
+    		
     		String cakeText;
     		if (cakeTime - timeNow < 0) {
     			cakeText = EnumChatFormatting.RED + "NONE";
@@ -1332,10 +1294,10 @@ public class DankersSkyblockMod
     			cakeText = CAKE_COLOUR + Utils.getTimeBetween(timeNow, cakeTime);
     		}
     		new TextRenderer(mc, cakeText, MoveCommand.cakeTimerXY[0] + 20, MoveCommand.cakeTimerXY[1] + 5, 1);
-
+    		
     		GL11.glScaled(scaleReset, scaleReset, scaleReset);
     	}
-
+    	
     	if (showSkillTracker && Utils.inSkyblock) {
     		int xpPerHour;
     		double xpToShow = 0;
@@ -1375,7 +1337,7 @@ public class DankersSkyblockMod
 			if (!skillStopwatch.isStarted() || skillStopwatch.isSuspended()) {
 				skillTrackerText += "\n" + EnumChatFormatting.RED + "PAUSED";
 			}
-
+			
 			new TextRenderer(mc, skillTrackerText, MoveCommand.skillTrackerXY[0], MoveCommand.skillTrackerXY[1], ScaleCommand.skillTrackerScale);
     	}
 
@@ -1393,7 +1355,7 @@ public class DankersSkyblockMod
     		String drop20;
     		double timeNow = System.currentTimeMillis() / 1000;
     		NumberFormat nf = NumberFormat.getIntegerInstance(Locale.US);
-
+    		
     		switch (DisplayCommand.display) {
     			case "wolf":
 	    			if (LootCommand.wolfTime == -1) {
@@ -1411,11 +1373,11 @@ public class DankersSkyblockMod
 	    			} else {
 	    				drop20 = nf.format(LootCommand.wolfWheelsDrops) + " times";
 	    			}
-
+	    			
 	    			dropsText = EnumChatFormatting.GOLD + "Svens Killed:\n" +
 								EnumChatFormatting.GREEN + "Wolf Teeth:\n" +
 								EnumChatFormatting.BLUE + "Hamster Wheels:\n" +
-								EnumChatFormatting.AQUA + "Spirit Runes:\n" +
+								EnumChatFormatting.AQUA + "Spirit Runes:\n" + 
 								EnumChatFormatting.WHITE + "Critical VI Books:\n" +
 								EnumChatFormatting.DARK_RED + "Red Claw Eggs:\n" +
 								EnumChatFormatting.GOLD + "Couture Runes:\n" +
@@ -1426,7 +1388,7 @@ public class DankersSkyblockMod
 	    			countText = EnumChatFormatting.GOLD + nf.format(LootCommand.wolfSvens) + "\n" +
 								EnumChatFormatting.GREEN + nf.format(LootCommand.wolfTeeth) + "\n" +
 								EnumChatFormatting.BLUE + drop20 + "\n" +
-								EnumChatFormatting.AQUA + LootCommand.wolfSpirits + "\n" +
+								EnumChatFormatting.AQUA + LootCommand.wolfSpirits + "\n" + 
 								EnumChatFormatting.WHITE + LootCommand.wolfBooks + "\n" +
 								EnumChatFormatting.DARK_RED + LootCommand.wolfEggs + "\n" +
 								EnumChatFormatting.GOLD + LootCommand.wolfCoutures + "\n" +
@@ -1451,11 +1413,11 @@ public class DankersSkyblockMod
 	    			} else {
 	    				drop20 = nf.format(LootCommand.wolfWheelsDropsSession) + " times";
 	    			}
-
+	    			
 	    			dropsText = EnumChatFormatting.GOLD + "Svens Killed:\n" +
 								EnumChatFormatting.GREEN + "Wolf Teeth:\n" +
 								EnumChatFormatting.BLUE + "Hamster Wheels:\n" +
-								EnumChatFormatting.AQUA + "Spirit Runes:\n" +
+								EnumChatFormatting.AQUA + "Spirit Runes:\n" + 
 								EnumChatFormatting.WHITE + "Critical VI Books:\n" +
 								EnumChatFormatting.DARK_RED + "Red Claw Eggs:\n" +
 								EnumChatFormatting.GOLD + "Couture Runes:\n" +
@@ -1466,7 +1428,7 @@ public class DankersSkyblockMod
 	    			countText = EnumChatFormatting.GOLD + nf.format(LootCommand.wolfSvensSession) + "\n" +
 								EnumChatFormatting.GREEN + nf.format(LootCommand.wolfTeethSession) + "\n" +
 								EnumChatFormatting.BLUE + drop20 + "\n" +
-								EnumChatFormatting.AQUA + LootCommand.wolfSpiritsSession + "\n" +
+								EnumChatFormatting.AQUA + LootCommand.wolfSpiritsSession + "\n" + 
 								EnumChatFormatting.WHITE + LootCommand.wolfBooksSession + "\n" +
 								EnumChatFormatting.DARK_RED + LootCommand.wolfEggsSession + "\n" +
 								EnumChatFormatting.GOLD + LootCommand.wolfCouturesSession + "\n" +
@@ -1491,11 +1453,11 @@ public class DankersSkyblockMod
 	    			} else {
 	    				drop20 = nf.format(LootCommand.spiderTAPDrops) + " times";
 	    			}
-
+	    			
 	    			dropsText = EnumChatFormatting.GOLD + "Tarantulas Killed:\n" +
 								EnumChatFormatting.GREEN + "Tarantula Webs:\n" +
 								EnumChatFormatting.DARK_GREEN + "Arrow Poison:\n" +
-								EnumChatFormatting.DARK_GRAY + "Bite Runes:\n" +
+								EnumChatFormatting.DARK_GRAY + "Bite Runes:\n" + 
 								EnumChatFormatting.WHITE + "Bane VI Books:\n" +
 								EnumChatFormatting.AQUA + "Spider Catalysts:\n" +
 								EnumChatFormatting.DARK_PURPLE + "Tarantula Talismans:\n" +
@@ -1506,7 +1468,7 @@ public class DankersSkyblockMod
 	    			countText = EnumChatFormatting.GOLD + nf.format(LootCommand.spiderTarantulas) + "\n" +
 								EnumChatFormatting.GREEN + nf.format(LootCommand.spiderWebs) + "\n" +
 								EnumChatFormatting.DARK_GREEN + drop20 + "\n" +
-								EnumChatFormatting.DARK_GRAY + LootCommand.spiderBites + "\n" +
+								EnumChatFormatting.DARK_GRAY + LootCommand.spiderBites + "\n" + 
 								EnumChatFormatting.WHITE + LootCommand.spiderBooks + "\n" +
 								EnumChatFormatting.AQUA + LootCommand.spiderCatalysts + "\n" +
 								EnumChatFormatting.DARK_PURPLE + LootCommand.spiderTalismans + "\n" +
@@ -1531,11 +1493,11 @@ public class DankersSkyblockMod
 	    			} else {
 	    				drop20 = nf.format(LootCommand.spiderTAPDropsSession) + " times";
 	    			}
-
+	    			
 	    			dropsText = EnumChatFormatting.GOLD + "Tarantulas Killed:\n" +
 								EnumChatFormatting.GREEN + "Tarantula Webs:\n" +
 								EnumChatFormatting.DARK_GREEN + "Arrow Poison:\n" +
-								EnumChatFormatting.DARK_GRAY + "Bite Runes:\n" +
+								EnumChatFormatting.DARK_GRAY + "Bite Runes:\n" + 
 								EnumChatFormatting.WHITE + "Bane VI Books:\n" +
 								EnumChatFormatting.AQUA + "Spider Catalysts:\n" +
 								EnumChatFormatting.DARK_PURPLE + "Tarantula Talismans:\n" +
@@ -1546,7 +1508,7 @@ public class DankersSkyblockMod
 	    			countText = EnumChatFormatting.GOLD + nf.format(LootCommand.spiderTarantulasSession) + "\n" +
 								EnumChatFormatting.GREEN + nf.format(LootCommand.spiderWebsSession) + "\n" +
 								EnumChatFormatting.DARK_GREEN + drop20 + "\n" +
-								EnumChatFormatting.DARK_GRAY + LootCommand.spiderBitesSession + "\n" +
+								EnumChatFormatting.DARK_GRAY + LootCommand.spiderBitesSession + "\n" + 
 								EnumChatFormatting.WHITE + LootCommand.spiderBooksSession + "\n" +
 								EnumChatFormatting.AQUA + LootCommand.spiderCatalystsSession + "\n" +
 								EnumChatFormatting.DARK_PURPLE + LootCommand.spiderTalismansSession + "\n" +
@@ -1571,11 +1533,11 @@ public class DankersSkyblockMod
 	    			} else {
 	    				drop20 = nf.format(LootCommand.zombieFoulFleshDrops) + " times";
 	    			}
-
+	    			
 	    			dropsText = EnumChatFormatting.GOLD + "Revs Killed:\n" +
 								EnumChatFormatting.GREEN + "Revenant Flesh:\n" +
 								EnumChatFormatting.BLUE + "Foul Flesh:\n" +
-								EnumChatFormatting.DARK_GREEN + "Pestilence Runes:\n" +
+								EnumChatFormatting.DARK_GREEN + "Pestilence Runes:\n" + 
 								EnumChatFormatting.WHITE + "Smite VI Books:\n" +
 								EnumChatFormatting.AQUA + "Undead Catalysts:\n" +
 								EnumChatFormatting.DARK_PURPLE + "Beheaded Horrors:\n" +
@@ -1587,7 +1549,7 @@ public class DankersSkyblockMod
 	    			countText = EnumChatFormatting.GOLD + nf.format(LootCommand.zombieRevs) + "\n" +
 								EnumChatFormatting.GREEN + nf.format(LootCommand.zombieRevFlesh) + "\n" +
 								EnumChatFormatting.BLUE + drop20 + "\n" +
-								EnumChatFormatting.DARK_GREEN + LootCommand.zombiePestilences + "\n" +
+								EnumChatFormatting.DARK_GREEN + LootCommand.zombiePestilences + "\n" + 
 								EnumChatFormatting.WHITE + LootCommand.zombieBooks + "\n" +
 								EnumChatFormatting.AQUA + LootCommand.zombieUndeadCatas + "\n" +
 								EnumChatFormatting.DARK_PURPLE + LootCommand.zombieBeheadeds + "\n" +
@@ -1613,11 +1575,11 @@ public class DankersSkyblockMod
 	    			} else {
 	    				drop20 = nf.format(LootCommand.zombieFoulFleshDropsSession) + " times";
 	    			}
-
+	    			
 	    			dropsText = EnumChatFormatting.GOLD + "Revs Killed:\n" +
 								EnumChatFormatting.GREEN + "Revenant Flesh:\n" +
 								EnumChatFormatting.BLUE + "Foul Flesh:\n" +
-								EnumChatFormatting.DARK_GREEN + "Pestilence Runes:\n" +
+								EnumChatFormatting.DARK_GREEN + "Pestilence Runes:\n" + 
 								EnumChatFormatting.WHITE + "Smite VI Books:\n" +
 								EnumChatFormatting.AQUA + "Undead Catalysts:\n" +
 								EnumChatFormatting.DARK_PURPLE + "Beheaded Horrors:\n" +
@@ -1629,7 +1591,7 @@ public class DankersSkyblockMod
 	    			countText = EnumChatFormatting.GOLD + nf.format(LootCommand.zombieRevsSession) + "\n" +
 								EnumChatFormatting.GREEN + nf.format(LootCommand.zombieRevFleshSession) + "\n" +
 								EnumChatFormatting.BLUE + drop20 + "\n" +
-								EnumChatFormatting.DARK_GREEN + LootCommand.zombiePestilencesSession + "\n" +
+								EnumChatFormatting.DARK_GREEN + LootCommand.zombiePestilencesSession + "\n" + 
 								EnumChatFormatting.WHITE + LootCommand.zombieBooksSession + "\n" +
 								EnumChatFormatting.AQUA + LootCommand.zombieUndeadCatasSession + "\n" +
 								EnumChatFormatting.DARK_PURPLE + LootCommand.zombieBeheadedsSession + "\n" +
@@ -1650,7 +1612,7 @@ public class DankersSkyblockMod
 	    			} else {
 	    				bossesBetween = nf.format(LootCommand.empSCs);
 	    			}
-
+	    			
 	    			dropsText = EnumChatFormatting.AQUA + "Creatures Caught:\n" +
 	    						EnumChatFormatting.AQUA + "Fishing Milestone:\n" +
 		    					EnumChatFormatting.GOLD + "Good Catches:\n" +
@@ -1692,7 +1654,7 @@ public class DankersSkyblockMod
 										  EnumChatFormatting.GOLD + nf.format(LootCommand.seaEmperors) + "\n" +
 										  EnumChatFormatting.AQUA + timeBetween + "\n" +
 										  EnumChatFormatting.AQUA + bossesBetween;
-
+	    			
 	    			if (ToggleCommand.splitFishing) {
 	    				new TextRenderer(mc, dropsTextTwo, (int) (MoveCommand.displayXY[0] + (160 * ScaleCommand.displayScale)), MoveCommand.displayXY[1], ScaleCommand.displayScale);
 	        			new TextRenderer(mc, countTextTwo, (int) (MoveCommand.displayXY[0] + (270 * ScaleCommand.displayScale)), MoveCommand.displayXY[1], ScaleCommand.displayScale);
@@ -1712,7 +1674,7 @@ public class DankersSkyblockMod
 	    			} else {
 	    				bossesBetween = nf.format(LootCommand.empSCsSession);
 	    			}
-
+	    			
 	    			dropsText = EnumChatFormatting.AQUA + "Creatures Caught:\n" +
 	    						EnumChatFormatting.AQUA + "Fishing Milestone:\n" +
 		    					EnumChatFormatting.GOLD + "Good Catches:\n" +
@@ -1754,7 +1716,7 @@ public class DankersSkyblockMod
 										  EnumChatFormatting.GOLD + nf.format(LootCommand.seaEmperorsSession) + "\n" +
 										  EnumChatFormatting.AQUA + timeBetween + "\n" +
 										  EnumChatFormatting.AQUA + bossesBetween;
-
+	    			
 	    			if (ToggleCommand.splitFishing) {
 	    				new TextRenderer(mc, dropsTextTwo, (int) (MoveCommand.displayXY[0] + (160 * ScaleCommand.displayScale)), MoveCommand.displayXY[1], ScaleCommand.displayScale);
 	        			new TextRenderer(mc, countTextTwo, (int) (MoveCommand.displayXY[0] + (270 * ScaleCommand.displayScale)), MoveCommand.displayXY[1], ScaleCommand.displayScale);
@@ -1774,7 +1736,7 @@ public class DankersSkyblockMod
 	    			} else {
 	    				bossesBetween = nf.format(LootCommand.yetiSCs);
 	    			}
-
+	    			
 	    			dropsText = EnumChatFormatting.AQUA + "Creatures Caught:\n" +
 	    						EnumChatFormatting.AQUA + "Fishing Milestone:\n" +
 	    						EnumChatFormatting.GOLD + "Good Catches:\n" +
@@ -1807,7 +1769,7 @@ public class DankersSkyblockMod
 	    			} else {
 	    				bossesBetween = nf.format(LootCommand.yetiSCsSession);
 	    			}
-
+	    			
 	    			dropsText = EnumChatFormatting.AQUA + "Creatures Caught:\n" +
 								EnumChatFormatting.AQUA + "Fishing Milestone:\n" +
 								EnumChatFormatting.GOLD + "Good Catches:\n" +
@@ -2261,7 +2223,7 @@ public class DankersSkyblockMod
     			new TextRenderer(mc, dropsText, MoveCommand.displayXY[0], MoveCommand.displayXY[1], ScaleCommand.displayScale);
     			new TextRenderer(mc, countText, (int) (MoveCommand.displayXY[0] + (110 * ScaleCommand.displayScale)), MoveCommand.displayXY[1], ScaleCommand.displayScale);
     		}
-
+    	
     	if (showTitle) {
     		Utils.drawTitle(titleText);
     	}
@@ -2269,17 +2231,17 @@ public class DankersSkyblockMod
     		new TextRenderer(mc, skillText, MoveCommand.skill50XY[0], MoveCommand.skill50XY[1], ScaleCommand.skill50Scale);
     	}
     }
-
+    
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void onSound(final PlaySoundEvent event) {
     	if (!Utils.inSkyblock) return;
     	if (event.name.equals("note.pling")) {
-    		// Don't check twice within 3 seconds
+    		// Don't check twice within 3 seconds 
     		checkItemsNow = System.currentTimeMillis() / 1000;
     		if (checkItemsNow - itemsChecked < 3) return;
-
+    		
     		List<String> scoreboard = ScoreboardHandler.getSidebarLines();
-
+    		
     		for (String line : scoreboard) {
     			String cleanedLine = ScoreboardHandler.cleanSB(line);
     			// If Hypixel lags and scoreboard doesn't update
@@ -2290,7 +2252,7 @@ public class DankersSkyblockMod
         			int itemTAP = Utils.getItems("Toxic Arrow Poison");
         			int itemRev = Utils.getItems("Revenant Flesh");
         			int itemFoul = Utils.getItems("Foul Flesh");
-
+        			
         			// If no items, are detected, allow check again. Should fix items not being found
         			if (itemTeeth + itemWheels + itemWebs + itemTAP + itemRev + itemFoul > 0) {
         				itemsChecked = System.currentTimeMillis() / 1000;
@@ -2306,7 +2268,7 @@ public class DankersSkyblockMod
             			LootCommand.spiderTAPSession += itemTAP;
             			LootCommand.zombieRevFleshSession += itemRev;
             			LootCommand.zombieFoulFleshSession += itemFoul;
-
+            			
             			ConfigHandler.writeIntConfig("wolf", "teeth", LootCommand.wolfTeeth);
             			ConfigHandler.writeIntConfig("wolf", "wheel", LootCommand.wolfWheels);
             			ConfigHandler.writeIntConfig("spider", "web", LootCommand.spiderWebs);
@@ -2318,12 +2280,12 @@ public class DankersSkyblockMod
     		}
     	}
     }
-
+    
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void onTooltip(ItemTooltipEvent event) {
     	if (!Utils.inSkyblock) return;
     	if (event.toolTip == null) return;
-
+    	
     	ItemStack item = event.itemStack;
     	Minecraft mc = Minecraft.getMinecraft();
     	EntityPlayerSP player = mc.thePlayer;
@@ -2333,7 +2295,7 @@ public class DankersSkyblockMod
     			event.toolTip.set(i, Utils.returnGoldenEnchants(event.toolTip.get(i)));
     		}
     	}
-
+    	
     	if (ToggleCommand.expertiseLoreToggled) {
     		if (item.hasTagCompound()) {
     			NBTTagCompound tags = item.getSubCompound("ExtraAttributes", false);
@@ -2341,7 +2303,7 @@ public class DankersSkyblockMod
     				if (tags.hasKey("expertise_kills")) {
     					int index = 4;
     					if (!Minecraft.getMinecraft().gameSettings.advancedItemTooltips) index -= 2;
-
+    					
     					event.toolTip.add(event.toolTip.size() - index, "");
     					event.toolTip.add(event.toolTip.size() - index, "Expertise Kills: " + EnumChatFormatting.RED + tags.getInteger("expertise_kills"));
     					if (Utils.expertiseKillsLeft(tags.getInteger("expertise_kills")) != -1) {
@@ -3025,32 +2987,9 @@ public class DankersSkyblockMod
 
     @SubscribeEvent
     public void onKey(KeyInputEvent event) {
-
-
-		EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
-
-		//Check for pressing O to read party
-		if(keyBindings[3].isPressed()){
-			SetPartyCommand.getParty();
-		}
-
-		// Check for pressing P for reparty
-		if (keyBindings[2].isPressed()) {
-			if(!SetPartyCommand.set){
-				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Usage: " + SetPartyCommand.getUsage()));
-				return;
-			}
-
-			String members = String.join("\n" + EnumChatFormatting.GOLD, RepartyCommand.players);
-			player.addChatMessage(new ChatComponentText(DankersSkyblockMod.DELIMITER_COLOUR + EnumChatFormatting.BOLD + "-------------------\n" +
-					EnumChatFormatting.RED + EnumChatFormatting.BOLD + "Repartying: \n" +
-					EnumChatFormatting.GOLD + members + "\n" +
-					DankersSkyblockMod.DELIMITER_COLOUR + EnumChatFormatting.BOLD + "-------------------"));
-			RepartyCommand.processCommand();
-		}
-
     	if (!Utils.inSkyblock) return;
 
+    	EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
     	if (keyBindings[0].isPressed()) {
     		player.sendChatMessage(lastMaddoxCommand);
     	}
@@ -3066,7 +3005,6 @@ public class DankersSkyblockMod
 				player.addChatMessage(new ChatComponentText(MAIN_COLOUR + "Skill tracker paused."));
     		}
     	}
-
     }
 
     @SubscribeEvent
