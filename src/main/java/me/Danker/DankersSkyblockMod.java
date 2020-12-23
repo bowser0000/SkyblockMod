@@ -382,6 +382,9 @@ public class DankersSkyblockMod
             else if (leader.matches() && !(leader.group(1).equals(player.getName()))) {
 				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "You are not party leader."));
 			}
+			else if (message.Contains("Couldn't find a player") || message.Contains("cannot invite that player")) {
+
+			}
 			else {
 				while (members.find()) {
 					String partyMember = members.group(1);
@@ -407,10 +410,8 @@ public class DankersSkyblockMod
 						if (ToggleCommand.autoSkillTrackerToggled && System.currentTimeMillis() / 1000 - timeSinceGained <= 2) {
 							if (skillStopwatch.isStarted() && skillStopwatch.isSuspended()) {
 								skillStopwatch.resume();
-								player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Skill tracker started."));
 							} else if (!skillStopwatch.isStarted()) {
 								skillStopwatch.start();
-								player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Skill tracker started."));
 							}
 						}
 						timeSinceGained = System.currentTimeMillis() / 1000;
@@ -3292,7 +3293,6 @@ public class DankersSkyblockMod
 		if (ToggleCommand.autoSkillTrackerToggled) {
 			if (skillStopwatch.isStarted() && !skillStopwatch.isSuspended()) {
 				skillStopwatch.suspend();
-				mc.thePlayer.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Skill tracker paused."));
 			}
 		}
 		
