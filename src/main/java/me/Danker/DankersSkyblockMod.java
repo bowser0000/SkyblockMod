@@ -96,7 +96,7 @@ public class DankersSkyblockMod {
     static int tickAmount = 1;
     static String lastMaddoxCommand = "/cb placeholder";
     static double lastMaddoxTime = 0;
-    static KeyBinding[] keyBindings = new KeyBinding[2];
+    static KeyBinding[] keyBindings = new KeyBinding[3];
     static boolean usingLabymod = false;
     public static String guiToOpen = null;
     static boolean foundLivid = false;
@@ -273,7 +273,8 @@ public class DankersSkyblockMod {
         t6EnchantPattern = Pattern.compile(patternString);
 
         keyBindings[0] = new KeyBinding("Open Maddox Menu", Keyboard.KEY_M, "Danker's Skyblock Mod");
-        keyBindings[1] = new KeyBinding("Start/Stop Skill Tracker", Keyboard.KEY_NUMPAD5, "Danker's Skyblock Mod");
+        keyBindings[1] = new KeyBinding("Regular Ability", Keyboard.KEY_NUMPAD4, "Danker's Skyblock Mod");
+        keyBindings[2] = new KeyBinding("Start/Stop Skill Tracker", Keyboard.KEY_NUMPAD5, "Danker's Skyblock Mod");
 
         for (KeyBinding keyBinding : keyBindings) {
             ClientRegistry.registerKeyBinding(keyBinding);
@@ -3193,6 +3194,11 @@ public class DankersSkyblockMod {
             player.sendChatMessage(lastMaddoxCommand);
         }
         if (keyBindings[1].isPressed()) {
+            if (Utils.inDungeons) {
+                player.dropOneItem(true);
+            }
+        }
+        if (keyBindings[2].isPressed()) {
             if (skillStopwatch.isStarted() && skillStopwatch.isSuspended()) {
                 skillStopwatch.resume();
                 player.addChatMessage(new ChatComponentText(MAIN_COLOUR + "Skill tracker started."));
