@@ -615,8 +615,12 @@ public class DankersSkyblockMod {
 
         if (ToggleCommand.oruoToggled && Utils.inDungeons) {
             if (message.contains("What SkyBlock year is it?")) {
-                int year = (int) (Math.floor((System.currentTimeMillis() - 1560276000000L)/446400) + 1);
+                double currentTime = System.currentTimeMillis() /1000L;
 
+                double diff = Math.floor(currentTime - 1560276000);
+
+                int year = (int) (diff / 446400 + 1);
+                Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("It is Skyblock Year " + year));
                 triviaAnswers = new String[]{"Year " + year};
             } else {
                 for (String question : triviaSolutions.keySet()) {
