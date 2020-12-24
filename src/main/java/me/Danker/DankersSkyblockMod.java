@@ -613,13 +613,16 @@ public class DankersSkyblockMod {
         }
 
         if (ToggleCommand.oruoToggled && Utils.inDungeons) {
-            // Don't set every answer to wrong with this question
-            if (message.contains("What SkyBlock year is it?")) triviaAnswers = null;
+            if (message.contains("What SkyBlock year is it?")) {
+                int year = (int) (Math.floor((System.currentTimeMillis() - 1560276000000L)/446400) + 1);
 
-            for (String question : triviaSolutions.keySet()) {
-                if (message.contains(question)) {
-                    triviaAnswers = triviaSolutions.get(question);
-                    break;
+                triviaAnswers = new String[]{"Year " + year};
+            } else {
+                for (String question : triviaSolutions.keySet()) {
+                    if (message.contains(question)) {
+                        triviaAnswers = triviaSolutions.get(question);
+                        break;
+                    }
                 }
             }
 
