@@ -323,7 +323,7 @@ public class DankersSkyblockMod {
 
             IChatComponent chatComponent = new ChatComponentText(
                     EnumChatFormatting.GOLD + "Thank you for downloading Danker's Skyblock Mod.\n" +
-                            "To get started, run the command " + EnumChatFormatting.GOLD + "/dsm" + EnumChatFormatting.RESET + " to view all the mod features."
+                         "To get started, run the command " + EnumChatFormatting.GOLD + "/dsm" + EnumChatFormatting.RESET + " to view all the mod features."
             );
             chatComponent.setChatStyle(chatComponent.getChatStyle().setChatHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ChatComponentText("Click to open the DSM menu."))).setChatClickEvent(new ClickEvent(Action.RUN_COMMAND, "/dsm")));
 
@@ -1344,17 +1344,17 @@ public class DankersSkyblockMod {
 
         if (ToggleCommand.dungeonTimerToggled && Utils.inDungeons) {
             String dungeonTimerText = EnumChatFormatting.GRAY + "Wither Doors:\n" +
-                    EnumChatFormatting.DARK_RED + "Blood Open:\n" +
-                    EnumChatFormatting.RED + "Watcher Clear:\n" +
-                    EnumChatFormatting.BLUE + "Boss Clear:\n" +
-                    EnumChatFormatting.YELLOW + "Deaths:\n" +
-                    EnumChatFormatting.YELLOW + "Puzzle Fails:";
+                                      EnumChatFormatting.DARK_RED + "Blood Open:\n" +
+                                      EnumChatFormatting.RED + "Watcher Clear:\n" +
+                                      EnumChatFormatting.BLUE + "Boss Clear:\n" +
+                                      EnumChatFormatting.YELLOW + "Deaths:\n" +
+                                      EnumChatFormatting.YELLOW + "Puzzle Fails:";
             String dungeonTimers = EnumChatFormatting.GRAY + "" + witherDoors + "\n" +
-                    EnumChatFormatting.DARK_RED + Utils.getTimeBetween(dungeonStartTime, bloodOpenTime) + "\n" +
-                    EnumChatFormatting.RED + Utils.getTimeBetween(dungeonStartTime, watcherClearTime) + "\n" +
-                    EnumChatFormatting.BLUE + Utils.getTimeBetween(dungeonStartTime, bossClearTime) + "\n" +
-                    EnumChatFormatting.YELLOW + dungeonDeaths + "\n" +
-                    EnumChatFormatting.YELLOW + puzzleFails;
+                                   EnumChatFormatting.DARK_RED + Utils.getTimeBetween(dungeonStartTime, bloodOpenTime) + "\n" +
+                                   EnumChatFormatting.RED + Utils.getTimeBetween(dungeonStartTime, watcherClearTime) + "\n" +
+                                   EnumChatFormatting.BLUE + Utils.getTimeBetween(dungeonStartTime, bossClearTime) + "\n" +
+                                   EnumChatFormatting.YELLOW + dungeonDeaths + "\n" +
+                                   EnumChatFormatting.YELLOW + puzzleFails;
             new TextRenderer(mc, dungeonTimerText, MoveCommand.dungeonTimerXY[0], MoveCommand.dungeonTimerXY[1], ScaleCommand.dungeonTimerScale);
             new TextRenderer(mc, dungeonTimers, (int) (MoveCommand.dungeonTimerXY[0] + (80 * ScaleCommand.dungeonTimerScale)), MoveCommand.dungeonTimerXY[1], ScaleCommand.dungeonTimerScale);
         }
@@ -1438,8 +1438,8 @@ public class DankersSkyblockMod {
             }
             xpPerHour = (int) Math.round(xpToShow / ((skillStopwatch.getTime() + 1) / 3600000d));
             String skillTrackerText = SKILL_TRACKER_COLOUR + lastSkill + " XP Earned: " + NumberFormat.getNumberInstance(Locale.US).format(xpToShow) + "\n" +
-                    SKILL_TRACKER_COLOUR + "Time Elapsed: " + Utils.getTimeBetween(0, skillStopwatch.getTime() / 1000d) + "\n" +
-                    SKILL_TRACKER_COLOUR + "XP Per Hour: " + NumberFormat.getIntegerInstance(Locale.US).format(xpPerHour);
+                                      SKILL_TRACKER_COLOUR + "Time Elapsed: " + Utils.getTimeBetween(0, skillStopwatch.getTime() / 1000d) + "\n" +
+                                      SKILL_TRACKER_COLOUR + "XP Per Hour: " + NumberFormat.getIntegerInstance(Locale.US).format(xpPerHour);
             if (xpLeft >= 0) {
                 String time = xpPerHour == 0 ? "Never" : Utils.getTimeBetween(0, xpLeft / (xpPerHour / 3600D));
                 skillTrackerText += "\n" + SKILL_TRACKER_COLOUR + "Time Until Next Level: " + time;
@@ -1485,27 +1485,27 @@ public class DankersSkyblockMod {
                     }
 
                     dropsText = EnumChatFormatting.GOLD + "Svens Killed:\n" +
-                            EnumChatFormatting.GREEN + "Wolf Teeth:\n" +
-                            EnumChatFormatting.BLUE + "Hamster Wheels:\n" +
-                            EnumChatFormatting.AQUA + "Spirit Runes:\n" +
-                            EnumChatFormatting.WHITE + "Critical VI Books:\n" +
-                            EnumChatFormatting.DARK_RED + "Red Claw Eggs:\n" +
-                            EnumChatFormatting.GOLD + "Couture Runes:\n" +
-                            EnumChatFormatting.AQUA + "Grizzly Baits:\n" +
-                            EnumChatFormatting.DARK_PURPLE + "Overfluxes:\n" +
-                            EnumChatFormatting.AQUA + "Time Since RNG:\n" +
-                            EnumChatFormatting.AQUA + "Bosses Since RNG:";
+                                EnumChatFormatting.GREEN + "Wolf Teeth:\n" +
+                                EnumChatFormatting.BLUE + "Hamster Wheels:\n" +
+                                EnumChatFormatting.AQUA + "Spirit Runes:\n" +
+                                EnumChatFormatting.WHITE + "Critical VI Books:\n" +
+                                EnumChatFormatting.DARK_RED + "Red Claw Eggs:\n" +
+                                EnumChatFormatting.GOLD + "Couture Runes:\n" +
+                                EnumChatFormatting.AQUA + "Grizzly Baits:\n" +
+                                EnumChatFormatting.DARK_PURPLE + "Overfluxes:\n" +
+                                EnumChatFormatting.AQUA + "Time Since RNG:\n" +
+                                EnumChatFormatting.AQUA + "Bosses Since RNG:";
                     countText = EnumChatFormatting.GOLD + nf.format(LootCommand.wolfSvens) + "\n" +
-                            EnumChatFormatting.GREEN + nf.format(LootCommand.wolfTeeth) + "\n" +
-                            EnumChatFormatting.BLUE + drop20 + "\n" +
-                            EnumChatFormatting.AQUA + LootCommand.wolfSpirits + "\n" +
-                            EnumChatFormatting.WHITE + LootCommand.wolfBooks + "\n" +
-                            EnumChatFormatting.DARK_RED + LootCommand.wolfEggs + "\n" +
-                            EnumChatFormatting.GOLD + LootCommand.wolfCoutures + "\n" +
-                            EnumChatFormatting.AQUA + LootCommand.wolfBaits + "\n" +
-                            EnumChatFormatting.DARK_PURPLE + LootCommand.wolfFluxes + "\n" +
-                            EnumChatFormatting.AQUA + timeBetween + "\n" +
-                            EnumChatFormatting.AQUA + bossesBetween;
+                                EnumChatFormatting.GREEN + nf.format(LootCommand.wolfTeeth) + "\n" +
+                                EnumChatFormatting.BLUE + drop20 + "\n" +
+                                EnumChatFormatting.AQUA + LootCommand.wolfSpirits + "\n" +
+                                EnumChatFormatting.WHITE + LootCommand.wolfBooks + "\n" +
+                                EnumChatFormatting.DARK_RED + LootCommand.wolfEggs + "\n" +
+                                EnumChatFormatting.GOLD + LootCommand.wolfCoutures + "\n" +
+                                EnumChatFormatting.AQUA + LootCommand.wolfBaits + "\n" +
+                                EnumChatFormatting.DARK_PURPLE + LootCommand.wolfFluxes + "\n" +
+                                EnumChatFormatting.AQUA + timeBetween + "\n" +
+                                EnumChatFormatting.AQUA + bossesBetween;
                     break;
                 case "wolf_session":
                     if (LootCommand.wolfTimeSession == -1) {
@@ -1525,27 +1525,27 @@ public class DankersSkyblockMod {
                     }
 
                     dropsText = EnumChatFormatting.GOLD + "Svens Killed:\n" +
-                            EnumChatFormatting.GREEN + "Wolf Teeth:\n" +
-                            EnumChatFormatting.BLUE + "Hamster Wheels:\n" +
-                            EnumChatFormatting.AQUA + "Spirit Runes:\n" +
-                            EnumChatFormatting.WHITE + "Critical VI Books:\n" +
-                            EnumChatFormatting.DARK_RED + "Red Claw Eggs:\n" +
-                            EnumChatFormatting.GOLD + "Couture Runes:\n" +
-                            EnumChatFormatting.AQUA + "Grizzly Baits:\n" +
-                            EnumChatFormatting.DARK_PURPLE + "Overfluxes:\n" +
-                            EnumChatFormatting.AQUA + "Time Since RNG:\n" +
-                            EnumChatFormatting.AQUA + "Bosses Since RNG:";
+                                EnumChatFormatting.GREEN + "Wolf Teeth:\n" +
+                                EnumChatFormatting.BLUE + "Hamster Wheels:\n" +
+                                EnumChatFormatting.AQUA + "Spirit Runes:\n" +
+                                EnumChatFormatting.WHITE + "Critical VI Books:\n" +
+                                EnumChatFormatting.DARK_RED + "Red Claw Eggs:\n" +
+                                EnumChatFormatting.GOLD + "Couture Runes:\n" +
+                                EnumChatFormatting.AQUA + "Grizzly Baits:\n" +
+                                EnumChatFormatting.DARK_PURPLE + "Overfluxes:\n" +
+                                EnumChatFormatting.AQUA + "Time Since RNG:\n" +
+                                EnumChatFormatting.AQUA + "Bosses Since RNG:";
                     countText = EnumChatFormatting.GOLD + nf.format(LootCommand.wolfSvensSession) + "\n" +
-                            EnumChatFormatting.GREEN + nf.format(LootCommand.wolfTeethSession) + "\n" +
-                            EnumChatFormatting.BLUE + drop20 + "\n" +
-                            EnumChatFormatting.AQUA + LootCommand.wolfSpiritsSession + "\n" +
-                            EnumChatFormatting.WHITE + LootCommand.wolfBooksSession + "\n" +
-                            EnumChatFormatting.DARK_RED + LootCommand.wolfEggsSession + "\n" +
-                            EnumChatFormatting.GOLD + LootCommand.wolfCouturesSession + "\n" +
-                            EnumChatFormatting.AQUA + LootCommand.wolfBaitsSession + "\n" +
-                            EnumChatFormatting.DARK_PURPLE + LootCommand.wolfFluxesSession + "\n" +
-                            EnumChatFormatting.AQUA + timeBetween + "\n" +
-                            EnumChatFormatting.AQUA + bossesBetween;
+                                EnumChatFormatting.GREEN + nf.format(LootCommand.wolfTeethSession) + "\n" +
+                                EnumChatFormatting.BLUE + drop20 + "\n" +
+                                EnumChatFormatting.AQUA + LootCommand.wolfSpiritsSession + "\n" +
+                                EnumChatFormatting.WHITE + LootCommand.wolfBooksSession + "\n" +
+                                EnumChatFormatting.DARK_RED + LootCommand.wolfEggsSession + "\n" +
+                                EnumChatFormatting.GOLD + LootCommand.wolfCouturesSession + "\n" +
+                                EnumChatFormatting.AQUA + LootCommand.wolfBaitsSession + "\n" +
+                                EnumChatFormatting.DARK_PURPLE + LootCommand.wolfFluxesSession + "\n" +
+                                EnumChatFormatting.AQUA + timeBetween + "\n" +
+                                EnumChatFormatting.AQUA + bossesBetween;
                     break;
                 case "spider":
                     if (LootCommand.spiderTime == -1) {
@@ -1565,27 +1565,27 @@ public class DankersSkyblockMod {
                     }
 
                     dropsText = EnumChatFormatting.GOLD + "Tarantulas Killed:\n" +
-                            EnumChatFormatting.GREEN + "Tarantula Webs:\n" +
-                            EnumChatFormatting.DARK_GREEN + "Arrow Poison:\n" +
-                            EnumChatFormatting.DARK_GRAY + "Bite Runes:\n" +
-                            EnumChatFormatting.WHITE + "Bane VI Books:\n" +
-                            EnumChatFormatting.AQUA + "Spider Catalysts:\n" +
-                            EnumChatFormatting.DARK_PURPLE + "Tarantula Talismans:\n" +
-                            EnumChatFormatting.LIGHT_PURPLE + "Fly Swatters:\n" +
-                            EnumChatFormatting.GOLD + "Digested Mosquitos:\n" +
-                            EnumChatFormatting.AQUA + "Time Since RNG:\n" +
-                            EnumChatFormatting.AQUA + "Bosses Since RNG:";
+                                EnumChatFormatting.GREEN + "Tarantula Webs:\n" +
+                                EnumChatFormatting.DARK_GREEN + "Arrow Poison:\n" +
+                                EnumChatFormatting.DARK_GRAY + "Bite Runes:\n" +
+                                EnumChatFormatting.WHITE + "Bane VI Books:\n" +
+                                EnumChatFormatting.AQUA + "Spider Catalysts:\n" +
+                                EnumChatFormatting.DARK_PURPLE + "Tarantula Talismans:\n" +
+                                EnumChatFormatting.LIGHT_PURPLE + "Fly Swatters:\n" +
+                                EnumChatFormatting.GOLD + "Digested Mosquitos:\n" +
+                                EnumChatFormatting.AQUA + "Time Since RNG:\n" +
+                                EnumChatFormatting.AQUA + "Bosses Since RNG:";
                     countText = EnumChatFormatting.GOLD + nf.format(LootCommand.spiderTarantulas) + "\n" +
-                            EnumChatFormatting.GREEN + nf.format(LootCommand.spiderWebs) + "\n" +
-                            EnumChatFormatting.DARK_GREEN + drop20 + "\n" +
-                            EnumChatFormatting.DARK_GRAY + LootCommand.spiderBites + "\n" +
-                            EnumChatFormatting.WHITE + LootCommand.spiderBooks + "\n" +
-                            EnumChatFormatting.AQUA + LootCommand.spiderCatalysts + "\n" +
-                            EnumChatFormatting.DARK_PURPLE + LootCommand.spiderTalismans + "\n" +
-                            EnumChatFormatting.LIGHT_PURPLE + LootCommand.spiderSwatters + "\n" +
-                            EnumChatFormatting.GOLD + LootCommand.spiderMosquitos + "\n" +
-                            EnumChatFormatting.AQUA + timeBetween + "\n" +
-                            EnumChatFormatting.AQUA + bossesBetween;
+                                EnumChatFormatting.GREEN + nf.format(LootCommand.spiderWebs) + "\n" +
+                                EnumChatFormatting.DARK_GREEN + drop20 + "\n" +
+                                EnumChatFormatting.DARK_GRAY + LootCommand.spiderBites + "\n" +
+                                EnumChatFormatting.WHITE + LootCommand.spiderBooks + "\n" +
+                                EnumChatFormatting.AQUA + LootCommand.spiderCatalysts + "\n" +
+                                EnumChatFormatting.DARK_PURPLE + LootCommand.spiderTalismans + "\n" +
+                                EnumChatFormatting.LIGHT_PURPLE + LootCommand.spiderSwatters + "\n" +
+                                EnumChatFormatting.GOLD + LootCommand.spiderMosquitos + "\n" +
+                                EnumChatFormatting.AQUA + timeBetween + "\n" +
+                                EnumChatFormatting.AQUA + bossesBetween;
                     break;
                 case "spider_session":
                     if (LootCommand.spiderTimeSession == -1) {
@@ -1605,27 +1605,27 @@ public class DankersSkyblockMod {
                     }
 
                     dropsText = EnumChatFormatting.GOLD + "Tarantulas Killed:\n" +
-                            EnumChatFormatting.GREEN + "Tarantula Webs:\n" +
-                            EnumChatFormatting.DARK_GREEN + "Arrow Poison:\n" +
-                            EnumChatFormatting.DARK_GRAY + "Bite Runes:\n" +
-                            EnumChatFormatting.WHITE + "Bane VI Books:\n" +
-                            EnumChatFormatting.AQUA + "Spider Catalysts:\n" +
-                            EnumChatFormatting.DARK_PURPLE + "Tarantula Talismans:\n" +
-                            EnumChatFormatting.LIGHT_PURPLE + "Fly Swatters:\n" +
-                            EnumChatFormatting.GOLD + "Digested Mosquitos:\n" +
-                            EnumChatFormatting.AQUA + "Time Since RNG:\n" +
-                            EnumChatFormatting.AQUA + "Bosses Since RNG:";
+                                EnumChatFormatting.GREEN + "Tarantula Webs:\n" +
+                                EnumChatFormatting.DARK_GREEN + "Arrow Poison:\n" +
+                                EnumChatFormatting.DARK_GRAY + "Bite Runes:\n" +
+                                EnumChatFormatting.WHITE + "Bane VI Books:\n" +
+                                EnumChatFormatting.AQUA + "Spider Catalysts:\n" +
+                                EnumChatFormatting.DARK_PURPLE + "Tarantula Talismans:\n" +
+                                EnumChatFormatting.LIGHT_PURPLE + "Fly Swatters:\n" +
+                                EnumChatFormatting.GOLD + "Digested Mosquitos:\n" +
+                                EnumChatFormatting.AQUA + "Time Since RNG:\n" +
+                                EnumChatFormatting.AQUA + "Bosses Since RNG:";
                     countText = EnumChatFormatting.GOLD + nf.format(LootCommand.spiderTarantulasSession) + "\n" +
-                            EnumChatFormatting.GREEN + nf.format(LootCommand.spiderWebsSession) + "\n" +
-                            EnumChatFormatting.DARK_GREEN + drop20 + "\n" +
-                            EnumChatFormatting.DARK_GRAY + LootCommand.spiderBitesSession + "\n" +
-                            EnumChatFormatting.WHITE + LootCommand.spiderBooksSession + "\n" +
-                            EnumChatFormatting.AQUA + LootCommand.spiderCatalystsSession + "\n" +
-                            EnumChatFormatting.DARK_PURPLE + LootCommand.spiderTalismansSession + "\n" +
-                            EnumChatFormatting.LIGHT_PURPLE + LootCommand.spiderSwattersSession + "\n" +
-                            EnumChatFormatting.GOLD + LootCommand.spiderMosquitosSession + "\n" +
-                            EnumChatFormatting.AQUA + timeBetween + "\n" +
-                            EnumChatFormatting.AQUA + bossesBetween;
+                                EnumChatFormatting.GREEN + nf.format(LootCommand.spiderWebsSession) + "\n" +
+                                EnumChatFormatting.DARK_GREEN + drop20 + "\n" +
+                                EnumChatFormatting.DARK_GRAY + LootCommand.spiderBitesSession + "\n" +
+                                EnumChatFormatting.WHITE + LootCommand.spiderBooksSession + "\n" +
+                                EnumChatFormatting.AQUA + LootCommand.spiderCatalystsSession + "\n" +
+                                EnumChatFormatting.DARK_PURPLE + LootCommand.spiderTalismansSession + "\n" +
+                                EnumChatFormatting.LIGHT_PURPLE + LootCommand.spiderSwattersSession + "\n" +
+                                EnumChatFormatting.GOLD + LootCommand.spiderMosquitosSession + "\n" +
+                                EnumChatFormatting.AQUA + timeBetween + "\n" +
+                                EnumChatFormatting.AQUA + bossesBetween;
                     break;
                 case "zombie":
                     if (LootCommand.zombieTime == -1) {
@@ -1645,29 +1645,29 @@ public class DankersSkyblockMod {
                     }
 
                     dropsText = EnumChatFormatting.GOLD + "Revs Killed:\n" +
-                            EnumChatFormatting.GREEN + "Revenant Flesh:\n" +
-                            EnumChatFormatting.BLUE + "Foul Flesh:\n" +
-                            EnumChatFormatting.DARK_GREEN + "Pestilence Runes:\n" +
-                            EnumChatFormatting.WHITE + "Smite VI Books:\n" +
-                            EnumChatFormatting.AQUA + "Undead Catalysts:\n" +
-                            EnumChatFormatting.DARK_PURPLE + "Beheaded Horrors:\n" +
-                            EnumChatFormatting.RED + "Revenant Catalysts:\n" +
-                            EnumChatFormatting.DARK_GREEN + "Snake Runes:\n" +
-                            EnumChatFormatting.GOLD + "Scythe Blades:\n" +
-                            EnumChatFormatting.AQUA + "Time Since RNG:\n" +
-                            EnumChatFormatting.AQUA + "Bosses Since RNG:";
+                                EnumChatFormatting.GREEN + "Revenant Flesh:\n" +
+                                EnumChatFormatting.BLUE + "Foul Flesh:\n" +
+                                EnumChatFormatting.DARK_GREEN + "Pestilence Runes:\n" +
+                                EnumChatFormatting.WHITE + "Smite VI Books:\n" +
+                                EnumChatFormatting.AQUA + "Undead Catalysts:\n" +
+                                EnumChatFormatting.DARK_PURPLE + "Beheaded Horrors:\n" +
+                                EnumChatFormatting.RED + "Revenant Catalysts:\n" +
+                                EnumChatFormatting.DARK_GREEN + "Snake Runes:\n" +
+                                EnumChatFormatting.GOLD + "Scythe Blades:\n" +
+                                EnumChatFormatting.AQUA + "Time Since RNG:\n" +
+                                EnumChatFormatting.AQUA + "Bosses Since RNG:";
                     countText = EnumChatFormatting.GOLD + nf.format(LootCommand.zombieRevs) + "\n" +
-                            EnumChatFormatting.GREEN + nf.format(LootCommand.zombieRevFlesh) + "\n" +
-                            EnumChatFormatting.BLUE + drop20 + "\n" +
-                            EnumChatFormatting.DARK_GREEN + LootCommand.zombiePestilences + "\n" +
-                            EnumChatFormatting.WHITE + LootCommand.zombieBooks + "\n" +
-                            EnumChatFormatting.AQUA + LootCommand.zombieUndeadCatas + "\n" +
-                            EnumChatFormatting.DARK_PURPLE + LootCommand.zombieBeheadeds + "\n" +
-                            EnumChatFormatting.RED + LootCommand.zombieRevCatas + "\n" +
-                            EnumChatFormatting.DARK_GREEN + LootCommand.zombieSnakes + "\n" +
-                            EnumChatFormatting.GOLD + LootCommand.zombieScythes + "\n" +
-                            EnumChatFormatting.AQUA + timeBetween + "\n" +
-                            EnumChatFormatting.AQUA + bossesBetween;
+                                EnumChatFormatting.GREEN + nf.format(LootCommand.zombieRevFlesh) + "\n" +
+                                EnumChatFormatting.BLUE + drop20 + "\n" +
+                                EnumChatFormatting.DARK_GREEN + LootCommand.zombiePestilences + "\n" +
+                                EnumChatFormatting.WHITE + LootCommand.zombieBooks + "\n" +
+                                EnumChatFormatting.AQUA + LootCommand.zombieUndeadCatas + "\n" +
+                                EnumChatFormatting.DARK_PURPLE + LootCommand.zombieBeheadeds + "\n" +
+                                EnumChatFormatting.RED + LootCommand.zombieRevCatas + "\n" +
+                                EnumChatFormatting.DARK_GREEN + LootCommand.zombieSnakes + "\n" +
+                                EnumChatFormatting.GOLD + LootCommand.zombieScythes + "\n" +
+                                EnumChatFormatting.AQUA + timeBetween + "\n" +
+                                EnumChatFormatting.AQUA + bossesBetween;
                     break;
                 case "zombie_session":
                     if (LootCommand.zombieTimeSession == -1) {
@@ -1687,29 +1687,29 @@ public class DankersSkyblockMod {
                     }
 
                     dropsText = EnumChatFormatting.GOLD + "Revs Killed:\n" +
-                            EnumChatFormatting.GREEN + "Revenant Flesh:\n" +
-                            EnumChatFormatting.BLUE + "Foul Flesh:\n" +
-                            EnumChatFormatting.DARK_GREEN + "Pestilence Runes:\n" +
-                            EnumChatFormatting.WHITE + "Smite VI Books:\n" +
-                            EnumChatFormatting.AQUA + "Undead Catalysts:\n" +
-                            EnumChatFormatting.DARK_PURPLE + "Beheaded Horrors:\n" +
-                            EnumChatFormatting.RED + "Revenant Catalysts:\n" +
-                            EnumChatFormatting.DARK_GREEN + "Snake Runes:\n" +
-                            EnumChatFormatting.GOLD + "Scythe Blades:\n" +
-                            EnumChatFormatting.AQUA + "Time Since RNG:\n" +
-                            EnumChatFormatting.AQUA + "Bosses Since RNG:";
+                                EnumChatFormatting.GREEN + "Revenant Flesh:\n" +
+                                EnumChatFormatting.BLUE + "Foul Flesh:\n" +
+                                EnumChatFormatting.DARK_GREEN + "Pestilence Runes:\n" +
+                                EnumChatFormatting.WHITE + "Smite VI Books:\n" +
+                                EnumChatFormatting.AQUA + "Undead Catalysts:\n" +
+                                EnumChatFormatting.DARK_PURPLE + "Beheaded Horrors:\n" +
+                                EnumChatFormatting.RED + "Revenant Catalysts:\n" +
+                                EnumChatFormatting.DARK_GREEN + "Snake Runes:\n" +
+                                EnumChatFormatting.GOLD + "Scythe Blades:\n" +
+                                EnumChatFormatting.AQUA + "Time Since RNG:\n" +
+                                EnumChatFormatting.AQUA + "Bosses Since RNG:";
                     countText = EnumChatFormatting.GOLD + nf.format(LootCommand.zombieRevsSession) + "\n" +
-                            EnumChatFormatting.GREEN + nf.format(LootCommand.zombieRevFleshSession) + "\n" +
-                            EnumChatFormatting.BLUE + drop20 + "\n" +
-                            EnumChatFormatting.DARK_GREEN + LootCommand.zombiePestilencesSession + "\n" +
-                            EnumChatFormatting.WHITE + LootCommand.zombieBooksSession + "\n" +
-                            EnumChatFormatting.AQUA + LootCommand.zombieUndeadCatasSession + "\n" +
-                            EnumChatFormatting.DARK_PURPLE + LootCommand.zombieBeheadedsSession + "\n" +
-                            EnumChatFormatting.RED + LootCommand.zombieRevCatasSession + "\n" +
-                            EnumChatFormatting.DARK_GREEN + LootCommand.zombieSnakesSession + "\n" +
-                            EnumChatFormatting.GOLD + LootCommand.zombieScythes + "\n" +
-                            EnumChatFormatting.AQUA + timeBetween + "\n" +
-                            EnumChatFormatting.AQUA + bossesBetween;
+                                EnumChatFormatting.GREEN + nf.format(LootCommand.zombieRevFleshSession) + "\n" +
+                                EnumChatFormatting.BLUE + drop20 + "\n" +
+                                EnumChatFormatting.DARK_GREEN + LootCommand.zombiePestilencesSession + "\n" +
+                                EnumChatFormatting.WHITE + LootCommand.zombieBooksSession + "\n" +
+                                EnumChatFormatting.AQUA + LootCommand.zombieUndeadCatasSession + "\n" +
+                                EnumChatFormatting.DARK_PURPLE + LootCommand.zombieBeheadedsSession + "\n" +
+                                EnumChatFormatting.RED + LootCommand.zombieRevCatasSession + "\n" +
+                                EnumChatFormatting.DARK_GREEN + LootCommand.zombieSnakesSession + "\n" +
+                                EnumChatFormatting.GOLD + LootCommand.zombieScythes + "\n" +
+                                EnumChatFormatting.AQUA + timeBetween + "\n" +
+                                EnumChatFormatting.AQUA + bossesBetween;
                     break;
                 case "fishing":
                     if (LootCommand.empTime == -1) {
@@ -1724,46 +1724,46 @@ public class DankersSkyblockMod {
                     }
 
                     dropsText = EnumChatFormatting.AQUA + "Creatures Caught:\n" +
-                            EnumChatFormatting.AQUA + "Fishing Milestone:\n" +
-                            EnumChatFormatting.GOLD + "Good Catches:\n" +
-                            EnumChatFormatting.DARK_PURPLE + "Great Catches:\n" +
-                            EnumChatFormatting.GRAY + "Squids:\n" +
-                            EnumChatFormatting.GREEN + "Sea Walkers:\n" +
-                            EnumChatFormatting.DARK_GRAY + "Night Squids:\n" +
-                            EnumChatFormatting.DARK_AQUA + "Sea Guardians:\n" +
-                            EnumChatFormatting.BLUE + "Sea Witches:\n" +
-                            EnumChatFormatting.GREEN + "Sea Archers:";
+                                EnumChatFormatting.AQUA + "Fishing Milestone:\n" +
+                                EnumChatFormatting.GOLD + "Good Catches:\n" +
+                                EnumChatFormatting.DARK_PURPLE + "Great Catches:\n" +
+                                EnumChatFormatting.GRAY + "Squids:\n" +
+                                EnumChatFormatting.GREEN + "Sea Walkers:\n" +
+                                EnumChatFormatting.DARK_GRAY + "Night Squids:\n" +
+                                EnumChatFormatting.DARK_AQUA + "Sea Guardians:\n" +
+                                EnumChatFormatting.BLUE + "Sea Witches:\n" +
+                                EnumChatFormatting.GREEN + "Sea Archers:";
                     countText = EnumChatFormatting.AQUA + nf.format(LootCommand.seaCreatures) + "\n" +
-                            EnumChatFormatting.AQUA + nf.format(LootCommand.fishingMilestone) + "\n" +
-                            EnumChatFormatting.GOLD + nf.format(LootCommand.goodCatches) + "\n" +
-                            EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.greatCatches) + "\n" +
-                            EnumChatFormatting.GRAY + nf.format(LootCommand.squids) + "\n" +
-                            EnumChatFormatting.GREEN + nf.format(LootCommand.seaWalkers) + "\n" +
-                            EnumChatFormatting.DARK_GRAY + nf.format(LootCommand.nightSquids) + "\n" +
-                            EnumChatFormatting.DARK_AQUA + nf.format(LootCommand.seaGuardians) + "\n" +
-                            EnumChatFormatting.BLUE + nf.format(LootCommand.seaWitches) + "\n" +
-                            EnumChatFormatting.GREEN + nf.format(LootCommand.seaArchers);
+                                EnumChatFormatting.AQUA + nf.format(LootCommand.fishingMilestone) + "\n" +
+                                EnumChatFormatting.GOLD + nf.format(LootCommand.goodCatches) + "\n" +
+                                EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.greatCatches) + "\n" +
+                                EnumChatFormatting.GRAY + nf.format(LootCommand.squids) + "\n" +
+                                EnumChatFormatting.GREEN + nf.format(LootCommand.seaWalkers) + "\n" +
+                                EnumChatFormatting.DARK_GRAY + nf.format(LootCommand.nightSquids) + "\n" +
+                                EnumChatFormatting.DARK_AQUA + nf.format(LootCommand.seaGuardians) + "\n" +
+                                EnumChatFormatting.BLUE + nf.format(LootCommand.seaWitches) + "\n" +
+                                EnumChatFormatting.GREEN + nf.format(LootCommand.seaArchers);
                     // Seperated to save vertical space
                     dropsTextTwo = EnumChatFormatting.GREEN + "Monster of Deeps:\n" +
-                            EnumChatFormatting.YELLOW + "Catfishes:\n" +
-                            EnumChatFormatting.GOLD + "Carrot Kings:\n" +
-                            EnumChatFormatting.GRAY + "Sea Leeches:\n" +
-                            EnumChatFormatting.DARK_PURPLE + "Guardian Defenders:\n" +
-                            EnumChatFormatting.DARK_PURPLE + "Deep Sea Protectors:\n" +
-                            EnumChatFormatting.GOLD + "Hydras:\n" +
-                            EnumChatFormatting.GOLD + "Sea Emperors:\n" +
-                            EnumChatFormatting.AQUA + "Time Since Emp:\n" +
-                            EnumChatFormatting.AQUA + "Creatures Since Emp:";
+                                   EnumChatFormatting.YELLOW + "Catfishes:\n" +
+                                   EnumChatFormatting.GOLD + "Carrot Kings:\n" +
+                                   EnumChatFormatting.GRAY + "Sea Leeches:\n" +
+                                   EnumChatFormatting.DARK_PURPLE + "Guardian Defenders:\n" +
+                                   EnumChatFormatting.DARK_PURPLE + "Deep Sea Protectors:\n" +
+                                   EnumChatFormatting.GOLD + "Hydras:\n" +
+                                   EnumChatFormatting.GOLD + "Sea Emperors:\n" +
+                                   EnumChatFormatting.AQUA + "Time Since Emp:\n" +
+                                   EnumChatFormatting.AQUA + "Creatures Since Emp:";
                     countTextTwo = EnumChatFormatting.GREEN + nf.format(LootCommand.monsterOfTheDeeps) + "\n" +
-                            EnumChatFormatting.YELLOW + nf.format(LootCommand.catfishes) + "\n" +
-                            EnumChatFormatting.GOLD + nf.format(LootCommand.carrotKings) + "\n" +
-                            EnumChatFormatting.GRAY + nf.format(LootCommand.seaLeeches) + "\n" +
-                            EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.guardianDefenders) + "\n" +
-                            EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.deepSeaProtectors) + "\n" +
-                            EnumChatFormatting.GOLD + nf.format(LootCommand.hydras) + "\n" +
-                            EnumChatFormatting.GOLD + nf.format(LootCommand.seaEmperors) + "\n" +
-                            EnumChatFormatting.AQUA + timeBetween + "\n" +
-                            EnumChatFormatting.AQUA + bossesBetween;
+                                   EnumChatFormatting.YELLOW + nf.format(LootCommand.catfishes) + "\n" +
+                                   EnumChatFormatting.GOLD + nf.format(LootCommand.carrotKings) + "\n" +
+                                   EnumChatFormatting.GRAY + nf.format(LootCommand.seaLeeches) + "\n" +
+                                   EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.guardianDefenders) + "\n" +
+                                   EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.deepSeaProtectors) + "\n" +
+                                   EnumChatFormatting.GOLD + nf.format(LootCommand.hydras) + "\n" +
+                                   EnumChatFormatting.GOLD + nf.format(LootCommand.seaEmperors) + "\n" +
+                                   EnumChatFormatting.AQUA + timeBetween + "\n" +
+                                   EnumChatFormatting.AQUA + bossesBetween;
 
                     if (ToggleCommand.splitFishing) {
                         new TextRenderer(mc, dropsTextTwo, (int) (MoveCommand.displayXY[0] + (160 * ScaleCommand.displayScale)), MoveCommand.displayXY[1], ScaleCommand.displayScale);
@@ -1786,46 +1786,46 @@ public class DankersSkyblockMod {
                     }
 
                     dropsText = EnumChatFormatting.AQUA + "Creatures Caught:\n" +
-                            EnumChatFormatting.AQUA + "Fishing Milestone:\n" +
-                            EnumChatFormatting.GOLD + "Good Catches:\n" +
-                            EnumChatFormatting.DARK_PURPLE + "Great Catches:\n" +
-                            EnumChatFormatting.GRAY + "Squids:\n" +
-                            EnumChatFormatting.GREEN + "Sea Walkers:\n" +
-                            EnumChatFormatting.DARK_GRAY + "Night Squids:\n" +
-                            EnumChatFormatting.DARK_AQUA + "Sea Guardians:\n" +
-                            EnumChatFormatting.BLUE + "Sea Witches:\n" +
-                            EnumChatFormatting.GREEN + "Sea Archers:";
+                                EnumChatFormatting.AQUA + "Fishing Milestone:\n" +
+                                EnumChatFormatting.GOLD + "Good Catches:\n" +
+                                EnumChatFormatting.DARK_PURPLE + "Great Catches:\n" +
+                                EnumChatFormatting.GRAY + "Squids:\n" +
+                                EnumChatFormatting.GREEN + "Sea Walkers:\n" +
+                                EnumChatFormatting.DARK_GRAY + "Night Squids:\n" +
+                                EnumChatFormatting.DARK_AQUA + "Sea Guardians:\n" +
+                                EnumChatFormatting.BLUE + "Sea Witches:\n" +
+                                EnumChatFormatting.GREEN + "Sea Archers:";
                     countText = EnumChatFormatting.AQUA + nf.format(LootCommand.seaCreaturesSession) + "\n" +
-                            EnumChatFormatting.AQUA + nf.format(LootCommand.fishingMilestoneSession) + "\n" +
-                            EnumChatFormatting.GOLD + nf.format(LootCommand.goodCatchesSession) + "\n" +
-                            EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.greatCatchesSession) + "\n" +
-                            EnumChatFormatting.GRAY + nf.format(LootCommand.squidsSession) + "\n" +
-                            EnumChatFormatting.GREEN + nf.format(LootCommand.seaWalkersSession) + "\n" +
-                            EnumChatFormatting.DARK_GRAY + nf.format(LootCommand.nightSquidsSession) + "\n" +
-                            EnumChatFormatting.DARK_AQUA + nf.format(LootCommand.seaGuardiansSession) + "\n" +
-                            EnumChatFormatting.BLUE + nf.format(LootCommand.seaWitchesSession) + "\n" +
-                            EnumChatFormatting.GREEN + nf.format(LootCommand.seaArchersSession);
+                                EnumChatFormatting.AQUA + nf.format(LootCommand.fishingMilestoneSession) + "\n" +
+                                EnumChatFormatting.GOLD + nf.format(LootCommand.goodCatchesSession) + "\n" +
+                                EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.greatCatchesSession) + "\n" +
+                                EnumChatFormatting.GRAY + nf.format(LootCommand.squidsSession) + "\n" +
+                                EnumChatFormatting.GREEN + nf.format(LootCommand.seaWalkersSession) + "\n" +
+                                EnumChatFormatting.DARK_GRAY + nf.format(LootCommand.nightSquidsSession) + "\n" +
+                                EnumChatFormatting.DARK_AQUA + nf.format(LootCommand.seaGuardiansSession) + "\n" +
+                                EnumChatFormatting.BLUE + nf.format(LootCommand.seaWitchesSession) + "\n" +
+                                EnumChatFormatting.GREEN + nf.format(LootCommand.seaArchersSession);
                     // Seperated to save vertical space
                     dropsTextTwo = EnumChatFormatting.GREEN + "Monster of Deeps:\n" +
-                            EnumChatFormatting.YELLOW + "Catfishes:\n" +
-                            EnumChatFormatting.GOLD + "Carrot Kings:\n" +
-                            EnumChatFormatting.GRAY + "Sea Leeches:\n" +
-                            EnumChatFormatting.DARK_PURPLE + "Guardian Defenders:\n" +
-                            EnumChatFormatting.DARK_PURPLE + "Deep Sea Protectors:\n" +
-                            EnumChatFormatting.GOLD + "Hydras:\n" +
-                            EnumChatFormatting.GOLD + "Sea Emperors:\n" +
-                            EnumChatFormatting.AQUA + "Time Since Emp:\n" +
-                            EnumChatFormatting.AQUA + "Creatures Since Emp:";
+                                   EnumChatFormatting.YELLOW + "Catfishes:\n" +
+                                   EnumChatFormatting.GOLD + "Carrot Kings:\n" +
+                                   EnumChatFormatting.GRAY + "Sea Leeches:\n" +
+                                   EnumChatFormatting.DARK_PURPLE + "Guardian Defenders:\n" +
+                                   EnumChatFormatting.DARK_PURPLE + "Deep Sea Protectors:\n" +
+                                   EnumChatFormatting.GOLD + "Hydras:\n" +
+                                   EnumChatFormatting.GOLD + "Sea Emperors:\n" +
+                                   EnumChatFormatting.AQUA + "Time Since Emp:\n" +
+                                   EnumChatFormatting.AQUA + "Creatures Since Emp:";
                     countTextTwo = EnumChatFormatting.GREEN + nf.format(LootCommand.monsterOfTheDeepsSession) + "\n" +
-                            EnumChatFormatting.YELLOW + nf.format(LootCommand.catfishesSession) + "\n" +
-                            EnumChatFormatting.GOLD + nf.format(LootCommand.carrotKingsSession) + "\n" +
-                            EnumChatFormatting.GRAY + nf.format(LootCommand.seaLeechesSession) + "\n" +
-                            EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.guardianDefendersSession) + "\n" +
-                            EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.deepSeaProtectorsSession) + "\n" +
-                            EnumChatFormatting.GOLD + nf.format(LootCommand.hydrasSession) + "\n" +
-                            EnumChatFormatting.GOLD + nf.format(LootCommand.seaEmperorsSession) + "\n" +
-                            EnumChatFormatting.AQUA + timeBetween + "\n" +
-                            EnumChatFormatting.AQUA + bossesBetween;
+                                   EnumChatFormatting.YELLOW + nf.format(LootCommand.catfishesSession) + "\n" +
+                                   EnumChatFormatting.GOLD + nf.format(LootCommand.carrotKingsSession) + "\n" +
+                                   EnumChatFormatting.GRAY + nf.format(LootCommand.seaLeechesSession) + "\n" +
+                                   EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.guardianDefendersSession) + "\n" +
+                                   EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.deepSeaProtectorsSession) + "\n" +
+                                   EnumChatFormatting.GOLD + nf.format(LootCommand.hydrasSession) + "\n" +
+                                   EnumChatFormatting.GOLD + nf.format(LootCommand.seaEmperorsSession) + "\n" +
+                                   EnumChatFormatting.AQUA + timeBetween + "\n" +
+                                   EnumChatFormatting.AQUA + bossesBetween;
 
                     if (ToggleCommand.splitFishing) {
                         new TextRenderer(mc, dropsTextTwo, (int) (MoveCommand.displayXY[0] + (160 * ScaleCommand.displayScale)), MoveCommand.displayXY[1], ScaleCommand.displayScale);
@@ -1848,25 +1848,25 @@ public class DankersSkyblockMod {
                     }
 
                     dropsText = EnumChatFormatting.AQUA + "Creatures Caught:\n" +
-                            EnumChatFormatting.AQUA + "Fishing Milestone:\n" +
-                            EnumChatFormatting.GOLD + "Good Catches:\n" +
-                            EnumChatFormatting.DARK_PURPLE + "Great Catches:\n" +
-                            EnumChatFormatting.AQUA + "Frozen Steves:\n" +
-                            EnumChatFormatting.WHITE + "Snowmans:\n" +
-                            EnumChatFormatting.DARK_GREEN + "Grinches:\n" +
-                            EnumChatFormatting.GOLD + "Yetis:\n" +
-                            EnumChatFormatting.AQUA + "Time Since Yeti:\n" +
-                            EnumChatFormatting.AQUA + "Creatures Since Yeti:";
+                                EnumChatFormatting.AQUA + "Fishing Milestone:\n" +
+                                EnumChatFormatting.GOLD + "Good Catches:\n" +
+                                EnumChatFormatting.DARK_PURPLE + "Great Catches:\n" +
+                                EnumChatFormatting.AQUA + "Frozen Steves:\n" +
+                                EnumChatFormatting.WHITE + "Snowmans:\n" +
+                                EnumChatFormatting.DARK_GREEN + "Grinches:\n" +
+                                EnumChatFormatting.GOLD + "Yetis:\n" +
+                                EnumChatFormatting.AQUA + "Time Since Yeti:\n" +
+                                EnumChatFormatting.AQUA + "Creatures Since Yeti:";
                     countText = EnumChatFormatting.AQUA + nf.format(LootCommand.seaCreatures) + "\n" +
-                            EnumChatFormatting.AQUA + nf.format(LootCommand.fishingMilestone) + "\n" +
-                            EnumChatFormatting.GOLD + nf.format(LootCommand.goodCatches) + "\n" +
-                            EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.greatCatches) + "\n" +
-                            EnumChatFormatting.AQUA + nf.format(LootCommand.frozenSteves) + "\n" +
-                            EnumChatFormatting.WHITE + nf.format(LootCommand.frostyTheSnowmans) + "\n" +
-                            EnumChatFormatting.DARK_GREEN + nf.format(LootCommand.grinches) + "\n" +
-                            EnumChatFormatting.GOLD + nf.format(LootCommand.yetis) + "\n" +
-                            EnumChatFormatting.AQUA + timeBetween + "\n" +
-                            EnumChatFormatting.AQUA + bossesBetween;
+                                EnumChatFormatting.AQUA + nf.format(LootCommand.fishingMilestone) + "\n" +
+                                EnumChatFormatting.GOLD + nf.format(LootCommand.goodCatches) + "\n" +
+                                EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.greatCatches) + "\n" +
+                                EnumChatFormatting.AQUA + nf.format(LootCommand.frozenSteves) + "\n" +
+                                EnumChatFormatting.WHITE + nf.format(LootCommand.frostyTheSnowmans) + "\n" +
+                                EnumChatFormatting.DARK_GREEN + nf.format(LootCommand.grinches) + "\n" +
+                                EnumChatFormatting.GOLD + nf.format(LootCommand.yetis) + "\n" +
+                                EnumChatFormatting.AQUA + timeBetween + "\n" +
+                                EnumChatFormatting.AQUA + bossesBetween;
                     break;
                 case "fishing_winter_session":
                     if (LootCommand.yetiTimeSession == -1) {
@@ -1881,449 +1881,449 @@ public class DankersSkyblockMod {
                     }
 
                     dropsText = EnumChatFormatting.AQUA + "Creatures Caught:\n" +
-                            EnumChatFormatting.AQUA + "Fishing Milestone:\n" +
-                            EnumChatFormatting.GOLD + "Good Catches:\n" +
-                            EnumChatFormatting.DARK_PURPLE + "Great Catches:\n" +
-                            EnumChatFormatting.AQUA + "Frozen Steves:\n" +
-                            EnumChatFormatting.WHITE + "Snowmans:\n" +
-                            EnumChatFormatting.DARK_GREEN + "Grinches:\n" +
-                            EnumChatFormatting.GOLD + "Yetis:\n" +
-                            EnumChatFormatting.AQUA + "Time Since Yeti:\n" +
-                            EnumChatFormatting.AQUA + "Creatures Since Yeti:";
+                                EnumChatFormatting.AQUA + "Fishing Milestone:\n" +
+                                EnumChatFormatting.GOLD + "Good Catches:\n" +
+                                EnumChatFormatting.DARK_PURPLE + "Great Catches:\n" +
+                                EnumChatFormatting.AQUA + "Frozen Steves:\n" +
+                                EnumChatFormatting.WHITE + "Snowmans:\n" +
+                                EnumChatFormatting.DARK_GREEN + "Grinches:\n" +
+                                EnumChatFormatting.GOLD + "Yetis:\n" +
+                                EnumChatFormatting.AQUA + "Time Since Yeti:\n" +
+                                EnumChatFormatting.AQUA + "Creatures Since Yeti:";
                     countText = EnumChatFormatting.AQUA + nf.format(LootCommand.seaCreaturesSession) + "\n" +
-                            EnumChatFormatting.AQUA + nf.format(LootCommand.fishingMilestoneSession) + "\n" +
-                            EnumChatFormatting.GOLD + nf.format(LootCommand.goodCatchesSession) + "\n" +
-                            EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.greatCatchesSession) + "\n" +
-                            EnumChatFormatting.AQUA + nf.format(LootCommand.frozenStevesSession) + "\n" +
-                            EnumChatFormatting.WHITE + nf.format(LootCommand.frostyTheSnowmansSession) + "\n" +
-                            EnumChatFormatting.DARK_GREEN + nf.format(LootCommand.grinchesSession) + "\n" +
-                            EnumChatFormatting.GOLD + nf.format(LootCommand.yetisSession) + "\n" +
-                            EnumChatFormatting.AQUA + timeBetween + "\n" +
-                            EnumChatFormatting.AQUA + bossesBetween;
+                                EnumChatFormatting.AQUA + nf.format(LootCommand.fishingMilestoneSession) + "\n" +
+                                EnumChatFormatting.GOLD + nf.format(LootCommand.goodCatchesSession) + "\n" +
+                                EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.greatCatchesSession) + "\n" +
+                                EnumChatFormatting.AQUA + nf.format(LootCommand.frozenStevesSession) + "\n" +
+                                EnumChatFormatting.WHITE + nf.format(LootCommand.frostyTheSnowmansSession) + "\n" +
+                                EnumChatFormatting.DARK_GREEN + nf.format(LootCommand.grinchesSession) + "\n" +
+                                EnumChatFormatting.GOLD + nf.format(LootCommand.yetisSession) + "\n" +
+                                EnumChatFormatting.AQUA + timeBetween + "\n" +
+                                EnumChatFormatting.AQUA + bossesBetween;
                     break;
                 case "fishing_festival":
                     dropsText = EnumChatFormatting.AQUA + "Creatures Caught:\n" +
-                            EnumChatFormatting.AQUA + "Fishing Milestone:\n" +
-                            EnumChatFormatting.GOLD + "Good Catches:\n" +
-                            EnumChatFormatting.DARK_PURPLE + "Great Catches:\n" +
-                            EnumChatFormatting.LIGHT_PURPLE + "Nurse Sharks:\n" +
-                            EnumChatFormatting.BLUE + "Blue Sharks:\n" +
-                            EnumChatFormatting.GOLD + "Tiger Sharks:\n" +
-                            EnumChatFormatting.WHITE + "Great White Sharks:";
+                                EnumChatFormatting.AQUA + "Fishing Milestone:\n" +
+                                EnumChatFormatting.GOLD + "Good Catches:\n" +
+                                EnumChatFormatting.DARK_PURPLE + "Great Catches:\n" +
+                                EnumChatFormatting.LIGHT_PURPLE + "Nurse Sharks:\n" +
+                                EnumChatFormatting.BLUE + "Blue Sharks:\n" +
+                                EnumChatFormatting.GOLD + "Tiger Sharks:\n" +
+                                EnumChatFormatting.WHITE + "Great White Sharks:";
                     countText = EnumChatFormatting.AQUA + nf.format(LootCommand.seaCreatures) + "\n" +
-                            EnumChatFormatting.AQUA + nf.format(LootCommand.fishingMilestone) + "\n" +
-                            EnumChatFormatting.GOLD + nf.format(LootCommand.goodCatches) + "\n" +
-                            EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.greatCatches) + "\n" +
-                            EnumChatFormatting.LIGHT_PURPLE + nf.format(LootCommand.nurseSharks) + "\n" +
-                            EnumChatFormatting.BLUE + nf.format(LootCommand.blueSharks) + "\n" +
-                            EnumChatFormatting.GOLD + nf.format(LootCommand.tigerSharks) + "\n" +
-                            EnumChatFormatting.WHITE + nf.format(LootCommand.greatWhiteSharks);
+                                EnumChatFormatting.AQUA + nf.format(LootCommand.fishingMilestone) + "\n" +
+                                EnumChatFormatting.GOLD + nf.format(LootCommand.goodCatches) + "\n" +
+                                EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.greatCatches) + "\n" +
+                                EnumChatFormatting.LIGHT_PURPLE + nf.format(LootCommand.nurseSharks) + "\n" +
+                                EnumChatFormatting.BLUE + nf.format(LootCommand.blueSharks) + "\n" +
+                                EnumChatFormatting.GOLD + nf.format(LootCommand.tigerSharks) + "\n" +
+                                EnumChatFormatting.WHITE + nf.format(LootCommand.greatWhiteSharks);
                     break;
                 case "fishing_festival_session":
                     dropsText = EnumChatFormatting.AQUA + "Creatures Caught:\n" +
-                            EnumChatFormatting.AQUA + "Fishing Milestone:\n" +
-                            EnumChatFormatting.GOLD + "Good Catches:\n" +
-                            EnumChatFormatting.DARK_PURPLE + "Great Catches:\n" +
-                            EnumChatFormatting.LIGHT_PURPLE + "Nurse Sharks:\n" +
-                            EnumChatFormatting.BLUE + "Blue Sharks:\n" +
-                            EnumChatFormatting.GOLD + "Tiger Sharks:\n" +
-                            EnumChatFormatting.WHITE + "Great White Sharks:";
+                                EnumChatFormatting.AQUA + "Fishing Milestone:\n" +
+                                EnumChatFormatting.GOLD + "Good Catches:\n" +
+                                EnumChatFormatting.DARK_PURPLE + "Great Catches:\n" +
+                                EnumChatFormatting.LIGHT_PURPLE + "Nurse Sharks:\n" +
+                                EnumChatFormatting.BLUE + "Blue Sharks:\n" +
+                                EnumChatFormatting.GOLD + "Tiger Sharks:\n" +
+                                EnumChatFormatting.WHITE + "Great White Sharks:";
                     countText = EnumChatFormatting.AQUA + nf.format(LootCommand.seaCreaturesSession) + "\n" +
-                            EnumChatFormatting.AQUA + nf.format(LootCommand.fishingMilestoneSession) + "\n" +
-                            EnumChatFormatting.GOLD + nf.format(LootCommand.goodCatchesSession) + "\n" +
-                            EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.greatCatchesSession) + "\n" +
-                            EnumChatFormatting.LIGHT_PURPLE + nf.format(LootCommand.nurseSharksSession) + "\n" +
-                            EnumChatFormatting.BLUE + nf.format(LootCommand.blueSharksSession) + "\n" +
-                            EnumChatFormatting.GOLD + nf.format(LootCommand.tigerSharksSession) + "\n" +
-                            EnumChatFormatting.WHITE + nf.format(LootCommand.greatWhiteSharksSession);
+                                EnumChatFormatting.AQUA + nf.format(LootCommand.fishingMilestoneSession) + "\n" +
+                                EnumChatFormatting.GOLD + nf.format(LootCommand.goodCatchesSession) + "\n" +
+                                EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.greatCatchesSession) + "\n" +
+                                EnumChatFormatting.LIGHT_PURPLE + nf.format(LootCommand.nurseSharksSession) + "\n" +
+                                EnumChatFormatting.BLUE + nf.format(LootCommand.blueSharksSession) + "\n" +
+                                EnumChatFormatting.GOLD + nf.format(LootCommand.tigerSharksSession) + "\n" +
+                                EnumChatFormatting.WHITE + nf.format(LootCommand.greatWhiteSharksSession);
                     break;
                 case "fishing_spooky":
                     dropsText = EnumChatFormatting.AQUA + "Creatures Caught:\n" +
-                            EnumChatFormatting.AQUA + "Fishing Milestone:\n" +
-                            EnumChatFormatting.GOLD + "Good Catches:\n" +
-                            EnumChatFormatting.DARK_PURPLE + "Great Catches:\n" +
-                            EnumChatFormatting.BLUE + "Scarecrows:\n" +
-                            EnumChatFormatting.GRAY + "Nightmares:\n" +
-                            EnumChatFormatting.DARK_PURPLE + "Werewolves:\n" +
-                            EnumChatFormatting.GOLD + "Phantom Fishers:\n" +
-                            EnumChatFormatting.GOLD + "Grim Reapers:";
+                                EnumChatFormatting.AQUA + "Fishing Milestone:\n" +
+                                EnumChatFormatting.GOLD + "Good Catches:\n" +
+                                EnumChatFormatting.DARK_PURPLE + "Great Catches:\n" +
+                                EnumChatFormatting.BLUE + "Scarecrows:\n" +
+                                EnumChatFormatting.GRAY + "Nightmares:\n" +
+                                EnumChatFormatting.DARK_PURPLE + "Werewolves:\n" +
+                                EnumChatFormatting.GOLD + "Phantom Fishers:\n" +
+                                EnumChatFormatting.GOLD + "Grim Reapers:";
                     countText = EnumChatFormatting.AQUA + nf.format(LootCommand.seaCreatures) + "\n" +
-                            EnumChatFormatting.AQUA + nf.format(LootCommand.fishingMilestone) + "\n" +
-                            EnumChatFormatting.GOLD + nf.format(LootCommand.goodCatches) + "\n" +
-                            EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.greatCatches) + "\n" +
-                            EnumChatFormatting.BLUE + nf.format(LootCommand.scarecrows) + "\n" +
-                            EnumChatFormatting.GRAY + nf.format(LootCommand.nightmares) + "\n" +
-                            EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.werewolfs) + "\n" +
-                            EnumChatFormatting.GOLD + nf.format(LootCommand.phantomFishers) + "\n" +
-                            EnumChatFormatting.GOLD + nf.format(LootCommand.grimReapers);
+                                EnumChatFormatting.AQUA + nf.format(LootCommand.fishingMilestone) + "\n" +
+                                EnumChatFormatting.GOLD + nf.format(LootCommand.goodCatches) + "\n" +
+                                EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.greatCatches) + "\n" +
+                                EnumChatFormatting.BLUE + nf.format(LootCommand.scarecrows) + "\n" +
+                                EnumChatFormatting.GRAY + nf.format(LootCommand.nightmares) + "\n" +
+                                EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.werewolfs) + "\n" +
+                                EnumChatFormatting.GOLD + nf.format(LootCommand.phantomFishers) + "\n" +
+                                EnumChatFormatting.GOLD + nf.format(LootCommand.grimReapers);
                     break;
                 case "fishing_spooky_session":
                     dropsText = EnumChatFormatting.AQUA + "Creatures Caught:\n" +
-                            EnumChatFormatting.AQUA + "Fishing Milestone:\n" +
-                            EnumChatFormatting.GOLD + "Good Catches:\n" +
-                            EnumChatFormatting.DARK_PURPLE + "Great Catches:\n" +
-                            EnumChatFormatting.BLUE + "Scarecrows:\n" +
-                            EnumChatFormatting.GRAY + "Nightmares:\n" +
-                            EnumChatFormatting.DARK_PURPLE + "Werewolves:\n" +
-                            EnumChatFormatting.GOLD + "Phantom Fishers:\n" +
-                            EnumChatFormatting.GOLD + "Grim Reapers:";
+                                EnumChatFormatting.AQUA + "Fishing Milestone:\n" +
+                                EnumChatFormatting.GOLD + "Good Catches:\n" +
+                                EnumChatFormatting.DARK_PURPLE + "Great Catches:\n" +
+                                EnumChatFormatting.BLUE + "Scarecrows:\n" +
+                                EnumChatFormatting.GRAY + "Nightmares:\n" +
+                                EnumChatFormatting.DARK_PURPLE + "Werewolves:\n" +
+                                EnumChatFormatting.GOLD + "Phantom Fishers:\n" +
+                                EnumChatFormatting.GOLD + "Grim Reapers:";
                     countText = EnumChatFormatting.AQUA + nf.format(LootCommand.seaCreaturesSession) + "\n" +
-                            EnumChatFormatting.AQUA + nf.format(LootCommand.fishingMilestoneSession) + "\n" +
-                            EnumChatFormatting.GOLD + nf.format(LootCommand.goodCatchesSession) + "\n" +
-                            EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.greatCatchesSession) + "\n" +
-                            EnumChatFormatting.BLUE + nf.format(LootCommand.scarecrowsSession) + "\n" +
-                            EnumChatFormatting.GRAY + nf.format(LootCommand.nightmaresSession) + "\n" +
-                            EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.werewolfsSession) + "\n" +
-                            EnumChatFormatting.GOLD + nf.format(LootCommand.phantomFishersSession) + "\n" +
-                            EnumChatFormatting.GOLD + nf.format(LootCommand.grimReapersSession);
+                                EnumChatFormatting.AQUA + nf.format(LootCommand.fishingMilestoneSession) + "\n" +
+                                EnumChatFormatting.GOLD + nf.format(LootCommand.goodCatchesSession) + "\n" +
+                                EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.greatCatchesSession) + "\n" +
+                                EnumChatFormatting.BLUE + nf.format(LootCommand.scarecrowsSession) + "\n" +
+                                EnumChatFormatting.GRAY + nf.format(LootCommand.nightmaresSession) + "\n" +
+                                EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.werewolfsSession) + "\n" +
+                                EnumChatFormatting.GOLD + nf.format(LootCommand.phantomFishersSession) + "\n" +
+                                EnumChatFormatting.GOLD + nf.format(LootCommand.grimReapersSession);
                     break;
                 case "mythological":
                     dropsText = EnumChatFormatting.GOLD + "Coins:\n" +
-                            EnumChatFormatting.WHITE + "Griffin Feathers:\n" +
-                            EnumChatFormatting.GOLD + "Crown of Greeds:\n" +
-                            EnumChatFormatting.AQUA + "Washed up Souvenirs:\n" +
-                            EnumChatFormatting.RED + "Minos Hunters:\n" +
-                            EnumChatFormatting.GRAY + "Siamese Lynxes:\n" +
-                            EnumChatFormatting.RED + "Minotaurs:\n" +
-                            EnumChatFormatting.WHITE + "Gaia Constructs:\n" +
-                            EnumChatFormatting.DARK_PURPLE + "Minos Champions:\n" +
-                            EnumChatFormatting.GOLD + "Minos Inquisitors:";
+                                EnumChatFormatting.WHITE + "Griffin Feathers:\n" +
+                                EnumChatFormatting.GOLD + "Crown of Greeds:\n" +
+                                EnumChatFormatting.AQUA + "Washed up Souvenirs:\n" +
+                                EnumChatFormatting.RED + "Minos Hunters:\n" +
+                                EnumChatFormatting.GRAY + "Siamese Lynxes:\n" +
+                                EnumChatFormatting.RED + "Minotaurs:\n" +
+                                EnumChatFormatting.WHITE + "Gaia Constructs:\n" +
+                                EnumChatFormatting.DARK_PURPLE + "Minos Champions:\n" +
+                                EnumChatFormatting.GOLD + "Minos Inquisitors:";
                     countText = EnumChatFormatting.GOLD + nf.format(LootCommand.mythCoins) + "\n" +
-                            EnumChatFormatting.WHITE + nf.format(LootCommand.griffinFeathers) + "\n" +
-                            EnumChatFormatting.GOLD + nf.format(LootCommand.crownOfGreeds) + "\n" +
-                            EnumChatFormatting.AQUA + nf.format(LootCommand.washedUpSouvenirs) + "\n" +
-                            EnumChatFormatting.RED + nf.format(LootCommand.minosHunters) + "\n" +
-                            EnumChatFormatting.GRAY + nf.format(LootCommand.siameseLynxes) + "\n" +
-                            EnumChatFormatting.RED + nf.format(LootCommand.minotaurs) + "\n" +
-                            EnumChatFormatting.WHITE + nf.format(LootCommand.gaiaConstructs) + "\n" +
-                            EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.minosChampions) + "\n" +
-                            EnumChatFormatting.GOLD + nf.format(LootCommand.minosInquisitors);
+                                EnumChatFormatting.WHITE + nf.format(LootCommand.griffinFeathers) + "\n" +
+                                EnumChatFormatting.GOLD + nf.format(LootCommand.crownOfGreeds) + "\n" +
+                                EnumChatFormatting.AQUA + nf.format(LootCommand.washedUpSouvenirs) + "\n" +
+                                EnumChatFormatting.RED + nf.format(LootCommand.minosHunters) + "\n" +
+                                EnumChatFormatting.GRAY + nf.format(LootCommand.siameseLynxes) + "\n" +
+                                EnumChatFormatting.RED + nf.format(LootCommand.minotaurs) + "\n" +
+                                EnumChatFormatting.WHITE + nf.format(LootCommand.gaiaConstructs) + "\n" +
+                                EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.minosChampions) + "\n" +
+                                EnumChatFormatting.GOLD + nf.format(LootCommand.minosInquisitors);
                     break;
                 case "mythological_session":
                     dropsText = EnumChatFormatting.GOLD + "Coins:\n" +
-                            EnumChatFormatting.WHITE + "Griffin Feathers:\n" +
-                            EnumChatFormatting.GOLD + "Crown of Greeds:\n" +
-                            EnumChatFormatting.AQUA + "Washed up Souvenirs:\n" +
-                            EnumChatFormatting.RED + "Minos Hunters:\n" +
-                            EnumChatFormatting.GRAY + "Siamese Lynxes:\n" +
-                            EnumChatFormatting.RED + "Minotaurs:\n" +
-                            EnumChatFormatting.WHITE + "Gaia Constructs:\n" +
-                            EnumChatFormatting.DARK_PURPLE + "Minos Champions:\n" +
-                            EnumChatFormatting.GOLD + "Minos Inquisitors:";
+                                EnumChatFormatting.WHITE + "Griffin Feathers:\n" +
+                                EnumChatFormatting.GOLD + "Crown of Greeds:\n" +
+                                EnumChatFormatting.AQUA + "Washed up Souvenirs:\n" +
+                                EnumChatFormatting.RED + "Minos Hunters:\n" +
+                                EnumChatFormatting.GRAY + "Siamese Lynxes:\n" +
+                                EnumChatFormatting.RED + "Minotaurs:\n" +
+                                EnumChatFormatting.WHITE + "Gaia Constructs:\n" +
+                                EnumChatFormatting.DARK_PURPLE + "Minos Champions:\n" +
+                                EnumChatFormatting.GOLD + "Minos Inquisitors:";
                     countText = EnumChatFormatting.GOLD + nf.format(LootCommand.mythCoinsSession) + "\n" +
-                            EnumChatFormatting.WHITE + nf.format(LootCommand.griffinFeathersSession) + "\n" +
-                            EnumChatFormatting.GOLD + nf.format(LootCommand.crownOfGreedsSession) + "\n" +
-                            EnumChatFormatting.AQUA + nf.format(LootCommand.washedUpSouvenirsSession) + "\n" +
-                            EnumChatFormatting.RED + nf.format(LootCommand.minosHuntersSession) + "\n" +
-                            EnumChatFormatting.GRAY + nf.format(LootCommand.siameseLynxesSession) + "\n" +
-                            EnumChatFormatting.RED + nf.format(LootCommand.minotaursSession) + "\n" +
-                            EnumChatFormatting.WHITE + nf.format(LootCommand.gaiaConstructsSession) + "\n" +
-                            EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.minosChampionsSession) + "\n" +
-                            EnumChatFormatting.GOLD + nf.format(LootCommand.minosInquisitorsSession);
+                                EnumChatFormatting.WHITE + nf.format(LootCommand.griffinFeathersSession) + "\n" +
+                                EnumChatFormatting.GOLD + nf.format(LootCommand.crownOfGreedsSession) + "\n" +
+                                EnumChatFormatting.AQUA + nf.format(LootCommand.washedUpSouvenirsSession) + "\n" +
+                                EnumChatFormatting.RED + nf.format(LootCommand.minosHuntersSession) + "\n" +
+                                EnumChatFormatting.GRAY + nf.format(LootCommand.siameseLynxesSession) + "\n" +
+                                EnumChatFormatting.RED + nf.format(LootCommand.minotaursSession) + "\n" +
+                                EnumChatFormatting.WHITE + nf.format(LootCommand.gaiaConstructsSession) + "\n" +
+                                EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.minosChampionsSession) + "\n" +
+                                EnumChatFormatting.GOLD + nf.format(LootCommand.minosInquisitorsSession);
                     break;
                 case "catacombs_floor_one":
                     dropsText = EnumChatFormatting.GOLD + "Recombobulators:\n" +
-                            EnumChatFormatting.DARK_PURPLE + "Fuming Potato Books:\n" +
-                            EnumChatFormatting.BLUE + "Bonzo's Staffs:\n" +
-                            EnumChatFormatting.AQUA + "Coins Spent:\n" +
-                            EnumChatFormatting.AQUA + "Time Spent:";
+                                EnumChatFormatting.DARK_PURPLE + "Fuming Potato Books:\n" +
+                                EnumChatFormatting.BLUE + "Bonzo's Staffs:\n" +
+                                EnumChatFormatting.AQUA + "Coins Spent:\n" +
+                                EnumChatFormatting.AQUA + "Time Spent:";
                     countText = EnumChatFormatting.GOLD + nf.format(LootCommand.recombobulators) + "\n" +
-                            EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.fumingPotatoBooks) + "\n" +
-                            EnumChatFormatting.BLUE + nf.format(LootCommand.bonzoStaffs) + "\n" +
-                            EnumChatFormatting.AQUA + Utils.getMoneySpent(LootCommand.f1CoinsSpent) + "\n" +
-                            EnumChatFormatting.AQUA + Utils.getTimeBetween(0, LootCommand.f1TimeSpent);
+                                EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.fumingPotatoBooks) + "\n" +
+                                EnumChatFormatting.BLUE + nf.format(LootCommand.bonzoStaffs) + "\n" +
+                                EnumChatFormatting.AQUA + Utils.getMoneySpent(LootCommand.f1CoinsSpent) + "\n" +
+                                EnumChatFormatting.AQUA + Utils.getTimeBetween(0, LootCommand.f1TimeSpent);
                     break;
                 case "catacombs_floor_one_session":
                     dropsText = EnumChatFormatting.GOLD + "Recombobulators:\n" +
-                            EnumChatFormatting.DARK_PURPLE + "Fuming Potato Books:\n" +
-                            EnumChatFormatting.BLUE + "Bonzo's Staffs:\n" +
-                            EnumChatFormatting.AQUA + "Coins Spent:\n" +
-                            EnumChatFormatting.AQUA + "Time Spent:";
+                                EnumChatFormatting.DARK_PURPLE + "Fuming Potato Books:\n" +
+                                EnumChatFormatting.BLUE + "Bonzo's Staffs:\n" +
+                                EnumChatFormatting.AQUA + "Coins Spent:\n" +
+                                EnumChatFormatting.AQUA + "Time Spent:";
                     countText = EnumChatFormatting.GOLD + nf.format(LootCommand.recombobulatorsSession) + "\n" +
-                            EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.fumingPotatoBooksSession) + "\n" +
-                            EnumChatFormatting.BLUE + nf.format(LootCommand.bonzoStaffsSession) + "\n" +
-                            EnumChatFormatting.AQUA + Utils.getMoneySpent(LootCommand.f1CoinsSpentSession) + "\n" +
-                            EnumChatFormatting.AQUA + Utils.getTimeBetween(0, LootCommand.f1TimeSpentSession);
+                                EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.fumingPotatoBooksSession) + "\n" +
+                                EnumChatFormatting.BLUE + nf.format(LootCommand.bonzoStaffsSession) + "\n" +
+                                EnumChatFormatting.AQUA + Utils.getMoneySpent(LootCommand.f1CoinsSpentSession) + "\n" +
+                                EnumChatFormatting.AQUA + Utils.getTimeBetween(0, LootCommand.f1TimeSpentSession);
                     break;
                 case "catacombs_floor_two":
                     dropsText = EnumChatFormatting.GOLD + "Recombobulators:\n" +
-                            EnumChatFormatting.DARK_PURPLE + "Fuming Potato Books:\n" +
-                            EnumChatFormatting.BLUE + "Scarf's Studies:\n" +
-                            EnumChatFormatting.DARK_PURPLE + "Adaptive Blades:\n" +
-                            EnumChatFormatting.AQUA + "Coins Spent:\n" +
-                            EnumChatFormatting.AQUA + "Time Spent:";
+                                EnumChatFormatting.DARK_PURPLE + "Fuming Potato Books:\n" +
+                                EnumChatFormatting.BLUE + "Scarf's Studies:\n" +
+                                EnumChatFormatting.DARK_PURPLE + "Adaptive Blades:\n" +
+                                EnumChatFormatting.AQUA + "Coins Spent:\n" +
+                                EnumChatFormatting.AQUA + "Time Spent:";
                     countText = EnumChatFormatting.GOLD + nf.format(LootCommand.recombobulators) + "\n" +
-                            EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.fumingPotatoBooks) + "\n" +
-                            EnumChatFormatting.BLUE + nf.format(LootCommand.scarfStudies) + "\n" +
-                            EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.adaptiveSwords) + "\n" +
-                            EnumChatFormatting.AQUA + Utils.getMoneySpent(LootCommand.f2CoinsSpent) + "\n" +
-                            EnumChatFormatting.AQUA + Utils.getTimeBetween(0, LootCommand.f2TimeSpent);
+                                EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.fumingPotatoBooks) + "\n" +
+                                EnumChatFormatting.BLUE + nf.format(LootCommand.scarfStudies) + "\n" +
+                                EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.adaptiveSwords) + "\n" +
+                                EnumChatFormatting.AQUA + Utils.getMoneySpent(LootCommand.f2CoinsSpent) + "\n" +
+                                EnumChatFormatting.AQUA + Utils.getTimeBetween(0, LootCommand.f2TimeSpent);
                     break;
                 case "catacombs_floor_two_session":
                     dropsText = EnumChatFormatting.GOLD + "Recombobulators:\n" +
-                            EnumChatFormatting.DARK_PURPLE + "Fuming Potato Books:\n" +
-                            EnumChatFormatting.BLUE + "Scarf's Studies:\n" +
-                            EnumChatFormatting.DARK_PURPLE + "Adaptive Blades:\n" +
-                            EnumChatFormatting.AQUA + "Coins Spent:\n" +
-                            EnumChatFormatting.AQUA + "Time Spent:";
+                                EnumChatFormatting.DARK_PURPLE + "Fuming Potato Books:\n" +
+                                EnumChatFormatting.BLUE + "Scarf's Studies:\n" +
+                                EnumChatFormatting.DARK_PURPLE + "Adaptive Blades:\n" +
+                                EnumChatFormatting.AQUA + "Coins Spent:\n" +
+                                EnumChatFormatting.AQUA + "Time Spent:";
                     countText = EnumChatFormatting.GOLD + nf.format(LootCommand.recombobulatorsSession) + "\n" +
-                            EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.fumingPotatoBooksSession) + "\n" +
-                            EnumChatFormatting.BLUE + nf.format(LootCommand.scarfStudiesSession) + "\n" +
-                            EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.adaptiveSwordsSession) + "\n" +
-                            EnumChatFormatting.AQUA + Utils.getMoneySpent(LootCommand.f2CoinsSpentSession) + "\n" +
-                            EnumChatFormatting.AQUA + Utils.getTimeBetween(0, LootCommand.f2TimeSpentSession);
+                                EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.fumingPotatoBooksSession) + "\n" +
+                                EnumChatFormatting.BLUE + nf.format(LootCommand.scarfStudiesSession) + "\n" +
+                                EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.adaptiveSwordsSession) + "\n" +
+                                EnumChatFormatting.AQUA + Utils.getMoneySpent(LootCommand.f2CoinsSpentSession) + "\n" +
+                                EnumChatFormatting.AQUA + Utils.getTimeBetween(0, LootCommand.f2TimeSpentSession);
                     break;
                 case "catacombs_floor_three":
                     dropsText = EnumChatFormatting.GOLD + "Recombobulators:\n" +
-                            EnumChatFormatting.DARK_PURPLE + "Fuming Potato Books:\n" +
-                            EnumChatFormatting.DARK_PURPLE + "Adaptive Helmets:\n" +
-                            EnumChatFormatting.DARK_PURPLE + "Adaptive Chestplates:\n" +
-                            EnumChatFormatting.DARK_PURPLE + "Adaptive Leggings:\n" +
-                            EnumChatFormatting.DARK_PURPLE + "Adaptive Boots:\n" +
-                            EnumChatFormatting.AQUA + "Coins Spent:\n" +
-                            EnumChatFormatting.AQUA + "Time Spent:";
+                                EnumChatFormatting.DARK_PURPLE + "Fuming Potato Books:\n" +
+                                EnumChatFormatting.DARK_PURPLE + "Adaptive Helmets:\n" +
+                                EnumChatFormatting.DARK_PURPLE + "Adaptive Chestplates:\n" +
+                                EnumChatFormatting.DARK_PURPLE + "Adaptive Leggings:\n" +
+                                EnumChatFormatting.DARK_PURPLE + "Adaptive Boots:\n" +
+                                EnumChatFormatting.AQUA + "Coins Spent:\n" +
+                                EnumChatFormatting.AQUA + "Time Spent:";
                     countText = EnumChatFormatting.GOLD + nf.format(LootCommand.recombobulators) + "\n" +
-                            EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.fumingPotatoBooks) + "\n" +
-                            EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.adaptiveHelms) + "\n" +
-                            EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.adaptiveChests) + "\n" +
-                            EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.adaptiveLegs) + "\n" +
-                            EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.adaptiveBoots) + "\n" +
-                            EnumChatFormatting.AQUA + Utils.getMoneySpent(LootCommand.f3CoinsSpent) + "\n" +
-                            EnumChatFormatting.AQUA + Utils.getTimeBetween(0, LootCommand.f3TimeSpent);
+                                EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.fumingPotatoBooks) + "\n" +
+                                EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.adaptiveHelms) + "\n" +
+                                EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.adaptiveChests) + "\n" +
+                                EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.adaptiveLegs) + "\n" +
+                                EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.adaptiveBoots) + "\n" +
+                                EnumChatFormatting.AQUA + Utils.getMoneySpent(LootCommand.f3CoinsSpent) + "\n" +
+                                EnumChatFormatting.AQUA + Utils.getTimeBetween(0, LootCommand.f3TimeSpent);
                     break;
                 case "catacombs_floor_three_session":
                     dropsText = EnumChatFormatting.GOLD + "Recombobulators:\n" +
-                            EnumChatFormatting.DARK_PURPLE + "Fuming Potato Books:\n" +
-                            EnumChatFormatting.DARK_PURPLE + "Adaptive Helmets:\n" +
-                            EnumChatFormatting.DARK_PURPLE + "Adaptive Chestplates:\n" +
-                            EnumChatFormatting.DARK_PURPLE + "Adaptive Leggings:\n" +
-                            EnumChatFormatting.DARK_PURPLE + "Adaptive Boots:\n" +
-                            EnumChatFormatting.AQUA + "Coins Spent:\n" +
-                            EnumChatFormatting.AQUA + "Time Spent:";
+                                EnumChatFormatting.DARK_PURPLE + "Fuming Potato Books:\n" +
+                                EnumChatFormatting.DARK_PURPLE + "Adaptive Helmets:\n" +
+                                EnumChatFormatting.DARK_PURPLE + "Adaptive Chestplates:\n" +
+                                EnumChatFormatting.DARK_PURPLE + "Adaptive Leggings:\n" +
+                                EnumChatFormatting.DARK_PURPLE + "Adaptive Boots:\n" +
+                                EnumChatFormatting.AQUA + "Coins Spent:\n" +
+                                EnumChatFormatting.AQUA + "Time Spent:";
                     countText = EnumChatFormatting.GOLD + nf.format(LootCommand.recombobulatorsSession) + "\n" +
-                            EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.fumingPotatoBooksSession) + "\n" +
-                            EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.adaptiveHelmsSession) + "\n" +
-                            EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.adaptiveChestsSession) + "\n" +
-                            EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.adaptiveLegsSession) + "\n" +
-                            EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.adaptiveBootsSession) + "\n" +
-                            EnumChatFormatting.AQUA + Utils.getMoneySpent(LootCommand.f3CoinsSpentSession) + "\n" +
-                            EnumChatFormatting.AQUA + Utils.getTimeBetween(0, LootCommand.f3TimeSpentSession);
+                                EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.fumingPotatoBooksSession) + "\n" +
+                                EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.adaptiveHelmsSession) + "\n" +
+                                EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.adaptiveChestsSession) + "\n" +
+                                EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.adaptiveLegsSession) + "\n" +
+                                EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.adaptiveBootsSession) + "\n" +
+                                EnumChatFormatting.AQUA + Utils.getMoneySpent(LootCommand.f3CoinsSpentSession) + "\n" +
+                                EnumChatFormatting.AQUA + Utils.getTimeBetween(0, LootCommand.f3TimeSpentSession);
                     break;
                 case "catacombs_floor_four":
                     dropsText = EnumChatFormatting.GOLD + "Recombobulators:\n" +
-                            EnumChatFormatting.DARK_PURPLE + "Fuming Potato Books:\n" +
-                            EnumChatFormatting.DARK_PURPLE + "Spirit Wings:\n" +
-                            EnumChatFormatting.DARK_PURPLE + "Spirit Bones:\n" +
-                            EnumChatFormatting.DARK_PURPLE + "Spirit Boots:\n" +
-                            EnumChatFormatting.DARK_PURPLE + "Spirit Swords:\n" +
-                            EnumChatFormatting.GOLD + "Spirit Bows:\n" +
-                            EnumChatFormatting.DARK_PURPLE + "Epic Spirit Pets:\n" +
-                            EnumChatFormatting.GOLD + "Leg Spirit Pets:\n" +
-                            EnumChatFormatting.AQUA + "Coins Spent:\n" +
-                            EnumChatFormatting.AQUA + "Time Spent:";
+                                EnumChatFormatting.DARK_PURPLE + "Fuming Potato Books:\n" +
+                                EnumChatFormatting.DARK_PURPLE + "Spirit Wings:\n" +
+                                EnumChatFormatting.DARK_PURPLE + "Spirit Bones:\n" +
+                                EnumChatFormatting.DARK_PURPLE + "Spirit Boots:\n" +
+                                EnumChatFormatting.DARK_PURPLE + "Spirit Swords:\n" +
+                                EnumChatFormatting.GOLD + "Spirit Bows:\n" +
+                                EnumChatFormatting.DARK_PURPLE + "Epic Spirit Pets:\n" +
+                                EnumChatFormatting.GOLD + "Leg Spirit Pets:\n" +
+                                EnumChatFormatting.AQUA + "Coins Spent:\n" +
+                                EnumChatFormatting.AQUA + "Time Spent:";
                     countText = EnumChatFormatting.GOLD + nf.format(LootCommand.recombobulators) + "\n" +
-                            EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.fumingPotatoBooks) + "\n" +
-                            EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.spiritWings) + "\n" +
-                            EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.spiritBones) + "\n" +
-                            EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.spiritBoots) + "\n" +
-                            EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.spiritSwords) + "\n" +
-                            EnumChatFormatting.GOLD + nf.format(LootCommand.spiritBows) + "\n" +
-                            EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.epicSpiritPets) + "\n" +
-                            EnumChatFormatting.GOLD + nf.format(LootCommand.legSpiritPets) + "\n" +
-                            EnumChatFormatting.AQUA + Utils.getMoneySpent(LootCommand.f4CoinsSpent) + "\n" +
-                            EnumChatFormatting.AQUA + Utils.getTimeBetween(0, LootCommand.f4TimeSpent);
+                                EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.fumingPotatoBooks) + "\n" +
+                                EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.spiritWings) + "\n" +
+                                EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.spiritBones) + "\n" +
+                                EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.spiritBoots) + "\n" +
+                                EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.spiritSwords) + "\n" +
+                                EnumChatFormatting.GOLD + nf.format(LootCommand.spiritBows) + "\n" +
+                                EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.epicSpiritPets) + "\n" +
+                                EnumChatFormatting.GOLD + nf.format(LootCommand.legSpiritPets) + "\n" +
+                                EnumChatFormatting.AQUA + Utils.getMoneySpent(LootCommand.f4CoinsSpent) + "\n" +
+                                EnumChatFormatting.AQUA + Utils.getTimeBetween(0, LootCommand.f4TimeSpent);
                     break;
                 case "catacombs_floor_four_session":
                     dropsText = EnumChatFormatting.GOLD + "Recombobulators:\n" +
-                            EnumChatFormatting.DARK_PURPLE + "Fuming Potato Books:\n" +
-                            EnumChatFormatting.DARK_PURPLE + "Spirit Wings:\n" +
-                            EnumChatFormatting.DARK_PURPLE + "Spirit Bones:\n" +
-                            EnumChatFormatting.DARK_PURPLE + "Spirit Boots:\n" +
-                            EnumChatFormatting.DARK_PURPLE + "Spirit Swords:\n" +
-                            EnumChatFormatting.GOLD + "Spirit Bows:\n" +
-                            EnumChatFormatting.DARK_PURPLE + "Epic Spirit Pets:\n" +
-                            EnumChatFormatting.GOLD + "Leg Spirit Pets:\n" +
-                            EnumChatFormatting.AQUA + "Coins Spent:\n" +
-                            EnumChatFormatting.AQUA + "Time Spent:";
+                                EnumChatFormatting.DARK_PURPLE + "Fuming Potato Books:\n" +
+                                EnumChatFormatting.DARK_PURPLE + "Spirit Wings:\n" +
+                                EnumChatFormatting.DARK_PURPLE + "Spirit Bones:\n" +
+                                EnumChatFormatting.DARK_PURPLE + "Spirit Boots:\n" +
+                                EnumChatFormatting.DARK_PURPLE + "Spirit Swords:\n" +
+                                EnumChatFormatting.GOLD + "Spirit Bows:\n" +
+                                EnumChatFormatting.DARK_PURPLE + "Epic Spirit Pets:\n" +
+                                EnumChatFormatting.GOLD + "Leg Spirit Pets:\n" +
+                                EnumChatFormatting.AQUA + "Coins Spent:\n" +
+                                EnumChatFormatting.AQUA + "Time Spent:";
                     countText = EnumChatFormatting.GOLD + nf.format(LootCommand.recombobulatorsSession) + "\n" +
-                            EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.fumingPotatoBooksSession) + "\n" +
-                            EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.spiritWingsSession) + "\n" +
-                            EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.spiritBonesSession) + "\n" +
-                            EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.spiritBootsSession) + "\n" +
-                            EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.spiritSwordsSession) + "\n" +
-                            EnumChatFormatting.GOLD + nf.format(LootCommand.spiritBowsSession) + "\n" +
-                            EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.epicSpiritPetsSession) + "\n" +
-                            EnumChatFormatting.GOLD + nf.format(LootCommand.legSpiritPetsSession) + "\n" +
-                            EnumChatFormatting.AQUA + Utils.getMoneySpent(LootCommand.f4CoinsSpentSession) + "\n" +
-                            EnumChatFormatting.AQUA + Utils.getTimeBetween(0, LootCommand.f4TimeSpentSession);
+                                EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.fumingPotatoBooksSession) + "\n" +
+                                EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.spiritWingsSession) + "\n" +
+                                EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.spiritBonesSession) + "\n" +
+                                EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.spiritBootsSession) + "\n" +
+                                EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.spiritSwordsSession) + "\n" +
+                                EnumChatFormatting.GOLD + nf.format(LootCommand.spiritBowsSession) + "\n" +
+                                EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.epicSpiritPetsSession) + "\n" +
+                                EnumChatFormatting.GOLD + nf.format(LootCommand.legSpiritPetsSession) + "\n" +
+                                EnumChatFormatting.AQUA + Utils.getMoneySpent(LootCommand.f4CoinsSpentSession) + "\n" +
+                                EnumChatFormatting.AQUA + Utils.getTimeBetween(0, LootCommand.f4TimeSpentSession);
                     break;
                 case "catacombs_floor_five":
                     dropsText = EnumChatFormatting.GOLD + "Recombobulators:\n" +
-                            EnumChatFormatting.DARK_PURPLE + "Fuming Potato Books:\n" +
-                            EnumChatFormatting.BLUE + "Warped Stones:\n" +
-                            EnumChatFormatting.DARK_PURPLE + "Shadow Helmets:\n" +
-                            EnumChatFormatting.DARK_PURPLE + "Shadow Chestplates:\n" +
-                            EnumChatFormatting.DARK_PURPLE + "Shadow Leggings:\n" +
-                            EnumChatFormatting.DARK_PURPLE + "Shadow Boots:\n" +
-                            EnumChatFormatting.GOLD + "Last Breaths:\n" +
-                            EnumChatFormatting.GOLD + "Livid Daggers:\n" +
-                            EnumChatFormatting.GOLD + "Shadow Furys:\n" +
-                            EnumChatFormatting.AQUA + "Coins Spent:\n" +
-                            EnumChatFormatting.AQUA + "Time Spent:";
+                                EnumChatFormatting.DARK_PURPLE + "Fuming Potato Books:\n" +
+                                EnumChatFormatting.BLUE + "Warped Stones:\n" +
+                                EnumChatFormatting.DARK_PURPLE + "Shadow Helmets:\n" +
+                                EnumChatFormatting.DARK_PURPLE + "Shadow Chestplates:\n" +
+                                EnumChatFormatting.DARK_PURPLE + "Shadow Leggings:\n" +
+                                EnumChatFormatting.DARK_PURPLE + "Shadow Boots:\n" +
+                                EnumChatFormatting.GOLD + "Last Breaths:\n" +
+                                EnumChatFormatting.GOLD + "Livid Daggers:\n" +
+                                EnumChatFormatting.GOLD + "Shadow Furys:\n" +
+                                EnumChatFormatting.AQUA + "Coins Spent:\n" +
+                                EnumChatFormatting.AQUA + "Time Spent:";
                     countText = EnumChatFormatting.GOLD + nf.format(LootCommand.recombobulators) + "\n" +
-                            EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.fumingPotatoBooks) + "\n" +
-                            EnumChatFormatting.BLUE + nf.format(LootCommand.warpedStones) + "\n" +
-                            EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.shadowAssHelms) + "\n" +
-                            EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.shadowAssChests) + "\n" +
-                            EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.shadowAssLegs) + "\n" +
-                            EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.shadowAssBoots) + "\n" +
-                            EnumChatFormatting.GOLD + nf.format(LootCommand.lastBreaths) + "\n" +
-                            EnumChatFormatting.GOLD + nf.format(LootCommand.lividDaggers) + "\n" +
-                            EnumChatFormatting.GOLD + nf.format(LootCommand.shadowFurys) + "\n" +
-                            EnumChatFormatting.AQUA + Utils.getMoneySpent(LootCommand.f5CoinsSpent) + "\n" +
-                            EnumChatFormatting.AQUA + Utils.getTimeBetween(0, LootCommand.f5TimeSpent);
+                                EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.fumingPotatoBooks) + "\n" +
+                                EnumChatFormatting.BLUE + nf.format(LootCommand.warpedStones) + "\n" +
+                                EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.shadowAssHelms) + "\n" +
+                                EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.shadowAssChests) + "\n" +
+                                EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.shadowAssLegs) + "\n" +
+                                EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.shadowAssBoots) + "\n" +
+                                EnumChatFormatting.GOLD + nf.format(LootCommand.lastBreaths) + "\n" +
+                                EnumChatFormatting.GOLD + nf.format(LootCommand.lividDaggers) + "\n" +
+                                EnumChatFormatting.GOLD + nf.format(LootCommand.shadowFurys) + "\n" +
+                                EnumChatFormatting.AQUA + Utils.getMoneySpent(LootCommand.f5CoinsSpent) + "\n" +
+                                EnumChatFormatting.AQUA + Utils.getTimeBetween(0, LootCommand.f5TimeSpent);
                     break;
                 case "catacombs_floor_five_session":
                     dropsText = EnumChatFormatting.GOLD + "Recombobulators:\n" +
-                            EnumChatFormatting.DARK_PURPLE + "Fuming Potato Books:\n" +
-                            EnumChatFormatting.BLUE + "Warped Stones:\n" +
-                            EnumChatFormatting.DARK_PURPLE + "Shadow Helmets:\n" +
-                            EnumChatFormatting.DARK_PURPLE + "Shadow Chestplates:\n" +
-                            EnumChatFormatting.DARK_PURPLE + "Shadow Leggings:\n" +
-                            EnumChatFormatting.DARK_PURPLE + "Shadow Boots:\n" +
-                            EnumChatFormatting.GOLD + "Last Breaths:\n" +
-                            EnumChatFormatting.GOLD + "Livid Daggers:\n" +
-                            EnumChatFormatting.GOLD + "Shadow Furys:\n" +
-                            EnumChatFormatting.AQUA + "Coins Spent:\n" +
-                            EnumChatFormatting.AQUA + "Time Spent:";
+                                EnumChatFormatting.DARK_PURPLE + "Fuming Potato Books:\n" +
+                                EnumChatFormatting.BLUE + "Warped Stones:\n" +
+                                EnumChatFormatting.DARK_PURPLE + "Shadow Helmets:\n" +
+                                EnumChatFormatting.DARK_PURPLE + "Shadow Chestplates:\n" +
+                                EnumChatFormatting.DARK_PURPLE + "Shadow Leggings:\n" +
+                                EnumChatFormatting.DARK_PURPLE + "Shadow Boots:\n" +
+                                EnumChatFormatting.GOLD + "Last Breaths:\n" +
+                                EnumChatFormatting.GOLD + "Livid Daggers:\n" +
+                                EnumChatFormatting.GOLD + "Shadow Furys:\n" +
+                                EnumChatFormatting.AQUA + "Coins Spent:\n" +
+                                EnumChatFormatting.AQUA + "Time Spent:";
                     countText = EnumChatFormatting.GOLD + nf.format(LootCommand.recombobulatorsSession) + "\n" +
-                            EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.fumingPotatoBooksSession) + "\n" +
-                            EnumChatFormatting.BLUE + nf.format(LootCommand.warpedStonesSession) + "\n" +
-                            EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.shadowAssHelmsSession) + "\n" +
-                            EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.shadowAssChestsSession) + "\n" +
-                            EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.shadowAssLegsSession) + "\n" +
-                            EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.shadowAssBootsSession) + "\n" +
-                            EnumChatFormatting.GOLD + nf.format(LootCommand.lastBreathsSession) + "\n" +
-                            EnumChatFormatting.GOLD + nf.format(LootCommand.lividDaggersSession) + "\n" +
-                            EnumChatFormatting.GOLD + nf.format(LootCommand.shadowFurysSession) + "\n" +
-                            EnumChatFormatting.AQUA + Utils.getMoneySpent(LootCommand.f5CoinsSpentSession) + "\n" +
-                            EnumChatFormatting.AQUA + Utils.getTimeBetween(0, LootCommand.f5TimeSpentSession);
+                                EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.fumingPotatoBooksSession) + "\n" +
+                                EnumChatFormatting.BLUE + nf.format(LootCommand.warpedStonesSession) + "\n" +
+                                EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.shadowAssHelmsSession) + "\n" +
+                                EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.shadowAssChestsSession) + "\n" +
+                                EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.shadowAssLegsSession) + "\n" +
+                                EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.shadowAssBootsSession) + "\n" +
+                                EnumChatFormatting.GOLD + nf.format(LootCommand.lastBreathsSession) + "\n" +
+                                EnumChatFormatting.GOLD + nf.format(LootCommand.lividDaggersSession) + "\n" +
+                                EnumChatFormatting.GOLD + nf.format(LootCommand.shadowFurysSession) + "\n" +
+                                EnumChatFormatting.AQUA + Utils.getMoneySpent(LootCommand.f5CoinsSpentSession) + "\n" +
+                                EnumChatFormatting.AQUA + Utils.getTimeBetween(0, LootCommand.f5TimeSpentSession);
                     break;
                 case "catacombs_floor_six":
                     dropsText = EnumChatFormatting.GOLD + "Recombobulators:\n" +
-                            EnumChatFormatting.DARK_PURPLE + "Fuming Potato Books:\n" +
-                            EnumChatFormatting.BLUE + "Ancient Roses:\n" +
-                            EnumChatFormatting.GOLD + "Precursor Eyes:\n" +
-                            EnumChatFormatting.GOLD + "Giant's Swords:\n" +
-                            EnumChatFormatting.GOLD + "Necro Lord Helmets:\n" +
-                            EnumChatFormatting.GOLD + "Necro Lord Chests:\n" +
-                            EnumChatFormatting.GOLD + "Necro Lord Leggings:\n" +
-                            EnumChatFormatting.GOLD + "Necro Lord Boots:\n" +
-                            EnumChatFormatting.GOLD + "Necro Swords:\n" +
-                            EnumChatFormatting.AQUA + "Coins Spent:\n" +
-                            EnumChatFormatting.AQUA + "Time Spent:";
+                                EnumChatFormatting.DARK_PURPLE + "Fuming Potato Books:\n" +
+                                EnumChatFormatting.BLUE + "Ancient Roses:\n" +
+                                EnumChatFormatting.GOLD + "Precursor Eyes:\n" +
+                                EnumChatFormatting.GOLD + "Giant's Swords:\n" +
+                                EnumChatFormatting.GOLD + "Necro Lord Helmets:\n" +
+                                EnumChatFormatting.GOLD + "Necro Lord Chests:\n" +
+                                EnumChatFormatting.GOLD + "Necro Lord Leggings:\n" +
+                                EnumChatFormatting.GOLD + "Necro Lord Boots:\n" +
+                                EnumChatFormatting.GOLD + "Necro Swords:\n" +
+                                EnumChatFormatting.AQUA + "Coins Spent:\n" +
+                                EnumChatFormatting.AQUA + "Time Spent:";
                     countText = EnumChatFormatting.GOLD + nf.format(LootCommand.recombobulators) + "\n" +
-                            EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.fumingPotatoBooks) + "\n" +
-                            EnumChatFormatting.BLUE + nf.format(LootCommand.ancientRoses) + "\n" +
-                            EnumChatFormatting.GOLD + nf.format(LootCommand.precursorEyes) + "\n" +
-                            EnumChatFormatting.GOLD + nf.format(LootCommand.giantsSwords) + "\n" +
-                            EnumChatFormatting.GOLD + nf.format(LootCommand.necroLordHelms) + "\n" +
-                            EnumChatFormatting.GOLD + nf.format(LootCommand.necroLordChests) + "\n" +
-                            EnumChatFormatting.GOLD + nf.format(LootCommand.necroLordLegs) + "\n" +
-                            EnumChatFormatting.GOLD + nf.format(LootCommand.necroLordBoots) + "\n" +
-                            EnumChatFormatting.GOLD + nf.format(LootCommand.necroSwords) + "\n" +
-                            EnumChatFormatting.AQUA + Utils.getMoneySpent(LootCommand.f6CoinsSpent) + "\n" +
-                            EnumChatFormatting.AQUA + Utils.getTimeBetween(0, LootCommand.f6TimeSpent);
+                                EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.fumingPotatoBooks) + "\n" +
+                                EnumChatFormatting.BLUE + nf.format(LootCommand.ancientRoses) + "\n" +
+                                EnumChatFormatting.GOLD + nf.format(LootCommand.precursorEyes) + "\n" +
+                                EnumChatFormatting.GOLD + nf.format(LootCommand.giantsSwords) + "\n" +
+                                EnumChatFormatting.GOLD + nf.format(LootCommand.necroLordHelms) + "\n" +
+                                EnumChatFormatting.GOLD + nf.format(LootCommand.necroLordChests) + "\n" +
+                                EnumChatFormatting.GOLD + nf.format(LootCommand.necroLordLegs) + "\n" +
+                                EnumChatFormatting.GOLD + nf.format(LootCommand.necroLordBoots) + "\n" +
+                                EnumChatFormatting.GOLD + nf.format(LootCommand.necroSwords) + "\n" +
+                                EnumChatFormatting.AQUA + Utils.getMoneySpent(LootCommand.f6CoinsSpent) + "\n" +
+                                EnumChatFormatting.AQUA + Utils.getTimeBetween(0, LootCommand.f6TimeSpent);
                     break;
                 case "catacombs_floor_six_session":
                     dropsText = EnumChatFormatting.GOLD + "Recombobulators:\n" +
-                            EnumChatFormatting.DARK_PURPLE + "Fuming Potato Books:\n" +
-                            EnumChatFormatting.BLUE + "Ancient Roses:\n" +
-                            EnumChatFormatting.GOLD + "Precursor Eyes:\n" +
-                            EnumChatFormatting.GOLD + "Giant's Swords:\n" +
-                            EnumChatFormatting.GOLD + "Necro Lord Helmets:\n" +
-                            EnumChatFormatting.GOLD + "Necro Lord Chests:\n" +
-                            EnumChatFormatting.GOLD + "Necro Lord Leggings:\n" +
-                            EnumChatFormatting.GOLD + "Necro Lord Boots:\n" +
-                            EnumChatFormatting.GOLD + "Necro Swords:\n" +
-                            EnumChatFormatting.AQUA + "Coins Spent:\n" +
-                            EnumChatFormatting.AQUA + "Time Spent:";
+                                EnumChatFormatting.DARK_PURPLE + "Fuming Potato Books:\n" +
+                                EnumChatFormatting.BLUE + "Ancient Roses:\n" +
+                                EnumChatFormatting.GOLD + "Precursor Eyes:\n" +
+                                EnumChatFormatting.GOLD + "Giant's Swords:\n" +
+                                EnumChatFormatting.GOLD + "Necro Lord Helmets:\n" +
+                                EnumChatFormatting.GOLD + "Necro Lord Chests:\n" +
+                                EnumChatFormatting.GOLD + "Necro Lord Leggings:\n" +
+                                EnumChatFormatting.GOLD + "Necro Lord Boots:\n" +
+                                EnumChatFormatting.GOLD + "Necro Swords:\n" +
+                                EnumChatFormatting.AQUA + "Coins Spent:\n" +
+                                EnumChatFormatting.AQUA + "Time Spent:";
                     countText = EnumChatFormatting.GOLD + nf.format(LootCommand.recombobulatorsSession) + "\n" +
-                            EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.fumingPotatoBooksSession) + "\n" +
-                            EnumChatFormatting.BLUE + nf.format(LootCommand.ancientRosesSession) + "\n" +
-                            EnumChatFormatting.GOLD + nf.format(LootCommand.precursorEyesSession) + "\n" +
-                            EnumChatFormatting.GOLD + nf.format(LootCommand.giantsSwordsSession) + "\n" +
-                            EnumChatFormatting.GOLD + nf.format(LootCommand.necroLordHelmsSession) + "\n" +
-                            EnumChatFormatting.GOLD + nf.format(LootCommand.necroLordChestsSession) + "\n" +
-                            EnumChatFormatting.GOLD + nf.format(LootCommand.necroLordLegsSession) + "\n" +
-                            EnumChatFormatting.GOLD + nf.format(LootCommand.necroLordBootsSession) + "\n" +
-                            EnumChatFormatting.GOLD + nf.format(LootCommand.necroSwordsSession) + "\n" +
-                            EnumChatFormatting.AQUA + Utils.getMoneySpent(LootCommand.f6CoinsSpentSession) + "\n" +
-                            EnumChatFormatting.AQUA + Utils.getTimeBetween(0, LootCommand.f6TimeSpentSession);
+                                EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.fumingPotatoBooksSession) + "\n" +
+                                EnumChatFormatting.BLUE + nf.format(LootCommand.ancientRosesSession) + "\n" +
+                                EnumChatFormatting.GOLD + nf.format(LootCommand.precursorEyesSession) + "\n" +
+                                EnumChatFormatting.GOLD + nf.format(LootCommand.giantsSwordsSession) + "\n" +
+                                EnumChatFormatting.GOLD + nf.format(LootCommand.necroLordHelmsSession) + "\n" +
+                                EnumChatFormatting.GOLD + nf.format(LootCommand.necroLordChestsSession) + "\n" +
+                                EnumChatFormatting.GOLD + nf.format(LootCommand.necroLordLegsSession) + "\n" +
+                                EnumChatFormatting.GOLD + nf.format(LootCommand.necroLordBootsSession) + "\n" +
+                                EnumChatFormatting.GOLD + nf.format(LootCommand.necroSwordsSession) + "\n" +
+                                EnumChatFormatting.AQUA + Utils.getMoneySpent(LootCommand.f6CoinsSpentSession) + "\n" +
+                                EnumChatFormatting.AQUA + Utils.getTimeBetween(0, LootCommand.f6TimeSpentSession);
                     break;
                 case "catacombs_floor_seven":
                     dropsText = EnumChatFormatting.GOLD + "Recombobulators:\n" +
-                            EnumChatFormatting.DARK_PURPLE + "Fuming Potato Books:\n" +
-                            EnumChatFormatting.DARK_PURPLE + "Wither Bloods:\n" +
-                            EnumChatFormatting.DARK_PURPLE + "Wither Cloaks:\n" +
-                            EnumChatFormatting.DARK_PURPLE + "Implosions:\n" +
-                            EnumChatFormatting.DARK_PURPLE + "Wither Shields:\n" +
-                            EnumChatFormatting.DARK_PURPLE + "Shadow Warps:\n" +
-                            EnumChatFormatting.DARK_PURPLE + "Necron's Handles:\n" +
-                            EnumChatFormatting.GOLD + "Auto Recombobs:\n" +
-                            EnumChatFormatting.GOLD + "Wither Helmets:\n" +
-                            EnumChatFormatting.GOLD + "Wither Chests:\n" +
-                            EnumChatFormatting.GOLD + "Wither Leggings:\n" +
-                            EnumChatFormatting.GOLD + "Wither Boots:\n" +
-                            EnumChatFormatting.AQUA + "Coins Spent:\n" +
-                            EnumChatFormatting.AQUA + "Time Spent:";
+                                EnumChatFormatting.DARK_PURPLE + "Fuming Potato Books:\n" +
+                                EnumChatFormatting.DARK_PURPLE + "Wither Bloods:\n" +
+                                EnumChatFormatting.DARK_PURPLE + "Wither Cloaks:\n" +
+                                EnumChatFormatting.DARK_PURPLE + "Implosions:\n" +
+                                EnumChatFormatting.DARK_PURPLE + "Wither Shields:\n" +
+                                EnumChatFormatting.DARK_PURPLE + "Shadow Warps:\n" +
+                                EnumChatFormatting.DARK_PURPLE + "Necron's Handles:\n" +
+                                EnumChatFormatting.GOLD + "Auto Recombobs:\n" +
+                                EnumChatFormatting.GOLD + "Wither Helmets:\n" +
+                                EnumChatFormatting.GOLD + "Wither Chests:\n" +
+                                EnumChatFormatting.GOLD + "Wither Leggings:\n" +
+                                EnumChatFormatting.GOLD + "Wither Boots:\n" +
+                                EnumChatFormatting.AQUA + "Coins Spent:\n" +
+                                EnumChatFormatting.AQUA + "Time Spent:";
                     countText = EnumChatFormatting.GOLD + nf.format(LootCommand.recombobulators) + "\n" +
-                            EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.fumingPotatoBooks) + "\n" +
-                            EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.witherBloods) + "\n" +
-                            EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.witherCloaks) + "\n" +
-                            EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.implosions) + "\n" +
-                            EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.witherShields) + "\n" +
-                            EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.shadowWarps) + "\n" +
-                            EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.necronsHandles) + "\n" +
-                            EnumChatFormatting.GOLD + nf.format(LootCommand.autoRecombs) + "\n" +
-                            EnumChatFormatting.GOLD + nf.format(LootCommand.witherHelms) + "\n" +
-                            EnumChatFormatting.GOLD + nf.format(LootCommand.witherChests) + "\n" +
-                            EnumChatFormatting.GOLD + nf.format(LootCommand.witherLegs) + "\n" +
-                            EnumChatFormatting.GOLD + nf.format(LootCommand.witherBoots) + "\n" +
-                            EnumChatFormatting.AQUA + Utils.getMoneySpent(LootCommand.f7CoinsSpent) + "\n" +
-                            EnumChatFormatting.AQUA + Utils.getTimeBetween(0, LootCommand.f7TimeSpent);
+                                EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.fumingPotatoBooks) + "\n" +
+                                EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.witherBloods) + "\n" +
+                                EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.witherCloaks) + "\n" +
+                                EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.implosions) + "\n" +
+                                EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.witherShields) + "\n" +
+                                EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.shadowWarps) + "\n" +
+                                EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.necronsHandles) + "\n" +
+                                EnumChatFormatting.GOLD + nf.format(LootCommand.autoRecombs) + "\n" +
+                                EnumChatFormatting.GOLD + nf.format(LootCommand.witherHelms) + "\n" +
+                                EnumChatFormatting.GOLD + nf.format(LootCommand.witherChests) + "\n" +
+                                EnumChatFormatting.GOLD + nf.format(LootCommand.witherLegs) + "\n" +
+                                EnumChatFormatting.GOLD + nf.format(LootCommand.witherBoots) + "\n" +
+                                EnumChatFormatting.AQUA + Utils.getMoneySpent(LootCommand.f7CoinsSpent) + "\n" +
+                                EnumChatFormatting.AQUA + Utils.getTimeBetween(0, LootCommand.f7TimeSpent);
                     break;
                 case "catacombs_floor_seven_session":
                     dropsText = EnumChatFormatting.GOLD + "Recombobulators:\n" +
-                            EnumChatFormatting.DARK_PURPLE + "Fuming Potato Books:\n" +
-                            EnumChatFormatting.DARK_PURPLE + "Wither Bloods:\n" +
-                            EnumChatFormatting.DARK_PURPLE + "Wither Cloaks:\n" +
-                            EnumChatFormatting.DARK_PURPLE + "Implosions:\n" +
-                            EnumChatFormatting.DARK_PURPLE + "Wither Shields:\n" +
-                            EnumChatFormatting.DARK_PURPLE + "Shadow Warps:\n" +
-                            EnumChatFormatting.DARK_PURPLE + "Necron's Handles:\n" +
-                            EnumChatFormatting.GOLD + "Auto Recombobulators:\n" +
-                            EnumChatFormatting.GOLD + "Wither Helmets:\n" +
-                            EnumChatFormatting.GOLD + "Wither Chests:\n" +
-                            EnumChatFormatting.GOLD + "Wither Leggings:\n" +
-                            EnumChatFormatting.GOLD + "Wither Boots:\n" +
-                            EnumChatFormatting.AQUA + "Coins Spent:\n" +
-                            EnumChatFormatting.AQUA + "Time Spent:";
+                                EnumChatFormatting.DARK_PURPLE + "Fuming Potato Books:\n" +
+                                EnumChatFormatting.DARK_PURPLE + "Wither Bloods:\n" +
+                                EnumChatFormatting.DARK_PURPLE + "Wither Cloaks:\n" +
+                                EnumChatFormatting.DARK_PURPLE + "Implosions:\n" +
+                                EnumChatFormatting.DARK_PURPLE + "Wither Shields:\n" +
+                                EnumChatFormatting.DARK_PURPLE + "Shadow Warps:\n" +
+                                EnumChatFormatting.DARK_PURPLE + "Necron's Handles:\n" +
+                                EnumChatFormatting.GOLD + "Auto Recombobulators:\n" +
+                                EnumChatFormatting.GOLD + "Wither Helmets:\n" +
+                                EnumChatFormatting.GOLD + "Wither Chests:\n" +
+                                EnumChatFormatting.GOLD + "Wither Leggings:\n" +
+                                EnumChatFormatting.GOLD + "Wither Boots:\n" +
+                                EnumChatFormatting.AQUA + "Coins Spent:\n" +
+                                EnumChatFormatting.AQUA + "Time Spent:";
                     countText = EnumChatFormatting.GOLD + nf.format(LootCommand.recombobulatorsSession) + "\n" +
-                            EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.fumingPotatoBooksSession) + "\n" +
-                            EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.witherBloodsSession) + "\n" +
-                            EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.witherCloaksSession) + "\n" +
-                            EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.implosionsSession) + "\n" +
-                            EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.witherShieldsSession) + "\n" +
-                            EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.shadowWarpsSession) + "\n" +
-                            EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.necronsHandlesSession) + "\n" +
-                            EnumChatFormatting.GOLD + nf.format(LootCommand.autoRecombsSession) + "\n" +
-                            EnumChatFormatting.GOLD + nf.format(LootCommand.witherHelmsSession) + "\n" +
-                            EnumChatFormatting.GOLD + nf.format(LootCommand.witherChestsSession) + "\n" +
-                            EnumChatFormatting.GOLD + nf.format(LootCommand.witherLegsSession) + "\n" +
-                            EnumChatFormatting.GOLD + nf.format(LootCommand.witherBootsSession) + "\n" +
-                            EnumChatFormatting.AQUA + Utils.getMoneySpent(LootCommand.f7CoinsSpentSession) + "\n" +
-                            EnumChatFormatting.AQUA + Utils.getTimeBetween(0, LootCommand.f7TimeSpentSession);
+                                EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.fumingPotatoBooksSession) + "\n" +
+                                EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.witherBloodsSession) + "\n" +
+                                EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.witherCloaksSession) + "\n" +
+                                EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.implosionsSession) + "\n" +
+                                EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.witherShieldsSession) + "\n" +
+                                EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.shadowWarpsSession) + "\n" +
+                                EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.necronsHandlesSession) + "\n" +
+                                EnumChatFormatting.GOLD + nf.format(LootCommand.autoRecombsSession) + "\n" +
+                                EnumChatFormatting.GOLD + nf.format(LootCommand.witherHelmsSession) + "\n" +
+                                EnumChatFormatting.GOLD + nf.format(LootCommand.witherChestsSession) + "\n" +
+                                EnumChatFormatting.GOLD + nf.format(LootCommand.witherLegsSession) + "\n" +
+                                EnumChatFormatting.GOLD + nf.format(LootCommand.witherBootsSession) + "\n" +
+                                EnumChatFormatting.AQUA + Utils.getMoneySpent(LootCommand.f7CoinsSpentSession) + "\n" +
+                                EnumChatFormatting.AQUA + Utils.getTimeBetween(0, LootCommand.f7TimeSpentSession);
                     break;
                 default:
                     System.out.println("Display was an unknown value, turning off.");
@@ -2675,11 +2675,11 @@ public class DankersSkyblockMod {
                                                 break;
                                         }
                                         waterAnswers = MAIN_COLOUR + "The following levers must be down:\n" +
-                                                EnumChatFormatting.DARK_PURPLE + "Purple: " + purple + "\n" +
-                                                EnumChatFormatting.GOLD + "Orange: " + orange + "\n" +
-                                                EnumChatFormatting.BLUE + "Blue: " + blue + "\n" +
-                                                EnumChatFormatting.GREEN + "Green: " + green + "\n" +
-                                                EnumChatFormatting.RED + "Red: " + red;
+                                                       EnumChatFormatting.DARK_PURPLE + "Purple: " + purple + "\n" +
+                                                       EnumChatFormatting.GOLD + "Orange: " + orange + "\n" +
+                                                       EnumChatFormatting.BLUE + "Blue: " + blue + "\n" +
+                                                       EnumChatFormatting.GREEN + "Green: " + green + "\n" +
+                                                       EnumChatFormatting.RED + "Red: " + red;
                                         done = true;
                                         break;
                                     }
