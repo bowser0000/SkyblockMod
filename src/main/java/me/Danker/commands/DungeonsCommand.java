@@ -110,7 +110,7 @@ public class DungeonsCommand extends CommandBase {
 														EnumChatFormatting.RED + " Berserk Level: " + berserk + "\n" +
 														EnumChatFormatting.GREEN + " Archer Level: " + archer + "\n" +
 														EnumChatFormatting.BLUE + " Tank Level: " + tank + "\n\n" +
-														EnumChatFormatting.WHITE + " Screts Found: " + secrets + "\n" +
+														EnumChatFormatting.WHITE + " Secrets Found: " + secrets + "\n" +
 														DankersSkyblockMod.DELIMITER_COLOUR + " " + EnumChatFormatting.BOLD + "-------------------"));
 		}).start();
 	}
