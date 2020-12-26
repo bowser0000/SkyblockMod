@@ -17,6 +17,7 @@ Discord Server: https://discord.gg/QsEkNQS
 - Block AOTD ability
 - Block Livid Dagger ability
 - Block placing Flower of Truth/Spirit Sceptre
+- Block breaking "farm blocks"
 - Disable Spirit Sceptre messages
 - Disable Midas Staff messages
 - Disable Implosion messages
@@ -32,8 +33,10 @@ Discord Server: https://discord.gg/QsEkNQS
 - Dungeons puzzle solver (Riddle, trivia, blaze, creeper, water, tic tac toe)
 - Dungeons timer (watcher, boss, deaths, and puzzle fails)
 - Watcher ready message
+- Bonzo's Mask Cooldown Timer
 - Catacombs F7 Stage 3 solvers (Starts with letter, select all colour, ignore arrows on sea lanterns)
 - Find correct Livid (with graphic display of HP)
+- Notify when Necron is stunned
 - Experimentation solvers (Ultrasequencer, Chronomatron, Superpairs)
 - Hide tooltips in experiment addons
 - Pet background colors based on level
