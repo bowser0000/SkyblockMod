@@ -1,0 +1,8 @@
+{
+  "compatibilityLevel": "JAVA_8",
+  "package": "me.Danker.mixin",
+  "mixins": [
+
+  ],
+  "verbose": true
+}
