@@ -62,6 +62,9 @@ public class DankerGui extends GuiScreen {
 	private GuiButton flowerWeapons;
 	private GuiButton pickBlock;
 	private GuiButton notifySlayerSlain;
+	private GuiButton necronNotifications;
+	private GuiButton bonzoTimer;
+	private GuiButton blockBreakingFarms;
 	
 	public DankerGui(int page) {
 		this.page = page;
@@ -120,13 +123,19 @@ public class DankerGui extends GuiScreen {
 		rngesusAlert = new GuiButton(0, width / 2 - 100, (int) (height * 0.6), "RNGesus Alerts: " + Utils.getColouredBoolean(ToggleCommand.rngesusAlerts));
 		splitFishing = new GuiButton(0, width / 2 - 100, (int) (height * 0.7), "Split Fishing Display: " + Utils.getColouredBoolean(ToggleCommand.splitFishing));
 		// Page 5
-		lowHealthNotify = new GuiButton(0, width / 2 - 100, (int) (height * 0.1), "Low Health Notifications: " + Utils.getColouredBoolean(ToggleCommand.lowHealthNotifyToggled));
+    lowHealthNotify = new GuiButton(0, width / 2 - 100, (int) (height * 0.1), "Low Health Notifications: " + Utils.getColouredBoolean(ToggleCommand.lowHealthNotifyToggled));
 		lividSolver = new GuiButton(0, width / 2 - 100, (int) (height * 0.2), "Find Correct Livid: " + Utils.getColouredBoolean(ToggleCommand.lividSolverToggled));
 		dungeonTimer = new GuiButton(0, width / 2 - 100, (int) (height * 0.3), "Display Dungeon Timers: " + Utils.getColouredBoolean(ToggleCommand.dungeonTimerToggled));
 		stopSalvageStarred = new GuiButton(0, width / 2 - 100, (int) (height * 0.4), "Stop Salvaging Starred Items: " + Utils.getColouredBoolean(ToggleCommand.stopSalvageStarredToggled));
 		watcherReadyMessage = new GuiButton(0, width / 2 - 100, (int) (height * 0.5), "Display Watcher Ready Message: " + Utils.getColouredBoolean(ToggleCommand.watcherReadyToggled));
-		notifySlayerSlain = new GuiButton(0, width / 2 - 100, (int) (height * 0.6), "Notify when Slayer Slain: " + Utils.getColouredBoolean(ToggleCommand.notifySlayerSlainToggled));
-    flowerWeapons = new GuiButton(0, width / 2 - 100, (int) (height * 0.5), "Prevent Placing FoT/Spirit Sceptre: " + Utils.getColouredBoolean(ToggleCommand.flowerWeaponsToggled));
+		splitFishing = new GuiButton(0, width / 2 - 100, (int) (height * 0.6), "Split Fishing Display: " + Utils.getColouredBoolean(ToggleCommand.splitFishing));
+		notifySlayerSlain = new GuiButton(0, width / 2 - 100, (int) (height * 0.7), "Notify when Slayer Slain: " + Utils.getColouredBoolean(ToggleCommand.notifySlayerSlainToggled));
+		//Page 6
+    flowerWeapons = new GuiButton(0, width / 2 - 100, (int) (height * 0.1), "Prevent Placing FoT/Spirit Sceptre: " + Utils.getColouredBoolean(ToggleCommand.flowerWeaponsToggled));
+		necronNotifications = new GuiButton(0, width / 2 - 100, (int) (height * 0.2), "Necron Phase Notifications: " + Utils.getColouredBoolean(ToggleCommand.necronNotificationsToggled));
+		bonzoTimer = new GuiButton(0, width / 2 - 100, (int) (height * 0.3), "Bonzo's Mask Timer: " + Utils.getColouredBoolean(ToggleCommand.bonzoTimerToggled));
+		blockBreakingFarms = new GuiButton(0, width / 2 - 100, (int) (height * 0.4), "Prevent Breaking Farms: " + Utils.getColouredBoolean(ToggleCommand.blockBreakingFarmsToggled));
+
 		switch (page) {
 			case 1:
 				this.buttonList.add(changeDisplay);
@@ -178,7 +187,14 @@ public class DankerGui extends GuiScreen {
 				this.buttonList.add(stopSalvageStarred);
 				this.buttonList.add(watcherReadyMessage);
 				this.buttonList.add(notifySlayerSlain);
-     		this.buttonList.add(flowerWeapons);
+				this.buttonList.add(flowerWeapons);
+				this.buttonList.add(nextPage);
+				this.buttonList.add(backPage);
+				break;
+			case 6:
+        this.buttonList.add(necronNotifications);
+				this.buttonList.add(bonzoTimer);
+				this.buttonList.add(blockBreakingFarms);
 				this.buttonList.add(backPage);
 				break;
 		}
@@ -191,7 +207,7 @@ public class DankerGui extends GuiScreen {
 	@Override
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
 		this.drawDefaultBackground();
-		String pageText = "Page: " + page + "/5";
+		String pageText = "Page: " + page + "/6";
 		int pageWidth = mc.fontRendererObj.getStringWidth(pageText);
 		new TextRenderer(mc, pageText, width / 2 - pageWidth / 2, 10, 1D);
 		super.drawScreen(mouseX, mouseY, partialTicks);
@@ -339,6 +355,18 @@ public class DankerGui extends GuiScreen {
 			ToggleCommand.notifySlayerSlainToggled = !ToggleCommand.notifySlayerSlainToggled;
 			ConfigHandler.writeBooleanConfig("toggles", "NotifySlayerSlain", ToggleCommand.notifySlayerSlainToggled);
 			notifySlayerSlain.displayString = "Notify when Slayer Slain: " + Utils.getColouredBoolean(ToggleCommand.notifySlayerSlainToggled);
+		} else if (button == necronNotifications) {
+			ToggleCommand.necronNotificationsToggled = !ToggleCommand.necronNotificationsToggled;
+			ConfigHandler.writeBooleanConfig("toggles", "NecronNotifications", ToggleCommand.necronNotificationsToggled);
+			necronNotifications.displayString = "Necron Phase Notifications: " + Utils.getColouredBoolean(ToggleCommand.necronNotificationsToggled);
+		} else if (button == bonzoTimer) {
+			ToggleCommand.bonzoTimerToggled = !ToggleCommand.bonzoTimerToggled;
+			ConfigHandler.writeBooleanConfig("toggles", "BonzoTimer", ToggleCommand.bonzoTimerToggled);
+			bonzoTimer.displayString = "Bonzo's Mask Timer: " + Utils.getColouredBoolean(ToggleCommand.bonzoTimerToggled);
+		} else if (button == blockBreakingFarms) {
+			ToggleCommand.blockBreakingFarmsToggled = !ToggleCommand.blockBreakingFarmsToggled;
+			ConfigHandler.writeBooleanConfig("toggles", "BlockBreakingFarms", ToggleCommand.blockBreakingFarmsToggled);
+			blockBreakingFarms.displayString = "Prevent Breaking Farms: " + Utils.getColouredBoolean(ToggleCommand.blockBreakingFarmsToggled);
 		} else if (button == pickBlock) {
 			ToggleCommand.swapToPickBlockToggled = !ToggleCommand.swapToPickBlockToggled;
 			ConfigHandler.writeBooleanConfig("toggles", "PickBlock", ToggleCommand.swapToPickBlockToggled);

@@ -20,13 +20,14 @@ import net.minecraft.entity.item.EntityItemFrame;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.scoreboard.ScoreObjective;
 import net.minecraft.util.*;
 import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.*;
 import java.util.List;
 import java.util.regex.Matcher;
 
@@ -119,7 +120,15 @@ public class Utils {
 			drawHeight += mc.fontRendererObj.FONT_HEIGHT;
 		}
 	}
-	
+
+	public static boolean isOnHypixel () {
+		Minecraft mc = Minecraft.getMinecraft();
+		if (mc != null && mc.theWorld != null && !mc.isSingleplayer()) {
+			return mc.getCurrentServerData().serverIP.toLowerCase().contains("hypixel");
+		}
+		return false;
+	}
+
 	public static void checkForSkyblock() {
 		Minecraft mc = Minecraft.getMinecraft();
 		if (mc != null && mc.theWorld != null && !mc.isSingleplayer()) {
@@ -263,7 +272,40 @@ public class Utils {
 	public static String getColouredBoolean(boolean bool) {
 		return bool ? EnumChatFormatting.GREEN + "On" : EnumChatFormatting.RED + "Off";
 	}
-	
+
+	//Taken from SkyblockAddons
+	public static List<String> getItemLore(ItemStack itemStack) {
+		final int NBT_INTEGER = 3;
+		final int NBT_STRING = 8;
+		final int NBT_LIST = 9;
+		final int NBT_COMPOUND = 10;
+
+		if (itemStack.hasTagCompound() && itemStack.getTagCompound().hasKey("display", NBT_COMPOUND)) {
+			NBTTagCompound display = itemStack.getTagCompound().getCompoundTag("display");
+
+			if (display.hasKey("Lore", NBT_LIST)) {
+				NBTTagList lore = display.getTagList("Lore", NBT_STRING);
+
+				List<String> loreAsList = new ArrayList<>();
+				for (int lineNumber = 0; lineNumber < lore.tagCount(); lineNumber++) {
+					loreAsList.add(lore.getStringTagAt(lineNumber));
+				}
+
+				return Collections.unmodifiableList(loreAsList);
+			}
+		}
+
+		return Collections.emptyList();
+	}
+
+	public static boolean hasRightClickAbility(ItemStack itemStack) {
+		return Utils.getItemLore(itemStack).stream().anyMatch(line->{
+			String stripped = StringUtils.stripControlCodes(line);
+			return stripped.startsWith("Item Ability:") && stripped.endsWith("RIGHT CLICK");
+		});
+	}
+
+
 	public static void draw3DLine(Vec3 pos1, Vec3 pos2, int colourInt, float partialTicks) {
 		Entity render = Minecraft.getMinecraft().getRenderViewEntity();
 		WorldRenderer worldRenderer = Tessellator.getInstance().getWorldRenderer();

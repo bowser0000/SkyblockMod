@@ -203,6 +203,11 @@ public class ConfigHandler {
 		if (!hasKey("toggles", "PickBlock")) writeBooleanConfig("toggles", "PickBlock", false);
 		if (!hasKey("toggles", "FlowerWeapons")) writeBooleanConfig("toggles", "FlowerWeapons", false);
 		if (!hasKey("toggles", "NotifySlayerSlain")) writeBooleanConfig("toggles", "NotifySlayerSlain", false);
+		if (!hasKey("toggles", "NecronNotifications")) writeBooleanConfig("toggles", "NecronNotifications", false);
+		if (!hasKey("toggles", "BonzoTimer")) writeBooleanConfig("toggles", "BonzoTimer", false);
+		if (!hasKey("toggles", "BlockBreakingFarms")) writeBooleanConfig("toggles", "BlockBreakingFarms", false);
+
+
 		// Puzzle Solvers
 		if (!hasKey("toggles", "ThreeManPuzzle")) writeBooleanConfig("toggles", "ThreeManPuzzle", false);
 		if (!hasKey("toggles", "OruoPuzzle")) writeBooleanConfig("toggles", "OruoPuzzle", false);
@@ -388,7 +393,9 @@ public class ConfigHandler {
 		if (!hasKey("misc", "skill50Time")) writeIntConfig("misc", "skill50Time", 3);
 		if (!hasKey("misc", "cakeTime")) writeDoubleConfig("misc", "cakeTime", 0);
 		if (!hasKey("misc", "showSkillTracker")) writeBooleanConfig("misc", "showSkillTracker", false);
-		
+		if (!hasKey("misc", "firstLaunch")) writeBooleanConfig("misc", "firstLaunch", true);
+
+
 		ScaledResolution scaled = new ScaledResolution(Minecraft.getMinecraft());
 		int height = scaled.getScaledHeight();
 		if (!hasKey("locations", "coordsX")) writeIntConfig("locations", "coordsX", 5);
@@ -407,6 +414,8 @@ public class ConfigHandler {
 		if (!hasKey("locations", "skillTrackerY")) writeIntConfig("locations", "skillTrackerY", 50);
 		if (!hasKey("locations", "waterAnswerX")) writeIntConfig("locations", "waterAnswerX", 100);
 		if (!hasKey("locations", "waterAnswerY")) writeIntConfig("locations", "waterAnswerY", 100);
+		if (!hasKey("locations", "bonzoTimerX")) writeIntConfig("locations", "bonzoTimerX", 40);
+		if (!hasKey("locations", "bonzoTimerY")) writeIntConfig("locations", "bonzoTimerY", 80);
 		if (!hasKey("scales", "coordsScale")) writeDoubleConfig("scales", "coordsScale", 1);
 		if (!hasKey("scales", "displayScale")) writeDoubleConfig("scales", "displayScale", 1);
 		if (!hasKey("scales", "dungeonTimerScale")) writeDoubleConfig("scales", "dungeonTimerScale", 1);
@@ -415,7 +424,9 @@ public class ConfigHandler {
 		if (!hasKey("scales", "cakeTimerScale")) writeDoubleConfig("scales", "cakeTimerScale", 1);
 		if (!hasKey("scales", "skillTrackerScale")) writeDoubleConfig("scales", "skillTrackerScale", 1);
 		if (!hasKey("scales", "waterAnswerScale")) writeDoubleConfig("scales", "waterAnswerScale", 1);
-		
+		if (!hasKey("scales", "bonzoTimerScale")) writeDoubleConfig("scales", "bonzoTimerScale", 1);
+
+
 		if (!hasKey("colors", "main")) writeStringConfig("colors", "main", EnumChatFormatting.GREEN.toString());
 		if (!hasKey("colors", "secondary")) writeStringConfig("colors", "secondary", EnumChatFormatting.DARK_GREEN.toString());
 		if (!hasKey("colors", "delimiter")) writeStringConfig("colors", "delimiter", EnumChatFormatting.AQUA.toString());
@@ -429,6 +440,7 @@ public class ConfigHandler {
 		if (!hasKey("colors", "cakeDisplay")) writeStringConfig("colors", "cakeDisplay", EnumChatFormatting.GOLD.toString());
 		if (!hasKey("colors", "skillTracker")) writeStringConfig("colors", "skillTracker", EnumChatFormatting.AQUA.toString());
 		if (!hasKey("colors", "triviaWrongAnswer")) writeStringConfig("colors", "triviaWrongAnswer", EnumChatFormatting.RED.toString());
+		if (!hasKey("colors", "bonzoDisplay")) writeStringConfig("colors", "bonzoDisplay", EnumChatFormatting.RED.toString());
 		if (!hasKey("colors", "blazeLowest")) writeIntConfig("colors", "blazeLowest", 0xFF0000);
 		if (!hasKey("colors", "blazeHighest")) writeIntConfig("colors", "blazeHighest", 0x40FF40);
 		if (!hasKey("colors", "pet1To9")) writeIntConfig("colors", "pet1To9", 0x999999); // Gray
@@ -473,8 +485,12 @@ public class ConfigHandler {
 		ToggleCommand.stopSalvageStarredToggled = getBoolean("toggles", "StopSalvageStarred");
 		ToggleCommand.watcherReadyToggled = getBoolean("toggles", "WatcherReadyMessage");
 		ToggleCommand.notifySlayerSlainToggled = getBoolean("toggles", "NotifySlayerSlain");
+		ToggleCommand.necronNotificationsToggled = getBoolean("toggles", "NecronNotifications");
+		ToggleCommand.bonzoTimerToggled = getBoolean("toggles", "BonzoTimer");
+		ToggleCommand.blockBreakingFarmsToggled = getBoolean("toggles", "BlockBreakingFarms");
 		ToggleCommand.swapToPickBlockToggled = getBoolean("toggles", "PickBlock");
 		ToggleCommand.flowerWeaponsToggled = getBoolean("toggles", "FlowerWeapons");
+
 		// Puzzle Solvers
 		ToggleCommand.threeManToggled = getBoolean("toggles", "ThreeManPuzzle");
 		ToggleCommand.oruoToggled = getBoolean("toggles", "OruoPuzzle");
@@ -665,7 +681,8 @@ public class ConfigHandler {
 		DankersSkyblockMod.SKILL_TIME = getInt("misc", "skill50Time") * 20;
 		DankersSkyblockMod.cakeTime = getDouble("misc", "cakeTime");
 		DankersSkyblockMod.showSkillTracker = getBoolean("misc", "showSkillTracker");
-		
+		DankersSkyblockMod.firstLaunch = getBoolean("misc", "firstLaunch");
+
 		MoveCommand.coordsXY[0] = getInt("locations", "coordsX");
 		MoveCommand.coordsXY[1] = getInt("locations", "coordsY");
 		MoveCommand.displayXY[0] = getInt("locations", "displayX");
@@ -682,7 +699,10 @@ public class ConfigHandler {
 		MoveCommand.skillTrackerXY[1] = getInt("locations", "skillTrackerY");
 		MoveCommand.waterAnswerXY[0] = getInt("locations", "waterAnswerX");
 		MoveCommand.waterAnswerXY[1] = getInt("locations", "waterAnswerY");
-		
+		MoveCommand.bonzoTimerXY[0] = getInt("locations", "bonzoTimerX");
+		MoveCommand.bonzoTimerXY[1] = getInt("locations", "bonzoTimerY");
+
+
 		ScaleCommand.coordsScale = getDouble("scales", "coordsScale");
 		ScaleCommand.displayScale = getDouble("scales", "displayScale");
 		ScaleCommand.dungeonTimerScale = getDouble("scales", "dungeonTimerScale");
@@ -691,6 +711,7 @@ public class ConfigHandler {
 		ScaleCommand.cakeTimerScale = getDouble("scales", "cakeTimerScale");
 		ScaleCommand.skillTrackerScale = getDouble("scales", "skillTrackerScale");
 		ScaleCommand.waterAnswerScale = getDouble("scales", "waterAnswerScale");
+		ScaleCommand.bonzoTimerScale = getDouble("scales", "bonzoTimerScale");
 
 		DankersSkyblockMod.MAIN_COLOUR = getString("colors", "main");
 		DankersSkyblockMod.SECONDARY_COLOUR = getString("colors", "secondary");
@@ -705,6 +726,7 @@ public class ConfigHandler {
 		DankersSkyblockMod.CAKE_COLOUR = getString("colors", "cakeDisplay");
 		DankersSkyblockMod.SKILL_TRACKER_COLOUR = getString("colors", "skillTracker");
 		DankersSkyblockMod.TRIVIA_WRONG_ANSWER_COLOUR = getString("colors", "triviaWrongAnswer");
+		DankersSkyblockMod.BONZO_COLOR = getString("colors", "bonzoDisplay");
 		DankersSkyblockMod.LOWEST_BLAZE_COLOUR = getInt("colors", "blazeLowest");
 		DankersSkyblockMod.HIGHEST_BLAZE_COLOUR = getInt("colors", "blazeHighest");
 		DankersSkyblockMod.PET_1_TO_9 = getInt("colors", "pet1To9");
