@@ -199,7 +199,7 @@ public class ConfigHandler {
 		if (!hasKey("toggles", "NecronNotifications")) writeBooleanConfig("toggles", "NecronNotifications", false);
 		if (!hasKey("toggles", "BonzoTimer")) writeBooleanConfig("toggles", "BonzoTimer", false);
 		if (!hasKey("toggles", "BlockBreakingFarms")) writeBooleanConfig("toggles", "BlockBreakingFarms", false);
-
+		if (!hasKey("toggles", "BossBarFix")) writeBooleanConfig("toggles", "BossBarFix", false);
 
 		// Puzzle Solvers
 		if (!hasKey("toggles", "ThreeManPuzzle")) writeBooleanConfig("toggles", "ThreeManPuzzle", false);
@@ -477,6 +477,7 @@ public class ConfigHandler {
 		ToggleCommand.necronNotificationsToggled = getBoolean("toggles", "NecronNotifications");
 		ToggleCommand.bonzoTimerToggled = getBoolean("toggles", "BonzoTimer");
 		ToggleCommand.blockBreakingFarmsToggled = getBoolean("toggles", "BlockBreakingFarms");
+		ToggleCommand.bossBarFixToggled = getBoolean("toggles", "BossBarFix");
 		ToggleCommand.swapToPickBlockToggled = getBoolean("toggles", "PickBlock");
 		ToggleCommand.flowerWeaponsToggled = getBoolean("toggles", "FlowerWeapons");
 

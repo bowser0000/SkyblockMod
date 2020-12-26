@@ -61,6 +61,7 @@ public class DankerGui extends GuiScreen {
 	private GuiButton necronNotifications;
 	private GuiButton bonzoTimer;
 	private GuiButton blockBreakingFarms;
+	private GuiButton bossBarFix;
 	
 	public DankerGui(int page) {
 		this.page = page;
@@ -128,6 +129,7 @@ public class DankerGui extends GuiScreen {
 		bonzoTimer = new GuiButton(0, width / 2 - 100, (int) (height * 0.7), "Bonzo's Mask Timer: " + Utils.getColouredBoolean(ToggleCommand.bonzoTimerToggled));
 		//Page 6
 		blockBreakingFarms = new GuiButton(0, width / 2 - 100, (int) (height * 0.1), "Prevent Breaking Farms: " + Utils.getColouredBoolean(ToggleCommand.blockBreakingFarmsToggled));
+		bossBarFix = new GuiButton(0, width / 2 - 100, (int) (height * 0.2), "Boss Bar Fix: " + Utils.getColouredBoolean(ToggleCommand.bossBarFixToggled));
 
 		switch (page) {
 			case 1:
@@ -186,6 +188,7 @@ public class DankerGui extends GuiScreen {
 				break;
 			case 6:
 				this.buttonList.add(blockBreakingFarms);
+				this.buttonList.add(bossBarFix);
 				this.buttonList.add(backPage);
 				break;
 		}
@@ -350,6 +353,10 @@ public class DankerGui extends GuiScreen {
 			ToggleCommand.blockBreakingFarmsToggled = !ToggleCommand.blockBreakingFarmsToggled;
 			ConfigHandler.writeBooleanConfig("toggles", "BlockBreakingFarms", ToggleCommand.blockBreakingFarmsToggled);
 			blockBreakingFarms.displayString = "Prevent Breaking Farms: " + Utils.getColouredBoolean(ToggleCommand.blockBreakingFarmsToggled);
+		} else if (button == bossBarFix) {
+			ToggleCommand.bossBarFixToggled = !ToggleCommand.bossBarFixToggled;
+			ConfigHandler.writeBooleanConfig("toggles", "BossBarFix", ToggleCommand.bossBarFixToggled);
+			bossBarFix.displayString = "Boss Bar Fix: " + Utils.getColouredBoolean(ToggleCommand.bossBarFixToggled);
 		} else if (button == pickBlock) {
 			ToggleCommand.swapToPickBlockToggled = !ToggleCommand.swapToPickBlockToggled;
 			ConfigHandler.writeBooleanConfig("toggles", "PickBlock", ToggleCommand.swapToPickBlockToggled);
