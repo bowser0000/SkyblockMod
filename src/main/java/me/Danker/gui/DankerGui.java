@@ -62,6 +62,7 @@ public class DankerGui extends GuiScreen {
 	private GuiButton bonzoTimer;
 	private GuiButton blockBreakingFarms;
 	private GuiButton bossBarFix;
+	private GuiButton hideImplosionParticles;
 	
 	public DankerGui(int page) {
 		this.page = page;
@@ -130,6 +131,7 @@ public class DankerGui extends GuiScreen {
 		//Page 6
 		blockBreakingFarms = new GuiButton(0, width / 2 - 100, (int) (height * 0.1), "Prevent Breaking Farms: " + Utils.getColouredBoolean(ToggleCommand.blockBreakingFarmsToggled));
 		bossBarFix = new GuiButton(0, width / 2 - 100, (int) (height * 0.2), "Boss Bar Fix: " + Utils.getColouredBoolean(ToggleCommand.bossBarFixToggled));
+		hideImplosionParticles = new GuiButton(0, width / 2 - 100, (int) (height * 0.3), "Hide Implosion Particles: " + Utils.getColouredBoolean(ToggleCommand.hideImplosionParticlesToggled));
 
 		switch (page) {
 			case 1:
@@ -189,6 +191,7 @@ public class DankerGui extends GuiScreen {
 			case 6:
 				this.buttonList.add(blockBreakingFarms);
 				this.buttonList.add(bossBarFix);
+				this.buttonList.add(hideImplosionParticles);
 				this.buttonList.add(backPage);
 				break;
 		}
@@ -357,6 +360,10 @@ public class DankerGui extends GuiScreen {
 			ToggleCommand.bossBarFixToggled = !ToggleCommand.bossBarFixToggled;
 			ConfigHandler.writeBooleanConfig("toggles", "BossBarFix", ToggleCommand.bossBarFixToggled);
 			bossBarFix.displayString = "Boss Bar Fix: " + Utils.getColouredBoolean(ToggleCommand.bossBarFixToggled);
+		} else if (button == hideImplosionParticles) {
+			ToggleCommand.hideImplosionParticlesToggled = !ToggleCommand.hideImplosionParticlesToggled;
+			ConfigHandler.writeBooleanConfig("toggles", "HideImplosionParticles", ToggleCommand.hideImplosionParticlesToggled);
+			hideImplosionParticles.displayString = "Hide Implosion Particles: " + Utils.getColouredBoolean(ToggleCommand.hideImplosionParticlesToggled);
 		} else if (button == pickBlock) {
 			ToggleCommand.swapToPickBlockToggled = !ToggleCommand.swapToPickBlockToggled;
 			ConfigHandler.writeBooleanConfig("toggles", "PickBlock", ToggleCommand.swapToPickBlockToggled);
