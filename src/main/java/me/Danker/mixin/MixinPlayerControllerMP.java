@@ -30,7 +30,6 @@ public class MixinPlayerControllerMP {
         Block block = mc.theWorld.getBlockState(pos).getBlock();
 
         if (Utils.inSkyblock) {
-
             if (ToggleCommand.blockBreakingFarmsToggled && heldItem != null) {
                 ArrayList<Item> tools = new ArrayList<>(Arrays.asList(
                         Items.wooden_hoe,
@@ -52,7 +51,23 @@ public class MixinPlayerControllerMP {
                         Blocks.glowstone,
                         Blocks.sea_lantern,
                         Blocks.soul_sand,
-                        Blocks.waterlily
+                        Blocks.waterlily,
+                        Blocks.standing_sign,
+                        Blocks.wall_sign,
+                        Blocks.wooden_slab,
+                        Blocks.double_wooden_slab,
+                        Blocks.oak_fence,
+                        Blocks.dark_oak_fence,
+                        Blocks.birch_fence,
+                        Blocks.spruce_fence,
+                        Blocks.acacia_fence,
+                        Blocks.jungle_fence,
+                        Blocks.oak_fence_gate,
+                        Blocks.acacia_fence_gate,
+                        Blocks.birch_fence_gate,
+                        Blocks.jungle_fence_gate,
+                        Blocks.spruce_fence_gate,
+                        Blocks.dark_oak_fence_gate
                 ));
 
                 if (tools.contains(heldItem.getItem()) && farmBlocks.contains(block)) {
