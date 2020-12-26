@@ -133,7 +133,7 @@ public class DankersSkyblockMod {
     static ItemStack[] experimentTableSlots = new ItemStack[54];
     static int pickBlockBind;
     static boolean pickBlockBindSwapped = false;
-    static String terminalColorNeeded;
+    static String terminalColourNeeded;
     static int[] terminalNumberNeeded = new int[4];
 
     static double dungeonStartTime = 0;
@@ -176,7 +176,7 @@ public class DankersSkyblockMod {
     public static String CAKE_COLOUR;
     public static String SKILL_TRACKER_COLOUR;
     public static String TRIVIA_WRONG_ANSWER_COLOUR;
-    public static String BONZO_COLOR;
+    public static String BONZO_COLOUR;
     public static int LOWEST_BLAZE_COLOUR;
     public static int HIGHEST_BLAZE_COLOUR;
     public static int PET_1_TO_9;
@@ -1407,7 +1407,7 @@ public class DankersSkyblockMod {
                 if (nextBonzoUse - timeNow < 0) {
                     bonzoText = EnumChatFormatting.GREEN + "READY";
                 } else {
-                    bonzoText = BONZO_COLOR + Utils.getTimeBetween(timeNow, nextBonzoUse);
+                    bonzoText = BONZO_COLOUR + Utils.getTimeBetween(timeNow, nextBonzoUse);
                 }
                 new TextRenderer(mc, bonzoText, MoveCommand.bonzoTimerXY[0] + 20, MoveCommand.bonzoTimerXY[1] + 5, 1);
 
@@ -3378,9 +3378,9 @@ public class DankersSkyblockMod {
                             char letter = inventoryName.charAt(inventoryName.indexOf("'") + 1);
                             shouldCancel = !(StringUtils.stripControlCodes(item.getDisplayName()).charAt(0) == letter);
                         } else if (inventoryName.startsWith("Select all the")) {
-                            if (terminalColorNeeded == null) return;
+                            if (terminalColourNeeded == null) return;
                             String itemName = StringUtils.stripControlCodes(item.getDisplayName()).toUpperCase();
-                            shouldCancel = !(itemName.contains(terminalColorNeeded) || (terminalColorNeeded.equals("SILVER") && itemName.contains("LIGHT GRAY")) || (terminalColorNeeded.equals("WHITE") && itemName.equals("WOOL")));
+                            shouldCancel = !(itemName.contains(terminalColourNeeded) || (terminalColourNeeded.equals("SILVER") && itemName.contains("LIGHT GRAY")) || (terminalColourNeeded.equals("WHITE") && itemName.equals("WOOL")));
                         }
                     }
 
@@ -3458,7 +3458,7 @@ public class DankersSkyblockMod {
         chronomatronPattern.clear();
         chronomatronMouseClicks = 0;
         experimentTableSlots = new ItemStack[54];
-        terminalColorNeeded = null;
+        terminalColourNeeded = null;
         terminalNumberNeeded = new int[4];
     }
 
@@ -3537,7 +3537,7 @@ public class DankersSkyblockMod {
                         colourParts.add(colourMatcher.group());
                     }
                     colour = String.join(" ", colourParts);
-                    terminalColorNeeded = colour;
+                    terminalColourNeeded = colour;
 
                     for (Slot slot : invSlots) {
                         if (slot.getSlotIndex() > 53) continue;

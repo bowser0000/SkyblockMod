@@ -716,7 +716,7 @@ public class ConfigHandler {
 		DankersSkyblockMod.CAKE_COLOUR = getString("colors", "cakeDisplay");
 		DankersSkyblockMod.SKILL_TRACKER_COLOUR = getString("colors", "skillTracker");
 		DankersSkyblockMod.TRIVIA_WRONG_ANSWER_COLOUR = getString("colors", "triviaWrongAnswer");
-		DankersSkyblockMod.BONZO_COLOR = getString("colors", "bonzoDisplay");
+		DankersSkyblockMod.BONZO_COLOUR = getString("colors", "bonzoDisplay");
 		DankersSkyblockMod.LOWEST_BLAZE_COLOUR = getInt("colors", "blazeLowest");
 		DankersSkyblockMod.HIGHEST_BLAZE_COLOUR = getInt("colors", "blazeHighest");
 		DankersSkyblockMod.PET_1_TO_9 = getInt("colors", "pet1To9");
