@@ -4,6 +4,7 @@ import net.minecraftforge.fml.relauncher.CoreModManager;
 import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin;
 import org.apache.logging.log4j.LogManager;
 import org.spongepowered.asm.launch.MixinBootstrap;
+import org.spongepowered.asm.mixin.Mixins;
 
 import javax.annotation.Nullable;
 import java.io.File;
@@ -16,6 +17,7 @@ public class DSMLoadingPlugin implements IFMLLoadingPlugin {
 
     public DSMLoadingPlugin() {
         MixinBootstrap.init();
+        Mixins.addConfiguration("mixins.dsm.json");
 
         CodeSource codeSource = this.getClass().getProtectionDomain().getCodeSource();
         if (codeSource != null) {
