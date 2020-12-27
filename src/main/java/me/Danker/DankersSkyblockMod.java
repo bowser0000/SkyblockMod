@@ -78,7 +78,7 @@ import java.util.regex.Pattern;
 public class DankersSkyblockMod
 {
     public static final String MODID = "Danker's Skyblock Mod";
-    public static final String VERSION = "1.8.5-beta5";
+    public static final String VERSION = "1.8.5-beta6";
     
     static double checkItemsNow = 0;
     static double itemsChecked = 0;
@@ -102,9 +102,6 @@ public class DankersSkyblockMod
 	static boolean foundLivid = false;
 	static Entity livid = null;
 	public static double cakeTime;
-	
-	public static List<String> partyList = new ArrayList<>();
-	public static List<String> repartyFailList = new ArrayList<>();
 	
 	public static final ResourceLocation CAKE_ICON = new ResourceLocation("dsm", "icons/cake.png");
     
@@ -360,8 +357,8 @@ public class DankersSkyblockMod
     	String message = StringUtils.stripControlCodes(event.message.getUnformattedText());
 		
 		// Reparty command
-		if (System.currentTimeMillis() / 1000 - RepartyCommand.callTime <= 3) {
-			if (!(message.contains("----") || message.contains("disbanded") || message.contains("seconds to accept") || message.contains("●") || message.contains("Party Members"))) {
+		if (System.currentTimeMillis() / 1000 - RepartyCommand.callTime <= 5) {
+			if (!(message.contains("----") || message.contains("disbanded") || message.contains("seconds to accept") || message.contains("●") || message.contains("Party Members") || message.contains("Couldn't find a player") || message.contains("cannot invite that player") || message.length() == 0)) {
 				return;
 			}
 			
@@ -370,11 +367,9 @@ public class DankersSkyblockMod
 			Pattern party_start_pattern = Pattern.compile("^Party Members \\((\\d+)\\)$");
             Pattern leader_pattern = Pattern.compile("^Party Leader: (?:\\[.+?] )?(\\w+) ●$");
 			Pattern members_pattern = Pattern.compile(" (?:\\[.+?] )?(\\w+) ●");
-
             Matcher party_start = party_start_pattern.matcher(message);
             Matcher leader = leader_pattern.matcher(message);
             Matcher members = members_pattern.matcher(message);
-			
 			
 			if (party_start.matches() && Integer.parseInt(party_start.group(1)) == 1) {
 				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "You cannot reparty yourself."));
@@ -382,18 +377,17 @@ public class DankersSkyblockMod
             else if (leader.matches() && !(leader.group(1).equals(player.getName()))) {
 				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "You are not party leader."));
 			}
-			else if (message.Contains("Couldn't find a player") || message.Contains("cannot invite that player")) {
-
+			else if (message.contains("Couldn't find a player") || message.contains("You cannot invite that player")) {
+				RepartyCommand.repartyFailList.add(RepartyCommand.currentMember);
 			}
 			else {
 				while (members.find()) {
 					String partyMember = members.group(1);
 					if (!partyMember.equals(player.getName())) {
-						partyList.add(partyMember);
+						RepartyCommand.party.add(partyMember);
 					}
 				}
 			}
-
 			event.setCanceled(true);
         }
 
