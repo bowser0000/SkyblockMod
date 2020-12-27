@@ -46,6 +46,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 	public static boolean blockBreakingFarmsToggled;
 	public static boolean bossBarFixToggled;
 	public static boolean hideImplosionParticlesToggled;
+	public static boolean zombieSwordToggled;
 
 	// Puzzle Solvers
 	public static boolean threeManToggled;
@@ -76,7 +77,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 		return "/" + getCommandName() + " <gparty/coords/golden/slayercount/rngesusalerts/splitfishing/chatmaddox/spiritbearalert/" + 
 										  "aotd/lividdagger/flowerweapons/sceptremessages/petcolors/dungeontimer/golemalerts/expertiselore/skill50display/" +
 										  "outlinetext/midasstaffmessages/implosionmessages/healmessages/caketimer/lowhealthnotify/" +
-										  "lividsolver/stopsalvagestarred/notifyslayerslain/necronnotifications/bonzotimer/blockbreakingfarms/bossbarfix/hideimplosionparticles/threemanpuzzle/oruopuzzle/blazepuzzle/creeperpuzzle/waterpuzzle/tictactoepuzzle/" +
+										  "lividsolver/stopsalvagestarred/notifyslayerslain/necronnotifications/bonzotimer/blockbreakingfarms/bossbarfix/hideimplosionparticles/zombiesword/threemanpuzzle/oruopuzzle/blazepuzzle/creeperpuzzle/waterpuzzle/tictactoepuzzle/" +
 										  "watchermessage/startswithterminal/selectallterminal/clickinorderterminal/blockwrongterminalclicks/" +
 										  "itemframeonsealanterns/ultrasequencer/chronomatron/superpairs/hidetooltipsinaddons/pickblock/list>";
 	}
@@ -94,7 +95,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 														  "flowerweapons", "sceptremessages", "petcolors", "dungeontimer", "golemalerts",
 														  "expertiselore", "skill50display", "outlinetext", "midasstaffmessages",
 														  "implosionmessages", "healmessages", "caketimer", "lowhealthnotify",
-														  "lividsolver", "stopsalvagestarred", "notifyslayerslain", "necronnotifications", "bonzotimer", "blockbreakingfarms", "bossbarfix", "hideimplosionparticles", "threemanpuzzle", "oruopuzzle", "blazepuzzle",
+														  "lividsolver", "stopsalvagestarred", "notifyslayerslain", "necronnotifications", "bonzotimer", "blockbreakingfarms", "bossbarfix", "hideimplosionparticles", "zombiesword", "threemanpuzzle", "oruopuzzle", "blazepuzzle",
 														  "creeperpuzzle", "waterpuzzle", "tictactoepuzzle", "watchermessage", "startswithterminal",
 														  "selectallterminal", "clickinorderterminal", "blockwrongterminalclicks", "itemframeonsealanterns", "ultrasequencer",
 														  "chronomatron", "superpairs", "hidetooltipsinaddons", "pickblock", "list");
@@ -267,6 +268,11 @@ public class ToggleCommand extends CommandBase implements ICommand {
 				hideImplosionParticlesToggled = !hideImplosionParticlesToggled;
 				ConfigHandler.writeBooleanConfig("toggles", "HideImplosionParticles", hideImplosionParticlesToggled);
 				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Hide Implosion Particles has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + hideImplosionParticlesToggled + DankersSkyblockMod.MAIN_COLOUR + "."));
+				break;
+			case "zombiesword":
+				zombieSwordToggled = !zombieSwordToggled;
+				ConfigHandler.writeBooleanConfig("toggles", "ZombieSword", zombieSwordToggled);
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Block Useless Zombie Sword has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + hideImplosionParticlesToggled + DankersSkyblockMod.MAIN_COLOUR + "."));
 				break;
 			case "threemanpuzzle":
 				threeManToggled = !threeManToggled;

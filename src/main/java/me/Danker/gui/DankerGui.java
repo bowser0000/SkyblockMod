@@ -63,6 +63,7 @@ public class DankerGui extends GuiScreen {
 	private GuiButton blockBreakingFarms;
 	private GuiButton bossBarFix;
 	private GuiButton hideImplosionParticles;
+	private GuiButton zombieSword;
 	
 	public DankerGui(int page) {
 		this.page = page;
@@ -132,6 +133,7 @@ public class DankerGui extends GuiScreen {
 		blockBreakingFarms = new GuiButton(0, width / 2 - 100, (int) (height * 0.1), "Prevent Breaking Farms: " + Utils.getColouredBoolean(ToggleCommand.blockBreakingFarmsToggled));
 		bossBarFix = new GuiButton(0, width / 2 - 100, (int) (height * 0.2), "Boss Bar Fix: " + Utils.getColouredBoolean(ToggleCommand.bossBarFixToggled));
 		hideImplosionParticles = new GuiButton(0, width / 2 - 100, (int) (height * 0.3), "Hide Implosion Particles: " + Utils.getColouredBoolean(ToggleCommand.hideImplosionParticlesToggled));
+		zombieSword = new GuiButton(0, width / 2 - 100, (int) (height * 0.4), "Block Useless Zombie Sword Use: " + Utils.getColouredBoolean(ToggleCommand.zombieSwordToggled));
 
 		switch (page) {
 			case 1:
@@ -192,6 +194,7 @@ public class DankerGui extends GuiScreen {
 				this.buttonList.add(blockBreakingFarms);
 				this.buttonList.add(bossBarFix);
 				this.buttonList.add(hideImplosionParticles);
+				this.buttonList.add(zombieSword);
 				this.buttonList.add(backPage);
 				break;
 		}
@@ -364,6 +367,10 @@ public class DankerGui extends GuiScreen {
 			ToggleCommand.hideImplosionParticlesToggled = !ToggleCommand.hideImplosionParticlesToggled;
 			ConfigHandler.writeBooleanConfig("toggles", "HideImplosionParticles", ToggleCommand.hideImplosionParticlesToggled);
 			hideImplosionParticles.displayString = "Hide Implosion Particles: " + Utils.getColouredBoolean(ToggleCommand.hideImplosionParticlesToggled);
+		} else if (button == zombieSword) {
+			ToggleCommand.zombieSwordToggled = !ToggleCommand.zombieSwordToggled;
+			ConfigHandler.writeBooleanConfig("toggles", "ZombieSword", ToggleCommand.zombieSwordToggled);
+			zombieSword.displayString = "Block Useless Zombie Sword Use: " + Utils.getColouredBoolean(ToggleCommand.zombieSwordToggled);
 		} else if (button == pickBlock) {
 			ToggleCommand.swapToPickBlockToggled = !ToggleCommand.swapToPickBlockToggled;
 			ConfigHandler.writeBooleanConfig("toggles", "PickBlock", ToggleCommand.swapToPickBlockToggled);

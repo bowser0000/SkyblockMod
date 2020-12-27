@@ -3004,6 +3004,7 @@ public class DankersSkyblockMod {
     @SubscribeEvent
     public void onInteract(PlayerInteractEvent event) {
         if (!Utils.inSkyblock || Minecraft.getMinecraft().thePlayer != event.entityPlayer) return;
+        EntityPlayer player = event.entityPlayer;
         ItemStack item = event.entityPlayer.getHeldItem();
         if (item == null) return;
 
@@ -3038,6 +3039,11 @@ public class DankersSkyblockMod {
                     }
                 }
             }
+
+            if (ToggleCommand.zombieSwordToggled && item.getDisplayName().contains("Zombie Sword") && player.getHealth() >= player.getMaxHealth()) {
+                event.setCanceled(true);
+            }
+
         }
 
         if (event.action == PlayerInteractEvent.Action.RIGHT_CLICK_BLOCK) {
@@ -3102,6 +3108,9 @@ public class DankersSkyblockMod {
                     event.setCanceled(true);
                 }
                 if (ToggleCommand.lividDaggerToggled && item.getDisplayName().contains("Livid Dagger")) {
+                    event.setCanceled(true);
+                }
+                if (ToggleCommand.zombieSwordToggled && item.getDisplayName().contains("Zombie Sword") && player.getHealth() >= player.getMaxHealth()) {
                     event.setCanceled(true);
                 }
             }

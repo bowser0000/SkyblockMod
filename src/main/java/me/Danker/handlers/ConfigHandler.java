@@ -200,7 +200,8 @@ public class ConfigHandler {
 		if (!hasKey("toggles", "BonzoTimer")) writeBooleanConfig("toggles", "BonzoTimer", false);
 		if (!hasKey("toggles", "BlockBreakingFarms")) writeBooleanConfig("toggles", "BlockBreakingFarms", false);
 		if (!hasKey("toggles", "BossBarFix")) writeBooleanConfig("toggles", "BossBarFix", false);
-		if (!hasKey("toggles", "HideImplosionParticles")) writeBooleanConfig("toggles", "BossBarFix", false);
+		if (!hasKey("toggles", "HideImplosionParticles")) writeBooleanConfig("toggles", "HideImplosionParticles", false);
+		if (!hasKey("toggles", "ZombieSword")) writeBooleanConfig("toggles", "ZombieSword", false);
 
 		// Puzzle Solvers
 		if (!hasKey("toggles", "ThreeManPuzzle")) writeBooleanConfig("toggles", "ThreeManPuzzle", false);
@@ -480,6 +481,7 @@ public class ConfigHandler {
 		ToggleCommand.blockBreakingFarmsToggled = getBoolean("toggles", "BlockBreakingFarms");
 		ToggleCommand.bossBarFixToggled = getBoolean("toggles", "BossBarFix");
 		ToggleCommand.hideImplosionParticlesToggled = getBoolean("toggles", "HideImplosionParticles");
+		ToggleCommand.zombieSwordToggled = getBoolean("toggles", "ZombieSword");
 		ToggleCommand.swapToPickBlockToggled = getBoolean("toggles", "PickBlock");
 		ToggleCommand.flowerWeaponsToggled = getBoolean("toggles", "FlowerWeapons");
 

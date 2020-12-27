@@ -157,7 +157,7 @@ public class Utils {
 		}
 		inDungeons = false;
 	}
-	
+
 	public static String capitalizeString(String string) {
 		String[] words = string.split("_");
 		
@@ -299,7 +299,7 @@ public class Utils {
 	}
 
 	public static boolean hasRightClickAbility(ItemStack itemStack) {
-		return Utils.getItemLore(itemStack).stream().anyMatch(line->{
+		return Utils.getItemLore(itemStack).stream().anyMatch(line -> {
 			String stripped = StringUtils.stripControlCodes(line);
 			return stripped.startsWith("Item Ability:") && stripped.endsWith("RIGHT CLICK");
 		});

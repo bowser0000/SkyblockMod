@@ -3,7 +3,7 @@
   "package": "me.Danker.mixin",
   "mixins": [
     "MixinBossStatus",
-    "MixinPlayerControllerMP"
+    "MixinNetHandlerPlayClient"
   ],
   "verbose": true
 }
