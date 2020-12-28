@@ -96,7 +96,7 @@ public class DankersSkyblockMod {
     static int tickAmount = 1;
     static String lastMaddoxCommand = "/cb placeholder";
     static double lastMaddoxTime = 0;
-    static KeyBinding[] keyBindings = new KeyBinding[3];
+    static KeyBinding[] keyBindings = new KeyBinding[4];
     static boolean usingLabymod = false;
     public static String guiToOpen = null;
     static boolean foundLivid = false;
@@ -275,6 +275,7 @@ public class DankersSkyblockMod {
         keyBindings[0] = new KeyBinding("Open Maddox Menu", Keyboard.KEY_M, "Danker's Skyblock Mod");
         keyBindings[1] = new KeyBinding("Regular Ability", Keyboard.KEY_NUMPAD4, "Danker's Skyblock Mod");
         keyBindings[2] = new KeyBinding("Start/Stop Skill Tracker", Keyboard.KEY_NUMPAD5, "Danker's Skyblock Mod");
+        keyBindings[3] = new KeyBinding("Swap Bonemerang", Keyboard.KEY_NONE, "Danker's Skyblock Mod");
 
         for (KeyBinding keyBinding : keyBindings) {
             ClientRegistry.registerKeyBinding(keyBinding);
@@ -537,8 +538,7 @@ public class DankersSkyblockMod {
             } else if (message.contains("STOP USING MY FACTORY AGAINST ME!") || message.contains("OOF") || message.contains("ANOTHER TRAP!! YOUR TRICKS ARE FUTILE!") || message.contains("SERIOUSLY? AGAIN?!") || message.contains("STOP!!!!!")) {
                 List<EntityArmorStand> necronLabels = world.getEntities(EntityArmorStand.class, (entity -> {
                     if (!entity.hasCustomName()) return false;
-                    if (!entity.getCustomNameTag().contains("Necron")) return false;
-                    return true;
+                    return entity.getCustomNameTag().contains("Necron");
                 }));
                 if (necronLabels.size() == 0) {
                     Utils.createTitle(EnumChatFormatting.WHITE + "NECRON STUNNED!", 2);
@@ -3187,6 +3187,39 @@ public class DankersSkyblockMod {
             } else if (skillStopwatch.isStarted() && !skillStopwatch.isSuspended()) {
                 skillStopwatch.suspend();
                 player.addChatMessage(new ChatComponentText(MAIN_COLOUR + "Skill tracker paused."));
+            }
+        }
+        if (keyBindings[3].isPressed()) {
+            if (Minecraft.getMinecraft().currentScreen == null) {
+
+                ItemStack held = player.getCurrentEquippedItem();
+
+                boolean shouldSwap = true;
+                if (held != null) {
+                    shouldSwap = !(held.getDisplayName().contains("Bonemerang") && held.getItem() == Items.bone);
+                }
+
+                if (shouldSwap) {
+                    int slot = -1;
+
+                    for (int i = 0; i <= 8; i++) {
+                        if (i == player.inventory.currentItem) continue;
+                        ItemStack item = player.inventory.getStackInSlot(i);
+                        if (item != null) {
+                            String itemName = item.getDisplayName();
+
+                            if (itemName.contains("Bonemerang") && item.getItem() == Items.bone) {
+                                slot = i;
+                                break;
+                            }
+
+                        }
+                    }
+
+                    if (slot != -1) {
+                        player.inventory.currentItem = slot;
+                    }
+                }
             }
         }
     }
