@@ -33,7 +33,7 @@ public class DHelpCommand extends CommandBase {
 													EnumChatFormatting.AQUA + " <> = Mandatory parameter. [] = Optional parameter.\n" +
 													EnumChatFormatting.GOLD + " Commands, " + EnumChatFormatting.GREEN + " Keybinds.\n" +
 													EnumChatFormatting.GOLD + " /dhelp" + EnumChatFormatting.AQUA + " - Returns this message.\n" +
-													EnumChatFormatting.GOLD + " /dsm" + EnumChatFormatting.AQUA + " - Opens the GUI for Danker's Skyblock Mod.\n" +
+													EnumChatFormatting.GOLD + " /dsm [edit]>" + EnumChatFormatting.AQUA + " - Opens the GUI for Danker's Skyblock Mod.\n" +
 													EnumChatFormatting.GOLD + " /toggle <gparty/coords/golden/slayercount/rngesusalerts/splitfishing/chatmaddox/spiritbearalerts/aotd/lividdagger/flowerweapons/sceptremessages/midasstaffmessages/implosionmessages/healmessages/petcolors/dungeontimer/golemalerts/expertiselore/skill50display/outlinetext/caketimer/lowhealthnotify/lividsolver/stopsalvagestarred/notifyslayerslain/necronnotifications/bonzotimer/blockbreakingfarms/bossbarfix/hideimplosionparticles/zombiesword/threemanpuzzle/oruopuzzle/blazepuzzle/creeperpuzzle/waterpuzzle/tictactoepuzzle/watchermessage/startswithterminal/selectallterminal/clickinorderterminal/blockwrongterminalclicks/itemframeonsealanterns/ultrasequencer/chronomatron/superpairs/hidetooltipsinaddons/pickblock/list>" + EnumChatFormatting.AQUA + " - Toggles features. /toggle list returns values of every toggle.\n" +
 													EnumChatFormatting.GOLD + " /setkey <key>" + EnumChatFormatting.AQUA + " - Sets API key.\n" +
 													EnumChatFormatting.GOLD + " /getkey" + EnumChatFormatting.AQUA + " - Returns key set with /setkey and copies it to your clipboard.\n" +

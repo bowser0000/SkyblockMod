@@ -65,8 +65,7 @@ public class MixinNetHandlerPlayClient {
 
                             if (shouldCancel) ci.cancel();
                         }
-                    } else ci.cancel();
-                }
+                } else ci.cancel();
             }
         }
     }
