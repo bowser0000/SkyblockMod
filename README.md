@@ -14,6 +14,7 @@ Discord Server: https://discord.gg/QsEkNQS
 - Guild party desktop notifications
 - Coordinate and angle display
 - Golden T10/T6/T4 enchant display
+- Keybind to cycle Bonemerangs
 - Block AOTD ability
 - Block Livid Dagger ability
 - Block placing Flower of Truth/Spirit Sceptre
@@ -30,11 +31,12 @@ Discord Server: https://discord.gg/QsEkNQS
 - Fishing, jerry fishing, fishing festival, spooky fishing trackers
 - Expertise kills in fishing rod lore
 - Catacombs trackers
+- Dungeons regular ability beybind
 - Dungeons puzzle solver (Riddle, trivia, blaze, creeper, water, tic tac toe)
 - Dungeons timer (watcher, boss, deaths, and puzzle fails)
 - Watcher ready message
 - Bonzo's Mask Cooldown Timer
-- Catacombs F7 Stage 3 solvers (Starts with letter, select all colour, ignore arrows on sea lanterns)
+- Catacombs F7 Stage 3 solvers (Starts with letter, select all colour, click in order, ignore arrows on sea lanterns)
 - Find correct Livid (with graphic display of HP)
 - Notify when Necron is stunned
 - Experimentation solvers (Ultrasequencer, Chronomatron, Superpairs)
@@ -52,8 +54,7 @@ Discord Server: https://discord.gg/QsEkNQS
 ## Commands
 - /dhelp - Returns this message in-game.
 - /dsm - Opens the GUI for Danker's Skyblock Mod.
-- /toggle <gparty/coords/golden/slayercount/rngesusalerts/splitfishing/chatmaddox/spiritbearalerts/aotd/lividdagger/flowerweapons/sceptremessages/petcolors/dungeontimer/golemalerts/expertiselore/skill50display/outlinetext/midasstaffmessages/implosionmessages/healmessages/caketimer/lowhealthnotify/lividsolver/stopsalvagestarred/notifyslayerslain/threemanpuzzle/oruopuzzle/blazepuzzle/creeperpuzzle/waterpuzzle/tictactoepuzzle/watchermessage/startswithterminal/selectallterminal/clickinorderterminal/blockwrongterminalclicks/itemframeonsealanterns/ultrasequencer/chronomatron/superpairs/hidetooltipsinaddons/pickblock/list> - Toggles features. /toggle list returns values of every toggle.
-- /setkey <key> - Sets API key.
+- /toggle <gparty/coords/golden/slayercount/rngesusalerts/splitfishing/chatmaddox/spiritbearalerts/aotd/lividdagger/flowerweapons/sceptremessages/midasstaffmessages/implosionmessages/healmessages/petcolors/dungeontimer/golemalerts/expertiselore/skill50display/outlinetext/caketimer/lowhealthnotify/lividsolver/stopsalvagestarred/notifyslayerslain/necronnotifications/bonzotimer/blockbreakingfarms/bossbarfix/hideimplosionparticles/zombiesword/threemanpuzzle/oruopuzzle/blazepuzzle/creeperpuzzle/waterpuzzle/tictactoepuzzle/watchermessage/startswithterminal/selectallterminal/clickinorderterminal/blockwrongterminalclicks/itemframeonsealanterns/ultrasequencer/chronomatron/superpairs/hidetooltipsinaddons/pickblock/list>- /setkey <key> - Sets API key.
 - /getkey - Returns key set with /setkey and copies it to your clipboard.
 - /loot <zombie/spider/wolf/fishing/catacombs> [winter/spooky/f(1-7)/session] - Returns loot received from slayer quests or fishing stats. /loot fishing winter returns winter sea creatures instead.
 - /display <zombie/spider/wolf/fishing/catacombs/auto/off> [winter/spooky/f(1-7)/session] - Text display for trackers. /display fishing winter displays winter sea creatures instead. /display auto automatically displays the loot for the slayer quest you have active.

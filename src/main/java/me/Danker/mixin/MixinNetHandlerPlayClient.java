@@ -50,7 +50,7 @@ public class MixinNetHandlerPlayClient {
                                 double range = 10.5d;
 
                                 if (ScoreboardHandler.getSidebarLines().stream().anyMatch(line -> ScoreboardHandler.cleanSB(line).contains("necron"))) {
-                                    range = 0.5d;
+                                    range = 1d;
                                 }
 
                                 return distance < range * range;

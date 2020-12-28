@@ -384,6 +384,14 @@ public class ToggleCommand extends CommandBase implements ICommand {
 															DankersSkyblockMod.TYPE_COLOUR + " Cake timer: " + DankersSkyblockMod.VALUE_COLOUR + cakeTimerToggled + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Low health notify: " + DankersSkyblockMod.VALUE_COLOUR + lowHealthNotifyToggled + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Livid solver: " + DankersSkyblockMod.VALUE_COLOUR + lividSolverToggled + "\n" +
+															DankersSkyblockMod.TYPE_COLOUR + " Stop Salvaging Starred Items: " + DankersSkyblockMod.VALUE_COLOUR + stopSalvageStarredToggled + "\n" +
+															DankersSkyblockMod.TYPE_COLOUR + " Necron Notifications: " + DankersSkyblockMod.VALUE_COLOUR + necronNotificationsToggled + "\n" +
+															DankersSkyblockMod.TYPE_COLOUR + " Notify Slayer Slain: " + DankersSkyblockMod.VALUE_COLOUR + notifySlayerSlainToggled + "\n" +
+															DankersSkyblockMod.TYPE_COLOUR + " Prevent Breaking Farms: " + DankersSkyblockMod.VALUE_COLOUR + blockBreakingFarmsToggled + "\n" +
+															DankersSkyblockMod.TYPE_COLOUR + " Bonzo's Mask Timer: " + DankersSkyblockMod.VALUE_COLOUR + bonzoTimerToggled + "\n" +
+															DankersSkyblockMod.TYPE_COLOUR + " Boss Bar Fix: " + DankersSkyblockMod.VALUE_COLOUR + bossBarFixToggled + "\n" +
+															DankersSkyblockMod.TYPE_COLOUR + " Hide Implosion Particles: " + DankersSkyblockMod.VALUE_COLOUR + hideImplosionParticlesToggled + "\n" +
+															DankersSkyblockMod.TYPE_COLOUR + " Block Useless Zombie Sword Use: " + DankersSkyblockMod.VALUE_COLOUR + zombieSwordToggled + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Three man puzzle solver: " + DankersSkyblockMod.VALUE_COLOUR + threeManToggled + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Oruo trivia solver: " + DankersSkyblockMod.VALUE_COLOUR + oruoToggled + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Blaze puzzle solver: " + DankersSkyblockMod.VALUE_COLOUR + blazeToggled + "\n" +
@@ -393,7 +401,9 @@ public class ToggleCommand extends CommandBase implements ICommand {
 															DankersSkyblockMod.TYPE_COLOUR + " Watcher ready message: " + DankersSkyblockMod.VALUE_COLOUR + watcherReadyToggled + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Starts with letter terminal solver: " + DankersSkyblockMod.VALUE_COLOUR + startsWithToggled + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Select all color items terminal solver: " + DankersSkyblockMod.VALUE_COLOUR + selectAllToggled + "\n" +
+															DankersSkyblockMod.TYPE_COLOUR + " Click in order terminal helper: " + DankersSkyblockMod.VALUE_COLOUR + clickInOrderToggled + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Ignore item frames on sea lanterns: " + DankersSkyblockMod.VALUE_COLOUR + itemFrameOnSeaLanternsToggled + "\n" +
+															DankersSkyblockMod.TYPE_COLOUR + " Block Wrong Terminal Clicks: " + DankersSkyblockMod.VALUE_COLOUR + blockWrongTerminalClicksToggled + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Ultra sequencer solver: " + DankersSkyblockMod.VALUE_COLOUR + ultrasequencerToggled + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Chronomatron solver: " + DankersSkyblockMod.VALUE_COLOUR + chronomatronToggled + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Superpairs solver: " + DankersSkyblockMod.VALUE_COLOUR + superpairsToggled + "\n" +
