@@ -24,6 +24,7 @@ public class DankerGui extends GuiScreen {
 	private GuiButton nextPage;
 	private GuiButton githubLink;
 	private GuiButton discordLink;
+	private GuiButton editLocations;
 	private GuiButton changeDisplay;
 	private GuiButton onlySlayer;
 	private GuiButton puzzleSolvers;
@@ -61,6 +62,7 @@ public class DankerGui extends GuiScreen {
 	private GuiButton necronNotifications;
 	private GuiButton bonzoTimer;
 	private GuiButton blockBreakingFarms;
+	private GuiButton autoSkillTracker;
 	
 	public DankerGui(int page) {
 		this.page = page;
@@ -85,6 +87,7 @@ public class DankerGui extends GuiScreen {
 		nextPage = new GuiButton(0, width / 2 + 20, (int) (height * 0.8), 80, 20, "Next >");
 		githubLink = new GuiButton(0, 2, height - 50, 80, 20, "GitHub");
 		discordLink = new GuiButton(0, 2, height - 30, 80, 20, "Discord");
+		editLocations = new GuiButton(0, 2, 5, 100, 20, "Edit Locations");
 		
 		// Page 1
 		changeDisplay = new GuiButton(0, width / 2 - 100, (int) (height * 0.1), "Change Display Settings");
@@ -126,8 +129,9 @@ public class DankerGui extends GuiScreen {
 		flowerWeapons = new GuiButton(0, width / 2 - 100, (int) (height * 0.5), "Prevent Placing FoT/Spirit Sceptre: " + Utils.getColouredBoolean(ToggleCommand.flowerWeaponsToggled));
 		necronNotifications = new GuiButton(0, width / 2 - 100, (int) (height * 0.6), "Necron Phase Notifications: " + Utils.getColouredBoolean(ToggleCommand.necronNotificationsToggled));
 		bonzoTimer = new GuiButton(0, width / 2 - 100, (int) (height * 0.7), "Bonzo's Mask Timer: " + Utils.getColouredBoolean(ToggleCommand.bonzoTimerToggled));
-		//Page 6
+		// Page 6
 		blockBreakingFarms = new GuiButton(0, width / 2 - 100, (int) (height * 0.1), "Prevent Breaking Farms: " + Utils.getColouredBoolean(ToggleCommand.blockBreakingFarmsToggled));
+		autoSkillTracker = new GuiButton(0, width / 2 - 100, (int) (height * 0.2), "Auto Start/Stop Skill Tracker: " + Utils.getColouredBoolean(ToggleCommand.autoSkillTrackerToggled));
 
 		switch (page) {
 			case 1:
@@ -186,6 +190,7 @@ public class DankerGui extends GuiScreen {
 				break;
 			case 6:
 				this.buttonList.add(blockBreakingFarms);
+				this.buttonList.add(autoSkillTracker);
 				this.buttonList.add(backPage);
 				break;
 		}
@@ -193,6 +198,7 @@ public class DankerGui extends GuiScreen {
 		this.buttonList.add(githubLink);
 		this.buttonList.add(discordLink);
 		this.buttonList.add(closeGUI);
+		this.buttonList.add(editLocations);
 	}
 	
 	@Override
@@ -212,6 +218,8 @@ public class DankerGui extends GuiScreen {
 			DankersSkyblockMod.guiToOpen = "dankergui" + (page + 1);
 		} else if (button == backPage) {
 			DankersSkyblockMod.guiToOpen = "dankergui" + (page - 1);
+		} else if (button == editLocations) {
+			DankersSkyblockMod.guiToOpen = "editlocations";
 		} else if (button == githubLink) {
 			try {
 				Desktop.getDesktop().browse(new URI("https://github.com/bowser0000/SkyblockMod"));
@@ -358,6 +366,10 @@ public class DankerGui extends GuiScreen {
 			ToggleCommand.flowerWeaponsToggled = !ToggleCommand.flowerWeaponsToggled;
 			ConfigHandler.writeBooleanConfig("toggles", "FlowerWeapons", ToggleCommand.flowerWeaponsToggled);
 			flowerWeapons.displayString = "Prevent Placing FoT/Spirit Sceptre: " + Utils.getColouredBoolean(ToggleCommand.flowerWeaponsToggled);
+		} else if (button == autoSkillTracker) {
+			ToggleCommand.autoSkillTrackerToggled = !ToggleCommand.autoSkillTrackerToggled;
+			ConfigHandler.writeBooleanConfig("toggles", "AutoSkillTracker", ToggleCommand.autoSkillTrackerToggled);
+			autoSkillTracker.displayString = "Auto Start/Stop Skill Tracker: " + Utils.getColouredBoolean(ToggleCommand.autoSkillTrackerToggled);
 		}
 	}
 	

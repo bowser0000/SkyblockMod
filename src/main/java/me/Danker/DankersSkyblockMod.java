@@ -78,8 +78,7 @@ import java.util.regex.Pattern;
 @Mod(modid = DankersSkyblockMod.MODID, version = DankersSkyblockMod.VERSION, clientSideOnly = true)
 public class DankersSkyblockMod {
     public static final String MODID = "Danker's Skyblock Mod";
-    public static final String VERSION = "1.8.5-beta6";
-
+    public static final String VERSION = "1.8.5-beta7";
     static double checkItemsNow = 0;
     static double itemsChecked = 0;
     public static Map<String, String> t6Enchants = new HashMap<>();
@@ -147,22 +146,23 @@ public class DankersSkyblockMod {
     static String lastSkill = "Farming";
     public static boolean showSkillTracker;
     public static StopWatch skillStopwatch = new StopWatch();
-    static double farmingXP = 0;
-    public static double farmingXPGained = 0;
-    static double miningXP = 0;
-    public static double miningXPGained = 0;
-    static double combatXP = 0;
-    public static double combatXPGained = 0;
-    static double foragingXP = 0;
-    public static double foragingXPGained = 0;
-    static double fishingXP = 0;
-    public static double fishingXPGained = 0;
-    static double enchantingXP = 0;
-    public static double enchantingXPGained = 0;
-    static double alchemyXP = 0;
-    public static double alchemyXPGained = 0;
-    static double xpLeft = 0;
-
+	static double farmingXP = 0;
+	public static double farmingXPGained = 0;
+	static double miningXP = 0;
+	public static double miningXPGained = 0;
+	static double combatXP = 0;
+	public static double combatXPGained = 0;
+	static double foragingXP = 0;
+	public static double foragingXPGained = 0;
+	static double fishingXP = 0;
+	public static double fishingXPGained = 0;
+	static double enchantingXP = 0;
+	public static double enchantingXPGained = 0;
+	static double alchemyXP = 0;
+	public static double alchemyXPGained = 0;
+	static double xpLeft = 0;
+	static double timeSinceGained = 0;
+    
     public static String MAIN_COLOUR;
     public static String SECONDARY_COLOUR;
     public static String ERROR_COLOUR;
@@ -283,29 +283,30 @@ public class DankersSkyblockMod {
 
     @EventHandler
     public void preInit(final FMLPreInitializationEvent event) {
-        ClientCommandHandler.instance.registerCommand(new ToggleCommand());
-        ClientCommandHandler.instance.registerCommand(new SetkeyCommand());
-        ClientCommandHandler.instance.registerCommand(new GetkeyCommand());
-        ClientCommandHandler.instance.registerCommand(new LootCommand());
-        ClientCommandHandler.instance.registerCommand(new ReloadConfigCommand());
-        ClientCommandHandler.instance.registerCommand(new DisplayCommand());
-        ClientCommandHandler.instance.registerCommand(new MoveCommand());
-        ClientCommandHandler.instance.registerCommand(new SlayerCommand());
-        ClientCommandHandler.instance.registerCommand(new SkillsCommand());
-        ClientCommandHandler.instance.registerCommand(new GuildOfCommand());
-        ClientCommandHandler.instance.registerCommand(new DHelpCommand());
-        ClientCommandHandler.instance.registerCommand(new PetsCommand());
-        ClientCommandHandler.instance.registerCommand(new BankCommand());
-        ClientCommandHandler.instance.registerCommand(new ArmourCommand());
-        ClientCommandHandler.instance.registerCommand(new ImportFishingCommand());
-        ClientCommandHandler.instance.registerCommand(new ResetLootCommand());
-        ClientCommandHandler.instance.registerCommand(new ScaleCommand());
-        ClientCommandHandler.instance.registerCommand(new SkyblockPlayersCommand());
-        ClientCommandHandler.instance.registerCommand(new BlockSlayerCommand());
-        ClientCommandHandler.instance.registerCommand(new DungeonsCommand());
-        ClientCommandHandler.instance.registerCommand(new LobbySkillsCommand());
-        ClientCommandHandler.instance.registerCommand(new DankerGuiCommand());
-        ClientCommandHandler.instance.registerCommand(new SkillTrackerCommand());
+    	ClientCommandHandler.instance.registerCommand(new ToggleCommand());
+    	ClientCommandHandler.instance.registerCommand(new SetkeyCommand());
+    	ClientCommandHandler.instance.registerCommand(new GetkeyCommand());
+    	ClientCommandHandler.instance.registerCommand(new LootCommand());
+    	ClientCommandHandler.instance.registerCommand(new ReloadConfigCommand());
+    	ClientCommandHandler.instance.registerCommand(new DisplayCommand());
+    	ClientCommandHandler.instance.registerCommand(new MoveCommand());
+    	ClientCommandHandler.instance.registerCommand(new SlayerCommand());
+    	ClientCommandHandler.instance.registerCommand(new SkillsCommand());
+    	ClientCommandHandler.instance.registerCommand(new GuildOfCommand());
+    	ClientCommandHandler.instance.registerCommand(new DHelpCommand());
+    	ClientCommandHandler.instance.registerCommand(new PetsCommand());
+    	ClientCommandHandler.instance.registerCommand(new BankCommand());
+    	ClientCommandHandler.instance.registerCommand(new ArmourCommand());
+    	ClientCommandHandler.instance.registerCommand(new ImportFishingCommand());
+    	ClientCommandHandler.instance.registerCommand(new ResetLootCommand());
+    	ClientCommandHandler.instance.registerCommand(new ScaleCommand());
+    	ClientCommandHandler.instance.registerCommand(new SkyblockPlayersCommand());
+    	ClientCommandHandler.instance.registerCommand(new BlockSlayerCommand());
+    	ClientCommandHandler.instance.registerCommand(new DungeonsCommand());
+    	ClientCommandHandler.instance.registerCommand(new LobbySkillsCommand());
+    	ClientCommandHandler.instance.registerCommand(new DankerGuiCommand());
+		ClientCommandHandler.instance.registerCommand(new SkillTrackerCommand());
+		ClientCommandHandler.instance.registerCommand(new RepartyCommand());
     }
 
     @EventHandler
@@ -390,116 +391,156 @@ public class DankersSkyblockMod {
     // It randomly broke, so I had to make it the highest priority
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void onChat(ClientChatReceivedEvent event) {
-        String message = StringUtils.stripControlCodes(event.message.getUnformattedText());
-
+    	String message = StringUtils.stripControlCodes(event.message.getUnformattedText());
+        
         if (message.startsWith("Your new API key is ") && Utils.isOnHypixel()) {
             String apiKey = event.message.getSiblings().get(0).getChatStyle().getChatClickEvent().getValue();
             ConfigHandler.writeStringConfig("api", "APIKey", apiKey);
             Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Set API key to " + DankersSkyblockMod.SECONDARY_COLOUR + apiKey));
         }
 
-        if (!Utils.inSkyblock) return;
-
-        // Action Bar
-        if (event.type == 2) {
-            String[] actionBarSections = event.message.getUnformattedText().split(" {3,}");
-            for (String section : actionBarSections) {
-                if (section.contains("+") && section.contains("/") && section.contains("(")) {
-                    if (!section.contains("Runecrafting") && !section.contains("Carpentry")) {
-                        int limit = section.contains("Farming") || section.contains("Enchanting") ? 60 : 50;
-                        double currentXP = Double.parseDouble(section.substring(section.indexOf("(") + 1, section.indexOf("/")).replace(",", ""));
-                        int xpToLevelUp = Integer.parseInt(section.substring(section.indexOf("/") + 1, section.indexOf(")")).replaceAll(",", ""));
-                        xpLeft = xpToLevelUp - currentXP;
-                        int previousXP = Utils.getPastXpEarned(xpToLevelUp, limit);
-                        double totalXP = currentXP + previousXP;
-                        String skill = section.substring(section.indexOf(" ") + 1, section.lastIndexOf(" "));
-                        switch (skill) {
-                            case "Farming":
-                                lastSkill = "Farming";
-                                if (farmingXP != 0) {
-                                    if (skillStopwatch.isStarted() && !skillStopwatch.isSuspended())
-                                        farmingXPGained += totalXP - farmingXP;
-                                }
-                                farmingXP = totalXP;
-                                break;
-                            case "Mining":
-                                lastSkill = "Mining";
-                                if (miningXP != 0) {
-                                    if (skillStopwatch.isStarted() && !skillStopwatch.isSuspended())
-                                        miningXPGained += totalXP - miningXP;
-                                }
-                                miningXP = totalXP;
-                                break;
-                            case "Combat":
-                                lastSkill = "Combat";
-                                if (combatXP != 0) {
-                                    if (skillStopwatch.isStarted() && !skillStopwatch.isSuspended())
-                                        combatXPGained += totalXP - combatXP;
-                                }
-                                combatXP = totalXP;
-                                break;
-                            case "Foraging":
-                                lastSkill = "Foraging";
-                                if (foragingXP != 0) {
-                                    if (skillStopwatch.isStarted() && !skillStopwatch.isSuspended())
-                                        foragingXPGained += totalXP - foragingXP;
-                                }
-                                foragingXP = totalXP;
-                                break;
-                            case "Fishing":
-                                lastSkill = "Fishing";
-                                if (fishingXP != 0) {
-                                    if (skillStopwatch.isStarted() && !skillStopwatch.isSuspended())
-                                        fishingXPGained += totalXP - fishingXP;
-                                }
-                                fishingXP = totalXP;
-                                break;
-                            case "Enchanting":
-                                lastSkill = "Enchanting";
-                                if (enchantingXP != 0) {
-                                    if (skillStopwatch.isStarted() && !skillStopwatch.isSuspended())
-                                        enchantingXPGained += totalXP - enchantingXP;
-                                }
-                                enchantingXP = totalXP;
-                                break;
-                            case "Alchemy":
-                                lastSkill = "Alchemy";
-                                if (alchemyXP != 0) {
-                                    if (skillStopwatch.isStarted() && !skillStopwatch.isSuspended())
-                                        alchemyXPGained += totalXP - alchemyXP;
-                                }
-                                alchemyXP = totalXP;
-                                break;
-                            default:
-                                System.err.println("Unknown skill.");
-                        }
-                    }
-
-                    if (ToggleCommand.skill50DisplayToggled && !section.contains("Runecrafting")) {
-                        String xpGained = section.substring(section.indexOf("+"), section.indexOf("(") - 1);
-                        double currentXp = Double.parseDouble(section.substring(section.indexOf("(") + 1, section.indexOf("/")).replace(",", ""));
-                        int limit;
-                        int totalXp;
-                        if (section.contains("Farming") || section.contains("Enchanting")) {
-                            limit = 60;
-                            totalXp = 111672425;
-                        } else {
-                            limit = 50;
-                            totalXp = 55172425;
-                        }
-                        int previousXp = Utils.getPastXpEarned(Integer.parseInt(section.substring(section.indexOf("/") + 1, section.indexOf(")")).replaceAll(",", "")), limit);
-                        double percentage = Math.floor(((currentXp + previousXp) / totalXp) * 10000D) / 100D;
-
-                        NumberFormat nf = NumberFormat.getNumberInstance(Locale.US);
-                        skillTimer = SKILL_TIME;
-                        showSkill = true;
-                        skillText = SKILL_50_COLOUR + xpGained + " (" + nf.format(currentXp + previousXp) + "/" + nf.format(totalXp) + ") " + percentage + "%";
-                    }
-                }
-            }
-            return;
+		// Reparty command
+		if (System.currentTimeMillis() / 1000 - RepartyCommand.callTime <= 5) {
+			if (!(message.contains("----") || message.contains("disbanded") || message.contains("seconds to accept") || message.contains("●") || message.contains("Party Members") || message.contains("Couldn't find a player") || message.contains("cannot invite that player") || message.length() == 0)) {
+				return;
+			}
+			
+			EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
+			
+			Pattern party_start_pattern = Pattern.compile("^Party Members \\((\\d+)\\)$");
+            Pattern leader_pattern = Pattern.compile("^Party Leader: (?:\\[.+?] )?(\\w+) ●$");
+			Pattern members_pattern = Pattern.compile(" (?:\\[.+?] )?(\\w+) ●");
+            Matcher party_start = party_start_pattern.matcher(message);
+            Matcher leader = leader_pattern.matcher(message);
+            Matcher members = members_pattern.matcher(message);
+			
+			if (party_start.matches() && Integer.parseInt(party_start.group(1)) == 1) {
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "You cannot reparty yourself."));
+			}
+            else if (leader.matches() && !(leader.group(1).equals(player.getName()))) {
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "You are not party leader."));
+			}
+			else if (message.contains("Couldn't find a player") || message.contains("You cannot invite that player")) {
+				RepartyCommand.repartyFailList.add(RepartyCommand.currentMember);
+			}
+			else {
+				while (members.find()) {
+					String partyMember = members.group(1);
+					if (!partyMember.equals(player.getName())) {
+						RepartyCommand.party.add(partyMember);
+					}
+				}
+			}
+			event.setCanceled(true);
         }
 
+    	if (!Utils.inSkyblock) return;
+    	
+    	// Action Bar
+    	if (event.type == 2) {
+			EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
+			String[] actionBarSections = event.message.getUnformattedText().split(" {3,}");
+			
+			for (String section : actionBarSections) {
+    			if (section.contains("+") && section.contains("/") && section.contains("(")) {
+    				if (!section.contains("Runecrafting") && !section.contains("Carpentry")) {
+						if (ToggleCommand.autoSkillTrackerToggled && System.currentTimeMillis() / 1000 - timeSinceGained <= 2) {
+							if (skillStopwatch.isStarted() && skillStopwatch.isSuspended()) {
+								skillStopwatch.resume();
+							} else if (!skillStopwatch.isStarted()) {
+								skillStopwatch.start();
+							}
+						}
+						timeSinceGained = System.currentTimeMillis() / 1000;
+						
+						int limit = section.contains("Farming") || section.contains("Enchanting") ? 60 : 50;
+						double currentXP = Double.parseDouble(section.substring(section.indexOf("(") + 1, section.indexOf("/")).replace(",", ""));
+    					int xpToLevelUp = Integer.parseInt(section.substring(section.indexOf("/") + 1, section.indexOf(")")).replaceAll(",", ""));
+    					xpLeft = xpToLevelUp - currentXP;
+    					int previousXP = Utils.getPastXpEarned(xpToLevelUp, limit);
+						double totalXP = currentXP + previousXP;
+						
+    					String skill = section.substring(section.indexOf(" ") + 1, section.lastIndexOf(" "));
+    					switch (skill) {
+	    					case "Farming":
+	    						lastSkill = "Farming";
+	    						if (farmingXP != 0) {
+	    							if (skillStopwatch.isStarted() && !skillStopwatch.isSuspended()) farmingXPGained += totalXP - farmingXP;
+	    						}
+								farmingXP = totalXP;
+	    						break;
+	    					case "Mining":
+	    						lastSkill = "Mining";
+	    						if (miningXP != 0) {
+	    							if (skillStopwatch.isStarted() && !skillStopwatch.isSuspended()) miningXPGained += totalXP - miningXP;
+	    						}
+								miningXP = totalXP;
+	    						break;
+	    					case "Combat":
+	    						lastSkill = "Combat";
+	    						if (combatXP != 0) {
+	    							if (skillStopwatch.isStarted() && !skillStopwatch.isSuspended()) combatXPGained += totalXP - combatXP;
+	    						}
+								combatXP = totalXP;
+	    						break;
+	    					case "Foraging":
+	    						lastSkill = "Foraging";
+	    						if (foragingXP != 0) {
+	    							if (skillStopwatch.isStarted() && !skillStopwatch.isSuspended()) foragingXPGained += totalXP - foragingXP;
+	    						}
+								foragingXP = totalXP;
+	    						break;
+	    					case "Fishing":
+	    						lastSkill = "Fishing";
+	    						if (fishingXP != 0) {
+	    							if (skillStopwatch.isStarted() && !skillStopwatch.isSuspended()) fishingXPGained += totalXP - fishingXP;
+	    						}
+								fishingXP = totalXP;
+	    						break;
+	    					case "Enchanting":
+	    						lastSkill = "Enchanting";
+	    						if (enchantingXP != 0) {
+	    							if (skillStopwatch.isStarted() && !skillStopwatch.isSuspended()) enchantingXPGained += totalXP - enchantingXP;
+	    						}
+								enchantingXP = totalXP;
+	    						break;
+	    					case "Alchemy":
+	    						lastSkill = "Alchemy";
+	    						if (alchemyXP != 0) {
+	    							if (skillStopwatch.isStarted() && !skillStopwatch.isSuspended()) alchemyXPGained += totalXP - alchemyXP;
+	    						}
+								alchemyXP = totalXP;
+	    						break;
+	    					default:
+	    						System.err.println("Unknown skill.");
+    					}
+    				}
+    				
+    				if (ToggleCommand.skill50DisplayToggled && !section.contains("Runecrafting")) {
+    					String xpGained = section.substring(section.indexOf("+"), section.indexOf("(") - 1);
+    					double currentXp = Double.parseDouble(section.substring(section.indexOf("(") + 1, section.indexOf("/")).replace(",", ""));
+    					int limit;
+    					int totalXp;
+    					if (section.contains("Farming") || section.contains("Enchanting")) {
+    						limit = 60;
+    						totalXp = 111672425;
+    					} else {
+    						limit = 50;
+    						totalXp = 55172425;
+    					}
+    					int previousXp = Utils.getPastXpEarned(Integer.parseInt(section.substring(section.indexOf("/") + 1, section.indexOf(")")).replaceAll(",", "")), limit);
+    					double percentage = Math.floor(((currentXp + previousXp) / totalXp) * 10000D) / 100D;
+    					
+    					NumberFormat nf = NumberFormat.getNumberInstance(Locale.US);
+    					skillTimer = SKILL_TIME;
+    					showSkill = true;
+    					skillText = SKILL_50_COLOUR + xpGained + " (" + nf.format(currentXp + previousXp) + "/" + nf.format(totalXp) + ") " + percentage + "%";
+    				}
+    			}
+    		}
+    		return;
+    	}
+        
         if (ToggleCommand.bonzoTimerToggled && Utils.inDungeons && message.contains("Bonzo's Mask") && message.contains("saved your life!")) {
             double usedTime = System.currentTimeMillis() / 1000;
             Minecraft mc = Minecraft.getMinecraft();
@@ -614,7 +655,7 @@ public class DankersSkyblockMod {
         }
 
         if (ToggleCommand.oruoToggled && Utils.inDungeons) {
-            if (message.contains("What SkyBlock year is it?")) {
+        	if (message.contains("What SkyBlock year is it?")) {
                 double currentTime = System.currentTimeMillis() /1000L;
 
                 double diff = Math.floor(currentTime - 1560276000);
@@ -629,691 +670,688 @@ public class DankersSkyblockMod {
                     }
                 }
             }
+        	
+        	// Set wrong answers to red and remove click events
+        	if (triviaAnswers != null && (message.contains("ⓐ") || message.contains("ⓑ") || message.contains("ⓒ"))) {
+        		boolean isSolution = false;
+        		for (String solution : triviaAnswers) {
+        			if (message.contains(solution)) {
+        				isSolution = true;
+        				break;
+					}
+        		}
+        		if (!isSolution) {
+        			char letter = message.charAt(5);
+        			String option = message.substring(6);
+        			event.message = new ChatComponentText("     " + EnumChatFormatting.GOLD + letter + TRIVIA_WRONG_ANSWER_COLOUR + option);
+        			return;
+        		}
+        	}
+        }
+    	
+		if (ToggleCommand.gpartyToggled) {
+			if (message.contains(" has invited all members of ")) {
+				try {
+					final SystemTray tray = SystemTray.getSystemTray();
+					final Image image = Toolkit.getDefaultToolkit().createImage("icon.png");
+					final TrayIcon trayIcon = new TrayIcon(image, "Guild Party Notifier");
+					trayIcon.setImageAutoSize(true);
+					trayIcon.setToolTip("Guild Party Notifier");
+					tray.add(trayIcon);
+					trayIcon.displayMessage("Guild Party", message, TrayIcon.MessageType.INFO);
+					tray.remove(trayIcon);
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				}
+			}
+		}
 
-            // Set wrong answers to red and remove click events
-            if (triviaAnswers != null && (message.contains("ⓐ") || message.contains("ⓑ") || message.contains("ⓒ"))) {
-                boolean isSolution = false;
-                for (String solution : triviaAnswers) {
-                    if (message.contains(solution)) {
-                        isSolution = true;
-                        break;
-                    }
-                }
-                if (!isSolution) {
-                    char letter = message.charAt(5);
-                    String option = message.substring(6);
-                    event.message = new ChatComponentText("     " + EnumChatFormatting.GOLD + letter + TRIVIA_WRONG_ANSWER_COLOUR + option);
-                    return;
-                }
-            }
-        }
+		if (ToggleCommand.golemAlertToggled) {
+			if (message.contains("The ground begins to shake as an Endstone Protector rises from below!")) {
+				Utils.createTitle(EnumChatFormatting.RED + "GOLEM SPAWNING!", 3);
+			}
+		}
+		
+		if (message.contains("Yum! You gain +") && message.contains(" for 48 hours!")) {
+			cakeTime = System.currentTimeMillis() / 1000 + 172800; // Add 48 hours
+			ConfigHandler.writeDoubleConfig("misc", "cakeTime", cakeTime);
+		}
+		
+		boolean wolfRNG = false;
+		boolean spiderRNG = false;
+		boolean zombieRNG = false;
+		// T6 books
+		if (message.contains("VERY RARE DROP!  (Enchanted Book)") || message.contains("CRAZY RARE DROP!  (Enchanted Book)")) {
+			// Loop through scoreboard to see what boss you're doing
+			List<String> scoreboard = ScoreboardHandler.getSidebarLines();
+			for (String s : scoreboard) {
+				String sCleaned = ScoreboardHandler.cleanSB(s);
+				if (sCleaned.contains("Sven Packmaster")) {
+					LootCommand.wolfBooks++;
+					ConfigHandler.writeIntConfig("wolf", "book", LootCommand.wolfBooks);
+				} else if (sCleaned.contains("Tarantula Broodfather")) {
+					LootCommand.spiderBooks++;
+					ConfigHandler.writeIntConfig("spider", "book", LootCommand.spiderBooks);
+				} else if (sCleaned.contains("Revenant Horror")) {
+					LootCommand.zombieBooks++;
+					ConfigHandler.writeIntConfig("zombie", "book", LootCommand.zombieBooks);
+				}
+			}
+		}
 
-        if (ToggleCommand.gpartyToggled) {
-            if (message.contains(" has invited all members of ")) {
-                try {
-                    final SystemTray tray = SystemTray.getSystemTray();
-                    final Image image = Toolkit.getDefaultToolkit().createImage("icon.png");
-                    final TrayIcon trayIcon = new TrayIcon(image, "Guild Party Notifier");
-                    trayIcon.setImageAutoSize(true);
-                    trayIcon.setToolTip("Guild Party Notifier");
-                    tray.add(trayIcon);
-                    trayIcon.displayMessage("Guild Party", message, TrayIcon.MessageType.INFO);
-                    tray.remove(trayIcon);
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }
-            }
-        }
-
-        if (ToggleCommand.golemAlertToggled) {
-            if (message.contains("The ground begins to shake as an Endstone Protector rises from below!")) {
-                Utils.createTitle(EnumChatFormatting.RED + "GOLEM SPAWNING!", 3);
-            }
-        }
-
-        if (message.contains("Yum! You gain +") && message.contains(" for 48 hours!")) {
-            cakeTime = System.currentTimeMillis() / 1000 + 172800; // Add 48 hours
-            ConfigHandler.writeDoubleConfig("misc", "cakeTime", cakeTime);
-        }
-
-        boolean wolfRNG = false;
-        boolean spiderRNG = false;
-        boolean zombieRNG = false;
-        // T6 books
-        if (message.contains("VERY RARE DROP!  (Enchanted Book)") || message.contains("CRAZY RARE DROP!  (Enchanted Book)")) {
-            // Loop through scoreboard to see what boss you're doing
-            List<String> scoreboard = ScoreboardHandler.getSidebarLines();
-            for (String s : scoreboard) {
-                String sCleaned = ScoreboardHandler.cleanSB(s);
-                if (sCleaned.contains("Sven Packmaster")) {
-                    LootCommand.wolfBooks++;
-                    ConfigHandler.writeIntConfig("wolf", "book", LootCommand.wolfBooks);
-                } else if (sCleaned.contains("Tarantula Broodfather")) {
-                    LootCommand.spiderBooks++;
-                    ConfigHandler.writeIntConfig("spider", "book", LootCommand.spiderBooks);
-                } else if (sCleaned.contains("Revenant Horror")) {
-                    LootCommand.zombieBooks++;
-                    ConfigHandler.writeIntConfig("zombie", "book", LootCommand.zombieBooks);
-                }
-            }
-        }
-
-        // Wolf
-        if (message.contains("Talk to Maddox to claim your Wolf Slayer XP!")) {
-            LootCommand.wolfSvens++;
-            LootCommand.wolfSvensSession++;
-            if (LootCommand.wolfBosses != -1) {
-                LootCommand.wolfBosses++;
-            }
-            if (LootCommand.wolfBossesSession != -1) {
-                LootCommand.wolfBossesSession++;
-            }
-            ConfigHandler.writeIntConfig("wolf", "svens", LootCommand.wolfSvens);
-            ConfigHandler.writeIntConfig("wolf", "bossRNG", LootCommand.wolfBosses);
-        } else if (message.contains("RARE DROP! (Hamster Wheel)")) {
-            LootCommand.wolfWheelsDrops++;
-            LootCommand.wolfWheelsDropsSession++;
-            ConfigHandler.writeIntConfig("wolf", "wheelDrops", LootCommand.wolfWheelsDrops);
-        } else if (message.contains("VERY RARE DROP!  (") && message.contains(" Spirit Rune I)")) { // Removing the unicode here *should* fix rune drops not counting
-            LootCommand.wolfSpirits++;
-            LootCommand.wolfSpiritsSession++;
-            ConfigHandler.writeIntConfig("wolf", "spirit", LootCommand.wolfSpirits);
-        } else if (message.contains("CRAZY RARE DROP!  (Red Claw Egg)")) {
-            wolfRNG = true;
-            LootCommand.wolfEggs++;
-            LootCommand.wolfEggsSession++;
-            ConfigHandler.writeIntConfig("wolf", "egg", LootCommand.wolfEggs);
-            if (ToggleCommand.rngesusAlerts) Utils.createTitle(EnumChatFormatting.DARK_RED + "RED CLAW EGG!", 3);
-        } else if (message.contains("CRAZY RARE DROP!  (") && message.contains(" Couture Rune I)")) {
-            wolfRNG = true;
-            LootCommand.wolfCoutures++;
-            LootCommand.wolfCouturesSession++;
-            ConfigHandler.writeIntConfig("wolf", "couture", LootCommand.wolfCoutures);
-            if (ToggleCommand.rngesusAlerts) Utils.createTitle(EnumChatFormatting.GOLD + "COUTURE RUNE!", 3);
-        } else if (message.contains("CRAZY RARE DROP!  (Grizzly Bait)") || message.contains("CRAZY RARE DROP! (Rename Me)")) { // How did Skyblock devs even manage to make this item Rename Me
-            wolfRNG = true;
-            LootCommand.wolfBaits++;
-            LootCommand.wolfBaitsSession++;
-            ConfigHandler.writeIntConfig("wolf", "bait", LootCommand.wolfBaits);
-            if (ToggleCommand.rngesusAlerts) Utils.createTitle(EnumChatFormatting.AQUA + "GRIZZLY BAIT!", 3);
-        } else if (message.contains("CRAZY RARE DROP!  (Overflux Capacitor)")) {
-            wolfRNG = true;
-            LootCommand.wolfFluxes++;
-            LootCommand.wolfFluxesSession++;
-            ConfigHandler.writeIntConfig("wolf", "flux", LootCommand.wolfFluxes);
-            if (ToggleCommand.rngesusAlerts)
-                Utils.createTitle(EnumChatFormatting.DARK_PURPLE + "OVERFLUX CAPACITOR!", 5);
-        } else if (message.contains("Talk to Maddox to claim your Spider Slayer XP!")) { // Spider
-            LootCommand.spiderTarantulas++;
-            LootCommand.spiderTarantulasSession++;
-            if (LootCommand.spiderBosses != -1) {
-                LootCommand.spiderBosses++;
-            }
-            if (LootCommand.spiderBossesSession != -1) {
-                LootCommand.spiderBossesSession++;
-            }
-            ConfigHandler.writeIntConfig("spider", "tarantulas", LootCommand.spiderTarantulas);
-            ConfigHandler.writeIntConfig("spider", "bossRNG", LootCommand.spiderBosses);
-        } else if (message.contains("RARE DROP! (Toxic Arrow Poison)")) {
-            LootCommand.spiderTAPDrops++;
-            LootCommand.spiderTAPDropsSession++;
-            ConfigHandler.writeIntConfig("spider", "tapDrops", LootCommand.spiderTAPDrops);
-        } else if (message.contains("VERY RARE DROP!  (") && message.contains(" Bite Rune I)")) {
-            LootCommand.spiderBites++;
-            LootCommand.spiderBitesSession++;
-            ConfigHandler.writeIntConfig("spider", "bite", LootCommand.spiderBites);
-        } else if (message.contains("VERY RARE DROP!  (Spider Catalyst)")) {
-            LootCommand.spiderCatalysts++;
-            LootCommand.spiderCatalystsSession++;
-            ConfigHandler.writeIntConfig("spider", "catalyst", LootCommand.spiderCatalysts);
-        } else if (message.contains("CRAZY RARE DROP!  (Fly Swatter)")) {
-            spiderRNG = true;
-            LootCommand.spiderSwatters++;
-            LootCommand.spiderSwattersSession++;
-            ConfigHandler.writeIntConfig("spider", "swatter", LootCommand.spiderSwatters);
-            if (ToggleCommand.rngesusAlerts) Utils.createTitle(EnumChatFormatting.LIGHT_PURPLE + "FLY SWATTER!", 3);
-        } else if (message.contains("CRAZY RARE DROP!  (Tarantula Talisman")) {
-            spiderRNG = true;
-            LootCommand.spiderTalismans++;
-            LootCommand.spiderTalismansSession++;
-            ConfigHandler.writeIntConfig("spider", "talisman", LootCommand.spiderTalismans);
-            if (ToggleCommand.rngesusAlerts)
-                Utils.createTitle(EnumChatFormatting.DARK_PURPLE + "TARANTULA TALISMAN!", 3);
-        } else if (message.contains("CRAZY RARE DROP!  (Digested Mosquito)")) {
-            spiderRNG = true;
-            LootCommand.spiderMosquitos++;
-            LootCommand.spiderMosquitosSession++;
-            ConfigHandler.writeIntConfig("spider", "mosquito", LootCommand.spiderMosquitos);
-            if (ToggleCommand.rngesusAlerts) Utils.createTitle(EnumChatFormatting.GOLD + "DIGESTED MOSQUITO!", 5);
-        } else if (message.contains("Talk to Maddox to claim your Zombie Slayer XP!")) { // Zombie
-            LootCommand.zombieRevs++;
-            LootCommand.zombieRevsSession++;
-            if (LootCommand.zombieBosses != -1) {
-                LootCommand.zombieBosses++;
-            }
-            if (LootCommand.zombieBossesSession != 1) {
-                LootCommand.zombieBossesSession++;
-            }
-            ConfigHandler.writeIntConfig("zombie", "revs", LootCommand.zombieRevs);
-            ConfigHandler.writeIntConfig("zombie", "bossRNG", LootCommand.zombieBosses);
-        } else if (message.contains("RARE DROP! (Foul Flesh)")) {
-            LootCommand.zombieFoulFleshDrops++;
-            LootCommand.zombieFoulFleshDropsSession++;
-            ConfigHandler.writeIntConfig("zombie", "foulFleshDrops", LootCommand.zombieFoulFleshDrops);
-        } else if (message.contains("VERY RARE DROP!  (Revenant Catalyst)")) {
-            LootCommand.zombieRevCatas++;
-            LootCommand.zombieRevCatasSession++;
-            ConfigHandler.writeIntConfig("zombie", "revCatalyst", LootCommand.zombieRevCatas);
-        } else if (message.contains("VERY RARE DROP!  (") && message.contains(" Pestilence Rune I)")) {
-            LootCommand.zombiePestilences++;
-            LootCommand.zombiePestilencesSession++;
-            ConfigHandler.writeIntConfig("zombie", "pestilence", LootCommand.zombiePestilences);
-        } else if (message.contains("VERY RARE DROP!  (Undead Catalyst)")) {
-            LootCommand.zombieUndeadCatas++;
-            LootCommand.zombieUndeadCatasSession++;
-            ConfigHandler.writeIntConfig("zombie", "undeadCatalyst", LootCommand.zombieUndeadCatas);
-        } else if (message.contains("CRAZY RARE DROP!  (Beheaded Horror)")) {
-            zombieRNG = true;
-            LootCommand.zombieBeheadeds++;
-            LootCommand.zombieBeheadedsSession++;
-            ConfigHandler.writeIntConfig("zombie", "beheaded", LootCommand.zombieBeheadeds);
-            if (ToggleCommand.rngesusAlerts) Utils.createTitle(EnumChatFormatting.DARK_PURPLE + "BEHEADED HORROR!", 3);
-        } else if (message.contains("CRAZY RARE DROP!  (") && message.contains(" Snake Rune I)")) {
-            zombieRNG = true;
-            LootCommand.zombieSnakes++;
-            LootCommand.zombieSnakesSession++;
-            ConfigHandler.writeIntConfig("zombie", "snake", LootCommand.zombieSnakes);
-            if (ToggleCommand.rngesusAlerts) Utils.createTitle(EnumChatFormatting.DARK_GREEN + "SNAKE RUNE!", 3);
-        } else if (message.contains("CRAZY RARE DROP!  (Scythe Blade)")) {
-            zombieRNG = true;
-            LootCommand.zombieScythes++;
-            LootCommand.zombieScythesSession++;
-            ConfigHandler.writeIntConfig("zombie", "scythe", LootCommand.zombieScythes);
-            if (ToggleCommand.rngesusAlerts) Utils.createTitle(EnumChatFormatting.GOLD + "SCYTHE BLADE!", 5);
-        } else if (message.contains("GOOD CATCH!")) { // Fishing
-            LootCommand.goodCatches++;
-            LootCommand.goodCatchesSession++;
-            ConfigHandler.writeIntConfig("fishing", "goodCatch", LootCommand.goodCatches);
-        } else if (message.contains("GREAT CATCH!")) {
-            LootCommand.greatCatches++;
-            LootCommand.greatCatchesSession++;
-            ConfigHandler.writeIntConfig("fishing", "greatCatch", LootCommand.greatCatches);
-        } else if (message.contains("A Squid appeared")) {
-            LootCommand.squids++;
-            LootCommand.squidsSession++;
-            ConfigHandler.writeIntConfig("fishing", "squid", LootCommand.squids);
-            increaseSeaCreatures();
-        } else if (message.contains("You caught a Sea Walker")) {
-            LootCommand.seaWalkers++;
-            LootCommand.seaWalkersSession++;
-            ConfigHandler.writeIntConfig("fishing", "seaWalker", LootCommand.seaWalkers);
-            increaseSeaCreatures();
-        } else if (message.contains("Pitch darkness reveals a Night Squid")) {
-            LootCommand.nightSquids++;
-            LootCommand.nightSquidsSession++;
-            ConfigHandler.writeIntConfig("fishing", "nightSquid", LootCommand.nightSquids);
-            increaseSeaCreatures();
-        } else if (message.contains("You stumbled upon a Sea Guardian")) {
-            LootCommand.seaGuardians++;
-            LootCommand.seaGuardiansSession++;
-            ConfigHandler.writeIntConfig("fishing", "seaGuardian", LootCommand.seaGuardians);
-            increaseSeaCreatures();
-        } else if (message.contains("It looks like you've disrupted the Sea Witch's brewing session. Watch out, she's furious")) {
-            LootCommand.seaWitches++;
-            LootCommand.seaWitchesSession++;
-            ConfigHandler.writeIntConfig("fishing", "seaWitch", LootCommand.seaWitches);
-            increaseSeaCreatures();
-        } else if (message.contains("You reeled in a Sea Archer")) {
-            LootCommand.seaArchers++;
-            LootCommand.seaArchersSession++;
-            ConfigHandler.writeIntConfig("fishing", "seaArcher", LootCommand.seaArchers);
-            increaseSeaCreatures();
-        } else if (message.contains("The Monster of the Deep has emerged")) {
-            LootCommand.monsterOfTheDeeps++;
-            LootCommand.monsterOfTheDeepsSession++;
-            ConfigHandler.writeIntConfig("fishing", "monsterOfDeep", LootCommand.monsterOfTheDeeps);
-            increaseSeaCreatures();
-        } else if (message.contains("Huh? A Catfish")) {
-            LootCommand.catfishes++;
-            LootCommand.catfishesSession++;
-            ConfigHandler.writeIntConfig("fishing", "catfish", LootCommand.catfishes);
-            increaseSeaCreatures();
-        } else if (message.contains("Is this even a fish? It's the Carrot King")) {
-            LootCommand.carrotKings++;
-            LootCommand.carrotKingsSession++;
-            ConfigHandler.writeIntConfig("fishing", "carrotKing", LootCommand.carrotKings);
-            increaseSeaCreatures();
-        } else if (message.contains("Gross! A Sea Leech")) {
-            LootCommand.seaLeeches++;
-            LootCommand.seaLeechesSession++;
-            ConfigHandler.writeIntConfig("fishing", "seaLeech", LootCommand.seaLeeches);
-            increaseSeaCreatures();
-        } else if (message.contains("You've discovered a Guardian Defender of the sea")) {
-            LootCommand.guardianDefenders++;
-            LootCommand.guardianDefendersSession++;
-            ConfigHandler.writeIntConfig("fishing", "guardianDefender", LootCommand.guardianDefenders);
-            increaseSeaCreatures();
-        } else if (message.contains("You have awoken the Deep Sea Protector, prepare for a battle")) {
-            LootCommand.deepSeaProtectors++;
-            LootCommand.deepSeaProtectorsSession++;
-            ConfigHandler.writeIntConfig("fishing", "deepSeaProtector", LootCommand.deepSeaProtectors);
-            increaseSeaCreatures();
-        } else if (message.contains("The Water Hydra has come to test your strength")) {
-            LootCommand.hydras++;
-            LootCommand.hydrasSession++;
-            ConfigHandler.writeIntConfig("fishing", "hydra", LootCommand.hydras);
-            increaseSeaCreatures();
-        } else if (message.contains("The Sea Emperor arises from the depths")) {
-            increaseSeaCreatures();
-
-            LootCommand.seaEmperors++;
-            LootCommand.empTime = System.currentTimeMillis() / 1000;
-            LootCommand.empSCs = 0;
-            LootCommand.seaEmperorsSession++;
-            LootCommand.empTimeSession = System.currentTimeMillis() / 1000;
-            LootCommand.empSCsSession = 0;
-            ConfigHandler.writeIntConfig("fishing", "seaEmperor", LootCommand.seaEmperors);
-            ConfigHandler.writeDoubleConfig("fishing", "empTime", LootCommand.empTime);
-            ConfigHandler.writeIntConfig("fishing", "empSC", LootCommand.empSCs);
-        } else if (message.contains("Frozen Steve fell into the pond long ago")) { // Fishing Winter
-            LootCommand.frozenSteves++;
-            LootCommand.frozenStevesSession++;
-            ConfigHandler.writeIntConfig("fishing", "frozenSteve", LootCommand.frozenSteves);
-            increaseSeaCreatures();
-        } else if (message.contains("It's a snowman! He looks harmless")) {
-            LootCommand.frostyTheSnowmans++;
-            LootCommand.frostyTheSnowmansSession++;
-            ConfigHandler.writeIntConfig("fishing", "snowman", LootCommand.frostyTheSnowmans);
-            increaseSeaCreatures();
-        } else if (message.contains("stole Jerry's Gifts...get them back")) {
-            LootCommand.grinches++;
-            LootCommand.grinchesSession++;
-            ConfigHandler.writeIntConfig("fishing", "grinch", LootCommand.grinches);
-            increaseSeaCreatures();
-        } else if (message.contains("What is this creature")) {
-            LootCommand.yetis++;
-            LootCommand.yetiTime = System.currentTimeMillis() / 1000;
-            LootCommand.yetiSCs = 0;
-            LootCommand.yetisSession++;
-            LootCommand.yetiTimeSession = System.currentTimeMillis() / 1000;
-            LootCommand.yetiSCsSession = 0;
-            ConfigHandler.writeIntConfig("fishing", "yeti", LootCommand.yetis);
-            ConfigHandler.writeDoubleConfig("fishing", "yetiTime", LootCommand.yetiTime);
-            ConfigHandler.writeIntConfig("fishing", "yetiSC", LootCommand.yetiSCs);
-            increaseSeaCreatures();
-        } else if (message.contains("A tiny fin emerges from the water, you've caught a Nurse Shark")) { // Fishing Festival
-            LootCommand.nurseSharks++;
-            LootCommand.nurseSharksSession++;
-            ConfigHandler.writeIntConfig("fishing", "nurseShark", LootCommand.nurseSharks);
-            increaseSeaCreatures();
-        } else if (message.contains("You spot a fin as blue as the water it came from, it's a Blue Shark")) {
-            LootCommand.blueSharks++;
-            LootCommand.blueSharksSession++;
-            ConfigHandler.writeIntConfig("fishing", "blueShark", LootCommand.blueSharks);
-            increaseSeaCreatures();
-        } else if (message.contains("A striped beast bounds from the depths, the wild Tiger Shark")) {
-            LootCommand.tigerSharks++;
-            LootCommand.tigerSharksSession++;
-            ConfigHandler.writeIntConfig("fishing", "tigerShark", LootCommand.tigerSharks);
-            increaseSeaCreatures();
-        } else if (message.contains("Hide no longer, a Great White Shark has tracked your scent and thirsts for your blood")) {
-            LootCommand.greatWhiteSharks++;
-            LootCommand.greatWhiteSharksSession++;
-            ConfigHandler.writeIntConfig("fishing", "greatWhiteShark", LootCommand.greatWhiteSharks);
-            increaseSeaCreatures();
-        } else if (message.contains("Phew! It's only a Scarecrow")) {
-            LootCommand.scarecrows++;
-            LootCommand.scarecrowsSession++;
-            ConfigHandler.writeIntConfig("fishing", "scarecrow", LootCommand.scarecrows);
-            increaseSeaCreatures();
-        } else if (message.contains("You hear trotting from beneath the waves, you caught a Nightmare")) {
-            LootCommand.nightmares++;
-            LootCommand.nightmaresSession++;
-            ConfigHandler.writeIntConfig("fishing", "nightmare", LootCommand.nightmares);
-            increaseSeaCreatures();
-        } else if (message.contains("It must be a full moon, a Werewolf appears")) {
-            LootCommand.werewolfs++;
-            LootCommand.werewolfsSession++;
-            ConfigHandler.writeIntConfig("fishing", "werewolf", LootCommand.werewolfs);
-            increaseSeaCreatures();
-        } else if (message.contains("The spirit of a long lost Phantom Fisher has come to haunt you")) {
-            LootCommand.phantomFishers++;
-            LootCommand.phantomFishersSession++;
-            ConfigHandler.writeIntConfig("fishing", "phantomFisher", LootCommand.phantomFishers);
-            increaseSeaCreatures();
-        } else if (message.contains("This can't be! The manifestation of death himself")) {
-            LootCommand.grimReapers++;
-            LootCommand.grimReapersSession++;
-            ConfigHandler.writeIntConfig("fishing", "grimReaper", LootCommand.grimReapers);
-            increaseSeaCreatures();
-        } else if (message.contains("Dungeon starts in 1 second.")) { // Dungeons Stuff
-            dungeonStartTime = System.currentTimeMillis() / 1000 + 1;
-            bloodOpenTime = dungeonStartTime;
-            watcherClearTime = dungeonStartTime;
-            bossClearTime = dungeonStartTime;
-            witherDoors = 0;
-            dungeonDeaths = 0;
-            puzzleFails = 0;
-        } else if (message.contains("The BLOOD DOOR has been opened!")) {
-            bloodOpenTime = System.currentTimeMillis() / 1000;
-        } else if (message.contains(" opened a WITHER door!")) {
-            witherDoors++;
-        } else if (message.contains(" and became a ghost.")) {
-            dungeonDeaths++;
-        } else if (message.contains(" Defeated ") && message.contains(" in ")) {
-            bossClearTime = System.currentTimeMillis() / 1000;
-        } else if (message.contains("EXTRA STATS ")) {
-            List<String> scoreboard = ScoreboardHandler.getSidebarLines();
-            int timeToAdd = 0;
-            for (String s : scoreboard) {
-                String sCleaned = ScoreboardHandler.cleanSB(s);
-                if (sCleaned.contains("The Catacombs (")) {
-                    // Add time to floor
-                    if (sCleaned.contains("F1")) {
-                        LootCommand.f1TimeSpent = Math.floor(LootCommand.f1TimeSpent + timeToAdd);
-                        LootCommand.f1TimeSpentSession = Math.floor(LootCommand.f1TimeSpentSession + timeToAdd);
-                        ConfigHandler.writeDoubleConfig("catacombs", "floorOneTime", LootCommand.f1TimeSpent);
-                    } else if (sCleaned.contains("F2")) {
-                        LootCommand.f2TimeSpent = Math.floor(LootCommand.f2TimeSpent + timeToAdd);
-                        LootCommand.f2TimeSpentSession = Math.floor(LootCommand.f2TimeSpentSession + timeToAdd);
-                        ConfigHandler.writeDoubleConfig("catacombs", "floorTwoTime", LootCommand.f2TimeSpent);
-                    } else if (sCleaned.contains("F3")) {
-                        LootCommand.f3TimeSpent = Math.floor(LootCommand.f3TimeSpent + timeToAdd);
-                        LootCommand.f3TimeSpentSession = Math.floor(LootCommand.f3TimeSpentSession + timeToAdd);
-                        ConfigHandler.writeDoubleConfig("catacombs", "floorThreeTime", LootCommand.f3TimeSpent);
-                    } else if (sCleaned.contains("F4")) {
-                        LootCommand.f4TimeSpent = Math.floor(LootCommand.f4TimeSpent + timeToAdd);
-                        LootCommand.f4TimeSpentSession = Math.floor(LootCommand.f4TimeSpentSession + timeToAdd);
-                        ConfigHandler.writeDoubleConfig("catacombs", "floorFourTime", LootCommand.f4TimeSpent);
-                    } else if (sCleaned.contains("F5")) {
-                        LootCommand.f5TimeSpent = Math.floor(LootCommand.f5TimeSpent + timeToAdd);
-                        LootCommand.f5TimeSpentSession = Math.floor(LootCommand.f5TimeSpentSession + timeToAdd);
-                        ConfigHandler.writeDoubleConfig("catacombs", "floorFiveTime", LootCommand.f5TimeSpent);
-                    } else if (sCleaned.contains("F6")) {
-                        LootCommand.f6TimeSpent = Math.floor(LootCommand.f6TimeSpent + timeToAdd);
-                        LootCommand.f6TimeSpentSession = Math.floor(LootCommand.f6TimeSpentSession + timeToAdd);
-                        ConfigHandler.writeDoubleConfig("catacombs", "floorSixTime", LootCommand.f6TimeSpent);
-                    } else if (sCleaned.contains("F7")) {
-                        LootCommand.f7TimeSpent = Math.floor(LootCommand.f7TimeSpent + timeToAdd);
-                        LootCommand.f7TimeSpentSession = Math.floor(LootCommand.f7TimeSpentSession + timeToAdd);
-                        ConfigHandler.writeDoubleConfig("catacombs", "floorSevenTime", LootCommand.f7TimeSpent);
-                    }
-                } else if (sCleaned.contains("Time Elapsed:")) {
-                    // Get floor time
-                    String time = sCleaned.substring(sCleaned.indexOf(":") + 2);
-                    time = time.replaceAll("\\s", "");
-                    int minutes = Integer.parseInt(time.substring(0, time.indexOf("m")));
-                    int seconds = Integer.parseInt(time.substring(time.indexOf("m") + 1, time.indexOf("s")));
-                    timeToAdd = (minutes * 60) + seconds;
-                }
-            }
-        }
-
-        if (wolfRNG) {
-            LootCommand.wolfTime = System.currentTimeMillis() / 1000;
-            LootCommand.wolfBosses = 0;
-            LootCommand.wolfTimeSession = System.currentTimeMillis() / 1000;
-            LootCommand.wolfBossesSession = 0;
-            ConfigHandler.writeDoubleConfig("wolf", "timeRNG", LootCommand.wolfTime);
-            ConfigHandler.writeIntConfig("wolf", "bossRNG", 0);
-        }
-        if (spiderRNG) {
-            LootCommand.spiderTime = System.currentTimeMillis() / 1000;
-            LootCommand.spiderBosses = 0;
-            LootCommand.spiderTimeSession = System.currentTimeMillis() / 1000;
-            LootCommand.spiderBossesSession = 0;
-            ConfigHandler.writeDoubleConfig("spider", "timeRNG", LootCommand.spiderTime);
-            ConfigHandler.writeIntConfig("spider", "bossRNG", 0);
-        }
-        if (zombieRNG) {
-            LootCommand.zombieTime = System.currentTimeMillis() / 1000;
-            LootCommand.zombieBosses = 0;
-            LootCommand.zombieTimeSession = System.currentTimeMillis() / 1000;
-            LootCommand.zombieBossesSession = 0;
-            ConfigHandler.writeDoubleConfig("zombie", "timeRNG", LootCommand.zombieTime);
-            ConfigHandler.writeIntConfig("zombie", "bossRNG", 0);
-        }
-
-        // Mythological Tracker
-        if (message.contains("You dug out")) {
-            if (message.contains(" coins!")) {
-                double coinsEarned = Double.parseDouble(message.replaceAll("[^\\d]", ""));
-                LootCommand.mythCoins += coinsEarned;
-                LootCommand.mythCoinsSession += coinsEarned;
-                ConfigHandler.writeDoubleConfig("mythological", "coins", LootCommand.mythCoins);
-            } else if (message.contains("a Griffin Feather!")) {
-                LootCommand.griffinFeathers++;
-                LootCommand.griffinFeathersSession++;
-                ConfigHandler.writeIntConfig("mythological", "griffinFeather", LootCommand.griffinFeathers);
-            } else if (message.contains("a Crown of Greed!")) {
-                LootCommand.crownOfGreeds++;
-                LootCommand.crownOfGreedsSession++;
-                ConfigHandler.writeIntConfig("mythological", "crownOfGreed", LootCommand.crownOfGreeds);
-            } else if (message.contains("a Washed-up Souvenir!")) {
-                LootCommand.washedUpSouvenirs++;
-                LootCommand.washedUpSouvenirsSession++;
-                ConfigHandler.writeIntConfig("mythological", "washedUpSouvenir", LootCommand.washedUpSouvenirs);
-            } else if (message.contains("a Minos Hunter!")) {
-                LootCommand.minosHunters++;
-                LootCommand.minosHuntersSession++;
-                ConfigHandler.writeIntConfig("mythological", "minosHunter", LootCommand.minosHunters);
-            } else if (message.contains("Siamese Lynxes!")) {
-                LootCommand.siameseLynxes++;
-                LootCommand.siameseLynxesSession++;
-                ConfigHandler.writeIntConfig("mythological", "siameseLynx", LootCommand.siameseLynxes);
-            } else if (message.contains("a Minotaur!")) {
-                LootCommand.minotaurs++;
-                LootCommand.minotaursSession++;
-                ConfigHandler.writeIntConfig("mythological", "minotaur", LootCommand.minotaurs);
-            } else if (message.contains("a Gaia Construct!")) {
-                LootCommand.gaiaConstructs++;
-                LootCommand.gaiaConstructsSession++;
-                ConfigHandler.writeIntConfig("mythological", "gaiaConstruct", LootCommand.gaiaConstructs);
-            } else if (message.contains("a Minos Champion!")) {
-                LootCommand.minosChampions++;
-                LootCommand.minosChampionsSession++;
-                ConfigHandler.writeIntConfig("mythological", "minosChampion", LootCommand.minosChampions);
-            } else if (message.contains("a Minos Inquisitor!")) {
-                LootCommand.minosInquisitors++;
-                LootCommand.minosInquisitorsSession++;
-                ConfigHandler.writeIntConfig("mythological", "minosInquisitor", LootCommand.minosInquisitors);
-            }
-        }
-
-        // Dungeons Trackers
-        if (message.contains("    ")) {
-            if (message.contains("Recombobulator 3000")) {
-                LootCommand.recombobulators++;
-                LootCommand.recombobulatorsSession++;
-                ConfigHandler.writeIntConfig("catacombs", "recombobulator", LootCommand.recombobulators);
-            } else if (message.contains("Fuming Potato Book")) {
-                LootCommand.fumingPotatoBooks++;
-                LootCommand.fumingPotatoBooksSession++;
-                ConfigHandler.writeIntConfig("catacombs", "fumingBooks", LootCommand.fumingPotatoBooks);
-            } else if (message.contains("Bonzo's Staff")) { // F1
-                LootCommand.bonzoStaffs++;
-                LootCommand.bonzoStaffsSession++;
-                ConfigHandler.writeIntConfig("catacombs", "bonzoStaff", LootCommand.bonzoStaffs);
-            } else if (message.contains("Scarf's Studies")) { // F2
-                LootCommand.scarfStudies++;
-                LootCommand.scarfStudiesSession++;
-                ConfigHandler.writeIntConfig("catacombs", "scarfStudies", LootCommand.scarfStudies);
-            } else if (message.contains("Adaptive Helmet")) { // F3
-                LootCommand.adaptiveHelms++;
-                LootCommand.adaptiveHelmsSession++;
-                ConfigHandler.writeIntConfig("catacombs", "adaptiveHelm", LootCommand.adaptiveHelms);
-            } else if (message.contains("Adaptive Chestplate")) {
-                LootCommand.adaptiveChests++;
-                LootCommand.adaptiveChestsSession++;
-                ConfigHandler.writeIntConfig("catacombs", "adaptiveChest", LootCommand.adaptiveChests);
-            } else if (message.contains("Adaptive Leggings")) {
-                LootCommand.adaptiveLegs++;
-                LootCommand.adaptiveLegsSession++;
-                ConfigHandler.writeIntConfig("catacombs", "adaptiveLegging", LootCommand.adaptiveLegs);
-            } else if (message.contains("Adaptive Boots")) {
-                LootCommand.adaptiveBoots++;
-                LootCommand.adaptiveBootsSession++;
-                ConfigHandler.writeIntConfig("catacombs", "adaptiveBoot", LootCommand.adaptiveBoots);
-            } else if (message.contains("Adaptive Blade")) {
-                LootCommand.adaptiveSwords++;
-                LootCommand.adaptiveSwordsSession++;
-                ConfigHandler.writeIntConfig("catacombs", "adaptiveSword", LootCommand.adaptiveSwords);
-            } else if (message.contains("Spirit Wing")) { // F4
-                LootCommand.spiritWings++;
-                LootCommand.spiritWingsSession++;
-                ConfigHandler.writeIntConfig("catacombs", "spiritWing", LootCommand.spiritWings);
-            } else if (message.contains("Spirit Bone")) {
-                LootCommand.spiritBones++;
-                LootCommand.spiritBonesSession++;
-                ConfigHandler.writeIntConfig("catacombs", "spiritBone", LootCommand.spiritBones);
-            } else if (message.contains("Spirit Boots")) {
-                LootCommand.spiritBoots++;
-                LootCommand.spiritBootsSession++;
-                ConfigHandler.writeIntConfig("catacombs", "spiritBoot", LootCommand.spiritBoots);
-            } else if (message.contains("[Lvl 1] Spirit")) {
-                String formattedMessage = event.message.getFormattedText();
-                // Unicode colour code messes up here, just gonna remove the symbols
-                if (formattedMessage.contains("5Spirit")) {
-                    LootCommand.epicSpiritPets++;
-                    LootCommand.epicSpiritPetsSession++;
-                    ConfigHandler.writeIntConfig("catacombs", "spiritPetEpic", LootCommand.epicSpiritPets);
-                } else if (formattedMessage.contains("6Spirit")) {
-                    LootCommand.legSpiritPets++;
-                    LootCommand.legSpiritPetsSession++;
-                    ConfigHandler.writeIntConfig("catacombs", "spiritPetLeg", LootCommand.legSpiritPets);
-                }
-            } else if (message.contains("Spirit Sword")) {
-                LootCommand.spiritSwords++;
-                LootCommand.spiritSwordsSession++;
-                ConfigHandler.writeIntConfig("catacombs", "spiritSword", LootCommand.spiritSwords);
-            } else if (message.contains("Spirit Bow")) {
-                LootCommand.spiritBows++;
-                LootCommand.spiritBowsSession++;
-                ConfigHandler.writeIntConfig("catacombs", "spiritBow", LootCommand.spiritBows);
-            } else if (message.contains("Warped Stone")) { // F5
-                LootCommand.warpedStones++;
-                LootCommand.warpedStonesSession++;
-                ConfigHandler.writeIntConfig("catacombs", "warpedStone", LootCommand.warpedStones);
-            } else if (message.contains("Shadow Assassin Helmet")) {
-                LootCommand.shadowAssHelms++;
-                LootCommand.shadowAssHelmsSession++;
-                ConfigHandler.writeIntConfig("catacombs", "shadowAssassinHelm", LootCommand.shadowAssHelms);
-            } else if (message.contains("Shadow Assassin Chestplate")) {
-                LootCommand.shadowAssChests++;
-                LootCommand.shadowAssChestsSession++;
-                ConfigHandler.writeIntConfig("catacombs", "shadowAssassinChest", LootCommand.shadowAssChests);
-            } else if (message.contains("Shadow Assassin Leggings")) {
-                LootCommand.shadowAssLegs++;
-                LootCommand.shadowAssLegsSession++;
-                ConfigHandler.writeIntConfig("catacombs", "shadowAssassinLegging", LootCommand.shadowAssLegs);
-            } else if (message.contains("Shadow Assassin Boots")) {
-                LootCommand.shadowAssBoots++;
-                LootCommand.shadowAssBootsSession++;
-                ConfigHandler.writeIntConfig("catacombs", "shadowAssassinBoot", LootCommand.shadowAssBoots);
-            } else if (message.contains("Livid Dagger")) {
-                LootCommand.lividDaggers++;
-                LootCommand.lividDaggersSession++;
-                ConfigHandler.writeIntConfig("catacombs", "lividDagger", LootCommand.lividDaggers);
-            } else if (message.contains("Shadow Fury")) {
-                LootCommand.shadowFurys++;
-                LootCommand.shadowFurysSession++;
-                ConfigHandler.writeIntConfig("catacombs", "shadowFury", LootCommand.shadowFurys);
-            } else if (message.contains("Ancient Rose")) { // F6
-                LootCommand.ancientRoses++;
-                LootCommand.ancientRosesSession++;
-                ConfigHandler.writeIntConfig("catacombs", "ancientRose", LootCommand.ancientRoses);
-            } else if (message.contains("Precursor Eye")) {
-                LootCommand.precursorEyes++;
-                LootCommand.precursorEyesSession++;
-                ConfigHandler.writeIntConfig("catacombs", "precursorEye", LootCommand.precursorEyes);
-            } else if (message.contains("Giant's Sword")) {
-                LootCommand.giantsSwords++;
-                LootCommand.giantsSwordsSession++;
-                ConfigHandler.writeIntConfig("catacombs", "giantsSword", LootCommand.giantsSwords);
-            } else if (message.contains("Necromancer Lord Helmet")) {
-                LootCommand.necroLordHelms++;
-                LootCommand.necroLordHelmsSession++;
-                ConfigHandler.writeIntConfig("catacombs", "necroLordHelm", LootCommand.necroLordHelms);
-            } else if (message.contains("Necromancer Lord Chestplate")) {
-                LootCommand.necroLordChests++;
-                LootCommand.necroLordChestsSession++;
-                ConfigHandler.writeIntConfig("catacombs", "necroLordChest", LootCommand.necroLordChests);
-            } else if (message.contains("Necromancer Lord Leggings")) {
-                LootCommand.necroLordLegs++;
-                LootCommand.necroLordLegsSession++;
-                ConfigHandler.writeIntConfig("catacombs", "necroLordLegging", LootCommand.necroLordLegs);
-            } else if (message.contains("Necromancer Lord Boots")) {
-                LootCommand.necroLordBoots++;
-                LootCommand.necroLordBootsSession++;
-                ConfigHandler.writeIntConfig("catacombs", "necroLordBoot", LootCommand.necroLordBoots);
-            } else if (message.contains("Necromancer Sword")) {
-                LootCommand.necroSwords++;
-                LootCommand.necroSwordsSession++;
-                ConfigHandler.writeIntConfig("catacombs", "necroSword", LootCommand.necroSwords);
-            } else if (message.contains("Wither Blood")) { // F7
-                LootCommand.witherBloods++;
-                LootCommand.witherBloodsSession++;
-                ConfigHandler.writeIntConfig("catacombs", "witherBlood", LootCommand.witherBloods);
-            } else if (message.contains("Wither Cloak")) {
-                LootCommand.witherCloaks++;
-                LootCommand.witherCloaksSession++;
-                ConfigHandler.writeIntConfig("catacombs", "witherCloak", LootCommand.witherCloaks);
-            } else if (message.contains("Implosion")) {
-                LootCommand.implosions++;
-                LootCommand.implosionsSession++;
-                ConfigHandler.writeIntConfig("catacombs", "implosion", LootCommand.implosions);
-            } else if (message.contains("Wither Shield")) {
-                LootCommand.witherShields++;
-                LootCommand.witherShieldsSession++;
-                ConfigHandler.writeIntConfig("catacombs", "witherShield", LootCommand.witherShields);
-            } else if (message.contains("Shadow Warp")) {
-                LootCommand.shadowWarps++;
-                LootCommand.shadowWarpsSession++;
-                ConfigHandler.writeIntConfig("catacombs", "shadowWarp", LootCommand.shadowWarps);
-            } else if (message.contains("Necron's Handle")) {
-                LootCommand.necronsHandles++;
-                LootCommand.necronsHandlesSession++;
-                ConfigHandler.writeIntConfig("catacombs", "necronsHandle", LootCommand.necronsHandles);
-            } else if (message.contains("Auto Recombobulator")) {
-                LootCommand.autoRecombs++;
-                LootCommand.autoRecombsSession++;
-                ConfigHandler.writeIntConfig("catacombs", "autoRecomb", LootCommand.autoRecombs);
-            } else if (message.contains("Wither Helmet")) {
-                LootCommand.witherHelms++;
-                LootCommand.witherHelmsSession++;
-                ConfigHandler.writeIntConfig("catacombs", "witherHelm", LootCommand.witherHelms);
-            } else if (message.contains("Wither Chestplate")) {
-                LootCommand.witherChests++;
-                LootCommand.witherChestsSession++;
-                ConfigHandler.writeIntConfig("catacombs", "witherChest", LootCommand.witherChests);
-            } else if (message.contains("Wither Leggings")) {
-                LootCommand.witherLegs++;
-                LootCommand.witherLegsSession++;
-                ConfigHandler.writeIntConfig("catacombs", "witherLegging", LootCommand.witherLegs);
-            } else if (message.contains("Wither Boots")) {
-                LootCommand.witherBoots++;
-                LootCommand.witherBootsSession++;
-                ConfigHandler.writeIntConfig("catacombs", "witherBoot", LootCommand.witherBoots);
-            }
-        }
-
-        // Chat Maddox
-        if (message.contains("[OPEN MENU]")) {
-            List<IChatComponent> listOfSiblings = event.message.getSiblings();
-            for (IChatComponent sibling : listOfSiblings) {
-                if (sibling.getUnformattedText().contains("[OPEN MENU]")) {
-                    lastMaddoxCommand = sibling.getChatStyle().getChatClickEvent().getValue();
-                    lastMaddoxTime = System.currentTimeMillis() / 1000;
-                }
-            }
-            if (ToggleCommand.chatMaddoxToggled)
-                Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(MAIN_COLOUR + "Open chat then click anywhere on-screen to open Maddox"));
-        }
-
-        // Spirit Bear alerts
-        if (ToggleCommand.spiritBearAlerts && message.contains("The Spirit Bear has appeared!")) {
-            Utils.createTitle(EnumChatFormatting.DARK_PURPLE + "SPIRIT BEAR", 2);
-        }
+		// Wolf
+		if (message.contains("Talk to Maddox to claim your Wolf Slayer XP!")) {
+			LootCommand.wolfSvens++;
+			LootCommand.wolfSvensSession++;
+			if (LootCommand.wolfBosses != -1) {
+				LootCommand.wolfBosses++;
+			}
+			if (LootCommand.wolfBossesSession != -1) {
+				LootCommand.wolfBossesSession++;
+			}
+			ConfigHandler.writeIntConfig("wolf", "svens", LootCommand.wolfSvens);
+			ConfigHandler.writeIntConfig("wolf", "bossRNG", LootCommand.wolfBosses);
+		} else if (message.contains("RARE DROP! (Hamster Wheel)")) {
+			LootCommand.wolfWheelsDrops++;
+			LootCommand.wolfWheelsDropsSession++;
+			ConfigHandler.writeIntConfig("wolf", "wheelDrops", LootCommand.wolfWheelsDrops);
+		} else if (message.contains("VERY RARE DROP!  (") && message.contains(" Spirit Rune I)")) { // Removing the unicode here *should* fix rune drops not counting
+			LootCommand.wolfSpirits++;
+			LootCommand.wolfSpiritsSession++;
+			ConfigHandler.writeIntConfig("wolf", "spirit", LootCommand.wolfSpirits);
+		} else if (message.contains("CRAZY RARE DROP!  (Red Claw Egg)")) {
+			wolfRNG = true;
+			LootCommand.wolfEggs++;
+			LootCommand.wolfEggsSession++;
+			ConfigHandler.writeIntConfig("wolf", "egg", LootCommand.wolfEggs);
+			if (ToggleCommand.rngesusAlerts) Utils.createTitle(EnumChatFormatting.DARK_RED + "RED CLAW EGG!", 3);
+		} else if (message.contains("CRAZY RARE DROP!  (") && message.contains(" Couture Rune I)")) {
+			wolfRNG = true;
+			LootCommand.wolfCoutures++;
+			LootCommand.wolfCouturesSession++;
+			ConfigHandler.writeIntConfig("wolf", "couture", LootCommand.wolfCoutures);
+			if (ToggleCommand.rngesusAlerts) Utils.createTitle(EnumChatFormatting.GOLD + "COUTURE RUNE!", 3);
+		} else if (message.contains("CRAZY RARE DROP!  (Grizzly Bait)") || message.contains("CRAZY RARE DROP! (Rename Me)")) { // How did Skyblock devs even manage to make this item Rename Me
+			wolfRNG = true;
+			LootCommand.wolfBaits++;
+			LootCommand.wolfBaitsSession++;
+			ConfigHandler.writeIntConfig("wolf", "bait", LootCommand.wolfBaits);
+			if (ToggleCommand.rngesusAlerts) Utils.createTitle(EnumChatFormatting.AQUA + "GRIZZLY BAIT!", 3);
+		} else if (message.contains("CRAZY RARE DROP!  (Overflux Capacitor)")) {
+			wolfRNG = true;
+			LootCommand.wolfFluxes++;
+			LootCommand.wolfFluxesSession++;
+			ConfigHandler.writeIntConfig("wolf", "flux", LootCommand.wolfFluxes);
+			if (ToggleCommand.rngesusAlerts) Utils.createTitle(EnumChatFormatting.DARK_PURPLE + "OVERFLUX CAPACITOR!", 5);
+		} else if (message.contains("Talk to Maddox to claim your Spider Slayer XP!")) { // Spider
+			LootCommand.spiderTarantulas++;
+			LootCommand.spiderTarantulasSession++;
+			if (LootCommand.spiderBosses != -1) {
+				LootCommand.spiderBosses++;
+			}
+			if (LootCommand.spiderBossesSession != -1) {
+				LootCommand.spiderBossesSession++;
+			}
+			ConfigHandler.writeIntConfig("spider", "tarantulas", LootCommand.spiderTarantulas);
+			ConfigHandler.writeIntConfig("spider", "bossRNG", LootCommand.spiderBosses);
+		} else if (message.contains("RARE DROP! (Toxic Arrow Poison)")) {
+			LootCommand.spiderTAPDrops++;
+			LootCommand.spiderTAPDropsSession++;
+			ConfigHandler.writeIntConfig("spider", "tapDrops", LootCommand.spiderTAPDrops);
+		} else if (message.contains("VERY RARE DROP!  (") && message.contains(" Bite Rune I)")) {
+			LootCommand.spiderBites++;
+			LootCommand.spiderBitesSession++;
+			ConfigHandler.writeIntConfig("spider", "bite", LootCommand.spiderBites);
+		} else if (message.contains("VERY RARE DROP!  (Spider Catalyst)")) {
+			LootCommand.spiderCatalysts++;
+			LootCommand.spiderCatalystsSession++;
+			ConfigHandler.writeIntConfig("spider", "catalyst", LootCommand.spiderCatalysts);
+		} else if (message.contains("CRAZY RARE DROP!  (Fly Swatter)")) {
+			spiderRNG = true;
+			LootCommand.spiderSwatters++;
+			LootCommand.spiderSwattersSession++;
+			ConfigHandler.writeIntConfig("spider", "swatter", LootCommand.spiderSwatters);
+			if (ToggleCommand.rngesusAlerts) Utils.createTitle(EnumChatFormatting.LIGHT_PURPLE + "FLY SWATTER!", 3);
+		} else if (message.contains("CRAZY RARE DROP!  (Tarantula Talisman")) {
+			spiderRNG = true;
+			LootCommand.spiderTalismans++;
+			LootCommand.spiderTalismansSession++;
+			ConfigHandler.writeIntConfig("spider", "talisman", LootCommand.spiderTalismans);
+			if (ToggleCommand.rngesusAlerts) Utils.createTitle(EnumChatFormatting.DARK_PURPLE + "TARANTULA TALISMAN!", 3);
+		} else if (message.contains("CRAZY RARE DROP!  (Digested Mosquito)")) {
+			spiderRNG = true;
+			LootCommand.spiderMosquitos++;
+			LootCommand.spiderMosquitosSession++;
+			ConfigHandler.writeIntConfig("spider", "mosquito", LootCommand.spiderMosquitos);
+			if (ToggleCommand.rngesusAlerts) Utils.createTitle(EnumChatFormatting.GOLD + "DIGESTED MOSQUITO!", 5);
+		} else if (message.contains("Talk to Maddox to claim your Zombie Slayer XP!")) { // Zombie
+			LootCommand.zombieRevs++;
+			LootCommand.zombieRevsSession++;
+			if (LootCommand.zombieBosses != -1) {
+				LootCommand.zombieBosses++;
+			}
+			if (LootCommand.zombieBossesSession != 1) {
+				LootCommand.zombieBossesSession++;
+			}
+			ConfigHandler.writeIntConfig("zombie", "revs", LootCommand.zombieRevs);
+			ConfigHandler.writeIntConfig("zombie", "bossRNG", LootCommand.zombieBosses);
+		} else if (message.contains("RARE DROP! (Foul Flesh)")) {
+			LootCommand.zombieFoulFleshDrops++;
+			LootCommand.zombieFoulFleshDropsSession++;
+			ConfigHandler.writeIntConfig("zombie", "foulFleshDrops", LootCommand.zombieFoulFleshDrops);
+		} else if (message.contains("VERY RARE DROP!  (Revenant Catalyst)")) {
+			LootCommand.zombieRevCatas++;
+			LootCommand.zombieRevCatasSession++;
+			ConfigHandler.writeIntConfig("zombie", "revCatalyst", LootCommand.zombieRevCatas);
+		} else if (message.contains("VERY RARE DROP!  (") && message.contains(" Pestilence Rune I)")) {
+			LootCommand.zombiePestilences++;
+			LootCommand.zombiePestilencesSession++;
+			ConfigHandler.writeIntConfig("zombie", "pestilence", LootCommand.zombiePestilences);
+		} else if (message.contains("VERY RARE DROP!  (Undead Catalyst)")) {
+			LootCommand.zombieUndeadCatas++;
+			LootCommand.zombieUndeadCatasSession++;
+			ConfigHandler.writeIntConfig("zombie", "undeadCatalyst", LootCommand.zombieUndeadCatas);
+		} else if (message.contains("CRAZY RARE DROP!  (Beheaded Horror)")) {
+			zombieRNG = true;
+			LootCommand.zombieBeheadeds++;
+			LootCommand.zombieBeheadedsSession++;
+			ConfigHandler.writeIntConfig("zombie", "beheaded", LootCommand.zombieBeheadeds);
+			if (ToggleCommand.rngesusAlerts) Utils.createTitle(EnumChatFormatting.DARK_PURPLE + "BEHEADED HORROR!", 3);
+		} else if (message.contains("CRAZY RARE DROP!  (") && message.contains(" Snake Rune I)")) {
+			zombieRNG = true;
+			LootCommand.zombieSnakes++;
+			LootCommand.zombieSnakesSession++;
+			ConfigHandler.writeIntConfig("zombie", "snake", LootCommand.zombieSnakes);
+			if (ToggleCommand.rngesusAlerts) Utils.createTitle(EnumChatFormatting.DARK_GREEN + "SNAKE RUNE!", 3);
+		} else if (message.contains("CRAZY RARE DROP!  (Scythe Blade)")) {
+			zombieRNG = true;
+			LootCommand.zombieScythes++;
+			LootCommand.zombieScythesSession++;
+			ConfigHandler.writeIntConfig("zombie", "scythe", LootCommand.zombieScythes);
+			if (ToggleCommand.rngesusAlerts) Utils.createTitle(EnumChatFormatting.GOLD + "SCYTHE BLADE!", 5);
+		} else if (message.contains("GOOD CATCH!")) { // Fishing
+			LootCommand.goodCatches++;
+			LootCommand.goodCatchesSession++;
+			ConfigHandler.writeIntConfig("fishing", "goodCatch", LootCommand.goodCatches);
+		} else if (message.contains("GREAT CATCH!")) {
+			LootCommand.greatCatches++;
+			LootCommand.greatCatchesSession++;
+			ConfigHandler.writeIntConfig("fishing", "greatCatch", LootCommand.greatCatches);
+		} else if (message.contains("A Squid appeared")) {
+			LootCommand.squids++;
+			LootCommand.squidsSession++;
+			ConfigHandler.writeIntConfig("fishing", "squid", LootCommand.squids);
+			increaseSeaCreatures();
+		} else if (message.contains("You caught a Sea Walker")) {
+			LootCommand.seaWalkers++;
+			LootCommand.seaWalkersSession++;
+			ConfigHandler.writeIntConfig("fishing", "seaWalker", LootCommand.seaWalkers);
+			increaseSeaCreatures();
+		} else if (message.contains("Pitch darkness reveals a Night Squid")) {
+			LootCommand.nightSquids++;
+			LootCommand.nightSquidsSession++;
+			ConfigHandler.writeIntConfig("fishing", "nightSquid", LootCommand.nightSquids);
+			increaseSeaCreatures();
+		} else if (message.contains("You stumbled upon a Sea Guardian")) {
+			LootCommand.seaGuardians++;
+			LootCommand.seaGuardiansSession++;
+			ConfigHandler.writeIntConfig("fishing", "seaGuardian", LootCommand.seaGuardians);
+			increaseSeaCreatures();
+		} else if (message.contains("It looks like you've disrupted the Sea Witch's brewing session. Watch out, she's furious")) {
+			LootCommand.seaWitches++;
+			LootCommand.seaWitchesSession++;
+			ConfigHandler.writeIntConfig("fishing", "seaWitch", LootCommand.seaWitches);
+			increaseSeaCreatures();
+		} else if (message.contains("You reeled in a Sea Archer")) {
+			LootCommand.seaArchers++;
+			LootCommand.seaArchersSession++;
+			ConfigHandler.writeIntConfig("fishing", "seaArcher", LootCommand.seaArchers);
+			increaseSeaCreatures();
+		} else if (message.contains("The Monster of the Deep has emerged")) {
+			LootCommand.monsterOfTheDeeps++;
+			LootCommand.monsterOfTheDeepsSession++;
+			ConfigHandler.writeIntConfig("fishing", "monsterOfDeep", LootCommand.monsterOfTheDeeps);
+			increaseSeaCreatures();
+		} else if (message.contains("Huh? A Catfish")) {
+			LootCommand.catfishes++;
+			LootCommand.catfishesSession++;
+			ConfigHandler.writeIntConfig("fishing", "catfish", LootCommand.catfishes);
+			increaseSeaCreatures();
+		} else if (message.contains("Is this even a fish? It's the Carrot King")) {
+			LootCommand.carrotKings++;
+			LootCommand.carrotKingsSession++;
+			ConfigHandler.writeIntConfig("fishing", "carrotKing", LootCommand.carrotKings);
+			increaseSeaCreatures();
+		} else if (message.contains("Gross! A Sea Leech")) {
+			LootCommand.seaLeeches++;
+			LootCommand.seaLeechesSession++;
+			ConfigHandler.writeIntConfig("fishing", "seaLeech", LootCommand.seaLeeches);
+			increaseSeaCreatures();
+		} else if (message.contains("You've discovered a Guardian Defender of the sea")) {
+			LootCommand.guardianDefenders++;
+			LootCommand.guardianDefendersSession++;
+			ConfigHandler.writeIntConfig("fishing", "guardianDefender", LootCommand.guardianDefenders);
+			increaseSeaCreatures();
+		} else if (message.contains("You have awoken the Deep Sea Protector, prepare for a battle")) {
+			LootCommand.deepSeaProtectors++;
+			LootCommand.deepSeaProtectorsSession++;
+			ConfigHandler.writeIntConfig("fishing", "deepSeaProtector", LootCommand.deepSeaProtectors);
+			increaseSeaCreatures();
+		} else if (message.contains("The Water Hydra has come to test your strength")) {
+			LootCommand.hydras++;
+			LootCommand.hydrasSession++;
+			ConfigHandler.writeIntConfig("fishing", "hydra", LootCommand.hydras);
+			increaseSeaCreatures();
+		} else if (message.contains("The Sea Emperor arises from the depths")) {
+			increaseSeaCreatures();
+			
+			LootCommand.seaEmperors++;
+			LootCommand.empTime = System.currentTimeMillis() / 1000;
+			LootCommand.empSCs = 0;
+			LootCommand.seaEmperorsSession++;
+			LootCommand.empTimeSession = System.currentTimeMillis() / 1000;
+			LootCommand.empSCsSession = 0;
+			ConfigHandler.writeIntConfig("fishing", "seaEmperor", LootCommand.seaEmperors);
+			ConfigHandler.writeDoubleConfig("fishing", "empTime", LootCommand.empTime);
+			ConfigHandler.writeIntConfig("fishing", "empSC", LootCommand.empSCs);
+		} else if (message.contains("Frozen Steve fell into the pond long ago")) { // Fishing Winter
+			LootCommand.frozenSteves++;
+			LootCommand.frozenStevesSession++;
+			ConfigHandler.writeIntConfig("fishing", "frozenSteve", LootCommand.frozenSteves);
+			increaseSeaCreatures();
+		} else if (message.contains("It's a snowman! He looks harmless")) {
+			LootCommand.frostyTheSnowmans++;
+			LootCommand.frostyTheSnowmansSession++;
+			ConfigHandler.writeIntConfig("fishing", "snowman", LootCommand.frostyTheSnowmans);
+			increaseSeaCreatures();
+		} else if (message.contains("stole Jerry's Gifts...get them back")) {
+			LootCommand.grinches++;
+			LootCommand.grinchesSession++;
+			ConfigHandler.writeIntConfig("fishing", "grinch", LootCommand.grinches);
+			increaseSeaCreatures();
+		} else if (message.contains("What is this creature")) {
+			LootCommand.yetis++;
+			LootCommand.yetiTime = System.currentTimeMillis() / 1000;
+			LootCommand.yetiSCs = 0;
+			LootCommand.yetisSession++;
+			LootCommand.yetiTimeSession = System.currentTimeMillis() / 1000;
+			LootCommand.yetiSCsSession = 0;
+			ConfigHandler.writeIntConfig("fishing", "yeti", LootCommand.yetis);
+			ConfigHandler.writeDoubleConfig("fishing", "yetiTime", LootCommand.yetiTime);
+			ConfigHandler.writeIntConfig("fishing", "yetiSC", LootCommand.yetiSCs);
+			increaseSeaCreatures();
+		} else if (message.contains("A tiny fin emerges from the water, you've caught a Nurse Shark")) { // Fishing Festival
+			LootCommand.nurseSharks++;
+			LootCommand.nurseSharksSession++;
+			ConfigHandler.writeIntConfig("fishing", "nurseShark", LootCommand.nurseSharks);
+			increaseSeaCreatures();
+		} else if (message.contains("You spot a fin as blue as the water it came from, it's a Blue Shark")) {
+			LootCommand.blueSharks++;
+			LootCommand.blueSharksSession++;
+			ConfigHandler.writeIntConfig("fishing", "blueShark", LootCommand.blueSharks);
+			increaseSeaCreatures();
+		} else if (message.contains("A striped beast bounds from the depths, the wild Tiger Shark")) {
+			LootCommand.tigerSharks++;
+			LootCommand.tigerSharksSession++;
+			ConfigHandler.writeIntConfig("fishing", "tigerShark", LootCommand.tigerSharks);
+			increaseSeaCreatures();
+		} else if (message.contains("Hide no longer, a Great White Shark has tracked your scent and thirsts for your blood")) {
+			LootCommand.greatWhiteSharks++;
+			LootCommand.greatWhiteSharksSession++;
+			ConfigHandler.writeIntConfig("fishing", "greatWhiteShark", LootCommand.greatWhiteSharks);
+			increaseSeaCreatures();
+		} else if (message.contains("Phew! It's only a Scarecrow")) {
+			LootCommand.scarecrows++;
+			LootCommand.scarecrowsSession++;
+			ConfigHandler.writeIntConfig("fishing", "scarecrow", LootCommand.scarecrows);
+			increaseSeaCreatures();
+		} else if (message.contains("You hear trotting from beneath the waves, you caught a Nightmare")) {
+			LootCommand.nightmares++;
+			LootCommand.nightmaresSession++;
+			ConfigHandler.writeIntConfig("fishing", "nightmare", LootCommand.nightmares);
+			increaseSeaCreatures();
+		} else if (message.contains("It must be a full moon, a Werewolf appears")) {
+			LootCommand.werewolfs++;
+			LootCommand.werewolfsSession++;
+			ConfigHandler.writeIntConfig("fishing", "werewolf", LootCommand.werewolfs);
+			increaseSeaCreatures();
+		} else if (message.contains("The spirit of a long lost Phantom Fisher has come to haunt you")) {
+			LootCommand.phantomFishers++;
+			LootCommand.phantomFishersSession++;
+			ConfigHandler.writeIntConfig("fishing", "phantomFisher", LootCommand.phantomFishers);
+			increaseSeaCreatures();
+		} else if (message.contains("This can't be! The manifestation of death himself")) {
+			LootCommand.grimReapers++;
+			LootCommand.grimReapersSession++;
+			ConfigHandler.writeIntConfig("fishing", "grimReaper", LootCommand.grimReapers);
+			increaseSeaCreatures();
+		} else if (message.contains("Dungeon starts in 1 second.")) { // Dungeons Stuff
+		    dungeonStartTime = System.currentTimeMillis() / 1000 + 1;
+		    bloodOpenTime = dungeonStartTime;
+		    watcherClearTime = dungeonStartTime;
+		    bossClearTime = dungeonStartTime;
+		    witherDoors = 0;
+		    dungeonDeaths = 0;
+		    puzzleFails = 0;
+		} else if (message.contains("The BLOOD DOOR has been opened!")) {
+			bloodOpenTime = System.currentTimeMillis() / 1000;
+		} else if (message.contains(" opened a WITHER door!")) {
+			witherDoors++;
+		} else if (message.contains(" and became a ghost.")) {
+			dungeonDeaths++;
+		} else if (message.contains(" Defeated ") && message.contains(" in ")) {
+			bossClearTime = System.currentTimeMillis() / 1000;
+		} else if (message.contains("EXTRA STATS ")) {
+			List<String> scoreboard = ScoreboardHandler.getSidebarLines();
+			int timeToAdd = 0;
+			for (String s : scoreboard) {
+				String sCleaned = ScoreboardHandler.cleanSB(s);
+				if (sCleaned.contains("The Catacombs (")) {
+					// Add time to floor
+					if (sCleaned.contains("F1")) {
+						LootCommand.f1TimeSpent = Math.floor(LootCommand.f1TimeSpent + timeToAdd);
+						LootCommand.f1TimeSpentSession = Math.floor(LootCommand.f1TimeSpentSession + timeToAdd);
+						ConfigHandler.writeDoubleConfig("catacombs", "floorOneTime", LootCommand.f1TimeSpent);
+					} else if (sCleaned.contains("F2")) {
+						LootCommand.f2TimeSpent = Math.floor(LootCommand.f2TimeSpent + timeToAdd);
+						LootCommand.f2TimeSpentSession = Math.floor(LootCommand.f2TimeSpentSession + timeToAdd);
+						ConfigHandler.writeDoubleConfig("catacombs", "floorTwoTime", LootCommand.f2TimeSpent);
+					} else if (sCleaned.contains("F3")) {
+						LootCommand.f3TimeSpent = Math.floor(LootCommand.f3TimeSpent + timeToAdd);
+						LootCommand.f3TimeSpentSession = Math.floor(LootCommand.f3TimeSpentSession + timeToAdd);
+						ConfigHandler.writeDoubleConfig("catacombs", "floorThreeTime", LootCommand.f3TimeSpent);
+					} else if (sCleaned.contains("F4")) {
+						LootCommand.f4TimeSpent = Math.floor(LootCommand.f4TimeSpent + timeToAdd);
+						LootCommand.f4TimeSpentSession = Math.floor(LootCommand.f4TimeSpentSession + timeToAdd);
+						ConfigHandler.writeDoubleConfig("catacombs", "floorFourTime", LootCommand.f4TimeSpent);
+					} else if (sCleaned.contains("F5")) {
+						LootCommand.f5TimeSpent = Math.floor(LootCommand.f5TimeSpent + timeToAdd);
+						LootCommand.f5TimeSpentSession = Math.floor(LootCommand.f5TimeSpentSession + timeToAdd);
+						ConfigHandler.writeDoubleConfig("catacombs", "floorFiveTime", LootCommand.f5TimeSpent);
+					} else if (sCleaned.contains("F6")) {
+						LootCommand.f6TimeSpent = Math.floor(LootCommand.f6TimeSpent + timeToAdd);
+						LootCommand.f6TimeSpentSession = Math.floor(LootCommand.f6TimeSpentSession + timeToAdd);
+						ConfigHandler.writeDoubleConfig("catacombs", "floorSixTime", LootCommand.f6TimeSpent);
+					} else if (sCleaned.contains("F7")) {
+						LootCommand.f7TimeSpent = Math.floor(LootCommand.f7TimeSpent + timeToAdd);
+						LootCommand.f7TimeSpentSession = Math.floor(LootCommand.f7TimeSpentSession + timeToAdd);
+						ConfigHandler.writeDoubleConfig("catacombs", "floorSevenTime", LootCommand.f7TimeSpent);
+					}
+				} else if (sCleaned.contains("Time Elapsed:")) {
+					// Get floor time
+					String time = sCleaned.substring(sCleaned.indexOf(":") + 2);
+					time = time.replaceAll("\\s", "");
+					int minutes = Integer.parseInt(time.substring(0, time.indexOf("m")));
+					int seconds = Integer.parseInt(time.substring(time.indexOf("m") + 1, time.indexOf("s")));
+					timeToAdd = (minutes * 60) + seconds;
+				}
+			}
+		}
+		
+		if (wolfRNG) {
+			LootCommand.wolfTime = System.currentTimeMillis() / 1000;
+			LootCommand.wolfBosses = 0;
+			LootCommand.wolfTimeSession = System.currentTimeMillis() / 1000;
+			LootCommand.wolfBossesSession = 0;
+			ConfigHandler.writeDoubleConfig("wolf", "timeRNG", LootCommand.wolfTime);
+			ConfigHandler.writeIntConfig("wolf", "bossRNG", 0);
+		}
+		if (spiderRNG) {
+			LootCommand.spiderTime = System.currentTimeMillis() / 1000;
+			LootCommand.spiderBosses = 0;
+			LootCommand.spiderTimeSession = System.currentTimeMillis() / 1000;
+			LootCommand.spiderBossesSession = 0;
+			ConfigHandler.writeDoubleConfig("spider", "timeRNG", LootCommand.spiderTime);
+			ConfigHandler.writeIntConfig("spider", "bossRNG", 0);
+		}
+		if (zombieRNG) {
+			LootCommand.zombieTime = System.currentTimeMillis() / 1000;
+			LootCommand.zombieBosses = 0;
+			LootCommand.zombieTimeSession = System.currentTimeMillis() / 1000;
+			LootCommand.zombieBossesSession = 0;
+			ConfigHandler.writeDoubleConfig("zombie", "timeRNG", LootCommand.zombieTime);
+			ConfigHandler.writeIntConfig("zombie", "bossRNG", 0);
+		}
+		
+		// Mythological Tracker
+		if (message.contains("You dug out")) {
+			if (message.contains(" coins!")) {
+				double coinsEarned = Double.parseDouble(message.replaceAll("[^\\d]", ""));
+				LootCommand.mythCoins += coinsEarned;
+				LootCommand.mythCoinsSession += coinsEarned;
+				ConfigHandler.writeDoubleConfig("mythological", "coins", LootCommand.mythCoins);
+			} else if (message.contains("a Griffin Feather!")) {
+				LootCommand.griffinFeathers++;
+				LootCommand.griffinFeathersSession++;
+				ConfigHandler.writeIntConfig("mythological", "griffinFeather", LootCommand.griffinFeathers);
+			} else if (message.contains("a Crown of Greed!")) {
+				LootCommand.crownOfGreeds++;
+				LootCommand.crownOfGreedsSession++;
+				ConfigHandler.writeIntConfig("mythological", "crownOfGreed", LootCommand.crownOfGreeds);
+			} else if (message.contains("a Washed-up Souvenir!")) {
+				LootCommand.washedUpSouvenirs++;
+				LootCommand.washedUpSouvenirsSession++;
+				ConfigHandler.writeIntConfig("mythological", "washedUpSouvenir", LootCommand.washedUpSouvenirs);
+			} else if (message.contains("a Minos Hunter!")) {
+				LootCommand.minosHunters++;
+				LootCommand.minosHuntersSession++;
+				ConfigHandler.writeIntConfig("mythological", "minosHunter", LootCommand.minosHunters);
+			} else if (message.contains("Siamese Lynxes!")) {
+				LootCommand.siameseLynxes++;
+				LootCommand.siameseLynxesSession++;
+				ConfigHandler.writeIntConfig("mythological", "siameseLynx", LootCommand.siameseLynxes);
+			} else if (message.contains("a Minotaur!")) {
+				LootCommand.minotaurs++;
+				LootCommand.minotaursSession++;
+				ConfigHandler.writeIntConfig("mythological", "minotaur", LootCommand.minotaurs);
+			} else if (message.contains("a Gaia Construct!")) {
+				LootCommand.gaiaConstructs++;
+				LootCommand.gaiaConstructsSession++;
+				ConfigHandler.writeIntConfig("mythological", "gaiaConstruct", LootCommand.gaiaConstructs);
+			} else if (message.contains("a Minos Champion!")) {
+				LootCommand.minosChampions++;
+				LootCommand.minosChampionsSession++;
+				ConfigHandler.writeIntConfig("mythological", "minosChampion", LootCommand.minosChampions);
+			} else if (message.contains("a Minos Inquisitor!")) {
+				LootCommand.minosInquisitors++;
+				LootCommand.minosInquisitorsSession++;
+				ConfigHandler.writeIntConfig("mythological", "minosInquisitor", LootCommand.minosInquisitors);
+			}
+		}
+		
+		// Dungeons Trackers
+		if (message.contains("    ")) {
+			if (message.contains("Recombobulator 3000")) {
+				LootCommand.recombobulators++;
+				LootCommand.recombobulatorsSession++;
+				ConfigHandler.writeIntConfig("catacombs", "recombobulator", LootCommand.recombobulators);
+			} else if (message.contains("Fuming Potato Book")) {
+				LootCommand.fumingPotatoBooks++;
+				LootCommand.fumingPotatoBooksSession++;
+				ConfigHandler.writeIntConfig("catacombs", "fumingBooks", LootCommand.fumingPotatoBooks);
+			} else if (message.contains("Bonzo's Staff")) { // F1
+				LootCommand.bonzoStaffs++;
+				LootCommand.bonzoStaffsSession++;
+				ConfigHandler.writeIntConfig("catacombs", "bonzoStaff", LootCommand.bonzoStaffs);
+			} else if (message.contains("Scarf's Studies")) { // F2
+				LootCommand.scarfStudies++;
+				LootCommand.scarfStudiesSession++;
+				ConfigHandler.writeIntConfig("catacombs", "scarfStudies", LootCommand.scarfStudies);
+			} else if (message.contains("Adaptive Helmet")) { // F3
+				LootCommand.adaptiveHelms++;
+				LootCommand.adaptiveHelmsSession++;
+				ConfigHandler.writeIntConfig("catacombs", "adaptiveHelm", LootCommand.adaptiveHelms);
+			} else if (message.contains("Adaptive Chestplate")) {
+				LootCommand.adaptiveChests++;
+				LootCommand.adaptiveChestsSession++;
+				ConfigHandler.writeIntConfig("catacombs", "adaptiveChest", LootCommand.adaptiveChests);
+			} else if (message.contains("Adaptive Leggings")) {
+				LootCommand.adaptiveLegs++;
+				LootCommand.adaptiveLegsSession++;
+				ConfigHandler.writeIntConfig("catacombs", "adaptiveLegging", LootCommand.adaptiveLegs);
+			} else if (message.contains("Adaptive Boots")) {
+				LootCommand.adaptiveBoots++;
+				LootCommand.adaptiveBootsSession++;
+				ConfigHandler.writeIntConfig("catacombs", "adaptiveBoot", LootCommand.adaptiveBoots);
+			} else if (message.contains("Adaptive Blade")) {
+				LootCommand.adaptiveSwords++;
+				LootCommand.adaptiveSwordsSession++;
+				ConfigHandler.writeIntConfig("catacombs", "adaptiveSword", LootCommand.adaptiveSwords);
+			} else if (message.contains("Spirit Wing")) { // F4
+				LootCommand.spiritWings++;
+				LootCommand.spiritWingsSession++;
+				ConfigHandler.writeIntConfig("catacombs", "spiritWing", LootCommand.spiritWings);
+			} else if (message.contains("Spirit Bone")) {
+				LootCommand.spiritBones++;
+				LootCommand.spiritBonesSession++;
+				ConfigHandler.writeIntConfig("catacombs", "spiritBone", LootCommand.spiritBones);
+			} else if (message.contains("Spirit Boots")) {
+				LootCommand.spiritBoots++;
+				LootCommand.spiritBootsSession++;
+				ConfigHandler.writeIntConfig("catacombs", "spiritBoot", LootCommand.spiritBoots);
+			} else if (message.contains("[Lvl 1] Spirit")) {
+				String formattedMessage = event.message.getFormattedText();
+				// Unicode colour code messes up here, just gonna remove the symbols
+				if (formattedMessage.contains("5Spirit")) {
+					LootCommand.epicSpiritPets++;
+					LootCommand.epicSpiritPetsSession++;
+					ConfigHandler.writeIntConfig("catacombs", "spiritPetEpic", LootCommand.epicSpiritPets);
+				} else if (formattedMessage.contains("6Spirit")) {
+					LootCommand.legSpiritPets++;
+					LootCommand.legSpiritPetsSession++;
+					ConfigHandler.writeIntConfig("catacombs", "spiritPetLeg", LootCommand.legSpiritPets);
+				} 
+			} else if (message.contains("Spirit Sword")) {
+				LootCommand.spiritSwords++;
+				LootCommand.spiritSwordsSession++;
+				ConfigHandler.writeIntConfig("catacombs", "spiritSword", LootCommand.spiritSwords);
+			} else if (message.contains("Spirit Bow")) {
+				LootCommand.spiritBows++;
+				LootCommand.spiritBowsSession++;
+				ConfigHandler.writeIntConfig("catacombs", "spiritBow", LootCommand.spiritBows);
+			} else if (message.contains("Warped Stone")) { // F5
+				LootCommand.warpedStones++;
+				LootCommand.warpedStonesSession++;
+				ConfigHandler.writeIntConfig("catacombs", "warpedStone", LootCommand.warpedStones);
+			} else if (message.contains("Shadow Assassin Helmet")) {
+				LootCommand.shadowAssHelms++;
+				LootCommand.shadowAssHelmsSession++;
+				ConfigHandler.writeIntConfig("catacombs", "shadowAssassinHelm", LootCommand.shadowAssHelms);
+			} else if (message.contains("Shadow Assassin Chestplate")) {
+				LootCommand.shadowAssChests++;
+				LootCommand.shadowAssChestsSession++;
+				ConfigHandler.writeIntConfig("catacombs", "shadowAssassinChest", LootCommand.shadowAssChests);
+			} else if (message.contains("Shadow Assassin Leggings")) {
+				LootCommand.shadowAssLegs++;
+				LootCommand.shadowAssLegsSession++;
+				ConfigHandler.writeIntConfig("catacombs", "shadowAssassinLegging", LootCommand.shadowAssLegs);
+			} else if (message.contains("Shadow Assassin Boots")) {
+				LootCommand.shadowAssBoots++;
+				LootCommand.shadowAssBootsSession++;
+				ConfigHandler.writeIntConfig("catacombs", "shadowAssassinBoot", LootCommand.shadowAssBoots);
+			} else if (message.contains("Livid Dagger")) {
+				LootCommand.lividDaggers++;
+				LootCommand.lividDaggersSession++;
+				ConfigHandler.writeIntConfig("catacombs", "lividDagger", LootCommand.lividDaggers);
+			} else if (message.contains("Shadow Fury")) {
+				LootCommand.shadowFurys++;
+				LootCommand.shadowFurysSession++;
+				ConfigHandler.writeIntConfig("catacombs", "shadowFury", LootCommand.shadowFurys);
+			} else if (message.contains("Ancient Rose")) { // F6
+				LootCommand.ancientRoses++;
+				LootCommand.ancientRosesSession++;
+				ConfigHandler.writeIntConfig("catacombs", "ancientRose", LootCommand.ancientRoses);
+			} else if (message.contains("Precursor Eye")) {
+				LootCommand.precursorEyes++;
+				LootCommand.precursorEyesSession++;
+				ConfigHandler.writeIntConfig("catacombs", "precursorEye", LootCommand.precursorEyes);
+			} else if (message.contains("Giant's Sword")) {
+				LootCommand.giantsSwords++;
+				LootCommand.giantsSwordsSession++;
+				ConfigHandler.writeIntConfig("catacombs", "giantsSword", LootCommand.giantsSwords);
+			} else if (message.contains("Necromancer Lord Helmet")) {
+				LootCommand.necroLordHelms++;
+				LootCommand.necroLordHelmsSession++;
+				ConfigHandler.writeIntConfig("catacombs", "necroLordHelm", LootCommand.necroLordHelms);
+			} else if (message.contains("Necromancer Lord Chestplate")) {
+				LootCommand.necroLordChests++;
+				LootCommand.necroLordChestsSession++;
+				ConfigHandler.writeIntConfig("catacombs", "necroLordChest", LootCommand.necroLordChests);
+			} else if (message.contains("Necromancer Lord Leggings")) {
+				LootCommand.necroLordLegs++;
+				LootCommand.necroLordLegsSession++;
+				ConfigHandler.writeIntConfig("catacombs", "necroLordLegging", LootCommand.necroLordLegs);
+			} else if (message.contains("Necromancer Lord Boots")) {
+				LootCommand.necroLordBoots++;
+				LootCommand.necroLordBootsSession++;
+				ConfigHandler.writeIntConfig("catacombs", "necroLordBoot", LootCommand.necroLordBoots);
+			} else if (message.contains("Necromancer Sword")) {
+				LootCommand.necroSwords++;
+				LootCommand.necroSwordsSession++;
+				ConfigHandler.writeIntConfig("catacombs", "necroSword", LootCommand.necroSwords);
+			} else if (message.contains("Wither Blood")) { // F7
+				LootCommand.witherBloods++;
+				LootCommand.witherBloodsSession++;
+				ConfigHandler.writeIntConfig("catacombs", "witherBlood", LootCommand.witherBloods);
+			} else if (message.contains("Wither Cloak")) {
+				LootCommand.witherCloaks++;
+				LootCommand.witherCloaksSession++;
+				ConfigHandler.writeIntConfig("catacombs", "witherCloak", LootCommand.witherCloaks);
+			} else if (message.contains("Implosion")) {
+				LootCommand.implosions++;
+				LootCommand.implosionsSession++;
+				ConfigHandler.writeIntConfig("catacombs", "implosion", LootCommand.implosions);
+			} else if (message.contains("Wither Shield")) {
+				LootCommand.witherShields++;
+				LootCommand.witherShieldsSession++;
+				ConfigHandler.writeIntConfig("catacombs", "witherShield", LootCommand.witherShields);
+			} else if (message.contains("Shadow Warp")) {
+				LootCommand.shadowWarps++;
+				LootCommand.shadowWarpsSession++;
+				ConfigHandler.writeIntConfig("catacombs", "shadowWarp", LootCommand.shadowWarps);
+			} else if (message.contains("Necron's Handle")) {
+				LootCommand.necronsHandles++;
+				LootCommand.necronsHandlesSession++;
+				ConfigHandler.writeIntConfig("catacombs", "necronsHandle", LootCommand.necronsHandles);
+			} else if (message.contains("Auto Recombobulator")) {
+				LootCommand.autoRecombs++;
+				LootCommand.autoRecombsSession++;
+				ConfigHandler.writeIntConfig("catacombs", "autoRecomb", LootCommand.autoRecombs);
+			} else if (message.contains("Wither Helmet")) {
+				LootCommand.witherHelms++;
+				LootCommand.witherHelmsSession++;
+				ConfigHandler.writeIntConfig("catacombs", "witherHelm", LootCommand.witherHelms);
+			} else if (message.contains("Wither Chestplate")) {
+				LootCommand.witherChests++;
+				LootCommand.witherChestsSession++;
+				ConfigHandler.writeIntConfig("catacombs", "witherChest", LootCommand.witherChests);
+			} else if (message.contains("Wither Leggings")) {
+				LootCommand.witherLegs++;
+				LootCommand.witherLegsSession++;
+				ConfigHandler.writeIntConfig("catacombs", "witherLegging", LootCommand.witherLegs);
+			} else if (message.contains("Wither Boots")) {
+				LootCommand.witherBoots++;
+				LootCommand.witherBootsSession++;
+				ConfigHandler.writeIntConfig("catacombs", "witherBoot", LootCommand.witherBoots);
+			}
+		}
+		
+		// Chat Maddox
+		if (message.contains("[OPEN MENU]")) {
+			List<IChatComponent> listOfSiblings = event.message.getSiblings();
+			for (IChatComponent sibling : listOfSiblings) {
+				if (sibling.getUnformattedText().contains("[OPEN MENU]")) {
+					lastMaddoxCommand = sibling.getChatStyle().getChatClickEvent().getValue();
+					lastMaddoxTime = System.currentTimeMillis() / 1000;
+				}
+			}
+			if (ToggleCommand.chatMaddoxToggled) Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(MAIN_COLOUR + "Open chat then click anywhere on-screen to open Maddox"));
+		}
+		
+		// Spirit Bear alerts
+		if (ToggleCommand.spiritBearAlerts && message.contains("The Spirit Bear has appeared!")) {
+			Utils.createTitle(EnumChatFormatting.DARK_PURPLE + "SPIRIT BEAR", 2);
+		}
     }
 
     @SubscribeEvent
@@ -2886,8 +2924,7 @@ public class DankersSkyblockMod {
                     ItemStack itemStack = invSlots.get(i).getStack();
                     if (itemStack == null) continue;
                     String itemName = itemStack.getDisplayName();
-                    if (Item.getIdFromItem(itemStack.getItem()) == 95 || Item.getIdFromItem(itemStack.getItem()) == 160)
-                        continue;
+                    if (Item.getIdFromItem(itemStack.getItem()) == 95 || Item.getIdFromItem(itemStack.getItem()) == 160) continue;
                     if (itemName.contains("Instant Find") || itemName.contains("Gained +")) continue;
                     if (itemName.contains("Enchanted Book")) {
                         itemName = itemStack.getTooltip(mc.thePlayer, false).get(3);
@@ -2907,8 +2944,7 @@ public class DankersSkyblockMod {
                     if (i == 17 || i == 18) continue;
                     ItemStack prevStack = invSlots.get(terminalNumberNeeded[1]).getStack();
                     if (prevStack == null) terminalNumberNeeded[0] = 15;
-                    else if (prevStack.getItem() != Item.getItemFromBlock(Blocks.stained_glass_pane))
-                        terminalNumberNeeded[0] = 15;
+                    else if (prevStack.getItem() != Item.getItemFromBlock(Blocks.stained_glass_pane)) terminalNumberNeeded[0] = 15;
                     else if (prevStack.getItemDamage() == 5) terminalNumberNeeded[0] = 15;
 
                     ItemStack itemStack = invSlots.get(i).getStack();
@@ -3465,6 +3501,7 @@ public class DankersSkyblockMod {
                 GuiChest chest = (GuiChest) event.gui;
                 IInventory inventory = ((ContainerChest) containerChest).getLowerChestInventory();
                 String inventoryName = inventory.getDisplayName().getUnformattedText();
+                
                 if (ToggleCommand.swapToPickBlockToggled) {
                     if (inventoryName.startsWith("Chronomatron (") || inventoryName.startsWith("Superpairs (") || inventoryName.startsWith("Ultrasequencer (") || inventoryName.startsWith("What starts with:") || inventoryName.startsWith("Select all the") || inventoryName.startsWith("Navigate the maze!") || inventoryName.startsWith("Correct all the panes!") || inventoryName.startsWith("Click in order!") || inventoryName.startsWith("Harp -")) {
                         if (!pickBlockBindSwapped) {
@@ -3486,6 +3523,13 @@ public class DankersSkyblockMod {
                 pickBlockBindSwapped = false;
             }
         }
+
+        if (ToggleCommand.autoSkillTrackerToggled) {
+			if (skillStopwatch.isStarted() && !skillStopwatch.isSuspended()) {
+				skillStopwatch.suspend();
+			}
+		}
+
         clickInOrderSlots = new Slot[36];
         lastChronomatronRound = 0;
         chronomatronPattern.clear();
