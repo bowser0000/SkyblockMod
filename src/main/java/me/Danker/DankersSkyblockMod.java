@@ -80,6 +80,8 @@ public class DankersSkyblockMod {
     public static final String MODID = "Danker's Skyblock Mod";
     public static final String VERSION = "1.8.5-beta6";
 
+    Minecraft mc = Minecraft.getMinecraft();
+
     static double checkItemsNow = 0;
     static double itemsChecked = 0;
     public static Map<String, String> t6Enchants = new HashMap<>();
@@ -111,6 +113,8 @@ public class DankersSkyblockMod {
     static String[] riddleSolutions = {"The reward is not in my chest!", "At least one of them is lying, and the reward is not in",
             "My chest doesn't have the reward. We are all telling the truth", "My chest has the reward and I'm telling the truth",
             "The reward isn't in any of our chests", "Both of them are telling the truth."};
+    static String riddleNPC = null;
+    static BlockPos riddleChest = null;
     static Map<String, String[]> triviaSolutions = new HashMap<>();
     static String[] triviaAnswers = null;
     static Entity highestBlaze = null;
@@ -331,7 +335,7 @@ public class DankersSkyblockMod {
 
             new Thread(() -> {
                 while (true) {
-                    if (Minecraft.getMinecraft().thePlayer == null) {
+                    if (mc.thePlayer == null) {
                         try {
                             Thread.sleep(500);
                         } catch (InterruptedException e) {
@@ -344,7 +348,7 @@ public class DankersSkyblockMod {
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                    Minecraft.getMinecraft().thePlayer.addChatMessage(chatComponent);
+                    mc.thePlayer.addChatMessage(chatComponent);
                     break;
                 }
             }).start();
@@ -355,7 +359,7 @@ public class DankersSkyblockMod {
 
             // MULTI THREAD DRIFTING
             new Thread(() -> {
-                EntityPlayer player = Minecraft.getMinecraft().thePlayer;
+                EntityPlayer player = mc.thePlayer;
 
                 System.out.println("Checking for updates...");
                 JsonObject latestRelease = APIHandler.getResponse("https://api.github.com/repos/bowser0000/SkyblockMod/releases/latest");
@@ -386,6 +390,8 @@ public class DankersSkyblockMod {
         foundLivid = false;
         livid = null;
         nextBonzoUse = 0;
+        riddleNPC = null;
+        riddleChest = null;
     }
 
     // It randomly broke, so I had to make it the highest priority
@@ -396,7 +402,7 @@ public class DankersSkyblockMod {
         if (message.startsWith("Your new API key is ") && Utils.isOnHypixel()) {
             String apiKey = event.message.getSiblings().get(0).getChatStyle().getChatClickEvent().getValue();
             ConfigHandler.writeStringConfig("api", "APIKey", apiKey);
-            Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Set API key to " + DankersSkyblockMod.SECONDARY_COLOUR + apiKey));
+            mc.thePlayer.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Set API key to " + DankersSkyblockMod.SECONDARY_COLOUR + apiKey));
         }
 
         if (!Utils.inSkyblock) return;
@@ -503,7 +509,6 @@ public class DankersSkyblockMod {
 
         if (ToggleCommand.bonzoTimerToggled && Utils.inDungeons && message.contains("Bonzo's Mask") && message.contains("saved your life!")) {
             double usedTime = System.currentTimeMillis() / 1000;
-            Minecraft mc = Minecraft.getMinecraft();
             EntityPlayerSP player = mc.thePlayer;
             ItemStack bonzoMask = player.getCurrentArmor(3);
             if (bonzoMask != null && bonzoMask.getItem() == Items.skull) {
@@ -519,19 +524,26 @@ public class DankersSkyblockMod {
             }
         }
 
+        if (message.contains("PUZZLE SOLVED!")) {
+            if (message.contains("wasn't fooled by ")) {
+                riddleNPC = null;
+                riddleChest = null;
+            }
+        }
+
         // Dungeon chat spoken by an NPC, containing :
         if (ToggleCommand.threeManToggled && Utils.inDungeons && message.contains("[NPC]")) {
             for (String solution : riddleSolutions) {
                 if (message.contains(solution)) {
                     String npcName = message.substring(message.indexOf("]") + 2, message.indexOf(":"));
-                    Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(ANSWER_COLOUR + EnumChatFormatting.BOLD + StringUtils.stripControlCodes(npcName) + MAIN_COLOUR + " has the blessing."));
+                    riddleNPC = npcName;
+                    mc.thePlayer.addChatMessage(new ChatComponentText(ANSWER_COLOUR + EnumChatFormatting.BOLD + StringUtils.stripControlCodes(npcName) + MAIN_COLOUR + " has the blessing."));
                     break;
                 }
             }
         }
 
         if (ToggleCommand.necronNotificationsToggled && Utils.inDungeons && message.contains("[BOSS] Necron:")) {
-            Minecraft mc = Minecraft.getMinecraft();
             World world = mc.theWorld;
             if (message.contains("You tricked me!") || message.contains("That beam, it hurts! IT HURTS!!")) {
                 Utils.createTitle(EnumChatFormatting.RED + "NECRON STUCK!", 2);
@@ -1307,7 +1319,7 @@ public class DankersSkyblockMod {
                 }
             }
             if (ToggleCommand.chatMaddoxToggled)
-                Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(MAIN_COLOUR + "Open chat then click anywhere on-screen to open Maddox"));
+                mc.thePlayer.addChatMessage(new ChatComponentText(MAIN_COLOUR + "Open chat then click anywhere on-screen to open Maddox"));
         }
 
         // Spirit Bear alerts
@@ -1318,7 +1330,7 @@ public class DankersSkyblockMod {
 
     @SubscribeEvent
     public void renderPlayerInfo(final RenderGameOverlayEvent.Post event) {
-        if (usingLabymod && !(Minecraft.getMinecraft().ingameGUI instanceof GuiIngameForge)) return;
+        if (usingLabymod && !(mc.ingameGUI instanceof GuiIngameForge)) return;
         if (event.type != RenderGameOverlayEvent.ElementType.EXPERIENCE && event.type != RenderGameOverlayEvent.ElementType.JUMPBAR)
             return;
         renderEverything();
@@ -1333,9 +1345,7 @@ public class DankersSkyblockMod {
     }
 
     public void renderEverything() {
-        if (Minecraft.getMinecraft().currentScreen instanceof EditLocationsGui) return;
-
-        Minecraft mc = Minecraft.getMinecraft();
+        if (mc.currentScreen instanceof EditLocationsGui) return;
 
         if (ToggleCommand.coordsToggled) {
             EntityPlayer player = mc.thePlayer;
@@ -2404,7 +2414,6 @@ public class DankersSkyblockMod {
         if (event.toolTip == null) return;
 
         ItemStack item = event.itemStack;
-        Minecraft mc = Minecraft.getMinecraft();
         EntityPlayerSP player = mc.thePlayer;
 
         if (ToggleCommand.goldenToggled) {
@@ -2419,7 +2428,7 @@ public class DankersSkyblockMod {
                 if (tags != null) {
                     if (tags.hasKey("expertise_kills")) {
                         int index = 4;
-                        if (!Minecraft.getMinecraft().gameSettings.advancedItemTooltips) index -= 2;
+                        if (!mc.gameSettings.advancedItemTooltips) index -= 2;
 
                         event.toolTip.add(event.toolTip.size() - index, "");
                         event.toolTip.add(event.toolTip.size() - index, "Expertise Kills: " + EnumChatFormatting.RED + tags.getInteger("expertise_kills"));
@@ -2464,7 +2473,6 @@ public class DankersSkyblockMod {
         if (!Utils.inSkyblock) return;
         if (event.toolTip == null) return;
 
-        Minecraft mc = Minecraft.getMinecraft();
         EntityPlayerSP player = mc.thePlayer;
 
         if (mc.currentScreen instanceof GuiChest) {
@@ -2487,7 +2495,6 @@ public class DankersSkyblockMod {
     public void onTick(TickEvent.ClientTickEvent event) {
         if (event.phase != Phase.START) return;
 
-        Minecraft mc = Minecraft.getMinecraft();
         World world = mc.theWorld;
         EntityPlayerSP player = mc.thePlayer;
 
@@ -2945,7 +2952,6 @@ public class DankersSkyblockMod {
     @SubscribeEvent
     public void onRenderTick(TickEvent.RenderTickEvent event) {
         if (guiToOpen != null) {
-            Minecraft mc = Minecraft.getMinecraft();
             if (guiToOpen.startsWith("dankergui")) {
                 int page = Character.getNumericValue(guiToOpen.charAt(guiToOpen.length() - 1));
                 mc.displayGuiScreen(new DankerGui(page));
@@ -2999,11 +3005,50 @@ public class DankersSkyblockMod {
         if (ToggleCommand.ticTacToeToggled && correctTicTacToeButton != null) {
             Utils.draw3DBox(correctTicTacToeButton, 0x40FF40, event.partialTicks);
         }
+        if (ToggleCommand.threeManToggled && riddleNPC != null && Utils.inDungeons) {
+            if (riddleChest == null) {
+                EntityArmorStand riddleLabel = mc.theWorld.getEntities(EntityArmorStand.class, (entity -> {
+                    if (entity == null) return false;
+                    if (!entity.hasCustomName()) return false;
+                    return entity.getCustomNameTag().contains(riddleNPC);
+                })).stream().findFirst().orElse(null);
+                System.out.println("Chest Finder: Found Riddle NPC " + riddleLabel.getCustomNameTag() + " at " + riddleLabel.posX + ", " + riddleLabel.posY + ", " + riddleLabel.posY);
+                BlockPos potentialPos = new BlockPos(Math.floor(riddleLabel.posX), 69, Math.floor(riddleLabel.posZ));
+                for (int i = 0; i < 4; i++) {
+                    if (i == 0) {
+                        if (mc.theWorld.getBlockState(potentialPos.north()).getBlock() == Blocks.chest) {
+                            riddleChest = potentialPos.north();
+                            System.out.print("Correct position is at: " + riddleChest.getX() + ", " + riddleChest.getY() + riddleChest.getZ());
+                            break;
+                        }
+                    } else if (i == 1) {
+                        if (mc.theWorld.getBlockState(potentialPos.south()).getBlock() == Blocks.chest) {
+                            riddleChest = potentialPos.south();
+                            System.out.print("Correct position is at: " + riddleChest);
+                            break;
+                        }
+                    } else if (i == 2) {
+                        if (mc.theWorld.getBlockState(potentialPos.east()).getBlock() == Blocks.chest) {
+                            riddleChest = potentialPos.east();
+                            break;
+                        }
+                    } else if (i == 3) {
+                        if (mc.theWorld.getBlockState(potentialPos.west()).getBlock() == Blocks.chest) {
+                            riddleChest = potentialPos.west();
+                            System.out.print("Correct position is at: " + riddleChest);
+                            break;
+                        }
+                    }
+                }
+            } else {
+                Utils.draw3DBox(new AxisAlignedBB(riddleChest, riddleChest.add(1, 1, 1)), new Color(255, 0, 0).getRGB(), event.partialTicks);
+            }
+        }
     }
 
     @SubscribeEvent
     public void onInteract(PlayerInteractEvent event) {
-        if (!Utils.inSkyblock || Minecraft.getMinecraft().thePlayer != event.entityPlayer) return;
+        if (!Utils.inSkyblock || mc.thePlayer != event.entityPlayer) return;
         EntityPlayer player = event.entityPlayer;
         ItemStack item = event.entityPlayer.getHeldItem();
         if (item == null) return;
@@ -3047,7 +3092,7 @@ public class DankersSkyblockMod {
         }
 
         if (event.action == PlayerInteractEvent.Action.RIGHT_CLICK_BLOCK) {
-            Block block = Minecraft.getMinecraft().theWorld.getBlockState(event.pos).getBlock();
+            Block block = event.world.getBlockState(event.pos).getBlock();
 
             ArrayList<Block> interactables = new ArrayList<>(Arrays.asList(
                     Blocks.acacia_door,
@@ -3094,6 +3139,49 @@ public class DankersSkyblockMod {
             if (Utils.inDungeons) {
                 interactables.add(Blocks.coal_block);
                 interactables.add(Blocks.stained_hardened_clay);
+
+                if (ToggleCommand.threeManToggled && block == Blocks.chest) {
+                    if (riddleNPC == null) {
+                        EntityArmorStand clickLabel = event.world.getEntities(EntityArmorStand.class, (entity -> {
+                            if (entity == null) return false;
+                            if (!entity.hasCustomName()) return false;
+                            return entity.getCustomNameTag().contains("CLICK");
+                        })).stream().findFirst().orElse(null);
+
+                        if (clickLabel != null) {
+                            if (clickLabel.getDistanceSq(event.pos) <= 5) {
+                                System.out.println("Chest was too close to NPC; Chest Pos: " + event.pos.getX() + ", " + event.pos.getY() + ", " + event.pos.getZ() + " NPC Pos: " + clickLabel.posX + ", " + clickLabel.posY + ", " + clickLabel.posZ);
+                                event.setCanceled(true);
+                            }
+                        }
+                    } else {
+                        if (riddleChest == null) {
+                            EntityArmorStand riddleLabel = event.world.getEntities(EntityArmorStand.class, (entity -> {
+                                if (entity == null) return false;
+                                if (!entity.hasCustomName()) return false;
+                                return entity.getCustomNameTag().contains(riddleNPC);
+                            })).stream().findFirst().orElse(null);
+
+                            if (riddleLabel != null) {
+                                System.out.println("Found Riddle NPC " + riddleLabel.getCustomNameTag() + " at " + riddleLabel.posX + ", " + riddleLabel.posY + ", " + riddleLabel.posY);
+                                BlockPos actualPos = new BlockPos(Math.floor(riddleLabel.posX), 69, Math.floor(riddleLabel.posZ));
+                                if (actualPos.distanceSq(event.pos) > 1) {
+                                    System.out.println("Wrong chest clicked, position: " + event.pos.getX() + ", " + event.pos.getY() + ", " + event.pos.getZ());
+                                    if (!(Keyboard.isKeyDown(Keyboard.KEY_LCONTROL) || Keyboard.isKeyDown(Keyboard.KEY_RCONTROL))) {
+                                        event.setCanceled(true);
+                                    }
+                                }
+                            }
+                        } else {
+                            if (!riddleChest.equals(event.pos)) {
+                                System.out.println("Wrong chest clicked, position: " + event.pos.getX() + ", " + event.pos.getY() + ", " + event.pos.getZ());
+                                if (!(Keyboard.isKeyDown(Keyboard.KEY_LCONTROL) || Keyboard.isKeyDown(Keyboard.KEY_RCONTROL))) {
+                                    event.setCanceled(true);
+                                }
+                            }
+                        }
+                    }
+                }
             }
             if (flowerPlaceable.contains(block)) {
                 if (ToggleCommand.flowerWeaponsToggled && item.getDisplayName().contains("Flower of Truth")) {
@@ -3119,7 +3207,7 @@ public class DankersSkyblockMod {
 
     @SubscribeEvent
     public void onArrowNock(ArrowNockEvent event) {
-        if (!Utils.inSkyblock || Minecraft.getMinecraft().thePlayer != event.entityPlayer) return;
+        if (!Utils.inSkyblock || mc.thePlayer != event.entityPlayer) return;
 
         if (ToggleCommand.notifySlayerSlainToggled) {
             if (ScoreboardHandler.getSidebarLines().stream().anyMatch(x -> ScoreboardHandler.cleanSB(x).contains("Boss slain!"))) {
@@ -3150,7 +3238,6 @@ public class DankersSkyblockMod {
 
     @SubscribeEvent
     public void onEntityInteract(EntityInteractEvent event) {
-        Minecraft mc = Minecraft.getMinecraft();
         if (mc.thePlayer != event.entityPlayer) return;
 
         if (ToggleCommand.itemFrameOnSeaLanternsToggled && Utils.inDungeons && event.target instanceof EntityItemFrame) {
@@ -3168,7 +3255,7 @@ public class DankersSkyblockMod {
     public void onKey(KeyInputEvent event) {
         if (!Utils.inSkyblock) return;
 
-        EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
+        EntityPlayerSP player = mc.thePlayer;
         if (keyBindings[0].isPressed()) {
             player.sendChatMessage(lastMaddoxCommand);
         }
@@ -3190,7 +3277,7 @@ public class DankersSkyblockMod {
             }
         }
         if (keyBindings[3].isPressed()) {
-            if (Minecraft.getMinecraft().currentScreen == null) {
+            if (mc.currentScreen == null) {
 
                 ItemStack held = player.getCurrentEquippedItem();
 
@@ -3252,15 +3339,15 @@ public class DankersSkyblockMod {
                         inSalvageGui = true;
                     }
                     if (item.getDisplayName().contains("✪") && (mouseSlot.slotNumber > 53 || inSalvageGui)) {
-                        Minecraft.getMinecraft().thePlayer.playSound("note.bass", 1, 0.5f);
-                        Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(ERROR_COLOUR + "Danker's Skyblock Mod has stopped you from salvaging that item!"));
+                        mc.thePlayer.playSound("note.bass", 1, 0.5f);
+                        mc.thePlayer.addChatMessage(new ChatComponentText(ERROR_COLOUR + "Danker's Skyblock Mod has stopped you from salvaging that item!"));
                         event.setCanceled(true);
                         return;
                     }
                 }
 
                 if (inventoryName.endsWith(" Chest") && item != null && item.getDisplayName().contains("Open Reward Chest")) {
-                    List<String> tooltip = item.getTooltip(Minecraft.getMinecraft().thePlayer, Minecraft.getMinecraft().gameSettings.advancedItemTooltips);
+                    List<String> tooltip = item.getTooltip(mc.thePlayer, mc.gameSettings.advancedItemTooltips);
                     for (String lineUnclean : tooltip) {
                         String line = StringUtils.stripControlCodes(lineUnclean);
                         if (line.contains("FREE")) {
@@ -3434,8 +3521,8 @@ public class DankersSkyblockMod {
                         if (!item.getDisplayName().contains("Revenant Horror") && !item.getDisplayName().contains("Tarantula Broodfather") && !item.getDisplayName().contains("Sven Packmaster"))
                             return;
                         if (!item.getDisplayName().contains(BlockSlayerCommand.onlySlayerName)) {
-                            Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(ERROR_COLOUR + "Danker's Skyblock Mod has stopped you from starting this quest (Set to " + BlockSlayerCommand.onlySlayerName + " " + BlockSlayerCommand.onlySlayerNumber + ")"));
-                            Minecraft.getMinecraft().thePlayer.playSound("note.bass", 1, (float) 0.5);
+                            mc.thePlayer.addChatMessage(new ChatComponentText(ERROR_COLOUR + "Danker's Skyblock Mod has stopped you from starting this quest (Set to " + BlockSlayerCommand.onlySlayerName + " " + BlockSlayerCommand.onlySlayerNumber + ")"));
+                            mc.thePlayer.playSound("note.bass", 1, (float) 0.5);
                             event.setCanceled(true);
                         }
                     } else if (inventoryName.equals("Revenant Horror") || inventoryName.equals("Tarantula Broodfather") || inventoryName.equals("Sven Packmaster")) {
@@ -3443,8 +3530,8 @@ public class DankersSkyblockMod {
                             // Only check number as they passed the above check
                             String slayerNumber = item.getDisplayName().substring(item.getDisplayName().lastIndexOf(" ") + 1);
                             if (!slayerNumber.equals(BlockSlayerCommand.onlySlayerNumber)) {
-                                Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(ERROR_COLOUR + "Danker's Skyblock Mod has stopped you from starting this quest (Set to " + BlockSlayerCommand.onlySlayerName + " " + BlockSlayerCommand.onlySlayerNumber + ")"));
-                                Minecraft.getMinecraft().thePlayer.playSound("note.bass", 1, (float) 0.5);
+                                mc.thePlayer.addChatMessage(new ChatComponentText(ERROR_COLOUR + "Danker's Skyblock Mod has stopped you from starting this quest (Set to " + BlockSlayerCommand.onlySlayerName + " " + BlockSlayerCommand.onlySlayerNumber + ")"));
+                                mc.thePlayer.playSound("note.bass", 1, (float) 0.5);
                                 event.setCanceled(true);
                             }
                         }
@@ -3459,14 +3546,13 @@ public class DankersSkyblockMod {
         if (!Utils.inSkyblock) return;
         if (Mouse.getEventButton() == 0 && event.gui instanceof GuiChat) {
             if (ToggleCommand.chatMaddoxToggled && System.currentTimeMillis() / 1000 - lastMaddoxTime < 10) {
-                Minecraft.getMinecraft().thePlayer.sendChatMessage(lastMaddoxCommand);
+                mc.thePlayer.sendChatMessage(lastMaddoxCommand);
             }
         }
     }
 
     @SubscribeEvent
     public void onGuiOpen(GuiOpenEvent event) {
-        Minecraft mc = Minecraft.getMinecraft();
         GameSettings gameSettings = mc.gameSettings;
         if (event.gui instanceof GuiChest) {
             Container containerChest = ((GuiChest) event.gui).inventorySlots;
@@ -3511,7 +3597,6 @@ public class DankersSkyblockMod {
             GuiChest inventory = (GuiChest) event.gui;
             Container containerChest = inventory.inventorySlots;
             if (containerChest instanceof ContainerChest) {
-                Minecraft mc = Minecraft.getMinecraft();
                 ScaledResolution sr = new ScaledResolution(mc);
                 int guiLeft = (sr.getScaledWidth() - 176) / 2;
                 int guiTop = (sr.getScaledHeight() - 222) / 2;

@@ -43,15 +43,10 @@ public class MixinNetHandlerPlayClient {
 
                 //More consistent detection system needed
                 if (ToggleCommand.hideImplosionParticlesToggled && bigExplosionFilter) {
-                    if (Utils.inDungeons) {
-                        if (gameController.theWorld.isAnyPlayerWithinRangeAt(x, y, z, 4)) {
+                        if (gameController.theWorld.isAnyPlayerWithinRangeAt(x, y, z, 11)) {
                             boolean shouldCancel = gameController.theWorld.playerEntities.stream().filter(player -> {
                                 double distance = player.getDistanceSq(x, y, z);
-                                double range = 10.5d;
-
-                                if (ScoreboardHandler.getSidebarLines().stream().anyMatch(line -> ScoreboardHandler.cleanSB(line).contains("necron"))) {
-                                    range = 1d;
-                                }
+                                double range = 11d;
 
                                 return distance < range * range;
                             }).anyMatch(player -> {
