@@ -392,6 +392,8 @@ public class DankersSkyblockMod {
         nextBonzoUse = 0;
         riddleNPC = null;
         riddleChest = null;
+        lowestBlaze = null;
+        highestBlaze = null;
     }
 
     // It randomly broke, so I had to make it the highest priority
@@ -2983,7 +2985,7 @@ public class DankersSkyblockMod {
 
     @SubscribeEvent
     public void onWorldRender(RenderWorldLastEvent event) {
-        if (ToggleCommand.blazeToggled) {
+        if (ToggleCommand.blazeToggled && Utils.inDungeons) {
             if (lowestBlaze != null) {
                 BlockPos stringPos = new BlockPos(lowestBlaze.posX, lowestBlaze.posY + 1, lowestBlaze.posZ);
                 Utils.draw3DString(stringPos, EnumChatFormatting.BOLD + "Smallest", LOWEST_BLAZE_COLOUR, event.partialTicks);
@@ -3014,31 +3016,20 @@ public class DankersSkyblockMod {
                 })).stream().findFirst().orElse(null);
                 System.out.println("Chest Finder: Found Riddle NPC " + riddleLabel.getCustomNameTag() + " at " + riddleLabel.posX + ", " + riddleLabel.posY + ", " + riddleLabel.posY);
                 BlockPos potentialPos = new BlockPos(Math.floor(riddleLabel.posX), 69, Math.floor(riddleLabel.posZ));
-                for (int i = 0; i < 4; i++) {
-                    if (i == 0) {
-                        if (mc.theWorld.getBlockState(potentialPos.north()).getBlock() == Blocks.chest) {
-                            riddleChest = potentialPos.north();
-                            System.out.print("Correct position is at: " + riddleChest.getX() + ", " + riddleChest.getY() + riddleChest.getZ());
-                            break;
-                        }
-                    } else if (i == 1) {
-                        if (mc.theWorld.getBlockState(potentialPos.south()).getBlock() == Blocks.chest) {
-                            riddleChest = potentialPos.south();
-                            System.out.print("Correct position is at: " + riddleChest);
-                            break;
-                        }
-                    } else if (i == 2) {
-                        if (mc.theWorld.getBlockState(potentialPos.east()).getBlock() == Blocks.chest) {
-                            riddleChest = potentialPos.east();
-                            break;
-                        }
-                    } else if (i == 3) {
-                        if (mc.theWorld.getBlockState(potentialPos.west()).getBlock() == Blocks.chest) {
-                            riddleChest = potentialPos.west();
-                            System.out.print("Correct position is at: " + riddleChest);
-                            break;
-                        }
-                    }
+                if (mc.theWorld.getBlockState(potentialPos.north()).getBlock() == Blocks.chest) {
+                    riddleChest = potentialPos.north();
+                    System.out.print("Correct position is at: " + riddleChest.getX() + ", " + riddleChest.getY() + riddleChest.getZ());
+                }
+                else if (mc.theWorld.getBlockState(potentialPos.south()).getBlock() == Blocks.chest) {
+                    riddleChest = potentialPos.south();
+                    System.out.print("Correct position is at: " + riddleChest);
+                }
+                else if (mc.theWorld.getBlockState(potentialPos.east()).getBlock() == Blocks.chest) {
+                    riddleChest = potentialPos.east();
+                }
+                else if (mc.theWorld.getBlockState(potentialPos.west()).getBlock() == Blocks.chest) {
+                    riddleChest = potentialPos.west();
+                    System.out.print("Correct position is at: " + riddleChest);
                 }
             } else {
                 Utils.draw3DBox(new AxisAlignedBB(riddleChest, riddleChest.add(1, 1, 1)), new Color(255, 0, 0).getRGB(), event.partialTicks);
