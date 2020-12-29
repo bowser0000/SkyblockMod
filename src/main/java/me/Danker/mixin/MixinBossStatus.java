@@ -14,7 +14,7 @@ public class MixinBossStatus {
     @Inject(method = "setBossStatus", at = @At("HEAD"), cancellable = true)
     private static void onSetBossStatus(IBossDisplayData displayData, boolean hasColorModifierIn, CallbackInfo ci) {
         if(Utils.inSkyblock) {
-            if(displayData.getDisplayName().getUnformattedText().equals("Wither") && ToggleCommand.bossBarFixToggled) {
+            if(displayData.getDisplayName().getUnformattedText().contains("Wither") && ToggleCommand.bossBarFixToggled) {
                 ci.cancel();
                 return;
             }

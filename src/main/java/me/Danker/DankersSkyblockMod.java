@@ -12,6 +12,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiChat;
+import net.minecraft.client.gui.GuiGameOver;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.gui.inventory.GuiChest;
 import net.minecraft.client.settings.GameSettings;
@@ -3545,6 +3546,11 @@ public class DankersSkyblockMod {
     @SubscribeEvent
     public void onGuiOpen(GuiOpenEvent event) {
         GameSettings gameSettings = mc.gameSettings;
+
+        if (event.gui != null && event.gui.getClass() == GuiGameOver.class && Utils.inSkyblock) {
+            event.gui = new DeathWarningGui();
+        }
+
         if (event.gui instanceof GuiChest) {
             Container containerChest = ((GuiChest) event.gui).inventorySlots;
             if (containerChest instanceof ContainerChest) {
