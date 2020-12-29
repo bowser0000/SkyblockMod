@@ -41,6 +41,11 @@ public class RepartyCommand extends CommandBase implements ICommand {
     }
 
     @Override
+    public List<String> getCommandAliases() {
+        return Collections.singletonList("rp");
+    }
+
+    @Override
     public int getRequiredPermissionLevel() { 
         return 0; 
     }
@@ -56,6 +61,7 @@ public class RepartyCommand extends CommandBase implements ICommand {
             RepartyCommand.callTime = (double) System.currentTimeMillis() / 1000;
             
             try {
+                Thread.sleep(210);
                 player.sendChatMessage("/p list");
                 System.out.println("Grabbing the party members...");
                 Thread.sleep(550);
