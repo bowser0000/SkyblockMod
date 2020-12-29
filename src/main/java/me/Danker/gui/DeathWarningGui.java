@@ -32,7 +32,7 @@ public class DeathWarningGui extends GuiScreen implements GuiYesNoCallback {
             case 0:
                 GuiYesNo guiyesno = new GuiYesNo(this, "Are you sure you want to respawn?", "Your inventory may get wiped if you continue!", "Respawn", "Quit Game", 0);
                 this.mc.displayGuiScreen(guiyesno);
-                guiyesno.setButtonDelay(20);
+                guiyesno.setButtonDelay(60);
                 break;
             case 1:
                 this.mc.crashed(CrashReport.makeCrashReport(new DoubleDeath(), "Game intentionally was crashed to try to avoid an inventory wipe!"));

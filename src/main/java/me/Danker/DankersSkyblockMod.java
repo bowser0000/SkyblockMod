@@ -2497,6 +2497,7 @@ public class DankersSkyblockMod {
     @SubscribeEvent
     public void onTick(TickEvent.ClientTickEvent event) {
         if (event.phase != Phase.START) return;
+        checkKeyBindings();
 
         World world = mc.theWorld;
         EntityPlayerSP player = mc.thePlayer;
@@ -3244,66 +3245,6 @@ public class DankersSkyblockMod {
     }
 
     @SubscribeEvent
-    public void onKey(KeyInputEvent event) {
-        if (!Utils.inSkyblock) return;
-
-        EntityPlayerSP player = mc.thePlayer;
-        if (keyBindings[0].isPressed()) {
-            player.sendChatMessage(lastMaddoxCommand);
-        }
-        if (keyBindings[1].isPressed()) {
-            if (Utils.inDungeons) {
-                player.dropOneItem(true);
-            }
-        }
-        if (keyBindings[2].isPressed()) {
-            if (skillStopwatch.isStarted() && skillStopwatch.isSuspended()) {
-                skillStopwatch.resume();
-                player.addChatMessage(new ChatComponentText(MAIN_COLOUR + "Skill tracker started."));
-            } else if (!skillStopwatch.isStarted()) {
-                skillStopwatch.start();
-                player.addChatMessage(new ChatComponentText(MAIN_COLOUR + "Skill tracker started."));
-            } else if (skillStopwatch.isStarted() && !skillStopwatch.isSuspended()) {
-                skillStopwatch.suspend();
-                player.addChatMessage(new ChatComponentText(MAIN_COLOUR + "Skill tracker paused."));
-            }
-        }
-        if (keyBindings[3].isPressed()) {
-            if (mc.currentScreen == null) {
-
-                ItemStack held = player.getCurrentEquippedItem();
-
-                boolean shouldSwap = true;
-                if (held != null) {
-                    shouldSwap = !(held.getDisplayName().contains("Bonemerang") && held.getItem() == Items.bone);
-                }
-
-                if (shouldSwap) {
-                    int slot = -1;
-
-                    for (int i = 0; i <= 8; i++) {
-                        if (i == player.inventory.currentItem) continue;
-                        ItemStack item = player.inventory.getStackInSlot(i);
-                        if (item != null) {
-                            String itemName = item.getDisplayName();
-
-                            if (itemName.contains("Bonemerang") && item.getItem() == Items.bone) {
-                                slot = i;
-                                break;
-                            }
-
-                        }
-                    }
-
-                    if (slot != -1) {
-                        player.inventory.currentItem = slot;
-                    }
-                }
-            }
-        }
-    }
-
-    @SubscribeEvent
     public void onGuiMouseInputPre(GuiScreenEvent.MouseInputEvent.Pre event) {
         if (!Utils.inSkyblock) return;
         if (Mouse.getEventButton() != 0 && Mouse.getEventButton() != 1 && Mouse.getEventButton() != 2)
@@ -3811,6 +3752,69 @@ public class DankersSkyblockMod {
     public void onServerConnect(ClientConnectedToServerEvent event) {
         event.manager.channel().pipeline().addBefore("packet_handler", "danker_packet_handler", new PacketHandler());
         System.out.println("Added packet handler to channel pipeline.");
+    }
+
+    public boolean isKeyBindActive(KeyBinding bind) {
+        if (bind.isPressed()) return true;
+        if (Mouse.isButtonDown(bind.getKeyCode() + 100)) return true;
+        return false;
+    }
+
+    public void checkKeyBindings() {
+        EntityPlayerSP player = mc.thePlayer;
+        if (isKeyBindActive(keyBindings[0])) {
+            player.sendChatMessage(lastMaddoxCommand);
+        }
+        if (isKeyBindActive(keyBindings[1])) {
+            if (Utils.inDungeons) {
+                player.dropOneItem(true);
+            }
+        }
+        if (isKeyBindActive(keyBindings[2])) {
+            if (skillStopwatch.isStarted() && skillStopwatch.isSuspended()) {
+                skillStopwatch.resume();
+                player.addChatMessage(new ChatComponentText(MAIN_COLOUR + "Skill tracker started."));
+            } else if (!skillStopwatch.isStarted()) {
+                skillStopwatch.start();
+                player.addChatMessage(new ChatComponentText(MAIN_COLOUR + "Skill tracker started."));
+            } else if (skillStopwatch.isStarted() && !skillStopwatch.isSuspended()) {
+                skillStopwatch.suspend();
+                player.addChatMessage(new ChatComponentText(MAIN_COLOUR + "Skill tracker paused."));
+            }
+        }
+        if (isKeyBindActive(keyBindings[3])) {
+            if (mc.currentScreen == null) {
+
+                ItemStack held = player.getCurrentEquippedItem();
+
+                boolean shouldSwap = true;
+                if (held != null) {
+                    shouldSwap = !(held.getDisplayName().contains("Bonemerang") && held.getItem() == Items.bone);
+                }
+
+                if (shouldSwap) {
+                    int slot = -1;
+
+                    for (int i = 0; i <= 8; i++) {
+                        if (i == player.inventory.currentItem) continue;
+                        ItemStack item = player.inventory.getStackInSlot(i);
+                        if (item != null) {
+                            String itemName = item.getDisplayName();
+
+                            if (itemName.contains("Bonemerang") && item.getItem() == Items.bone) {
+                                slot = i;
+                                break;
+                            }
+
+                        }
+                    }
+
+                    if (slot != -1) {
+                        player.inventory.currentItem = slot;
+                    }
+                }
+            }
+        }
     }
 
     public void increaseSeaCreatures() {
