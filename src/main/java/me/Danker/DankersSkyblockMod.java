@@ -20,6 +20,7 @@ import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityArmorStand;
 import net.minecraft.entity.item.EntityItemFrame;
+import net.minecraft.entity.monster.EntityBlaze;
 import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.monster.EntitySpider;
 import net.minecraft.entity.monster.EntityZombie;
@@ -577,10 +578,10 @@ public class DankersSkyblockMod {
                                 Utils.createTitle(EnumChatFormatting.YELLOW + "YELLOW PILLAR!", 2);
                                 break;
                             case 5:
-                                Utils.createTitle(EnumChatFormatting.GREEN + "LIME PILLAR!", 2);
+                                Utils.createTitle(EnumChatFormatting.DARK_GREEN + "GREEN PILLAR!", 2);
                                 break;
                             case 11:
-                                Utils.createTitle(EnumChatFormatting.BLUE + "BLUE PILLAR!", 2);
+                                Utils.createTitle(EnumChatFormatting.DARK_PURPLE + "PURPLE PILLAR!", 2);
                                 break;
                             default:
                                 Utils.createTitle(EnumChatFormatting.WHITE + "NECRON STUNNED!", 2);
@@ -3261,7 +3262,7 @@ public class DankersSkyblockMod {
 
     @SubscribeEvent
     public void onEntityDeath(LivingDeathEvent event) {
-        if (event.entity instanceof EntityArmorStand && lowestBlaze != null && highestBlaze != null) {
+        if (event.entity instanceof EntityBlaze && lowestBlaze != null && highestBlaze != null) {
             AxisAlignedBB aabb = new AxisAlignedBB(event.entity.posX - 0.5, event.entity.posY - 2, event.entity.posZ - 0.5, event.entity.posX + 0.5, event.entity.posY, event.entity.posZ + 0.5);
             if (lowestBlaze.getEntityBoundingBox().intersectsWith(aabb)) {
                 System.out.println("Lowest blaze killed");
@@ -3628,7 +3629,7 @@ public class DankersSkyblockMod {
                 if (ToggleCommand.startsWithToggled && Utils.inDungeons && displayName.startsWith("What starts with:")) {
                     char letter = displayName.charAt(displayName.indexOf("'") + 1);
                     for (Slot slot : invSlots) {
-                        if (slot.getSlotIndex() > 53) continue;
+                        if (slot.inventory == mc.thePlayer.inventory) continue;
                         ItemStack item = slot.getStack();
                         if (item == null) continue;
                         if (item.isItemEnchanted()) continue;
@@ -3649,7 +3650,7 @@ public class DankersSkyblockMod {
                     terminalColourNeeded = colour;
 
                     for (Slot slot : invSlots) {
-                        if (slot.getSlotIndex() > 53) continue;
+                        if (slot.inventory == mc.thePlayer.inventory) continue;
                         ItemStack item = slot.getStack();
                         if (item == null) continue;
                         if (item.isItemEnchanted()) continue;
