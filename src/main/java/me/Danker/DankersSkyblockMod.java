@@ -3071,6 +3071,16 @@ public class DankersSkyblockMod {
     }
 
     @SubscribeEvent
+    public void onRenderEntityPre(RenderLivingEvent.Pre event) {
+        if (ToggleCommand.lividSolverToggled && Utils.inDungeons && foundLivid) {
+            String name = event.entity.getName();
+            if (event.entity instanceof EntityArmorStand && !event.entity.isEntityEqual(livid) && name.contains("Livid") && name.length() > 5 && name.charAt(1) == name.charAt(5)) {
+                event.setCanceled(true);
+            }
+        }
+    }
+
+    @SubscribeEvent
     public void onInteract(PlayerInteractEvent event) {
         if (!Utils.inSkyblock || mc.thePlayer != event.entityPlayer) return;
         EntityPlayer player = event.entityPlayer;
