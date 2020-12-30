@@ -13,6 +13,7 @@ import java.net.URL;
 import java.security.CodeSource;
 import java.util.Map;
 
+@IFMLLoadingPlugin.MCVersion("1.8.9")
 public class DSMLoadingPlugin implements IFMLLoadingPlugin {
 
     public DSMLoadingPlugin() {

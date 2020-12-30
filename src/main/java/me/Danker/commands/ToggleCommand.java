@@ -253,12 +253,12 @@ public class ToggleCommand extends CommandBase implements ICommand {
 			case "bonzotimer":
 				bonzoTimerToggled = !bonzoTimerToggled;
 				ConfigHandler.writeBooleanConfig("toggles", "BonzoTimer", bonzoTimerToggled);
-				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Bonzo's Mask timer has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + necronNotificationsToggled + DankersSkyblockMod.MAIN_COLOUR + "."));
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Bonzo's Mask timer has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + bonzoTimerToggled + DankersSkyblockMod.MAIN_COLOUR + "."));
 				break;
 			case "blockbreakingfarms":
 				blockBreakingFarmsToggled = !blockBreakingFarmsToggled;
 				ConfigHandler.writeBooleanConfig("toggles", "BlockBreakingFarms", blockBreakingFarmsToggled);
-				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Prevent breaking farms has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + necronNotificationsToggled + DankersSkyblockMod.MAIN_COLOUR + "."));
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Prevent breaking farms has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + blockBreakingFarmsToggled + DankersSkyblockMod.MAIN_COLOUR + "."));
 				break;
 			case "bossbarfix":
 				bossBarFixToggled = !bossBarFixToggled;
