@@ -3261,20 +3261,6 @@ public class DankersSkyblockMod {
     }
 
     @SubscribeEvent
-    public void onEntityDeath(LivingDeathEvent event) {
-        if (event.entity instanceof EntityBlaze && lowestBlaze != null && highestBlaze != null) {
-            AxisAlignedBB aabb = new AxisAlignedBB(event.entity.posX - 0.5, event.entity.posY - 2, event.entity.posZ - 0.5, event.entity.posX + 0.5, event.entity.posY, event.entity.posZ + 0.5);
-            if (lowestBlaze.getEntityBoundingBox().intersectsWith(aabb)) {
-                System.out.println("Lowest blaze killed");
-                blazeMode = -1;
-            } else if (highestBlaze.getEntityBoundingBox().intersectsWith(aabb)) {
-                System.out.println("Highest blaze killed");
-                blazeMode = 1;
-            }
-        }
-    }
-
-    @SubscribeEvent
     public void onEntityInteract(EntityInteractEvent event) {
         if (mc.thePlayer != event.entityPlayer) return;
 
