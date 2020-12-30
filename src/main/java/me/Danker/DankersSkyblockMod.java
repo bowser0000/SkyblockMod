@@ -47,7 +47,7 @@ import net.minecraftforge.client.event.*;
 import net.minecraftforge.client.event.sound.PlaySoundEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
-import net.minecraftforge.event.entity.player.AttackEntityEvent;
+import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.player.*;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
@@ -59,7 +59,6 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.InputEvent.KeyInputEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.common.network.FMLNetworkEvent.ClientConnectedToServerEvent;
@@ -120,6 +119,8 @@ public class DankersSkyblockMod {
     static String[] triviaAnswers = null;
     static Entity highestBlaze = null;
     static Entity lowestBlaze = null;
+    static int blazeMode = 0;
+
     // Among Us colours
     static final int[] CREEPER_COLOURS = {0x50EF39, 0xC51111, 0x132ED1, 0x117F2D, 0xED54BA, 0xEF7D0D, 0xF5F557, 0xD6E0F0, 0x6B2FBB, 0x39FEDC};
     static boolean drawCreeperLines = false;
@@ -395,6 +396,7 @@ public class DankersSkyblockMod {
         riddleChest = null;
         lowestBlaze = null;
         highestBlaze = null;
+        blazeMode = 0;
     }
 
     // It randomly broke, so I had to make it the highest priority
@@ -2831,6 +2833,18 @@ public class DankersSkyblockMod {
         // Checks 5 times per second
         if (tickAmount % 4 == 0) {
             if (ToggleCommand.blazeToggled && Utils.inDungeons && world != null) {
+
+                if (lowestBlaze != null && highestBlaze != null) {
+                    if (lowestBlaze.isDead) {
+                        System.out.println("Lowest Blaze is Dead");
+                        blazeMode = -1;
+                    }
+                    if (highestBlaze.isDead) {
+                        System.out.println("Highest Blaze is Dead");
+                        blazeMode = 1;
+                    }
+                }
+
                 List<Entity> entities = world.getLoadedEntityList();
                 int highestHealth = 0;
                 highestBlaze = null;
@@ -2855,6 +2869,22 @@ public class DankersSkyblockMod {
                         }
                     }
                 }
+
+                if (blazeMode == 0 && (highestBlaze != null || lowestBlaze != null)) {
+                    new Thread(() -> {
+                        ScoreboardHandler.getSidebarLines().stream().forEach(l -> {
+                            String line = ScoreboardHandler.cleanSB(l);
+                            if (line.contains("-96,-204")) {
+                                blazeMode = -1;
+                                mc.thePlayer.addChatMessage(new ChatComponentText(MAIN_COLOUR + "Shoot the blazes from " + EnumChatFormatting.RED + EnumChatFormatting.BOLD + "lowest to highest" + EnumChatFormatting.RESET + MAIN_COLOUR + "!"));
+                            } else if (line.contains("-60,-204")) {
+                                blazeMode = 1;
+                                mc.thePlayer.addChatMessage(new ChatComponentText(MAIN_COLOUR + "Shoot the blazes from " + EnumChatFormatting.DARK_GREEN + EnumChatFormatting.BOLD + "highest to lowest" + EnumChatFormatting.RESET + MAIN_COLOUR + "!"));
+                            }
+                        });
+                    }).start();
+                }
+
             }
         }
 
@@ -2988,13 +3018,13 @@ public class DankersSkyblockMod {
     @SubscribeEvent
     public void onWorldRender(RenderWorldLastEvent event) {
         if (ToggleCommand.blazeToggled && Utils.inDungeons) {
-            if (lowestBlaze != null) {
+            if (lowestBlaze != null && ((ToggleCommand.onlyShowCorrectBlazeToggled && blazeMode == -1) || !ToggleCommand.onlyShowCorrectBlazeToggled || blazeMode == 0)) {
                 BlockPos stringPos = new BlockPos(lowestBlaze.posX, lowestBlaze.posY + 1, lowestBlaze.posZ);
                 Utils.draw3DString(stringPos, EnumChatFormatting.BOLD + "Smallest", LOWEST_BLAZE_COLOUR, event.partialTicks);
                 AxisAlignedBB aabb = new AxisAlignedBB(lowestBlaze.posX - 0.5, lowestBlaze.posY - 2, lowestBlaze.posZ - 0.5, lowestBlaze.posX + 0.5, lowestBlaze.posY, lowestBlaze.posZ + 0.5);
                 Utils.draw3DBox(aabb, LOWEST_BLAZE_COLOUR, event.partialTicks);
             }
-            if (highestBlaze != null) {
+            if (highestBlaze != null  && ((ToggleCommand.onlyShowCorrectBlazeToggled && blazeMode == 1) || !ToggleCommand.onlyShowCorrectBlazeToggled || blazeMode == 0)) {
                 BlockPos stringPos = new BlockPos(highestBlaze.posX, highestBlaze.posY + 1, highestBlaze.posZ);
                 Utils.draw3DString(stringPos, EnumChatFormatting.BOLD + "Biggest", HIGHEST_BLAZE_COLOUR, event.partialTicks);
                 AxisAlignedBB aabb = new AxisAlignedBB(highestBlaze.posX - 0.5, highestBlaze.posY - 2, highestBlaze.posZ - 0.5, highestBlaze.posX + 0.5, highestBlaze.posY, highestBlaze.posZ + 0.5);
@@ -3225,6 +3255,20 @@ public class DankersSkyblockMod {
                     Utils.createTitle(EnumChatFormatting.RED + "Boss slain!", 2);
                     break;
                 }
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public void onEntityDeath(LivingDeathEvent event) {
+        if (event.entity instanceof EntityArmorStand && lowestBlaze != null && highestBlaze != null) {
+            AxisAlignedBB aabb = new AxisAlignedBB(event.entity.posX - 0.5, event.entity.posY - 2, event.entity.posZ - 0.5, event.entity.posX + 0.5, event.entity.posY, event.entity.posZ + 0.5);
+            if (lowestBlaze.getEntityBoundingBox().intersectsWith(aabb)) {
+                System.out.println("Lowest blaze killed");
+                blazeMode = -1;
+            } else if (highestBlaze.getEntityBoundingBox().intersectsWith(aabb)) {
+                System.out.println("Highest blaze killed");
+                blazeMode = 1;
             }
         }
     }
