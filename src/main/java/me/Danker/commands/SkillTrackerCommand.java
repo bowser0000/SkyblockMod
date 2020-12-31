@@ -50,7 +50,7 @@ public class SkillTrackerCommand extends CommandBase {
 			}
 			
 			try {
-				Thread.sleep(200);
+				Thread.sleep(50);
 
 				switch (arg1[0].toLowerCase()) {
 					case "start":
