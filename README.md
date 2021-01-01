@@ -47,7 +47,7 @@ Discord Server: https://discord.gg/QsEkNQS
 - Low health alert in dungeons
 - API commands
 - Update checker
-- Reparty Function on Key press
+- Reparty command
 
 ## Commands
 - /dhelp - Returns this message in-game.
