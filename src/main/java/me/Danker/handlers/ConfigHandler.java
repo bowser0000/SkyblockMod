@@ -206,8 +206,7 @@ public class ConfigHandler {
 		if (!hasKey("toggles", "NecronNotifications")) writeBooleanConfig("toggles", "NecronNotifications", false);
 		if (!hasKey("toggles", "BonzoTimer")) writeBooleanConfig("toggles", "BonzoTimer", false);
 		if (!hasKey("toggles", "BlockBreakingFarms")) writeBooleanConfig("toggles", "BlockBreakingFarms", false);
-
-
+		if (!hasKey("toggles", "AutoSkillTracker")) writeBooleanConfig("toggles", "AutoSkillTracker", false);
 		// Puzzle Solvers
 		if (!hasKey("toggles", "ThreeManPuzzle")) writeBooleanConfig("toggles", "ThreeManPuzzle", false);
 		if (!hasKey("toggles", "OruoPuzzle")) writeBooleanConfig("toggles", "OruoPuzzle", false);
@@ -426,10 +425,9 @@ public class ConfigHandler {
 		if (!hasKey("scales", "waterAnswerScale")) writeDoubleConfig("scales", "waterAnswerScale", 1);
 		if (!hasKey("scales", "bonzoTimerScale")) writeDoubleConfig("scales", "bonzoTimerScale", 1);
 
-
 		if (!hasKey("colors", "main")) writeStringConfig("colors", "main", EnumChatFormatting.GREEN.toString());
 		if (!hasKey("colors", "secondary")) writeStringConfig("colors", "secondary", EnumChatFormatting.DARK_GREEN.toString());
-		if (!hasKey("colors", "delimiter")) writeStringConfig("colors", "delimiter", EnumChatFormatting.AQUA.toString());
+		if (!hasKey("colors", "delimiter")) writeStringConfig("colors", "delimiter", EnumChatFormatting.AQUA.toString() + EnumChatFormatting.STRIKETHROUGH.toString());
 		if (!hasKey("colors", "error")) writeStringConfig("colors", "error", EnumChatFormatting.RED.toString());
 		if (!hasKey("colors", "type")) writeStringConfig("colors", "type", EnumChatFormatting.GREEN.toString());
 		if (!hasKey("colors", "value")) writeStringConfig("colors", "value", EnumChatFormatting.DARK_GREEN.toString());
@@ -490,7 +488,7 @@ public class ConfigHandler {
 		ToggleCommand.blockBreakingFarmsToggled = getBoolean("toggles", "BlockBreakingFarms");
 		ToggleCommand.swapToPickBlockToggled = getBoolean("toggles", "PickBlock");
 		ToggleCommand.flowerWeaponsToggled = getBoolean("toggles", "FlowerWeapons");
-
+		ToggleCommand.autoSkillTrackerToggled =  getBoolean("toggles", "AutoSkillTracker");
 		// Puzzle Solvers
 		ToggleCommand.threeManToggled = getBoolean("toggles", "ThreeManPuzzle");
 		ToggleCommand.oruoToggled = getBoolean("toggles", "OruoPuzzle");
@@ -501,7 +499,6 @@ public class ConfigHandler {
 		ToggleCommand.startsWithToggled = getBoolean("toggles", "StartsWithTerminal");
 		ToggleCommand.selectAllToggled = getBoolean("toggles", "SelectAllTerminal");
 		ToggleCommand.clickInOrderToggled = getBoolean("toggles", "ClickInOrderTerminal");
-
 		ToggleCommand.blockWrongTerminalClicksToggled = getBoolean("toggles", "BlockWrongTerminalClicks");
 		ToggleCommand.itemFrameOnSeaLanternsToggled = getBoolean("toggles", "IgnoreItemFrameOnSeaLanterns");
 		// Experiment Solvers
