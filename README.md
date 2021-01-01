@@ -73,6 +73,7 @@ Discord Server: https://discord.gg/QsEkNQS
 - /sbplayers - Uses API to find how many players are on each Skyblock island.
 - /onlyslayer <zombie/spider/wolf> <1/2/3/4> - Stops you from starting a slayer quest other than the one specified.
 - /skilltracker <start/stop/reset> - Text display for skill xp/hour.
+- /reparty - Disbands and reparties all members in the party
 
 ## Keybinds
 - Open Maddox menu - M by default.

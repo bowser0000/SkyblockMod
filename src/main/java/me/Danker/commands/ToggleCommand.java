@@ -44,6 +44,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 	public static boolean necronNotificationsToggled;
 	public static boolean bonzoTimerToggled;
 	public static boolean blockBreakingFarmsToggled;
+	public static boolean autoSkillTrackerToggled;
 	public static boolean bossBarFixToggled;
 	public static boolean hideImplosionParticlesToggled;
 	public static boolean zombieSwordToggled;
@@ -78,7 +79,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 		return "/" + getCommandName() + " <gparty/coords/golden/slayercount/rngesusalerts/splitfishing/chatmaddox/spiritbearalert/" + 
 										  "aotd/lividdagger/flowerweapons/sceptremessages/petcolors/dungeontimer/golemalerts/expertiselore/skill50display/" +
 										  "outlinetext/midasstaffmessages/implosionmessages/healmessages/caketimer/lowhealthnotify/" +
-										  "lividsolver/stopsalvagestarred/notifyslayerslain/necronnotifications/bonzotimer/blockbreakingfarms/bossbarfix/hideimplosionparticles/zombiesword/threemanpuzzle/oruopuzzle/blazepuzzle/onlyshowcorrectblaze/creeperpuzzle/waterpuzzle/tictactoepuzzle/" +
+										  "lividsolver/stopsalvagestarred/notifyslayerslain/necronnotifications/bonzotimer/blockbreakingfarms/autoskilltracker/bossbarfix/hideimplosionparticles/zombiesword/threemanpuzzle/oruopuzzle/blazepuzzle/onlyshowcorrectblaze/creeperpuzzle/waterpuzzle/tictactoepuzzle/" +
 										  "watchermessage/startswithterminal/selectallterminal/clickinorderterminal/blockwrongterminalclicks/" +
 										  "itemframeonsealanterns/ultrasequencer/chronomatron/superpairs/hidetooltipsinaddons/pickblock/list>";
 	}
@@ -96,7 +97,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 														  "flowerweapons", "sceptremessages", "petcolors", "dungeontimer", "golemalerts",
 														  "expertiselore", "skill50display", "outlinetext", "midasstaffmessages",
 														  "implosionmessages", "healmessages", "caketimer", "lowhealthnotify",
-														  "lividsolver", "stopsalvagestarred", "notifyslayerslain", "necronnotifications", "bonzotimer", "blockbreakingfarms", "bossbarfix", "hideimplosionparticles", "zombiesword", "threemanpuzzle", "oruopuzzle", "blazepuzzle", "onlyshowcorrectblaze",
+														  "lividsolver", "stopsalvagestarred", "notifyslayerslain", "necronnotifications", "bonzotimer", "blockbreakingfarms", "autoskilltracker", "bossbarfix", "hideimplosionparticles", "zombiesword", "threemanpuzzle", "oruopuzzle", "blazepuzzle", "onlyshowcorrectblaze",
 														  "creeperpuzzle", "waterpuzzle", "tictactoepuzzle", "watchermessage", "startswithterminal",
 														  "selectallterminal", "clickinorderterminal", "blockwrongterminalclicks", "itemframeonsealanterns", "ultrasequencer",
 														  "chronomatron", "superpairs", "hidetooltipsinaddons", "pickblock", "list");
@@ -259,6 +260,10 @@ public class ToggleCommand extends CommandBase implements ICommand {
 				blockBreakingFarmsToggled = !blockBreakingFarmsToggled;
 				ConfigHandler.writeBooleanConfig("toggles", "BlockBreakingFarms", blockBreakingFarmsToggled);
 				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Prevent breaking farms has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + necronNotificationsToggled + DankersSkyblockMod.MAIN_COLOUR + "."));
+			case "autoskilltracker":
+				autoSkillTrackerToggled = !autoSkillTrackerToggled;
+				ConfigHandler.writeBooleanConfig("toggles", "AutoSkillTracker", autoSkillTrackerToggled);
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Auto start/stop skill tracker has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + autoSkillTrackerToggled + DankersSkyblockMod.MAIN_COLOUR + "."));
 				break;
 			case "bossbarfix":
 				bossBarFixToggled = !bossBarFixToggled;
@@ -394,6 +399,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 															DankersSkyblockMod.TYPE_COLOUR + " Necron Notifications: " + DankersSkyblockMod.VALUE_COLOUR + necronNotificationsToggled + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Notify Slayer Slain: " + DankersSkyblockMod.VALUE_COLOUR + notifySlayerSlainToggled + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Prevent Breaking Farms: " + DankersSkyblockMod.VALUE_COLOUR + blockBreakingFarmsToggled + "\n" +
+                              DankersSkyblockMod.TYPE_COLOUR + " Auto start/stop skill tracker: " + DankersSkyblockMod.VALUE_COLOUR + autoSkillTrackerToggled + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Bonzo's Mask Timer: " + DankersSkyblockMod.VALUE_COLOUR + bonzoTimerToggled + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Boss Bar Fix: " + DankersSkyblockMod.VALUE_COLOUR + bossBarFixToggled + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Hide Implosion Particles: " + DankersSkyblockMod.VALUE_COLOUR + hideImplosionParticlesToggled + "\n" +
