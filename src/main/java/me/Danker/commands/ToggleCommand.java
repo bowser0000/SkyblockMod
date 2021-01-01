@@ -44,7 +44,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 	public static boolean necronNotificationsToggled;
 	public static boolean bonzoTimerToggled;
 	public static boolean blockBreakingFarmsToggled;
-
+	public static boolean autoSkillTrackerToggled;
 	// Puzzle Solvers
 	public static boolean threeManToggled;
 	public static boolean oruoToggled;
@@ -73,7 +73,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 	public String getCommandUsage(ICommandSender arg0) {
 		return "/" + getCommandName() + " <gparty/coords/golden/slayercount/rngesusalerts/splitfishing/chatmaddox/spiritbearalert/" + 
 										  "aotd/lividdagger/flowerweapons/sceptremessages/petcolors/dungeontimer/golemalerts/expertiselore/skill50display/" +
-										  "outlinetext/midasstaffmessages/implosionmessages/healmessages/caketimer/lowhealthnotify/" +
+										  "outlinetext/midasstaffmessages/implosionmessages/healmessages/caketimer/lowhealthnotify/autoskilltracker/" +
 										  "lividsolver/stopsalvagestarred/notifyslayerslain/necronnotifications/bonzotimer/blockbreakingfarms/threemanpuzzle/oruopuzzle/blazepuzzle/creeperpuzzle/waterpuzzle/tictactoepuzzle/" +
 										  "watchermessage/startswithterminal/selectallterminal/clickinorderterminal/blockwrongterminalclicks/" +
 										  "itemframeonsealanterns/ultrasequencer/chronomatron/superpairs/hidetooltipsinaddons/pickblock/list>";
@@ -91,8 +91,9 @@ public class ToggleCommand extends CommandBase implements ICommand {
 														  "splitfishing", "chatmaddox", "spiritbearalerts", "aotd", "lividdagger",
 														  "flowerweapons", "sceptremessages", "petcolors", "dungeontimer", "golemalerts",
 														  "expertiselore", "skill50display", "outlinetext", "midasstaffmessages",
-														  "implosionmessages", "healmessages", "caketimer", "lowhealthnotify",
-														  "lividsolver", "stopsalvagestarred", "notifyslayerslain", "necronnotifications", "bonzotimer", "blockbreakingfarms", "threemanpuzzle", "oruopuzzle", "blazepuzzle",
+														  "implosionmessages", "healmessages", "caketimer", "lowhealthnotify", "autoskilltracker",
+														  "lividsolver", "stopsalvagestarred", "notifyslayerslain", "necronnotifications",
+														  "bonzotimer", "blockbreakingfarms", "threemanpuzzle", "oruopuzzle", "blazepuzzle",
 														  "creeperpuzzle", "waterpuzzle", "tictactoepuzzle", "watchermessage", "startswithterminal",
 														  "selectallterminal", "clickinorderterminal", "blockwrongterminalclicks", "itemframeonsealanterns", "ultrasequencer",
 														  "chronomatron", "superpairs", "hidetooltipsinaddons", "pickblock", "list");
@@ -255,6 +256,10 @@ public class ToggleCommand extends CommandBase implements ICommand {
 				blockBreakingFarmsToggled = !blockBreakingFarmsToggled;
 				ConfigHandler.writeBooleanConfig("toggles", "BlockBreakingFarms", blockBreakingFarmsToggled);
 				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Prevent breaking farms has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + necronNotificationsToggled + DankersSkyblockMod.MAIN_COLOUR + "."));
+			case "autoskilltracker":
+				autoSkillTrackerToggled = !autoSkillTrackerToggled;
+				ConfigHandler.writeBooleanConfig("toggles", "AutoSkillTracker", autoSkillTrackerToggled);
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Auto start/stop skill tracker has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + autoSkillTrackerToggled + DankersSkyblockMod.MAIN_COLOUR + "."));
 				break;
 			case "threemanpuzzle":
 				threeManToggled = !threeManToggled;
@@ -365,6 +370,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 															DankersSkyblockMod.TYPE_COLOUR + " Outline displayed text: " + DankersSkyblockMod.VALUE_COLOUR + outlineTextToggled + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Cake timer: " + DankersSkyblockMod.VALUE_COLOUR + cakeTimerToggled + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Low health notify: " + DankersSkyblockMod.VALUE_COLOUR + lowHealthNotifyToggled + "\n" +
+															DankersSkyblockMod.TYPE_COLOUR + " Auto start/stop skill tracker: " + DankersSkyblockMod.VALUE_COLOUR + autoSkillTrackerToggled + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Livid solver: " + DankersSkyblockMod.VALUE_COLOUR + lividSolverToggled + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Three man puzzle solver: " + DankersSkyblockMod.VALUE_COLOUR + threeManToggled + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Oruo trivia solver: " + DankersSkyblockMod.VALUE_COLOUR + oruoToggled + "\n" +
