@@ -419,7 +419,7 @@ public class DankersSkyblockMod {
 				return;
 			}
 			
-			EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
+			EntityPlayerSP player = mc.thePlayer;
 			
 			Pattern party_start_pattern = Pattern.compile("^Party Members \\((\\d+)\\)$");
             Pattern leader_pattern = Pattern.compile("^Party Leader: (?:\\[.+?] )?(\\w+) ●$");
@@ -452,8 +452,7 @@ public class DankersSkyblockMod {
     	
     	// Action Bar
     	if (event.type == 2) {
-			EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
-			String[] actionBarSections = event.message.getUnformattedText().split(" {3,}");
+            String[] actionBarSections = event.message.getUnformattedText().split(" {3,}");
 			
 			for (String section : actionBarSections) {
     			if (section.contains("+") && section.contains("/") && section.contains("(")) {
@@ -1364,7 +1363,7 @@ public class DankersSkyblockMod {
 					lastMaddoxTime = System.currentTimeMillis() / 1000;
 				}
 			}
-			if (ToggleCommand.chatMaddoxToggled) Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(MAIN_COLOUR + "Open chat then click anywhere on-screen to open Maddox"));
+			if (ToggleCommand.chatMaddoxToggled) mc.thePlayer.addChatMessage(new ChatComponentText(MAIN_COLOUR + "Open chat then click anywhere on-screen to open Maddox"));
 		}
 		
 		// Spirit Bear alerts
