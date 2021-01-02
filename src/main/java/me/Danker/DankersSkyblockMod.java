@@ -315,7 +315,7 @@ public class DankersSkyblockMod {
     public void postInit(final FMLPostInitializationEvent event) {
 		Package[] packages = Package.getPackages();
 		for(Package p : packages){
-			if(p.getName().startsWith("com.spiderfrog.gadgets")){
+			if(p.getName().startsWith("com.spiderfrog.gadgets") || p.getName().startsWith("com.spiderfrog.oldanimations")){
 				usingOAM = true;
 				break;
 			}
