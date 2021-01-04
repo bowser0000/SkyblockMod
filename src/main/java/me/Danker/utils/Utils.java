@@ -1,5 +1,9 @@
 package me.Danker.utils;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import me.Danker.DankersSkyblockMod;
 import me.Danker.handlers.ScoreboardHandler;
 import me.Danker.handlers.TextRenderer;
@@ -27,6 +31,10 @@ import net.minecraft.util.*;
 import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.*;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -63,7 +71,73 @@ public class Utils {
     	// No items found
     	return 0;
     }
-    
+
+	//Parts of the following code adapted and modified from @Moulberry (https://github.com/Moulberry/)
+	public static String getSBItemID(ItemStack stack) {
+		if(stack == null) return null;
+		NBTTagCompound tag = stack.getTagCompound();
+
+		String sbItemID = null;
+		if(tag != null && tag.hasKey("ExtraAttributes", 10)) {
+			NBTTagCompound ea = tag.getCompoundTag("ExtraAttributes");
+
+			if(ea.hasKey("id", 8)) {
+				sbItemID = ea.getString("id").replaceAll(":", "-");
+			}
+
+			if(sbItemID.equals("PET")) {
+				String petInfo = ea.getString("petInfo");
+				if(petInfo.length() > 0) {
+					JsonObject petInfoObject = new Gson().fromJson(petInfo, JsonObject.class);
+					String type = petInfoObject.get("type").getAsString();
+					String tier = petInfoObject.get("tier").getAsString();
+					sbItemID += "-" + type + "-" + tier;
+				}
+			}
+			if(sbItemID.equals("ENCHANTED_BOOK")) {
+				NBTTagCompound enchantments = ea.getCompoundTag("enchantments");
+				if (enchantments.getKeySet().size() <= 2) {
+					ArrayList sortedEnchants = new ArrayList();
+					for(String enchant : enchantments.getKeySet()) {
+						sortedEnchants.add(enchant.toUpperCase() + enchantments.getInteger(enchant));
+					}
+					Collections.sort(sortedEnchants);
+					for(Object enchant : sortedEnchants) {
+						sbItemID += "-" + enchant;
+					}
+				} else {
+					sbItemID += "-" + enchantments.getKeySet().size() + "ENCHANTS";
+				}
+
+			}
+			if(sbItemID.equals("POTION")) {
+				NBTTagCompound display = tag.getCompoundTag("display");
+				sbItemID= display.getString("Name").replaceAll("§.", "").replaceAll(" ", "_").toUpperCase();
+			}
+		}
+
+		return sbItemID;
+	}
+
+	//Note: Improvements needed. Currently calls lowestbin.json on every single item --> too many requests
+	//		should only request lowestbin.json once every 5 minutes and store it locally
+	public static int getLowestBin(String sbItemID) {
+		try {
+			URL url = new URL("https://dsm.quantizr.repl.co/lowestbin.json");
+			URLConnection request = url.openConnection();
+			request.connect();
+
+			JsonParser json = new JsonParser();
+			JsonElement root = json.parse(new InputStreamReader((InputStream) request.getContent()));
+			JsonObject rootObj = root.getAsJsonObject();
+			int lowestBin = rootObj.get(sbItemID).getAsInt();
+			return lowestBin;
+		}
+		catch(Exception e) {
+			return -1;
+		}
+	}
+
     public static String returnGoldenEnchants(String line) {
     	Matcher matcher = DankersSkyblockMod.t6EnchantPattern.matcher(line);
     	StringBuffer out = new StringBuffer();
