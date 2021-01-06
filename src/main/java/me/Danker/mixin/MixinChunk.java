@@ -36,18 +36,21 @@ public abstract class MixinChunk {
                             }
                         } else if (pos.getX() == 309) {
                             if (state.getBlock() == Blocks.air) {
+                                System.out.println("Buttons on simon says were removed!");
                                 DankersSkyblockMod.simonNumberNeeded = 0;
                             } else if (state.getBlock() == Blocks.stone_button) {
                                 if (old.getBlock() == Blocks.stone_button) {
                                     if (state.getValue(BlockButtonStone.POWERED)) {
+                                        System.out.println("Button on simon says was pressed");
                                         DankersSkyblockMod.simonNumberNeeded++;
                                     }
                                 }
                             }
                         }
-                    } else if (pos == new BlockPos(309, 121, 290)) {
+                    } else if (pos.equals(new BlockPos(309, 121, 290))) {
                         if (state.getBlock() == Blocks.stone_button) {
                             if (state.getValue(BlockButtonStone.POWERED)) {
+                                System.out.println("Simon says was started");
                                 DankersSkyblockMod.simonBlockOrder.clear();
                                 DankersSkyblockMod.simonNumberNeeded = 0;
                             }

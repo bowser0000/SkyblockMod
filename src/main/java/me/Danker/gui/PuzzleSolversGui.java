@@ -148,7 +148,7 @@ public class PuzzleSolversGui extends GuiScreen {
 		} else if (button == simon) {
 			ToggleCommand.simonToggled = !ToggleCommand.simonToggled;
 			ConfigHandler.writeBooleanConfig("toggles", "SimonSays", ToggleCommand.simonToggled);
-			clickOrder.displayString = "Simon Says Device Helper: " + Utils.getColouredBoolean(ToggleCommand.simonToggled);
+			simon.displayString = "Simon Says Device Helper: " + Utils.getColouredBoolean(ToggleCommand.simonToggled);
 		} else if (button == blockClicks) {
 			ToggleCommand.blockWrongTerminalClicksToggled = !ToggleCommand.blockWrongTerminalClicksToggled;
 			ConfigHandler.writeBooleanConfig("toggles", "BlockWrongTerminalClicks", ToggleCommand.blockWrongTerminalClicksToggled);
