@@ -36,7 +36,7 @@ Discord Server: https://discord.gg/QsEkNQS
 - Dungeons timer (watcher, boss, deaths, and puzzle fails)
 - Watcher ready message
 - Bonzo's Mask Cooldown Timer
-- Catacombs F7 Stage 3 solvers (Starts with letter, select all colour, click in order, ignore arrows on sea lanterns)
+- Catacombs F7 Stage 3 solvers (Starts with letter, select all colour, click in order, simon says, ignore arrows on sea lanterns)
 - Find correct Livid (with graphic display of HP)
 - Notify when Necron is stunned
 - Experimentation solvers (Ultrasequencer, Chronomatron, Superpairs)

@@ -134,7 +134,7 @@ public class DankerGui extends GuiScreen {
 		bonzoTimer = new GuiButton(0, width / 2 - 100, (int) (height * 0.7), "Bonzo's Mask Timer: " + Utils.getColouredBoolean(ToggleCommand.bonzoTimerToggled));
 		// Page 6
 		blockBreakingFarms = new GuiButton(0, width / 2 - 100, (int) (height * 0.1), "Prevent Breaking Farms: " + Utils.getColouredBoolean(ToggleCommand.blockBreakingFarmsToggled));
-    autoSkillTracker = new GuiButton(0, width / 2 - 100, (int) (height * 0.2), "Auto Start/Stop Skill Tracker: " + Utils.getColouredBoolean(ToggleCommand.autoSkillTrackerToggled));
+        autoSkillTracker = new GuiButton(0, width / 2 - 100, (int) (height * 0.2), "Auto Start/Stop Skill Tracker: " + Utils.getColouredBoolean(ToggleCommand.autoSkillTrackerToggled));
 		bossBarFix = new GuiButton(0, width / 2 - 100, (int) (height * 0.3), "Boss Bar Fix: " + Utils.getColouredBoolean(ToggleCommand.bossBarFixToggled));
 		hideImplosionParticles = new GuiButton(0, width / 2 - 100, (int) (height * 0.4), "Hide Implosion Particles: " + Utils.getColouredBoolean(ToggleCommand.hideImplosionParticlesToggled));
 		zombieSword = new GuiButton(0, width / 2 - 100, (int) (height * 0.5), "Block Useless Zombie Sword Use: " + Utils.getColouredBoolean(ToggleCommand.zombieSwordToggled));

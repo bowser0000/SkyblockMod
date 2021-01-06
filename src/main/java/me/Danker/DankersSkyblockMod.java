@@ -10,11 +10,9 @@ import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
-import net.minecraft.client.gui.Gui;
-import net.minecraft.client.gui.GuiChat;
-import net.minecraft.client.gui.GuiGameOver;
-import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.gui.*;
 import net.minecraft.client.gui.inventory.GuiChest;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.Entity;
@@ -142,6 +140,8 @@ public class DankersSkyblockMod {
     static boolean pickBlockBindSwapped = false;
     static String terminalColourNeeded;
     static int[] terminalNumberNeeded = new int[4];
+    public static ArrayList<BlockPos> simonBlockOrder = new ArrayList<>();
+    public static int simonNumberNeeded = 0;
 
     static double dungeonStartTime = 0;
     static double bloodOpenTime = 0;
@@ -400,6 +400,8 @@ public class DankersSkyblockMod {
         lowestBlaze = null;
         highestBlaze = null;
         blazeMode = 0;
+        simonBlockOrder.clear();
+        simonNumberNeeded = 0;
     }
 
     // It randomly broke, so I had to make it the highest priority
@@ -3054,6 +3056,11 @@ public class DankersSkyblockMod {
 
     @SubscribeEvent
     public void onWorldRender(RenderWorldLastEvent event) {
+        if (ToggleCommand.simonToggled && simonNumberNeeded < simonBlockOrder.size()) {
+            BlockPos pos = simonBlockOrder.get(simonNumberNeeded);
+            Utils.draw3DBox(new AxisAlignedBB(pos.west(), pos.add(1, 1, 1)), new Color(255, 0, 0).getRGB(), event.partialTicks);
+        }
+
         if (ToggleCommand.blazeToggled && Utils.inDungeons) {
             if (lowestBlaze != null && ((ToggleCommand.onlyShowCorrectBlazeToggled && blazeMode == -1) || !ToggleCommand.onlyShowCorrectBlazeToggled || blazeMode == 0)) {
                 BlockPos stringPos = new BlockPos(lowestBlaze.posX, lowestBlaze.posY + 1, lowestBlaze.posZ);

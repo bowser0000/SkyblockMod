@@ -215,6 +215,7 @@ public class ConfigHandler {
 		if (!hasKey("toggles", "StartsWithTerminal")) writeBooleanConfig("toggles", "StartsWithTerminal", false);
 		if (!hasKey("toggles", "SelectAllTerminal")) writeBooleanConfig("toggles", "SelectAllTerminal", false);
 		if (!hasKey("toggles", "ClickInOrderTerminal")) writeBooleanConfig("toggles", "ClickInOrderTerminal", false);
+		if (!hasKey("toggles", "SimonSays")) writeBooleanConfig("toggles", "SimonSays", false);
 		if (!hasKey("toggles", "BlockWrongTerminalClicks")) writeBooleanConfig("toggles", "BlockWrongTerminalClicks", false);
 		if (!hasKey("toggles", "IgnoreItemFrameOnSeaLanterns")) writeBooleanConfig("toggles", "IgnoreItemFrameOnSeaLanterns", false);
 		// Experiment Solvers
@@ -480,12 +481,13 @@ public class ConfigHandler {
 		ToggleCommand.necronNotificationsToggled = getBoolean("toggles", "NecronNotifications");
 		ToggleCommand.bonzoTimerToggled = getBoolean("toggles", "BonzoTimer");
 		ToggleCommand.blockBreakingFarmsToggled = getBoolean("toggles", "BlockBreakingFarms");
-    ToggleCommand.autoSkillTrackerToggled =  getBoolean("toggles", "AutoSkillTracker");
+        ToggleCommand.autoSkillTrackerToggled =  getBoolean("toggles", "AutoSkillTracker");
 		ToggleCommand.bossBarFixToggled = getBoolean("toggles", "BossBarFix");
 		ToggleCommand.hideImplosionParticlesToggled = getBoolean("toggles", "HideImplosionParticles");
 		ToggleCommand.zombieSwordToggled = getBoolean("toggles", "ZombieSword");
 		ToggleCommand.swapToPickBlockToggled = getBoolean("toggles", "PickBlock");
 		ToggleCommand.flowerWeaponsToggled = getBoolean("toggles", "FlowerWeapons");
+
 		// Puzzle Solvers
 		ToggleCommand.threeManToggled = getBoolean("toggles", "ThreeManPuzzle");
 		ToggleCommand.oruoToggled = getBoolean("toggles", "OruoPuzzle");
@@ -497,8 +499,10 @@ public class ConfigHandler {
 		ToggleCommand.startsWithToggled = getBoolean("toggles", "StartsWithTerminal");
 		ToggleCommand.selectAllToggled = getBoolean("toggles", "SelectAllTerminal");
 		ToggleCommand.clickInOrderToggled = getBoolean("toggles", "ClickInOrderTerminal");
+		ToggleCommand.simonToggled = getBoolean("toggles", "SimonSays");
 		ToggleCommand.blockWrongTerminalClicksToggled = getBoolean("toggles", "BlockWrongTerminalClicks");
 		ToggleCommand.itemFrameOnSeaLanternsToggled = getBoolean("toggles", "IgnoreItemFrameOnSeaLanterns");
+
 		// Experiment Solvers
 		ToggleCommand.ultrasequencerToggled = getBoolean("toggles", "UltraSequencer");
 		ToggleCommand.chronomatronToggled = getBoolean("toggles", "Chronomatron");
