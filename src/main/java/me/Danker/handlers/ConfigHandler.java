@@ -203,6 +203,7 @@ public class ConfigHandler {
 		if (!hasKey("toggles", "BossBarFix")) writeBooleanConfig("toggles", "BossBarFix", false);
 		if (!hasKey("toggles", "HideImplosionParticles")) writeBooleanConfig("toggles", "HideImplosionParticles", false);
 		if (!hasKey("toggles", "ZombieSword")) writeBooleanConfig("toggles", "ZombieSword", false);
+		if (!hasKey("toggles", "AutoAcceptReparty")) writeBooleanConfig("toggles", "AutoAcceptReparty", false);
 
 		// Puzzle Solvers
 		if (!hasKey("toggles", "ThreeManPuzzle")) writeBooleanConfig("toggles", "ThreeManPuzzle", false);
@@ -485,6 +486,7 @@ public class ConfigHandler {
 		ToggleCommand.bossBarFixToggled = getBoolean("toggles", "BossBarFix");
 		ToggleCommand.hideImplosionParticlesToggled = getBoolean("toggles", "HideImplosionParticles");
 		ToggleCommand.zombieSwordToggled = getBoolean("toggles", "ZombieSword");
+		ToggleCommand.autoAcceptRepartyToggled = getBoolean("toggles", "AutoAcceptReparty");
 		ToggleCommand.swapToPickBlockToggled = getBoolean("toggles", "PickBlock");
 		ToggleCommand.flowerWeaponsToggled = getBoolean("toggles", "FlowerWeapons");
 

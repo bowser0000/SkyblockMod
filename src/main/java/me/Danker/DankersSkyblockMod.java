@@ -105,6 +105,7 @@ public class DankersSkyblockMod {
     public static double cakeTime;
     public static double nextBonzoUse = 0;
     public static boolean firstLaunch = false;
+    static String lastPartyDisbander = "";
 
     public static final ResourceLocation CAKE_ICON = new ResourceLocation("dsm", "icons/cake.png");
     public static final ResourceLocation BONZO_ICON = new ResourceLocation("dsm", "icons/bonzo.png");
@@ -413,6 +414,25 @@ public class DankersSkyblockMod {
             String apiKey = event.message.getSiblings().get(0).getChatStyle().getChatClickEvent().getValue();
             ConfigHandler.writeStringConfig("api", "APIKey", apiKey);
             mc.thePlayer.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Set API key to " + DankersSkyblockMod.SECONDARY_COLOUR + apiKey));
+        }
+
+        if (ToggleCommand.autoAcceptRepartyToggled && Utils.isOnHypixel()) {
+            if (message.contains("has disbanded the party!")) {
+                Pattern player_pattern = Pattern.compile("(?:\\[.+?] )?(\\w+)");
+                Matcher matcher = player_pattern.matcher(message);
+                if (matcher.find()) {
+                    String disbander = matcher.group(1);
+                    lastPartyDisbander = disbander;
+                    System.out.println("Party disbanded by " + lastPartyDisbander);
+                }
+            }
+            if (message.contains("You have 60 seconds to accept") && lastPartyDisbander.length() > 0 && event.message.getSiblings().size() > 0) {
+                ChatStyle acceptMessage = event.message.getSiblings().get(6).getChatStyle();
+                if (acceptMessage.getChatHoverEvent().getValue().getUnformattedText().contains(lastPartyDisbander)) {
+                    mc.thePlayer.sendChatMessage("/party accept " + lastPartyDisbander);
+                    lastPartyDisbander = "";
+                }
+            }
         }
 
 		// Reparty command
@@ -2971,7 +2991,7 @@ public class DankersSkyblockMod {
                     if (Item.getIdFromItem(itemStack.getItem()) == 95 || Item.getIdFromItem(itemStack.getItem()) == 160) continue;
                     if (itemName.contains("Instant Find") || itemName.contains("Gained +")) continue;
                     if (itemName.contains("Enchanted Book")) {
-                        itemName = itemStack.getTooltip(mc.thePlayer, false).get(3);
+                        itemName = StringUtils.stripControlCodes(itemStack.getTooltip(mc.thePlayer, false).get(3));
                     }
                     if (itemStack.stackSize > 1) {
                         itemName = itemStack.stackSize + " " + itemName;

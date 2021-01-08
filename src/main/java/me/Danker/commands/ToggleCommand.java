@@ -48,6 +48,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 	public static boolean bossBarFixToggled;
 	public static boolean hideImplosionParticlesToggled;
 	public static boolean zombieSwordToggled;
+	public static boolean autoAcceptRepartyToggled;
 
 	// Puzzle Solvers
 	public static boolean threeManToggled;
@@ -82,7 +83,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 		return "/" + getCommandName() + " <gparty/coords/golden/slayercount/rngesusalerts/splitfishing/chatmaddox/spiritbearalert/" + 
 										  "aotd/lividdagger/flowerweapons/sceptremessages/petcolors/dungeontimer/golemalerts/expertiselore/skill50display/" +
 										  "outlinetext/midasstaffmessages/implosionmessages/healmessages/caketimer/lowhealthnotify/" +
-										  "lividsolver/stopsalvagestarred/notifyslayerslain/necronnotifications/bonzotimer/blockbreakingfarms/autoskilltracker/bossbarfix/hideimplosionparticles/zombiesword/threemanpuzzle/oruopuzzle/blazepuzzle/onlyshowcorrectblaze/creeperpuzzle/waterpuzzle/tictactoepuzzle/" +
+										  "lividsolver/stopsalvagestarred/notifyslayerslain/necronnotifications/bonzotimer/blockbreakingfarms/autoskilltracker/bossbarfix/hideimplosionparticles/zombiesword/autoacceptreparty/threemanpuzzle/oruopuzzle/blazepuzzle/onlyshowcorrectblaze/creeperpuzzle/waterpuzzle/tictactoepuzzle/" +
 										  "watchermessage/startswithterminal/selectallterminal/clickinorderterminal/simonsays/blockwrongterminalclicks/" +
 										  "itemframeonsealanterns/ultrasequencer/chronomatron/superpairs/hidetooltipsinaddons/pickblock/list>";
 	}
@@ -100,7 +101,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 														  "flowerweapons", "sceptremessages", "petcolors", "dungeontimer", "golemalerts",
 														  "expertiselore", "skill50display", "outlinetext", "midasstaffmessages",
 														  "implosionmessages", "healmessages", "caketimer", "lowhealthnotify",
-														  "lividsolver", "stopsalvagestarred", "notifyslayerslain", "necronnotifications", "bonzotimer", "blockbreakingfarms", "autoskilltracker", "bossbarfix", "hideimplosionparticles", "zombiesword", "threemanpuzzle", "oruopuzzle", "blazepuzzle", "onlyshowcorrectblaze",
+														  "lividsolver", "stopsalvagestarred", "notifyslayerslain", "necronnotifications", "bonzotimer", "blockbreakingfarms", "autoskilltracker", "bossbarfix", "hideimplosionparticles", "zombiesword", "autoacceptreparty", "threemanpuzzle", "oruopuzzle", "blazepuzzle", "onlyshowcorrectblaze",
 														  "creeperpuzzle", "waterpuzzle", "tictactoepuzzle", "watchermessage", "startswithterminal",
 														  "selectallterminal", "clickinorderterminal", "blockwrongterminalclicks", "simonsays", "itemframeonsealanterns", "ultrasequencer",
 														  "chronomatron", "superpairs", "hidetooltipsinaddons", "pickblock", "list");
@@ -281,7 +282,12 @@ public class ToggleCommand extends CommandBase implements ICommand {
 			case "zombiesword":
 				zombieSwordToggled = !zombieSwordToggled;
 				ConfigHandler.writeBooleanConfig("toggles", "ZombieSword", zombieSwordToggled);
-				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Block Useless Zombie Sword has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + hideImplosionParticlesToggled + DankersSkyblockMod.MAIN_COLOUR + "."));
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Block Useless Zombie Sword has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + zombieSwordToggled + DankersSkyblockMod.MAIN_COLOUR + "."));
+				break;
+			case "autoacceptreparty":
+				autoAcceptRepartyToggled = !autoAcceptRepartyToggled;
+				ConfigHandler.writeBooleanConfig("toggles", "AutoAcceptReparty", autoAcceptRepartyToggled);
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Auto Accept Reparty has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + autoAcceptRepartyToggled + DankersSkyblockMod.MAIN_COLOUR + "."));
 				break;
 			case "threemanpuzzle":
 				threeManToggled = !threeManToggled;
@@ -336,7 +342,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 			case "clickinorderterminal":
 				clickInOrderToggled = !clickInOrderToggled;
 				ConfigHandler.writeBooleanConfig("toggles", "ClickInOrderTerminal", clickInOrderToggled);
-				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Click in order terminal helper has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + selectAllToggled + DankersSkyblockMod.MAIN_COLOUR + "."));
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Click in order terminal helper has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + clickInOrderToggled + DankersSkyblockMod.MAIN_COLOUR + "."));
 				break;
 			case "simonsays":
 				simonToggled = !simonToggled;
@@ -407,11 +413,12 @@ public class ToggleCommand extends CommandBase implements ICommand {
 															DankersSkyblockMod.TYPE_COLOUR + " Necron Notifications: " + DankersSkyblockMod.VALUE_COLOUR + necronNotificationsToggled + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Notify Slayer Slain: " + DankersSkyblockMod.VALUE_COLOUR + notifySlayerSlainToggled + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Prevent Breaking Farms: " + DankersSkyblockMod.VALUE_COLOUR + blockBreakingFarmsToggled + "\n" +
-                              DankersSkyblockMod.TYPE_COLOUR + " Auto start/stop skill tracker: " + DankersSkyblockMod.VALUE_COLOUR + autoSkillTrackerToggled + "\n" +
+                                                            DankersSkyblockMod.TYPE_COLOUR + " Auto start/stop skill tracker: " + DankersSkyblockMod.VALUE_COLOUR + autoSkillTrackerToggled + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Bonzo's Mask Timer: " + DankersSkyblockMod.VALUE_COLOUR + bonzoTimerToggled + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Boss Bar Fix: " + DankersSkyblockMod.VALUE_COLOUR + bossBarFixToggled + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Hide Implosion Particles: " + DankersSkyblockMod.VALUE_COLOUR + hideImplosionParticlesToggled + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Block Useless Zombie Sword Use: " + DankersSkyblockMod.VALUE_COLOUR + zombieSwordToggled + "\n" +
+															DankersSkyblockMod.TYPE_COLOUR + " Auto Accept Reparty: " + DankersSkyblockMod.VALUE_COLOUR + autoAcceptRepartyToggled + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Three man puzzle solver: " + DankersSkyblockMod.VALUE_COLOUR + threeManToggled + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Oruo trivia solver: " + DankersSkyblockMod.VALUE_COLOUR + oruoToggled + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Blaze puzzle solver: " + DankersSkyblockMod.VALUE_COLOUR + blazeToggled + "\n" +

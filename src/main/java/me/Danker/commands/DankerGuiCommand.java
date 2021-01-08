@@ -66,10 +66,11 @@ public class DankerGuiCommand extends CommandBase {
 					debug.append("[necronnotifications][").append(ToggleCommand.necronNotificationsToggled).append("]\n");
 					debug.append("[bonzotimer][").append(ToggleCommand.bonzoTimerToggled).append("]\n");
 					debug.append("[blockbreakingfarms][").append(ToggleCommand.blockBreakingFarmsToggled).append("]\n");
-          debug.append("[autoskilltracker][").append(ToggleCommand.autoSkillTrackerToggled).append("]\n");
+                    debug.append("[autoskilltracker][").append(ToggleCommand.autoSkillTrackerToggled).append("]\n");
 					debug.append("[bossbarfix][").append(ToggleCommand.bossBarFixToggled).append("]\n");
 					debug.append("[hideimplosionparticles][").append(ToggleCommand.hideImplosionParticlesToggled).append("]\n");
 					debug.append("[zombiesword][").append(ToggleCommand.zombieSwordToggled).append("]\n");
+					debug.append("[autoacceptreparty][").append(ToggleCommand.autoAcceptRepartyToggled).append("]\n");
 					debug.append("[threemanpuzzle][").append(ToggleCommand.threeManToggled).append("]\n");
 					debug.append("[oruopuzzle][").append(ToggleCommand.oruoToggled).append("]\n");
 					debug.append("[blazepuzzle][").append(ToggleCommand.blazeToggled).append("]\n");
@@ -80,6 +81,7 @@ public class DankerGuiCommand extends CommandBase {
 					debug.append("[startswithterminal][").append(ToggleCommand.startsWithToggled).append("]\n");
 					debug.append("[selectallterminal][").append(ToggleCommand.selectAllToggled).append("]\n");
 					debug.append("[clickinorderterminal][").append(ToggleCommand.clickInOrderToggled).append("]\n");
+					debug.append("[simonsays][").append(ToggleCommand.simonToggled).append("]\n");
 					debug.append("[blockwrongterminalclicks][").append(ToggleCommand.blockWrongTerminalClicksToggled).append("]\n");
 					debug.append("[itemframeonsealanterns][").append(ToggleCommand.itemFrameOnSeaLanternsToggled).append("]\n");
 					debug.append("[ultrasequencer][").append(ToggleCommand.ultrasequencerToggled).append("]\n");
