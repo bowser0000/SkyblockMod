@@ -575,6 +575,14 @@ public class DankersSkyblockMod {
     		}
     		return;
     	}
+    	if (ToggleCommand.hiddenJerryAlertToggled && message.contains("☺") && message.contains("Jerry")) {
+    	    Pattern jerryType = Pattern.compile("(\\w+)(?=\\s+Jerry)");
+    	    Matcher matcher = jerryType.matcher(event.message.getFormattedText());
+    	    if (matcher.find()) {
+    	        String colour = matcher.group(1);
+    	        Utils.createTitle("\u00a7" + colour.toUpperCase() + " JERRY !", 2);
+            }
+        }
         
         if (ToggleCommand.bonzoTimerToggled && Utils.inDungeons && message.contains("Bonzo's Mask") && message.contains("saved your life!")) {
             double usedTime = System.currentTimeMillis() / 1000;

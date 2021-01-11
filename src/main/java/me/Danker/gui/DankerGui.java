@@ -66,6 +66,8 @@ public class DankerGui extends GuiScreen {
 	private GuiButton bossBarFix;
 	private GuiButton hideImplosionParticles;
 	private GuiButton zombieSword;
+	private GuiButton autoAcceptReparty;
+	private GuiButton hiddenJerryAlert;
 
 	public DankerGui(int page) {
 		this.page = page;
@@ -138,6 +140,8 @@ public class DankerGui extends GuiScreen {
 		bossBarFix = new GuiButton(0, width / 2 - 100, (int) (height * 0.3), "Boss Bar Fix: " + Utils.getColouredBoolean(ToggleCommand.bossBarFixToggled));
 		hideImplosionParticles = new GuiButton(0, width / 2 - 100, (int) (height * 0.4), "Hide Implosion Particles: " + Utils.getColouredBoolean(ToggleCommand.hideImplosionParticlesToggled));
 		zombieSword = new GuiButton(0, width / 2 - 100, (int) (height * 0.5), "Block Useless Zombie Sword Use: " + Utils.getColouredBoolean(ToggleCommand.zombieSwordToggled));
+		autoAcceptReparty = new GuiButton(0, width / 2 - 100, (int) (height * 0.6), "Auto Accept Reparty: " + Utils.getColouredBoolean(ToggleCommand.autoAcceptRepartyToggled));
+		hiddenJerryAlert = new GuiButton(0, width / 2 - 100, (int) (height * 0.7), "Hidden Jerry Alert: " + Utils.getColouredBoolean(ToggleCommand.hiddenJerryAlertToggled));
 
 		switch (page) {
 			case 1:
@@ -200,6 +204,8 @@ public class DankerGui extends GuiScreen {
 				this.buttonList.add(bossBarFix);
 				this.buttonList.add(hideImplosionParticles);
 				this.buttonList.add(zombieSword);
+				this.buttonList.add(autoAcceptReparty);
+				this.buttonList.add(hiddenJerryAlert);
 				this.buttonList.add(backPage);
 				break;
 		}
@@ -383,6 +389,14 @@ public class DankerGui extends GuiScreen {
 			ToggleCommand.zombieSwordToggled = !ToggleCommand.zombieSwordToggled;
 			ConfigHandler.writeBooleanConfig("toggles", "ZombieSword", ToggleCommand.zombieSwordToggled);
 			zombieSword.displayString = "Block Useless Zombie Sword Use: " + Utils.getColouredBoolean(ToggleCommand.zombieSwordToggled);
+		} else if (button == autoAcceptReparty) {
+			ToggleCommand.autoAcceptRepartyToggled = !ToggleCommand.autoAcceptRepartyToggled;
+			ConfigHandler.writeBooleanConfig("toggles", "AutoAcceptReparty", ToggleCommand.autoAcceptRepartyToggled);
+			autoAcceptReparty.displayString = "Auto Accept Reparty: " + Utils.getColouredBoolean(ToggleCommand.autoAcceptRepartyToggled);
+		} else if (button == hiddenJerryAlert) {
+			ToggleCommand.hiddenJerryAlertToggled = !ToggleCommand.hiddenJerryAlertToggled;
+			ConfigHandler.writeBooleanConfig("toggles", "HiddenJerryAlert", ToggleCommand.hiddenJerryAlertToggled);
+			hiddenJerryAlert.displayString = "Hidden Jerry Alert: " + Utils.getColouredBoolean(ToggleCommand.hiddenJerryAlertToggled);
 		} else if (button == pickBlock) {
 			ToggleCommand.swapToPickBlockToggled = !ToggleCommand.swapToPickBlockToggled;
 			ConfigHandler.writeBooleanConfig("toggles", "PickBlock", ToggleCommand.swapToPickBlockToggled);
