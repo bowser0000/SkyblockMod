@@ -575,7 +575,7 @@ public class DankersSkyblockMod {
     		}
     		return;
     	}
-    	if (ToggleCommand.hiddenJerryAlertToggled && message.contains("☺") && message.contains("Jerry")) {
+    	if (ToggleCommand.hiddenJerryAlertToggled && message.contains("☺") && message.contains("Jerry") && !message.contains("Jerry Box")) {
     	    Pattern jerryType = Pattern.compile("(\\w+)(?=\\s+Jerry)");
     	    Matcher matcher = jerryType.matcher(event.message.getFormattedText());
     	    if (matcher.find()) {
