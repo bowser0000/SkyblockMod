@@ -14,6 +14,7 @@ import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 
 import java.text.NumberFormat;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
@@ -22,6 +23,11 @@ public class SlayerCommand extends CommandBase {
 	@Override
 	public String getCommandName() {
 		return "slayer";
+	}
+
+	@Override
+	public List<String> getCommandAliases() {
+		return Collections.singletonList("slayers");
 	}
 
 	@Override
