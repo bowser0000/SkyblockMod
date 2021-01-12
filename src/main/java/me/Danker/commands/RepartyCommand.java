@@ -25,11 +25,13 @@ import java.util.regex.Pattern;
 
 
 public class RepartyCommand extends CommandBase implements ICommand {
+    public static double callTime = 0;
     public static boolean gettingParty = false;
     public static int Delimiter = 0;
     public static boolean disbanding = false;
     public static boolean inviting = false;
     public static boolean failInviting = false;
+    public static String currentMember;
     public static List<String> party = new ArrayList<>();
     public static List<String> repartyFailList = new ArrayList<>();
     public static List<String> joinList = new ArrayList<>();
@@ -60,6 +62,7 @@ public class RepartyCommand extends CommandBase implements ICommand {
         if (args.length > 0 && (args[0].startsWith("fail") || args[0].equals("f"))) {
             partyThread = new Thread(() -> {
                 EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
+                RepartyCommand.callTime = (double) System.currentTimeMillis() / 1000;
                 GuiNewChat chat = Minecraft.getMinecraft().ingameGUI.getChatGUI();
 
 
@@ -91,25 +94,22 @@ public class RepartyCommand extends CommandBase implements ICommand {
             return;
         }
 
-        boolean ghost = args.length > 0 && (args[0].toLowerCase().equals("g") || args[0].toLowerCase().equals("ghost"));
 
-        if(ghost){
-            party.clear();
-            repartyFailList.clear();
-        }
+        party.clear();
+        repartyFailList.clear();
 
         // MULTI THREAD DRIFTING
         partyThread = new Thread(() -> {
             EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
+            RepartyCommand.callTime = (double) System.currentTimeMillis() / 1000;
+            GuiNewChat chat = Minecraft.getMinecraft().ingameGUI.getChatGUI();
 
 
             try {
-                if(ghost){
-                    player.sendChatMessage("/pl");
-                    gettingParty = true;
-                    while (gettingParty) {
-                        Thread.sleep(10);
-                    }
+                player.sendChatMessage("/pl");
+                gettingParty = true;
+                while (gettingParty) {
+                    Thread.sleep(10);
                 }
                 if (party.size() == 0) return;
                 player.sendChatMessage("/p disband");
