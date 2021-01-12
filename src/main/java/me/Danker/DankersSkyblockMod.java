@@ -120,6 +120,7 @@ public class DankersSkyblockMod {
     static Entity highestBlaze = null;
     static Entity lowestBlaze = null;
     static int blazeMode = 0;
+    static boolean shotArrowNearBlaze = false;
 
     // Among Us colours
     static final int[] CREEPER_COLOURS = {0x50EF39, 0xC51111, 0x132ED1, 0x117F2D, 0xED54BA, 0xEF7D0D, 0xF5F557, 0xD6E0F0, 0x6B2FBB, 0x39FEDC};
@@ -401,6 +402,7 @@ public class DankersSkyblockMod {
         lowestBlaze = null;
         highestBlaze = null;
         blazeMode = 0;
+        shotArrowNearBlaze = false;
         simonBlockOrder.clear();
         simonNumberNeeded = 0;
     }
@@ -580,7 +582,7 @@ public class DankersSkyblockMod {
     	    Matcher matcher = jerryType.matcher(event.message.getFormattedText());
     	    if (matcher.find()) {
     	        String colour = matcher.group(1);
-    	        Utils.createTitle("\u00a7" + colour.toUpperCase() + " JERRY !", 2);
+    	        Utils.createTitle("\u00a7" + colour.toUpperCase() + " JERRY!", 3);
             }
         }
         
@@ -2903,7 +2905,7 @@ public class DankersSkyblockMod {
         if (tickAmount % 4 == 0) {
             if (ToggleCommand.blazeToggled && Utils.inDungeons && world != null) {
 
-                if (lowestBlaze != null && highestBlaze != null) {
+                if (lowestBlaze != null && highestBlaze != null && blazeMode == 0 && shotArrowNearBlaze) {
                     if (lowestBlaze.isDead) {
                         System.out.println("Lowest Blaze is Dead");
                         blazeMode = -1;
@@ -3321,6 +3323,23 @@ public class DankersSkyblockMod {
                     return Arrays.stream(new String[]{"Howling Cave", "Ruins", "Graveyard", "Coal Mine", "Spider's Den"}).anyMatch(line::contains);
                 })) {
                     Utils.createTitle(EnumChatFormatting.RED + "Boss slain!", 2);
+                }
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public void onArrowLoose(ArrowLooseEvent event) {
+        if (Utils.inDungeons) {
+            if (event.entity.equals(mc.thePlayer)) {
+                if (!shotArrowNearBlaze) {
+                    for (Entity e : mc.theWorld.loadedEntityList) {
+                        if (e instanceof EntityBlaze) {
+                            if (e.getDistanceToEntity(mc.thePlayer) <= 10) {
+                                shotArrowNearBlaze = true;
+                            }
+                        }
+                    }
                 }
             }
         }
