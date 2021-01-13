@@ -117,8 +117,10 @@ public class DankersSkyblockMod {
     static BlockPos riddleChest = null;
     static Map<String, String[]> triviaSolutions = new HashMap<>();
     static String[] triviaAnswers = null;
-    static Entity highestBlaze = null;
-    static Entity lowestBlaze = null;
+    static EntityArmorStand highestBlazeLabel = null;
+    static EntityArmorStand lowestBlazeLabel = null;
+    public static EntityBlaze highestBlaze = null;
+    public static EntityBlaze lowestBlaze = null;
     static int blazeMode = 0;
     static boolean shotArrowNearBlaze = false;
 
@@ -399,6 +401,8 @@ public class DankersSkyblockMod {
         nextBonzoUse = 0;
         riddleNPC = null;
         riddleChest = null;
+        lowestBlazeLabel = null;
+        highestBlazeLabel = null;
         lowestBlaze = null;
         highestBlaze = null;
         blazeMode = 0;
@@ -2905,12 +2909,12 @@ public class DankersSkyblockMod {
         if (tickAmount % 4 == 0) {
             if (ToggleCommand.blazeToggled && Utils.inDungeons && world != null) {
 
-                if (lowestBlaze != null && highestBlaze != null && blazeMode == 0 && shotArrowNearBlaze) {
-                    if (lowestBlaze.isDead) {
+                if (lowestBlazeLabel != null && highestBlazeLabel != null && blazeMode == 0 && shotArrowNearBlaze) {
+                    if (lowestBlazeLabel.isDead) {
                         System.out.println("Lowest Blaze is Dead");
                         blazeMode = -1;
                     }
-                    if (highestBlaze.isDead) {
+                    if (highestBlazeLabel.isDead) {
                         System.out.println("Highest Blaze is Dead");
                         blazeMode = 1;
                     }
@@ -2918,22 +2922,24 @@ public class DankersSkyblockMod {
 
                 List<Entity> entities = world.getLoadedEntityList();
                 int highestHealth = 0;
+                highestBlazeLabel = null;
                 highestBlaze = null;
                 int lowestHealth = 99999999;
+                lowestBlazeLabel = null;
                 lowestBlaze = null;
 
                 for (Entity entity : entities) {
-                    if (entity.getName().contains("Blaze") && entity.getName().contains("/")) {
+                    if (entity instanceof EntityArmorStand && entity.getName().contains("Blaze") && entity.getName().contains("/")) {
                         String blazeName = StringUtils.stripControlCodes(entity.getName());
                         try {
                             int health = Integer.parseInt(blazeName.substring(blazeName.indexOf("/") + 1, blazeName.length() - 1));
                             if (health > highestHealth) {
                                 highestHealth = health;
-                                highestBlaze = entity;
+                                highestBlazeLabel = (EntityArmorStand) entity;
                             }
                             if (health < lowestHealth) {
                                 lowestHealth = health;
-                                lowestBlaze = entity;
+                                lowestBlazeLabel = (EntityArmorStand) entity;
                             }
                         } catch (NumberFormatException ex) {
                             ex.printStackTrace();
@@ -2941,7 +2947,7 @@ public class DankersSkyblockMod {
                     }
                 }
 
-                if (blazeMode == 0 && (highestBlaze != null || lowestBlaze != null)) {
+                if (blazeMode == 0 && (highestBlazeLabel != null || lowestBlazeLabel != null)) {
                     new Thread(() -> {
                         ScoreboardHandler.getSidebarLines().stream().forEach(l -> {
                             String line = ScoreboardHandler.cleanSB(l);
@@ -3092,17 +3098,33 @@ public class DankersSkyblockMod {
         }
 
         if (ToggleCommand.blazeToggled && Utils.inDungeons) {
-            if (lowestBlaze != null && ((ToggleCommand.onlyShowCorrectBlazeToggled && blazeMode == -1) || !ToggleCommand.onlyShowCorrectBlazeToggled || blazeMode == 0)) {
-                BlockPos stringPos = new BlockPos(lowestBlaze.posX, lowestBlaze.posY + 1, lowestBlaze.posZ);
+            if (lowestBlazeLabel != null && ((ToggleCommand.onlyShowCorrectBlazeToggled && blazeMode == -1) || !ToggleCommand.onlyShowCorrectBlazeToggled || blazeMode == 0)) {
+                BlockPos stringPos = new BlockPos(lowestBlazeLabel.posX, lowestBlazeLabel.posY + 1, lowestBlazeLabel.posZ);
                 Utils.draw3DString(stringPos, EnumChatFormatting.BOLD + "Smallest", LOWEST_BLAZE_COLOUR, event.partialTicks);
-                AxisAlignedBB aabb = new AxisAlignedBB(lowestBlaze.posX - 0.5, lowestBlaze.posY - 2, lowestBlaze.posZ - 0.5, lowestBlaze.posX + 0.5, lowestBlaze.posY, lowestBlaze.posZ + 0.5);
+                AxisAlignedBB aabb = new AxisAlignedBB(lowestBlazeLabel.posX - 0.5, lowestBlazeLabel.posY - 2, lowestBlazeLabel.posZ - 0.5, lowestBlazeLabel.posX + 0.5, lowestBlazeLabel.posY, lowestBlazeLabel.posZ + 0.5);
                 Utils.draw3DBox(aabb, LOWEST_BLAZE_COLOUR, event.partialTicks);
+                for (Entity entity : mc.theWorld.loadedEntityList) {
+                    if (entity instanceof EntityBlaze) {
+                        if (entity.getEntityBoundingBox().intersectsWith(aabb)) {
+                            lowestBlaze = (EntityBlaze) entity;
+                            break;
+                        }
+                    }
+                }
             }
-            if (highestBlaze != null  && ((ToggleCommand.onlyShowCorrectBlazeToggled && blazeMode == 1) || !ToggleCommand.onlyShowCorrectBlazeToggled || blazeMode == 0)) {
-                BlockPos stringPos = new BlockPos(highestBlaze.posX, highestBlaze.posY + 1, highestBlaze.posZ);
+            if (highestBlazeLabel != null  && ((ToggleCommand.onlyShowCorrectBlazeToggled && blazeMode == 1) || !ToggleCommand.onlyShowCorrectBlazeToggled || blazeMode == 0)) {
+                BlockPos stringPos = new BlockPos(highestBlazeLabel.posX, highestBlazeLabel.posY + 1, highestBlazeLabel.posZ);
                 Utils.draw3DString(stringPos, EnumChatFormatting.BOLD + "Biggest", HIGHEST_BLAZE_COLOUR, event.partialTicks);
-                AxisAlignedBB aabb = new AxisAlignedBB(highestBlaze.posX - 0.5, highestBlaze.posY - 2, highestBlaze.posZ - 0.5, highestBlaze.posX + 0.5, highestBlaze.posY, highestBlaze.posZ + 0.5);
+                AxisAlignedBB aabb = new AxisAlignedBB(highestBlazeLabel.posX - 0.5, highestBlazeLabel.posY - 2, highestBlazeLabel.posZ - 0.5, highestBlazeLabel.posX + 0.5, highestBlazeLabel.posY, highestBlazeLabel.posZ + 0.5);
                 Utils.draw3DBox(aabb, HIGHEST_BLAZE_COLOUR, event.partialTicks);
+                for (Entity entity : mc.theWorld.loadedEntityList) {
+                    if (entity instanceof EntityBlaze) {
+                        if (entity.getEntityBoundingBox().intersectsWith(aabb)) {
+                            highestBlaze = (EntityBlaze) entity;
+                            break;
+                        }
+                    }
+                }
             }
         }
         if (ToggleCommand.creeperToggled && drawCreeperLines && !creeperLines.isEmpty()) {

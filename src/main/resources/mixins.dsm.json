@@ -4,8 +4,10 @@
   "mixins": [
     "MixinBossStatus",
     "MixinChunk",
+    "MixinModelBlaze",
     "MixinNetHandlerPlayClient",
-    "MixinPlayerControllerMP"
+    "MixinPlayerControllerMP",
+    "MixinRenderBlaze"
   ],
   "verbose": true
 }
