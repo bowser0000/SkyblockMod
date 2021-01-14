@@ -121,7 +121,7 @@ public class DankerGui extends GuiScreen {
 		healMessages = new GuiButton(0, width / 2 - 100, (int) (height * 0.7), "Heal Messages: " + Utils.getColouredBoolean(ToggleCommand.healMessages));
 		// Page 4
 		goldenEnch = new GuiButton(0, width / 2 - 100, (int) (height * 0.1), "Golden T10/T6/T4 Enchantments: " + Utils.getColouredBoolean(ToggleCommand.goldenToggled));
-		petColours = new GuiButton(0, width / 2 - 100, (int) (height * 0.2), "Colour Pet Backgrounds: " + Utils.getColouredBoolean(ToggleCommand.petColoursToggled));
+		petColours = new GuiButton(0, width / 2 - 100, (int) (height * 0.2), "Color Pet Backgrounds: " + Utils.getColouredBoolean(ToggleCommand.petColoursToggled));
 		expertiseLore = new GuiButton(0, width / 2 - 100, (int) (height * 0.3), "Expertise Kills In Lore: " + Utils.getColouredBoolean(ToggleCommand.expertiseLoreToggled));
 		lividSolver = new GuiButton(0, width / 2 - 100, (int) (height * 0.4), "Find Correct Livid: " + Utils.getColouredBoolean(ToggleCommand.lividSolverToggled));
 		golemAlerts = new GuiButton(0, width / 2 - 100, (int) (height * 0.5), "Alert When Golem Spawns: " + Utils.getColouredBoolean(ToggleCommand.golemAlertToggled));

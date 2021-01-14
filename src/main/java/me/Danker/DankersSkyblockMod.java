@@ -3441,7 +3441,8 @@ public class DankersSkyblockMod {
                                             event.setCanceled(true);
                                             return;
                                         }
-                                    } else if (secondUpgrade != null) {
+                                    }
+                                    if (secondUpgrade != null) {
                                         if (StringUtils.stripControlCodes(secondUpgrade.getDisplayName()).contains("Super Compactor 3000")) {
                                             event.setCanceled(true);
                                             return;
