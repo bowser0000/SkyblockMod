@@ -62,12 +62,7 @@ public class MixinNetHandlerPlayClient {
             ObfuscationReflectionHelper.setPrivateValue(S04PacketEntityEquipment.class, packet, packet.getEquipmentSlot() + 1, "equipmentSlot", "field_149392_b");
         }
     }
-
-    @Inject(method = "handleBlockChange", at = @At("HEAD"))
-    private void onHandleBlockChange(S23PacketBlockChange packet, CallbackInfo ci) {
-
-    }
-
+    
     @Inject(method = "handleParticles(Lnet/minecraft/network/play/server/S2APacketParticles;)V", at = @At("HEAD"), cancellable = true)
     private void onHandleParticles(S2APacketParticles packet, CallbackInfo ci) {
 

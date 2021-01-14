@@ -105,6 +105,7 @@ public class DankersSkyblockMod {
     public static double nextBonzoUse = 0;
     public static boolean firstLaunch = false;
     static String lastPartyDisbander = "";
+    public static HashMap<BlockPos, Integer> griffinBurrows = new HashMap<>();
 
     public static final ResourceLocation CAKE_ICON = new ResourceLocation("dsm", "icons/cake.png");
     public static final ResourceLocation BONZO_ICON = new ResourceLocation("dsm", "icons/bonzo.png");
@@ -579,6 +580,11 @@ public class DankersSkyblockMod {
     		}
     		return;
     	}
+
+    	if (message.contains("You dug out a Griffin Burrow") || message.contains("You finished the Griffin burrow chain!")) {
+    	    griffinBurrows.clear();
+        }
+
     	if (ToggleCommand.hiddenJerryAlertToggled && message.contains("☺") && message.contains("Jerry") && !message.contains("Jerry Box")) {
     	    Pattern jerryType = Pattern.compile("(\\w+)(?=\\s+Jerry)");
     	    Matcher matcher = jerryType.matcher(event.message.getFormattedText());
@@ -3090,6 +3096,18 @@ public class DankersSkyblockMod {
 
     @SubscribeEvent
     public void onWorldRender(RenderWorldLastEvent event) {
+        if (griffinBurrows.size() > 0) {
+            griffinBurrows.entrySet().iterator().forEachRemaining((entry) -> {
+                BlockPos pos = entry.getKey();
+                GlStateManager.disableDepth();
+                GL11.glLineWidth(200);
+                Utils.draw3DLine(new Vec3(pos.add(0.5, 0, 0.5)), new Vec3(pos.add(0.5, 200, 0.5)), new Color(255, 0, 0).getRGB(), event.partialTicks);
+                Utils.draw3DBox(new AxisAlignedBB(pos, pos.add(1, 1, 1)), new Color(255, 0, 0).getRGB(), event.partialTicks);
+                GL11.glLineWidth(1);
+                GlStateManager.enableDepth();
+            });
+        }
+
         if (ToggleCommand.simonToggled && simonNumberNeeded < simonBlockOrder.size()) {
             BlockPos pos = simonBlockOrder.get(simonNumberNeeded);
             Utils.draw3DBox(new AxisAlignedBB(pos.west(), pos.add(1, 1, 1)), new Color(255, 0, 0).getRGB(), event.partialTicks);
