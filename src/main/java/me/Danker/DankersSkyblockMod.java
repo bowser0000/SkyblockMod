@@ -206,7 +206,6 @@ public class DankersSkyblockMod {
     @EventHandler
     public void init(FMLInitializationEvent event) {
         MinecraftForge.EVENT_BUS.register(this);
-        MinecraftForge.EVENT_BUS.register(new PacketHandler());
 
         ConfigHandler.reloadConfig();
 
@@ -3903,12 +3902,6 @@ public class DankersSkyblockMod {
 
             }
         }
-    }
-
-    @SubscribeEvent
-    public void onServerConnect(ClientConnectedToServerEvent event) {
-        event.manager.channel().pipeline().addBefore("packet_handler", "danker_packet_handler", new PacketHandler());
-        System.out.println("Added packet handler to channel pipeline.");
     }
 
     public boolean isKeyBindActive(KeyBinding bind) {

@@ -1,16 +1,25 @@
 package me.Danker.mixin;
 
+import me.Danker.DankersSkyblockMod;
 import me.Danker.commands.ToggleCommand;
-import me.Danker.handlers.ScoreboardHandler;
 import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.client.network.NetHandlerPlayClient;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.item.EntityItemFrame;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraft.network.Packet;
+import net.minecraft.network.play.INetHandlerPlayServer;
+import net.minecraft.network.play.client.C02PacketUseEntity;
+import net.minecraft.network.play.server.S04PacketEntityEquipment;
+import net.minecraft.network.play.server.S23PacketBlockChange;
 import net.minecraft.network.play.server.S2APacketParticles;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.EntitySelectors;
+import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumParticleTypes;
+import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -23,22 +32,53 @@ public class MixinNetHandlerPlayClient {
     @Shadow
     private Minecraft gameController;
 
+    @Shadow
+    private WorldClient clientWorldController;
+
+    @Inject(method = "addToSendQueue", at = @At("HEAD"), cancellable = true)
+    private void onSendPacket(Packet<INetHandlerPlayServer> packetIn, CallbackInfo ci) {
+        if (packetIn instanceof C02PacketUseEntity) {
+            C02PacketUseEntity packet = (C02PacketUseEntity) packetIn;
+            if (ToggleCommand.itemFrameOnSeaLanternsToggled && Utils.inDungeons) {
+                Entity entityHit = packet.getEntityFromWorld(gameController.theWorld);
+                if (entityHit instanceof EntityItemFrame) {
+                    EntityItemFrame itemFrame = (EntityItemFrame) entityHit;
+                    ItemStack item = itemFrame.getDisplayedItem();
+                    if (item != null && item.getItem() == Items.arrow) {
+                        BlockPos blockPos = Utils.getBlockUnderItemFrame(itemFrame);
+                        if (gameController.theWorld.getBlockState(blockPos).getBlock() == Blocks.sea_lantern) {
+                            ci.cancel();
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    @Inject(method = "handleEntityEquipment", at = @At("HEAD"))
+    private void onHandleEntityEquipment(S04PacketEntityEquipment packet, CallbackInfo ci) {
+        //Spirit Boots Fix
+        if (packet.getEntityID() == gameController.thePlayer.getEntityId()) {
+            ObfuscationReflectionHelper.setPrivateValue(S04PacketEntityEquipment.class, packet, packet.getEquipmentSlot() + 1, "equipmentSlot", "field_149392_b");
+        }
+    }
+
     @Inject(method = "handleParticles(Lnet/minecraft/network/play/server/S2APacketParticles;)V", at = @At("HEAD"), cancellable = true)
-    private void onHandleParticles(S2APacketParticles packetIn, CallbackInfo ci) {
+    private void onHandleParticles(S2APacketParticles packet, CallbackInfo ci) {
 
-        boolean longDistance = packetIn.isLongDistance();
-        int count = packetIn.getParticleCount();
-        float speed = packetIn.getParticleSpeed();
-        float xOffset = packetIn.getXOffset();
-        float yOffset = packetIn.getYOffset();
-        float zOffset = packetIn.getZOffset();
+        boolean longDistance = packet.isLongDistance();
+        int count = packet.getParticleCount();
+        float speed = packet.getParticleSpeed();
+        float xOffset = packet.getXOffset();
+        float yOffset = packet.getYOffset();
+        float zOffset = packet.getZOffset();
 
-        double x = packetIn.getXCoordinate();
-        double y = packetIn.getYCoordinate();
-        double z = packetIn.getZCoordinate();
+        double x = packet.getXCoordinate();
+        double y = packet.getYCoordinate();
+        double z = packet.getZCoordinate();
 
         if (Utils.inSkyblock) {
-            if (packetIn.getParticleType() == EnumParticleTypes.EXPLOSION_LARGE) {
+            if (packet.getParticleType() == EnumParticleTypes.EXPLOSION_LARGE) {
                 boolean bigExplosionFilter = count == 8 && speed == 8 && xOffset == 0 && yOffset == 0 && zOffset == 0;
 
                 //More consistent detection system needed
