@@ -205,6 +205,7 @@ public class ConfigHandler {
 		if (!hasKey("toggles", "ZombieSword")) writeBooleanConfig("toggles", "ZombieSword", false);
 		if (!hasKey("toggles", "AutoAcceptReparty")) writeBooleanConfig("toggles", "AutoAcceptReparty", false);
 		if (!hasKey("toggles", "HiddenJerryAlert")) writeBooleanConfig("toggles", "HiddenJerryAlert", false);
+		if (!hasKey("toggles", "BlockCollectingUnenchanted")) writeBooleanConfig("toggles", "BlockCollectingUnenchanted", false);
 
 		// Puzzle Solvers
 		if (!hasKey("toggles", "ThreeManPuzzle")) writeBooleanConfig("toggles", "ThreeManPuzzle", false);
@@ -489,6 +490,7 @@ public class ConfigHandler {
 		ToggleCommand.zombieSwordToggled = getBoolean("toggles", "ZombieSword");
 		ToggleCommand.autoAcceptRepartyToggled = getBoolean("toggles", "AutoAcceptReparty");
 		ToggleCommand.hiddenJerryAlertToggled = getBoolean("toggles", "HiddenJerryAlert");
+		ToggleCommand.blockCollectingUnenchantedToggled = getBoolean("toggles", "BlockCollectingUnenchanted");
 		ToggleCommand.swapToPickBlockToggled = getBoolean("toggles", "PickBlock");
 		ToggleCommand.flowerWeaponsToggled = getBoolean("toggles", "FlowerWeapons");
 

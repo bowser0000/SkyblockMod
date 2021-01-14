@@ -3414,6 +3414,46 @@ public class DankersSkyblockMod {
                 ItemStack item = mouseSlot.getStack();
                 String inventoryName = inventory.getDisplayName().getUnformattedText();
 
+                if (ToggleCommand.blockCollectingUnenchantedToggled && inventoryName.contains("Minion") && item != null) {
+                    if (!item.isItemEnchanted()) {
+                        if (inventoryName.equals("Minion Chest")) {
+                            boolean chestHasEnchantedItem = false;
+                            for (int i = 0; i < inventory.getSizeInventory(); i++) {
+                                ItemStack stack = inventory.getStackInSlot(i);
+                                if (stack.isItemEnchanted()) {
+                                    chestHasEnchantedItem = true;
+                                    break;
+                                }
+                            }
+                            if (!chestHasEnchantedItem) {
+                                event.setCanceled(true);
+                                return;
+                            }
+                        } else {
+                            ItemStack minionType = inventory.getStackInSlot(4);
+                            if (minionType == null) return;
+                            if (StringUtils.stripControlCodes(minionType.getDisplayName()).contains("Minion")) {
+                                int index = mouseSlot.getSlotIndex();
+                                if (index >= 21 && index <= 43 && index % 9 >= 3 && index % 9 <= 7) {
+                                    ItemStack firstUpgrade = inventory.getStackInSlot(37);
+                                    ItemStack secondUpgrade = inventory.getStackInSlot(46);
+                                    if (firstUpgrade != null) {
+                                        if (StringUtils.stripControlCodes(firstUpgrade.getDisplayName()).contains("Super Compactor 3000")) {
+                                            event.setCanceled(true);
+                                            return;
+                                        }
+                                    } else if (secondUpgrade != null) {
+                                        if (StringUtils.stripControlCodes(secondUpgrade.getDisplayName()).contains("Super Compactor 3000")) {
+                                            event.setCanceled(true);
+                                            return;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
                 if (ToggleCommand.stopSalvageStarredToggled && inventoryName.startsWith("Salvage")) {
                     if (item == null) return;
                     boolean inSalvageGui = false;

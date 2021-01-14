@@ -68,6 +68,7 @@ public class DankerGui extends GuiScreen {
 	private GuiButton zombieSword;
 	private GuiButton autoAcceptReparty;
 	private GuiButton hiddenJerryAlert;
+	private GuiButton blockCollectingUnenchanted;
 
 	public DankerGui(int page) {
 		this.page = page;
@@ -142,6 +143,8 @@ public class DankerGui extends GuiScreen {
 		zombieSword = new GuiButton(0, width / 2 - 100, (int) (height * 0.5), "Block Useless Zombie Sword Use: " + Utils.getColouredBoolean(ToggleCommand.zombieSwordToggled));
 		autoAcceptReparty = new GuiButton(0, width / 2 - 100, (int) (height * 0.6), "Auto Accept Reparty: " + Utils.getColouredBoolean(ToggleCommand.autoAcceptRepartyToggled));
 		hiddenJerryAlert = new GuiButton(0, width / 2 - 100, (int) (height * 0.7), "Hidden Jerry Alert: " + Utils.getColouredBoolean(ToggleCommand.hiddenJerryAlertToggled));
+		// Page 7
+		blockCollectingUnenchanted = new GuiButton(0, width / 2 - 100, (int) (height * 0.1), "Block Collecting Unenchanted Items: " + Utils.getColouredBoolean(ToggleCommand.blockCollectingUnenchantedToggled));
 
 		switch (page) {
 			case 1:
@@ -206,8 +209,12 @@ public class DankerGui extends GuiScreen {
 				this.buttonList.add(zombieSword);
 				this.buttonList.add(autoAcceptReparty);
 				this.buttonList.add(hiddenJerryAlert);
+				this.buttonList.add(nextPage);
 				this.buttonList.add(backPage);
 				break;
+			case 7:
+				this.buttonList.add(blockCollectingUnenchanted);
+				this.buttonList.add(backPage);
 		}
 		
 		this.buttonList.add(githubLink);
@@ -397,6 +404,10 @@ public class DankerGui extends GuiScreen {
 			ToggleCommand.hiddenJerryAlertToggled = !ToggleCommand.hiddenJerryAlertToggled;
 			ConfigHandler.writeBooleanConfig("toggles", "HiddenJerryAlert", ToggleCommand.hiddenJerryAlertToggled);
 			hiddenJerryAlert.displayString = "Hidden Jerry Alert: " + Utils.getColouredBoolean(ToggleCommand.hiddenJerryAlertToggled);
+		} else if (button == blockCollectingUnenchanted) {
+			ToggleCommand.blockCollectingUnenchantedToggled = !ToggleCommand.blockCollectingUnenchantedToggled;
+			ConfigHandler.writeBooleanConfig("toggles", "BlockCollectingUnenchanted", ToggleCommand.blockCollectingUnenchantedToggled);
+			blockCollectingUnenchanted.displayString = "Block Collecting Unenchanted Items: " + Utils.getColouredBoolean(ToggleCommand.blockCollectingUnenchantedToggled);
 		} else if (button == pickBlock) {
 			ToggleCommand.swapToPickBlockToggled = !ToggleCommand.swapToPickBlockToggled;
 			ConfigHandler.writeBooleanConfig("toggles", "PickBlock", ToggleCommand.swapToPickBlockToggled);
