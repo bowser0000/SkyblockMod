@@ -226,7 +226,7 @@ public class DankerGui extends GuiScreen {
 	@Override
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
 		this.drawDefaultBackground();
-		String pageText = "Page: " + page + "/6";
+		String pageText = "Page: " + page + "/7";
 		int pageWidth = mc.fontRendererObj.getStringWidth(pageText);
 		new TextRenderer(mc, pageText, width / 2 - pageWidth / 2, 10, 1D);
 		super.drawScreen(mouseX, mouseY, partialTicks);
