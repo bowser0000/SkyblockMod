@@ -3470,7 +3470,7 @@ public class DankersSkyblockMod {
                                     break;
                                 }
                             }
-                            if (!chestHasEnchantedItem) {
+                            if (chestHasEnchantedItem) {
                                 event.setCanceled(true);
                                 return;
                             }
