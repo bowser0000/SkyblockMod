@@ -73,6 +73,7 @@ public class DankerGuiCommand extends CommandBase {
 					debug.append("[autoacceptreparty][").append(ToggleCommand.autoAcceptRepartyToggled).append("]\n");
 					debug.append("[hiddenjerryalert][").append(ToggleCommand.hiddenJerryAlertToggled).append("]\n");
 					debug.append("[blockcollectingunenchanted][").append(ToggleCommand.blockCollectingUnenchantedToggled).append("]\n");
+					debug.append("[burrowwaypoints][").append(ToggleCommand.burrowWaypointsToggled).append("]\n");
 					debug.append("[threemanpuzzle][").append(ToggleCommand.threeManToggled).append("]\n");
 					debug.append("[oruopuzzle][").append(ToggleCommand.oruoToggled).append("]\n");
 					debug.append("[blazepuzzle][").append(ToggleCommand.blazeToggled).append("]\n");

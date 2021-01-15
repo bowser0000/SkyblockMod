@@ -62,7 +62,7 @@ public class MixinNetHandlerPlayClient {
             ObfuscationReflectionHelper.setPrivateValue(S04PacketEntityEquipment.class, packet, packet.getEquipmentSlot() + 1, "equipmentSlot", "field_149392_b");
         }
     }
-    
+
     @Inject(method = "handleParticles(Lnet/minecraft/network/play/server/S2APacketParticles;)V", at = @At("HEAD"), cancellable = true)
     private void onHandleParticles(S2APacketParticles packet, CallbackInfo ci) {
 
@@ -78,17 +78,6 @@ public class MixinNetHandlerPlayClient {
         double z = packet.getZCoordinate();
 
         if (Utils.inSkyblock) {
-
-            if (packet.getParticleType() == EnumParticleTypes.FOOTSTEP) {
-                boolean burrowFilter = count == 1 && speed <= 0.1 && xOffset <= 0.1 && yOffset <= 0.1 && zOffset <= 0.1;
-                if (burrowFilter) {
-                    BlockPos blockUnder = new BlockPos(Math.floor(x), Math.floor(y) -1, Math.floor(z));
-                    if (clientWorldController.getBlockState(blockUnder).getBlock() == Blocks.grass) {
-                        DankersSkyblockMod.griffinBurrows.compute(blockUnder, (pos, times) -> times != null ? times++ : 1);
-                    }
-                }
-            }
-
             if (packet.getParticleType() == EnumParticleTypes.EXPLOSION_LARGE) {
                 boolean bigExplosionFilter = count == 8 && speed == 8 && xOffset == 0 && yOffset == 0 && zOffset == 0;
 

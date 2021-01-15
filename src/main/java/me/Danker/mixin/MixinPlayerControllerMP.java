@@ -2,6 +2,7 @@ package me.Danker.mixin;
 
 import me.Danker.DankersSkyblockMod;
 import me.Danker.commands.ToggleCommand;
+import me.Danker.utils.GriffinBurrowUtils;
 import me.Danker.utils.Utils;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
@@ -43,6 +44,13 @@ public class MixinPlayerControllerMP {
         Block block = mc.theWorld.getBlockState(pos).getBlock();
 
         if (Utils.inSkyblock) {
+
+            if (ToggleCommand.burrowWaypointsToggled && heldItem.getDisplayName().contains("Ancestral Spade") && block == Blocks.grass) {
+                if (GriffinBurrowUtils.burrows.stream().anyMatch(burrow -> burrow.getBlockPos().equals(pos))) {
+                    GriffinBurrowUtils.lastDugBurrow = pos;
+                }
+            }
+
             if (ToggleCommand.blockBreakingFarmsToggled && heldItem != null) {
                 ArrayList<Item> tools = new ArrayList<>(Arrays.asList(
                         Items.wooden_hoe,

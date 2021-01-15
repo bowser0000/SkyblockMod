@@ -69,6 +69,7 @@ public class DankerGui extends GuiScreen {
 	private GuiButton autoAcceptReparty;
 	private GuiButton hiddenJerryAlert;
 	private GuiButton blockCollectingUnenchanted;
+	private GuiButton burrowWaypoints;
 
 	public DankerGui(int page) {
 		this.page = page;
@@ -145,6 +146,7 @@ public class DankerGui extends GuiScreen {
 		hiddenJerryAlert = new GuiButton(0, width / 2 - 100, (int) (height * 0.7), "Hidden Jerry Alert: " + Utils.getColouredBoolean(ToggleCommand.hiddenJerryAlertToggled));
 		// Page 7
 		blockCollectingUnenchanted = new GuiButton(0, width / 2 - 100, (int) (height * 0.1), "Block Collecting Unenchanted Items: " + Utils.getColouredBoolean(ToggleCommand.blockCollectingUnenchantedToggled));
+		burrowWaypoints = new GuiButton(0, width / 2 - 100, (int) (height * 0.2), "Griffin Burrow Waypoints: " + Utils.getColouredBoolean(ToggleCommand.burrowWaypointsToggled));
 
 		switch (page) {
 			case 1:
@@ -214,6 +216,7 @@ public class DankerGui extends GuiScreen {
 				break;
 			case 7:
 				this.buttonList.add(blockCollectingUnenchanted);
+				this.buttonList.add(burrowWaypoints);
 				this.buttonList.add(backPage);
 		}
 		
@@ -408,6 +411,10 @@ public class DankerGui extends GuiScreen {
 			ToggleCommand.blockCollectingUnenchantedToggled = !ToggleCommand.blockCollectingUnenchantedToggled;
 			ConfigHandler.writeBooleanConfig("toggles", "BlockCollectingUnenchanted", ToggleCommand.blockCollectingUnenchantedToggled);
 			blockCollectingUnenchanted.displayString = "Block Collecting Unenchanted Items: " + Utils.getColouredBoolean(ToggleCommand.blockCollectingUnenchantedToggled);
+		} else if (button == burrowWaypoints) {
+			ToggleCommand.burrowWaypointsToggled = !ToggleCommand.burrowWaypointsToggled;
+			ConfigHandler.writeBooleanConfig("toggles", "BurrowWaypoints", ToggleCommand.burrowWaypointsToggled);
+			burrowWaypoints.displayString = "Griffin Burrow Waypoints: " + Utils.getColouredBoolean(ToggleCommand.burrowWaypointsToggled);
 		} else if (button == pickBlock) {
 			ToggleCommand.swapToPickBlockToggled = !ToggleCommand.swapToPickBlockToggled;
 			ConfigHandler.writeBooleanConfig("toggles", "PickBlock", ToggleCommand.swapToPickBlockToggled);
