@@ -6,9 +6,14 @@ import me.Danker.DankersSkyblockMod;
 import me.Danker.handlers.APIHandler;
 import me.Danker.handlers.ConfigHandler;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.Vec3;
+import org.lwjgl.opengl.GL11;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 public class GriffinBurrowUtils {
@@ -86,6 +91,14 @@ public class GriffinBurrowUtils {
 
         public BlockPos getBlockPos() {
             return new BlockPos(x, y, z);
+        }
+
+        public void drawWaypoint(float partialTicks) {
+            BlockPos pos = this.getBlockPos();
+            GlStateManager.disableDepth();
+            Utils.draw3DLine(new Vec3(pos.add(0.5, 0, 0.5)), new Vec3(pos.add(0.5, 200, 0.5)), new Color(255, 0, 0).getRGB(), partialTicks);
+            Utils.draw3DBox(new AxisAlignedBB(pos, pos.add(1, 1, 1)), new Color(255, 0, 0).getRGB(), partialTicks);
+            GlStateManager.enableDepth();
         }
 
     }

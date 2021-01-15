@@ -409,6 +409,8 @@ public class DankersSkyblockMod {
         shotArrowNearBlaze = false;
         simonBlockOrder.clear();
         simonNumberNeeded = 0;
+        inIceRoom = false;
+        GriffinBurrowUtils.burrows.clear();
     }
 
     // It randomly broke, so I had to make it the highest priority
@@ -3133,13 +3135,7 @@ public class DankersSkyblockMod {
         if (ToggleCommand.burrowWaypointsToggled && GriffinBurrowUtils.burrows.size() > 0) {
             List<GriffinBurrowUtils.Burrow> burrows = Lists.newArrayList(GriffinBurrowUtils.burrows);
             burrows.forEach(burrow -> {
-                BlockPos pos = burrow.getBlockPos();
-                GlStateManager.disableDepth();
-                GL11.glLineWidth(200);
-                Utils.draw3DLine(new Vec3(pos.add(0.5, 0, 0.5)), new Vec3(pos.add(0.5, 200, 0.5)), new Color(255, 0, 0).getRGB(), event.partialTicks);
-                Utils.draw3DBox(new AxisAlignedBB(pos, pos.add(1, 1, 1)), new Color(255, 0, 0).getRGB(), event.partialTicks);
-                GL11.glLineWidth(1);
-                GlStateManager.enableDepth();
+                burrow.drawWaypoint(event.partialTicks);
             });
         }
 
