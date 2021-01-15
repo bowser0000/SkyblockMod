@@ -2591,7 +2591,7 @@ public class DankersSkyblockMod {
 
         //Checks every minute
         if (tickAmount % 1200 == 0) {
-            if (ToggleCommand.burrowWaypointsToggled && Utils.inSkyblock) {
+            if (ToggleCommand.burrowWaypointsToggled && Utils.inSkyblock && player != null) {
                 for (int i = 0; i < 8; i++) {
                     ItemStack hotbarItem = player.inventory.getStackInSlot(i);
                     if (hotbarItem == null) continue;
@@ -2655,6 +2655,18 @@ public class DankersSkyblockMod {
                 }
                 if (!found) DisplayCommand.display = "off";
                 ConfigHandler.writeStringConfig("misc", "display", DisplayCommand.display);
+            }
+
+            if (ToggleCommand.burrowWaypointsToggled && Utils.inSkyblock && GriffinBurrowUtils.burrows.size() == 0 && player != null) {
+                for (int i = 0; i < 8; i++) {
+                    ItemStack hotbarItem = player.inventory.getStackInSlot(i);
+                    if (hotbarItem == null) continue;
+                    if (hotbarItem.getDisplayName().contains("Ancestral Spade")) {
+                        player.addChatMessage(new ChatComponentText(MAIN_COLOUR + "Looking for burrows"));
+                        GriffinBurrowUtils.refreshBurrows();
+                        break;
+                    }
+                }
             }
 
             if (ToggleCommand.creeperToggled && Utils.inDungeons && world != null && player != null) {
