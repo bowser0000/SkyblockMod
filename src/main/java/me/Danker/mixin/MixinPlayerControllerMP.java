@@ -45,9 +45,11 @@ public class MixinPlayerControllerMP {
 
         if (Utils.inSkyblock) {
 
-            if (ToggleCommand.burrowWaypointsToggled && heldItem.getDisplayName().contains("Ancestral Spade") && block == Blocks.grass) {
-                if (GriffinBurrowUtils.burrows.stream().anyMatch(burrow -> burrow.getBlockPos().equals(pos))) {
-                    GriffinBurrowUtils.lastDugBurrow = pos;
+            if (ToggleCommand.burrowWaypointsToggled && heldItem != null) {
+                if (heldItem.getDisplayName().contains("Ancestral Spade") && block == Blocks.grass) {
+                    if (GriffinBurrowUtils.burrows.stream().anyMatch(burrow -> burrow.getBlockPos().equals(pos))) {
+                        GriffinBurrowUtils.lastDugBurrow = pos;
+                    }
                 }
             }
 
