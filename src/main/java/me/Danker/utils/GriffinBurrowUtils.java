@@ -23,18 +23,24 @@ public class GriffinBurrowUtils {
 
         new Thread(() -> {
             System.out.println("Finding burrows");
+            String uuid = mc.thePlayer.getGameProfile().getId().toString().replaceAll("[\\-]", "");
+            String apiKey = ConfigHandler.getString("api", "APIKey");
+            if (apiKey.length() == 0) {
+                mc.thePlayer.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "API key not set. Use /setkey."));
+                return;
+            }
 
-            JsonObject profileResponse = APIHandler.getResponse("https://api.slothpixel.me/api/skyblock/profile/" + mc.thePlayer.getName() + "?key=" + ConfigHandler.getString("api", "APIKey"));
+            String latestProfile = APIHandler.getLatestProfileID(uuid, apiKey);
+            if (latestProfile == null) return;
 
-            if (profileResponse.has("error")) {
-                String reason = profileResponse.get("error").getAsString();
+            JsonObject profileResponse = APIHandler.getResponse("https://api.hypixel.net/skyblock/profile?profile=" + latestProfile + "&key=" + apiKey);
+            if (!profileResponse.get("success").getAsBoolean()) {
+                String reason = profileResponse.get("cause").getAsString();
                 mc.thePlayer.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Failed getting burrows with reason: " + reason));
                 return;
             }
 
-            String uuid = mc.thePlayer.getGameProfile().getId().toString().replaceAll("[\\-]", "");
-
-            JsonObject playerObject = profileResponse.get("members").getAsJsonObject().get(uuid).getAsJsonObject();
+            JsonObject playerObject = profileResponse.get("profile").getAsJsonObject().get("members").getAsJsonObject().get(uuid).getAsJsonObject();
 
             if (!playerObject.has("griffin")) {
                 mc.thePlayer.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Failed getting burrows with reason: No griffin object."));
