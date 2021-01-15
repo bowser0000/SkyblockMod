@@ -66,6 +66,8 @@ public class MixinNetHandlerPlayClient {
     @Inject(method = "handleParticles(Lnet/minecraft/network/play/server/S2APacketParticles;)V", at = @At("HEAD"), cancellable = true)
     private void onHandleParticles(S2APacketParticles packet, CallbackInfo ci) {
 
+        EnumParticleTypes type = packet.getParticleType();
+
         boolean longDistance = packet.isLongDistance();
         int count = packet.getParticleCount();
         float speed = packet.getParticleSpeed();
@@ -78,7 +80,7 @@ public class MixinNetHandlerPlayClient {
         double z = packet.getZCoordinate();
 
         if (Utils.inSkyblock) {
-            if (packet.getParticleType() == EnumParticleTypes.EXPLOSION_LARGE) {
+            if (type == EnumParticleTypes.EXPLOSION_LARGE) {
                 boolean bigExplosionFilter = count == 8 && speed == 8 && xOffset == 0 && yOffset == 0 && zOffset == 0;
 
                 //More consistent detection system needed

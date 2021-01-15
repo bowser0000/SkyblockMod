@@ -429,8 +429,7 @@ public class DankersSkyblockMod {
                 Pattern player_pattern = Pattern.compile("(?:\\[.+?] )?(\\w+)");
                 Matcher matcher = player_pattern.matcher(message);
                 if (matcher.find()) {
-                    String disbander = matcher.group(1);
-                    lastPartyDisbander = disbander;
+                    lastPartyDisbander = matcher.group(1);
                     System.out.println("Party disbanded by " + lastPartyDisbander);
                 }
             }
@@ -2659,7 +2658,7 @@ public class DankersSkyblockMod {
                 ConfigHandler.writeStringConfig("misc", "display", DisplayCommand.display);
             }
 
-            if (ToggleCommand.burrowWaypointsToggled && Utils.inSkyblock && GriffinBurrowUtils.burrows.size() == 0 && player != null) {
+            if (ToggleCommand.burrowWaypointsToggled && Utils.inSkyblock && GriffinBurrowUtils.burrows.size() == 0 && GriffinBurrowUtils.dugBurrows.size() == 0 && player != null) {
                 for (int i = 0; i < 8; i++) {
                     ItemStack hotbarItem = player.inventory.getStackInSlot(i);
                     if (hotbarItem == null) continue;
@@ -2940,8 +2939,6 @@ public class DankersSkyblockMod {
                     }
                 }
             }
-
-            tickAmount = 0;
         }
 
         // Checks 5 times per second

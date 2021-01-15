@@ -7,11 +7,7 @@ import me.Danker.handlers.APIHandler;
 import me.Danker.handlers.ConfigHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.Vec3;
-import org.lwjgl.opengl.GL11;
+import net.minecraft.util.*;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -22,7 +18,7 @@ public class GriffinBurrowUtils {
     public static ArrayList<BlockPos> dugBurrows = new ArrayList<>();
     public static BlockPos lastDugBurrow = null;
 
-    private static Minecraft mc = Minecraft.getMinecraft();
+    private static final Minecraft mc = Minecraft.getMinecraft();
 
     public static void refreshBurrows() {
 
@@ -67,7 +63,7 @@ public class GriffinBurrowUtils {
                 receivedBurrows.add(burrow);
             });
 
-            dugBurrows.removeIf(dug -> !receivedBurrows.stream().anyMatch(burrow -> burrow.getBlockPos().equals(dug)));
+            dugBurrows.removeIf(dug -> receivedBurrows.stream().noneMatch(burrow -> burrow.getBlockPos().equals(dug)));
             receivedBurrows.removeIf(burrow -> dugBurrows.contains(burrow.getBlockPos()));
 
             burrows.clear();
