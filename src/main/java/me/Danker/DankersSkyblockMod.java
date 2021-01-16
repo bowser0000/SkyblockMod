@@ -274,7 +274,7 @@ public class DankersSkyblockMod {
         triviaSolutions.put("What is the name of the person that upgrades pets?", new String[]{"Kat"});
         triviaSolutions.put("What is the name of the lady of the Nether?", new String[]{"Elle"});
         triviaSolutions.put("Which villager in the Village gives you a Rogue Sword?", new String[]{"Jamie"});
-        triviaSolutions.put("How many unique minions are there?", new String[]{"52 Minions"});
+        triviaSolutions.put("How many unique minions are there?", new String[]{"53 Minions"});
         triviaSolutions.put("Which of these enemies does not spawn in the Spider's Den?", new String[]{"Zombie Spider", "Cave Spider", "Wither Skeleton",
                 "Dashing Spooder", "Broodfather", "Night Spider"});
         triviaSolutions.put("Which of these monsters only spawns at night?", new String[]{"Zombie Villager", "Ghast"});
