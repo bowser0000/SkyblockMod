@@ -410,7 +410,6 @@ public class DankersSkyblockMod {
         shotArrowNearBlaze = false;
         simonBlockOrder.clear();
         simonNumberNeeded = 0;
-        inIceRoom = false;
         puzzlerSolution = null;
         GriffinBurrowUtils.burrows.clear();
     }
@@ -3134,6 +3133,7 @@ public class DankersSkyblockMod {
         }
     }
 
+
     // Delay GUI by 1 tick
     @SubscribeEvent
     public void onRenderTick(TickEvent.RenderTickEvent event) {
@@ -3510,6 +3510,7 @@ public class DankersSkyblockMod {
                             boolean chestHasEnchantedItem = false;
                             for (int i = 0; i < inventory.getSizeInventory(); i++) {
                                 ItemStack stack = inventory.getStackInSlot(i);
+                                if (stack == null) continue;
                                 if (stack.isItemEnchanted()) {
                                     chestHasEnchantedItem = true;
                                     break;
@@ -3521,22 +3522,23 @@ public class DankersSkyblockMod {
                             }
                         } else {
                             ItemStack minionType = inventory.getStackInSlot(4);
-                            if (minionType == null) return;
-                            if (StringUtils.stripControlCodes(minionType.getDisplayName()).contains("Minion")) {
-                                int index = mouseSlot.getSlotIndex();
-                                if (index >= 21 && index <= 43 && index % 9 >= 3 && index % 9 <= 7) {
-                                    ItemStack firstUpgrade = inventory.getStackInSlot(37);
-                                    ItemStack secondUpgrade = inventory.getStackInSlot(46);
-                                    if (firstUpgrade != null) {
-                                        if (StringUtils.stripControlCodes(firstUpgrade.getDisplayName()).contains("Super Compactor 3000")) {
-                                            event.setCanceled(true);
-                                            return;
+                            if (minionType != null) {
+                                if (StringUtils.stripControlCodes(minionType.getDisplayName()).contains("Minion")) {
+                                    int index = mouseSlot.getSlotIndex();
+                                    if (index >= 21 && index <= 43 && index % 9 >= 3 && index % 9 <= 7) {
+                                        ItemStack firstUpgrade = inventory.getStackInSlot(37);
+                                        ItemStack secondUpgrade = inventory.getStackInSlot(46);
+                                        if (firstUpgrade != null) {
+                                            if (StringUtils.stripControlCodes(firstUpgrade.getDisplayName()).contains("Super Compactor 3000")) {
+                                                event.setCanceled(true);
+                                                return;
+                                            }
                                         }
-                                    }
-                                    if (secondUpgrade != null) {
-                                        if (StringUtils.stripControlCodes(secondUpgrade.getDisplayName()).contains("Super Compactor 3000")) {
-                                            event.setCanceled(true);
-                                            return;
+                                        if (secondUpgrade != null) {
+                                            if (StringUtils.stripControlCodes(secondUpgrade.getDisplayName()).contains("Super Compactor 3000")) {
+                                                event.setCanceled(true);
+                                                return;
+                                            }
                                         }
                                     }
                                 }
@@ -3653,8 +3655,6 @@ public class DankersSkyblockMod {
                     boolean shouldCancel = false;
 
                     if (item == null) return;
-
-                    //most of these are extra but who cares
 
                     switch (inventoryName) {
                         case "Correct all the panes!":
