@@ -256,7 +256,7 @@ public class DankersSkyblockMod {
         triviaSolutions.put("What is the status of Goldor?", new String[]{"Wither Soldier"});
         triviaSolutions.put("What is the status of Storm?", new String[]{"Elementalist"});
         triviaSolutions.put("What is the status of Necron?", new String[]{"Wither Lord"});
-        triviaSolutions.put("How many total Fairy Souls are there?", new String[]{"209 Fairy Souls"});
+        triviaSolutions.put("How many total Fairy Souls are there?", new String[]{"220 Fairy Souls"});
         triviaSolutions.put("How many Fairy Souls are there in Spider's Den?", new String[]{"17 Fairy Souls"});
         triviaSolutions.put("How many Fairy Souls are there in The End?", new String[]{"12 Fairy Souls"});
         triviaSolutions.put("How many Fairy Souls are there in The Barn?", new String[]{"7 Fairy Souls"});
