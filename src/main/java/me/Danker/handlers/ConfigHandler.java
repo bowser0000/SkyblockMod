@@ -208,7 +208,9 @@ public class ConfigHandler {
 		if (!hasKey("toggles", "BlockCollectingUnenchanted")) writeBooleanConfig("toggles", "BlockCollectingUnenchanted", false);
 		if (!hasKey("toggles", "BurrowWaypoints")) writeBooleanConfig("toggles", "BurrowWaypoints", false);
 
-		// Puzzle Solvers
+		if (!hasKey("toggles", "Puzzler")) writeBooleanConfig("toggles", "Puzzler", false);
+
+		// Dungeon Puzzle Solvers
 		if (!hasKey("toggles", "ThreeManPuzzle")) writeBooleanConfig("toggles", "ThreeManPuzzle", false);
 		if (!hasKey("toggles", "OruoPuzzle")) writeBooleanConfig("toggles", "OruoPuzzle", false);
 		if (!hasKey("toggles", "BlazePuzzle")) writeBooleanConfig("toggles", "BlazePuzzle", false);
@@ -495,6 +497,8 @@ public class ConfigHandler {
 		ToggleCommand.burrowWaypointsToggled = getBoolean("toggles", "BurrowWaypoints");
 		ToggleCommand.swapToPickBlockToggled = getBoolean("toggles", "PickBlock");
 		ToggleCommand.flowerWeaponsToggled = getBoolean("toggles", "FlowerWeapons");
+
+		ToggleCommand.puzzlerToggled = getBoolean("toggles", "Puzzler");
 
 		// Puzzle Solvers
 		ToggleCommand.threeManToggled = getBoolean("toggles", "ThreeManPuzzle");

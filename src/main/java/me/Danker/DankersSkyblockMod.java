@@ -107,6 +107,7 @@ public class DankersSkyblockMod {
     public static double nextBonzoUse = 0;
     public static boolean firstLaunch = false;
     static String lastPartyDisbander = "";
+    static BlockPos puzzlerSolution = null;
 
     public static final ResourceLocation CAKE_ICON = new ResourceLocation("dsm", "icons/cake.png");
     public static final ResourceLocation BONZO_ICON = new ResourceLocation("dsm", "icons/bonzo.png");
@@ -410,6 +411,7 @@ public class DankersSkyblockMod {
         simonBlockOrder.clear();
         simonNumberNeeded = 0;
         inIceRoom = false;
+        puzzlerSolution = null;
         GriffinBurrowUtils.burrows.clear();
     }
 
@@ -587,6 +589,45 @@ public class DankersSkyblockMod {
             if (GriffinBurrowUtils.lastDugBurrow != null) {
                 GriffinBurrowUtils.dugBurrows.add(GriffinBurrowUtils.lastDugBurrow);
                 GriffinBurrowUtils.burrows.removeIf(burrow -> burrow.getBlockPos().equals(GriffinBurrowUtils.lastDugBurrow));
+            }
+        }
+
+        if (ToggleCommand.puzzlerToggled && message.contains("[NPC]") && message.contains("Puzzler")) {
+            if (message.contains("Nice")) {
+                puzzlerSolution = null;
+                return;
+            }
+            if (message.contains("Wrong") || message.contains("Come") || (!message.contains("▶") && !message.contains("▲") && !message.contains("◀") && !message.contains("▼"))) return;
+            if (ScoreboardHandler.getSidebarLines().stream().anyMatch(line -> ScoreboardHandler.cleanSB(line).contains("Dwarven Mines"))) {
+                puzzlerSolution = new BlockPos(181, 195, 135);
+                String msg = message.substring(15).trim();
+                Matcher matcher = Pattern.compile("([▶▲◀▼]+)").matcher(message);
+                if (matcher.find()) {
+                    String sequence = matcher.group(1).trim();
+                    if (sequence.length() != msg.length()) {
+                        System.out.println(String.format("%s - %s | %s - %s", sequence, msg, sequence.length(), message.length()));
+                    }
+                    for (char c : sequence.toCharArray()) {
+                        switch (String.valueOf(c)) {
+                            case "▲":
+                                puzzlerSolution = puzzlerSolution.south();
+                                break;
+                            case "▶":
+                                puzzlerSolution = puzzlerSolution.west();
+                                break;
+                            case "◀":
+                                puzzlerSolution = puzzlerSolution.east();
+                                break;
+                            case "▼":
+                                puzzlerSolution = puzzlerSolution.north();
+                                break;
+                            default:
+                                System.out.println("Invalid Puzzler character: " + c);
+                        }
+                    }
+                    System.out.println("Puzzler Solution: " + puzzlerSolution);
+                    mc.thePlayer.addChatMessage(new ChatComponentText(MAIN_COLOUR + "Mine the block highlighted in " + EnumChatFormatting.RED + EnumChatFormatting.BOLD + "RED" + MAIN_COLOUR + "!"));
+                }
             }
         }
 
@@ -3128,6 +3169,10 @@ public class DankersSkyblockMod {
 
     @SubscribeEvent
     public void onWorldRender(RenderWorldLastEvent event) {
+
+        if (ToggleCommand.puzzlerToggled && puzzlerSolution != null && !puzzlerSolution.equals(new BlockPos(181, 195, 135))) {
+            Utils.draw3DBox(new AxisAlignedBB(puzzlerSolution, puzzlerSolution.add(1, 1, 1)), new Color(255, 0, 0).getRGB(), event.partialTicks);
+        }
 
         if (ToggleCommand.burrowWaypointsToggled && GriffinBurrowUtils.burrows.size() > 0) {
             List<GriffinBurrowUtils.Burrow> burrows = Lists.newArrayList(GriffinBurrowUtils.burrows);

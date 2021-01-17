@@ -53,7 +53,9 @@ public class ToggleCommand extends CommandBase implements ICommand {
 	public static boolean blockCollectingUnenchantedToggled;
 	public static boolean burrowWaypointsToggled;
 
-	// Puzzle Solvers
+	public static boolean puzzlerToggled;
+
+	//Dungeon Puzzle Solvers
 	public static boolean threeManToggled;
 	public static boolean oruoToggled;
 	public static boolean blazeToggled;
@@ -86,7 +88,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 		return "/" + getCommandName() + " <gparty/coords/golden/slayercount/rngesusalerts/splitfishing/chatmaddox/spiritbearalert/" + 
 										  "aotd/lividdagger/flowerweapons/sceptremessages/petcolors/dungeontimer/golemalerts/expertiselore/skill50display/" +
 										  "outlinetext/midasstaffmessages/implosionmessages/healmessages/caketimer/lowhealthnotify/" +
-										  "lividsolver/stopsalvagestarred/notifyslayerslain/necronnotifications/bonzotimer/blockbreakingfarms/autoskilltracker/bossbarfix/hideimplosionparticles/zombiesword/autoacceptreparty/hiddenjerryalert/blockcollectingunenchanted/burrowwaypoints/threemanpuzzle/oruopuzzle/blazepuzzle/onlyshowcorrectblaze/creeperpuzzle/waterpuzzle/tictactoepuzzle/" +
+										  "lividsolver/stopsalvagestarred/notifyslayerslain/necronnotifications/bonzotimer/blockbreakingfarms/autoskilltracker/bossbarfix/hideimplosionparticles/zombiesword/autoacceptreparty/hiddenjerryalert/blockcollectingunenchanted/burrowwaypoints/puzzler/threemanpuzzle/oruopuzzle/blazepuzzle/onlyshowcorrectblaze/creeperpuzzle/waterpuzzle/tictactoepuzzle/" +
 										  "watchermessage/startswithterminal/selectallterminal/clickinorderterminal/simonsays/blockwrongterminalclicks/" +
 										  "itemframeonsealanterns/ultrasequencer/chronomatron/superpairs/hidetooltipsinaddons/pickblock/list>";
 	}
@@ -104,7 +106,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 														  "flowerweapons", "sceptremessages", "petcolors", "dungeontimer", "golemalerts",
 														  "expertiselore", "skill50display", "outlinetext", "midasstaffmessages",
 														  "implosionmessages", "healmessages", "caketimer", "lowhealthnotify",
-														  "lividsolver", "stopsalvagestarred", "notifyslayerslain", "necronnotifications", "bonzotimer", "blockbreakingfarms", "autoskilltracker", "bossbarfix", "hideimplosionparticles", "zombiesword", "autoacceptreparty", "hiddenjerryalert", "blockcollectingunenchanted", "burrowwaypoints", "threemanpuzzle", "oruopuzzle", "blazepuzzle", "onlyshowcorrectblaze",
+														  "lividsolver", "stopsalvagestarred", "notifyslayerslain", "necronnotifications", "bonzotimer", "blockbreakingfarms", "autoskilltracker", "bossbarfix", "hideimplosionparticles", "zombiesword", "autoacceptreparty", "hiddenjerryalert", "blockcollectingunenchanted", "burrowwaypoints", "puzzler", "threemanpuzzle", "oruopuzzle", "blazepuzzle", "onlyshowcorrectblaze",
 														  "creeperpuzzle", "waterpuzzle", "tictactoepuzzle", "watchermessage", "startswithterminal",
 														  "selectallterminal", "clickinorderterminal", "blockwrongterminalclicks", "simonsays", "itemframeonsealanterns", "ultrasequencer",
 														  "chronomatron", "superpairs", "hidetooltipsinaddons", "pickblock", "list");
@@ -307,6 +309,11 @@ public class ToggleCommand extends CommandBase implements ICommand {
 				ConfigHandler.writeBooleanConfig("toggles", "BurrowWaypoints", burrowWaypointsToggled);
 				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Griffin Burrow Waypoints has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + burrowWaypointsToggled + DankersSkyblockMod.MAIN_COLOUR + "."));
 				break;
+			case "puzzler":
+				puzzlerToggled = !puzzlerToggled;
+				ConfigHandler.writeBooleanConfig("toggles", "Puzzler", puzzlerToggled);
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Puzzler solver has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + puzzlerToggled + DankersSkyblockMod.MAIN_COLOUR + "."));
+				break;
 			case "threemanpuzzle":
 				threeManToggled = !threeManToggled;
 				ConfigHandler.writeBooleanConfig("toggles", "ThreeManPuzzle", threeManToggled);
@@ -440,6 +447,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 															DankersSkyblockMod.TYPE_COLOUR + " Hidden Jerry Alert: " + DankersSkyblockMod.VALUE_COLOUR + hiddenJerryAlertToggled + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Block Collecting Unenchanted Items: " + DankersSkyblockMod.VALUE_COLOUR + blockCollectingUnenchantedToggled + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Griffin Burrow Waypoints: " + DankersSkyblockMod.VALUE_COLOUR + burrowWaypointsToggled + "\n" +
+															DankersSkyblockMod.TYPE_COLOUR + " Puzzler Solver: " + DankersSkyblockMod.VALUE_COLOUR + puzzlerToggled + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Three man puzzle solver: " + DankersSkyblockMod.VALUE_COLOUR + threeManToggled + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Oruo trivia solver: " + DankersSkyblockMod.VALUE_COLOUR + oruoToggled + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Blaze puzzle solver: " + DankersSkyblockMod.VALUE_COLOUR + blazeToggled + "\n" +
