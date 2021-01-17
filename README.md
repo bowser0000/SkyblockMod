@@ -3,6 +3,6 @@ Fork of a mod that brings QOL changes that enhance your Hypixel Skyblock experie
 
 [Latest Changelog](https://github.com/bowser0000/SkyblockMod/pull/62)
 
-[Builds](https://github.com/My-Name-Is-Jeff/SkyblockMod/actions?query=is%3Acompleted+workflow%3A%22Compile+Beta+Mod%22)
+[Builds](https://github.com/My-Name-Is-Jeff/SkyblockMod/actions?query=is%3Asuccess+workflow%3A%22Compile+Beta+Mod%22)
 
 [Read the full README here](https://github.com/My-Name-Is-Jeff/SkyblockMod/blob/development/README.md)
