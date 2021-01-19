@@ -143,7 +143,8 @@ public class PetsCommand extends CommandBase {
 			List<JsonObject> rarePets = new ArrayList<>();
 			List<JsonObject> epicPets = new ArrayList<>();
 			List<JsonObject> legendaryPets = new ArrayList<>();
-			
+			List<JsonObject> mythicPets = new ArrayList<>();
+
 			for (JsonElement petElement : sortedPets) {
 				JsonObject pet = petElement.getAsJsonObject();
 				String rarity = pet.get("tier").getAsString();
@@ -162,16 +163,42 @@ public class PetsCommand extends CommandBase {
 						epicPets.add(pet);
 						break;
 					case "LEGENDARY":
-						legendaryPets.add(pet);
+						if (!pet.get("heldItem").isJsonNull()) {
+							String petItemID = pet.get("heldItem").getAsString();
+							switch (petItemID) {
+								case "PET_ITEM_VAMPIRE_FANG":
+								case "PET_ITEM_TOY_JERRY":
+									mythicPets.add(pet);
+									break;
+								default:
+									legendaryPets.add(pet);
+							}
+						} else {
+							legendaryPets.add(pet);
+						}
 						break;
 				}
 			}
 			
-			int totalPets = commonPets.size() + uncommonPets.size() + rarePets.size() + epicPets.size() + legendaryPets.size();
+			int totalPets = commonPets.size() + uncommonPets.size() + rarePets.size() + epicPets.size() + legendaryPets.size() + mythicPets.size();
 			String finalMessage = DankersSkyblockMod.DELIMITER_COLOUR + "" + EnumChatFormatting.BOLD + "-------------------\n" +
 					  			  EnumChatFormatting.AQUA + " " + username + "'s Pets (" + totalPets + "):\n";
 			
 			// Loop through pet rarities
+			for (JsonObject mythPet : mythicPets) {
+				String petName = Utils.capitalizeString(mythPet.get("type").getAsString());
+				int level = petXpToLevel(mythPet.get("exp").getAsDouble(), "LEGENDARY");
+
+				String messageToAdd;
+				if (mythPet.get("active").getAsBoolean()) {
+					messageToAdd = EnumChatFormatting.LIGHT_PURPLE + " " + EnumChatFormatting.BOLD + ">>> Mythic " + petName + " (" + level + ") <<<";
+				} else {
+					messageToAdd = EnumChatFormatting.LIGHT_PURPLE + " Mythic " + petName + " (" + level + ")";
+				}
+
+				finalMessage += messageToAdd + "\n";
+			}
+
 			for (JsonObject legPet : legendaryPets) {
 				String petName = Utils.capitalizeString(legPet.get("type").getAsString());
 				int level = petXpToLevel(legPet.get("exp").getAsDouble(), "LEGENDARY");
