@@ -114,6 +114,7 @@ public class DankerGuiCommand extends CommandBase {
 							debug.append("< ").append(StringUtils.stripControlCodes(resource.getResourcePackName())).append(" >\n");
 						}
 					}
+					debug.append("[Server Brand][").append(Minecraft.getMinecraft().thePlayer.getClientBrand()).append("]\n");
 					debug.append("```");
 					StringSelection clipboard = new StringSelection(debug.toString());
 					Toolkit.getDefaultToolkit().getSystemClipboard().setContents(clipboard, clipboard);

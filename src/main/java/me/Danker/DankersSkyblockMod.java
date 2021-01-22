@@ -4043,6 +4043,7 @@ public class DankersSkyblockMod {
 
     public void checkKeyBindings() {
         EntityPlayerSP player = mc.thePlayer;
+        if (mc.thePlayer == null || mc.theWorld == null) return;
         if (isKeyBindActive(keyBindings[0])) {
             player.sendChatMessage(lastMaddoxCommand);
         }
