@@ -16,6 +16,7 @@ import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class PetsCommand extends CommandBase {
@@ -44,6 +45,9 @@ public class PetsCommand extends CommandBase {
 			case "LEGENDARY":
 				levelOffset = 20;
 				break;
+			case "MYTHIC":
+				levelOffset = 20;
+				break;
 		}
 		
 		for (int i = levelOffset, xpAdded = 0; i < levelOffset + 99; i++) {
@@ -53,6 +57,66 @@ public class PetsCommand extends CommandBase {
 			}
 		}
 		return 100;
+	}
+
+	enum Rarity {
+		COMMON,
+		UNCOMMON,
+		RARE,
+		EPIC,
+		LEGENDARY,
+		MYTHIC;
+
+		public Rarity nextRarity() {
+			if (this.ordinal() == Rarity.values().length) return this;
+			return Rarity.values()[this.ordinal() + 1];
+		}
+
+		public EnumChatFormatting getChatColor() {
+			if (this == Rarity.COMMON) return EnumChatFormatting.WHITE;
+			if (this == Rarity.UNCOMMON) return EnumChatFormatting.GREEN;
+			if (this == Rarity.RARE) return EnumChatFormatting.BLUE;
+			if (this == Rarity.EPIC) return EnumChatFormatting.DARK_PURPLE;
+			if (this == Rarity.LEGENDARY) return EnumChatFormatting.GOLD;
+			if (this == Rarity.MYTHIC) return EnumChatFormatting.LIGHT_PURPLE;
+			return null;
+		}
+	}
+
+	class Pet {
+
+		public Rarity rarity;
+		public double xp;
+		public boolean active;
+		public boolean rarityBoosted = false;
+		public String name;
+
+		Pet(JsonObject pet) {
+			Rarity rarity = Rarity.valueOf(pet.get("tier").getAsString());
+			if (!pet.get("heldItem").isJsonNull()) {
+				String petItemID = pet.get("heldItem").getAsString();
+				switch (petItemID) {
+					case "PET_ITEM_VAMPIRE_FANG":
+					case "PET_ITEM_TOY_JERRY":
+					case "PET_ITEM_TIER_BOOST":
+						rarityBoosted = true;
+						rarity = rarity.nextRarity();
+				}
+			}
+			this.active = pet.get("active").getAsBoolean();
+			this.name = Utils.capitalizeString(pet.get("type").getAsString());;
+			this.rarity = rarity;
+			this.xp = pet.get("exp").getAsDouble();
+		}
+
+		public String getStringToAdd() {
+			int level = petXpToLevel(this.xp, this.rarity.name());
+
+			String messageToAdd = rarity.getChatColor() + " " + (this.active ? EnumChatFormatting.BOLD + ">>> " : "") + Utils.capitalizeString(this.rarity.name()) + (this.rarityBoosted ? " ⇑" : "")  + " " + this.name + " (" + level + ")" + (this.active ? " <<<" : "");
+
+			return messageToAdd + "\n";
+		}
+
 	}
 	
 	@Override
@@ -125,148 +189,25 @@ public class PetsCommand extends CommandBase {
 			
 			System.out.println("Looping through pets...");
 			// Push each pet into list
-			List<JsonElement> sortedPets = new ArrayList<>();
+			List<Pet> pets = new ArrayList<>();
 			for (JsonElement petElement : petsArray) {
-				sortedPets.add(petElement);
+				pets.add(new Pet(petElement.getAsJsonObject()));
 			}
 			
-			// Sort pets by exp
-			sortedPets.sort((pet1, pet2) -> {
-				double petXp1 = pet1.getAsJsonObject().get("exp").getAsDouble();
-				double petXp2 = pet2.getAsJsonObject().get("exp").getAsDouble();
-				return -Double.compare(petXp1, petXp2);
+			// Sort pets by exp and rarity
+			pets.sort((pet1, pet2) -> {
+				 int rarity = pet1.rarity.compareTo(pet2.rarity);
+				 int xp = Double.compare(pet1.xp, pet2.xp);
+				 if (rarity != 0) return -rarity;
+				 return -xp;
 			});
-			
-			// Sort pets into rarities
-			List<JsonObject> commonPets = new ArrayList<>();
-			List<JsonObject> uncommonPets = new ArrayList<>();
-			List<JsonObject> rarePets = new ArrayList<>();
-			List<JsonObject> epicPets = new ArrayList<>();
-			List<JsonObject> legendaryPets = new ArrayList<>();
-			List<JsonObject> mythicPets = new ArrayList<>();
 
-			for (JsonElement petElement : sortedPets) {
-				JsonObject pet = petElement.getAsJsonObject();
-				String rarity = pet.get("tier").getAsString();
-
-				switch (rarity) {
-					case "COMMON":
-						commonPets.add(pet);
-						break;
-					case "UNCOMMON":
-						uncommonPets.add(pet);
-						break;
-					case "RARE":
-						rarePets.add(pet);
-						break;
-					case "EPIC":
-						epicPets.add(pet);
-						break;
-					case "LEGENDARY":
-						if (!pet.get("heldItem").isJsonNull()) {
-							String petItemID = pet.get("heldItem").getAsString();
-							switch (petItemID) {
-								case "PET_ITEM_VAMPIRE_FANG":
-								case "PET_ITEM_TOY_JERRY":
-									mythicPets.add(pet);
-									break;
-								default:
-									legendaryPets.add(pet);
-							}
-						} else {
-							legendaryPets.add(pet);
-						}
-						break;
-				}
-			}
-			
-			int totalPets = commonPets.size() + uncommonPets.size() + rarePets.size() + epicPets.size() + legendaryPets.size() + mythicPets.size();
 			String finalMessage = DankersSkyblockMod.DELIMITER_COLOUR + "" + EnumChatFormatting.BOLD + "-------------------\n" +
-					  			  EnumChatFormatting.AQUA + " " + username + "'s Pets (" + totalPets + "):\n";
+					  			  EnumChatFormatting.AQUA + " " + username + "'s Pets (" + pets.size() + "):\n";
 			
-			// Loop through pet rarities
-			for (JsonObject mythPet : mythicPets) {
-				String petName = Utils.capitalizeString(mythPet.get("type").getAsString());
-				int level = petXpToLevel(mythPet.get("exp").getAsDouble(), "LEGENDARY");
-
-				String messageToAdd;
-				if (mythPet.get("active").getAsBoolean()) {
-					messageToAdd = EnumChatFormatting.LIGHT_PURPLE + " " + EnumChatFormatting.BOLD + ">>> Mythic " + petName + " (" + level + ") <<<";
-				} else {
-					messageToAdd = EnumChatFormatting.LIGHT_PURPLE + " Mythic " + petName + " (" + level + ")";
-				}
-
-				finalMessage += messageToAdd + "\n";
-			}
-
-			for (JsonObject legPet : legendaryPets) {
-				String petName = Utils.capitalizeString(legPet.get("type").getAsString());
-				int level = petXpToLevel(legPet.get("exp").getAsDouble(), "LEGENDARY");
-				
-				String messageToAdd;
-				if (legPet.get("active").getAsBoolean()) {
-					messageToAdd = EnumChatFormatting.GOLD + " " + EnumChatFormatting.BOLD + ">>> Legendary " + petName + " (" + level + ") <<<";
-				} else {
-					messageToAdd = EnumChatFormatting.GOLD + " Legendary " + petName + " (" + level + ")";
-				}
-				
-				finalMessage += messageToAdd + "\n";
-			}
-			
-			for (JsonObject epicPet: epicPets) {
-				String petName = Utils.capitalizeString(epicPet.get("type").getAsString());
-				int level = petXpToLevel(epicPet.get("exp").getAsDouble(), "EPIC");
-				
-				String messageToAdd;
-				if (epicPet.get("active").getAsBoolean()) {
-					messageToAdd = EnumChatFormatting.DARK_PURPLE + " " + EnumChatFormatting.BOLD + ">>> Epic " + petName + " (" + level + ") <<<";
-				} else {
-					messageToAdd = EnumChatFormatting.DARK_PURPLE + " Epic " + petName + " (" + level + ")";
-				}
-				
-				finalMessage += messageToAdd + "\n";
-			}
-			
-			for (JsonObject rarePet: rarePets) {
-				String petName = Utils.capitalizeString(rarePet.get("type").getAsString());
-				int level = petXpToLevel(rarePet.get("exp").getAsDouble(), "RARE");
-				
-				String messageToAdd;
-				if (rarePet.get("active").getAsBoolean()) {
-					messageToAdd = EnumChatFormatting.BLUE + " " + EnumChatFormatting.BOLD + ">>> Rare " + petName + " (" + level + ") <<<";
-				} else {
-					messageToAdd = EnumChatFormatting.BLUE + " Rare " + petName + " (" + level + ")";
-				}
-				
-				finalMessage += messageToAdd + "\n";
-			}
-			
-			for (JsonObject uncommonPet: uncommonPets) {
-				String petName = Utils.capitalizeString(uncommonPet.get("type").getAsString());
-				int level = petXpToLevel(uncommonPet.get("exp").getAsDouble(), "UNCOMMON");
-				
-				String messageToAdd;
-				if (uncommonPet.get("active").getAsBoolean()) {
-					messageToAdd = EnumChatFormatting.GREEN + " " + EnumChatFormatting.BOLD + ">>> Uncommon " + petName + " (" + level + ") <<<";
-				} else {
-					messageToAdd = EnumChatFormatting.GREEN + " Uncommon " + petName + " (" + level + ")";
-				}
-				
-				finalMessage += messageToAdd + "\n";
-			}
-			
-			for (JsonObject commonPet: commonPets) {
-				String petName = Utils.capitalizeString(commonPet.get("type").getAsString());
-				int level = petXpToLevel(commonPet.get("exp").getAsDouble(), "COMMON");
-				
-				String messageToAdd;
-				if (commonPet.get("active").getAsBoolean()) {
-					messageToAdd = EnumChatFormatting.BOLD + ">>> Common " + petName + " (" + level + ") <<<";
-				} else {
-					messageToAdd = " Common " + petName + " (" + level + ")";
-				}
-				
-				finalMessage += messageToAdd + "\n";
+			// Loop through pets
+			for(Pet pet : pets) {
+				finalMessage += pet.getStringToAdd();
 			}
 			
 			finalMessage += DankersSkyblockMod.DELIMITER_COLOUR + " " + EnumChatFormatting.BOLD + "-------------------";
