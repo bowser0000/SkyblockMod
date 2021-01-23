@@ -53,6 +53,9 @@ public class Utils {
 									  1065000, 1410000, 1900000, 2500000, 3300000, 4300000, 5600000, 7200000, 9200000, 12000000, 15000000,
 									  19000000, 24000000, 30000000, 38000000, 48000000, 60000000, 75000000, 93000000, 116250000};
 	static int[] expertiseKills = {50, 100, 250, 500, 1000, 2500, 5500, 10000, 15000};
+
+	static double lastAPITime= 0;
+	static JsonObject lowestBINJson;
 	
     public static int getItems(String item) {
     	Minecraft mc = Minecraft.getMinecraft();
@@ -72,7 +75,7 @@ public class Utils {
     	return 0;
     }
 
-	//Parts of the following code adapted and modified from @Moulberry (https://github.com/Moulberry/)
+	//A portion of the following code was adapted from @Moulberry (https://github.com/Moulberry/NotEnoughUpdates/blob/master/src/main/java/io/github/moulberry/notenoughupdates/NEUManager.java)
 	public static String getSBItemID(ItemStack stack) {
 		if(stack == null) return null;
 		NBTTagCompound tag = stack.getTagCompound();
@@ -119,22 +122,28 @@ public class Utils {
 		return sbItemID;
 	}
 
-	//Note: Improvements needed. Currently calls lowestbin.json on every single item --> too many requests
-	//		should only request lowestbin.json once every 5 minutes and store it locally
 	public static int getLowestBin(String sbItemID) {
-		try {
-			URL url = new URL("https://dsm.quantizr.repl.co/lowestbin.json");
-			URLConnection request = url.openConnection();
-			request.connect();
+		if (System.currentTimeMillis() - lastAPITime >= 60000) {
+			try {
+				//Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Calling LowestBIN API"));
+				URL url = new URL("https://dsm.quantizr.repl.co/lowestbin.json");
+				URLConnection request = url.openConnection();
+				request.connect();
 
-			JsonParser json = new JsonParser();
-			JsonElement root = json.parse(new InputStreamReader((InputStream) request.getContent()));
-			JsonObject rootObj = root.getAsJsonObject();
-			int lowestBin = rootObj.get(sbItemID).getAsInt();
-			return lowestBin;
+				JsonParser json = new JsonParser();
+				JsonElement root = json.parse(new InputStreamReader((InputStream) request.getContent()));
+				lowestBINJson = root.getAsJsonObject();
+				lastAPITime = System.currentTimeMillis();
+			} catch (Exception e) {
+				Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Error connecting to API, prices will most likely not be accurate"));
+			}
 		}
-		catch(Exception e) {
-			return -1;
+		try {
+			int lowestBin = lowestBINJson.get(sbItemID).getAsInt();
+			return lowestBin;
+		} catch (Exception e)	{
+			Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(sbItemID + " not found in API, chest price will not be accurate"));
+			return 0;
 		}
 	}
 

@@ -163,12 +163,12 @@ public class DankersSkyblockMod {
 	static double xpLeft = 0;
 	static double timeSinceGained = 0;
 
-    static String woodChest = null;
-    static String goldChest = null;
-    static String diamondChest = null;
-    static String emeraldChest = null;
-    static String obsidianChest = null;
-    static String bedrockChest = null;
+    static String woodChest = "";
+    static String goldChest = "";
+    static String diamondChest = "";
+    static String emeraldChest = "";
+    static String obsidianChest = "";
+    static String bedrockChest = "";
 
     public static String MAIN_COLOUR;
     public static String SECONDARY_COLOUR;
@@ -1042,12 +1042,12 @@ public class DankersSkyblockMod {
 		    puzzleFails = 0;
 
 		    //reset dungeon chest profit messages
-            woodChest = null;
-            goldChest = null;
-            diamondChest = null;
-            emeraldChest = null;
-            obsidianChest = null;
-            bedrockChest = null;
+            woodChest = "";
+            goldChest = "";
+            diamondChest = "";
+            emeraldChest = "";
+            obsidianChest = "";
+            bedrockChest = "";
 		} else if (message.contains("The BLOOD DOOR has been opened!")) {
 			bloodOpenTime = System.currentTimeMillis() / 1000;
 		} else if (message.contains(" opened a WITHER door!")) {
@@ -1518,6 +1518,7 @@ public class DankersSkyblockMod {
         if (!DisplayCommand.display.equals("off")) {
             String dropsText = "";
             String countText = "";
+            String profitText = "";
             String dropsTextTwo;
             String countTextTwo;
             String timeBetween;
@@ -2092,6 +2093,12 @@ public class DankersSkyblockMod {
                                 EnumChatFormatting.BLUE + nf.format(LootCommand.bonzoStaffs) + "\n" +
                                 EnumChatFormatting.AQUA + Utils.getMoneySpent(LootCommand.f1CoinsSpent) + "\n" +
                                 EnumChatFormatting.AQUA + Utils.getTimeBetween(0, LootCommand.f1TimeSpent);
+                    profitText = EnumChatFormatting.GOLD + woodChest +
+                            EnumChatFormatting.YELLOW + goldChest +
+                            EnumChatFormatting.AQUA + diamondChest +
+                            EnumChatFormatting.GREEN + emeraldChest +
+                            EnumChatFormatting.DARK_PURPLE + obsidianChest +
+                            EnumChatFormatting.BLACK + bedrockChest;
                     break;
                 case "catacombs_floor_one_session":
                     dropsText = EnumChatFormatting.GOLD + "Recombobulators:\n" +
@@ -2104,6 +2111,12 @@ public class DankersSkyblockMod {
                                 EnumChatFormatting.BLUE + nf.format(LootCommand.bonzoStaffsSession) + "\n" +
                                 EnumChatFormatting.AQUA + Utils.getMoneySpent(LootCommand.f1CoinsSpentSession) + "\n" +
                                 EnumChatFormatting.AQUA + Utils.getTimeBetween(0, LootCommand.f1TimeSpentSession);
+                    profitText = EnumChatFormatting.GOLD + woodChest +
+                            EnumChatFormatting.YELLOW + goldChest +
+                            EnumChatFormatting.AQUA + diamondChest +
+                            EnumChatFormatting.GREEN + emeraldChest +
+                            EnumChatFormatting.DARK_PURPLE + obsidianChest +
+                            EnumChatFormatting.BLACK + bedrockChest;
                     break;
                 case "catacombs_floor_two":
                     dropsText = EnumChatFormatting.GOLD + "Recombobulators:\n" +
@@ -2118,6 +2131,12 @@ public class DankersSkyblockMod {
                                 EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.adaptiveSwords) + "\n" +
                                 EnumChatFormatting.AQUA + Utils.getMoneySpent(LootCommand.f2CoinsSpent) + "\n" +
                                 EnumChatFormatting.AQUA + Utils.getTimeBetween(0, LootCommand.f2TimeSpent);
+                    profitText = EnumChatFormatting.GOLD + woodChest +
+                            EnumChatFormatting.YELLOW + goldChest +
+                            EnumChatFormatting.AQUA + diamondChest +
+                            EnumChatFormatting.GREEN + emeraldChest +
+                            EnumChatFormatting.DARK_PURPLE + obsidianChest +
+                            EnumChatFormatting.BLACK + bedrockChest;
                     break;
                 case "catacombs_floor_two_session":
                     dropsText = EnumChatFormatting.GOLD + "Recombobulators:\n" +
@@ -2132,6 +2151,12 @@ public class DankersSkyblockMod {
                                 EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.adaptiveSwordsSession) + "\n" +
                                 EnumChatFormatting.AQUA + Utils.getMoneySpent(LootCommand.f2CoinsSpentSession) + "\n" +
                                 EnumChatFormatting.AQUA + Utils.getTimeBetween(0, LootCommand.f2TimeSpentSession);
+                    profitText = EnumChatFormatting.GOLD + woodChest +
+                            EnumChatFormatting.YELLOW + goldChest +
+                            EnumChatFormatting.AQUA + diamondChest +
+                            EnumChatFormatting.GREEN + emeraldChest +
+                            EnumChatFormatting.DARK_PURPLE + obsidianChest +
+                            EnumChatFormatting.BLACK + bedrockChest;
                     break;
                 case "catacombs_floor_three":
                     dropsText = EnumChatFormatting.GOLD + "Recombobulators:\n" +
@@ -2150,6 +2175,12 @@ public class DankersSkyblockMod {
                                 EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.adaptiveBoots) + "\n" +
                                 EnumChatFormatting.AQUA + Utils.getMoneySpent(LootCommand.f3CoinsSpent) + "\n" +
                                 EnumChatFormatting.AQUA + Utils.getTimeBetween(0, LootCommand.f3TimeSpent);
+                    profitText = EnumChatFormatting.GOLD + woodChest +
+                            EnumChatFormatting.YELLOW + goldChest +
+                            EnumChatFormatting.AQUA + diamondChest +
+                            EnumChatFormatting.GREEN + emeraldChest +
+                            EnumChatFormatting.DARK_PURPLE + obsidianChest +
+                            EnumChatFormatting.BLACK + bedrockChest;
                     break;
                 case "catacombs_floor_three_session":
                     dropsText = EnumChatFormatting.GOLD + "Recombobulators:\n" +
@@ -2168,6 +2199,12 @@ public class DankersSkyblockMod {
                                 EnumChatFormatting.DARK_PURPLE + nf.format(LootCommand.adaptiveBootsSession) + "\n" +
                                 EnumChatFormatting.AQUA + Utils.getMoneySpent(LootCommand.f3CoinsSpentSession) + "\n" +
                                 EnumChatFormatting.AQUA + Utils.getTimeBetween(0, LootCommand.f3TimeSpentSession);
+                    profitText = EnumChatFormatting.GOLD + woodChest +
+                            EnumChatFormatting.YELLOW + goldChest +
+                            EnumChatFormatting.AQUA + diamondChest +
+                            EnumChatFormatting.GREEN + emeraldChest +
+                            EnumChatFormatting.DARK_PURPLE + obsidianChest +
+                            EnumChatFormatting.BLACK + bedrockChest;
                     break;
                 case "catacombs_floor_four":
                     dropsText = EnumChatFormatting.GOLD + "Recombobulators:\n" +
@@ -2192,6 +2229,12 @@ public class DankersSkyblockMod {
                                 EnumChatFormatting.GOLD + nf.format(LootCommand.legSpiritPets) + "\n" +
                                 EnumChatFormatting.AQUA + Utils.getMoneySpent(LootCommand.f4CoinsSpent) + "\n" +
                                 EnumChatFormatting.AQUA + Utils.getTimeBetween(0, LootCommand.f4TimeSpent);
+                    profitText = EnumChatFormatting.GOLD + woodChest +
+                            EnumChatFormatting.YELLOW + goldChest +
+                            EnumChatFormatting.AQUA + diamondChest +
+                            EnumChatFormatting.GREEN + emeraldChest +
+                            EnumChatFormatting.DARK_PURPLE + obsidianChest +
+                            EnumChatFormatting.BLACK + bedrockChest;
                     break;
                 case "catacombs_floor_four_session":
                     dropsText = EnumChatFormatting.GOLD + "Recombobulators:\n" +
@@ -2216,6 +2259,12 @@ public class DankersSkyblockMod {
                                 EnumChatFormatting.GOLD + nf.format(LootCommand.legSpiritPetsSession) + "\n" +
                                 EnumChatFormatting.AQUA + Utils.getMoneySpent(LootCommand.f4CoinsSpentSession) + "\n" +
                                 EnumChatFormatting.AQUA + Utils.getTimeBetween(0, LootCommand.f4TimeSpentSession);
+                    profitText = EnumChatFormatting.GOLD + woodChest +
+                            EnumChatFormatting.YELLOW + goldChest +
+                            EnumChatFormatting.AQUA + diamondChest +
+                            EnumChatFormatting.GREEN + emeraldChest +
+                            EnumChatFormatting.DARK_PURPLE + obsidianChest +
+                            EnumChatFormatting.BLACK + bedrockChest;
                     break;
                 case "catacombs_floor_five":
                     dropsText = EnumChatFormatting.GOLD + "Recombobulators:\n" +
@@ -2242,6 +2291,12 @@ public class DankersSkyblockMod {
                                 EnumChatFormatting.GOLD + nf.format(LootCommand.shadowFurys) + "\n" +
                                 EnumChatFormatting.AQUA + Utils.getMoneySpent(LootCommand.f5CoinsSpent) + "\n" +
                                 EnumChatFormatting.AQUA + Utils.getTimeBetween(0, LootCommand.f5TimeSpent);
+                    profitText = EnumChatFormatting.GOLD + woodChest +
+                            EnumChatFormatting.YELLOW + goldChest +
+                            EnumChatFormatting.AQUA + diamondChest +
+                            EnumChatFormatting.GREEN + emeraldChest +
+                            EnumChatFormatting.DARK_PURPLE + obsidianChest +
+                            EnumChatFormatting.BLACK + bedrockChest;
                     break;
                 case "catacombs_floor_five_session":
                     dropsText = EnumChatFormatting.GOLD + "Recombobulators:\n" +
@@ -2268,6 +2323,12 @@ public class DankersSkyblockMod {
                                 EnumChatFormatting.GOLD + nf.format(LootCommand.shadowFurysSession) + "\n" +
                                 EnumChatFormatting.AQUA + Utils.getMoneySpent(LootCommand.f5CoinsSpentSession) + "\n" +
                                 EnumChatFormatting.AQUA + Utils.getTimeBetween(0, LootCommand.f5TimeSpentSession);
+                    profitText = EnumChatFormatting.GOLD + woodChest +
+                            EnumChatFormatting.YELLOW + goldChest +
+                            EnumChatFormatting.AQUA + diamondChest +
+                            EnumChatFormatting.GREEN + emeraldChest +
+                            EnumChatFormatting.DARK_PURPLE + obsidianChest +
+                            EnumChatFormatting.BLACK + bedrockChest;
                     break;
                 case "catacombs_floor_six":
                     dropsText = EnumChatFormatting.GOLD + "Recombobulators:\n" +
@@ -2294,6 +2355,12 @@ public class DankersSkyblockMod {
                                 EnumChatFormatting.GOLD + nf.format(LootCommand.necroSwords) + "\n" +
                                 EnumChatFormatting.AQUA + Utils.getMoneySpent(LootCommand.f6CoinsSpent) + "\n" +
                                 EnumChatFormatting.AQUA + Utils.getTimeBetween(0, LootCommand.f6TimeSpent);
+                    profitText = EnumChatFormatting.GOLD + woodChest +
+                            EnumChatFormatting.YELLOW + goldChest +
+                            EnumChatFormatting.AQUA + diamondChest +
+                            EnumChatFormatting.GREEN + emeraldChest +
+                            EnumChatFormatting.DARK_PURPLE + obsidianChest +
+                            EnumChatFormatting.BLACK + bedrockChest;
                     break;
                 case "catacombs_floor_six_session":
                     dropsText = EnumChatFormatting.GOLD + "Recombobulators:\n" +
@@ -2320,6 +2387,12 @@ public class DankersSkyblockMod {
                                 EnumChatFormatting.GOLD + nf.format(LootCommand.necroSwordsSession) + "\n" +
                                 EnumChatFormatting.AQUA + Utils.getMoneySpent(LootCommand.f6CoinsSpentSession) + "\n" +
                                 EnumChatFormatting.AQUA + Utils.getTimeBetween(0, LootCommand.f6TimeSpentSession);
+                    profitText = EnumChatFormatting.GOLD + woodChest +
+                            EnumChatFormatting.YELLOW + goldChest +
+                            EnumChatFormatting.AQUA + diamondChest +
+                            EnumChatFormatting.GREEN + emeraldChest +
+                            EnumChatFormatting.DARK_PURPLE + obsidianChest +
+                            EnumChatFormatting.BLACK + bedrockChest;
                     break;
                 case "catacombs_floor_seven":
                     dropsText = EnumChatFormatting.GOLD + "Recombobulators:\n" +
@@ -2352,6 +2425,12 @@ public class DankersSkyblockMod {
                                 EnumChatFormatting.GOLD + nf.format(LootCommand.witherBoots) + "\n" +
                                 EnumChatFormatting.AQUA + Utils.getMoneySpent(LootCommand.f7CoinsSpent) + "\n" +
                                 EnumChatFormatting.AQUA + Utils.getTimeBetween(0, LootCommand.f7TimeSpent);
+                    profitText = EnumChatFormatting.GOLD + woodChest +
+                            EnumChatFormatting.YELLOW + goldChest +
+                            EnumChatFormatting.AQUA + diamondChest +
+                            EnumChatFormatting.GREEN + emeraldChest +
+                            EnumChatFormatting.DARK_PURPLE + obsidianChest +
+                            EnumChatFormatting.BLACK + bedrockChest;
                     break;
                 case "catacombs_floor_seven_session":
                     dropsText = EnumChatFormatting.GOLD + "Recombobulators:\n" +
@@ -2384,13 +2463,19 @@ public class DankersSkyblockMod {
                                 EnumChatFormatting.GOLD + nf.format(LootCommand.witherBootsSession) + "\n" +
                                 EnumChatFormatting.AQUA + Utils.getMoneySpent(LootCommand.f7CoinsSpentSession) + "\n" +
                                 EnumChatFormatting.AQUA + Utils.getTimeBetween(0, LootCommand.f7TimeSpentSession);
+                    profitText = EnumChatFormatting.GOLD + woodChest +
+                            EnumChatFormatting.YELLOW + goldChest +
+                            EnumChatFormatting.AQUA + diamondChest +
+                            EnumChatFormatting.GREEN + emeraldChest +
+                            EnumChatFormatting.DARK_PURPLE + obsidianChest +
+                            EnumChatFormatting.BLACK + bedrockChest;
                     break;
                 default:
                     System.out.println("Display was an unknown value, turning off.");
                     DisplayCommand.display = "off";
                     ConfigHandler.writeStringConfig("misc", "display", "off");
             }
-            new TextRenderer(mc, dropsText, MoveCommand.displayXY[0], MoveCommand.displayXY[1], ScaleCommand.displayScale);
+            new TextRenderer(mc, dropsText+"\n\n"+profitText, MoveCommand.displayXY[0], MoveCommand.displayXY[1], ScaleCommand.displayScale);
             new TextRenderer(mc, countText, (int) (MoveCommand.displayXY[0] + (110 * ScaleCommand.displayScale)), MoveCommand.displayXY[1], ScaleCommand.displayScale);
         }
 
@@ -3610,12 +3695,12 @@ public class DankersSkyblockMod {
 
                 //Dungeon Reward Chest Profit Calculator
                 if (Utils.inDungeons && displayName.endsWith(" Chest")) {
-                    if (displayName.equals("Wood Chest") && woodChest != null) return;
-                    if (displayName.equals("Gold Chest") && goldChest != null) return;
-                    if (displayName.equals("Diamond Chest") && diamondChest != null) return;
-                    if (displayName.equals("Emerald Chest") && emeraldChest != null) return;
-                    if (displayName.equals("Obsidian Chest") && obsidianChest != null) return;
-                    if (displayName.equals("Bedrock Chest") && bedrockChest != null) return;
+                    if (displayName.equals("Wood Chest") && !woodChest.equals("")) return;
+                    if (displayName.equals("Gold Chest") && !goldChest.equals("")) return;
+                    if (displayName.equals("Diamond Chest") && !diamondChest.equals("")) return;
+                    if (displayName.equals("Emerald Chest") && !emeraldChest.equals("")) return;
+                    if (displayName.equals("Obsidian Chest") && !obsidianChest.equals("")) return;
+                    if (displayName.equals("Bedrock Chest") && !bedrockChest.equals("")) return;
                     if (invSlots.size() > 30 && invSlots.get(31).getStack() != null){
                         if (invSlots.get(31).getStack().getDisplayName().startsWith("§aOpen Reward Chest")) {
                             ItemStack openChest = invSlots.get(31).getStack();
@@ -3643,7 +3728,8 @@ public class DankersSkyblockMod {
                                 }
                             }
                             int chestProfit = chestValue - chestCost;
-                            String output = (displayName + ": " + chestValue + " coins value - " + chestCost + " coins cost = " + chestProfit + " coins profit");
+                            //String output = (displayName + ": " + chestValue + " coins value - " + chestCost + " coins cost = " + chestProfit + " coins profit");
+                            String output = (displayName + ": " + chestProfit + " coins profit\n");
                             switch(displayName) {
                                 case "Wood Chest":
                                     woodChest = output;
@@ -3664,10 +3750,8 @@ public class DankersSkyblockMod {
                                     bedrockChest = output;
                                     break;
                             }
-                            //Temporary: display dungeon chest profit in chat
-                            //Future improvements: display profit of each chest in GUI, above variables woodChest,
-                            //                     goldChest, etc. already are set to the string to display in GUI
-                            Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(MAIN_COLOUR + output));
+                            //Temporary until GUI works properly
+                            //Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(MAIN_COLOUR + output));
                         }
                     }
                 }
