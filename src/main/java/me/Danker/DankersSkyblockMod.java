@@ -3722,13 +3722,10 @@ public class DankersSkyblockMod {
                                 String sbItemID = Utils.getSBItemID(chestLoot);
                                 if (sbItemID != null) {
                                     int binValue = Utils.getLowestBin(sbItemID);
-                                    //Display price of item
-                                    //Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(MAIN_COLOUR + sbItemID + ": " + binValue));
                                     chestValue += binValue;
                                 }
                             }
                             int chestProfit = chestValue - chestCost;
-                            //String output = (displayName + ": " + chestValue + " coins value - " + chestCost + " coins cost = " + chestProfit + " coins profit");
                             String output = (displayName + ": " + chestProfit + " coins profit\n");
                             switch(displayName) {
                                 case "Wood Chest":
@@ -3750,8 +3747,6 @@ public class DankersSkyblockMod {
                                     bedrockChest = output;
                                     break;
                             }
-                            //Temporary until GUI works properly
-                            //Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(MAIN_COLOUR + output));
                         }
                     }
                 }

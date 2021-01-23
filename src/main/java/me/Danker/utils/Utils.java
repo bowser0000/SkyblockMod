@@ -75,7 +75,7 @@ public class Utils {
     	return 0;
     }
 
-	//A portion of the following code was adapted from @Moulberry (https://github.com/Moulberry/NotEnoughUpdates/blob/master/src/main/java/io/github/moulberry/notenoughupdates/NEUManager.java)
+	//A portion of the following code was adapted from @Moulberry (https://github.com/Moulberry/)
 	public static String getSBItemID(ItemStack stack) {
 		if(stack == null) return null;
 		NBTTagCompound tag = stack.getTagCompound();
@@ -125,7 +125,6 @@ public class Utils {
 	public static int getLowestBin(String sbItemID) {
 		if (System.currentTimeMillis() - lastAPITime >= 60000) {
 			try {
-				//Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Calling LowestBIN API"));
 				URL url = new URL("https://dsm.quantizr.repl.co/lowestbin.json");
 				URLConnection request = url.openConnection();
 				request.connect();
