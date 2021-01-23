@@ -3726,7 +3726,7 @@ public class DankersSkyblockMod {
                                 }
                             }
                             int chestProfit = chestValue - chestCost;
-                            String output = (displayName + ": " + chestProfit + " coins profit\n");
+                            String output = (displayName + ": " + NumberFormat.getInstance().format(chestProfit) + " coins profit\n");
                             switch(displayName) {
                                 case "Wood Chest":
                                     woodChest = output;
