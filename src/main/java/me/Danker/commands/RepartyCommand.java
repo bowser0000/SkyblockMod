@@ -8,20 +8,11 @@ import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.*;
 import net.minecraft.util.ChatComponentText;
-import net.minecraftforge.client.event.*;
-import net.minecraftforge.fml.common.Mod.EventHandler;
-import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
-import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.util.*;
-import java.text.NumberFormat;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 
 public class RepartyCommand extends CommandBase implements ICommand {
@@ -56,9 +47,6 @@ public class RepartyCommand extends CommandBase implements ICommand {
 
     @Override
     public void processCommand(ICommandSender sender, String[] args) throws CommandException {
-        if (args.length > 0 && args[0].startsWith("sbe")) {
-            Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("ew imagine using sbe which breaks mojang tos"));
-        }
         if (args.length > 0 && (args[0].startsWith("fail") || args[0].equals("f"))) {
             partyThread = new Thread(() -> {
                 EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
