@@ -101,7 +101,6 @@ public class RepartyCommand extends CommandBase implements ICommand {
                 while (disbanding) {
                     Thread.sleep(10);
                 }
-//                player.sendChatMessage("/p " + String.join(" ", party));
                 String members = String.join(EnumChatFormatting.WHITE + "\n- " + EnumChatFormatting.YELLOW, RepartyCommand.party);
                 player.addChatMessage(new ChatComponentText(DankersSkyblockMod.DELIMITER_COLOUR + "-----------------------------\n" +
                         DankersSkyblockMod.MAIN_COLOUR + "Repartying:" + EnumChatFormatting.WHITE + "\n- " +
@@ -116,7 +115,6 @@ public class RepartyCommand extends CommandBase implements ICommand {
                     }
                     Thread.sleep(100);
                 }
-//                inviting = true;
                 while (inviting) {
                     Thread.sleep(10);
                 }
