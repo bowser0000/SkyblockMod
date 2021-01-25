@@ -32,7 +32,6 @@ public class RepartyCommand extends CommandBase implements ICommand {
     public static boolean failInviting = false;
     public static List<String> party = new ArrayList<>();
     public static List<String> repartyFailList = new ArrayList<>();
-    public static List<String> joinList = new ArrayList<>();
     public static Thread partyThread = null;
 
     @Override
@@ -57,6 +56,9 @@ public class RepartyCommand extends CommandBase implements ICommand {
 
     @Override
     public void processCommand(ICommandSender sender, String[] args) throws CommandException {
+        if (args.length > 0 && args[0].startsWith("sbe")) {
+            Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("ew imagine using sbe which breaks mojang tos"));
+        }
         if (args.length > 0 && (args[0].startsWith("fail") || args[0].equals("f"))) {
             partyThread = new Thread(() -> {
                 EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
@@ -91,12 +93,8 @@ public class RepartyCommand extends CommandBase implements ICommand {
             return;
         }
 
-        boolean ghost = args.length > 0 && (args[0].toLowerCase().equals("g") || args[0].toLowerCase().equals("ghost"));
-
-        if(ghost){
-            party.clear();
-            repartyFailList.clear();
-        }
+        party.clear();
+        repartyFailList.clear();
 
         // MULTI THREAD DRIFTING
         partyThread = new Thread(() -> {
@@ -104,12 +102,10 @@ public class RepartyCommand extends CommandBase implements ICommand {
 
 
             try {
-                if(ghost){
-                    player.sendChatMessage("/pl");
-                    gettingParty = true;
-                    while (gettingParty) {
-                        Thread.sleep(10);
-                    }
+                player.sendChatMessage("/pl");
+                gettingParty = true;
+                while (gettingParty) {
+                    Thread.sleep(10);
                 }
                 if (party.size() == 0) return;
                 player.sendChatMessage("/p disband");
@@ -117,14 +113,22 @@ public class RepartyCommand extends CommandBase implements ICommand {
                 while (disbanding) {
                     Thread.sleep(10);
                 }
-                player.sendChatMessage("/p " + String.join(" ", party));
+//                player.sendChatMessage("/p " + String.join(" ", party));
                 String members = String.join(EnumChatFormatting.WHITE + "\n- " + EnumChatFormatting.YELLOW, RepartyCommand.party);
                 player.addChatMessage(new ChatComponentText(DankersSkyblockMod.DELIMITER_COLOUR + "-----------------------------\n" +
                         DankersSkyblockMod.MAIN_COLOUR + "Repartying:" + EnumChatFormatting.WHITE + "\n- " +
                         EnumChatFormatting.YELLOW + members + "\n" +
                         DankersSkyblockMod.DELIMITER_COLOUR + "-----------------------------"));
-                inviting = true;
                 repartyFailList = new ArrayList<>(party);
+                for (String invitee : party) {
+                    player.sendChatMessage("/p " + invitee);
+                    inviting = true;
+                    while (inviting) {
+                        Thread.sleep(10);
+                    }
+                    Thread.sleep(100);
+                }
+//                inviting = true;
                 while (inviting) {
                     Thread.sleep(10);
                 }

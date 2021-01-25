@@ -15,6 +15,7 @@ import net.minecraft.client.gui.*;
 import net.minecraft.client.gui.inventory.GuiChest;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraft.client.settings.KeyBinding;
+import net.minecraft.command.ICommand;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityArmorStand;
 import net.minecraft.entity.item.EntityItemFrame;
@@ -312,36 +313,39 @@ public class DankersSkyblockMod {
     	ClientCommandHandler.instance.registerCommand(new LobbySkillsCommand());
     	ClientCommandHandler.instance.registerCommand(new DankerGuiCommand());
 		ClientCommandHandler.instance.registerCommand(new SkillTrackerCommand());
-		ClientCommandHandler.instance.registerCommand(new RepartyCommand());
     }
 
     @EventHandler
     public void postInit(final FMLPostInitializationEvent event) {
 		Package[] packages = Package.getPackages();
 		for(Package p : packages){
-		    DSMLogger.info(p);
 			if(p.getName().startsWith("com.spiderfrog.gadgets") || p.getName().startsWith("com.spiderfrog.oldanimations")){
 				usingOAM = true;
-				break;
 			}
 		}
 		System.out.println("OAM detection: " + usingOAM);
 
-
     	usingLabymod = Loader.isModLoaded("labymod");
     	System.out.println("LabyMod detection: " + usingLabymod);
+    	
+        if(!ClientCommandHandler.instance.getCommands().containsKey("reparty")) {
+            ClientCommandHandler.instance.registerCommand(new RepartyCommand());
+        } else if (ConfigHandler.getBoolean("commands", "reparty")) {
+            for(Map.Entry<String, ICommand> entry : ClientCommandHandler.instance.getCommands().entrySet()) {
+                if (entry.getKey().equals("reparty") || entry.getKey().equals("rp")) {
+                    entry.setValue(new RepartyCommand());
+                }
+            }
+        }
+
     }
 
     @SubscribeEvent
 	public void onGuiOpenEvent(GuiOpenEvent event){
 		if(event.gui instanceof GuiMainMenu && usingOAM && !OAMWarning){
-			System.out.println("Gui opened: Instance of GuiMainMenu.");
 			if(!(event.gui instanceof WarningGui)){
-				System.out.println("No instance of WarningGui");
 				event.gui = new WarningGuiRedirect(new WarningGui());
 				OAMWarning = true;
-			}else{
-				System.out.println("Instance of WarningGui");
 			}
 		}
 	}
@@ -500,16 +504,17 @@ public class DankersSkyblockMod {
         // Inviting
         if (RepartyCommand.inviting) {
             if (message.contains("-----")) {
-                if (RepartyCommand.Delimiter >= RepartyCommand.party.size() * 2 - 1) {
-                    event.setCanceled(true);
-                    RepartyCommand.Delimiter = 0;
-                    System.out.println("Done Inviting!");
-                    RepartyCommand.inviting = false;
-                    return;
-                } else {
-                    RepartyCommand.Delimiter++;
-                    event.setCanceled(true);
-                    return;
+                switch (RepartyCommand.Delimiter) {
+                    case 1:
+                        event.setCanceled(true);
+                        RepartyCommand.Delimiter = 0;
+                        System.out.println("Player Invited!");
+                        RepartyCommand.inviting = false;
+                        return;
+                    case 0:
+                        RepartyCommand.Delimiter++;
+                        event.setCanceled(true);
+                        return;
                 }
             } else if (message.endsWith(" to the party! They have 60 seconds to accept.")) {
                 Pattern invitePattern = Pattern.compile("(?:(?:\\[.+?] )?(?:\\w+) invited )(?:\\[.+?] )?(\\w+)");
@@ -527,16 +532,17 @@ public class DankersSkyblockMod {
         // Fail Inviting
         if (RepartyCommand.failInviting) {
             if (message.contains("-----")) {
-                if (RepartyCommand.Delimiter >= RepartyCommand.repartyFailList.size() * 2 - 1) {
-                    event.setCanceled(true);
-                    RepartyCommand.Delimiter = 0;
-                    System.out.println("Done Inviting!");
-                    RepartyCommand.inviting = false;
-                    return;
-                } else {
-                    RepartyCommand.Delimiter++;
-                    event.setCanceled(true);
-                    return;
+                switch (RepartyCommand.Delimiter) {
+                    case 1:
+                        event.setCanceled(true);
+                        RepartyCommand.Delimiter = 0;
+                        System.out.println("Player Invited!");
+                        RepartyCommand.inviting = false;
+                        return;
+                    case 0:
+                        RepartyCommand.Delimiter++;
+                        event.setCanceled(true);
+                        return;
                 }
             } else if (message.endsWith(" to the party! They have 60 seconds to accept.")) {
                 Pattern invitePattern = Pattern.compile("(?:(?:\\[.+?] )?(?:\\w+) invited )(?:\\[.+?] )?(\\w+)");

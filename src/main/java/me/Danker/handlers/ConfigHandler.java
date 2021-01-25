@@ -452,6 +452,9 @@ public class ConfigHandler {
 		if (!hasKey("colors", "pet80To89")) writeIntConfig("colors", "pet80To89", 0x5C1F35); // idk weird magenta
 		if (!hasKey("colors", "pet90To99")) writeIntConfig("colors", "pet90To99", 0x9E794E); // Brown
 		if (!hasKey("colors", "pet100")) writeIntConfig("colors", "pet100", 0xF2D249); // Gold
+
+		//Commands
+		if (!hasKey("commands", "reparty")) writeBooleanConfig("commands", "reparty", false);
 		
 		ToggleCommand.gpartyToggled = getBoolean("toggles", "GParty");
 		ToggleCommand.coordsToggled = getBoolean("toggles", "Coords");
