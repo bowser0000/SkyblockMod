@@ -3601,7 +3601,70 @@ public class DankersSkyblockMod {
                 GuiChest chest = (GuiChest) event.gui;
                 IInventory inventory = ((ContainerChest) containerChest).getLowerChestInventory();
                 String inventoryName = inventory.getDisplayName().getUnformattedText();
-                
+                List<Slot> invSlots = containerChest.inventorySlots;
+
+                //Dungeon Reward Chest Profit Calculator
+                if (Utils.inDungeons && inventoryName.endsWith(" Chest")) {
+                    System.out.println("Getting " + inventoryName + " Profit");
+                    new Thread(() -> {
+                        System.out.println(inventoryName + " profit checking thread opened");
+                        try {
+                            Thread.sleep(300);
+                            if (invSlots.size() > 30 && invSlots.get(31).getStack() != null){
+                                if (invSlots.get(31).getStack().getDisplayName().startsWith("§aOpen Reward Chest")) {
+                                    ItemStack openChest = invSlots.get(31).getStack();
+                                    List<String> chestTooltip = openChest.getTooltip(Minecraft.getMinecraft().thePlayer, Minecraft.getMinecraft().gameSettings.advancedItemTooltips);
+                                    int chestCost = 0;
+                                    int chestValue = 0;
+                                    for (String lineUnclean : chestTooltip) {
+                                        String line = StringUtils.stripControlCodes(lineUnclean);
+                                        if (line.contains("FREE")) {
+                                            chestCost = 0;
+                                            break;
+                                        } else if (line.contains(" Coins")) {
+                                            chestCost = Integer.parseInt(line.substring(0, line.indexOf(" ")).replaceAll(",", ""));
+                                            break;
+                                        }
+                                    }
+                                    for (int i = 11; i < 16; i++) {
+                                        ItemStack chestLoot = invSlots.get(i).getStack();
+                                        String sbItemID = Utils.getSBItemID(chestLoot);
+                                        if (sbItemID != null) {
+                                            int binValue = Utils.getLowestBin(sbItemID);
+                                            chestValue += binValue;
+                                        }
+                                    }
+                                    int chestProfit = chestValue - chestCost;
+                                    String output = (inventoryName + ": " + NumberFormat.getInstance().format(chestProfit) + " coins profit\n");
+                                    System.out.println(output);
+                                    switch (inventoryName) {
+                                        case "Wood Chest":
+                                            woodChest = output;
+                                            break;
+                                        case "Gold Chest":
+                                            goldChest = output;
+                                            break;
+                                        case "Diamond Chest":
+                                            diamondChest = output;
+                                            break;
+                                        case "Emerald Chest":
+                                            emeraldChest = output;
+                                            break;
+                                        case "Obsidian Chest":
+                                            obsidianChest = output;
+                                            break;
+                                        case "Bedrock Chest":
+                                            bedrockChest = output;
+                                            break;
+                                    }
+                                }
+                            }
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }).start();
+                }
+
                 if (ToggleCommand.swapToPickBlockToggled) {
                     if (inventoryName.startsWith("Chronomatron (") || inventoryName.startsWith("Superpairs (") || inventoryName.startsWith("Ultrasequencer (") || inventoryName.startsWith("What starts with:") || inventoryName.startsWith("Select all the") || inventoryName.startsWith("Navigate the maze!") || inventoryName.startsWith("Correct all the panes!") || inventoryName.startsWith("Click in order!") || inventoryName.startsWith("Harp -")) {
                         if (!pickBlockBindSwapped) {
@@ -3689,64 +3752,6 @@ public class DankersSkyblockMod {
                                 colour = PET_1_TO_9;
                             }
                             Utils.drawOnSlot(chestSize, slot.xDisplayPosition, slot.yDisplayPosition, colour + 0xBF000000);
-                        }
-                    }
-                }
-
-                //Dungeon Reward Chest Profit Calculator
-                if (Utils.inDungeons && displayName.endsWith(" Chest")) {
-                    if (displayName.equals("Wood Chest") && !woodChest.equals("")) return;
-                    if (displayName.equals("Gold Chest") && !goldChest.equals("")) return;
-                    if (displayName.equals("Diamond Chest") && !diamondChest.equals("")) return;
-                    if (displayName.equals("Emerald Chest") && !emeraldChest.equals("")) return;
-                    if (displayName.equals("Obsidian Chest") && !obsidianChest.equals("")) return;
-                    if (displayName.equals("Bedrock Chest") && !bedrockChest.equals("")) return;
-                    if (invSlots.size() > 30 && invSlots.get(31).getStack() != null){
-                        if (invSlots.get(31).getStack().getDisplayName().startsWith("§aOpen Reward Chest")) {
-                            ItemStack openChest = invSlots.get(31).getStack();
-                            List<String> chestTooltip = openChest.getTooltip(Minecraft.getMinecraft().thePlayer, Minecraft.getMinecraft().gameSettings.advancedItemTooltips);
-                            int chestCost = 0;
-                            int chestValue = 0;
-                            for (String lineUnclean : chestTooltip) {
-                                String line = StringUtils.stripControlCodes(lineUnclean);
-                                if (line.contains("FREE")) {
-                                    chestCost = 0;
-                                    break;
-                                } else if (line.contains(" Coins")) {
-                                    chestCost = Integer.parseInt(line.substring(0, line.indexOf(" ")).replaceAll(",", ""));
-                                    break;
-                                }
-                            }
-                            for (int i = 11; i < 16; i++) {
-                                ItemStack chestLoot = invSlots.get(i).getStack();
-                                String sbItemID = Utils.getSBItemID(chestLoot);
-                                if (sbItemID != null) {
-                                    int binValue = Utils.getLowestBin(sbItemID);
-                                    chestValue += binValue;
-                                }
-                            }
-                            int chestProfit = chestValue - chestCost;
-                            String output = (displayName + ": " + NumberFormat.getInstance().format(chestProfit) + " coins profit\n");
-                            switch(displayName) {
-                                case "Wood Chest":
-                                    woodChest = output;
-                                    break;
-                                case "Gold Chest":
-                                    goldChest = output;
-                                    break;
-                                case "Diamond Chest":
-                                    diamondChest = output;
-                                    break;
-                                case "Emerald Chest":
-                                    emeraldChest = output;
-                                    break;
-                                case "Obsidian Chest":
-                                    obsidianChest = output;
-                                    break;
-                                case "Bedrock Chest":
-                                    bedrockChest = output;
-                                    break;
-                            }
                         }
                     }
                 }

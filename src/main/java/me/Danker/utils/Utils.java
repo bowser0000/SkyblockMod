@@ -1,10 +1,9 @@
 package me.Danker.utils;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import me.Danker.DankersSkyblockMod;
+import me.Danker.handlers.APIHandler;
 import me.Danker.handlers.ScoreboardHandler;
 import me.Danker.handlers.TextRenderer;
 import net.minecraft.block.Block;
@@ -31,10 +30,6 @@ import net.minecraft.util.*;
 import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.*;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -124,24 +119,16 @@ public class Utils {
 
 	public static int getLowestBin(String sbItemID) {
 		if (System.currentTimeMillis() - lastAPITime >= 60000) {
-			try {
-				URL url = new URL("https://dsm.quantizr.repl.co/lowestbin.json");
-				URLConnection request = url.openConnection();
-				request.connect();
-
-				JsonParser json = new JsonParser();
-				JsonElement root = json.parse(new InputStreamReader((InputStream) request.getContent()));
-				lowestBINJson = root.getAsJsonObject();
-				lastAPITime = System.currentTimeMillis();
-			} catch (Exception e) {
-				Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Error connecting to API, prices will most likely not be accurate"));
-			}
+			//If json hasn't been updated for over a minute since last chest opened, get a new copy from server
+			lowestBINJson = APIHandler.getResponse("http://dsm.quantizr.repl.co/lowestbin.json");
 		}
 		try {
 			int lowestBin = lowestBINJson.get(sbItemID).getAsInt();
+			//Reset timer after an item value is successfully queried, otherwise immediately allow for new query
+			lastAPITime = System.currentTimeMillis();
 			return lowestBin;
-		} catch (Exception e)	{
-			Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(sbItemID + " not found in API, chest price will not be accurate"));
+		} catch (Exception e) {
+			Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(sbItemID + " not found in API, chest profit will not be accurate"));
 			return 0;
 		}
 	}
