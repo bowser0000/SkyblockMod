@@ -64,7 +64,6 @@ import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.common.network.FMLNetworkEvent.ClientConnectedToServerEvent;
 import net.minecraftforge.fml.common.versioning.DefaultArtifactVersion;
 import org.apache.commons.lang3.time.StopWatch;
-import org.apache.logging.log4j.Logger;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
@@ -81,7 +80,6 @@ import java.util.regex.Pattern;
 public class DankersSkyblockMod {
     public static final String MODID = "Danker's Skyblock Mod";
     public static final String VERSION = "1.8.5-beta8";
-    public static Logger DSMLogger;
     static double checkItemsNow = 0;
     static double itemsChecked = 0;
     public static Map<String, String> t6Enchants = new HashMap<>();
@@ -111,9 +109,8 @@ public class DankersSkyblockMod {
 
     public static final ResourceLocation CAKE_ICON = new ResourceLocation("dsm", "icons/cake.png");
     public static final ResourceLocation BONZO_ICON = new ResourceLocation("dsm", "icons/bonzo.png");
-	public static final ResourceLocation LOGO = new ResourceLocation("dsm", "icons/dsm.png");
 
-	static String[] riddleSolutions = {"The reward is not in my chest!", "At least one of them is lying, and the reward is not in",
+    static String[] riddleSolutions = {"The reward is not in my chest!", "At least one of them is lying, and the reward is not in",
             "My chest doesn't have the reward. We are all telling the truth", "My chest has the reward and I'm telling the truth",
             "The reward isn't in any of our chests", "Both of them are telling the truth."};
     static Map<String, String[]> triviaSolutions = new HashMap<>();
@@ -289,7 +286,6 @@ public class DankersSkyblockMod {
 
     @EventHandler
     public void preInit(final FMLPreInitializationEvent event) {
-        DSMLogger = event.getModLog();
     	ClientCommandHandler.instance.registerCommand(new ToggleCommand());
     	ClientCommandHandler.instance.registerCommand(new SetkeyCommand());
     	ClientCommandHandler.instance.registerCommand(new GetkeyCommand());
@@ -787,7 +783,7 @@ public class DankersSkyblockMod {
                 return;
             }
         }
-
+  
         if (ToggleCommand.oruoToggled && Utils.inDungeons) {
         	if (message.contains("What SkyBlock year is it?")) {
                 double currentTime = System.currentTimeMillis() /1000L;

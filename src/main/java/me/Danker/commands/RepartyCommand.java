@@ -1,9 +1,9 @@
 package me.Danker.commands;
 
 import me.Danker.DankersSkyblockMod;
+import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
-import net.minecraft.client.gui.GuiNewChat;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommand;
@@ -13,7 +13,6 @@ import net.minecraft.util.*;
 import net.minecraft.util.ChatComponentText;
 import net.minecraftforge.client.event.*;
 import net.minecraftforge.fml.common.Mod.EventHandler;
-import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -97,23 +96,21 @@ public class RepartyCommand extends CommandBase implements ICommand {
         repartyFailList.clear();
 
         // MULTI THREAD DRIFTING
-        partyThread = new Thread(() -> {
+		new Thread(() -> {
             EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
-
-
+      
             try {
-                player.sendChatMessage("/pl");
-                gettingParty = true;
-                while (gettingParty) {
-                    Thread.sleep(10);
-                }
-                if (party.size() == 0) return;
+                Thread.sleep(210);
+                player.sendChatMessage("/p list");
+                System.out.println("Grabbing the party members...");
+                Thread.sleep(550);
+                if (RepartyCommand.party.size() == 0) return;
+                
                 player.sendChatMessage("/p disband");
                 disbanding = true;
                 while (disbanding) {
                     Thread.sleep(10);
                 }
-//                player.sendChatMessage("/p " + String.join(" ", party));
                 String members = String.join(EnumChatFormatting.WHITE + "\n- " + EnumChatFormatting.YELLOW, RepartyCommand.party);
                 player.addChatMessage(new ChatComponentText(DankersSkyblockMod.DELIMITER_COLOUR + "-----------------------------\n" +
                         DankersSkyblockMod.MAIN_COLOUR + "Repartying:" + EnumChatFormatting.WHITE + "\n- " +
@@ -128,22 +125,21 @@ public class RepartyCommand extends CommandBase implements ICommand {
                     }
                     Thread.sleep(100);
                 }
-//                inviting = true;
                 while (inviting) {
                     Thread.sleep(10);
                 }
-                if (repartyFailList.size() > 0) {
-                    String repartyFails = String.join("\n- " + EnumChatFormatting.RED, repartyFailList);
+
+                if (RepartyCommand.repartyFailList.size() > 0) {
+                    Thread.sleep(300);
+                    String failedMembers = String.join(EnumChatFormatting.WHITE + "\n- " + EnumChatFormatting.GOLD, RepartyCommand.repartyFailList);
                     player.addChatMessage(new ChatComponentText(DankersSkyblockMod.DELIMITER_COLOUR + "-----------------------------\n" +
-                            DankersSkyblockMod.MAIN_COLOUR + "Failed to invite:" + EnumChatFormatting.WHITE + "\n- " +
-                            EnumChatFormatting.RED + repartyFails + "\n" +
-                            DankersSkyblockMod.DELIMITER_COLOUR + "-----------------------------"));
+                                                                DankersSkyblockMod.ERROR_COLOUR + "Unable to Invite:" + EnumChatFormatting.WHITE + "\n- " +
+                                                                EnumChatFormatting.GOLD + failedMembers + "\n" +
+                                                                DankersSkyblockMod.DELIMITER_COLOUR + "-----------------------------\n"));
                 }
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-        });
-
-		partyThread.start();
+        }).start();
     }
 }
