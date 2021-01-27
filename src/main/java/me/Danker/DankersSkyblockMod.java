@@ -4,6 +4,8 @@ import com.google.gson.JsonObject;
 import me.Danker.commands.*;
 import me.Danker.gui.*;
 import me.Danker.handlers.*;
+import me.Danker.utils.DarkMonolithUtils;
+import me.Danker.handlers.LocationHandler;
 import me.Danker.utils.TicTacToeUtils;
 import me.Danker.utils.Utils;
 import net.minecraft.block.Block;
@@ -202,6 +204,7 @@ public class DankersSkyblockMod {
     public void init(FMLInitializationEvent event) {
         MinecraftForge.EVENT_BUS.register(this);
         MinecraftForge.EVENT_BUS.register(new PacketHandler());
+        MinecraftForge.EVENT_BUS.register(new LocationHandler());
 
         ConfigHandler.reloadConfig();
 
@@ -2635,6 +2638,7 @@ public class DankersSkyblockMod {
             if (player != null) {
                 Utils.checkForSkyblock();
                 Utils.checkForDungeons();
+                if (Utils.inSkyblock) LocationHandler.sendLocraw();
             }
 
             if (DisplayCommand.auto && world != null && player != null) {
@@ -3113,6 +3117,9 @@ public class DankersSkyblockMod {
 
     @SubscribeEvent
     public void onWorldRender(RenderWorldLastEvent event) {
+        if (ToggleCommand.monolithWaypointsToggled && LocationHandler.getLocation().equals("mining_3")) {
+            DarkMonolithUtils.drawWaypoint(DarkMonolithUtils.findMonolith(), event.partialTicks);
+        }
         if (ToggleCommand.blazeToggled) {
             if (lowestBlaze != null) {
                 BlockPos stringPos = new BlockPos(lowestBlaze.posX, lowestBlaze.posY + 1, lowestBlaze.posZ);
