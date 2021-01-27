@@ -70,6 +70,7 @@ public class DankerGui extends GuiScreen {
 	private GuiButton hiddenJerryAlert;
 	private GuiButton blockCollectingUnenchanted;
 	private GuiButton burrowWaypoints;
+	private GuiButton petItemConfirmation;
 	private GuiButton puzzler;
 
 	public DankerGui(int page) {
@@ -148,7 +149,8 @@ public class DankerGui extends GuiScreen {
 		// Page 7
 		blockCollectingUnenchanted = new GuiButton(0, width / 2 - 100, (int) (height * 0.1), "Block Collecting Unenchanted Items: " + Utils.getColouredBoolean(ToggleCommand.blockCollectingUnenchantedToggled));
 		burrowWaypoints = new GuiButton(0, width / 2 - 100, (int) (height * 0.2), "Griffin Burrow Waypoints: " + Utils.getColouredBoolean(ToggleCommand.burrowWaypointsToggled));
-		puzzler = new GuiButton(0, width / 2 - 100, (int) (height * 0.3), "Puzzler Solver: " + Utils.getColouredBoolean(ToggleCommand.puzzlerToggled));
+		petItemConfirmation = new GuiButton(0, width / 2 - 100, (int) (height * 0.3), "Pet Item Confirmation: " + Utils.getColouredBoolean(ToggleCommand.petItemConfirmationToggled));
+		puzzler = new GuiButton(0, width / 2 - 100, (int) (height * 0.4), "Puzzler Solver: " + Utils.getColouredBoolean(ToggleCommand.puzzlerToggled));
 
 		switch (page) {
 			case 1:
@@ -219,6 +221,7 @@ public class DankerGui extends GuiScreen {
 			case 7:
 				this.buttonList.add(blockCollectingUnenchanted);
 				this.buttonList.add(burrowWaypoints);
+				this.buttonList.add(petItemConfirmation);
 				this.buttonList.add(puzzler);
 				this.buttonList.add(backPage);
 		}
@@ -418,6 +421,10 @@ public class DankerGui extends GuiScreen {
 			ToggleCommand.burrowWaypointsToggled = !ToggleCommand.burrowWaypointsToggled;
 			ConfigHandler.writeBooleanConfig("toggles", "BurrowWaypoints", ToggleCommand.burrowWaypointsToggled);
 			burrowWaypoints.displayString = "Griffin Burrow Waypoints: " + Utils.getColouredBoolean(ToggleCommand.burrowWaypointsToggled);
+		} else if (button == petItemConfirmation) {
+			ToggleCommand.petItemConfirmationToggled = !ToggleCommand.petItemConfirmationToggled;
+			ConfigHandler.writeBooleanConfig("toggles", "PetItemConfirmation", ToggleCommand.petItemConfirmationToggled);
+			petItemConfirmation.displayString = "Pet Item Confirmation: " + Utils.getColouredBoolean(ToggleCommand.petItemConfirmationToggled);
 		} else if (button == puzzler) {
 			ToggleCommand.puzzlerToggled = !ToggleCommand.puzzlerToggled;
 			ConfigHandler.writeBooleanConfig("toggles", "Puzzler", ToggleCommand.puzzlerToggled);

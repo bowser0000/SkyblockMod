@@ -35,9 +35,7 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.ContainerChest;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemMap;
-import net.minecraft.item.ItemStack;
+import net.minecraft.item.*;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.*;
 import net.minecraft.world.World;
@@ -108,6 +106,9 @@ public class DankersSkyblockMod {
     public static boolean firstLaunch = false;
     static String lastPartyDisbander = "";
     static BlockPos puzzlerSolution = null;
+    static ItemStack petItemLastAttempted;
+    static long timeOfLastPetItemAttempt;
+    static int petItemAttemptsRequired;
 
     public static final ResourceLocation CAKE_ICON = new ResourceLocation("dsm", "icons/cake.png");
     public static final ResourceLocation BONZO_ICON = new ResourceLocation("dsm", "icons/bonzo.png");
@@ -3272,6 +3273,42 @@ public class DankersSkyblockMod {
         if (item == null) return;
 
         if (event.action == PlayerInteractEvent.Action.RIGHT_CLICK_AIR) {
+
+            if (ToggleCommand.petItemConfirmationToggled) {
+                String itemId = Utils.getSkyBlockItemID(item);
+                if (itemId != null ) {
+                    if (itemId.startsWith("PET_ITEM")) {
+                        if (petItemLastAttempted == null) {
+                            petItemLastAttempted = item;
+                            timeOfLastPetItemAttempt = System.currentTimeMillis();
+                            petItemAttemptsRequired = 2;
+                            mc.thePlayer.addChatMessage(new ChatComponentText(ERROR_COLOUR + String.format("Danker's Skyblock Mod stopped you from using that pet item! Click %s more %s to apply!", petItemAttemptsRequired, petItemAttemptsRequired > 1 ? "times": "time")));
+                            event.setCanceled(true);
+                            return;
+                        } else {
+                            if (System.currentTimeMillis() - timeOfLastPetItemAttempt > 5000 || !ItemStack.areItemStacksEqual(item, petItemLastAttempted)) {
+                                petItemLastAttempted = item;
+                                timeOfLastPetItemAttempt = System.currentTimeMillis();
+                                petItemAttemptsRequired = 2;
+                                mc.thePlayer.addChatMessage(new ChatComponentText(ERROR_COLOUR + String.format("Danker's Skyblock Mod stopped you from using that pet item! Click %s more %s to apply!", petItemAttemptsRequired, petItemAttemptsRequired > 1 ? "times": "time")));
+                                event.setCanceled(true);
+                                return;
+                            } else {
+                                petItemAttemptsRequired--;
+                                if (petItemAttemptsRequired > 0) {
+                                    timeOfLastPetItemAttempt = System.currentTimeMillis();
+                                    mc.thePlayer.addChatMessage(new ChatComponentText(ERROR_COLOUR + String.format("Danker's Skyblock Mod stopped you from using that pet item! Click %s more %s to apply!", petItemAttemptsRequired, petItemAttemptsRequired > 1 ? "times": "time")));
+                                    event.setCanceled(true);
+                                    return;
+                                } else {
+                                    petItemLastAttempted = null;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
             if (ToggleCommand.aotdToggled && item.getDisplayName().contains("Aspect of the Dragons")) {
                 event.setCanceled(true);
             }
@@ -3458,6 +3495,8 @@ public class DankersSkyblockMod {
 
     @SubscribeEvent
     public void onAttackingEntity(AttackEntityEvent event) {
+        if (event.entity != mc.thePlayer) return;
+
         if (ToggleCommand.notifySlayerSlainToggled && (event.target instanceof EntityZombie || event.target instanceof EntitySpider || event.target instanceof EntityWolf)) {
             List<String> scoreboard = ScoreboardHandler.getSidebarLines();
 

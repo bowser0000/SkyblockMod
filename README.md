@@ -4,8 +4,8 @@ QOL changes that enhances your Hypixel Skyblock experience. Created to add featu
 Discord Server: https://discord.gg/QsEkNQS
 
 ## Incompatibilities
-- Old Animations <2.6.4 - Frequent crashes
-- Old Animations 2.6.4
+- Old Animations Mod 2.6.4
+  - Potential Crashing
   - Pet colors does not color slots
   - Catacombs F7 terminal solvers do not color slots
   - Ultrasequencer solver does not color slots
@@ -20,6 +20,8 @@ Discord Server: https://discord.gg/QsEkNQS
 - Block Zombie Sword ability when at full health
 - Block placing Flower of Truth/Spirit Sceptre
 - Block breaking "farm blocks"
+- Stop salvaging starred items
+- Confirmation to use pet item
 - Disable Spirit Sceptre messages
 - Disable Midas Staff messages
 - Disable Implosion messages
