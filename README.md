@@ -41,6 +41,7 @@ Discord Server: https://discord.gg/QsEkNQS
 - Dungeons timer (watcher, boss, deaths, and puzzle fails)
 - Watcher ready message
 - Low health alert in dungeons
+- Show names above Spirit Leaps
 - Bonzo's Mask Cooldown Timer
 - Catacombs F7 Stage 3 solvers (Starts with letter, select all colour, click in order, simon says, ignore arrows on sea lanterns)
 - Find correct Livid (with graphic display of HP)

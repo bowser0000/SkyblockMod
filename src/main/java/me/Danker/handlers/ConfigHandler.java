@@ -208,6 +208,7 @@ public class ConfigHandler {
 		if (!hasKey("toggles", "BlockCollectingUnenchanted")) writeBooleanConfig("toggles", "BlockCollectingUnenchanted", false);
 		if (!hasKey("toggles", "BurrowWaypoints")) writeBooleanConfig("toggles", "BurrowWaypoints", false);
 		if (!hasKey("toggles", "PetItemConfirmation")) writeBooleanConfig("toggles", "PetItemConfirmation", false);
+		if (!hasKey("toggles", "SpiritLeapNames")) writeBooleanConfig("toggles", "SpiritLeapNames", false);
 
 		if (!hasKey("toggles", "Puzzler")) writeBooleanConfig("toggles", "Puzzler", false);
 
@@ -482,9 +483,11 @@ public class ConfigHandler {
 		ToggleCommand.cakeTimerToggled = getBoolean("toggles", "CakeTimer");
 		ToggleCommand.lowHealthNotifyToggled = getBoolean("toggles", "LowHealthNotify");
 		ToggleCommand.lividSolverToggled = getBoolean("toggles", "LividSolver");
+		ToggleCommand.swapToPickBlockToggled = getBoolean("toggles", "PickBlock");
 		ToggleCommand.stopSalvageStarredToggled = getBoolean("toggles", "StopSalvageStarred");
 		ToggleCommand.watcherReadyToggled = getBoolean("toggles", "WatcherReadyMessage");
 		ToggleCommand.notifySlayerSlainToggled = getBoolean("toggles", "NotifySlayerSlain");
+		ToggleCommand.flowerWeaponsToggled = getBoolean("toggles", "FlowerWeapons");
 		ToggleCommand.necronNotificationsToggled = getBoolean("toggles", "NecronNotifications");
 		ToggleCommand.bonzoTimerToggled = getBoolean("toggles", "BonzoTimer");
 		ToggleCommand.blockBreakingFarmsToggled = getBoolean("toggles", "BlockBreakingFarms");
@@ -497,8 +500,7 @@ public class ConfigHandler {
 		ToggleCommand.blockCollectingUnenchantedToggled = getBoolean("toggles", "BlockCollectingUnenchanted");
 		ToggleCommand.burrowWaypointsToggled = getBoolean("toggles", "BurrowWaypoints");
 		ToggleCommand.petItemConfirmationToggled = getBoolean("toggles", "PetItemConfirmation");
-		ToggleCommand.swapToPickBlockToggled = getBoolean("toggles", "PickBlock");
-		ToggleCommand.flowerWeaponsToggled = getBoolean("toggles", "FlowerWeapons");
+		ToggleCommand.spiritLeapNamesToggled = getBoolean("toggles", "SpiritLeapNames");
 
 		ToggleCommand.puzzlerToggled = getBoolean("toggles", "Puzzler");
 
