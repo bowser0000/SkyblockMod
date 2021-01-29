@@ -65,6 +65,7 @@ import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
+import java.lang.reflect.Field;
 import java.text.NumberFormat;
 import java.util.List;
 import java.util.*;
@@ -115,7 +116,7 @@ public class DankersSkyblockMod {
             "My chest doesn't have the reward. We are all telling the truth", "My chest has the reward and I'm telling the truth",
             "The reward isn't in any of our chests", "Both of them are telling the truth."};
     static String riddleNPC = null;
-    static BlockPos riddleChest = null;
+    public static BlockPos riddleChest = null;
     static Map<String, String[]> triviaSolutions = new HashMap<>();
     static String[] triviaAnswers = null;
     static EntityArmorStand highestBlazeLabel = null;
@@ -657,6 +658,17 @@ public class DankersSkyblockMod {
 
         if (message.contains("PUZZLE SOLVED!")) {
             if (message.contains("wasn't fooled by ")) {
+                // re-enable NEU dungeon block overlay
+                if (Loader.isModLoaded("notenoughupdates") && riddleChest != null) {
+                    try {
+                        Class neuUtilsClass = Class.forName("io.github.moulberry.notenoughupdates.util.Utils");
+                        Field disableField = neuUtilsClass.getDeclaredField("disableCustomDungColours");
+                        disableField.setAccessible(true);
+                        disableField.set(null, false);
+                    } catch (ClassNotFoundException | NoSuchFieldException | IllegalAccessException ignored)  {
+
+                    }
+                }
                 riddleNPC = null;
                 riddleChest = null;
             }
@@ -3259,25 +3271,28 @@ public class DankersSkyblockMod {
                     if (!entity.hasCustomName()) return false;
                     return entity.getCustomNameTag().contains(riddleNPC);
                 })).stream().findFirst().orElse(null);
-                System.out.println("Chest Finder: Found Riddle NPC " + riddleLabel.getCustomNameTag() + " at " + riddleLabel.posX + ", " + riddleLabel.posY + ", " + riddleLabel.posY);
-                BlockPos potentialPos = new BlockPos(Math.floor(riddleLabel.posX), 69, Math.floor(riddleLabel.posZ));
-                if (mc.theWorld.getBlockState(potentialPos.north()).getBlock() == Blocks.chest) {
-                    riddleChest = potentialPos.north();
-                    System.out.print("Correct position is at: " + riddleChest.getX() + ", " + riddleChest.getY() + riddleChest.getZ());
-                }
-                else if (mc.theWorld.getBlockState(potentialPos.south()).getBlock() == Blocks.chest) {
-                    riddleChest = potentialPos.south();
-                    System.out.print("Correct position is at: " + riddleChest);
-                }
-                else if (mc.theWorld.getBlockState(potentialPos.east()).getBlock() == Blocks.chest) {
-                    riddleChest = potentialPos.east();
-                }
-                else if (mc.theWorld.getBlockState(potentialPos.west()).getBlock() == Blocks.chest) {
-                    riddleChest = potentialPos.west();
-                    System.out.print("Correct position is at: " + riddleChest);
+                if (riddleLabel != null) {
+                    System.out.println("Chest Finder: Found Riddle NPC " + riddleLabel.getCustomNameTag() + " at " + riddleLabel.posX + ", " + riddleLabel.posY + ", " + riddleLabel.posY);
+                    BlockPos potentialPos = new BlockPos(Math.floor(riddleLabel.posX), 69, Math.floor(riddleLabel.posZ));
+                    if (mc.theWorld.getBlockState(potentialPos.north()).getBlock() == Blocks.chest) {
+                        riddleChest = potentialPos.north();
+                        System.out.print("Correct position is at: " + riddleChest.getX() + ", " + riddleChest.getY() + riddleChest.getZ());
+                    }
+                    else if (mc.theWorld.getBlockState(potentialPos.south()).getBlock() == Blocks.chest) {
+                        riddleChest = potentialPos.south();
+                        System.out.print("Correct position is at: " + riddleChest);
+                    }
+                    else if (mc.theWorld.getBlockState(potentialPos.east()).getBlock() == Blocks.chest) {
+                        riddleChest = potentialPos.east();
+                        System.out.print("Correct position is at: " + riddleChest);
+                    }
+                    else if (mc.theWorld.getBlockState(potentialPos.west()).getBlock() == Blocks.chest) {
+                        riddleChest = potentialPos.west();
+                        System.out.print("Correct position is at: " + riddleChest);
+                    }
                 }
             } else {
-                Utils.draw3DBox(new AxisAlignedBB(riddleChest, riddleChest.add(1, 1, 1)), new Color(255, 0, 0).getRGB(), event.partialTicks);
+                //Utils.draw3DBox(new AxisAlignedBB(riddleChest, riddleChest.add(1, 1, 1)), new Color(255, 0, 0).getRGB(), event.partialTicks);
             }
         }
     }
