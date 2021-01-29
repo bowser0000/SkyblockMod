@@ -34,6 +34,7 @@ Discord Server: https://discord.gg/QsEkNQS
 - Block starting other slayer quests
 - Fishing, jerry fishing, fishing festival, spooky fishing trackers
 - Expertise kills in fishing rod lore
+- Soul Eater "bonus" in lore
 - Puzzler solver
 - Dungeons puzzle solver (Riddle, trivia, blaze, creeper, water, tic tac toe)
 - Catacombs trackers

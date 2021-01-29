@@ -209,6 +209,7 @@ public class ConfigHandler {
 		if (!hasKey("toggles", "BurrowWaypoints")) writeBooleanConfig("toggles", "BurrowWaypoints", false);
 		if (!hasKey("toggles", "PetItemConfirmation")) writeBooleanConfig("toggles", "PetItemConfirmation", false);
 		if (!hasKey("toggles", "SpiritLeapNames")) writeBooleanConfig("toggles", "SpiritLeapNames", false);
+		if (!hasKey("toggles", "SoulEaterLore")) writeBooleanConfig("toggles", "SoulEaterLore", false);
 
 		if (!hasKey("toggles", "Puzzler")) writeBooleanConfig("toggles", "Puzzler", false);
 
@@ -501,6 +502,7 @@ public class ConfigHandler {
 		ToggleCommand.burrowWaypointsToggled = getBoolean("toggles", "BurrowWaypoints");
 		ToggleCommand.petItemConfirmationToggled = getBoolean("toggles", "PetItemConfirmation");
 		ToggleCommand.spiritLeapNamesToggled = getBoolean("toggles", "SpiritLeapNames");
+		ToggleCommand.soulEaterLoreToggled = getBoolean("toggles", "SoulEaterLore");
 
 		ToggleCommand.puzzlerToggled = getBoolean("toggles", "Puzzler");
 

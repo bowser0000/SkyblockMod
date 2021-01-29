@@ -72,6 +72,8 @@ public class DankerGui extends GuiScreen {
 	private GuiButton burrowWaypoints;
 	private GuiButton petItemConfirmation;
 	private GuiButton spiritLeapNames;
+	private GuiButton soulEaterLore;
+
 	private GuiButton puzzler;
 
 	public DankerGui(int page) {
@@ -153,6 +155,7 @@ public class DankerGui extends GuiScreen {
 		puzzler = new GuiButton(0, width / 2 - 100, (int) (height * 0.3), "Puzzler Solver: " + Utils.getColouredBoolean(ToggleCommand.puzzlerToggled));
 		petItemConfirmation = new GuiButton(0, width / 2 - 100, (int) (height * 0.4), "Pet Item Confirmation: " + Utils.getColouredBoolean(ToggleCommand.petItemConfirmationToggled));
 		spiritLeapNames = new GuiButton(0, width / 2 - 100, (int) (height * 0.5), "Show Names on Spirit Leap: " + Utils.getColouredBoolean(ToggleCommand.spiritLeapNamesToggled));
+		soulEaterLore = new GuiButton(0, width / 2 - 100, (int) (height * 0.6), "Soul Eater Bonus in Lore: " + Utils.getColouredBoolean(ToggleCommand.soulEaterLoreToggled));
 
 		switch (page) {
 			case 1:
@@ -226,6 +229,7 @@ public class DankerGui extends GuiScreen {
 				this.buttonList.add(puzzler);
 				this.buttonList.add(petItemConfirmation);
 				this.buttonList.add(spiritLeapNames);
+				this.buttonList.add(soulEaterLore);
 				this.buttonList.add(backPage);
 		}
 		
@@ -444,6 +448,10 @@ public class DankerGui extends GuiScreen {
 			ToggleCommand.spiritLeapNamesToggled = !ToggleCommand.spiritLeapNamesToggled;
 			ConfigHandler.writeBooleanConfig("toggles", "SpiritLeapNames", ToggleCommand.spiritLeapNamesToggled);
 			spiritLeapNames.displayString = "Show Names on Spirit Leap: " + Utils.getColouredBoolean(ToggleCommand.spiritLeapNamesToggled);
+		} else if (button == soulEaterLore) {
+			ToggleCommand.soulEaterLoreToggled = !ToggleCommand.soulEaterLoreToggled;
+			ConfigHandler.writeBooleanConfig("toggles", "SoulEaterLore", ToggleCommand.soulEaterLoreToggled);
+			soulEaterLore.displayString = "Soul Eater Bonus in Lore: " + Utils.getColouredBoolean(ToggleCommand.soulEaterLoreToggled);
 		}
 	}
 }

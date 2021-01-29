@@ -14,7 +14,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.*;
 import net.minecraft.client.gui.inventory.GuiChest;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.Entity;
@@ -59,7 +58,6 @@ import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
-import net.minecraftforge.fml.common.network.FMLNetworkEvent.ClientConnectedToServerEvent;
 import net.minecraftforge.fml.common.versioning.DefaultArtifactVersion;
 import org.apache.commons.lang3.time.StopWatch;
 import org.lwjgl.input.Keyboard;
@@ -2564,6 +2562,35 @@ public class DankersSkyblockMod {
                         event.toolTip.add(event.toolTip.size() - index, "Expertise Kills: " + EnumChatFormatting.RED + tags.getInteger("expertise_kills"));
                         if (Utils.expertiseKillsLeft(tags.getInteger("expertise_kills")) != -1) {
                             event.toolTip.add(event.toolTip.size() - index, Utils.expertiseKillsLeft(tags.getInteger("expertise_kills")) + " kills to tier up!");
+                        }
+                    }
+                }
+            }
+        }
+
+        if (ToggleCommand.soulEaterLoreToggled) {
+            if (item.hasTagCompound()) {
+                NBTTagCompound tags = item.getSubCompound("ExtraAttributes", false);
+                if (tags != null) {
+                    if (tags.hasKey("ultimateSoulEaterData")) {
+
+                        int bonus = tags.getInteger("ultimateSoulEaterData");
+
+                        boolean foundStrength = false;
+
+                        for (int i = 0; i < event.toolTip.size(); i++) {
+                            String line = event.toolTip.get(i);
+                            if (line.contains("§7Strength:")) {
+                                event.toolTip.add(i + 1, EnumChatFormatting.DARK_RED + " Soul Eater Bonus: " + EnumChatFormatting.GREEN + bonus);
+                                foundStrength = true;
+                                break;
+                            }
+                        }
+
+                        if (!foundStrength) {
+                            int index = mc.gameSettings.advancedItemTooltips ? 4 : 2;
+                            event.toolTip.add(event.toolTip.size() - index, "");
+                            event.toolTip.add(event.toolTip.size() - index, EnumChatFormatting.DARK_RED + " Soul Eater Bonus: " + EnumChatFormatting.GREEN + bonus);
                         }
                     }
                 }
