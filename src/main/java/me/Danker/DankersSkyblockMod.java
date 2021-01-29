@@ -108,6 +108,7 @@ public class DankersSkyblockMod {
     static ItemStack petItemLastAttempted;
     static long timeOfLastPetItemAttempt;
     static int petItemAttemptsRequired;
+    static HashMap<String, String> fetchurItems = new HashMap<>();
 
     public static final ResourceLocation CAKE_ICON = new ResourceLocation("dsm", "icons/cake.png");
     public static final ResourceLocation BONZO_ICON = new ResourceLocation("dsm", "icons/bonzo.png");
@@ -284,6 +285,20 @@ public class DankersSkyblockMod {
 
         String patternString = "(" + String.join("|", t6Enchants.keySet()) + ")";
         t6EnchantPattern = Pattern.compile(patternString);
+
+        fetchurItems.put("theyre yellow and see through", "20 Yellow Stained Glass");
+        fetchurItems.put("its circlular and sometimes moves", "1 Compass");
+        fetchurItems.put("theyre expensive minerals", "20 Mithril");
+        fetchurItems.put("its useful during celebrations", "1 Firework Rocket");
+        fetchurItems.put("its hot and gives energy", "1 Cheap Coffee or 1 Decent Coffee");
+        fetchurItems.put("its tall and can be opened", "1 Wooden Door");
+        //hypixel disabled fetchur for a couple of days here, some may be missing
+        fetchurItems.put("its explosive but more than usual", "1 Superboom TNT");
+        fetchurItems.put("its wearable and grows", "1 Pumpkin");
+        fetchurItems.put("its shiny and makes sparks", "1 Flint and Steel");
+        fetchurItems.put("theyre red and white and you can mine it", "50 Nether Quartz Ore");
+        fetchurItems.put("theyre round and green or purple", "16 Ender Pearls");
+        fetchurItems.put("theyre red and soft", "50 Red Wool");
 
         keyBindings[0] = new KeyBinding("Open Maddox Menu", Keyboard.KEY_M, "Danker's Skyblock Mod");
         keyBindings[1] = new KeyBinding("Regular Ability", Keyboard.KEY_NUMPAD4, "Danker's Skyblock Mod");
@@ -589,6 +604,26 @@ public class DankersSkyblockMod {
                 GriffinBurrowUtils.dugBurrows.add(GriffinBurrowUtils.lastDugBurrow);
                 GriffinBurrowUtils.burrows.removeIf(burrow -> burrow.getBlockPos().equals(GriffinBurrowUtils.lastDugBurrow));
             }
+        }
+
+        if (ToggleCommand.fetchurToggled && message.contains("[NPC]") && message.contains("Fetchur")) {
+            String solution = fetchurItems.keySet().stream().filter(message::contains).findFirst().map(fetchurItems::get).orElse(null);
+            new Thread(() -> {
+                try {
+                    Thread.sleep(2500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                if (solution != null) {
+                    mc.thePlayer.addChatMessage(new ChatComponentText(MAIN_COLOUR + "Fetchur needs: " + ANSWER_COLOUR + EnumChatFormatting.BOLD + solution + EnumChatFormatting.RESET + MAIN_COLOUR + "!"));
+                } else {
+                    if (message.contains("its") || message.contains("theyre")) {
+                        System.out.println("Missing Fetchur item: " + message);
+                        mc.thePlayer.addChatMessage(new ChatComponentText(ERROR_COLOUR + "Danker's Skyblock Mod couldn't determine the Fetchur item."));
+                    }
+                }
+
+            }).start();
         }
 
         if (ToggleCommand.puzzlerToggled && message.contains("[NPC]") && message.contains("Puzzler")) {

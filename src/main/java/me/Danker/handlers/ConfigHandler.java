@@ -212,6 +212,7 @@ public class ConfigHandler {
 		if (!hasKey("toggles", "SoulEaterLore")) writeBooleanConfig("toggles", "SoulEaterLore", false);
 
 		if (!hasKey("toggles", "Puzzler")) writeBooleanConfig("toggles", "Puzzler", false);
+		if (!hasKey("toggles", "Fetchur")) writeBooleanConfig("toggles", "Fetchur", false);
 
 		// Dungeon Puzzle Solvers
 		if (!hasKey("toggles", "ThreeManPuzzle")) writeBooleanConfig("toggles", "ThreeManPuzzle", false);
@@ -505,6 +506,7 @@ public class ConfigHandler {
 		ToggleCommand.soulEaterLoreToggled = getBoolean("toggles", "SoulEaterLore");
 
 		ToggleCommand.puzzlerToggled = getBoolean("toggles", "Puzzler");
+		ToggleCommand.fetchurToggled = getBoolean("toggles", "Fetchur");
 
 		// Puzzle Solvers
 		ToggleCommand.threeManToggled = getBoolean("toggles", "ThreeManPuzzle");

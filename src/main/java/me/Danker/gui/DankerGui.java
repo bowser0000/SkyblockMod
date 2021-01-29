@@ -75,6 +75,7 @@ public class DankerGui extends GuiScreen {
 	private GuiButton soulEaterLore;
 
 	private GuiButton puzzler;
+	private GuiButton fetchur;
 
 	public DankerGui(int page) {
 		this.page = page;
@@ -153,9 +154,10 @@ public class DankerGui extends GuiScreen {
 		blockCollectingUnenchanted = new GuiButton(0, width / 2 - 100, (int) (height * 0.1), "Block Collecting Unenchanted Items: " + Utils.getColouredBoolean(ToggleCommand.blockCollectingUnenchantedToggled));
 		burrowWaypoints = new GuiButton(0, width / 2 - 100, (int) (height * 0.2), "Griffin Burrow Waypoints: " + Utils.getColouredBoolean(ToggleCommand.burrowWaypointsToggled));
 		puzzler = new GuiButton(0, width / 2 - 100, (int) (height * 0.3), "Puzzler Solver: " + Utils.getColouredBoolean(ToggleCommand.puzzlerToggled));
-		petItemConfirmation = new GuiButton(0, width / 2 - 100, (int) (height * 0.4), "Pet Item Confirmation: " + Utils.getColouredBoolean(ToggleCommand.petItemConfirmationToggled));
-		spiritLeapNames = new GuiButton(0, width / 2 - 100, (int) (height * 0.5), "Show Names on Spirit Leap: " + Utils.getColouredBoolean(ToggleCommand.spiritLeapNamesToggled));
-		soulEaterLore = new GuiButton(0, width / 2 - 100, (int) (height * 0.6), "Soul Eater Bonus in Lore: " + Utils.getColouredBoolean(ToggleCommand.soulEaterLoreToggled));
+		fetchur = new GuiButton(0, width / 2 - 100, (int) (height * 0.4), "Fetchur Solver: " + Utils.getColouredBoolean(ToggleCommand.fetchurToggled));
+		petItemConfirmation = new GuiButton(0, width / 2 - 100, (int) (height * 0.5), "Pet Item Confirmation: " + Utils.getColouredBoolean(ToggleCommand.petItemConfirmationToggled));
+		spiritLeapNames = new GuiButton(0, width / 2 - 100, (int) (height * 0.6), "Show Names on Spirit Leap: " + Utils.getColouredBoolean(ToggleCommand.spiritLeapNamesToggled));
+		soulEaterLore = new GuiButton(0, width / 2 - 100, (int) (height * 0.7), "Soul Eater Bonus in Lore: " + Utils.getColouredBoolean(ToggleCommand.soulEaterLoreToggled));
 
 		switch (page) {
 			case 1:
@@ -227,6 +229,7 @@ public class DankerGui extends GuiScreen {
 				this.buttonList.add(blockCollectingUnenchanted);
 				this.buttonList.add(burrowWaypoints);
 				this.buttonList.add(puzzler);
+				this.buttonList.add(fetchur);
 				this.buttonList.add(petItemConfirmation);
 				this.buttonList.add(spiritLeapNames);
 				this.buttonList.add(soulEaterLore);
@@ -440,6 +443,10 @@ public class DankerGui extends GuiScreen {
 			ToggleCommand.puzzlerToggled = !ToggleCommand.puzzlerToggled;
 			ConfigHandler.writeBooleanConfig("toggles", "Puzzler", ToggleCommand.puzzlerToggled);
 			puzzler.displayString = "Puzzler Solver: " + Utils.getColouredBoolean(ToggleCommand.puzzlerToggled);
+		} else if (button == fetchur) {
+			ToggleCommand.fetchurToggled = !ToggleCommand.fetchurToggled;
+			ConfigHandler.writeBooleanConfig("toggles", "Fetchur", ToggleCommand.fetchurToggled);
+			fetchur.displayString = "Fetchur Solver: " + Utils.getColouredBoolean(ToggleCommand.fetchurToggled);
 		} else if (button == petItemConfirmation) {
 			ToggleCommand.petItemConfirmationToggled = !ToggleCommand.petItemConfirmationToggled;
 			ConfigHandler.writeBooleanConfig("toggles", "PetItemConfirmation", ToggleCommand.petItemConfirmationToggled);

@@ -35,7 +35,7 @@ Discord Server: https://discord.gg/QsEkNQS
 - Fishing, jerry fishing, fishing festival, spooky fishing trackers
 - Expertise kills in fishing rod lore
 - Soul Eater "bonus" in lore
-- Puzzler solver
+- Mining solvers (Puzzler, Fetchur)
 - Dungeons puzzle solver (Riddle, trivia, blaze, creeper, water, tic tac toe)
 - Catacombs trackers
 - Dungeons regular ability keybind
