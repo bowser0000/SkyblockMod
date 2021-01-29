@@ -2683,6 +2683,7 @@ public class DankersSkyblockMod {
             ContainerChest chest = (ContainerChest) player.openContainer;
             IInventory inv = chest.getLowerChestInventory();
             String chestName = inv.getDisplayName().getUnformattedText();
+            ItemStack item = event.itemStack;
 
             if (ToggleCommand.hideTooltipsInExperimentAddonsToggled && (chestName.startsWith("Ultrasequencer (") || chestName.startsWith("Chronomatron ("))) {
                 event.toolTip.clear();
