@@ -4,6 +4,7 @@
   "mixins": [
     "MixinBossStatus",
     "MixinChunk",
+    "MixinGuiContainer",
     "MixinModelBlaze",
     "MixinNetHandlerPlayClient",
     "MixinPlayerControllerMP",

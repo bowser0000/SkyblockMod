@@ -2692,6 +2692,12 @@ public class DankersSkyblockMod {
                 event.toolTip.clear();
             }
 
+            if (ToggleCommand.spiritLeapNamesToggled && chestName.equals("Spirit Leap")) {
+                if (item.getItem() == Item.getItemFromBlock(Blocks.stained_glass_pane)) {
+                    event.toolTip.clear();
+                }
+            }
+
         }
     }
 
@@ -4191,9 +4197,9 @@ public class DankersSkyblockMod {
 
                                 String text = fr.trimStringToWidth(name, 32);
 
-                                GL11.glTranslated(0, 0, 10);
+                                GL11.glTranslated(0, 0, 1000);
                                 fr.drawStringWithShadow(text, (x - fr.getStringWidth(text) / 2), y, new Color(255, 0, 0).getRGB());
-                                GL11.glTranslated(0, 0, -10);
+                                GL11.glTranslated(0, 0, -1000);
                             }
                         }
                     }
