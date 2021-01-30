@@ -4186,11 +4186,28 @@ public class DankersSkyblockMod {
                                 }
 
                                 String text = fr.trimStringToWidth(name, 32);
-                                 x -= fr.getStringWidth(text) / 2;
+                                x -= fr.getStringWidth(text) / 2;
+
+                                boolean shouldDrawBkg = true;
+                                if (Loader.isModLoaded("notenoughupdates")) {
+                                    try {
+                                        Class<?> neuClass = Class.forName("io.github.moulberry.notenoughupdates.NotEnoughUpdates");
+                                        Field neuInstance = neuClass.getDeclaredField("INSTANCE");
+                                        Object neu = neuInstance.get(null);
+                                        Field neuConfig = neuClass.getDeclaredField("config");
+                                        Object config = neuConfig.get(neu);
+                                        Field improvedSBMenu = config.getClass().getDeclaredField("improvedSBMenu");
+                                        Object improvedSBMenuS = improvedSBMenu.get(config);
+                                        Field enableSbMenus = improvedSBMenuS.getClass().getDeclaredField("enableSbMenus");
+                                        boolean customGuiEnabled = enableSbMenus.getBoolean(improvedSBMenuS);
+                                        if (customGuiEnabled) shouldDrawBkg = false;
+                                    } catch (ClassNotFoundException | NoSuchFieldException | IllegalAccessException ignored) {
+                                    }
+                                }
 
                                 GL11.glPushMatrix();
                                 GL11.glTranslated(0, 0, 10);
-                                Gui.drawRect(x - 2, y - 2, x + fr.getStringWidth(text) + 2, y + fr.FONT_HEIGHT + 2, new Color(47, 40, 40).getRGB());
+                                if (shouldDrawBkg) Gui.drawRect(x - 2, y - 2, x + fr.getStringWidth(text) + 2, y + fr.FONT_HEIGHT + 2, new Color(47, 40, 40).getRGB());
                                 fr.drawStringWithShadow(text, x, y, new Color(255, 0, 0).getRGB());
                                 GL11.glTranslated(0, 0, -10);
                                 GL11.glPopMatrix();
