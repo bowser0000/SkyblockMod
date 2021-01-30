@@ -693,17 +693,6 @@ public class DankersSkyblockMod {
 
         if (message.contains("PUZZLE SOLVED!")) {
             if (message.contains("wasn't fooled by ")) {
-                // re-enable NEU dungeon block overlay
-                if (Loader.isModLoaded("notenoughupdates") && riddleChest != null) {
-                    try {
-                        Class neuUtilsClass = Class.forName("io.github.moulberry.notenoughupdates.util.Utils");
-                        Field disableField = neuUtilsClass.getDeclaredField("disableCustomDungColours");
-                        disableField.setAccessible(true);
-                        disableField.set(null, false);
-                    } catch (ClassNotFoundException | NoSuchFieldException | IllegalAccessException ignored)  {
-
-                    }
-                }
                 riddleNPC = null;
                 riddleChest = null;
             }
@@ -4197,10 +4186,15 @@ public class DankersSkyblockMod {
                                 }
 
                                 String text = fr.trimStringToWidth(name, 32);
+                                 x -= fr.getStringWidth(text) / 2;
 
-                                GL11.glTranslated(0, 0, 1000);
-                                fr.drawStringWithShadow(text, (x - fr.getStringWidth(text) / 2), y, new Color(255, 0, 0).getRGB());
-                                GL11.glTranslated(0, 0, -1000);
+                                GL11.glPushMatrix();
+                                GL11.glTranslated(0, 0, 10);
+                                Gui.drawRect(x - 2, y - 2, x + fr.getStringWidth(text) + 2, y + fr.FONT_HEIGHT + 2, new Color(47, 40, 40).getRGB());
+                                fr.drawStringWithShadow(text, x, y, new Color(255, 0, 0).getRGB());
+                                GL11.glTranslated(0, 0, -10);
+                                GL11.glPopMatrix();
+
                             }
                         }
                     }
