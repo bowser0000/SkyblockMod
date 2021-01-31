@@ -5,9 +5,7 @@ import com.google.gson.JsonObject;
 import me.Danker.commands.*;
 import me.Danker.gui.*;
 import me.Danker.handlers.*;
-import me.Danker.utils.GriffinBurrowUtils;
-import me.Danker.utils.TicTacToeUtils;
-import me.Danker.utils.Utils;
+import me.Danker.utils.*;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
@@ -77,7 +75,7 @@ public class DankersSkyblockMod {
     public static final String MODID = "Danker's Skyblock Mod";
     public static final String VERSION = "1.8.5-beta8";
 
-    Minecraft mc = Minecraft.getMinecraft();
+    public static Minecraft mc = Minecraft.getMinecraft();
 
     static double checkItemsNow = 0;
     static double itemsChecked = 0;
@@ -120,11 +118,13 @@ public class DankersSkyblockMod {
     public static BlockPos riddleChest = null;
     static Map<String, String[]> triviaSolutions = new HashMap<>();
     static String[] triviaAnswers = null;
+    static String triviaAnswer = null;
     static EntityArmorStand highestBlazeLabel = null;
     static EntityArmorStand lowestBlazeLabel = null;
     public static EntityBlaze highestBlaze = null;
     public static EntityBlaze lowestBlaze = null;
     static int blazeMode = 0;
+    static BlockPos blazeChest = null;
     static boolean shotArrowNearBlaze = false;
 
     // Among Us colours
@@ -422,6 +422,8 @@ public class DankersSkyblockMod {
         lowestBlaze = null;
         highestBlaze = null;
         blazeMode = 0;
+        blazeChest = null;
+        triviaAnswer = null;
         shotArrowNearBlaze = false;
         simonBlockOrder.clear();
         simonNumberNeeded = 0;
@@ -793,6 +795,8 @@ public class DankersSkyblockMod {
         }
 
         if (ToggleCommand.oruoToggled && Utils.inDungeons) {
+            if (message.contains("Oruo the Omniscient") && message.contains("correctly")) triviaAnswer = null;
+
         	if (message.contains("What SkyBlock year is it?")) {
                 double currentTime = System.currentTimeMillis() /1000L;
 
@@ -811,10 +815,12 @@ public class DankersSkyblockMod {
         	
         	// Set wrong answers to red and remove click events
         	if (triviaAnswers != null && (message.contains("ⓐ") || message.contains("ⓑ") || message.contains("ⓒ"))) {
-        		boolean isSolution = false;
+        		String answer = null;
+        	    boolean isSolution = false;
         		for (String solution : triviaAnswers) {
         			if (message.contains(solution)) {
         				isSolution = true;
+        				answer = solution;
         				break;
 					}
         		}
@@ -823,10 +829,12 @@ public class DankersSkyblockMod {
         			String option = message.substring(6);
         			event.message = new ChatComponentText("     " + EnumChatFormatting.GOLD + letter + TRIVIA_WRONG_ANSWER_COLOUR + option);
         			return;
-        		}
+        		} else {
+        		    triviaAnswer = answer;
+                }
         	}
         }
-    	
+
 		if (ToggleCommand.gpartyToggled) {
 			if (message.contains(" has invited all members of ")) {
 				try {
@@ -2818,6 +2826,53 @@ public class DankersSkyblockMod {
                 }
             }
 
+            if (ToggleCommand.onlyShowCorrectBlazeToggled && Utils.inDungeons && blazeMode == 0 && (lowestBlazeLabel != null || highestBlazeLabel != null) && world != null && player != null) {
+                new Thread(() -> {
+                    List<EntityBlaze> blazes = mc.theWorld.getEntities(EntityBlaze.class, (blaze) -> player.getDistanceToEntity(blaze) < 100);
+                    if (blazes.size() > 10) {
+                        System.out.println("More than 10 blazes, was there an update?");
+                    } else if (blazes.size() > 0) {
+                        int diffY = 5 * (10 - blazes.size());
+                        EntityBlaze blaze = blazes.get(0);
+                        for (int x = (int) (blaze.posX - 13); x <= blaze.posX + 13; x++) {
+                            for (int z = (int) (blaze.posZ - 13); z <= blaze.posZ + 13; z++) {
+                                BlockPos blockPos1 = new BlockPos(x, 70 + diffY, z);
+                                BlockPos blockPos2 = new BlockPos(x, 69 - diffY, z);
+                                if (world.getBlockState(blockPos1).getBlock() == Blocks.chest) {
+                                    if (world.getBlockState(blockPos1.up()).getBlock() == Blocks.iron_bars) {
+                                        blazeChest = blockPos1;
+                                        if (blazes.size() < 10) {
+                                            blazeMode = -1;
+                                            System.out.println("Block scanning determined lowest -> highest");
+                                        }
+                                        break;
+                                    }
+                                } else if (world.getBlockState(blockPos2).getBlock() == Blocks.chest) {
+                                    if (world.getBlockState(blockPos2.up()).getBlock() == Blocks.iron_bars) {
+                                        blazeChest = blockPos2;
+                                        if (blazes.size() < 10) {
+                                            blazeMode = 1;
+                                            System.out.println("Block scanning determined highest -> lowest");
+                                        }
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+
+                        if (blazeChest != null && blazes.size() == 10) {
+                            if (world.getBlockState(blazeChest.down()).getBlock() == Blocks.stone) {
+                                System.out.println("Bottom block scanning determined lowest -> highest");
+                                blazeMode = -1;
+                            } else {
+                                System.out.println("Bottom block scanning determined highest -> lowest");
+                                blazeMode = 1;
+                            }
+                        }
+                    }
+                }).start();
+            }
+
             if (ToggleCommand.waterToggled && Utils.inDungeons && world != null && player != null) {
                 // multi thread block checking
                 new Thread(() -> {
@@ -3100,9 +3155,11 @@ public class DankersSkyblockMod {
                             String line = ScoreboardHandler.cleanSB(l);
                             if (line.contains("-96,-204")) {
                                 blazeMode = -1;
+                                System.out.println("Scoreboard determined lowest -> highest");
                                 mc.thePlayer.addChatMessage(new ChatComponentText(MAIN_COLOUR + "Shoot the blazes from " + EnumChatFormatting.RED + EnumChatFormatting.BOLD + "lowest to highest" + EnumChatFormatting.RESET + MAIN_COLOUR + "!"));
                             } else if (line.contains("-60,-204")) {
                                 blazeMode = 1;
+                                System.out.println("Scoreboard determined highest -> lowest");
                                 mc.thePlayer.addChatMessage(new ChatComponentText(MAIN_COLOUR + "Shoot the blazes from " + EnumChatFormatting.DARK_GREEN + EnumChatFormatting.BOLD + "highest to lowest" + EnumChatFormatting.RESET + MAIN_COLOUR + "!"));
                             }
                         });
@@ -3594,6 +3651,17 @@ public class DankersSkyblockMod {
             BlockPos blockPos = Utils.getBlockUnderItemFrame(itemFrame);
             if (mc.theWorld.getBlockState(blockPos).getBlock() == Blocks.sea_lantern) {
                 event.setCanceled(true);
+            }
+        }
+
+        if (ToggleCommand.oruoToggled && triviaAnswer != null) {
+            if (event.entity instanceof EntityArmorStand && event.entity.hasCustomName()) {
+                String name = event.entity.getCustomNameTag();
+                if (name.contains("ⓐ") || name.contains("ⓑ") || name.contains("ⓒ")) {
+                    if (!name.contains(triviaAnswer)) {
+                        event.setCanceled(true);
+                    }
+                }
             }
         }
     }
