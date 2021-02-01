@@ -1,6 +1,8 @@
 package me.Danker.mixin;
 
 import me.Danker.DankersSkyblockMod;
+import me.Danker.commands.ToggleCommand;
+import me.Danker.utils.Utils;
 import net.minecraft.client.renderer.entity.RenderBlaze;
 import net.minecraft.entity.monster.EntityBlaze;
 import net.minecraft.util.ResourceLocation;
@@ -16,7 +18,7 @@ public class MixinRenderBlaze {
 
     @Inject(method = "getEntityTexture", at = @At("RETURN"), cancellable = true)
     private void onGetEntityTexture(EntityBlaze entity, CallbackInfoReturnable<ResourceLocation> cir) {
-        if (entity.isEntityEqual(DankersSkyblockMod.lowestBlaze) || entity.isEntityEqual(DankersSkyblockMod.highestBlaze)) {
+        if (ToggleCommand.blazeToggled && Utils.inDungeons) {
             cir.setReturnValue(BLANK_BLAZE_TEXTURE);
         }
     }

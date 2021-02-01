@@ -123,7 +123,7 @@ public class DankersSkyblockMod {
     static EntityArmorStand lowestBlazeLabel = null;
     public static EntityBlaze highestBlaze = null;
     public static EntityBlaze lowestBlaze = null;
-    static int blazeMode = 0;
+    public static int blazeMode = 0;
     static BlockPos blazeChest = null;
     static boolean shotArrowNearBlaze = false;
 
@@ -3125,10 +3125,8 @@ public class DankersSkyblockMod {
                 List<Entity> entities = world.getLoadedEntityList();
                 int highestHealth = 0;
                 highestBlazeLabel = null;
-                highestBlaze = null;
                 int lowestHealth = 99999999;
                 lowestBlazeLabel = null;
-                lowestBlaze = null;
 
                 for (Entity entity : entities) {
                     if (entity instanceof EntityArmorStand && entity.getName().contains("Blaze") && entity.getName().contains("/")) {
@@ -3319,7 +3317,7 @@ public class DankersSkyblockMod {
                 BlockPos stringPos = new BlockPos(lowestBlazeLabel.posX, lowestBlazeLabel.posY + 1, lowestBlazeLabel.posZ);
                 Utils.draw3DString(stringPos, EnumChatFormatting.BOLD + "Smallest", LOWEST_BLAZE_COLOUR, event.partialTicks);
                 AxisAlignedBB aabb = new AxisAlignedBB(lowestBlazeLabel.posX - 0.5, lowestBlazeLabel.posY - 2, lowestBlazeLabel.posZ - 0.5, lowestBlazeLabel.posX + 0.5, lowestBlazeLabel.posY, lowestBlazeLabel.posZ + 0.5);
-                Utils.draw3DBox(aabb, LOWEST_BLAZE_COLOUR, event.partialTicks);
+                //Utils.draw3DBox(aabb, LOWEST_BLAZE_COLOUR, event.partialTicks);
                 for (Entity entity : mc.theWorld.loadedEntityList) {
                     if (entity instanceof EntityBlaze) {
                         if (entity.getEntityBoundingBox().intersectsWith(aabb)) {
@@ -3333,7 +3331,7 @@ public class DankersSkyblockMod {
                 BlockPos stringPos = new BlockPos(highestBlazeLabel.posX, highestBlazeLabel.posY + 1, highestBlazeLabel.posZ);
                 Utils.draw3DString(stringPos, EnumChatFormatting.BOLD + "Biggest", HIGHEST_BLAZE_COLOUR, event.partialTicks);
                 AxisAlignedBB aabb = new AxisAlignedBB(highestBlazeLabel.posX - 0.5, highestBlazeLabel.posY - 2, highestBlazeLabel.posZ - 0.5, highestBlazeLabel.posX + 0.5, highestBlazeLabel.posY, highestBlazeLabel.posZ + 0.5);
-                Utils.draw3DBox(aabb, HIGHEST_BLAZE_COLOUR, event.partialTicks);
+                //Utils.draw3DBox(aabb, HIGHEST_BLAZE_COLOUR, event.partialTicks);
                 for (Entity entity : mc.theWorld.loadedEntityList) {
                     if (entity instanceof EntityBlaze) {
                         if (entity.getEntityBoundingBox().intersectsWith(aabb)) {
