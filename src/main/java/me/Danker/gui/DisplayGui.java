@@ -157,7 +157,7 @@ public class DisplayGui extends GuiScreen {
 			setDisplay("catacombs_floor_seven", false);
 		}else if (button == chestProfit) {
 			ToggleCommand.chestProfitToggled = !ToggleCommand.chestProfitToggled;
-			ConfigHandler.writeBooleanConfig("toggles", "DungeonTimer", ToggleCommand.chestProfitToggled);
+			ConfigHandler.writeBooleanConfig("toggles", "ChestProfit", ToggleCommand.chestProfitToggled);
 			chestProfit.displayString = "Display Dungeon Chest Profit: " + Utils.getColouredBoolean(ToggleCommand.chestProfitToggled);
 		}
 	}
