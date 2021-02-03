@@ -22,6 +22,7 @@ public class MoveCommand extends CommandBase {
 	public static int[] skillTrackerXY = {0, 0};
 	public static int[] waterAnswerXY = {0, 0};
 	public static int[] bonzoTimerXY = {0, 0};
+	public static int[] chestProfitXY = {0, 0};
 
 	@Override
 	public String getCommandName() {
@@ -30,7 +31,7 @@ public class MoveCommand extends CommandBase {
 
 	@Override
 	public String getCommandUsage(ICommandSender arg0) {
-		return "/" + getCommandName() + " <coords/display/dungeontimer/skill50/lividhp/caketimer/skilltracker/wateranswer/bonzotimer> <x> <y>";
+		return "/" + getCommandName() + " <coords/display/dungeontimer/skill50/lividhp/caketimer/skilltracker/wateranswer/bonzotimer/chestprofit> <x> <y>";
 	}
 	
 	@Override
@@ -41,7 +42,7 @@ public class MoveCommand extends CommandBase {
 	@Override
 	public List<String> addTabCompletionOptions(ICommandSender sender, String[] args, BlockPos pos) {
 		if (args.length == 1) {
-			return getListOfStringsMatchingLastWord(args, "coords", "display", "dungeontimer", "skill50", "lividhp", "caketimer", "skilltracker", "wateranswer", "bonzotimer");
+			return getListOfStringsMatchingLastWord(args, "coords", "display", "dungeontimer", "skill50", "lividhp", "caketimer", "skilltracker", "wateranswer", "bonzotimer", "chestprofit");
 		}
 		return null;
 	}
@@ -118,6 +119,13 @@ public class MoveCommand extends CommandBase {
 				ConfigHandler.writeIntConfig("locations", "bonzoTimerX", bonzoTimerXY[0]);
 				ConfigHandler.writeIntConfig("locations", "bonzoTimerX", bonzoTimerXY[1]);
 				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Bonzo's Mask timer has been moved to " + DankersSkyblockMod.SECONDARY_COLOUR + arg1[1] + ", " + arg1[2]));
+				break;
+			case "chestprofit":
+				chestProfitXY[0] = Integer.parseInt(arg1[1]);
+				chestProfitXY[1] = Integer.parseInt(arg1[2]);
+				ConfigHandler.writeIntConfig("locations", "chestProfitX", chestProfitXY[0]);
+				ConfigHandler.writeIntConfig("locations", "chestProfitY", chestProfitXY[1]);
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Dungeon chest profit calculator has been moved to " + DankersSkyblockMod.SECONDARY_COLOUR + arg1[1] + ", " + arg1[2]));
 				break;
 			default:
 				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Usage: " + getCommandUsage(arg0)));

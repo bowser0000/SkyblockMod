@@ -27,6 +27,7 @@ public class EditLocationsGui extends GuiScreen {
 	private LocationButton skillTracker;
 	private LocationButton waterAnswer;
 	private LocationButton bonzoTimer;
+	private LocationButton chestProfit;
 	
 	@Override
 	public boolean doesGuiPauseGame() {
@@ -84,6 +85,13 @@ public class EditLocationsGui extends GuiScreen {
 								 EnumChatFormatting.GREEN + "Green: " + EnumChatFormatting.YELLOW + "Gold, " + EnumChatFormatting.GREEN + "Emerald\n" +
 								 EnumChatFormatting.RED + "Red: " + EnumChatFormatting.YELLOW + "Gold, " + EnumChatFormatting.AQUA + "Diamond, " + EnumChatFormatting.GREEN + "Emerald, " + EnumChatFormatting.RED + "Clay";
 
+		String chestProfitText = EnumChatFormatting.GOLD + "Wood Chest: 0 \n" +
+								 EnumChatFormatting.YELLOW + "Gold Chest: 10 coins profit\n" +
+								 EnumChatFormatting.AQUA + "Diamond Chest: 100 coins profit\n" +
+								 EnumChatFormatting.GREEN + "Emerald Chest: 1000 coins profit\n" +
+								 EnumChatFormatting.DARK_PURPLE + "Obsidian Chest: 10,000 coins profit\n" +
+								 EnumChatFormatting.BLACK + "Bedrock Chest: 100,000 coins profit";
+
 		display = new LocationButton(0, MoveCommand.displayXY[0], MoveCommand.displayXY[1], 145 * ScaleCommand.displayScale, 102 * ScaleCommand.displayScale, ScaleCommand.displayScale, displayText, displayNums, 110);
 		dungeonTimer = new LocationButton(0, MoveCommand.dungeonTimerXY[0], MoveCommand.dungeonTimerXY[1], 113 * ScaleCommand.dungeonTimerScale, 57 * ScaleCommand.dungeonTimerScale, ScaleCommand.dungeonTimerScale, dungeonTimerText, dungeonTimerNums, 80);
 		coords = new LocationButton(0, MoveCommand.coordsXY[0], MoveCommand.coordsXY[1], 141 * ScaleCommand.coordsScale, 12 * ScaleCommand.coordsScale, ScaleCommand.coordsScale, DankersSkyblockMod.COORDS_COLOUR + "74 / 14 / -26 (141.1 / 6.7)", null, null);
@@ -93,7 +101,7 @@ public class EditLocationsGui extends GuiScreen {
 		skillTracker = new LocationButton(0, MoveCommand.skillTrackerXY[0], MoveCommand.skillTrackerXY[1], 150 * ScaleCommand.skillTrackerScale, 28 * ScaleCommand.skillTrackerScale, ScaleCommand.skillTrackerScale, skillTrackerText, null, null);
 		waterAnswer = new LocationButton(0, MoveCommand.waterAnswerXY[0], MoveCommand.waterAnswerXY[1], 190 * ScaleCommand.waterAnswerScale, 54 * ScaleCommand.waterAnswerScale, ScaleCommand.waterAnswerScale, waterAnswerText, null, null);
 		bonzoTimer = new LocationButton(0, MoveCommand.bonzoTimerXY[0], MoveCommand.bonzoTimerXY[1] + 5, 85 * ScaleCommand.bonzoTimerScale, 18 * ScaleCommand.bonzoTimerScale, ScaleCommand.bonzoTimerScale, DankersSkyblockMod.BONZO_COLOR + "     3m30s", null, null);
-
+		chestProfit = new LocationButton(0, MoveCommand.chestProfitXY[0], MoveCommand.chestProfitXY[1], 190 * ScaleCommand.chestProfitScale, 54 * ScaleCommand.chestProfitScale, ScaleCommand.chestProfitScale, chestProfitText, null, null);
 
 		this.buttonList.add(coords);
 		this.buttonList.add(dungeonTimer);
@@ -104,6 +112,7 @@ public class EditLocationsGui extends GuiScreen {
 		this.buttonList.add(bonzoTimer);
 		this.buttonList.add(display);
 		this.buttonList.add(skill50);
+		this.buttonList.add(chestProfit);
 	}
 	
 	@Override
@@ -189,6 +198,12 @@ public class EditLocationsGui extends GuiScreen {
 					bonzoTimer.xPosition = MoveCommand.bonzoTimerXY[0];
 					bonzoTimer.yPosition = MoveCommand.bonzoTimerXY[1];
 					break;
+				case "chestProfit":
+					MoveCommand.chestProfitXY[0] += xMoved;
+					MoveCommand.chestProfitXY[1] += yMoved;
+					chestProfit.xPosition = MoveCommand.chestProfitXY[0];
+					chestProfit.yPosition = MoveCommand.chestProfitXY[1];
+					break;
 			}
 			this.buttonList.clear();
 			initGui();
@@ -219,6 +234,8 @@ public class EditLocationsGui extends GuiScreen {
 				moving = "waterAnswer";
 			} else if (button == bonzoTimer) {
 				moving = "bonzoTimer";
+			}else if (button == chestProfit) {
+				moving = "chestProfit";
 			}
 		}
 	}
@@ -245,6 +262,8 @@ public class EditLocationsGui extends GuiScreen {
 		ConfigHandler.writeIntConfig("locations", "waterAnswerY", MoveCommand.waterAnswerXY[1]);
 		ConfigHandler.writeIntConfig("locations", "bonzoTimerX", MoveCommand.bonzoTimerXY[0]);
 		ConfigHandler.writeIntConfig("locations", "bonzoTimerY", MoveCommand.bonzoTimerXY[1]);
+		ConfigHandler.writeIntConfig("locations", "chestProfitX", MoveCommand.chestProfitXY[0]);
+		ConfigHandler.writeIntConfig("locations", "chestProfitY", MoveCommand.chestProfitXY[1]);
 	}
 	
 }

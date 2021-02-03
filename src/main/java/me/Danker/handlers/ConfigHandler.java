@@ -183,6 +183,7 @@ public class ConfigHandler {
 		if (!hasKey("toggles", "HealMessages")) writeBooleanConfig("toggles", "HealMessages", true);
 		if (!hasKey("toggles", "PetColors")) writeBooleanConfig("toggles", "PetColors", false);
 		if (!hasKey("toggles", "DungeonTimer")) writeBooleanConfig("toggles", "DungeonTimer", false);
+		if (!hasKey("toggles", "ChestProfit")) writeBooleanConfig("toggles", "ChestProfit", false);
 		if (!hasKey("toggles", "BlockSlayer")) writeStringConfig("toggles", "BlockSlayer", "");
 		if (!hasKey("toggles", "GolemAlerts")) writeBooleanConfig("toggles", "GolemAlerts", false);
 		if (!hasKey("toggles", "ExpertiseLore")) writeBooleanConfig("toggles", "ExpertiseLore", true);
@@ -408,6 +409,8 @@ public class ConfigHandler {
 		if (!hasKey("locations", "waterAnswerY")) writeIntConfig("locations", "waterAnswerY", 100);
 		if (!hasKey("locations", "bonzoTimerX")) writeIntConfig("locations", "bonzoTimerX", 40);
 		if (!hasKey("locations", "bonzoTimerY")) writeIntConfig("locations", "bonzoTimerY", 80);
+		if (!hasKey("locations", "chestProfitX")) writeIntConfig("locations", "chestProfitX", 5);
+		if (!hasKey("locations", "chestProfitY")) writeIntConfig("locations", "chestProfitY", 120);
 		if (!hasKey("scales", "coordsScale")) writeDoubleConfig("scales", "coordsScale", 1);
 		if (!hasKey("scales", "displayScale")) writeDoubleConfig("scales", "displayScale", 1);
 		if (!hasKey("scales", "dungeonTimerScale")) writeDoubleConfig("scales", "dungeonTimerScale", 1);
@@ -417,6 +420,7 @@ public class ConfigHandler {
 		if (!hasKey("scales", "skillTrackerScale")) writeDoubleConfig("scales", "skillTrackerScale", 1);
 		if (!hasKey("scales", "waterAnswerScale")) writeDoubleConfig("scales", "waterAnswerScale", 1);
 		if (!hasKey("scales", "bonzoTimerScale")) writeDoubleConfig("scales", "bonzoTimerScale", 1);
+		if (!hasKey("scales", "chestProfitScale")) writeDoubleConfig("scales", "chestProfitScale", 1);
 
 		if (!hasKey("colors", "main")) writeStringConfig("colors", "main", EnumChatFormatting.GREEN.toString());
 		if (!hasKey("colors", "secondary")) writeStringConfig("colors", "secondary", EnumChatFormatting.DARK_GREEN.toString());
@@ -462,6 +466,7 @@ public class ConfigHandler {
 		ToggleCommand.healMessages = getBoolean("toggles", "HealMessages");
 		ToggleCommand.petColoursToggled = getBoolean("toggles", "PetColors");
 		ToggleCommand.dungeonTimerToggled = getBoolean("toggles", "DungeonTimer");
+		ToggleCommand.chestProfitToggled = getBoolean("toggles", "ChestProfit");
 		ToggleCommand.golemAlertToggled = getBoolean("toggles", "GolemAlerts");
 		ToggleCommand.expertiseLoreToggled = getBoolean("toggles", "ExpertiseLore");
 		ToggleCommand.skill50DisplayToggled = getBoolean("toggles", "Skill50Display");
@@ -687,7 +692,8 @@ public class ConfigHandler {
 		MoveCommand.waterAnswerXY[1] = getInt("locations", "waterAnswerY");
 		MoveCommand.bonzoTimerXY[0] = getInt("locations", "bonzoTimerX");
 		MoveCommand.bonzoTimerXY[1] = getInt("locations", "bonzoTimerY");
-
+		MoveCommand.chestProfitXY[0] = getInt("locations", "chestProfitX");
+		MoveCommand.chestProfitXY[1] = getInt("locations", "chestProfitY");
 
 		ScaleCommand.coordsScale = getDouble("scales", "coordsScale");
 		ScaleCommand.displayScale = getDouble("scales", "displayScale");
@@ -698,6 +704,7 @@ public class ConfigHandler {
 		ScaleCommand.skillTrackerScale = getDouble("scales", "skillTrackerScale");
 		ScaleCommand.waterAnswerScale = getDouble("scales", "waterAnswerScale");
 		ScaleCommand.bonzoTimerScale = getDouble("scales", "bonzoTimerScale");
+		ScaleCommand.chestProfitScale = getDouble("scales", "chestProfitScale");
 
 		DankersSkyblockMod.MAIN_COLOUR = getString("colors", "main");
 		DankersSkyblockMod.SECONDARY_COLOUR = getString("colors", "secondary");

@@ -2,6 +2,7 @@ package me.Danker.gui;
 
 import me.Danker.DankersSkyblockMod;
 import me.Danker.commands.DisplayCommand;
+import me.Danker.commands.ToggleCommand;
 import me.Danker.handlers.ConfigHandler;
 import me.Danker.handlers.TextRenderer;
 import me.Danker.utils.Utils;
@@ -33,6 +34,7 @@ public class DisplayGui extends GuiScreen {
 	private GuiButton catacombsF5;
 	private GuiButton catacombsF6;
 	private GuiButton catacombsF7;
+	private GuiButton chestProfit;
 	
 	@Override
 	public boolean doesGuiPauseGame() {
@@ -66,6 +68,7 @@ public class DisplayGui extends GuiScreen {
 		catacombsF5 = new GuiButton(0, width / 2 + 35, (int) (height * 0.65), 50, 20, "F5");
 		catacombsF6 = new GuiButton(0, width / 2 + 95, (int) (height * 0.65), 50, 20, "F6");
 		catacombsF7 = new GuiButton(0, width / 2 + 155, (int) (height * 0.65), 50, 20, "F7");
+		chestProfit = new GuiButton(0, width / 2 - 100, (int) (height * 0.75), 200, 20,  "Display Dungeon Chest Profit: " + Utils.getColouredBoolean(ToggleCommand.chestProfitToggled));
 		
 		this.buttonList.add(showSession);
 		this.buttonList.add(off);
@@ -85,6 +88,7 @@ public class DisplayGui extends GuiScreen {
 		this.buttonList.add(catacombsF5);
 		this.buttonList.add(catacombsF6);
 		this.buttonList.add(catacombsF7);
+		this.buttonList.add(chestProfit);
 		this.buttonList.add(goBack);
 	}
 	
@@ -151,6 +155,10 @@ public class DisplayGui extends GuiScreen {
 			setDisplay("catacombs_floor_six", false);
 		} else if (button == catacombsF7) {
 			setDisplay("catacombs_floor_seven", false);
+		}else if (button == chestProfit) {
+			ToggleCommand.chestProfitToggled = !ToggleCommand.chestProfitToggled;
+			ConfigHandler.writeBooleanConfig("toggles", "DungeonTimer", ToggleCommand.chestProfitToggled);
+			chestProfit.displayString = "Display Dungeon Chest Profit: " + Utils.getColouredBoolean(ToggleCommand.chestProfitToggled);
 		}
 	}
 	
