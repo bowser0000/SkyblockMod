@@ -1,7 +1,9 @@
 package me.Danker.utils;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import me.Danker.DankersSkyblockMod;
 import me.Danker.handlers.APIHandler;
 import me.Danker.handlers.ScoreboardHandler;
@@ -29,7 +31,17 @@ import net.minecraft.scoreboard.ScoreObjective;
 import net.minecraft.util.*;
 import org.lwjgl.opengl.GL11;
 
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
 import java.awt.*;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.URLConnection;
+import java.security.SecureRandom;
+import java.security.cert.X509Certificate;
 import java.util.*;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -118,9 +130,32 @@ public class Utils {
 	}
 
 	public static int getLowestBin(String sbItemID) {
-		if (System.currentTimeMillis() - lastAPITime >= 60000) {
-			//If json hasn't been updated for over a minute since last chest opened, get a new copy from server
-			lowestBINJson = APIHandler.getResponse("http://dsm.quantizr.repl.co/lowestbin.json");
+		if (System.currentTimeMillis() - lastAPITime >= 60000) { //If json hasn't been updated for over a minute, get a new copy from server
+			try {
+				SSLContext context = SSLContext.getInstance("TLSv1.2");
+				TrustManager[] trustManager = new TrustManager[] {
+						new X509TrustManager() {
+							public X509Certificate[] getAcceptedIssuers() {
+								return new X509Certificate[0];
+							}
+							public void checkClientTrusted(X509Certificate[] certificate, String str) {}
+							public void checkServerTrusted(X509Certificate[] certificate, String str) {}
+						}
+				};
+				context.init(null, trustManager, new SecureRandom());
+
+				HttpsURLConnection.setDefaultSSLSocketFactory(context.getSocketFactory());
+				URL url = new URL("https://dsm.quantizr.repl.co/lowestbin.json");
+				URLConnection request = url.openConnection();
+				request.connect();
+
+				JsonParser json = new JsonParser();
+				JsonElement root = json.parse(new InputStreamReader((InputStream) request.getContent()));
+				lowestBINJson = root.getAsJsonObject();
+			} catch (Exception e) {
+				Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Unable to connect to LowestBIN API"));
+				return 0;
+			}
 		}
 		try {
 			int lowestBin = lowestBINJson.get(sbItemID).getAsInt();
