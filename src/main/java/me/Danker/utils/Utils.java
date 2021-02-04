@@ -1,6 +1,11 @@
 package me.Danker.utils;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import me.Danker.DankersSkyblockMod;
+import me.Danker.handlers.APIHandler;
 import me.Danker.handlers.ScoreboardHandler;
 import me.Danker.handlers.TextRenderer;
 import net.minecraft.block.Block;
@@ -26,7 +31,17 @@ import net.minecraft.scoreboard.ScoreObjective;
 import net.minecraft.util.*;
 import org.lwjgl.opengl.GL11;
 
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
 import java.awt.*;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.URLConnection;
+import java.security.SecureRandom;
+import java.security.cert.X509Certificate;
 import java.util.*;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -45,6 +60,9 @@ public class Utils {
 									  1065000, 1410000, 1900000, 2500000, 3300000, 4300000, 5600000, 7200000, 9200000, 12000000, 15000000,
 									  19000000, 24000000, 30000000, 38000000, 48000000, 60000000, 75000000, 93000000, 116250000};
 	static int[] expertiseKills = {50, 100, 250, 500, 1000, 2500, 5500, 10000, 15000};
+
+	static double lastAPITime= 0;
+	static JsonObject lowestBINJson;
 	
     public static int getItems(String item) {
     	Minecraft mc = Minecraft.getMinecraft();
@@ -63,7 +81,93 @@ public class Utils {
     	// No items found
     	return 0;
     }
-    
+
+	//A portion of the following code was adapted from @Moulberry (https://github.com/Moulberry/)
+	public static String getSBItemID(ItemStack stack) {
+		if(stack == null) return null;
+		NBTTagCompound tag = stack.getTagCompound();
+
+		String sbItemID = null;
+		if(tag != null && tag.hasKey("ExtraAttributes", 10)) {
+			NBTTagCompound ea = tag.getCompoundTag("ExtraAttributes");
+
+			if(ea.hasKey("id", 8)) {
+				sbItemID = ea.getString("id").replaceAll(":", "-");
+			}
+
+			if(sbItemID.equals("PET")) {
+				String petInfo = ea.getString("petInfo");
+				if(petInfo.length() > 0) {
+					JsonObject petInfoObject = new Gson().fromJson(petInfo, JsonObject.class);
+					String type = petInfoObject.get("type").getAsString();
+					String tier = petInfoObject.get("tier").getAsString();
+					sbItemID += "-" + type + "-" + tier;
+				}
+			}
+			if(sbItemID.equals("ENCHANTED_BOOK")) {
+				NBTTagCompound enchantments = ea.getCompoundTag("enchantments");
+				if (enchantments.getKeySet().size() <= 2) {
+					ArrayList sortedEnchants = new ArrayList();
+					for(String enchant : enchantments.getKeySet()) {
+						sortedEnchants.add(enchant.toUpperCase() + enchantments.getInteger(enchant));
+					}
+					Collections.sort(sortedEnchants);
+					for(Object enchant : sortedEnchants) {
+						sbItemID += "-" + enchant;
+					}
+				} else {
+					sbItemID += "-" + enchantments.getKeySet().size() + "ENCHANTS";
+				}
+
+			}
+			if(sbItemID.equals("POTION")) {
+				NBTTagCompound display = tag.getCompoundTag("display");
+				sbItemID= display.getString("Name").replaceAll("§.", "").replaceAll(" ", "_").toUpperCase();
+			}
+		}
+
+		return sbItemID;
+	}
+
+	public static int getLowestBin(String sbItemID) {
+		if (System.currentTimeMillis() - lastAPITime >= 60000) { //If json hasn't been updated for over a minute, get a new copy from server
+			try {
+				SSLContext context = SSLContext.getInstance("TLSv1.2");
+				TrustManager[] trustManager = new TrustManager[] {
+						new X509TrustManager() {
+							public X509Certificate[] getAcceptedIssuers() {
+								return new X509Certificate[0];
+							}
+							public void checkClientTrusted(X509Certificate[] certificate, String str) {}
+							public void checkServerTrusted(X509Certificate[] certificate, String str) {}
+						}
+				};
+				context.init(null, trustManager, new SecureRandom());
+
+				HttpsURLConnection.setDefaultSSLSocketFactory(context.getSocketFactory());
+				URL url = new URL("https://dsm.quantizr.repl.co/lowestbin.json");
+				URLConnection request = url.openConnection();
+				request.connect();
+
+				JsonParser json = new JsonParser();
+				JsonElement root = json.parse(new InputStreamReader((InputStream) request.getContent()));
+				lowestBINJson = root.getAsJsonObject();
+			} catch (Exception e) {
+				Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Unable to connect to LowestBIN API"));
+				return 0;
+			}
+		}
+		try {
+			int lowestBin = lowestBINJson.get(sbItemID).getAsInt();
+			//Reset timer after an item value is successfully queried, otherwise immediately allow for new query
+			lastAPITime = System.currentTimeMillis();
+			return lowestBin;
+		} catch (Exception e) {
+			Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(sbItemID + " not found in API, chest profit will not be accurate"));
+			return 0;
+		}
+	}
+
     public static String returnGoldenEnchants(String line) {
     	Matcher matcher = DankersSkyblockMod.t6EnchantPattern.matcher(line);
     	StringBuffer out = new StringBuffer();
@@ -305,6 +409,86 @@ public class Utils {
 		});
 	}
 
+	//Taken from NEU https://github.com/Moulberry/NotEnoughUpdates/
+	private static final ResourceLocation beaconBeam = new ResourceLocation("textures/entity/beacon_beam.png");
+
+	public static void renderBeaconBeam(double x, double y, double z, int rgb, float alphaMult, float partialTicks) {
+		int height = 300;
+		int bottomOffset = 0;
+		int topOffset = bottomOffset + height;
+
+		Tessellator tessellator = Tessellator.getInstance();
+		WorldRenderer worldrenderer = tessellator.getWorldRenderer();
+
+		Minecraft.getMinecraft().getTextureManager().bindTexture(beaconBeam);
+		GL11.glTexParameterf(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_S, 10497.0F);
+		GL11.glTexParameterf(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_T, 10497.0F);
+		GlStateManager.disableLighting();
+		GlStateManager.enableCull();
+		GlStateManager.enableTexture2D();
+		GlStateManager.tryBlendFuncSeparate(770, 1, 1, 0);
+		GlStateManager.enableBlend();
+		GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
+
+		double time = Minecraft.getMinecraft().theWorld.getTotalWorldTime() + (double)partialTicks;
+		double d1 = MathHelper.func_181162_h(-time * 0.2D - (double)MathHelper.floor_double(-time * 0.1D));
+
+		float r = ((rgb >> 16) & 0xFF) / 255f;
+		float g = ((rgb >> 8) & 0xFF) / 255f;
+		float b = (rgb & 0xFF) / 255f;
+		double d2 = time * 0.025D * -1.5D;
+		double d4 = 0.5D + Math.cos(d2 + 2.356194490192345D) * 0.2D;
+		double d5 = 0.5D + Math.sin(d2 + 2.356194490192345D) * 0.2D;
+		double d6 = 0.5D + Math.cos(d2 + (Math.PI / 4D)) * 0.2D;
+		double d7 = 0.5D + Math.sin(d2 + (Math.PI / 4D)) * 0.2D;
+		double d8 = 0.5D + Math.cos(d2 + 3.9269908169872414D) * 0.2D;
+		double d9 = 0.5D + Math.sin(d2 + 3.9269908169872414D) * 0.2D;
+		double d10 = 0.5D + Math.cos(d2 + 5.497787143782138D) * 0.2D;
+		double d11 = 0.5D + Math.sin(d2 + 5.497787143782138D) * 0.2D;
+		double d14 = -1.0D + d1;
+		double d15 = (double)(height) * 2.5D + d14;
+		worldrenderer.begin(7, DefaultVertexFormats.POSITION_TEX_COLOR);
+		worldrenderer.pos(x + d4, y + topOffset, z + d5).tex(1.0D, d15).color(r, g, b, 1.0F*alphaMult).endVertex();
+		worldrenderer.pos(x + d4, y + bottomOffset, z + d5).tex(1.0D, d14).color(r, g, b, 1.0F).endVertex();
+		worldrenderer.pos(x + d6, y + bottomOffset, z + d7).tex(0.0D, d14).color(r, g, b, 1.0F).endVertex();
+		worldrenderer.pos(x + d6, y + topOffset, z + d7).tex(0.0D, d15).color(r, g, b, 1.0F*alphaMult).endVertex();
+		worldrenderer.pos(x + d10, y + topOffset, z + d11).tex(1.0D, d15).color(r, g, b, 1.0F*alphaMult).endVertex();
+		worldrenderer.pos(x + d10, y + bottomOffset, z + d11).tex(1.0D, d14).color(r, g, b, 1.0F).endVertex();
+		worldrenderer.pos(x + d8, y + bottomOffset, z + d9).tex(0.0D, d14).color(r, g, b, 1.0F).endVertex();
+		worldrenderer.pos(x + d8, y + topOffset, z + d9).tex(0.0D, d15).color(r, g, b, 1.0F*alphaMult).endVertex();
+		worldrenderer.pos(x + d6, y + topOffset, z + d7).tex(1.0D, d15).color(r, g, b, 1.0F*alphaMult).endVertex();
+		worldrenderer.pos(x + d6, y + bottomOffset, z + d7).tex(1.0D, d14).color(r, g, b, 1.0F).endVertex();
+		worldrenderer.pos(x + d10, y + bottomOffset, z + d11).tex(0.0D, d14).color(r, g, b, 1.0F).endVertex();
+		worldrenderer.pos(x + d10, y + topOffset, z + d11).tex(0.0D, d15).color(r, g, b, 1.0F*alphaMult).endVertex();
+		worldrenderer.pos(x + d8, y + topOffset, z + d9).tex(1.0D, d15).color(r, g, b, 1.0F*alphaMult).endVertex();
+		worldrenderer.pos(x + d8, y + bottomOffset, z + d9).tex(1.0D, d14).color(r, g, b, 1.0F).endVertex();
+		worldrenderer.pos(x + d4, y + bottomOffset, z + d5).tex(0.0D, d14).color(r, g, b, 1.0F).endVertex();
+		worldrenderer.pos(x + d4, y + topOffset, z + d5).tex(0.0D, d15).color(r, g, b, 1.0F*alphaMult).endVertex();
+		tessellator.draw();
+
+		GlStateManager.disableCull();
+		double d12 = -1.0D + d1;
+		double d13 = height + d12;
+
+		worldrenderer.begin(7, DefaultVertexFormats.POSITION_TEX_COLOR);
+		worldrenderer.pos(x + 0.2D, y + topOffset, z + 0.2D).tex(1.0D, d13).color(r, g, b, 0.25F*alphaMult).endVertex();
+		worldrenderer.pos(x + 0.2D, y + bottomOffset, z + 0.2D).tex(1.0D, d12).color(r, g, b, 0.25F).endVertex();
+		worldrenderer.pos(x + 0.8D, y + bottomOffset, z + 0.2D).tex(0.0D, d12).color(r, g, b, 0.25F).endVertex();
+		worldrenderer.pos(x + 0.8D, y + topOffset, z + 0.2D).tex(0.0D, d13).color(r, g, b, 0.25F*alphaMult).endVertex();
+		worldrenderer.pos(x + 0.8D, y + topOffset, z + 0.8D).tex(1.0D, d13).color(r, g, b, 0.25F*alphaMult).endVertex();
+		worldrenderer.pos(x + 0.8D, y + bottomOffset, z + 0.8D).tex(1.0D, d12).color(r, g, b, 0.25F).endVertex();
+		worldrenderer.pos(x + 0.2D, y + bottomOffset, z + 0.8D).tex(0.0D, d12).color(r, g, b, 0.25F).endVertex();
+		worldrenderer.pos(x + 0.2D, y + topOffset, z + 0.8D).tex(0.0D, d13).color(r, g, b, 0.25F*alphaMult).endVertex();
+		worldrenderer.pos(x + 0.8D, y + topOffset, z + 0.2D).tex(1.0D, d13).color(r, g, b, 0.25F*alphaMult).endVertex();
+		worldrenderer.pos(x + 0.8D, y + bottomOffset, z + 0.2D).tex(1.0D, d12).color(r, g, b, 0.25F).endVertex();
+		worldrenderer.pos(x + 0.8D, y + bottomOffset, z + 0.8D).tex(0.0D, d12).color(r, g, b, 0.25F).endVertex();
+		worldrenderer.pos(x + 0.8D, y + topOffset, z + 0.8D).tex(0.0D, d13).color(r, g, b, 0.25F*alphaMult).endVertex();
+		worldrenderer.pos(x + 0.2D, y + topOffset, z + 0.8D).tex(1.0D, d13).color(r, g, b, 0.25F*alphaMult).endVertex();
+		worldrenderer.pos(x + 0.2D, y + bottomOffset, z + 0.8D).tex(1.0D, d12).color(r, g, b, 0.25F).endVertex();
+		worldrenderer.pos(x + 0.2D, y + bottomOffset, z + 0.2D).tex(0.0D, d12).color(r, g, b, 0.25F).endVertex();
+		worldrenderer.pos(x + 0.2D, y + topOffset, z + 0.2D).tex(0.0D, d13).color(r, g, b, 0.25F*alphaMult).endVertex();
+		tessellator.draw();
+	}
 
 	public static void draw3DLine(Vec3 pos1, Vec3 pos2, int colourInt, float partialTicks) {
 		Entity render = Minecraft.getMinecraft().getRenderViewEntity();

@@ -4,6 +4,8 @@ import com.google.gson.JsonObject;
 import me.Danker.commands.*;
 import me.Danker.gui.*;
 import me.Danker.handlers.*;
+import me.Danker.utils.DarkMonolithUtils;
+import me.Danker.handlers.LocationHandler;
 import me.Danker.utils.TicTacToeUtils;
 import me.Danker.utils.Utils;
 import net.minecraft.block.Block;
@@ -162,7 +164,14 @@ public class DankersSkyblockMod {
 	public static double alchemyXPGained = 0;
 	static double xpLeft = 0;
 	static double timeSinceGained = 0;
-    
+
+    static String woodChest = "";
+    static String goldChest = "";
+    static String diamondChest = "";
+    static String emeraldChest = "";
+    static String obsidianChest = "";
+    static String bedrockChest = "";
+
     public static String MAIN_COLOUR;
     public static String SECONDARY_COLOUR;
     public static String ERROR_COLOUR;
@@ -195,6 +204,7 @@ public class DankersSkyblockMod {
     public void init(FMLInitializationEvent event) {
         MinecraftForge.EVENT_BUS.register(this);
         MinecraftForge.EVENT_BUS.register(new PacketHandler());
+        MinecraftForge.EVENT_BUS.register(new LocationHandler());
 
         ConfigHandler.reloadConfig();
 
@@ -1033,6 +1043,14 @@ public class DankersSkyblockMod {
 		    witherDoors = 0;
 		    dungeonDeaths = 0;
 		    puzzleFails = 0;
+
+		    //reset dungeon chest profit messages
+            woodChest = "";
+            goldChest = "";
+            diamondChest = "";
+            emeraldChest = "";
+            obsidianChest = "";
+            bedrockChest = "";
 		} else if (message.contains("The BLOOD DOOR has been opened!")) {
 			bloodOpenTime = System.currentTimeMillis() / 1000;
 		} else if (message.contains(" opened a WITHER door!")) {
@@ -1402,6 +1420,16 @@ public class DankersSkyblockMod {
                                    EnumChatFormatting.YELLOW + puzzleFails;
             new TextRenderer(mc, dungeonTimerText, MoveCommand.dungeonTimerXY[0], MoveCommand.dungeonTimerXY[1], ScaleCommand.dungeonTimerScale);
             new TextRenderer(mc, dungeonTimers, (int) (MoveCommand.dungeonTimerXY[0] + (80 * ScaleCommand.dungeonTimerScale)), MoveCommand.dungeonTimerXY[1], ScaleCommand.dungeonTimerScale);
+        }
+
+        if (ToggleCommand.chestProfitToggled && Utils.inDungeons) {
+            String profitText = EnumChatFormatting.GOLD + woodChest +
+                    EnumChatFormatting.YELLOW + goldChest +
+                    EnumChatFormatting.AQUA + diamondChest +
+                    EnumChatFormatting.GREEN + emeraldChest +
+                    EnumChatFormatting.DARK_PURPLE + obsidianChest +
+                    EnumChatFormatting.BLACK + bedrockChest;
+            new TextRenderer(mc, profitText, MoveCommand.chestProfitXY[0], MoveCommand.chestProfitXY[1], ScaleCommand.chestProfitScale);
         }
 
         if (ToggleCommand.lividSolverToggled && foundLivid && livid != null) {
@@ -2535,6 +2563,7 @@ public class DankersSkyblockMod {
             if (player != null) {
                 Utils.checkForSkyblock();
                 Utils.checkForDungeons();
+                if (Utils.inSkyblock) LocationHandler.sendLocraw();
             }
 
             if (DisplayCommand.auto && world != null && player != null) {
@@ -3013,6 +3042,10 @@ public class DankersSkyblockMod {
 
     @SubscribeEvent
     public void onWorldRender(RenderWorldLastEvent event) {
+        if (ToggleCommand.monolithWaypointsToggled && LocationHandler.getLocation() != null) {
+            if (!LocationHandler.getLocation().equals("mining_3")) return;
+            DarkMonolithUtils.drawWaypoint(DarkMonolithUtils.findMonolith(), event.partialTicks);
+        }
         if (ToggleCommand.blazeToggled) {
             if (lowestBlaze != null) {
                 BlockPos stringPos = new BlockPos(lowestBlaze.posX, lowestBlaze.posY + 1, lowestBlaze.posZ);
@@ -3501,7 +3534,70 @@ public class DankersSkyblockMod {
                 GuiChest chest = (GuiChest) event.gui;
                 IInventory inventory = ((ContainerChest) containerChest).getLowerChestInventory();
                 String inventoryName = inventory.getDisplayName().getUnformattedText();
-                
+                List<Slot> invSlots = containerChest.inventorySlots;
+
+                //Dungeon Reward Chest Profit Calculator
+                if (ToggleCommand.chestProfitToggled && Utils.inDungeons && inventoryName.endsWith(" Chest")) {
+                    System.out.println("Getting " + inventoryName + " Profit");
+                    new Thread(() -> {
+                        System.out.println(inventoryName + " profit checking thread opened");
+                        try {
+                            Thread.sleep(300);
+                            if (invSlots.size() > 30 && invSlots.get(31).getStack() != null){
+                                if (invSlots.get(31).getStack().getDisplayName().startsWith("§aOpen Reward Chest")) {
+                                    ItemStack openChest = invSlots.get(31).getStack();
+                                    List<String> chestTooltip = openChest.getTooltip(Minecraft.getMinecraft().thePlayer, Minecraft.getMinecraft().gameSettings.advancedItemTooltips);
+                                    int chestCost = 0;
+                                    int chestValue = 0;
+                                    for (String lineUnclean : chestTooltip) {
+                                        String line = StringUtils.stripControlCodes(lineUnclean);
+                                        if (line.contains("FREE")) {
+                                            chestCost = 0;
+                                            break;
+                                        } else if (line.contains(" Coins")) {
+                                            chestCost = Integer.parseInt(line.substring(0, line.indexOf(" ")).replaceAll(",", ""));
+                                            break;
+                                        }
+                                    }
+                                    for (int i = 11; i < 16; i++) {
+                                        ItemStack chestLoot = invSlots.get(i).getStack();
+                                        String sbItemID = Utils.getSBItemID(chestLoot);
+                                        if (sbItemID != null) {
+                                            int binValue = Utils.getLowestBin(sbItemID);
+                                            chestValue += binValue;
+                                        }
+                                    }
+                                    int chestProfit = chestValue - chestCost;
+                                    String output = (inventoryName + ": " + NumberFormat.getInstance().format(chestProfit) + " coins profit\n");
+                                    System.out.println(output);
+                                    switch (inventoryName) {
+                                        case "Wood Chest":
+                                            woodChest = output;
+                                            break;
+                                        case "Gold Chest":
+                                            goldChest = output;
+                                            break;
+                                        case "Diamond Chest":
+                                            diamondChest = output;
+                                            break;
+                                        case "Emerald Chest":
+                                            emeraldChest = output;
+                                            break;
+                                        case "Obsidian Chest":
+                                            obsidianChest = output;
+                                            break;
+                                        case "Bedrock Chest":
+                                            bedrockChest = output;
+                                            break;
+                                    }
+                                }
+                            }
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }).start();
+                }
+
                 if (ToggleCommand.swapToPickBlockToggled) {
                     if (inventoryName.startsWith("Chronomatron (") || inventoryName.startsWith("Superpairs (") || inventoryName.startsWith("Ultrasequencer (") || inventoryName.startsWith("What starts with:") || inventoryName.startsWith("Select all the") || inventoryName.startsWith("Navigate the maze!") || inventoryName.startsWith("Correct all the panes!") || inventoryName.startsWith("Click in order!") || inventoryName.startsWith("Harp -")) {
                         if (!pickBlockBindSwapped) {

@@ -26,6 +26,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 	public static boolean sceptreMessages;
 	public static boolean petColoursToggled;
 	public static boolean dungeonTimerToggled;
+	public static boolean chestProfitToggled;
 	public static boolean golemAlertToggled;
 	public static boolean expertiseLoreToggled;
 	public static boolean skill50DisplayToggled;
@@ -45,6 +46,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 	public static boolean bonzoTimerToggled;
 	public static boolean blockBreakingFarmsToggled;
 	public static boolean autoSkillTrackerToggled;
+	public static boolean monolithWaypointsToggled;
 	// Puzzle Solvers
 	public static boolean threeManToggled;
 	public static boolean oruoToggled;
@@ -72,8 +74,8 @@ public class ToggleCommand extends CommandBase implements ICommand {
 	@Override
 	public String getCommandUsage(ICommandSender arg0) {
 		return "/" + getCommandName() + " <gparty/coords/golden/slayercount/rngesusalerts/splitfishing/chatmaddox/spiritbearalert/" + 
-										  "aotd/lividdagger/flowerweapons/sceptremessages/petcolors/dungeontimer/golemalerts/expertiselore/skill50display/" +
-										  "outlinetext/midasstaffmessages/implosionmessages/healmessages/caketimer/lowhealthnotify/autoskilltracker/" +
+										  "aotd/lividdagger/flowerweapons/sceptremessages/petcolors/dungeontimer/chestprofit/golemalerts/expertiselore/skill50display/" +
+										  "outlinetext/midasstaffmessages/implosionmessages/healmessages/caketimer/lowhealthnotify/autoskilltracker/monolithwaypoints" +
 										  "lividsolver/stopsalvagestarred/notifyslayerslain/necronnotifications/bonzotimer/blockbreakingfarms/threemanpuzzle/oruopuzzle/blazepuzzle/creeperpuzzle/waterpuzzle/tictactoepuzzle/" +
 										  "watchermessage/startswithterminal/selectallterminal/clickinorderterminal/blockwrongterminalclicks/" +
 										  "itemframeonsealanterns/ultrasequencer/chronomatron/superpairs/hidetooltipsinaddons/pickblock/list>";
@@ -89,9 +91,9 @@ public class ToggleCommand extends CommandBase implements ICommand {
 		if (args.length == 1) {
 			return getListOfStringsMatchingLastWord(args, "gparty", "coords", "golden", "slayercount", "rngesusalerts",
 														  "splitfishing", "chatmaddox", "spiritbearalerts", "aotd", "lividdagger",
-														  "flowerweapons", "sceptremessages", "petcolors", "dungeontimer", "golemalerts",
+														  "flowerweapons", "sceptremessages", "petcolors", "dungeontimer", "chestprofit", "golemalerts",
 														  "expertiselore", "skill50display", "outlinetext", "midasstaffmessages",
-														  "implosionmessages", "healmessages", "caketimer", "lowhealthnotify", "autoskilltracker",
+														  "implosionmessages", "healmessages", "caketimer", "lowhealthnotify", "autoskilltracker", "monolithwaypoints",
 														  "lividsolver", "stopsalvagestarred", "notifyslayerslain", "necronnotifications",
 														  "bonzotimer", "blockbreakingfarms", "threemanpuzzle", "oruopuzzle", "blazepuzzle",
 														  "creeperpuzzle", "waterpuzzle", "tictactoepuzzle", "watchermessage", "startswithterminal",
@@ -197,6 +199,11 @@ public class ToggleCommand extends CommandBase implements ICommand {
 				ConfigHandler.writeBooleanConfig("toggles", "DungeonTimer", dungeonTimerToggled);
 				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Dungeon timer has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + dungeonTimerToggled + DankersSkyblockMod.MAIN_COLOUR + "."));
 				break;
+			case "chestprofit":
+				chestProfitToggled = !chestProfitToggled;
+				ConfigHandler.writeBooleanConfig("toggles", "ChestProfit", chestProfitToggled);
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Dungeon chest profit has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + chestProfitToggled + DankersSkyblockMod.MAIN_COLOUR + "."));
+				break;
 			case "golemalerts":
 				golemAlertToggled = !golemAlertToggled;
 				ConfigHandler.writeBooleanConfig("toggles", "GolemAlerts", golemAlertToggled);
@@ -260,6 +267,14 @@ public class ToggleCommand extends CommandBase implements ICommand {
 				autoSkillTrackerToggled = !autoSkillTrackerToggled;
 				ConfigHandler.writeBooleanConfig("toggles", "AutoSkillTracker", autoSkillTrackerToggled);
 				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Auto start/stop skill tracker has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + autoSkillTrackerToggled + DankersSkyblockMod.MAIN_COLOUR + "."));
+				break;
+			case "monolithwaypoints":
+				monolithWaypointsToggled = !monolithWaypointsToggled;
+				ConfigHandler.writeBooleanConfig("toggles", "MonolithWaypoints", monolithWaypointsToggled);
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Display Dark Monolith waypoints has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + monolithWaypointsToggled + DankersSkyblockMod.MAIN_COLOUR + "."));
+				if (monolithWaypointsToggled){
+					player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "You will need to move/look around the Dwarven Mines for the Dark Monolith Waypoints to be within render distance"));
+				}
 				break;
 			case "threemanpuzzle":
 				threeManToggled = !threeManToggled;
@@ -364,6 +379,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 															DankersSkyblockMod.TYPE_COLOUR + " Heal messages: " + DankersSkyblockMod.VALUE_COLOUR + healMessages + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Pet colours: " + DankersSkyblockMod.VALUE_COLOUR + petColoursToggled + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Dungeon timer: " + DankersSkyblockMod.VALUE_COLOUR + dungeonTimerToggled + "\n" +
+															DankersSkyblockMod.TYPE_COLOUR + " Dungeon chest profit: " + DankersSkyblockMod.VALUE_COLOUR + chestProfitToggled + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Golem spawn alerts: " + DankersSkyblockMod.VALUE_COLOUR + golemAlertToggled + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Expertise in lore: " + DankersSkyblockMod.VALUE_COLOUR + expertiseLoreToggled + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Skill 50 display: " + DankersSkyblockMod.VALUE_COLOUR + skill50DisplayToggled + "\n" +
@@ -371,6 +387,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 															DankersSkyblockMod.TYPE_COLOUR + " Cake timer: " + DankersSkyblockMod.VALUE_COLOUR + cakeTimerToggled + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Low health notify: " + DankersSkyblockMod.VALUE_COLOUR + lowHealthNotifyToggled + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Auto start/stop skill tracker: " + DankersSkyblockMod.VALUE_COLOUR + autoSkillTrackerToggled + "\n" +
+															DankersSkyblockMod.TYPE_COLOUR + " Display Dark Monolith waypoints: " + DankersSkyblockMod.VALUE_COLOUR + monolithWaypointsToggled + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Livid solver: " + DankersSkyblockMod.VALUE_COLOUR + lividSolverToggled + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Three man puzzle solver: " + DankersSkyblockMod.VALUE_COLOUR + threeManToggled + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Oruo trivia solver: " + DankersSkyblockMod.VALUE_COLOUR + oruoToggled + "\n" +
