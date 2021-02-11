@@ -721,10 +721,10 @@ public class DankersSkyblockMod {
                                 Utils.createTitle(EnumChatFormatting.YELLOW + "YELLOW PILLAR!", 2);
                                 break;
                             case 5:
-                                Utils.createTitle(EnumChatFormatting.GREEN + "LIME PILLAR!", 2);
+                                Utils.createTitle(EnumChatFormatting.DARK_GREEN + "GREEN PILLAR!", 2);
                                 break;
                             case 11:
-                                Utils.createTitle(EnumChatFormatting.BLUE + "BLUE PILLAR!", 2);
+                                Utils.createTitle(EnumChatFormatting.DARK_PURPLE + "PURPLE PILLAR!", 2);
                                 break;
                             default:
                                 Utils.createTitle(EnumChatFormatting.WHITE + "NECRON STUNNED!", 2);
@@ -3726,7 +3726,7 @@ public class DankersSkyblockMod {
                 if (ToggleCommand.startsWithToggled && Utils.inDungeons && displayName.startsWith("What starts with:")) {
                     char letter = displayName.charAt(displayName.indexOf("'") + 1);
                     for (Slot slot : invSlots) {
-                        if (slot.getSlotIndex() > 53) continue;
+                        if (slot.inventory == mc.thePlayer.inventory) continue;
                         ItemStack item = slot.getStack();
                         if (item == null) continue;
                         if (item.isItemEnchanted()) continue;
@@ -3747,7 +3747,7 @@ public class DankersSkyblockMod {
                     terminalColorNeeded = colour;
 
                     for (Slot slot : invSlots) {
-                        if (slot.getSlotIndex() > 53) continue;
+                        if (slot.inventory == mc.thePlayer.inventory) continue;
                         ItemStack item = slot.getStack();
                         if (item == null) continue;
                         if (item.isItemEnchanted()) continue;
