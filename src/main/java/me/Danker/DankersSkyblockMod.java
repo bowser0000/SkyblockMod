@@ -767,7 +767,7 @@ public class DankersSkyblockMod {
             return;
         }
         // Ability Cooldown
-        if (!ToggleCommand.cooldownMessages && message.contains("This ability is currently on cooldown for") && message.contains("more second")) {
+        if (!ToggleCommand.cooldownMessages && message.contains("This ability is on cooldown for ")) {
           event.setCanceled(true);
           return;
         }
