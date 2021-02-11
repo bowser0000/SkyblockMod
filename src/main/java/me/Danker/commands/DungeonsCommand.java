@@ -78,6 +78,14 @@ public class DungeonsCommand extends CommandBase {
 				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Failed with reason: " + reason));
 				return;
 			}
+
+			String playerURL = "https://api.hypixel.net/player?uuid=" + uuid + "&key=" + key;
+			System.out.println("Fetching player data...");
+			JsonObject playerResponse = APIHandler.getResponse(playerURL);
+			if(!playerResponse.get("success").getAsBoolean()){
+				String reason = playerResponse.get("cause").getAsString();
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "This player has not played on Hypixel."));
+			}
 			
 			System.out.println("Fetching dungeon stats...");
 			JsonObject dungeonsObject = profileResponse.get("profile").getAsJsonObject().get("members").getAsJsonObject().get(uuid).getAsJsonObject().get("dungeons").getAsJsonObject();
@@ -94,6 +102,7 @@ public class DungeonsCommand extends CommandBase {
 			double archer = Utils.xpToDungeonsLevel(dungeonsObject.get("player_classes").getAsJsonObject().get("archer").getAsJsonObject().get("experience").getAsDouble());
 			double tank = Utils.xpToDungeonsLevel(dungeonsObject.get("player_classes").getAsJsonObject().get("tank").getAsJsonObject().get("experience").getAsDouble());
 			String selectedClass = Utils.capitalizeString(dungeonsObject.get("selected_dungeon_class").getAsString());
+			int secrets = playerResponse.get("player").getAsJsonObject().get("achievements").getAsJsonObject().get("skyblock_treasure_hunter").getAsInt();
 
 			int highestFloor = catacombsObject.get("highest_tier_completed").getAsInt();
 			JsonObject completionObj = catacombsObject.get("tier_completions").getAsJsonObject();
@@ -107,7 +116,8 @@ public class DungeonsCommand extends CommandBase {
 						 EnumChatFormatting.LIGHT_PURPLE + " Mage Level: " + mage + "\n" +
 						 EnumChatFormatting.RED + " Berserk Level: " + berserk + "\n" +
 						 EnumChatFormatting.GREEN + " Archer Level: " + archer + "\n" +
-						 EnumChatFormatting.BLUE + " Tank Level: " + tank + "\n\n");
+						 EnumChatFormatting.BLUE + " Tank Level: " + tank + "\n\n" +
+						 EnumChatFormatting.WHITE + " Secrets Found: " + secrets + "\n\n");
 
 			StringBuilder completionsHoverString = new StringBuilder();
 
@@ -135,5 +145,4 @@ public class DungeonsCommand extends CommandBase {
 				);
 		}).start();
 	}
-
 }

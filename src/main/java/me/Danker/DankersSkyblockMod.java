@@ -1,5 +1,6 @@
 package me.Danker;
 
+import akka.event.Logging;
 import com.google.gson.JsonObject;
 import me.Danker.commands.*;
 import me.Danker.gui.*;
@@ -10,12 +11,11 @@ import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
-import net.minecraft.client.gui.Gui;
-import net.minecraft.client.gui.GuiChat;
-import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.gui.*;
 import net.minecraft.client.gui.inventory.GuiChest;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraft.client.settings.KeyBinding;
+import net.minecraft.command.ICommand;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityArmorStand;
 import net.minecraft.entity.item.EntityItemFrame;
@@ -69,6 +69,7 @@ import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
+import java.net.URLDecoder;
 import java.text.NumberFormat;
 import java.util.List;
 import java.util.*;
@@ -78,7 +79,7 @@ import java.util.regex.Pattern;
 @Mod(modid = DankersSkyblockMod.MODID, version = DankersSkyblockMod.VERSION, clientSideOnly = true)
 public class DankersSkyblockMod {
     public static final String MODID = "Danker's Skyblock Mod";
-    public static final String VERSION = "1.8.5-beta7";
+    public static final String VERSION = "1.8.5-beta8";
     static double checkItemsNow = 0;
     static double itemsChecked = 0;
     public static Map<String, String> t6Enchants = new HashMap<>();
@@ -97,6 +98,8 @@ public class DankersSkyblockMod {
     static double lastMaddoxTime = 0;
     static KeyBinding[] keyBindings = new KeyBinding[3];
     static boolean usingLabymod = false;
+    static boolean usingOAM = false;
+    static boolean OAMWarning = false;
     public static String guiToOpen = null;
     static boolean foundLivid = false;
     static Entity livid = null;
@@ -306,14 +309,42 @@ public class DankersSkyblockMod {
     	ClientCommandHandler.instance.registerCommand(new LobbySkillsCommand());
     	ClientCommandHandler.instance.registerCommand(new DankerGuiCommand());
 		ClientCommandHandler.instance.registerCommand(new SkillTrackerCommand());
-		ClientCommandHandler.instance.registerCommand(new RepartyCommand());
     }
 
     @EventHandler
     public void postInit(final FMLPostInitializationEvent event) {
-        usingLabymod = Loader.isModLoaded("labymod");
-        System.out.println("LabyMod detection: " + usingLabymod);
+		Package[] packages = Package.getPackages();
+		for(Package p : packages){
+			if(p.getName().startsWith("com.spiderfrog.gadgets") || p.getName().startsWith("com.spiderfrog.oldanimations")){
+				usingOAM = true;
+			}
+		}
+		System.out.println("OAM detection: " + usingOAM);
+
+    	usingLabymod = Loader.isModLoaded("labymod");
+    	System.out.println("LabyMod detection: " + usingLabymod);
+    	
+        if(!ClientCommandHandler.instance.getCommands().containsKey("reparty")) {
+            ClientCommandHandler.instance.registerCommand(new RepartyCommand());
+        } else if (ConfigHandler.getBoolean("commands", "reparty")) {
+            for(Map.Entry<String, ICommand> entry : ClientCommandHandler.instance.getCommands().entrySet()) {
+                if (entry.getKey().equals("reparty") || entry.getKey().equals("rp")) {
+                    entry.setValue(new RepartyCommand());
+                }
+            }
+        }
+
     }
+
+    @SubscribeEvent
+	public void onGuiOpenEvent(GuiOpenEvent event){
+		if(event.gui instanceof GuiMainMenu && usingOAM && !OAMWarning){
+			if(!(event.gui instanceof WarningGui)){
+				event.gui = new WarningGuiRedirect(new WarningGui());
+				OAMWarning = true;
+			}
+		}
+	}
 
     // Update checker
     @SubscribeEvent
@@ -400,38 +431,127 @@ public class DankersSkyblockMod {
         }
 
 		// Reparty command
-		if (System.currentTimeMillis() / 1000 - RepartyCommand.callTime <= 5) {
-			if (!(message.contains("----") || message.contains("disbanded") || message.contains("seconds to accept") || message.contains("●") || message.contains("Party Members") || message.contains("Couldn't find a player") || message.contains("cannot invite that player") || message.length() == 0)) {
-				return;
-			}
-			
-			EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
-			
-			Pattern party_start_pattern = Pattern.compile("^Party Members \\((\\d+)\\)$");
-            Pattern leader_pattern = Pattern.compile("^Party Leader: (?:\\[.+?] )?(\\w+) ●$");
-			Pattern members_pattern = Pattern.compile(" (?:\\[.+?] )?(\\w+) ●");
-            Matcher party_start = party_start_pattern.matcher(message);
-            Matcher leader = leader_pattern.matcher(message);
-            Matcher members = members_pattern.matcher(message);
-			
-			if (party_start.matches() && Integer.parseInt(party_start.group(1)) == 1) {
-				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "You cannot reparty yourself."));
-			}
-            else if (leader.matches() && !(leader.group(1).equals(player.getName()))) {
-				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "You are not party leader."));
-			}
-			else if (message.contains("Couldn't find a player") || message.contains("You cannot invite that player")) {
-				RepartyCommand.repartyFailList.add(RepartyCommand.currentMember);
-			}
-			else {
-				while (members.find()) {
-					String partyMember = members.group(1);
-					if (!partyMember.equals(player.getName())) {
-						RepartyCommand.party.add(partyMember);
-					}
-				}
-			}
-			event.setCanceled(true);
+        // Getting party
+        if (RepartyCommand.gettingParty) {
+            if (message.contains("-----")) {
+                switch(RepartyCommand.Delimiter) {
+                    case 0:
+                        System.out.println("Get Party Delimiter Cancelled");
+                        RepartyCommand.Delimiter++;
+                        event.setCanceled(true);
+                        return;
+                    case 1:
+                        System.out.println("Done querying party");
+                        RepartyCommand.gettingParty = false;
+                        RepartyCommand.Delimiter = 0;
+                        event.setCanceled(true);
+                        return;
+                }
+            }else if (message.startsWith("Party M") || message.startsWith("Party Leader")){
+                EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
+
+                Pattern party_start_pattern = Pattern.compile("^Party Members \\((\\d+)\\)$");
+                Pattern leader_pattern = Pattern.compile("^Party Leader: (?:\\[.+?] )?(\\w+) ●$");
+                Pattern members_pattern = Pattern.compile(" (?:\\[.+?] )?(\\w+) ●");
+                Matcher party_start = party_start_pattern.matcher(message);
+                Matcher leader = leader_pattern.matcher(message);
+                Matcher members = members_pattern.matcher(message);
+
+                if (party_start.matches() && Integer.parseInt(party_start.group(1)) == 1) {
+                    player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "You cannot reparty yourself."));
+                    RepartyCommand.partyThread.interrupt();
+                } else if (leader.matches() && !(leader.group(1).equals(player.getName()))) {
+                    player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "You are not party leader."));
+                    RepartyCommand.partyThread.interrupt();
+                } else {
+                    while (members.find()) {
+                        String partyMember = members.group(1);
+                        if (!partyMember.equals(player.getName())) {
+                            RepartyCommand.party.add(partyMember);
+                            System.out.println(partyMember);
+                        }
+                    }
+                }
+                event.setCanceled(true);
+                return;
+            }
+        }
+        // Disbanding party
+        if (RepartyCommand.disbanding) {
+            if (message.contains("-----")) {
+                switch (RepartyCommand.Delimiter) {
+                    case 0:
+                        System.out.println("Disband Delimiter Cancelled");
+                        RepartyCommand.Delimiter++;
+                        event.setCanceled(true);
+                        return;
+                    case 1:
+                        System.out.println("Done disbanding");
+                        RepartyCommand.disbanding = false;
+                        RepartyCommand.Delimiter = 0;
+                        event.setCanceled(true);
+                        return;
+                }
+            } else if (message.endsWith("has disbanded the party!")) {
+                event.setCanceled(true);
+                return;
+            }
+        }
+        // Inviting
+        if (RepartyCommand.inviting) {
+            if (message.contains("-----")) {
+                switch (RepartyCommand.Delimiter) {
+                    case 1:
+                        event.setCanceled(true);
+                        RepartyCommand.Delimiter = 0;
+                        System.out.println("Player Invited!");
+                        RepartyCommand.inviting = false;
+                        return;
+                    case 0:
+                        RepartyCommand.Delimiter++;
+                        event.setCanceled(true);
+                        return;
+                }
+            } else if (message.endsWith(" to the party! They have 60 seconds to accept.")) {
+                Pattern invitePattern = Pattern.compile("(?:(?:\\[.+?] )?(?:\\w+) invited )(?:\\[.+?] )?(\\w+)");
+                Matcher invitee = invitePattern.matcher(message);
+                if (invitee.find()) {
+                    System.out.println("" + invitee.group(1) + ": " + RepartyCommand.repartyFailList.remove(invitee.group(1)));
+                }
+                event.setCanceled(true);
+                return;
+            } else if (message.contains("Couldn't find a player") || message.contains("You cannot invite that player")) {
+                event.setCanceled(true);
+                return;
+            }
+        }
+        // Fail Inviting
+        if (RepartyCommand.failInviting) {
+            if (message.contains("-----")) {
+                switch (RepartyCommand.Delimiter) {
+                    case 1:
+                        event.setCanceled(true);
+                        RepartyCommand.Delimiter = 0;
+                        System.out.println("Player Invited!");
+                        RepartyCommand.inviting = false;
+                        return;
+                    case 0:
+                        RepartyCommand.Delimiter++;
+                        event.setCanceled(true);
+                        return;
+                }
+            } else if (message.endsWith(" to the party! They have 60 seconds to accept.")) {
+                Pattern invitePattern = Pattern.compile("(?:(?:\\[.+?] )?(?:\\w+) invited )(?:\\[.+?] )?(\\w+)");
+                Matcher invitee = invitePattern.matcher(message);
+                if (invitee.find()) {
+                    System.out.println("" + invitee.group(1) + ": " + RepartyCommand.repartyFailList.remove(invitee.group(1)));
+                }
+                event.setCanceled(true);
+                return;
+            } else if (message.contains("Couldn't find a player") || message.contains("You cannot invite that player")) {
+                event.setCanceled(true);
+                return;
+            }
         }
 
     	if (!Utils.inSkyblock) return;
@@ -646,6 +766,16 @@ public class DankersSkyblockMod {
             event.setCanceled(true);
             return;
         }
+        // Ability Cooldown
+        if (!ToggleCommand.cooldownMessages && message.contains("This ability is currently on cooldown for") && message.contains("more second")) {
+          event.setCanceled(true);
+          return;
+        }
+        // Out of mana messages
+        if (!ToggleCommand.manaMessages && message.contains("You do not have enough mana to do this!")) {
+          event.setCanceled(true);
+          return;
+        }
         // Implosion
         if (!ToggleCommand.implosionMessages) {
             if (message.contains("Your Implosion hit ") || message.contains("There are blocks in the way")) {
@@ -653,7 +783,7 @@ public class DankersSkyblockMod {
                 return;
             }
         }
-
+  
         if (ToggleCommand.oruoToggled && Utils.inDungeons) {
         	if (message.contains("What SkyBlock year is it?")) {
                 double currentTime = System.currentTimeMillis() /1000L;

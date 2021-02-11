@@ -177,18 +177,25 @@ public class ConfigHandler {
 		if (!hasKey("toggles", "SpiritBearAlerts")) writeBooleanConfig("toggles", "SpiritBearAlerts", true);
 		if (!hasKey("toggles", "AOTD")) writeBooleanConfig("toggles", "AOTD", false);
 		if (!hasKey("toggles", "LividDagger")) writeBooleanConfig("toggles", "LividDagger", false);
-		if (!hasKey("toggles", "SceptreMessages")) writeBooleanConfig("toggles", "SceptreMessages", true);
 		if (!hasKey("toggles", "MidasStaffMessages")) writeBooleanConfig("toggles", "MidasStaffMessages", true);
 		if (!hasKey("toggles", "ImplosionMessages")) writeBooleanConfig("toggles", "ImplosionMessages", true);
 		if (!hasKey("toggles", "HealMessages")) writeBooleanConfig("toggles", "HealMessages", true);
 		if (!hasKey("toggles", "PetColors")) writeBooleanConfig("toggles", "PetColors", false);
-		if (!hasKey("toggles", "DungeonTimer")) writeBooleanConfig("toggles", "DungeonTimer", false);
 		if (!hasKey("toggles", "BlockSlayer")) writeStringConfig("toggles", "BlockSlayer", "");
 		if (!hasKey("toggles", "GolemAlerts")) writeBooleanConfig("toggles", "GolemAlerts", false);
 		if (!hasKey("toggles", "ExpertiseLore")) writeBooleanConfig("toggles", "ExpertiseLore", true);
 		if (!hasKey("toggles", "Skill50Display")) writeBooleanConfig("toggles", "Skill50Display", false);
 		if (!hasKey("toggles", "OutlineText")) writeBooleanConfig("toggles", "OutlineText", false);
 		if (!hasKey("toggles", "CakeTimer")) writeBooleanConfig("toggles", "CakeTimer", false);
+		// Chat Messages
+		if (!hasKey("toggles", "SceptreMessages")) writeBooleanConfig("toggles", "SceptreMessages", true);
+		if (!hasKey("toggles", "MidasStaffMessages")) writeBooleanConfig("toggles", "MidasStaffMessages", true);
+		if (!hasKey("toggles", "ImplosionMessages")) writeBooleanConfig("toggles", "ImplosionMessages", true);
+		if (!hasKey("toggles", "HealMessages")) writeBooleanConfig("toggles", "HealMessages", true);
+		if (!hasKey("toggles", "CooldownMessages")) writeBooleanConfig("toggles","CooldownMessages",true);
+		if (!hasKey("toggles", "ManaMessages")) writeBooleanConfig("toggles","ManaMessages",true);
+		// Dungeons
+		if (!hasKey("toggles", "DungeonTimer")) writeBooleanConfig("toggles", "DungeonTimer", false);
 		if (!hasKey("toggles", "LowHealthNotify")) writeBooleanConfig("toggles", "LowHealthNotify", false);
 		if (!hasKey("toggles", "LividSolver")) writeBooleanConfig("toggles", "LividSolver", false);
 		if (!hasKey("toggles", "StopSalvageStarred")) writeBooleanConfig("toggles", "StopSalvageStarred", false);
@@ -445,6 +452,9 @@ public class ConfigHandler {
 		if (!hasKey("colors", "pet80To89")) writeIntConfig("colors", "pet80To89", 0x5C1F35); // idk weird magenta
 		if (!hasKey("colors", "pet90To99")) writeIntConfig("colors", "pet90To99", 0x9E794E); // Brown
 		if (!hasKey("colors", "pet100")) writeIntConfig("colors", "pet100", 0xF2D249); // Gold
+
+		//Commands
+		if (!hasKey("commands", "reparty")) writeBooleanConfig("commands", "reparty", false);
 		
 		ToggleCommand.gpartyToggled = getBoolean("toggles", "GParty");
 		ToggleCommand.coordsToggled = getBoolean("toggles", "Coords");
@@ -456,17 +466,21 @@ public class ConfigHandler {
 		ToggleCommand.spiritBearAlerts = getBoolean("toggles", "SpiritBearAlerts");
 		ToggleCommand.aotdToggled = getBoolean("toggles", "AOTD");
 		ToggleCommand.lividDaggerToggled = getBoolean("toggles", "LividDagger");
-		ToggleCommand.sceptreMessages = getBoolean("toggles", "SceptreMessages");
-		ToggleCommand.midasStaffMessages = getBoolean("toggles", "MidasStaffMessages");
-		ToggleCommand.implosionMessages = getBoolean("toggles", "ImplosionMessages");
-		ToggleCommand.healMessages = getBoolean("toggles", "HealMessages");
 		ToggleCommand.petColoursToggled = getBoolean("toggles", "PetColors");
-		ToggleCommand.dungeonTimerToggled = getBoolean("toggles", "DungeonTimer");
 		ToggleCommand.golemAlertToggled = getBoolean("toggles", "GolemAlerts");
 		ToggleCommand.expertiseLoreToggled = getBoolean("toggles", "ExpertiseLore");
 		ToggleCommand.skill50DisplayToggled = getBoolean("toggles", "Skill50Display");
 		ToggleCommand.outlineTextToggled = getBoolean("toggles", "OutlineText");
 		ToggleCommand.cakeTimerToggled = getBoolean("toggles", "CakeTimer");
+		// Chat Messages
+		ToggleCommand.sceptreMessages = getBoolean("toggles", "SceptreMessages");
+		ToggleCommand.midasStaffMessages = getBoolean("toggles", "MidasStaffMessages");
+		ToggleCommand.implosionMessages = getBoolean("toggles", "ImplosionMessages");
+		ToggleCommand.healMessages = getBoolean("toggles", "HealMessages");
+		ToggleCommand.cooldownMessages = getBoolean("toggles", "CooldownMessages");
+		ToggleCommand.manaMessages = getBoolean("toggles", "ManaMessages");
+		//Dungeons
+		ToggleCommand.dungeonTimerToggled = getBoolean("toggles", "DungeonTimer");
 		ToggleCommand.lowHealthNotifyToggled = getBoolean("toggles", "LowHealthNotify");
 		ToggleCommand.lividSolverToggled = getBoolean("toggles", "LividSolver");
 		ToggleCommand.stopSalvageStarredToggled = getBoolean("toggles", "StopSalvageStarred");
@@ -579,7 +593,7 @@ public class ConfigHandler {
 		// Spooky Fishing
 		LootCommand.scarecrows = getInt("fishing", "scarecrow");
 		LootCommand.nightmares = getInt("fishing", "nightmare");
-		LootCommand.werewolfs = getInt("fishing", "nightmare");
+		LootCommand.werewolfs = getInt("fishing", "werewolf");
 		LootCommand.phantomFishers = getInt("fishing", "phantomFisher");
 		LootCommand.grimReapers = getInt("fishing", "grimReaper");
 		
