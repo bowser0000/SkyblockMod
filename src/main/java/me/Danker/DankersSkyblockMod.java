@@ -416,6 +416,8 @@ public class DankersSkyblockMod {
     public void onWorldChange(WorldEvent.Load event) {
         foundLivid = false;
         livid = null;
+        lowestBlaze = null;
+        highestBlaze = null;
         nextBonzoUse = 0;
     }
 
@@ -3143,7 +3145,7 @@ public class DankersSkyblockMod {
 
     @SubscribeEvent
     public void onWorldRender(RenderWorldLastEvent event) {
-        if (ToggleCommand.blazeToggled) {
+        if (ToggleCommand.blazeToggled && Utils.inDungeons) {
             if (lowestBlaze != null) {
                 BlockPos stringPos = new BlockPos(lowestBlaze.posX, lowestBlaze.posY + 1, lowestBlaze.posZ);
                 Utils.draw3DString(stringPos, EnumChatFormatting.BOLD + "Smallest", LOWEST_BLAZE_COLOUR, event.partialTicks);
