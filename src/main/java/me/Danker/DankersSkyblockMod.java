@@ -3044,7 +3044,7 @@ public class DankersSkyblockMod {
             if (ToggleCommand.lowHealthNotifyToggled && Utils.inDungeons && world != null) {
                 List<String> scoreboard = ScoreboardHandler.getSidebarLines();
                 for (String score : scoreboard) {
-                    if (score.endsWith("❤") && score.matches(".*§c\\d.*")) {
+                    if (score.endsWith("❤") && score.matches(".* §c\\d.*")) {
                         String name = score.substring(score.indexOf(" ") + 1);
                         Utils.createTitle(EnumChatFormatting.RED + "LOW HEALTH!\n" + name, 1);
                         break;
