@@ -8,10 +8,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.network.NetworkPlayerInfo;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.WorldRenderer;
+import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.Entity;
@@ -410,6 +407,67 @@ public class Utils {
 		GlStateManager.enableAlpha();
 		GlStateManager.enableTexture2D();
 		GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+		GlStateManager.popMatrix();
+	}
+
+	public static void drawFilled3DBox(AxisAlignedBB aabb, int colourInt, boolean translucent, float partialTicks) {
+		Entity render = Minecraft.getMinecraft().getRenderViewEntity();
+		WorldRenderer worldRenderer = Tessellator.getInstance().getWorldRenderer();
+		Color colour = new Color(colourInt);
+
+		double realX = render.lastTickPosX + (render.posX - render.lastTickPosX) * partialTicks;
+		double realY = render.lastTickPosY + (render.posY - render.lastTickPosY) * partialTicks;
+		double realZ = render.lastTickPosZ + (render.posZ - render.lastTickPosZ) * partialTicks;
+
+		GlStateManager.pushMatrix();
+		GlStateManager.pushAttrib();
+		GlStateManager.translate(-realX, -realY, -realZ);
+		GlStateManager.disableTexture2D();
+		GlStateManager.enableAlpha();
+		GlStateManager.enableBlend();
+		GlStateManager.tryBlendFuncSeparate(770, translucent ? 1 : 771, 1, 0);
+		GlStateManager.disableCull();
+		GlStateManager.color(colour.getRed() / 255f, colour.getGreen() / 255f, colour.getBlue() / 255f, colour.getAlpha() / 255f);
+		worldRenderer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION);
+		// Bottom
+		worldRenderer.pos(aabb.minX, aabb.minY, aabb.minZ).endVertex();
+		worldRenderer.pos(aabb.maxX, aabb.minY, aabb.minZ).endVertex();
+		worldRenderer.pos(aabb.maxX, aabb.minY, aabb.maxZ).endVertex();
+		worldRenderer.pos(aabb.minX, aabb.minY, aabb.maxZ).endVertex();
+		// Top
+		worldRenderer.pos(aabb.minX, aabb.maxY, aabb.minZ).endVertex();
+		worldRenderer.pos(aabb.maxX, aabb.maxY, aabb.minZ).endVertex();
+		worldRenderer.pos(aabb.maxX, aabb.maxY, aabb.maxZ).endVertex();
+		worldRenderer.pos(aabb.minX, aabb.maxY, aabb.maxZ).endVertex();
+		// West
+		worldRenderer.pos(aabb.minX, aabb.minY, aabb.minZ).endVertex();
+		worldRenderer.pos(aabb.minX, aabb.maxY, aabb.minZ).endVertex();
+		worldRenderer.pos(aabb.minX, aabb.maxY, aabb.maxZ).endVertex();
+		worldRenderer.pos(aabb.minX, aabb.minY, aabb.maxZ).endVertex();
+		// East
+		worldRenderer.pos(aabb.maxX, aabb.minY, aabb.minZ).endVertex();
+		worldRenderer.pos(aabb.maxX, aabb.maxY, aabb.minZ).endVertex();
+		worldRenderer.pos(aabb.maxX, aabb.maxY, aabb.maxZ).endVertex();
+		worldRenderer.pos(aabb.maxX, aabb.minY, aabb.maxZ).endVertex();
+		// North
+		worldRenderer.pos(aabb.minX, aabb.minY, aabb.minZ).endVertex();
+		worldRenderer.pos(aabb.maxX, aabb.minY, aabb.minZ).endVertex();
+		worldRenderer.pos(aabb.maxX, aabb.maxY, aabb.minZ).endVertex();
+		worldRenderer.pos(aabb.minX, aabb.maxY, aabb.minZ).endVertex();
+		// South
+		worldRenderer.pos(aabb.minX, aabb.minY, aabb.maxZ).endVertex();
+		worldRenderer.pos(aabb.maxX, aabb.minY, aabb.maxZ).endVertex();
+		worldRenderer.pos(aabb.maxX, aabb.maxY, aabb.maxZ).endVertex();
+		worldRenderer.pos(aabb.minX, aabb.maxY, aabb.maxZ).endVertex();
+		Tessellator.getInstance().draw();
+
+		GlStateManager.translate(realX, realY, realZ);
+		GlStateManager.enableCull();
+		GlStateManager.disableAlpha();
+		GlStateManager.disableBlend();
+		GlStateManager.enableTexture2D();
+		GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+		GlStateManager.popAttrib();
 		GlStateManager.popMatrix();
 	}
 
