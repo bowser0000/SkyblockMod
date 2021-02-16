@@ -191,6 +191,12 @@ public class DankersSkyblockMod {
     public static int PET_80_TO_89;
     public static int PET_90_TO_99;
     public static int PET_100;
+    public static int ULTRASEQUENCER_NEXT;
+    public static int ULTRASEQUENCER_NEXT_TO_NEXT;
+    public static int CHRONOMATRON_NEXT;
+    public static int CHRONOMATRON_NEXT_TO_NEXT;
+    public static int CLICK_IN_ORDER_NEXT;
+    public static int CLICK_IN_ORDER_NEXT_TO_NEXT;
 
     @EventHandler
     public void init(FMLInitializationEvent event) {
@@ -3796,10 +3802,10 @@ public class DankersSkyblockMod {
 
                 if (ToggleCommand.clickInOrderToggled && displayName.equals("Click in order!")) {
                     Slot slot = invSlots.get(terminalNumberNeeded[1]);
-                    Utils.drawOnSlot(chestSize, slot.xDisplayPosition, slot.yDisplayPosition, new Color(255, 0, 221, 255).getRGB());
+                    Utils.drawOnSlot(chestSize, slot.xDisplayPosition, slot.yDisplayPosition, CLICK_IN_ORDER_NEXT + 0xFF000000);
                     Slot nextSlot = invSlots.get(terminalNumberNeeded[3]);
                     if (nextSlot != slot && nextSlot.getSlotIndex() != 0) {
-                        Utils.drawOnSlot(chestSize, nextSlot.xDisplayPosition, nextSlot.yDisplayPosition, new Color(11, 239, 231, 255).getRGB());
+                        Utils.drawOnSlot(chestSize, nextSlot.xDisplayPosition, nextSlot.yDisplayPosition, CLICK_IN_ORDER_NEXT_TO_NEXT + 0xFF000000);
                     }
                 }
 
@@ -3817,12 +3823,12 @@ public class DankersSkyblockMod {
                             }
                             if (clickInOrderSlots[lastUltraSequencerClicked] != null) {
                                 Slot nextSlot = clickInOrderSlots[lastUltraSequencerClicked];
-                                Utils.drawOnSlot(chestSize, nextSlot.xDisplayPosition, nextSlot.yDisplayPosition, 0xE540FF40);
+                                Utils.drawOnSlot(chestSize, nextSlot.xDisplayPosition, nextSlot.yDisplayPosition, ULTRASEQUENCER_NEXT + 0xE5000000);
                             }
                             if (lastUltraSequencerClicked + 1 < clickInOrderSlots.length) {
                                 if (clickInOrderSlots[lastUltraSequencerClicked + 1] != null) {
                                     Slot nextSlot = clickInOrderSlots[lastUltraSequencerClicked + 1];
-                                    Utils.drawOnSlot(chestSize, nextSlot.xDisplayPosition, nextSlot.yDisplayPosition, 0xD740DAE6);
+                                    Utils.drawOnSlot(chestSize, nextSlot.xDisplayPosition, nextSlot.yDisplayPosition, ULTRASEQUENCER_NEXT_TO_NEXT + 0xD7000000);
                                 }
                             }
                         }
@@ -3855,15 +3861,15 @@ public class DankersSkyblockMod {
                                     if (chronomatronMouseClicks + 1 < chronomatronPattern.size()) {
                                         if (chronomatronPattern.get(chronomatronMouseClicks).equals(chronomatronPattern.get(chronomatronMouseClicks + 1))) {
                                             if (glass.getDisplayName().equals(chronomatronPattern.get(chronomatronMouseClicks))) {
-                                                Utils.drawOnSlot(chestSize, glassSlot.xDisplayPosition, glassSlot.yDisplayPosition, 0xE540FF40);
+                                                Utils.drawOnSlot(chestSize, glassSlot.xDisplayPosition, glassSlot.yDisplayPosition, CHRONOMATRON_NEXT + 0xE5000000);
                                             }
                                         } else if (glass.getDisplayName().equals(chronomatronPattern.get(chronomatronMouseClicks))) {
-                                            Utils.drawOnSlot(chestSize, glassSlot.xDisplayPosition, glassSlot.yDisplayPosition, 0xE540FF40);
+                                            Utils.drawOnSlot(chestSize, glassSlot.xDisplayPosition, glassSlot.yDisplayPosition, CHRONOMATRON_NEXT + 0xE5000000);
                                         } else if (glass.getDisplayName().equals(chronomatronPattern.get(chronomatronMouseClicks + 1))) {
-                                            Utils.drawOnSlot(chestSize, glassSlot.xDisplayPosition, glassSlot.yDisplayPosition, 0xBE40DAE6);
+                                            Utils.drawOnSlot(chestSize, glassSlot.xDisplayPosition, glassSlot.yDisplayPosition, CHRONOMATRON_NEXT_TO_NEXT + 0XBE000000);
                                         }
                                     } else if (glass.getDisplayName().equals(chronomatronPattern.get(chronomatronMouseClicks))) {
-                                        Utils.drawOnSlot(chestSize, glassSlot.xDisplayPosition, glassSlot.yDisplayPosition, 0xE540FF40);
+                                        Utils.drawOnSlot(chestSize, glassSlot.xDisplayPosition, glassSlot.yDisplayPosition, CHRONOMATRON_NEXT + 0xE5000000);
                                     }
                                 }
                             }

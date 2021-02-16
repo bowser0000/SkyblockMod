@@ -394,7 +394,6 @@ public class ConfigHandler {
 		if (!hasKey("misc", "showSkillTracker")) writeBooleanConfig("misc", "showSkillTracker", false);
 		if (!hasKey("misc", "firstLaunch")) writeBooleanConfig("misc", "firstLaunch", true);
 
-
 		ScaledResolution scaled = new ScaledResolution(Minecraft.getMinecraft());
 		int height = scaled.getScaledHeight();
 		if (!hasKey("locations", "coordsX")) writeIntConfig("locations", "coordsX", 5);
@@ -452,8 +451,14 @@ public class ConfigHandler {
 		if (!hasKey("colors", "pet80To89")) writeIntConfig("colors", "pet80To89", 0x5C1F35); // idk weird magenta
 		if (!hasKey("colors", "pet90To99")) writeIntConfig("colors", "pet90To99", 0x9E794E); // Brown
 		if (!hasKey("colors", "pet100")) writeIntConfig("colors", "pet100", 0xF2D249); // Gold
+		if (!hasKey("colors", "ultrasequencerNext")) writeIntConfig("colors", "ultrasequencerNext", 0x40FF40);
+		if (!hasKey("colors", "ultrasequencerNextToNext")) writeIntConfig("colors", "ultrasequencerNextToNext", 0x40DAE6);
+		if (!hasKey("colors", "chronomatronNext")) writeIntConfig("colors", "chronomatronNext", 0x40FF40);
+		if (!hasKey("colors", "chronomatronNextToNext")) writeIntConfig("colors", "chronomatronNextToNext", 0x40DAE6);
+		if (!hasKey("colors", "clickInOrderNext")) writeIntConfig("colors", "clickInOrderNext", 0xFF00DD);
+		if (!hasKey("colors", "clickInOrderNextToNext")) writeIntConfig("colors", "clickInOrderNextToNext", 0x0BEFE7);
 
-		//Commands
+		// Commands
 		if (!hasKey("commands", "reparty")) writeBooleanConfig("commands", "reparty", false);
 		
 		ToggleCommand.gpartyToggled = getBoolean("toggles", "GParty");
@@ -740,6 +745,12 @@ public class ConfigHandler {
 		DankersSkyblockMod.PET_80_TO_89 = getInt("colors", "pet80To89");
 		DankersSkyblockMod.PET_90_TO_99 = getInt("colors", "pet90To99");
 		DankersSkyblockMod.PET_100 = getInt("colors", "pet100");
+		DankersSkyblockMod.ULTRASEQUENCER_NEXT = getInt("colors", "ultrasequencerNext");
+		DankersSkyblockMod.ULTRASEQUENCER_NEXT_TO_NEXT = getInt("colors", "ultrasequencerNextToNext");
+		DankersSkyblockMod.CHRONOMATRON_NEXT = getInt("colors", "chronomatronNext");
+		DankersSkyblockMod.CHRONOMATRON_NEXT_TO_NEXT = getInt("colors", "chronomatronNextToNext");
+		DankersSkyblockMod.CLICK_IN_ORDER_NEXT = getInt("colors", "clickInOrderNext");
+		DankersSkyblockMod.CLICK_IN_ORDER_NEXT_TO_NEXT = getInt("colors", "clickInOrderNextToNext");
 	}
 	
 }
