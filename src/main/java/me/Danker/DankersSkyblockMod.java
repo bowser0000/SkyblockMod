@@ -1,6 +1,5 @@
 package me.Danker;
 
-import akka.event.Logging;
 import com.google.gson.JsonObject;
 import me.Danker.commands.*;
 import me.Danker.gui.*;
@@ -46,7 +45,6 @@ import net.minecraftforge.client.event.*;
 import net.minecraftforge.client.event.sound.PlaySoundEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
-import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.event.entity.player.*;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
@@ -69,7 +67,6 @@ import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
-import java.net.URLDecoder;
 import java.text.NumberFormat;
 import java.util.List;
 import java.util.*;
@@ -2538,6 +2535,17 @@ public class DankersSkyblockMod {
         }
         if (showSkill) {
             new TextRenderer(mc, skillText, MoveCommand.skill50XY[0], MoveCommand.skill50XY[1], ScaleCommand.skill50Scale);
+        }
+    }
+    
+    @SubscribeEvent
+    public void onRenderEntity(RenderLivingEvent.Pre event) {
+        Entity entity = event.entity;
+        String name = entity.getName();
+        if (entity instanceof EntityArmorStand) {
+            if (ToggleCommand.lividSolverToggled && !entity.isEntityEqual(livid) && name.contains("Livid") && name.length() > 5 && name.charAt(1) == name.charAt(5)) {
+                event.setCanceled(true);
+            }
         }
     }
 
