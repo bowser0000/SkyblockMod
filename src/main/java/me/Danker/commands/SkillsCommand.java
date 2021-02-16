@@ -141,7 +141,7 @@ public class SkillsCommand extends CommandBase {
 					farmingLevel = achievementObject.get("skyblock_harvester").getAsInt();
 				}
 				if (achievementObject.has("skyblock_excavator")) {
-					miningLevel = Math.min(achievementObject.get("skyblock_excavator").getAsInt(), 50);
+					miningLevel = achievementObject.get("skyblock_excavator").getAsInt();
 				}
 				if (achievementObject.has("skyblock_combat")) {
 					combatLevel = Math.min(achievementObject.get("skyblock_combat").getAsInt(), 50);

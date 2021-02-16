@@ -1,6 +1,5 @@
 package me.Danker;
 
-import akka.event.Logging;
 import com.google.gson.JsonObject;
 import me.Danker.commands.*;
 import me.Danker.gui.*;
@@ -46,7 +45,6 @@ import net.minecraftforge.client.event.*;
 import net.minecraftforge.client.event.sound.PlaySoundEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
-import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.event.entity.player.*;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
@@ -69,7 +67,6 @@ import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
-import java.net.URLDecoder;
 import java.text.NumberFormat;
 import java.util.List;
 import java.util.*;
@@ -79,7 +76,7 @@ import java.util.regex.Pattern;
 @Mod(modid = DankersSkyblockMod.MODID, version = DankersSkyblockMod.VERSION, clientSideOnly = true)
 public class DankersSkyblockMod {
     public static final String MODID = "Danker's Skyblock Mod";
-    public static final String VERSION = "1.8.5-beta8";
+    public static final String VERSION = "1.8.5-beta9";
     static double checkItemsNow = 0;
     static double itemsChecked = 0;
     public static Map<String, String> t6Enchants = new HashMap<>();
@@ -113,6 +110,7 @@ public class DankersSkyblockMod {
     static String[] riddleSolutions = {"The reward is not in my chest!", "At least one of them is lying, and the reward is not in",
             "My chest doesn't have the reward. We are all telling the truth", "My chest has the reward and I'm telling the truth",
             "The reward isn't in any of our chests", "Both of them are telling the truth."};
+    static BlockPos riddleChest = null;
     static Map<String, String[]> triviaSolutions = new HashMap<>();
     static String[] triviaAnswers = null;
     static Entity highestBlaze = null;
@@ -193,6 +191,12 @@ public class DankersSkyblockMod {
     public static int PET_80_TO_89;
     public static int PET_90_TO_99;
     public static int PET_100;
+    public static int ULTRASEQUENCER_NEXT;
+    public static int ULTRASEQUENCER_NEXT_TO_NEXT;
+    public static int CHRONOMATRON_NEXT;
+    public static int CHRONOMATRON_NEXT_TO_NEXT;
+    public static int CLICK_IN_ORDER_NEXT;
+    public static int CLICK_IN_ORDER_NEXT_TO_NEXT;
 
     @EventHandler
     public void init(FMLInitializationEvent event) {
@@ -414,6 +418,7 @@ public class DankersSkyblockMod {
 
     @SubscribeEvent
     public void onWorldChange(WorldEvent.Load event) {
+        riddleChest = null;
         foundLivid = false;
         livid = null;
         lowestBlaze = null;
@@ -685,8 +690,30 @@ public class DankersSkyblockMod {
         if (ToggleCommand.threeManToggled && Utils.inDungeons && message.contains("[NPC]")) {
             for (String solution : riddleSolutions) {
                 if (message.contains(solution)) {
+                    Minecraft mc = Minecraft.getMinecraft();
                     String npcName = message.substring(message.indexOf("]") + 2, message.indexOf(":"));
-                    Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(ANSWER_COLOUR + EnumChatFormatting.BOLD + StringUtils.stripControlCodes(npcName) + MAIN_COLOUR + " has the blessing."));
+                    mc.thePlayer.addChatMessage(new ChatComponentText(ANSWER_COLOUR + EnumChatFormatting.BOLD + StringUtils.stripControlCodes(npcName) + MAIN_COLOUR + " has the blessing."));
+                    if (riddleChest == null) {
+                        List<Entity> entities = mc.theWorld.getLoadedEntityList();
+                        for (Entity entity : entities) {
+                            if (entity == null || !entity.hasCustomName()) continue;
+                            if (entity.getCustomNameTag().contains(npcName)) {
+                                BlockPos npcLocation = new BlockPos(entity.posX, 69, entity.posZ);
+                                if (mc.theWorld.getBlockState(npcLocation.north()).getBlock() == Blocks.chest) {
+                                    riddleChest = npcLocation.north();
+                                } else if (mc.theWorld.getBlockState(npcLocation.east()).getBlock() == Blocks.chest) {
+                                    riddleChest = npcLocation.east();
+                                } else if (mc.theWorld.getBlockState(npcLocation.south()).getBlock() == Blocks.chest) {
+                                    riddleChest = npcLocation.south();
+                                } else if (mc.theWorld.getBlockState(npcLocation.west()).getBlock() == Blocks.chest) {
+                                    riddleChest = npcLocation.west();
+                                } else {
+                                    System.out.print("Could not find correct riddle chest.");
+                                }
+                                break;
+                            }
+                        }
+                    }
                     break;
                 }
             }
@@ -2518,6 +2545,17 @@ public class DankersSkyblockMod {
             new TextRenderer(mc, skillText, MoveCommand.skill50XY[0], MoveCommand.skill50XY[1], ScaleCommand.skill50Scale);
         }
     }
+    
+    @SubscribeEvent
+    public void onRenderEntity(RenderLivingEvent.Pre event) {
+        Entity entity = event.entity;
+        String name = entity.getName();
+        if (entity instanceof EntityArmorStand) {
+            if (ToggleCommand.lividSolverToggled && !entity.isEntityEqual(livid) && name.contains("Livid") && name.length() > 5 && name.charAt(1) == name.charAt(5)) {
+                event.setCanceled(true);
+            }
+        }
+    }
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void onSound(final PlaySoundEvent event) {
@@ -3022,7 +3060,7 @@ public class DankersSkyblockMod {
             if (ToggleCommand.lowHealthNotifyToggled && Utils.inDungeons && world != null) {
                 List<String> scoreboard = ScoreboardHandler.getSidebarLines();
                 for (String score : scoreboard) {
-                    if (score.endsWith("❤") && score.matches(".*§c\\d.*")) {
+                    if (score.endsWith("❤") && score.matches(".* §c\\d.*")) {
                         String name = score.substring(score.indexOf(" ") + 1);
                         Utils.createTitle(EnumChatFormatting.RED + "LOW HEALTH!\n" + name, 1);
                         break;
@@ -3145,6 +3183,10 @@ public class DankersSkyblockMod {
 
     @SubscribeEvent
     public void onWorldRender(RenderWorldLastEvent event) {
+        if (ToggleCommand.threeManToggled && riddleChest != null) {
+            Utils.drawFilled3DBox(new AxisAlignedBB(riddleChest.getX() - 0.05, riddleChest.getY(), riddleChest.getZ() - 0.05, riddleChest.getX() + 1.05, riddleChest.getY() + 1, riddleChest.getZ() + 1.05), 0x197F19, true, event.partialTicks);
+        }
+
         if (ToggleCommand.blazeToggled && Utils.inDungeons) {
             if (lowestBlaze != null) {
                 BlockPos stringPos = new BlockPos(lowestBlaze.posX, lowestBlaze.posY + 1, lowestBlaze.posZ);
@@ -3762,10 +3804,10 @@ public class DankersSkyblockMod {
 
                 if (ToggleCommand.clickInOrderToggled && displayName.equals("Click in order!")) {
                     Slot slot = invSlots.get(terminalNumberNeeded[1]);
-                    Utils.drawOnSlot(chestSize, slot.xDisplayPosition, slot.yDisplayPosition, new Color(255, 0, 221, 255).getRGB());
+                    Utils.drawOnSlot(chestSize, slot.xDisplayPosition, slot.yDisplayPosition, CLICK_IN_ORDER_NEXT + 0xFF000000);
                     Slot nextSlot = invSlots.get(terminalNumberNeeded[3]);
                     if (nextSlot != slot && nextSlot.getSlotIndex() != 0) {
-                        Utils.drawOnSlot(chestSize, nextSlot.xDisplayPosition, nextSlot.yDisplayPosition, new Color(11, 239, 231, 255).getRGB());
+                        Utils.drawOnSlot(chestSize, nextSlot.xDisplayPosition, nextSlot.yDisplayPosition, CLICK_IN_ORDER_NEXT_TO_NEXT + 0xFF000000);
                     }
                 }
 
@@ -3783,12 +3825,12 @@ public class DankersSkyblockMod {
                             }
                             if (clickInOrderSlots[lastUltraSequencerClicked] != null) {
                                 Slot nextSlot = clickInOrderSlots[lastUltraSequencerClicked];
-                                Utils.drawOnSlot(chestSize, nextSlot.xDisplayPosition, nextSlot.yDisplayPosition, 0xE540FF40);
+                                Utils.drawOnSlot(chestSize, nextSlot.xDisplayPosition, nextSlot.yDisplayPosition, ULTRASEQUENCER_NEXT + 0xE5000000);
                             }
                             if (lastUltraSequencerClicked + 1 < clickInOrderSlots.length) {
                                 if (clickInOrderSlots[lastUltraSequencerClicked + 1] != null) {
                                     Slot nextSlot = clickInOrderSlots[lastUltraSequencerClicked + 1];
-                                    Utils.drawOnSlot(chestSize, nextSlot.xDisplayPosition, nextSlot.yDisplayPosition, 0xD740DAE6);
+                                    Utils.drawOnSlot(chestSize, nextSlot.xDisplayPosition, nextSlot.yDisplayPosition, ULTRASEQUENCER_NEXT_TO_NEXT + 0xD7000000);
                                 }
                             }
                         }
@@ -3821,15 +3863,15 @@ public class DankersSkyblockMod {
                                     if (chronomatronMouseClicks + 1 < chronomatronPattern.size()) {
                                         if (chronomatronPattern.get(chronomatronMouseClicks).equals(chronomatronPattern.get(chronomatronMouseClicks + 1))) {
                                             if (glass.getDisplayName().equals(chronomatronPattern.get(chronomatronMouseClicks))) {
-                                                Utils.drawOnSlot(chestSize, glassSlot.xDisplayPosition, glassSlot.yDisplayPosition, 0xE540FF40);
+                                                Utils.drawOnSlot(chestSize, glassSlot.xDisplayPosition, glassSlot.yDisplayPosition, CHRONOMATRON_NEXT + 0xE5000000);
                                             }
                                         } else if (glass.getDisplayName().equals(chronomatronPattern.get(chronomatronMouseClicks))) {
-                                            Utils.drawOnSlot(chestSize, glassSlot.xDisplayPosition, glassSlot.yDisplayPosition, 0xE540FF40);
+                                            Utils.drawOnSlot(chestSize, glassSlot.xDisplayPosition, glassSlot.yDisplayPosition, CHRONOMATRON_NEXT + 0xE5000000);
                                         } else if (glass.getDisplayName().equals(chronomatronPattern.get(chronomatronMouseClicks + 1))) {
-                                            Utils.drawOnSlot(chestSize, glassSlot.xDisplayPosition, glassSlot.yDisplayPosition, 0xBE40DAE6);
+                                            Utils.drawOnSlot(chestSize, glassSlot.xDisplayPosition, glassSlot.yDisplayPosition, CHRONOMATRON_NEXT_TO_NEXT + 0XBE000000);
                                         }
                                     } else if (glass.getDisplayName().equals(chronomatronPattern.get(chronomatronMouseClicks))) {
-                                        Utils.drawOnSlot(chestSize, glassSlot.xDisplayPosition, glassSlot.yDisplayPosition, 0xE540FF40);
+                                        Utils.drawOnSlot(chestSize, glassSlot.xDisplayPosition, glassSlot.yDisplayPosition, CHRONOMATRON_NEXT + 0xE5000000);
                                     }
                                 }
                             }
