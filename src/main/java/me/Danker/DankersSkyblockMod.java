@@ -421,6 +421,8 @@ public class DankersSkyblockMod {
         riddleChest = null;
         foundLivid = false;
         livid = null;
+        lowestBlaze = null;
+        highestBlaze = null;
         nextBonzoUse = 0;
     }
 
@@ -577,8 +579,8 @@ public class DankersSkyblockMod {
 							}
 						}
 						timeSinceGained = System.currentTimeMillis() / 1000;
-						
-						int limit = section.contains("Farming") || section.contains("Enchanting") ? 60 : 50;
+
+                        int limit = section.contains("Farming") || section.contains("Enchanting") || section.contains("Mining") ? 60 : 50;
 						double currentXP = Double.parseDouble(section.substring(section.indexOf("(") + 1, section.indexOf("/")).replace(",", ""));
     					int xpToLevelUp = Integer.parseInt(section.substring(section.indexOf("/") + 1, section.indexOf(")")).replaceAll(",", ""));
     					xpLeft = xpToLevelUp - currentXP;
@@ -646,7 +648,7 @@ public class DankersSkyblockMod {
     					double currentXp = Double.parseDouble(section.substring(section.indexOf("(") + 1, section.indexOf("/")).replace(",", ""));
     					int limit;
     					int totalXp;
-    					if (section.contains("Farming") || section.contains("Enchanting")) {
+                        if (section.contains("Farming") || section.contains("Enchanting") || section.contains("Mining")) {
     						limit = 60;
     						totalXp = 111672425;
     					} else {
@@ -748,10 +750,10 @@ public class DankersSkyblockMod {
                                 Utils.createTitle(EnumChatFormatting.YELLOW + "YELLOW PILLAR!", 2);
                                 break;
                             case 5:
-                                Utils.createTitle(EnumChatFormatting.GREEN + "LIME PILLAR!", 2);
+                                Utils.createTitle(EnumChatFormatting.DARK_GREEN + "GREEN PILLAR!", 2);
                                 break;
                             case 11:
-                                Utils.createTitle(EnumChatFormatting.BLUE + "BLUE PILLAR!", 2);
+                                Utils.createTitle(EnumChatFormatting.DARK_PURPLE + "PURPLE PILLAR!", 2);
                                 break;
                             default:
                                 Utils.createTitle(EnumChatFormatting.WHITE + "NECRON STUNNED!", 2);
@@ -3185,7 +3187,7 @@ public class DankersSkyblockMod {
             Utils.drawFilled3DBox(new AxisAlignedBB(riddleChest.getX() - 0.05, riddleChest.getY(), riddleChest.getZ() - 0.05, riddleChest.getX() + 1.05, riddleChest.getY() + 1, riddleChest.getZ() + 1.05), 0x197F19, true, event.partialTicks);
         }
 
-        if (ToggleCommand.blazeToggled) {
+        if (ToggleCommand.blazeToggled && Utils.inDungeons) {
             if (lowestBlaze != null) {
                 BlockPos stringPos = new BlockPos(lowestBlaze.posX, lowestBlaze.posY + 1, lowestBlaze.posZ);
                 Utils.draw3DString(stringPos, EnumChatFormatting.BOLD + "Smallest", LOWEST_BLAZE_COLOUR, event.partialTicks);
@@ -3768,7 +3770,7 @@ public class DankersSkyblockMod {
                 if (ToggleCommand.startsWithToggled && Utils.inDungeons && displayName.startsWith("What starts with:")) {
                     char letter = displayName.charAt(displayName.indexOf("'") + 1);
                     for (Slot slot : invSlots) {
-                        if (slot.getSlotIndex() > 53) continue;
+                        if (slot.inventory == mc.thePlayer.inventory) continue;
                         ItemStack item = slot.getStack();
                         if (item == null) continue;
                         if (item.isItemEnchanted()) continue;
@@ -3789,7 +3791,7 @@ public class DankersSkyblockMod {
                     terminalColorNeeded = colour;
 
                     for (Slot slot : invSlots) {
-                        if (slot.getSlotIndex() > 53) continue;
+                        if (slot.inventory == mc.thePlayer.inventory) continue;
                         ItemStack item = slot.getStack();
                         if (item == null) continue;
                         if (item.isItemEnchanted()) continue;

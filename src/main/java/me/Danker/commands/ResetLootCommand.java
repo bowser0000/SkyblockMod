@@ -24,7 +24,7 @@ public class ResetLootCommand extends CommandBase {
 
 	@Override
 	public String getCommandUsage(ICommandSender arg0) {
-		return "/" + getCommandName() + "<zombie/spider/wolf/fishing/catacombs/confirm/cancel>";
+		return "/" + getCommandName() + "<zombie/spider/wolf/fishing/mythological/catacombs/confirm/cancel>";
 	}
 
 	@Override
