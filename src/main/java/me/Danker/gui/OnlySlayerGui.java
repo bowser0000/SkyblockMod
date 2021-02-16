@@ -95,6 +95,7 @@ public class OnlySlayerGui extends GuiScreen {
 	public void actionPerformed(GuiButton button) {
 		if (button == goBack) {
 			DankersSkyblockMod.guiToOpen = "dankergui1";
+			return;
 		} else if (button == off) {
 			BlockSlayerCommand.onlySlayerName = "";
 			BlockSlayerCommand.onlySlayerNumber = "";
