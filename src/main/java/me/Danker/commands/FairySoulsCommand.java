@@ -51,10 +51,11 @@ public class FairySoulsCommand extends CommandBase {
             }
 
             // Get UUID for Hypixel API requests
-            String username, uuid;
+            String username;
+            String uuid;
             if(args.length == 0) {
                 username = player.getName();
-                uuid = player.getUniqueID().toString().replace("[\\-]", "");
+                uuid = APIHandler.getUUID(username);
                 player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Checking fairy souls of " + DankersSkyblockMod.SECONDARY_COLOUR + username));
             } else {
                 username = args[0];
@@ -68,6 +69,7 @@ public class FairySoulsCommand extends CommandBase {
 
             String profileURL = "https://api.hypixel.net/skyblock/profile?profile=" + latestProfile + "&key=" + key;
             System.out.println("Fetching profile...");
+
             JsonObject profileResponse = APIHandler.getResponse(profileURL);
             if (!profileResponse.get("success").getAsBoolean()) {
                 String reason = profileResponse.get("cause").getAsString();
