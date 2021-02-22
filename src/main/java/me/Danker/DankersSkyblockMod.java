@@ -313,6 +313,7 @@ public class DankersSkyblockMod {
     	ClientCommandHandler.instance.registerCommand(new LobbySkillsCommand());
     	ClientCommandHandler.instance.registerCommand(new DankerGuiCommand());
 		ClientCommandHandler.instance.registerCommand(new SkillTrackerCommand());
+		ClientCommandHandler.instance.registerCommand(new FairySoulsCommand());
     }
 
     @EventHandler
