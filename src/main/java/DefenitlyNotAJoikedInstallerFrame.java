@@ -424,7 +424,7 @@ public class DefenitlyNotAJoikedInstallerFrame extends JFrame implements ActionL
                 inSubFolder = true;
             }
 
-            File newFile = new File(modsFolder, "Dankers_Skyblock_mod-"+getVersionFromMcmodInfo()+".jar");
+            File newFile = new File(modsFolder, "Danker's Skyblock Mod-"+getVersionFromMcmodInfo()+".jar");
             if (thisFile.equals(newFile)) {
                 showErrorMessage("You are opening this file from where the file should be installed... there's nothing to be done!");
                 return;
@@ -432,18 +432,18 @@ public class DefenitlyNotAJoikedInstallerFrame extends JFrame implements ActionL
 
             boolean deletingFailure = false;
             if (modsFolder.isDirectory()) { // Delete in this current folder.
-                boolean failed = findSkyblockAddonsAndDelete(modsFolder.listFiles());
+                boolean failed = findDSMAndDelete(modsFolder.listFiles());
                 if (failed) deletingFailure = true;
             }
             if (inSubFolder) { // We are in the 1.8.9 folder, delete in the parent folder as well.
                 if (modsFolder.getParentFile().isDirectory()) {
-                    boolean failed = findSkyblockAddonsAndDelete(modsFolder.getParentFile().listFiles());
+                    boolean failed = findDSMAndDelete(modsFolder.getParentFile().listFiles());
                     if (failed) deletingFailure = true;
                 }
             } else { // We are in the main mods folder, but the 1.8.9 subfolder exists... delete in there too.
                 File subFolder = new File(modsFolder, "1.8.9");
                 if (subFolder.exists() && subFolder.isDirectory()) {
-                    boolean failed = findSkyblockAddonsAndDelete(subFolder.listFiles());
+                    boolean failed = findDSMAndDelete(subFolder.listFiles());
                     if (failed) deletingFailure = true;
                 }
             }
@@ -468,7 +468,7 @@ public class DefenitlyNotAJoikedInstallerFrame extends JFrame implements ActionL
         }
     }
 
-    private boolean findSkyblockAddonsAndDelete(File[] files) {
+    private boolean findDSMAndDelete(File[] files) {
         if (files == null) return false;
 
         for (File file : files) {
@@ -488,7 +488,7 @@ public class DefenitlyNotAJoikedInstallerFrame extends JFrame implements ActionL
                                 }
                             } catch (Exception ex) {
                                 ex.printStackTrace();
-                                showErrorMessage("Was not able to delete the other SkyblockAddons files found in your mods folder!" + System.lineSeparator() +
+                                showErrorMessage("Was not able to delete the other DSM files found in your mods folder!" + System.lineSeparator() +
                                         "Please make sure that your minecraft is currently closed and try again, or feel" + System.lineSeparator() +
                                         "free to open your mods folder and delete those files manually.");
                                 return true;
