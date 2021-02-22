@@ -63,7 +63,6 @@ public class DankerGuiCommand extends CommandBase {
 			debug.append("[notifyslayerslain][").append(ToggleCommand.notifySlayerSlainToggled).append("]\n");
 			debug.append("[necronnotifications][").append(ToggleCommand.necronNotificationsToggled).append("]\n");
 			debug.append("[bonzotimer][").append(ToggleCommand.bonzoTimerToggled).append("]\n");
-			debug.append("[blockbreakingfarms][").append(ToggleCommand.blockBreakingFarmsToggled).append("]\n");
 			debug.append("[autoskilltracker][").append(ToggleCommand.autoSkillTrackerToggled).append("]\n");
 			debug.append("[threemanpuzzle][").append(ToggleCommand.threeManToggled).append("]\n");
 			debug.append("[oruopuzzle][").append(ToggleCommand.oruoToggled).append("]\n");

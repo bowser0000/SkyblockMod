@@ -65,7 +65,6 @@ public class DankerGui extends GuiScreen {
 	private GuiButton notifySlayerSlain;
 	private GuiButton necronNotifications;
 	private GuiButton bonzoTimer;
-	private GuiButton blockBreakingFarms;
 	private GuiButton autoSkillTracker;
 	
 	public DankerGui(int page) {
@@ -136,8 +135,7 @@ public class DankerGui extends GuiScreen {
 		//Page 6
 		necronNotifications = new GuiButton(0, width / 2 - 100, (int) (height * 0.1), "Necron Phase Notifications: " + Utils.getColouredBoolean(ToggleCommand.necronNotificationsToggled));
 		bonzoTimer = new GuiButton(0, width / 2 - 100, (int) (height * 0.2), "Bonzo's Mask Timer: " + Utils.getColouredBoolean(ToggleCommand.bonzoTimerToggled));
-		blockBreakingFarms = new GuiButton(0, width / 2 - 100, (int) (height * 0.3), "Prevent Breaking Farms: " + Utils.getColouredBoolean(ToggleCommand.blockBreakingFarmsToggled));
-    autoSkillTracker = new GuiButton(0, width / 2 - 100, (int) (height * 0.4), "Auto Start/Stop Skill Tracker: " + Utils.getColouredBoolean(ToggleCommand.autoSkillTrackerToggled));
+		autoSkillTracker = new GuiButton(0, width / 2 - 100, (int) (height * 0.3), "Auto Start/Stop Skill Tracker: " + Utils.getColouredBoolean(ToggleCommand.autoSkillTrackerToggled));
 
 		switch (page) {
 			case 1:
@@ -195,9 +193,8 @@ public class DankerGui extends GuiScreen {
 				this.buttonList.add(backPage);
 				break;
 			case 6:
-        this.buttonList.add(necronNotifications);
+        		this.buttonList.add(necronNotifications);
 				this.buttonList.add(bonzoTimer);
-				this.buttonList.add(blockBreakingFarms);
 				this.buttonList.add(autoSkillTracker);
 				this.buttonList.add(backPage);
 				break;
@@ -370,10 +367,6 @@ public class DankerGui extends GuiScreen {
 			ToggleCommand.bonzoTimerToggled = !ToggleCommand.bonzoTimerToggled;
 			ConfigHandler.writeBooleanConfig("toggles", "BonzoTimer", ToggleCommand.bonzoTimerToggled);
 			bonzoTimer.displayString = "Bonzo's Mask Timer: " + Utils.getColouredBoolean(ToggleCommand.bonzoTimerToggled);
-		} else if (button == blockBreakingFarms) {
-			ToggleCommand.blockBreakingFarmsToggled = !ToggleCommand.blockBreakingFarmsToggled;
-			ConfigHandler.writeBooleanConfig("toggles", "BlockBreakingFarms", ToggleCommand.blockBreakingFarmsToggled);
-			blockBreakingFarms.displayString = "Prevent Breaking Farms: " + Utils.getColouredBoolean(ToggleCommand.blockBreakingFarmsToggled);
 		} else if (button == pickBlock) {
 			ToggleCommand.swapToPickBlockToggled = !ToggleCommand.swapToPickBlockToggled;
 			ConfigHandler.writeBooleanConfig("toggles", "PickBlock", ToggleCommand.swapToPickBlockToggled);

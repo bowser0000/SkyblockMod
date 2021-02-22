@@ -205,7 +205,6 @@ public class ConfigHandler {
 		if (!hasKey("toggles", "NotifySlayerSlain")) writeBooleanConfig("toggles", "NotifySlayerSlain", false);
 		if (!hasKey("toggles", "NecronNotifications")) writeBooleanConfig("toggles", "NecronNotifications", false);
 		if (!hasKey("toggles", "BonzoTimer")) writeBooleanConfig("toggles", "BonzoTimer", false);
-		if (!hasKey("toggles", "BlockBreakingFarms")) writeBooleanConfig("toggles", "BlockBreakingFarms", false);
 		if (!hasKey("toggles", "AutoSkillTracker")) writeBooleanConfig("toggles", "AutoSkillTracker", false);
 		// Puzzle Solvers
 		if (!hasKey("toggles", "ThreeManPuzzle")) writeBooleanConfig("toggles", "ThreeManPuzzle", false);
@@ -224,7 +223,6 @@ public class ConfigHandler {
 		if (!hasKey("toggles", "Chronomatron")) writeBooleanConfig("toggles", "Chronomatron", false);
 		if (!hasKey("toggles", "Superpairs")) writeBooleanConfig("toggles", "Superpairs", false);
 		if (!hasKey("toggles", "HideTooltipsInExperimentAddons")) writeBooleanConfig("toggles", "HideTooltipsInExperimentAddons", false);
-
 
 		if (!hasKey("api", "APIKey")) writeStringConfig("api", "APIKey", "");
 		
@@ -493,7 +491,6 @@ public class ConfigHandler {
 		ToggleCommand.notifySlayerSlainToggled = getBoolean("toggles", "NotifySlayerSlain");
 		ToggleCommand.necronNotificationsToggled = getBoolean("toggles", "NecronNotifications");
 		ToggleCommand.bonzoTimerToggled = getBoolean("toggles", "BonzoTimer");
-		ToggleCommand.blockBreakingFarmsToggled = getBoolean("toggles", "BlockBreakingFarms");
 		ToggleCommand.swapToPickBlockToggled = getBoolean("toggles", "PickBlock");
 		ToggleCommand.flowerWeaponsToggled = getBoolean("toggles", "FlowerWeapons");
 		ToggleCommand.autoSkillTrackerToggled =  getBoolean("toggles", "AutoSkillTracker");
