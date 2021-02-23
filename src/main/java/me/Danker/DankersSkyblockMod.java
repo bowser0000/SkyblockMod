@@ -3590,7 +3590,12 @@ public class DankersSkyblockMod {
                         } else if (inventoryName.startsWith("Select all the")) {
                             if (terminalColorNeeded == null) return;
                             String itemName = StringUtils.stripControlCodes(item.getDisplayName()).toUpperCase();
-                            shouldCancel = !(itemName.contains(terminalColorNeeded) || (terminalColorNeeded.equals("SILVER") && itemName.contains("LIGHT GRAY")) || (terminalColorNeeded.equals("WHITE") && itemName.equals("WOOL")));
+                            shouldCancel = !(itemName.contains(terminalColorNeeded) ||
+                                            (terminalColorNeeded.equals("SILVER") && itemName.contains("LIGHT GRAY")) ||
+                                            (terminalColorNeeded.equals("WHITE") && (itemName.equals("WOOL") || itemName.equals("BONE MEAL"))) ||
+                                            (terminalColorNeeded.equals("BLACK") && itemName.equals("INK SACK")) ||
+                                            (terminalColorNeeded.equals("BLUE") && itemName.equals("LAPIS LAZULI")) ||
+                                            (terminalColorNeeded.equals("BROWN") && itemName.equals("COCOA BEANS")));
                         }
                     }
 
@@ -3763,8 +3768,13 @@ public class DankersSkyblockMod {
                         if (item == null) continue;
                         if (item.isItemEnchanted()) continue;
                         String itemName = StringUtils.stripControlCodes(item.getDisplayName()).toUpperCase();
-                        if (itemName.contains(colour) || (colour.equals("SILVER") && itemName.contains("LIGHT GRAY")) || (colour.equals("WHITE") && itemName.equals("WOOL"))) {
-                            Utils.drawOnSlot(chestSize, slot.xDisplayPosition, slot.yDisplayPosition, 0xBF40FF40);
+                        if (itemName.contains(terminalColorNeeded) ||
+                           (terminalColorNeeded.equals("SILVER") && itemName.contains("LIGHT GRAY")) ||
+                           (terminalColorNeeded.equals("WHITE") && (itemName.equals("WOOL") || itemName.equals("BONE MEAL"))) ||
+                           (terminalColorNeeded.equals("BLACK") && itemName.equals("INK SACK")) ||
+                           (terminalColorNeeded.equals("BLUE") && itemName.equals("LAPIS LAZULI")) ||
+                           (terminalColorNeeded.equals("BROWN") && itemName.equals("COCOA BEANS"))) {
+                                Utils.drawOnSlot(chestSize, slot.xDisplayPosition, slot.yDisplayPosition, 0xBF40FF40);
                         }
                     }
                 }
