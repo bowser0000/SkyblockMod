@@ -16,10 +16,13 @@ Discord Server: https://discord.gg/QsEkNQS
 - Golden T10/T6/T4 enchant display
 - Block AOTD ability
 - Block Livid Dagger ability
+- Block placing Flower of Truth/Spirit Sceptre
 - Disable Spirit Sceptre messages
 - Disable Midas Staff messages
 - Disable Implosion messages
 - Disable heal messages
+- Disable ability cooldown messages
+- Disable out of mana messages
 - Slayer item tracker
 - RNGesus drop alerts
 - Click anywhere on-screen to open Maddox
@@ -29,9 +32,12 @@ Discord Server: https://discord.gg/QsEkNQS
 - Expertise kills in fishing rod lore
 - Catacombs trackers
 - Dungeons puzzle solver (Riddle, trivia, blaze, creeper, water, tic tac toe)
-- Experimentation solvers (Ultrasequencer, Chronomatron, Superpairs)
+- Dungeons timer (watcher, boss, deaths, and puzzle fails)
+- Watcher ready message
 - Catacombs F7 Stage 3 solvers (Starts with letter, select all colour, ignore arrows on sea lanterns)
 - Find correct Livid (with graphic display of HP)
+- Experimentation solvers (Ultrasequencer, Chronomatron, Superpairs)
+- Hide tooltips in experiment addons
 - Pet background colors based on level
 - Golem spawning alerts
 - Skill xp/hour tracker
@@ -41,11 +47,12 @@ Discord Server: https://discord.gg/QsEkNQS
 - Low health alert in dungeons
 - API commands
 - Update checker
+- Reparty command
 
 ## Commands
 - /dhelp - Returns this message in-game.
 - /dsm - Opens the GUI for Danker's Skyblock Mod.
-- /toggle <gparty/coords/golden/slayercount/rngesusalerts/splitfishing/chatmaddox/spiritbearalerts/aotd/lividdagger/sceptremessages/midasstaffmessages/implosionmessages/healmessages/petcolors/dungeontimer/golemalerts/expertiselore/skill50display/outlinetext/caketimer/lowhealthnotify/lividsolver/threemanpuzzle/oruopuzzle/blazepuzzle/creeperpuzzle/waterpuzzle/tictactoepuzzle/startswithterminal/selectallterminal/itemframeonsealanterns/ultrasequencer/list> - Toggles features. /toggle list returns values of every toggle.
+- /toggle <gparty/coords/golden/slayercount/rngesusalerts/splitfishing/chatmaddox/spiritbearalerts/aotd/lividdagger/flowerweapons/sceptremessages/petcolors/dungeontimer/golemalerts/expertiselore/skill50display/outlinetext/midasstaffmessages/implosionmessages/healmessages/cooldownmessages/manamessages/caketimer/lowhealthnotify/lividsolver/stopsalvagestarred/notifyslayerslain/threemanpuzzle/oruopuzzle/blazepuzzle/creeperpuzzle/waterpuzzle/tictactoepuzzle/watchermessage/startswithterminal/selectallterminal/clickinorderterminal/blockwrongterminalclicks/itemframeonsealanterns/ultrasequencer/chronomatron/superpairs/hidetooltipsinaddons/pickblock/list> - Toggles features. /toggle list returns values of every toggle.
 - /setkey <key> - Sets API key.
 - /getkey - Returns key set with /setkey and copies it to your clipboard.
 - /loot <zombie/spider/wolf/fishing/catacombs> [winter/spooky/f(1-7)/session] - Returns loot received from slayer quests or fishing stats. /loot fishing winter returns winter sea creatures instead.
@@ -65,6 +72,7 @@ Discord Server: https://discord.gg/QsEkNQS
 - /sbplayers - Uses API to find how many players are on each Skyblock island.
 - /onlyslayer <zombie/spider/wolf> <1/2/3/4> - Stops you from starting a slayer quest other than the one specified.
 - /skilltracker <start/stop/reset> - Text display for skill xp/hour.
+- /reparty - Disbands and reparties all members in the party
 
 ## Keybinds
 - Open Maddox menu - M by default.

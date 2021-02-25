@@ -8,7 +8,6 @@ import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
-import sun.security.krb5.Config;
 
 import java.util.List;
 
@@ -22,6 +21,7 @@ public class ScaleCommand extends CommandBase {
 	public static double cakeTimerScale;
 	public static double skillTrackerScale;
 	public static double waterAnswerScale;
+	public static double bonzoTimerScale;
 	
 	@Override
 	public String getCommandName() {
@@ -30,7 +30,7 @@ public class ScaleCommand extends CommandBase {
 
 	@Override
 	public String getCommandUsage(ICommandSender arg0) {
-		return "/" + getCommandName() + " <coords/display/dungeontimer/skill50/lividhp/caketimer/skilltracker/wateranswer> <size (0.1 - 10)>";
+		return "/" + getCommandName() + " <coords/display/dungeontimer/skill50/lividhp/caketimer/skilltracker/wateranswer/bonzotimer> <size (0.1 - 10)>";
 	}
 	
 	@Override
@@ -41,7 +41,7 @@ public class ScaleCommand extends CommandBase {
 	@Override
 	public List<String> addTabCompletionOptions(ICommandSender sender, String[] args, BlockPos pos) {
 		if (args.length == 1) {
-			return getListOfStringsMatchingLastWord(args, "coords", "display", "dungeontimer", "skill50", "lividhp", "caketimer", "skilltracker", "wateranswer");
+			return getListOfStringsMatchingLastWord(args, "coords", "display", "dungeontimer", "skill50", "lividhp", "caketimer", "skilltracker", "wateranswer", "bonzotimer");
 		}
 		return null;
 	}
@@ -101,6 +101,11 @@ public class ScaleCommand extends CommandBase {
 				waterAnswerScale = scaleAmount;
 				ConfigHandler.writeDoubleConfig("scales", "waterAnswerScale", waterAnswerScale);
 				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Water solver answer has been scaled to " + DankersSkyblockMod.SECONDARY_COLOUR + waterAnswerScale + "x"));
+				break;
+			case "bonzotimer":
+				bonzoTimerScale = scaleAmount;
+				ConfigHandler.writeDoubleConfig("scales", "bonzoTimerScale", bonzoTimerScale);
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Bonzo's Mask timer has been scaled to " + DankersSkyblockMod.SECONDARY_COLOUR + bonzoTimerScale + "x"));
 				break;
 			default:
 				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Usage: " + getCommandUsage(arg0)));

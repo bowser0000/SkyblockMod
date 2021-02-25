@@ -8,10 +8,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.network.NetworkPlayerInfo;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.WorldRenderer;
+import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.Entity;
@@ -20,13 +17,14 @@ import net.minecraft.entity.item.EntityItemFrame;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.scoreboard.ScoreObjective;
 import net.minecraft.util.*;
 import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.*;
 import java.util.List;
 import java.util.regex.Matcher;
 
@@ -64,7 +62,7 @@ public class Utils {
     }
     
     public static String returnGoldenEnchants(String line) {
-    	Matcher matcher = DankersSkyblockMod.pattern.matcher(line);
+    	Matcher matcher = DankersSkyblockMod.t6EnchantPattern.matcher(line);
     	StringBuffer out = new StringBuffer();
     	
     	while (matcher.find()) {
@@ -119,7 +117,15 @@ public class Utils {
 			drawHeight += mc.fontRendererObj.FONT_HEIGHT;
 		}
 	}
-	
+
+	public static boolean isOnHypixel () {
+		Minecraft mc = Minecraft.getMinecraft();
+		if (mc != null && mc.theWorld != null && !mc.isSingleplayer()) {
+			return mc.getCurrentServerData().serverIP.toLowerCase().contains("hypixel");
+		}
+		return false;
+	}
+
 	public static void checkForSkyblock() {
 		Minecraft mc = Minecraft.getMinecraft();
 		if (mc != null && mc.theWorld != null && !mc.isSingleplayer()) {
@@ -263,7 +269,40 @@ public class Utils {
 	public static String getColouredBoolean(boolean bool) {
 		return bool ? EnumChatFormatting.GREEN + "On" : EnumChatFormatting.RED + "Off";
 	}
-	
+
+	//Taken from SkyblockAddons
+	public static List<String> getItemLore(ItemStack itemStack) {
+		final int NBT_INTEGER = 3;
+		final int NBT_STRING = 8;
+		final int NBT_LIST = 9;
+		final int NBT_COMPOUND = 10;
+
+		if (itemStack.hasTagCompound() && itemStack.getTagCompound().hasKey("display", NBT_COMPOUND)) {
+			NBTTagCompound display = itemStack.getTagCompound().getCompoundTag("display");
+
+			if (display.hasKey("Lore", NBT_LIST)) {
+				NBTTagList lore = display.getTagList("Lore", NBT_STRING);
+
+				List<String> loreAsList = new ArrayList<>();
+				for (int lineNumber = 0; lineNumber < lore.tagCount(); lineNumber++) {
+					loreAsList.add(lore.getStringTagAt(lineNumber));
+				}
+
+				return Collections.unmodifiableList(loreAsList);
+			}
+		}
+
+		return Collections.emptyList();
+	}
+
+	public static boolean hasRightClickAbility(ItemStack itemStack) {
+		return Utils.getItemLore(itemStack).stream().anyMatch(line->{
+			String stripped = StringUtils.stripControlCodes(line);
+			return stripped.startsWith("Item Ability:") && stripped.endsWith("RIGHT CLICK");
+		});
+	}
+
+
 	public static void draw3DLine(Vec3 pos1, Vec3 pos2, int colourInt, float partialTicks) {
 		Entity render = Minecraft.getMinecraft().getRenderViewEntity();
 		WorldRenderer worldRenderer = Tessellator.getInstance().getWorldRenderer();
@@ -280,7 +319,7 @@ public class Utils {
 		GlStateManager.disableAlpha();
 		GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
 		GL11.glLineWidth(2);
-		GlStateManager.color(colour.getRed() / 255f, colour.getGreen() / 255f, colour.getBlue()/ 255f, colour.getAlpha() / 255f);
+		GlStateManager.color(colour.getRed() / 255f, colour.getGreen() / 255f, colour.getBlue() / 255f, colour.getAlpha() / 255f);
 		worldRenderer.begin(GL11.GL_LINE_STRIP, DefaultVertexFormats.POSITION);
 		
 		worldRenderer.pos(pos1.xCoord, pos1.yCoord, pos1.zCoord).endVertex();
@@ -368,6 +407,67 @@ public class Utils {
 		GlStateManager.enableAlpha();
 		GlStateManager.enableTexture2D();
 		GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+		GlStateManager.popMatrix();
+	}
+
+	public static void drawFilled3DBox(AxisAlignedBB aabb, int colourInt, boolean translucent, float partialTicks) {
+		Entity render = Minecraft.getMinecraft().getRenderViewEntity();
+		WorldRenderer worldRenderer = Tessellator.getInstance().getWorldRenderer();
+		Color colour = new Color(colourInt);
+
+		double realX = render.lastTickPosX + (render.posX - render.lastTickPosX) * partialTicks;
+		double realY = render.lastTickPosY + (render.posY - render.lastTickPosY) * partialTicks;
+		double realZ = render.lastTickPosZ + (render.posZ - render.lastTickPosZ) * partialTicks;
+
+		GlStateManager.pushMatrix();
+		GlStateManager.pushAttrib();
+		GlStateManager.translate(-realX, -realY, -realZ);
+		GlStateManager.disableTexture2D();
+		GlStateManager.enableAlpha();
+		GlStateManager.enableBlend();
+		GlStateManager.tryBlendFuncSeparate(770, translucent ? 1 : 771, 1, 0);
+		GlStateManager.disableCull();
+		GlStateManager.color(colour.getRed() / 255f, colour.getGreen() / 255f, colour.getBlue() / 255f, colour.getAlpha() / 255f);
+		worldRenderer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION);
+		// Bottom
+		worldRenderer.pos(aabb.minX, aabb.minY, aabb.minZ).endVertex();
+		worldRenderer.pos(aabb.maxX, aabb.minY, aabb.minZ).endVertex();
+		worldRenderer.pos(aabb.maxX, aabb.minY, aabb.maxZ).endVertex();
+		worldRenderer.pos(aabb.minX, aabb.minY, aabb.maxZ).endVertex();
+		// Top
+		worldRenderer.pos(aabb.minX, aabb.maxY, aabb.minZ).endVertex();
+		worldRenderer.pos(aabb.maxX, aabb.maxY, aabb.minZ).endVertex();
+		worldRenderer.pos(aabb.maxX, aabb.maxY, aabb.maxZ).endVertex();
+		worldRenderer.pos(aabb.minX, aabb.maxY, aabb.maxZ).endVertex();
+		// West
+		worldRenderer.pos(aabb.minX, aabb.minY, aabb.minZ).endVertex();
+		worldRenderer.pos(aabb.minX, aabb.maxY, aabb.minZ).endVertex();
+		worldRenderer.pos(aabb.minX, aabb.maxY, aabb.maxZ).endVertex();
+		worldRenderer.pos(aabb.minX, aabb.minY, aabb.maxZ).endVertex();
+		// East
+		worldRenderer.pos(aabb.maxX, aabb.minY, aabb.minZ).endVertex();
+		worldRenderer.pos(aabb.maxX, aabb.maxY, aabb.minZ).endVertex();
+		worldRenderer.pos(aabb.maxX, aabb.maxY, aabb.maxZ).endVertex();
+		worldRenderer.pos(aabb.maxX, aabb.minY, aabb.maxZ).endVertex();
+		// North
+		worldRenderer.pos(aabb.minX, aabb.minY, aabb.minZ).endVertex();
+		worldRenderer.pos(aabb.maxX, aabb.minY, aabb.minZ).endVertex();
+		worldRenderer.pos(aabb.maxX, aabb.maxY, aabb.minZ).endVertex();
+		worldRenderer.pos(aabb.minX, aabb.maxY, aabb.minZ).endVertex();
+		// South
+		worldRenderer.pos(aabb.minX, aabb.minY, aabb.maxZ).endVertex();
+		worldRenderer.pos(aabb.maxX, aabb.minY, aabb.maxZ).endVertex();
+		worldRenderer.pos(aabb.maxX, aabb.maxY, aabb.maxZ).endVertex();
+		worldRenderer.pos(aabb.minX, aabb.maxY, aabb.maxZ).endVertex();
+		Tessellator.getInstance().draw();
+
+		GlStateManager.translate(realX, realY, realZ);
+		GlStateManager.enableCull();
+		GlStateManager.disableAlpha();
+		GlStateManager.disableBlend();
+		GlStateManager.enableTexture2D();
+		GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+		GlStateManager.popAttrib();
 		GlStateManager.popMatrix();
 	}
 

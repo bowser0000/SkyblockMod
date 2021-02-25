@@ -177,21 +177,35 @@ public class ConfigHandler {
 		if (!hasKey("toggles", "SpiritBearAlerts")) writeBooleanConfig("toggles", "SpiritBearAlerts", true);
 		if (!hasKey("toggles", "AOTD")) writeBooleanConfig("toggles", "AOTD", false);
 		if (!hasKey("toggles", "LividDagger")) writeBooleanConfig("toggles", "LividDagger", false);
-		if (!hasKey("toggles", "SceptreMessages")) writeBooleanConfig("toggles", "SceptreMessages", true);
 		if (!hasKey("toggles", "MidasStaffMessages")) writeBooleanConfig("toggles", "MidasStaffMessages", true);
 		if (!hasKey("toggles", "ImplosionMessages")) writeBooleanConfig("toggles", "ImplosionMessages", true);
 		if (!hasKey("toggles", "HealMessages")) writeBooleanConfig("toggles", "HealMessages", true);
 		if (!hasKey("toggles", "PetColors")) writeBooleanConfig("toggles", "PetColors", false);
-		if (!hasKey("toggles", "DungeonTimer")) writeBooleanConfig("toggles", "DungeonTimer", false);
 		if (!hasKey("toggles", "BlockSlayer")) writeStringConfig("toggles", "BlockSlayer", "");
 		if (!hasKey("toggles", "GolemAlerts")) writeBooleanConfig("toggles", "GolemAlerts", false);
 		if (!hasKey("toggles", "ExpertiseLore")) writeBooleanConfig("toggles", "ExpertiseLore", true);
 		if (!hasKey("toggles", "Skill50Display")) writeBooleanConfig("toggles", "Skill50Display", false);
 		if (!hasKey("toggles", "OutlineText")) writeBooleanConfig("toggles", "OutlineText", false);
 		if (!hasKey("toggles", "CakeTimer")) writeBooleanConfig("toggles", "CakeTimer", false);
+		// Chat Messages
+		if (!hasKey("toggles", "SceptreMessages")) writeBooleanConfig("toggles", "SceptreMessages", true);
+		if (!hasKey("toggles", "MidasStaffMessages")) writeBooleanConfig("toggles", "MidasStaffMessages", true);
+		if (!hasKey("toggles", "ImplosionMessages")) writeBooleanConfig("toggles", "ImplosionMessages", true);
+		if (!hasKey("toggles", "HealMessages")) writeBooleanConfig("toggles", "HealMessages", true);
+		if (!hasKey("toggles", "CooldownMessages")) writeBooleanConfig("toggles","CooldownMessages",true);
+		if (!hasKey("toggles", "ManaMessages")) writeBooleanConfig("toggles","ManaMessages",true);
+		// Dungeons
+		if (!hasKey("toggles", "DungeonTimer")) writeBooleanConfig("toggles", "DungeonTimer", false);
 		if (!hasKey("toggles", "LowHealthNotify")) writeBooleanConfig("toggles", "LowHealthNotify", false);
 		if (!hasKey("toggles", "LividSolver")) writeBooleanConfig("toggles", "LividSolver", false);
 		if (!hasKey("toggles", "StopSalvageStarred")) writeBooleanConfig("toggles", "StopSalvageStarred", false);
+		if (!hasKey("toggles", "WatcherReadyMessage")) writeBooleanConfig("toggles", "WatcherReadyMessage", false);
+		if (!hasKey("toggles", "PickBlock")) writeBooleanConfig("toggles", "PickBlock", false);
+		if (!hasKey("toggles", "FlowerWeapons")) writeBooleanConfig("toggles", "FlowerWeapons", false);
+		if (!hasKey("toggles", "NotifySlayerSlain")) writeBooleanConfig("toggles", "NotifySlayerSlain", false);
+		if (!hasKey("toggles", "NecronNotifications")) writeBooleanConfig("toggles", "NecronNotifications", false);
+		if (!hasKey("toggles", "BonzoTimer")) writeBooleanConfig("toggles", "BonzoTimer", false);
+		if (!hasKey("toggles", "AutoSkillTracker")) writeBooleanConfig("toggles", "AutoSkillTracker", false);
 		// Puzzle Solvers
 		if (!hasKey("toggles", "ThreeManPuzzle")) writeBooleanConfig("toggles", "ThreeManPuzzle", false);
 		if (!hasKey("toggles", "OruoPuzzle")) writeBooleanConfig("toggles", "OruoPuzzle", false);
@@ -201,12 +215,14 @@ public class ConfigHandler {
 		if (!hasKey("toggles", "TicTacToePuzzle")) writeBooleanConfig("toggles", "TicTacToePuzzle", false);
 		if (!hasKey("toggles", "StartsWithTerminal")) writeBooleanConfig("toggles", "StartsWithTerminal", false);
 		if (!hasKey("toggles", "SelectAllTerminal")) writeBooleanConfig("toggles", "SelectAllTerminal", false);
+		if (!hasKey("toggles", "ClickInOrderTerminal")) writeBooleanConfig("toggles", "ClickInOrderTerminal", false);
+		if (!hasKey("toggles", "BlockWrongTerminalClicks")) writeBooleanConfig("toggles", "BlockWrongTerminalClicks", false);
 		if (!hasKey("toggles", "IgnoreItemFrameOnSeaLanterns")) writeBooleanConfig("toggles", "IgnoreItemFrameOnSeaLanterns", false);
+		// Experiment Solvers
 		if (!hasKey("toggles", "UltraSequencer")) writeBooleanConfig("toggles", "UltraSequencer", false);
 		if (!hasKey("toggles", "Chronomatron")) writeBooleanConfig("toggles", "Chronomatron", false);
 		if (!hasKey("toggles", "Superpairs")) writeBooleanConfig("toggles", "Superpairs", false);
-		if (!hasKey("toggles", "PickBlockInExperiments")) writeBooleanConfig("toggles", "PickBlockInExperiments", false);
-
+		if (!hasKey("toggles", "HideTooltipsInExperimentAddons")) writeBooleanConfig("toggles", "HideTooltipsInExperimentAddons", false);
 
 		if (!hasKey("api", "APIKey")) writeStringConfig("api", "APIKey", "");
 		
@@ -374,7 +390,8 @@ public class ConfigHandler {
 		if (!hasKey("misc", "skill50Time")) writeIntConfig("misc", "skill50Time", 3);
 		if (!hasKey("misc", "cakeTime")) writeDoubleConfig("misc", "cakeTime", 0);
 		if (!hasKey("misc", "showSkillTracker")) writeBooleanConfig("misc", "showSkillTracker", false);
-		
+		if (!hasKey("misc", "firstLaunch")) writeBooleanConfig("misc", "firstLaunch", true);
+
 		ScaledResolution scaled = new ScaledResolution(Minecraft.getMinecraft());
 		int height = scaled.getScaledHeight();
 		if (!hasKey("locations", "coordsX")) writeIntConfig("locations", "coordsX", 5);
@@ -393,6 +410,8 @@ public class ConfigHandler {
 		if (!hasKey("locations", "skillTrackerY")) writeIntConfig("locations", "skillTrackerY", 50);
 		if (!hasKey("locations", "waterAnswerX")) writeIntConfig("locations", "waterAnswerX", 100);
 		if (!hasKey("locations", "waterAnswerY")) writeIntConfig("locations", "waterAnswerY", 100);
+		if (!hasKey("locations", "bonzoTimerX")) writeIntConfig("locations", "bonzoTimerX", 40);
+		if (!hasKey("locations", "bonzoTimerY")) writeIntConfig("locations", "bonzoTimerY", 80);
 		if (!hasKey("scales", "coordsScale")) writeDoubleConfig("scales", "coordsScale", 1);
 		if (!hasKey("scales", "displayScale")) writeDoubleConfig("scales", "displayScale", 1);
 		if (!hasKey("scales", "dungeonTimerScale")) writeDoubleConfig("scales", "dungeonTimerScale", 1);
@@ -401,10 +420,11 @@ public class ConfigHandler {
 		if (!hasKey("scales", "cakeTimerScale")) writeDoubleConfig("scales", "cakeTimerScale", 1);
 		if (!hasKey("scales", "skillTrackerScale")) writeDoubleConfig("scales", "skillTrackerScale", 1);
 		if (!hasKey("scales", "waterAnswerScale")) writeDoubleConfig("scales", "waterAnswerScale", 1);
-		
+		if (!hasKey("scales", "bonzoTimerScale")) writeDoubleConfig("scales", "bonzoTimerScale", 1);
+
 		if (!hasKey("colors", "main")) writeStringConfig("colors", "main", EnumChatFormatting.GREEN.toString());
 		if (!hasKey("colors", "secondary")) writeStringConfig("colors", "secondary", EnumChatFormatting.DARK_GREEN.toString());
-		if (!hasKey("colors", "delimiter")) writeStringConfig("colors", "delimiter", EnumChatFormatting.AQUA.toString());
+		if (!hasKey("colors", "delimiter")) writeStringConfig("colors", "delimiter", EnumChatFormatting.AQUA.toString() + EnumChatFormatting.STRIKETHROUGH.toString());
 		if (!hasKey("colors", "error")) writeStringConfig("colors", "error", EnumChatFormatting.RED.toString());
 		if (!hasKey("colors", "type")) writeStringConfig("colors", "type", EnumChatFormatting.GREEN.toString());
 		if (!hasKey("colors", "value")) writeStringConfig("colors", "value", EnumChatFormatting.DARK_GREEN.toString());
@@ -415,8 +435,29 @@ public class ConfigHandler {
 		if (!hasKey("colors", "cakeDisplay")) writeStringConfig("colors", "cakeDisplay", EnumChatFormatting.GOLD.toString());
 		if (!hasKey("colors", "skillTracker")) writeStringConfig("colors", "skillTracker", EnumChatFormatting.AQUA.toString());
 		if (!hasKey("colors", "triviaWrongAnswer")) writeStringConfig("colors", "triviaWrongAnswer", EnumChatFormatting.RED.toString());
+		if (!hasKey("colors", "bonzoDisplay")) writeStringConfig("colors", "bonzoDisplay", EnumChatFormatting.RED.toString());
 		if (!hasKey("colors", "blazeLowest")) writeIntConfig("colors", "blazeLowest", 0xFF0000);
 		if (!hasKey("colors", "blazeHighest")) writeIntConfig("colors", "blazeHighest", 0x40FF40);
+		if (!hasKey("colors", "pet1To9")) writeIntConfig("colors", "pet1To9", 0x999999); // Gray
+		if (!hasKey("colors", "pet10To19")) writeIntConfig("colors", "pet10To19", 0xD62440); // Red
+		if (!hasKey("colors", "pet20To29")) writeIntConfig("colors", "pet20To29", 0xEF5230); // Orange
+		if (!hasKey("colors", "pet30To39")) writeIntConfig("colors", "pet30To39", 0xFFC400); // Yellow
+		if (!hasKey("colors", "pet40To49")) writeIntConfig("colors", "pet40To49", 0x0EAC35); // Green
+		if (!hasKey("colors", "pet50To59")) writeIntConfig("colors", "pet50To59", 0x008AD8); // Light Blue
+		if (!hasKey("colors", "pet60To69")) writeIntConfig("colors", "pet60To69", 0x7E4FC6); // Purple
+		if (!hasKey("colors", "pet70To79")) writeIntConfig("colors", "pet70To79", 0xD64FC8); // Pink
+		if (!hasKey("colors", "pet80To89")) writeIntConfig("colors", "pet80To89", 0x5C1F35); // idk weird magenta
+		if (!hasKey("colors", "pet90To99")) writeIntConfig("colors", "pet90To99", 0x9E794E); // Brown
+		if (!hasKey("colors", "pet100")) writeIntConfig("colors", "pet100", 0xF2D249); // Gold
+		if (!hasKey("colors", "ultrasequencerNext")) writeIntConfig("colors", "ultrasequencerNext", 0x40FF40);
+		if (!hasKey("colors", "ultrasequencerNextToNext")) writeIntConfig("colors", "ultrasequencerNextToNext", 0x40DAE6);
+		if (!hasKey("colors", "chronomatronNext")) writeIntConfig("colors", "chronomatronNext", 0x40FF40);
+		if (!hasKey("colors", "chronomatronNextToNext")) writeIntConfig("colors", "chronomatronNextToNext", 0x40DAE6);
+		if (!hasKey("colors", "clickInOrderNext")) writeIntConfig("colors", "clickInOrderNext", 0xFF00DD);
+		if (!hasKey("colors", "clickInOrderNextToNext")) writeIntConfig("colors", "clickInOrderNextToNext", 0x0BEFE7);
+
+		// Commands
+		if (!hasKey("commands", "reparty")) writeBooleanConfig("commands", "reparty", false);
 		
 		ToggleCommand.gpartyToggled = getBoolean("toggles", "GParty");
 		ToggleCommand.coordsToggled = getBoolean("toggles", "Coords");
@@ -428,20 +469,31 @@ public class ConfigHandler {
 		ToggleCommand.spiritBearAlerts = getBoolean("toggles", "SpiritBearAlerts");
 		ToggleCommand.aotdToggled = getBoolean("toggles", "AOTD");
 		ToggleCommand.lividDaggerToggled = getBoolean("toggles", "LividDagger");
-		ToggleCommand.sceptreMessages = getBoolean("toggles", "SceptreMessages");
-		ToggleCommand.midasStaffMessages = getBoolean("toggles", "MidasStaffMessages");
-		ToggleCommand.implosionMessages = getBoolean("toggles", "ImplosionMessages");
-		ToggleCommand.healMessages = getBoolean("toggles", "HealMessages");
 		ToggleCommand.petColoursToggled = getBoolean("toggles", "PetColors");
-		ToggleCommand.dungeonTimerToggled = getBoolean("toggles", "DungeonTimer");
 		ToggleCommand.golemAlertToggled = getBoolean("toggles", "GolemAlerts");
 		ToggleCommand.expertiseLoreToggled = getBoolean("toggles", "ExpertiseLore");
 		ToggleCommand.skill50DisplayToggled = getBoolean("toggles", "Skill50Display");
 		ToggleCommand.outlineTextToggled = getBoolean("toggles", "OutlineText");
 		ToggleCommand.cakeTimerToggled = getBoolean("toggles", "CakeTimer");
+		// Chat Messages
+		ToggleCommand.sceptreMessages = getBoolean("toggles", "SceptreMessages");
+		ToggleCommand.midasStaffMessages = getBoolean("toggles", "MidasStaffMessages");
+		ToggleCommand.implosionMessages = getBoolean("toggles", "ImplosionMessages");
+		ToggleCommand.healMessages = getBoolean("toggles", "HealMessages");
+		ToggleCommand.cooldownMessages = getBoolean("toggles", "CooldownMessages");
+		ToggleCommand.manaMessages = getBoolean("toggles", "ManaMessages");
+		//Dungeons
+		ToggleCommand.dungeonTimerToggled = getBoolean("toggles", "DungeonTimer");
 		ToggleCommand.lowHealthNotifyToggled = getBoolean("toggles", "LowHealthNotify");
 		ToggleCommand.lividSolverToggled = getBoolean("toggles", "LividSolver");
 		ToggleCommand.stopSalvageStarredToggled = getBoolean("toggles", "StopSalvageStarred");
+		ToggleCommand.watcherReadyToggled = getBoolean("toggles", "WatcherReadyMessage");
+		ToggleCommand.notifySlayerSlainToggled = getBoolean("toggles", "NotifySlayerSlain");
+		ToggleCommand.necronNotificationsToggled = getBoolean("toggles", "NecronNotifications");
+		ToggleCommand.bonzoTimerToggled = getBoolean("toggles", "BonzoTimer");
+		ToggleCommand.swapToPickBlockToggled = getBoolean("toggles", "PickBlock");
+		ToggleCommand.flowerWeaponsToggled = getBoolean("toggles", "FlowerWeapons");
+		ToggleCommand.autoSkillTrackerToggled =  getBoolean("toggles", "AutoSkillTracker");
 		// Puzzle Solvers
 		ToggleCommand.threeManToggled = getBoolean("toggles", "ThreeManPuzzle");
 		ToggleCommand.oruoToggled = getBoolean("toggles", "OruoPuzzle");
@@ -451,11 +503,14 @@ public class ConfigHandler {
 		ToggleCommand.ticTacToeToggled = getBoolean("toggles", "TicTacToePuzzle");
 		ToggleCommand.startsWithToggled = getBoolean("toggles", "StartsWithTerminal");
 		ToggleCommand.selectAllToggled = getBoolean("toggles", "SelectAllTerminal");
+		ToggleCommand.clickInOrderToggled = getBoolean("toggles", "ClickInOrderTerminal");
+		ToggleCommand.blockWrongTerminalClicksToggled = getBoolean("toggles", "BlockWrongTerminalClicks");
 		ToggleCommand.itemFrameOnSeaLanternsToggled = getBoolean("toggles", "IgnoreItemFrameOnSeaLanterns");
+		// Experiment Solvers
 		ToggleCommand.ultrasequencerToggled = getBoolean("toggles", "UltraSequencer");
 		ToggleCommand.chronomatronToggled = getBoolean("toggles", "Chronomatron");
 		ToggleCommand.superpairsToggled = getBoolean("toggles", "Superpairs");
-		ToggleCommand.swapToPickBlockInExperimentsToggled = getBoolean("toggles", "PickBlockInExperiments");
+		ToggleCommand.hideTooltipsInExperimentAddonsToggled = getBoolean("toggles", "HideTooltipsInExperimentAddons");
 
 		String onlySlayer = getString("toggles", "BlockSlayer");
 		if (!onlySlayer.equals("")) {
@@ -540,7 +595,7 @@ public class ConfigHandler {
 		// Spooky Fishing
 		LootCommand.scarecrows = getInt("fishing", "scarecrow");
 		LootCommand.nightmares = getInt("fishing", "nightmare");
-		LootCommand.werewolfs = getInt("fishing", "nightmare");
+		LootCommand.werewolfs = getInt("fishing", "werewolf");
 		LootCommand.phantomFishers = getInt("fishing", "phantomFisher");
 		LootCommand.grimReapers = getInt("fishing", "grimReaper");
 		
@@ -628,7 +683,8 @@ public class ConfigHandler {
 		DankersSkyblockMod.SKILL_TIME = getInt("misc", "skill50Time") * 20;
 		DankersSkyblockMod.cakeTime = getDouble("misc", "cakeTime");
 		DankersSkyblockMod.showSkillTracker = getBoolean("misc", "showSkillTracker");
-		
+		DankersSkyblockMod.firstLaunch = getBoolean("misc", "firstLaunch");
+
 		MoveCommand.coordsXY[0] = getInt("locations", "coordsX");
 		MoveCommand.coordsXY[1] = getInt("locations", "coordsY");
 		MoveCommand.displayXY[0] = getInt("locations", "displayX");
@@ -645,7 +701,10 @@ public class ConfigHandler {
 		MoveCommand.skillTrackerXY[1] = getInt("locations", "skillTrackerY");
 		MoveCommand.waterAnswerXY[0] = getInt("locations", "waterAnswerX");
 		MoveCommand.waterAnswerXY[1] = getInt("locations", "waterAnswerY");
-		
+		MoveCommand.bonzoTimerXY[0] = getInt("locations", "bonzoTimerX");
+		MoveCommand.bonzoTimerXY[1] = getInt("locations", "bonzoTimerY");
+
+
 		ScaleCommand.coordsScale = getDouble("scales", "coordsScale");
 		ScaleCommand.displayScale = getDouble("scales", "displayScale");
 		ScaleCommand.dungeonTimerScale = getDouble("scales", "dungeonTimerScale");
@@ -654,6 +713,7 @@ public class ConfigHandler {
 		ScaleCommand.cakeTimerScale = getDouble("scales", "cakeTimerScale");
 		ScaleCommand.skillTrackerScale = getDouble("scales", "skillTrackerScale");
 		ScaleCommand.waterAnswerScale = getDouble("scales", "waterAnswerScale");
+		ScaleCommand.bonzoTimerScale = getDouble("scales", "bonzoTimerScale");
 
 		DankersSkyblockMod.MAIN_COLOUR = getString("colors", "main");
 		DankersSkyblockMod.SECONDARY_COLOUR = getString("colors", "secondary");
@@ -668,8 +728,26 @@ public class ConfigHandler {
 		DankersSkyblockMod.CAKE_COLOUR = getString("colors", "cakeDisplay");
 		DankersSkyblockMod.SKILL_TRACKER_COLOUR = getString("colors", "skillTracker");
 		DankersSkyblockMod.TRIVIA_WRONG_ANSWER_COLOUR = getString("colors", "triviaWrongAnswer");
+		DankersSkyblockMod.BONZO_COLOR = getString("colors", "bonzoDisplay");
 		DankersSkyblockMod.LOWEST_BLAZE_COLOUR = getInt("colors", "blazeLowest");
 		DankersSkyblockMod.HIGHEST_BLAZE_COLOUR = getInt("colors", "blazeHighest");
+		DankersSkyblockMod.PET_1_TO_9 = getInt("colors", "pet1To9");
+		DankersSkyblockMod.PET_10_TO_19 = getInt("colors", "pet10To19");
+		DankersSkyblockMod.PET_20_TO_29 = getInt("colors", "pet20To29");
+		DankersSkyblockMod.PET_30_TO_39 = getInt("colors", "pet30To39");
+		DankersSkyblockMod.PET_40_TO_49 = getInt("colors", "pet40To49");
+		DankersSkyblockMod.PET_50_TO_59 = getInt("colors", "pet50To59");
+		DankersSkyblockMod.PET_60_TO_69 = getInt("colors", "pet60To69");
+		DankersSkyblockMod.PET_70_TO_79 = getInt("colors", "pet70To79");
+		DankersSkyblockMod.PET_80_TO_89 = getInt("colors", "pet80To89");
+		DankersSkyblockMod.PET_90_TO_99 = getInt("colors", "pet90To99");
+		DankersSkyblockMod.PET_100 = getInt("colors", "pet100");
+		DankersSkyblockMod.ULTRASEQUENCER_NEXT = getInt("colors", "ultrasequencerNext");
+		DankersSkyblockMod.ULTRASEQUENCER_NEXT_TO_NEXT = getInt("colors", "ultrasequencerNextToNext");
+		DankersSkyblockMod.CHRONOMATRON_NEXT = getInt("colors", "chronomatronNext");
+		DankersSkyblockMod.CHRONOMATRON_NEXT_TO_NEXT = getInt("colors", "chronomatronNextToNext");
+		DankersSkyblockMod.CLICK_IN_ORDER_NEXT = getInt("colors", "clickInOrderNext");
+		DankersSkyblockMod.CLICK_IN_ORDER_NEXT_TO_NEXT = getInt("colors", "clickInOrderNextToNext");
 	}
 	
 }

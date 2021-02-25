@@ -26,6 +26,7 @@ public class EditLocationsGui extends GuiScreen {
 	private LocationButton cakeTimer;
 	private LocationButton skillTracker;
 	private LocationButton waterAnswer;
+	private LocationButton bonzoTimer;
 	
 	@Override
 	public boolean doesGuiPauseGame() {
@@ -91,6 +92,8 @@ public class EditLocationsGui extends GuiScreen {
 		cakeTimer = new LocationButton(0, MoveCommand.cakeTimerXY[0], MoveCommand.cakeTimerXY[1] + 5, 85 * ScaleCommand.cakeTimerScale, 18 * ScaleCommand.cakeTimerScale, ScaleCommand.cakeTimerScale, DankersSkyblockMod.CAKE_COLOUR + "     11h16m", null, null);
 		skillTracker = new LocationButton(0, MoveCommand.skillTrackerXY[0], MoveCommand.skillTrackerXY[1], 150 * ScaleCommand.skillTrackerScale, 28 * ScaleCommand.skillTrackerScale, ScaleCommand.skillTrackerScale, skillTrackerText, null, null);
 		waterAnswer = new LocationButton(0, MoveCommand.waterAnswerXY[0], MoveCommand.waterAnswerXY[1], 190 * ScaleCommand.waterAnswerScale, 54 * ScaleCommand.waterAnswerScale, ScaleCommand.waterAnswerScale, waterAnswerText, null, null);
+		bonzoTimer = new LocationButton(0, MoveCommand.bonzoTimerXY[0], MoveCommand.bonzoTimerXY[1] + 5, 85 * ScaleCommand.bonzoTimerScale, 18 * ScaleCommand.bonzoTimerScale, ScaleCommand.bonzoTimerScale, DankersSkyblockMod.BONZO_COLOR + "     3m30s", null, null);
+
 
 		this.buttonList.add(coords);
 		this.buttonList.add(dungeonTimer);
@@ -98,6 +101,7 @@ public class EditLocationsGui extends GuiScreen {
 		this.buttonList.add(cakeTimer);
 		this.buttonList.add(skillTracker);
 		this.buttonList.add(waterAnswer);
+		this.buttonList.add(bonzoTimer);
 		this.buttonList.add(display);
 		this.buttonList.add(skill50);
 	}
@@ -107,13 +111,21 @@ public class EditLocationsGui extends GuiScreen {
 		this.drawDefaultBackground();
 		mouseMoved(mouseX, mouseY);
 		
-		double scale = ScaleCommand.cakeTimerScale;
-		double scaleReset = Math.pow(scale, -1);
-		GL11.glScaled(scale, scale, scale);
+		double cakeTimerScale = ScaleCommand.cakeTimerScale;
+		double cakeTimerScaleReset = Math.pow(cakeTimerScale, -1);
+		GL11.glScaled(cakeTimerScale, cakeTimerScale, cakeTimerScale);
 		mc.getTextureManager().bindTexture(DankersSkyblockMod.CAKE_ICON);
 		Gui.drawModalRectWithCustomSizedTexture(MoveCommand.cakeTimerXY[0], MoveCommand.cakeTimerXY[1], 0, 0, 16, 16, 16, 16);
-		GL11.glScaled(scaleReset, scaleReset, scaleReset);
-		
+		GL11.glScaled(cakeTimerScaleReset, cakeTimerScaleReset, cakeTimerScaleReset);
+
+		double bonzoTimerScale = ScaleCommand.bonzoTimerScale;
+		double bonzoTimerScaleReset = Math.pow(bonzoTimerScale, -1);
+		GL11.glScaled(bonzoTimerScale, bonzoTimerScale, bonzoTimerScale);
+		mc.getTextureManager().bindTexture(DankersSkyblockMod.BONZO_ICON);
+		Gui.drawModalRectWithCustomSizedTexture(MoveCommand.bonzoTimerXY[0], MoveCommand.bonzoTimerXY[1], 0, 0, 16, 16, 16, 16);
+		GL11.glScaled(bonzoTimerScaleReset, bonzoTimerScaleReset, bonzoTimerScaleReset);
+
+
 		super.drawScreen(mouseX, mouseY, partialTicks);
 	}
 	
@@ -171,6 +183,12 @@ public class EditLocationsGui extends GuiScreen {
 					waterAnswer.xPosition = MoveCommand.waterAnswerXY[0];
 					waterAnswer.yPosition = MoveCommand.waterAnswerXY[1];
 					break;
+				case "bonzoTimer":
+					MoveCommand.bonzoTimerXY[0] += xMoved;
+					MoveCommand.bonzoTimerXY[1] += yMoved;
+					bonzoTimer.xPosition = MoveCommand.bonzoTimerXY[0];
+					bonzoTimer.yPosition = MoveCommand.bonzoTimerXY[1];
+					break;
 			}
 			this.buttonList.clear();
 			initGui();
@@ -199,6 +217,8 @@ public class EditLocationsGui extends GuiScreen {
 				moving = "skillTracker";
 			} else if (button == waterAnswer) {
 				moving = "waterAnswer";
+			} else if (button == bonzoTimer) {
+				moving = "bonzoTimer";
 			}
 		}
 	}
@@ -221,8 +241,10 @@ public class EditLocationsGui extends GuiScreen {
 		ConfigHandler.writeIntConfig("locations", "cakeTimerY", MoveCommand.cakeTimerXY[1]);
 		ConfigHandler.writeIntConfig("locations", "skillTrackerX", MoveCommand.skillTrackerXY[0]);
 		ConfigHandler.writeIntConfig("locations", "skillTrackerY", MoveCommand.skillTrackerXY[1]);
-		ConfigHandler.writeIntConfig("locations", "waterAnswerX", MoveCommand.waterAnswerXY[1]);
+		ConfigHandler.writeIntConfig("locations", "waterAnswerX", MoveCommand.waterAnswerXY[0]);
 		ConfigHandler.writeIntConfig("locations", "waterAnswerY", MoveCommand.waterAnswerXY[1]);
+		ConfigHandler.writeIntConfig("locations", "bonzoTimerX", MoveCommand.bonzoTimerXY[0]);
+		ConfigHandler.writeIntConfig("locations", "bonzoTimerY", MoveCommand.bonzoTimerXY[1]);
 	}
 	
 }
