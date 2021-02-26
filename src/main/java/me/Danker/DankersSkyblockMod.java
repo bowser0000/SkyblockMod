@@ -76,7 +76,7 @@ import java.util.regex.Pattern;
 @Mod(modid = DankersSkyblockMod.MODID, version = DankersSkyblockMod.VERSION, clientSideOnly = true)
 public class DankersSkyblockMod {
     public static final String MODID = "Danker's Skyblock Mod";
-    public static final String VERSION = "1.8.5-beta9";
+    public static final String VERSION = "1.8.5";
     static double checkItemsNow = 0;
     static double itemsChecked = 0;
     public static Map<String, String> t6Enchants = new HashMap<>();
@@ -313,6 +313,7 @@ public class DankersSkyblockMod {
     	ClientCommandHandler.instance.registerCommand(new LobbySkillsCommand());
     	ClientCommandHandler.instance.registerCommand(new DankerGuiCommand());
 		ClientCommandHandler.instance.registerCommand(new SkillTrackerCommand());
+		ClientCommandHandler.instance.registerCommand(new FairySoulsCommand());
     }
 
     @EventHandler
@@ -3217,39 +3218,6 @@ public class DankersSkyblockMod {
         ItemStack item = event.entityPlayer.getHeldItem();
         if (item == null) return;
 
-        if (event.action == PlayerInteractEvent.Action.LEFT_CLICK_BLOCK) {
-
-            Block block = Minecraft.getMinecraft().theWorld.getBlockState(event.pos).getBlock();
-
-            if (ToggleCommand.blockBreakingFarmsToggled) {
-                ArrayList<Item> tools = new ArrayList<>(Arrays.asList(
-                        Items.wooden_hoe,
-                        Items.stone_hoe,
-                        Items.iron_hoe,
-                        Items.golden_hoe,
-                        Items.diamond_hoe,
-                        Items.wooden_axe,
-                        Items.stone_axe,
-                        Items.iron_axe,
-                        Items.golden_axe,
-                        Items.diamond_axe
-                ));
-
-                ArrayList<Block> farmBlocks = new ArrayList<>(Arrays.asList(
-                        Blocks.dirt,
-                        Blocks.farmland,
-                        Blocks.carpet,
-                        Blocks.glowstone,
-                        Blocks.sea_lantern
-                ));
-
-                if (tools.contains(item.getItem()) && farmBlocks.contains(block)) {
-                    event.setCanceled(true);
-                }
-
-            }
-        }
-
         if (event.action == PlayerInteractEvent.Action.RIGHT_CLICK_AIR) {
             if (ToggleCommand.aotdToggled && item.getDisplayName().contains("Aspect of the Dragons")) {
                 event.setCanceled(true);
@@ -3623,7 +3591,12 @@ public class DankersSkyblockMod {
                         } else if (inventoryName.startsWith("Select all the")) {
                             if (terminalColorNeeded == null) return;
                             String itemName = StringUtils.stripControlCodes(item.getDisplayName()).toUpperCase();
-                            shouldCancel = !(itemName.contains(terminalColorNeeded) || (terminalColorNeeded.equals("SILVER") && itemName.contains("LIGHT GRAY")) || (terminalColorNeeded.equals("WHITE") && itemName.equals("WOOL")));
+                            shouldCancel = !(itemName.contains(terminalColorNeeded) ||
+                                            (terminalColorNeeded.equals("SILVER") && itemName.contains("LIGHT GRAY")) ||
+                                            (terminalColorNeeded.equals("WHITE") && (itemName.equals("WOOL") || itemName.equals("BONE MEAL"))) ||
+                                            (terminalColorNeeded.equals("BLACK") && itemName.equals("INK SACK")) ||
+                                            (terminalColorNeeded.equals("BLUE") && itemName.equals("LAPIS LAZULI")) ||
+                                            (terminalColorNeeded.equals("BROWN") && itemName.equals("COCOA BEANS")));
                         }
                     }
 
@@ -3796,8 +3769,13 @@ public class DankersSkyblockMod {
                         if (item == null) continue;
                         if (item.isItemEnchanted()) continue;
                         String itemName = StringUtils.stripControlCodes(item.getDisplayName()).toUpperCase();
-                        if (itemName.contains(colour) || (colour.equals("SILVER") && itemName.contains("LIGHT GRAY")) || (colour.equals("WHITE") && itemName.equals("WOOL"))) {
-                            Utils.drawOnSlot(chestSize, slot.xDisplayPosition, slot.yDisplayPosition, 0xBF40FF40);
+                        if (itemName.contains(terminalColorNeeded) ||
+                           (terminalColorNeeded.equals("SILVER") && itemName.contains("LIGHT GRAY")) ||
+                           (terminalColorNeeded.equals("WHITE") && (itemName.equals("WOOL") || itemName.equals("BONE MEAL"))) ||
+                           (terminalColorNeeded.equals("BLACK") && itemName.equals("INK SACK")) ||
+                           (terminalColorNeeded.equals("BLUE") && itemName.equals("LAPIS LAZULI")) ||
+                           (terminalColorNeeded.equals("BROWN") && itemName.equals("COCOA BEANS"))) {
+                                Utils.drawOnSlot(chestSize, slot.xDisplayPosition, slot.yDisplayPosition, 0xBF40FF40);
                         }
                     }
                 }

@@ -21,3 +21,13 @@ build
 eclipse
 run
 *.txt
+*.cfg
+*.gz
+*.log
+*.dat
+*.mca
+*.json
+*.dat_mcr
+*.lock
+*.dat_old
+*.properties
