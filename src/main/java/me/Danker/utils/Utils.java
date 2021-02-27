@@ -1,6 +1,7 @@
 package me.Danker.utils;
 
 import me.Danker.DankersSkyblockMod;
+import me.Danker.features.GoldenEnchants;
 import me.Danker.handlers.ScoreboardHandler;
 import me.Danker.handlers.TextRenderer;
 import net.minecraft.block.Block;
@@ -8,7 +9,10 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.network.NetworkPlayerInfo;
-import net.minecraft.client.renderer.*;
+import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.RenderHelper;
+import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.Entity;
@@ -24,7 +28,9 @@ import net.minecraft.util.*;
 import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.regex.Matcher;
 
@@ -62,11 +68,11 @@ public class Utils {
     }
     
     public static String returnGoldenEnchants(String line) {
-    	Matcher matcher = DankersSkyblockMod.t6EnchantPattern.matcher(line);
+    	Matcher matcher = GoldenEnchants.t6EnchantPattern.matcher(line);
     	StringBuffer out = new StringBuffer();
     	
     	while (matcher.find()) {
-    		matcher.appendReplacement(out, DankersSkyblockMod.t6Enchants.get(matcher.group(1)));
+    		matcher.appendReplacement(out, GoldenEnchants.t6Enchants.get(matcher.group(1)));
     	}
     	matcher.appendTail(out);
     	

@@ -1,6 +1,7 @@
 package me.Danker.commands;
 
 import me.Danker.DankersSkyblockMod;
+import me.Danker.features.SkillTracker;
 import me.Danker.handlers.ConfigHandler;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
@@ -55,39 +56,39 @@ public class SkillTrackerCommand extends CommandBase {
 				switch (arg1[0].toLowerCase()) {
 					case "start":
 					case "resume":
-						if (DankersSkyblockMod.skillStopwatch.isStarted() && DankersSkyblockMod.skillStopwatch.isSuspended()) {
-							DankersSkyblockMod.skillStopwatch.resume();
-						} else if (!DankersSkyblockMod.skillStopwatch.isStarted()) {
-							DankersSkyblockMod.skillStopwatch.start();
+						if (SkillTracker.skillStopwatch.isStarted() && SkillTracker.skillStopwatch.isSuspended()) {
+							SkillTracker.skillStopwatch.resume();
+						} else if (!SkillTracker.skillStopwatch.isStarted()) {
+							SkillTracker.skillStopwatch.start();
 						}
 						player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Skill tracker started."));
 						break;
 					case "pause":
 					case "stop":
-						if (DankersSkyblockMod.skillStopwatch.isStarted() && !DankersSkyblockMod.skillStopwatch.isSuspended()) {
-							DankersSkyblockMod.skillStopwatch.suspend();
+						if (SkillTracker.skillStopwatch.isStarted() && !SkillTracker.skillStopwatch.isSuspended()) {
+							SkillTracker.skillStopwatch.suspend();
 						} else {
 							player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Skill tracker paused."));
 						}
 						break;
 					case "reset":
-						DankersSkyblockMod.skillStopwatch = new StopWatch();
-						DankersSkyblockMod.farmingXPGained = 0;
-						DankersSkyblockMod.miningXPGained = 0;
-						DankersSkyblockMod.combatXPGained = 0;
-						DankersSkyblockMod.foragingXPGained = 0;
-						DankersSkyblockMod.fishingXPGained = 0;
-						DankersSkyblockMod.enchantingXPGained = 0;
-						DankersSkyblockMod.alchemyXPGained = 0;
+						SkillTracker.skillStopwatch = new StopWatch();
+						SkillTracker.farmingXPGained = 0;
+						SkillTracker.miningXPGained = 0;
+						SkillTracker.combatXPGained = 0;
+						SkillTracker.foragingXPGained = 0;
+						SkillTracker.fishingXPGained = 0;
+						SkillTracker.enchantingXPGained = 0;
+						SkillTracker.alchemyXPGained = 0;
 						player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Skill tracker reset."));
 						break;
 					case "hide":
-						DankersSkyblockMod.showSkillTracker = false;
+						SkillTracker.showSkillTracker = false;
 						ConfigHandler.writeBooleanConfig("misc", "showSkillTracker", false);
 						player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Skill tracker hidden."));
 						break;
 					case "show":
-						DankersSkyblockMod.showSkillTracker = true;
+						SkillTracker.showSkillTracker = true;
 						ConfigHandler.writeBooleanConfig("misc", "showSkillTracker", true);
 						player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Skill tracker shown."));
 						break;

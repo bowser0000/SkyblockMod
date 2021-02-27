@@ -1,6 +1,7 @@
 package me.Danker.commands;
 
 import me.Danker.DankersSkyblockMod;
+import me.Danker.features.SkillTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.ResourcePackRepository;
 import net.minecraft.command.CommandBase;
@@ -93,7 +94,7 @@ public class DankerGuiCommand extends CommandBase {
 			debug.append("# Other Settings\n");
 			debug.append("[Current Display][").append(DisplayCommand.display).append("]\n");
 			debug.append("[Auto Display][").append(DisplayCommand.auto).append("]\n");
-			debug.append("[Skill Tracker Visible][").append(DankersSkyblockMod.showSkillTracker).append("]\n");
+			debug.append("[Skill Tracker Visible][").append(SkillTracker.showSkillTracker).append("]\n");
 			debug.append("# Resource Packs\n");
 			if (Minecraft.getMinecraft().getResourcePackRepository().getRepositoryEntries().size() == 0) {
 				debug.append("<None>\n");

@@ -16,7 +16,6 @@ import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 public class PetsCommand extends CommandBase {

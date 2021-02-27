@@ -2,6 +2,7 @@ package me.Danker.commands;
 
 import com.google.gson.JsonObject;
 import me.Danker.DankersSkyblockMod;
+import me.Danker.features.loot.LootTracker;
 import me.Danker.handlers.APIHandler;
 import me.Danker.handlers.ConfigHandler;
 import net.minecraft.command.CommandBase;
@@ -59,230 +60,230 @@ public class ImportFishingCommand extends CommandBase {
 			System.out.println("Fetching fishing stats...");
 			JsonObject statsObject = profileResponse.get("profile").getAsJsonObject().get("members").getAsJsonObject().get(uuid).getAsJsonObject().get("stats").getAsJsonObject();
 			
-			LootCommand.greatCatches = 0;
-			LootCommand.goodCatches = 0;
+			LootTracker.greatCatches = 0;
+			LootTracker.goodCatches = 0;
 			if (statsObject.has("items_fished_treasure")) {
 				if (statsObject.has("items_fished_large_treasure")) {
-					LootCommand.greatCatches = statsObject.get("items_fished_large_treasure").getAsInt();
-					LootCommand.goodCatches = statsObject.get("items_fished_treasure").getAsInt() - LootCommand.greatCatches;
+					LootTracker.greatCatches = statsObject.get("items_fished_large_treasure").getAsInt();
+					LootTracker.goodCatches = statsObject.get("items_fished_treasure").getAsInt() - LootTracker.greatCatches;
 				} else {
-					LootCommand.goodCatches = statsObject.get("items_fished_treasure").getAsInt();
+					LootTracker.goodCatches = statsObject.get("items_fished_treasure").getAsInt();
 				}
 			}
 			
-			LootCommand.seaCreatures = 0;
-			LootCommand.squids = 0;
+			LootTracker.seaCreatures = 0;
+			LootTracker.squids = 0;
 			if (statsObject.has("kills_pond_squid")) {
-				LootCommand.squids = statsObject.get("kills_pond_squid").getAsInt();
+				LootTracker.squids = statsObject.get("kills_pond_squid").getAsInt();
 			}
-			LootCommand.seaCreatures += LootCommand.squids;
+			LootTracker.seaCreatures += LootTracker.squids;
 			
-			LootCommand.seaWalkers = 0;
+			LootTracker.seaWalkers = 0;
 			if (statsObject.has("kills_sea_walker")) {
-				LootCommand.seaWalkers = statsObject.get("kills_sea_walker").getAsInt();
+				LootTracker.seaWalkers = statsObject.get("kills_sea_walker").getAsInt();
 			}
-			LootCommand.seaCreatures += LootCommand.seaWalkers;
+			LootTracker.seaCreatures += LootTracker.seaWalkers;
 			
-			LootCommand.nightSquids = 0;
+			LootTracker.nightSquids = 0;
 			if (statsObject.has("kills_night_squid")) {
-				LootCommand.nightSquids = statsObject.get("kills_night_squid").getAsInt();
+				LootTracker.nightSquids = statsObject.get("kills_night_squid").getAsInt();
 			}
-			LootCommand.seaCreatures += LootCommand.nightSquids;
+			LootTracker.seaCreatures += LootTracker.nightSquids;
 			
-			LootCommand.seaGuardians = 0;
+			LootTracker.seaGuardians = 0;
 			if (statsObject.has("kills_sea_guardian")) {
-				LootCommand.seaGuardians = statsObject.get("kills_sea_guardian").getAsInt();
+				LootTracker.seaGuardians = statsObject.get("kills_sea_guardian").getAsInt();
 			}
-			LootCommand.seaCreatures += LootCommand.seaGuardians;
+			LootTracker.seaCreatures += LootTracker.seaGuardians;
 				
-			LootCommand.seaWitches = 0;
+			LootTracker.seaWitches = 0;
 			if (statsObject.has("kills_sea_witch")) {
-				LootCommand.seaWitches = statsObject.get("kills_sea_witch").getAsInt();
+				LootTracker.seaWitches = statsObject.get("kills_sea_witch").getAsInt();
 			}
-			LootCommand.seaCreatures += LootCommand.seaWitches;
+			LootTracker.seaCreatures += LootTracker.seaWitches;
 			
-			LootCommand.seaArchers = 0;
+			LootTracker.seaArchers = 0;
 			if (statsObject.has("kills_sea_archer")) {
-				LootCommand.seaArchers = statsObject.get("kills_sea_archer").getAsInt();
+				LootTracker.seaArchers = statsObject.get("kills_sea_archer").getAsInt();
 			}
-			LootCommand.seaCreatures += LootCommand.seaArchers;
+			LootTracker.seaCreatures += LootTracker.seaArchers;
 			
-			LootCommand.monsterOfTheDeeps = 0;
+			LootTracker.monsterOfTheDeeps = 0;
 			if (statsObject.has("kills_zombie_deep")) {
 				if (statsObject.has("kills_chicken_deep")) {
-					LootCommand.monsterOfTheDeeps = statsObject.get("kills_zombie_deep").getAsInt() + statsObject.get("kills_chicken_deep").getAsInt();
+					LootTracker.monsterOfTheDeeps = statsObject.get("kills_zombie_deep").getAsInt() + statsObject.get("kills_chicken_deep").getAsInt();
 				} else {
-					LootCommand.monsterOfTheDeeps = statsObject.get("kills_zombie_deep").getAsInt();
+					LootTracker.monsterOfTheDeeps = statsObject.get("kills_zombie_deep").getAsInt();
 				}
 			} else if (statsObject.has("kills_chicken_deep")) {
-				LootCommand.monsterOfTheDeeps = statsObject.get("kills_chicken_deep").getAsInt();
+				LootTracker.monsterOfTheDeeps = statsObject.get("kills_chicken_deep").getAsInt();
 			}
-			LootCommand.seaCreatures += LootCommand.monsterOfTheDeeps;
+			LootTracker.seaCreatures += LootTracker.monsterOfTheDeeps;
 			
-			LootCommand.catfishes = 0;
+			LootTracker.catfishes = 0;
 			if (statsObject.has("kills_catfish")) {
-				LootCommand.catfishes = statsObject.get("kills_catfish").getAsInt();
+				LootTracker.catfishes = statsObject.get("kills_catfish").getAsInt();
 			}
-			LootCommand.seaCreatures += LootCommand.catfishes;
+			LootTracker.seaCreatures += LootTracker.catfishes;
 			
-			LootCommand.carrotKings = 0;
+			LootTracker.carrotKings = 0;
 			if (statsObject.has("kills_carrot_king")) {
-				LootCommand.carrotKings = statsObject.get("kills_carrot_king").getAsInt();
+				LootTracker.carrotKings = statsObject.get("kills_carrot_king").getAsInt();
 			}
-			LootCommand.seaCreatures += LootCommand.carrotKings;
+			LootTracker.seaCreatures += LootTracker.carrotKings;
 			
-			LootCommand.seaLeeches = 0;
+			LootTracker.seaLeeches = 0;
 			if (statsObject.has("kills_sea_leech")) {
-				LootCommand.seaLeeches = statsObject.get("kills_sea_leech").getAsInt();
+				LootTracker.seaLeeches = statsObject.get("kills_sea_leech").getAsInt();
 			}
-			LootCommand.seaCreatures += LootCommand.seaLeeches;
+			LootTracker.seaCreatures += LootTracker.seaLeeches;
 			
-			LootCommand.guardianDefenders = 0;
+			LootTracker.guardianDefenders = 0;
 			if (statsObject.has("kills_guardian_defender")) {
-				LootCommand.guardianDefenders = statsObject.get("kills_guardian_defender").getAsInt();
+				LootTracker.guardianDefenders = statsObject.get("kills_guardian_defender").getAsInt();
 			}
-			LootCommand.seaCreatures += LootCommand.guardianDefenders;
+			LootTracker.seaCreatures += LootTracker.guardianDefenders;
 			
-			LootCommand.deepSeaProtectors = 0;
+			LootTracker.deepSeaProtectors = 0;
 			if (statsObject.has("kills_deep_sea_protector")) {
-				LootCommand.deepSeaProtectors = statsObject.get("kills_deep_sea_protector").getAsInt();
+				LootTracker.deepSeaProtectors = statsObject.get("kills_deep_sea_protector").getAsInt();
 			}
-			LootCommand.seaCreatures += LootCommand.deepSeaProtectors;
+			LootTracker.seaCreatures += LootTracker.deepSeaProtectors;
 			
-			LootCommand.hydras = 0;
+			LootTracker.hydras = 0;
 			if (statsObject.has("kills_water_hydra")) {
 				// Hydra splits
-				LootCommand.hydras = statsObject.get("kills_water_hydra").getAsInt() / 2;
+				LootTracker.hydras = statsObject.get("kills_water_hydra").getAsInt() / 2;
 			}
-			LootCommand.seaCreatures += LootCommand.hydras;
+			LootTracker.seaCreatures += LootTracker.hydras;
 			
-			LootCommand.seaEmperors = 0;
+			LootTracker.seaEmperors = 0;
 			if (statsObject.has("kills_skeleton_emperor")) {
 				if (statsObject.has("kills_guardian_emperor")) {
-					LootCommand.seaEmperors = statsObject.get("kills_skeleton_emperor").getAsInt() + statsObject.get("kills_guardian_emperor").getAsInt();
+					LootTracker.seaEmperors = statsObject.get("kills_skeleton_emperor").getAsInt() + statsObject.get("kills_guardian_emperor").getAsInt();
 				} else {
-					LootCommand.seaEmperors = statsObject.get("kills_skeleton_emperor").getAsInt();
+					LootTracker.seaEmperors = statsObject.get("kills_skeleton_emperor").getAsInt();
 				}
 			} else if (statsObject.has("kills_guardian_emperor")) {
-				LootCommand.seaEmperors = statsObject.get("kills_guardian_emperor").getAsInt();
+				LootTracker.seaEmperors = statsObject.get("kills_guardian_emperor").getAsInt();
 			}
-			LootCommand.seaCreatures += LootCommand.seaEmperors;
+			LootTracker.seaCreatures += LootTracker.seaEmperors;
 			
-			LootCommand.fishingMilestone = 0;
+			LootTracker.fishingMilestone = 0;
 			if (statsObject.has("pet_milestone_sea_creatures_killed")) {
-				LootCommand.fishingMilestone = statsObject.get("pet_milestone_sea_creatures_killed").getAsInt();
+				LootTracker.fishingMilestone = statsObject.get("pet_milestone_sea_creatures_killed").getAsInt();
 			}
 			
-			LootCommand.frozenSteves = 0;
+			LootTracker.frozenSteves = 0;
 			if (statsObject.has("kills_frozen_steve")) {
-				LootCommand.frozenSteves = statsObject.get("kills_frozen_steve").getAsInt();
+				LootTracker.frozenSteves = statsObject.get("kills_frozen_steve").getAsInt();
 			}
-			LootCommand.seaCreatures += LootCommand.frozenSteves;
+			LootTracker.seaCreatures += LootTracker.frozenSteves;
 			
-			LootCommand.frostyTheSnowmans = 0;
+			LootTracker.frostyTheSnowmans = 0;
 			if (statsObject.has("kills_frosty_the_snowman")) {
-				LootCommand.frostyTheSnowmans = statsObject.get("kills_frosty_the_snowman").getAsInt();
+				LootTracker.frostyTheSnowmans = statsObject.get("kills_frosty_the_snowman").getAsInt();
 			}
-			LootCommand.seaCreatures += LootCommand.frostyTheSnowmans;
+			LootTracker.seaCreatures += LootTracker.frostyTheSnowmans;
 			
-			LootCommand.grinches = 0;
+			LootTracker.grinches = 0;
 			if (statsObject.has("kills_grinch")) {
-				LootCommand.grinches = statsObject.get("kills_grinch").getAsInt();
+				LootTracker.grinches = statsObject.get("kills_grinch").getAsInt();
 			}
-			LootCommand.seaCreatures += LootCommand.grinches;
+			LootTracker.seaCreatures += LootTracker.grinches;
 			
-			LootCommand.yetis = 0;
+			LootTracker.yetis = 0;
 			if (statsObject.has("kills_yeti")) {
-				LootCommand.yetis = statsObject.get("kills_yeti").getAsInt();
+				LootTracker.yetis = statsObject.get("kills_yeti").getAsInt();
 			}
-			LootCommand.seaCreatures += LootCommand.yetis;
+			LootTracker.seaCreatures += LootTracker.yetis;
 			
-			LootCommand.nurseSharks = 0;
+			LootTracker.nurseSharks = 0;
 			if (statsObject.has("kills_nurse_shark")) {
-				LootCommand.nurseSharks = statsObject.get("kills_nurse_shark").getAsInt();
+				LootTracker.nurseSharks = statsObject.get("kills_nurse_shark").getAsInt();
 			}
-			LootCommand.seaCreatures += LootCommand.nurseSharks;
+			LootTracker.seaCreatures += LootTracker.nurseSharks;
 			
-			LootCommand.blueSharks = 0;
+			LootTracker.blueSharks = 0;
 			if (statsObject.has("kills_nurse_shark")) {
-				LootCommand.blueSharks = statsObject.get("kills_blue_shark").getAsInt();
+				LootTracker.blueSharks = statsObject.get("kills_blue_shark").getAsInt();
 			}
-			LootCommand.seaCreatures += LootCommand.blueSharks;
+			LootTracker.seaCreatures += LootTracker.blueSharks;
 			
-			LootCommand.tigerSharks = 0;
+			LootTracker.tigerSharks = 0;
 			if (statsObject.has("kills_nurse_shark")) {
-				LootCommand.tigerSharks = statsObject.get("kills_tiger_shark").getAsInt();
+				LootTracker.tigerSharks = statsObject.get("kills_tiger_shark").getAsInt();
 			}
-			LootCommand.seaCreatures += LootCommand.tigerSharks;
+			LootTracker.seaCreatures += LootTracker.tigerSharks;
 			
-			LootCommand.greatWhiteSharks = 0;
+			LootTracker.greatWhiteSharks = 0;
 			if (statsObject.has("kills_nurse_shark")) {
-				LootCommand.greatWhiteSharks = statsObject.get("kills_great_white_shark").getAsInt();
+				LootTracker.greatWhiteSharks = statsObject.get("kills_great_white_shark").getAsInt();
 			}
-			LootCommand.seaCreatures += LootCommand.greatWhiteSharks;
+			LootTracker.seaCreatures += LootTracker.greatWhiteSharks;
 			
-			LootCommand.scarecrows = 0;
+			LootTracker.scarecrows = 0;
 			if (statsObject.has("kills_scarecrow")) {
-				LootCommand.scarecrows = statsObject.get("kills_scarecrow").getAsInt();
+				LootTracker.scarecrows = statsObject.get("kills_scarecrow").getAsInt();
 			}
-			LootCommand.seaCreatures += LootCommand.scarecrows;
+			LootTracker.seaCreatures += LootTracker.scarecrows;
 			
-			LootCommand.nightmares = 0;
+			LootTracker.nightmares = 0;
 			if (statsObject.has("kills_nightmare")) {
-				LootCommand.nightmares = statsObject.get("kills_nightmare").getAsInt();
+				LootTracker.nightmares = statsObject.get("kills_nightmare").getAsInt();
 			}
-			LootCommand.seaCreatures += LootCommand.nightmares;
+			LootTracker.seaCreatures += LootTracker.nightmares;
 			
-			LootCommand.werewolfs = 0;
+			LootTracker.werewolfs = 0;
 			if (statsObject.has("kills_werewolf")) {
-				LootCommand.werewolfs = statsObject.get("kills_werewolf").getAsInt();
+				LootTracker.werewolfs = statsObject.get("kills_werewolf").getAsInt();
 			}
-			LootCommand.seaCreatures += LootCommand.werewolfs;
+			LootTracker.seaCreatures += LootTracker.werewolfs;
 			
-			LootCommand.phantomFishers = 0;
+			LootTracker.phantomFishers = 0;
 			if (statsObject.has("kills_phantom_fisherman")) {
-				LootCommand.phantomFishers = statsObject.get("kills_phantom_fisherman").getAsInt();
+				LootTracker.phantomFishers = statsObject.get("kills_phantom_fisherman").getAsInt();
 			}
-			LootCommand.seaCreatures += LootCommand.phantomFishers;
+			LootTracker.seaCreatures += LootTracker.phantomFishers;
 			
-			LootCommand.grimReapers = 0;
+			LootTracker.grimReapers = 0;
 			if (statsObject.has("kills_grim_reaper")) {
-				LootCommand.grimReapers = statsObject.get("kills_grim_reaper").getAsInt();
+				LootTracker.grimReapers = statsObject.get("kills_grim_reaper").getAsInt();
 			}
-			LootCommand.seaCreatures += LootCommand.grimReapers;
+			LootTracker.seaCreatures += LootTracker.grimReapers;
 			
 			System.out.println("Writing to config...");
-			ConfigHandler.writeIntConfig("fishing", "goodCatch", LootCommand.goodCatches);
-			ConfigHandler.writeIntConfig("fishing", "greatCatch", LootCommand.greatCatches);
-			ConfigHandler.writeIntConfig("fishing", "seaCreature", LootCommand.seaCreatures);
-			ConfigHandler.writeIntConfig("fishing", "squid", LootCommand.squids);
-			ConfigHandler.writeIntConfig("fishing", "seaWalker", LootCommand.seaWalkers);
-			ConfigHandler.writeIntConfig("fishing", "nightSquid", LootCommand.nightSquids);
-			ConfigHandler.writeIntConfig("fishing", "seaGuardian", LootCommand.seaGuardians);
-			ConfigHandler.writeIntConfig("fishing", "seaWitch", LootCommand.seaWitches);
-			ConfigHandler.writeIntConfig("fishing", "seaArcher", LootCommand.seaArchers);
-			ConfigHandler.writeIntConfig("fishing", "monsterOfDeep", LootCommand.monsterOfTheDeeps);
-			ConfigHandler.writeIntConfig("fishing", "catfish", LootCommand.catfishes);
-			ConfigHandler.writeIntConfig("fishing", "carrotKing", LootCommand.carrotKings);
-			ConfigHandler.writeIntConfig("fishing", "seaLeech", LootCommand.seaLeeches);
-			ConfigHandler.writeIntConfig("fishing", "guardianDefender", LootCommand.guardianDefenders);
-			ConfigHandler.writeIntConfig("fishing", "deepSeaProtector", LootCommand.deepSeaProtectors);
-			ConfigHandler.writeIntConfig("fishing", "hydra", LootCommand.hydras);
-			ConfigHandler.writeIntConfig("fishing", "seaEmperor", LootCommand.seaEmperors);
-			ConfigHandler.writeIntConfig("fishing", "milestone", LootCommand.fishingMilestone);
-			ConfigHandler.writeIntConfig("fishing", "frozenSteve", LootCommand.frozenSteves);
-			ConfigHandler.writeIntConfig("fishing", "snowman", LootCommand.frostyTheSnowmans);
-			ConfigHandler.writeIntConfig("fishing", "grinch", LootCommand.grinches);
-			ConfigHandler.writeIntConfig("fishing", "yeti", LootCommand.yetis);
-			ConfigHandler.writeIntConfig("fishing", "nurseShark", LootCommand.nurseSharks);
-			ConfigHandler.writeIntConfig("fishing", "blueShark", LootCommand.blueSharks);
-			ConfigHandler.writeIntConfig("fishing", "tigerShark", LootCommand.tigerSharks);
-			ConfigHandler.writeIntConfig("fishing", "greatWhiteShark", LootCommand.greatWhiteSharks);
-			ConfigHandler.writeIntConfig("fishing", "scarecrow", LootCommand.scarecrows);
-			ConfigHandler.writeIntConfig("fishing", "nightmare", LootCommand.nightmares);
-			ConfigHandler.writeIntConfig("fishing", "werewolf", LootCommand.werewolfs);
-			ConfigHandler.writeIntConfig("fishing", "phantomFisher", LootCommand.phantomFishers);
-			ConfigHandler.writeIntConfig("fishing", "grimReaper", LootCommand.grimReapers);
+			ConfigHandler.writeIntConfig("fishing", "goodCatch", LootTracker.goodCatches);
+			ConfigHandler.writeIntConfig("fishing", "greatCatch", LootTracker.greatCatches);
+			ConfigHandler.writeIntConfig("fishing", "seaCreature", LootTracker.seaCreatures);
+			ConfigHandler.writeIntConfig("fishing", "squid", LootTracker.squids);
+			ConfigHandler.writeIntConfig("fishing", "seaWalker", LootTracker.seaWalkers);
+			ConfigHandler.writeIntConfig("fishing", "nightSquid", LootTracker.nightSquids);
+			ConfigHandler.writeIntConfig("fishing", "seaGuardian", LootTracker.seaGuardians);
+			ConfigHandler.writeIntConfig("fishing", "seaWitch", LootTracker.seaWitches);
+			ConfigHandler.writeIntConfig("fishing", "seaArcher", LootTracker.seaArchers);
+			ConfigHandler.writeIntConfig("fishing", "monsterOfDeep", LootTracker.monsterOfTheDeeps);
+			ConfigHandler.writeIntConfig("fishing", "catfish", LootTracker.catfishes);
+			ConfigHandler.writeIntConfig("fishing", "carrotKing", LootTracker.carrotKings);
+			ConfigHandler.writeIntConfig("fishing", "seaLeech", LootTracker.seaLeeches);
+			ConfigHandler.writeIntConfig("fishing", "guardianDefender", LootTracker.guardianDefenders);
+			ConfigHandler.writeIntConfig("fishing", "deepSeaProtector", LootTracker.deepSeaProtectors);
+			ConfigHandler.writeIntConfig("fishing", "hydra", LootTracker.hydras);
+			ConfigHandler.writeIntConfig("fishing", "seaEmperor", LootTracker.seaEmperors);
+			ConfigHandler.writeIntConfig("fishing", "milestone", LootTracker.fishingMilestone);
+			ConfigHandler.writeIntConfig("fishing", "frozenSteve", LootTracker.frozenSteves);
+			ConfigHandler.writeIntConfig("fishing", "snowman", LootTracker.frostyTheSnowmans);
+			ConfigHandler.writeIntConfig("fishing", "grinch", LootTracker.grinches);
+			ConfigHandler.writeIntConfig("fishing", "yeti", LootTracker.yetis);
+			ConfigHandler.writeIntConfig("fishing", "nurseShark", LootTracker.nurseSharks);
+			ConfigHandler.writeIntConfig("fishing", "blueShark", LootTracker.blueSharks);
+			ConfigHandler.writeIntConfig("fishing", "tigerShark", LootTracker.tigerSharks);
+			ConfigHandler.writeIntConfig("fishing", "greatWhiteShark", LootTracker.greatWhiteSharks);
+			ConfigHandler.writeIntConfig("fishing", "scarecrow", LootTracker.scarecrows);
+			ConfigHandler.writeIntConfig("fishing", "nightmare", LootTracker.nightmares);
+			ConfigHandler.writeIntConfig("fishing", "werewolf", LootTracker.werewolfs);
+			ConfigHandler.writeIntConfig("fishing", "phantomFisher", LootTracker.phantomFishers);
+			ConfigHandler.writeIntConfig("fishing", "grimReaper", LootTracker.grimReapers);
 			
 			player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Fishing stats imported."));
 		}).start();

@@ -1,6 +1,7 @@
 package me.Danker.commands;
 
 import me.Danker.DankersSkyblockMod;
+import me.Danker.features.BlockWrongSlayer;
 import me.Danker.handlers.ConfigHandler;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
@@ -12,9 +13,6 @@ import net.minecraft.util.ChatComponentText;
 import java.util.List;
 
 public class BlockSlayerCommand extends CommandBase {
-	
-	public static String onlySlayerName = "";
-	public static String onlySlayerNumber = "";
 
 	@Override
 	public String getCommandName() {
@@ -52,17 +50,17 @@ public class BlockSlayerCommand extends CommandBase {
 		
 		switch (arg1[0].toLowerCase()) {
 			case "zombie":
-				onlySlayerName = "Revenant Horror";
+				BlockWrongSlayer.onlySlayerName = "Revenant Horror";
 				break;
 			case "spider":
-				onlySlayerName = "Tarantula Broodfather";
+				BlockWrongSlayer.onlySlayerName = "Tarantula Broodfather";
 				break;
 			case "wolf":
-				onlySlayerName = "Sven Packmaster";
+				BlockWrongSlayer.onlySlayerName = "Sven Packmaster";
 				break;
 			case "off":
-				onlySlayerName = "";
-				onlySlayerNumber = "";
+				BlockWrongSlayer.onlySlayerName = "";
+				BlockWrongSlayer.onlySlayerNumber = "";
 				ConfigHandler.writeStringConfig("toggles", "BlockSlayer", "");
 				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Slayer blocking turned off."));
 				return;
@@ -75,26 +73,26 @@ public class BlockSlayerCommand extends CommandBase {
 		// Just manually set to roman numeral, I don't wanna put a whole converter in here
 		switch (slayerNumber) {
 			case 1:
-				onlySlayerNumber = "I";
+				BlockWrongSlayer.onlySlayerNumber = "I";
 				break;
 			case 2:
-				onlySlayerNumber = "II";
+				BlockWrongSlayer.onlySlayerNumber = "II";
 				break;
 			case 3:
-				onlySlayerNumber = "III";
+				BlockWrongSlayer.onlySlayerNumber = "III";
 				break;
 			case 4:
-				onlySlayerNumber = "IV";
+				BlockWrongSlayer.onlySlayerNumber = "IV";
 				break;
 			default:
-				onlySlayerName = "";
-				onlySlayerNumber = "";
+				BlockWrongSlayer.onlySlayerName = "";
+				BlockWrongSlayer.onlySlayerNumber = "";
 				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Usage: " + getCommandUsage(arg0)));
 				return;
 		}
 		
-		ConfigHandler.writeStringConfig("toggles", "BlockSlayer", onlySlayerName + " " + onlySlayerNumber);
-		player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Slayer blocking set to " + DankersSkyblockMod.SECONDARY_COLOUR + onlySlayerName + " " + onlySlayerNumber));
+		ConfigHandler.writeStringConfig("toggles", "BlockSlayer", BlockWrongSlayer.onlySlayerName + " " + BlockWrongSlayer.onlySlayerNumber);
+		player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Slayer blocking set to " + DankersSkyblockMod.SECONDARY_COLOUR + BlockWrongSlayer.onlySlayerName + " " + BlockWrongSlayer.onlySlayerNumber));
 	}
 
 }

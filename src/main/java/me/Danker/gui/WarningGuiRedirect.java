@@ -1,10 +1,8 @@
 package me.Danker.gui;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.gui.ScaledResolution;
 
 public class WarningGuiRedirect extends GuiMainMenu {
     public GuiScreen guiToShow;

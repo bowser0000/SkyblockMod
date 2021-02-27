@@ -1,7 +1,7 @@
 package me.Danker.gui;
 
 import me.Danker.DankersSkyblockMod;
-import me.Danker.commands.BlockSlayerCommand;
+import me.Danker.features.BlockWrongSlayer;
 import me.Danker.handlers.ConfigHandler;
 import me.Danker.handlers.TextRenderer;
 import net.minecraft.client.Minecraft;
@@ -37,8 +37,8 @@ public class OnlySlayerGui extends GuiScreen {
 		int height = sr.getScaledHeight();
 		int width = sr.getScaledWidth();
 		
-		onlyName = BlockSlayerCommand.onlySlayerName;
-		switch (BlockSlayerCommand.onlySlayerNumber) {
+		onlyName = BlockWrongSlayer.onlySlayerName;
+		switch (BlockWrongSlayer.onlySlayerNumber) {
 			case "I":
 				onlyNumberInt = 1;
 				break;
@@ -80,10 +80,10 @@ public class OnlySlayerGui extends GuiScreen {
 		Minecraft mc = Minecraft.getMinecraft();
 		
 		String displayText;
-		if (BlockSlayerCommand.onlySlayerName.equals("")) {
+		if (BlockWrongSlayer.onlySlayerName.equals("")) {
 			displayText = "Only Allow Slayer: Off";
 		} else {
-			displayText = "Only Allow Slayer: " + BlockSlayerCommand.onlySlayerName + " " + BlockSlayerCommand.onlySlayerNumber;
+			displayText = "Only Allow Slayer: " + BlockWrongSlayer.onlySlayerName + " " + BlockWrongSlayer.onlySlayerNumber;
 		}
 		int displayWidth = mc.fontRendererObj.getStringWidth(displayText);
 		new TextRenderer(mc, displayText, width / 2 - displayWidth / 2, 10, 1D);
@@ -97,8 +97,8 @@ public class OnlySlayerGui extends GuiScreen {
 			DankersSkyblockMod.guiToOpen = "dankergui1";
 			return;
 		} else if (button == off) {
-			BlockSlayerCommand.onlySlayerName = "";
-			BlockSlayerCommand.onlySlayerNumber = "";
+			BlockWrongSlayer.onlySlayerName = "";
+			BlockWrongSlayer.onlySlayerNumber = "";
 			ConfigHandler.writeStringConfig("toggles", "BlockSlayer", "");
 			return;
 		} else if (button == zombie) {
@@ -132,10 +132,10 @@ public class OnlySlayerGui extends GuiScreen {
 			default:
 				onlyNumber = "IV";
 		}
-		
-		BlockSlayerCommand.onlySlayerName = onlyName;
-		BlockSlayerCommand.onlySlayerNumber = onlyNumber;
-		ConfigHandler.writeStringConfig("toggles", "BlockSlayer", BlockSlayerCommand.onlySlayerName + " " + BlockSlayerCommand.onlySlayerNumber);
+
+		BlockWrongSlayer.onlySlayerName = onlyName;
+		BlockWrongSlayer.onlySlayerNumber = onlyNumber;
+		ConfigHandler.writeStringConfig("toggles", "BlockSlayer", BlockWrongSlayer.onlySlayerName + " " + BlockWrongSlayer.onlySlayerNumber);
 	}
 	
 }
