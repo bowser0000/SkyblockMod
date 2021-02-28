@@ -9,10 +9,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.network.NetworkPlayerInfo;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.WorldRenderer;
+import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.Entity;
@@ -124,7 +121,7 @@ public class Utils {
 		}
 	}
 
-	public static boolean isOnHypixel () {
+	public static boolean isOnHypixel() {
 		Minecraft mc = Minecraft.getMinecraft();
 		if (mc != null && mc.theWorld != null && !mc.isSingleplayer()) {
 			return mc.getCurrentServerData().serverIP.toLowerCase().contains("hypixel");
@@ -276,7 +273,7 @@ public class Utils {
 		return bool ? EnumChatFormatting.GREEN + "On" : EnumChatFormatting.RED + "Off";
 	}
 
-	//Taken from SkyblockAddons
+	// Taken from SkyblockAddons
 	public static List<String> getItemLore(ItemStack itemStack) {
 		final int NBT_INTEGER = 3;
 		final int NBT_STRING = 8;
@@ -302,13 +299,12 @@ public class Utils {
 	}
 
 	public static boolean hasRightClickAbility(ItemStack itemStack) {
-		return Utils.getItemLore(itemStack).stream().anyMatch(line->{
+		return Utils.getItemLore(itemStack).stream().anyMatch(line -> {
 			String stripped = StringUtils.stripControlCodes(line);
 			return stripped.startsWith("Item Ability:") && stripped.endsWith("RIGHT CLICK");
 		});
 	}
-
-
+	
 	public static void draw3DLine(Vec3 pos1, Vec3 pos2, int colourInt, float partialTicks) {
 		Entity render = Minecraft.getMinecraft().getRenderViewEntity();
 		WorldRenderer worldRenderer = Tessellator.getInstance().getWorldRenderer();
@@ -363,11 +359,9 @@ public class Utils {
 		GlStateManager.disableBlend();
 		GlStateManager.popMatrix();
 	}
-	
-	// Yoinked from ForgeHax
+
 	public static void draw3DBox(AxisAlignedBB aabb, int colourInt, float partialTicks) {
-		Entity render = Minecraft.getMinecraft().getRenderViewEntity();
-		WorldRenderer worldRenderer = Tessellator.getInstance().getWorldRenderer();
+    	Entity render = Minecraft.getMinecraft().getRenderViewEntity();
 		Color colour = new Color(colourInt);
 		
 		double realX = render.lastTickPosX + (render.posX - render.lastTickPosX) * partialTicks;
@@ -381,33 +375,9 @@ public class Utils {
 		GlStateManager.disableAlpha();
 		GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
 		GL11.glLineWidth(2);
-		GlStateManager.color(colour.getRed() / 255f, colour.getGreen() / 255f, colour.getBlue() / 255f, colour.getAlpha() / 255f);
-		worldRenderer.begin(GL11.GL_LINE_STRIP, DefaultVertexFormats.POSITION);
-		
-		worldRenderer.pos(aabb.minX, aabb.minY, aabb.minZ).endVertex();
-		worldRenderer.pos(aabb.maxX, aabb.minY, aabb.minZ).endVertex();
-		worldRenderer.pos(aabb.maxX, aabb.minY, aabb.maxZ).endVertex();
-		worldRenderer.pos(aabb.minX, aabb.minY, aabb.maxZ).endVertex();
-		worldRenderer.pos(aabb.minX, aabb.minY, aabb.minZ).endVertex();
-		Tessellator.getInstance().draw();
-		worldRenderer.begin(GL11.GL_LINE_STRIP, DefaultVertexFormats.POSITION);
-		worldRenderer.pos(aabb.minX, aabb.maxY, aabb.minZ).endVertex();
-		worldRenderer.pos(aabb.maxX, aabb.maxY, aabb.minZ).endVertex();
-		worldRenderer.pos(aabb.maxX, aabb.maxY, aabb.maxZ).endVertex();
-		worldRenderer.pos(aabb.minX, aabb.maxY, aabb.maxZ).endVertex();
-		worldRenderer.pos(aabb.minX, aabb.maxY, aabb.minZ).endVertex();
-		Tessellator.getInstance().draw();
-		worldRenderer.begin(GL11.GL_LINE_STRIP, DefaultVertexFormats.POSITION);
-		worldRenderer.pos(aabb.minX, aabb.minY, aabb.minZ).endVertex();
-		worldRenderer.pos(aabb.minX, aabb.maxY, aabb.minZ).endVertex();
-		worldRenderer.pos(aabb.maxX, aabb.minY, aabb.minZ).endVertex();
-		worldRenderer.pos(aabb.maxX, aabb.maxY, aabb.minZ).endVertex();
-		worldRenderer.pos(aabb.maxX, aabb.minY, aabb.maxZ).endVertex();
-		worldRenderer.pos(aabb.maxX, aabb.maxY, aabb.maxZ).endVertex();
-		worldRenderer.pos(aabb.minX, aabb.minY, aabb.maxZ).endVertex();
-		worldRenderer.pos(aabb.minX, aabb.maxY, aabb.maxZ).endVertex();
-		Tessellator.getInstance().draw();
-		
+
+		RenderGlobal.drawOutlinedBoundingBox(aabb, colour.getRed(), colour.getGreen(), colour.getBlue(), colour.getAlpha());
+
 		GlStateManager.translate(realX, realY, realZ);
 		GlStateManager.disableBlend();
 		GlStateManager.enableAlpha();

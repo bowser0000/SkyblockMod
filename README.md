@@ -90,6 +90,5 @@ Credit to all the following open source software used in this mod.
 Software | License
 ------------ | -------------
 [SkyblockAddons](https://github.com/BiscuitDevelopment/SkyblockAddons/) | [MIT License](https://github.com/BiscuitDevelopment/SkyblockAddons/blob/master/LICENSE)
-[Zealot Counter](https://github.com/symt/zealot-counter/) | No License
+[Zealot Counter](https://github.com/symt/zealot-counter/) | [Apache License](https://github.com/symt/zealot-counter/blob/master/LICENSE.md)
 [NotEnoughUpdates](https://github.com/Moulberry/NotEnoughUpdates/) | [Creative Commons Public License](https://github.com/Moulberry/NotEnoughUpdates/blob/master/LICENSE)
-[ForgeHax](https://github.com/fr1kin/ForgeHax) | [MIT License](https://github.com/fr1kin/ForgeHax/blob/1.16/LICENSE)
