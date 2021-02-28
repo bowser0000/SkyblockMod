@@ -2,6 +2,7 @@ package me.Danker.commands;
 
 import me.Danker.DankersSkyblockMod;
 import me.Danker.features.SkillTracker;
+import me.Danker.features.loot.LootDisplay;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.ResourcePackRepository;
 import net.minecraft.command.CommandBase;
@@ -92,8 +93,8 @@ public class DankerGuiCommand extends CommandBase {
 			debug.append("[skilltracker][").append(MoveCommand.skillTrackerXY[0]).append(", ").append(MoveCommand.skillTrackerXY[1]).append("]\n");
 			debug.append("[wateranswer][").append(MoveCommand.waterAnswerXY[0]).append(", ").append(MoveCommand.waterAnswerXY[1]).append("]\n");
 			debug.append("# Other Settings\n");
-			debug.append("[Current Display][").append(DisplayCommand.display).append("]\n");
-			debug.append("[Auto Display][").append(DisplayCommand.auto).append("]\n");
+			debug.append("[Current Display][").append(LootDisplay.display).append("]\n");
+			debug.append("[Auto Display][").append(LootDisplay.auto).append("]\n");
 			debug.append("[Skill Tracker Visible][").append(SkillTracker.showSkillTracker).append("]\n");
 			debug.append("# Resource Packs\n");
 			if (Minecraft.getMinecraft().getResourcePackRepository().getRepositoryEntries().size() == 0) {

@@ -17,9 +17,12 @@ import java.util.Locale;
 
 public class LootDisplay {
 
+    public static String display;
+    public static boolean auto;
+
     @SubscribeEvent
     public void renderPlayerInfo(RenderOverlay event) {
-        if (!DisplayCommand.display.equals("off")) {
+        if (!display.equals("off")) {
             Minecraft mc = Minecraft.getMinecraft();
             String dropsText = "";
             String countText = "";
@@ -31,7 +34,7 @@ public class LootDisplay {
             double timeNow = System.currentTimeMillis() / 1000;
             NumberFormat nf = NumberFormat.getIntegerInstance(Locale.US);
 
-            switch (DisplayCommand.display) {
+            switch (display) {
                 case "wolf":
                     if (LootTracker.wolfTime == -1) {
                         timeBetween = "Never";
@@ -892,7 +895,7 @@ public class LootDisplay {
                     break;
                 default:
                     System.out.println("Display was an unknown value, turning off.");
-                    DisplayCommand.display = "off";
+                    display = "off";
                     ConfigHandler.writeStringConfig("misc", "display", "off");
             }
             new TextRenderer(mc, dropsText, MoveCommand.displayXY[0], MoveCommand.displayXY[1], ScaleCommand.displayScale);

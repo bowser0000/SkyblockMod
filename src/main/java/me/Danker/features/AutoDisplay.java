@@ -2,6 +2,7 @@ package me.Danker.features;
 
 import me.Danker.DankersSkyblockMod;
 import me.Danker.commands.DisplayCommand;
+import me.Danker.features.loot.LootDisplay;
 import me.Danker.handlers.ConfigHandler;
 import me.Danker.handlers.ScoreboardHandler;
 import net.minecraft.client.Minecraft;
@@ -23,35 +24,35 @@ public class AutoDisplay {
         World world = mc.theWorld;
         EntityPlayerSP player = mc.thePlayer;
         if (DankersSkyblockMod.tickAmount % 20 == 0) {
-            if (DisplayCommand.auto && world != null && player != null) {
+            if (LootDisplay.auto && world != null && player != null) {
                 List<String> scoreboard = ScoreboardHandler.getSidebarLines();
                 boolean found = false;
                 for (String s : scoreboard) {
                     String sCleaned = ScoreboardHandler.cleanSB(s);
                     if (sCleaned.contains("Sven Packmaster")) {
-                        DisplayCommand.display = "wolf";
+                        LootDisplay.display = "wolf";
                         found = true;
                     } else if (sCleaned.contains("Tarantula Broodfather")) {
-                        DisplayCommand.display = "spider";
+                        LootDisplay.display = "spider";
                         found = true;
                     } else if (sCleaned.contains("Revenant Horror")) {
-                        DisplayCommand.display = "zombie";
+                        LootDisplay.display = "zombie";
                         found = true;
                     } else if (sCleaned.contains("The Catacombs (")) {
                         if (sCleaned.contains("F1")) {
-                            DisplayCommand.display = "catacombs_floor_one";
+                            LootDisplay.display = "catacombs_floor_one";
                         } else if (sCleaned.contains("F2")) {
-                            DisplayCommand.display = "catacombs_floor_two";
+                            LootDisplay.display = "catacombs_floor_two";
                         } else if (sCleaned.contains("F3")) {
-                            DisplayCommand.display = "catacombs_floor_three";
+                            LootDisplay.display = "catacombs_floor_three";
                         } else if (sCleaned.contains("F4")) {
-                            DisplayCommand.display = "catacombs_floor_four";
+                            LootDisplay.display = "catacombs_floor_four";
                         } else if (sCleaned.contains("F5")) {
-                            DisplayCommand.display = "catacombs_floor_five";
+                            LootDisplay.display = "catacombs_floor_five";
                         } else if (sCleaned.contains("F6")) {
-                            DisplayCommand.display = "catacombs_floor_six";
+                            LootDisplay.display = "catacombs_floor_six";
                         } else if (sCleaned.contains("F7")) {
-                            DisplayCommand.display = "catacombs_floor_seven";
+                            LootDisplay.display = "catacombs_floor_seven";
                         }
                         found = true;
                     }
@@ -60,12 +61,12 @@ public class AutoDisplay {
                     ItemStack hotbarItem = player.inventory.getStackInSlot(i);
                     if (hotbarItem == null) continue;
                     if (hotbarItem.getDisplayName().contains("Ancestral Spade")) {
-                        DisplayCommand.display = "mythological";
+                        LootDisplay.display = "mythological";
                         found = true;
                     }
                 }
-                if (!found) DisplayCommand.display = "off";
-                ConfigHandler.writeStringConfig("misc", "display", DisplayCommand.display);
+                if (!found) LootDisplay.display = "off";
+                ConfigHandler.writeStringConfig("misc", "display", LootDisplay.display);
             }
         }
     }
