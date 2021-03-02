@@ -177,6 +177,7 @@ public class ConfigHandler {
 		if (!hasKey("toggles", "SpiritBearAlerts")) writeBooleanConfig("toggles", "SpiritBearAlerts", true);
 		if (!hasKey("toggles", "AOTD")) writeBooleanConfig("toggles", "AOTD", false);
 		if (!hasKey("toggles", "LividDagger")) writeBooleanConfig("toggles", "LividDagger", false);
+		if (!hasKey("toggles", "ShadowFury")) writeBooleanConfig("toggles", "ShadowFury", false);
 		if (!hasKey("toggles", "MidasStaffMessages")) writeBooleanConfig("toggles", "MidasStaffMessages", true);
 		if (!hasKey("toggles", "ImplosionMessages")) writeBooleanConfig("toggles", "ImplosionMessages", true);
 		if (!hasKey("toggles", "HealMessages")) writeBooleanConfig("toggles", "HealMessages", true);
@@ -469,6 +470,7 @@ public class ConfigHandler {
 		ToggleCommand.spiritBearAlerts = getBoolean("toggles", "SpiritBearAlerts");
 		ToggleCommand.aotdToggled = getBoolean("toggles", "AOTD");
 		ToggleCommand.lividDaggerToggled = getBoolean("toggles", "LividDagger");
+		ToggleCommand.shadowFuryToggled = getBoolean("toggles", "ShadowFury");
 		ToggleCommand.petColoursToggled = getBoolean("toggles", "PetColors");
 		ToggleCommand.golemAlertToggled = getBoolean("toggles", "GolemAlerts");
 		ToggleCommand.expertiseLoreToggled = getBoolean("toggles", "ExpertiseLore");

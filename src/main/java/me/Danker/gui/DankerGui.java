@@ -48,6 +48,7 @@ public class DankerGui extends GuiScreen {
 	private GuiButton cakeTimer;
 	// Chat Messages
 	private GuiButton lividDagger;
+	private GuiButton shadowFury;
 	private GuiButton sceptreMessages;
 	private GuiButton midasStaffMessages;
 	private GuiButton implosionMessages;
@@ -108,6 +109,7 @@ public class DankerGui extends GuiScreen {
 		slayerCount = new GuiButton(0, width / 2 - 100, (int) (height * 0.5), "Count Total 20% Drops: " + Utils.getColouredBoolean(ToggleCommand.slayerCountTotal));
 		aotd = new GuiButton(0, width / 2 - 100, (int) (height * 0.6), "Disable AOTD Ability: " + Utils.getColouredBoolean(ToggleCommand.aotdToggled));
 		lividDagger = new GuiButton(0, width / 2 - 100, (int) (height * 0.7), "Disable Livid Dagger Ability: " + Utils.getColouredBoolean(ToggleCommand.lividDaggerToggled));
+		shadowFury = new GuiButton(0, width / 2 - 100, (int) (height * 0.7), "Disable Shadow Fury Ability: " + Utils.getColouredBoolean(ToggleCommand.shadowFuryToggled));
 		// Page 3
 		spiritBearAlert = new GuiButton(0, width / 2 - 100, (int) (height * 0.1), "Spirit Bear Spawn Alerts: " + Utils.getColouredBoolean(ToggleCommand.spiritBearAlerts));
 		sceptreMessages = new GuiButton(0, width / 2 - 100, (int) (height * 0.2), "Spirit Sceptre Messages: " + Utils.getColouredBoolean(ToggleCommand.sceptreMessages));
@@ -156,6 +158,7 @@ public class DankerGui extends GuiScreen {
 				this.buttonList.add(slayerCount);
 				this.buttonList.add(aotd);
 				this.buttonList.add(lividDagger);
+				this.buttonList.add(shadowFury);
 				this.buttonList.add(nextPage);
 				this.buttonList.add(backPage);
 				break;
@@ -275,6 +278,11 @@ public class DankerGui extends GuiScreen {
 			ToggleCommand.lividDaggerToggled = !ToggleCommand.lividDaggerToggled;
 			ConfigHandler.writeBooleanConfig("toggles", "LividDagger", ToggleCommand.lividDaggerToggled);
 			lividDagger.displayString = "Disable Livid Dagger Ability: " + Utils.getColouredBoolean(ToggleCommand.lividDaggerToggled);
+
+		} else if (button == shadowFury){
+			ToggleCommand.shadowFuryToggled = !ToggleCommand.shadowFuryToggled;
+			ConfigHandler.writeBooleanConfig("toggles", "ShadowFury", ToggleCommand.shadowFuryToggled);
+			shadowFury.displayString = "Disable Shadow Fury Ability: " + Utils.getColouredBoolean(ToggleCommand.shadowFuryToggled);
 		} else if (button == sceptreMessages) {
 			ToggleCommand.sceptreMessages = !ToggleCommand.sceptreMessages;
 			ConfigHandler.writeBooleanConfig("toggles", "SceptreMessages", ToggleCommand.sceptreMessages);

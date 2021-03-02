@@ -3225,6 +3225,9 @@ public class DankersSkyblockMod {
             if (ToggleCommand.lividDaggerToggled && item.getDisplayName().contains("Livid Dagger")) {
                 event.setCanceled(true);
             }
+            if (ToggleCommand.shadowFuryToggled && item.getDisplayName().contains("Shadow Fury")) {
+                event.setCanceled(true);
+            }
             if (ToggleCommand.notifySlayerSlainToggled) {
                 if (ScoreboardHandler.getSidebarLines().stream().anyMatch(x -> ScoreboardHandler.cleanSB(x).contains("Boss slain!"))) {
                     if (ScoreboardHandler.getSidebarLines().stream().anyMatch(x -> {

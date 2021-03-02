@@ -23,6 +23,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 	public static boolean spiritBearAlerts;
 	public static boolean aotdToggled;
 	public static boolean lividDaggerToggled;
+	public static boolean shadowFuryToggled;
 	public static boolean petColoursToggled;
 	public static boolean dungeonTimerToggled;
 	public static boolean golemAlertToggled;
@@ -76,7 +77,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 	public String getCommandUsage(ICommandSender arg0) {
 
 		return "/" + getCommandName() + " <gparty/coords/golden/slayercount/rngesusalerts/splitfishing/chatmaddox/spiritbearalert/" + 
-										  "aotd/lividdagger/flowerweapons/sceptremessages/petcolors/dungeontimer/golemalerts/expertiselore/skill50display/" +
+										  "aotd/lividdagger/shadowfury/flowerweapons/sceptremessages/petcolors/dungeontimer/golemalerts/expertiselore/skill50display/" +
 										  "outlinetext/midasstaffmessages/implosionmessages/healmessages/cooldownmessages/manamessages/caketimer/lowhealthnotify/" +
 										  "lividsolver/stopsalvagestarred/notifyslayerslain/necronnotifications/bonzotimer/threemanpuzzle/oruopuzzle/blazepuzzle/creeperpuzzle/waterpuzzle/tictactoepuzzle/" +
 										  "watchermessage/startswithterminal/selectallterminal/clickinorderterminal/blockwrongterminalclicks/" +
@@ -92,7 +93,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 	public List<String> addTabCompletionOptions(ICommandSender sender, String[] args, BlockPos pos) {
 		if (args.length == 1) {
 			return getListOfStringsMatchingLastWord(args, "gparty", "coords", "golden", "slayercount", "rngesusalerts",
-														  "splitfishing", "chatmaddox", "spiritbearalerts", "aotd", "lividdagger",
+														  "splitfishing", "chatmaddox", "spiritbearalerts", "aotd", "lividdagger", "shadowfury",
 														  "flowerweapons", "sceptremessages", "petcolors", "dungeontimer", "golemalerts",
 														  "expertiselore", "skill50display", "outlinetext", "midasstaffmessages",
 														  "implosionmessages", "healmessages", "cooldownmessages", "manamessages", "caketimer", "lowhealthnotify", "autoskilltracker",
@@ -164,6 +165,11 @@ public class ToggleCommand extends CommandBase implements ICommand {
 				lividDaggerToggled = !lividDaggerToggled;
 				ConfigHandler.writeBooleanConfig("toggles", "LividDagger", lividDaggerToggled);
 				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Block Livid Dagger ability been set to " + DankersSkyblockMod.SECONDARY_COLOUR + lividDaggerToggled + DankersSkyblockMod.MAIN_COLOUR + "."));
+				break;
+			case "shadowfury":
+				shadowFuryToggled = !shadowFuryToggled;
+				ConfigHandler.writeBooleanConfig("toggles", "ShadowFury", shadowFuryToggled);
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Block Shadow Fury ability been set to " + DankersSkyblockMod.SECONDARY_COLOUR + shadowFuryToggled + DankersSkyblockMod.MAIN_COLOUR + "."));
 				break;
 			case "flowerweapons":
 				flowerWeaponsToggled = !flowerWeaponsToggled;
