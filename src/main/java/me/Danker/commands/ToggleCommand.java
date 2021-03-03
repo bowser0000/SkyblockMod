@@ -24,6 +24,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 	public static boolean aotdToggled;
 	public static boolean lividDaggerToggled;
 	public static boolean shadowFuryToggled;
+	public static boolean specialHoeToggled;
 	public static boolean petColoursToggled;
 	public static boolean dungeonTimerToggled;
 	public static boolean golemAlertToggled;
@@ -77,7 +78,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 	public String getCommandUsage(ICommandSender arg0) {
 
 		return "/" + getCommandName() + " <gparty/coords/golden/slayercount/rngesusalerts/splitfishing/chatmaddox/spiritbearalert/" + 
-										  "aotd/lividdagger/shadowfury/flowerweapons/sceptremessages/petcolors/dungeontimer/golemalerts/expertiselore/skill50display/" +
+										  "aotd/lividdagger/shadowfury/specialhoe/flowerweapons/sceptremessages/petcolors/dungeontimer/golemalerts/expertiselore/skill50display/" +
 										  "outlinetext/midasstaffmessages/implosionmessages/healmessages/cooldownmessages/manamessages/caketimer/lowhealthnotify/" +
 										  "lividsolver/stopsalvagestarred/notifyslayerslain/necronnotifications/bonzotimer/threemanpuzzle/oruopuzzle/blazepuzzle/creeperpuzzle/waterpuzzle/tictactoepuzzle/" +
 										  "watchermessage/startswithterminal/selectallterminal/clickinorderterminal/blockwrongterminalclicks/" +
@@ -93,7 +94,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 	public List<String> addTabCompletionOptions(ICommandSender sender, String[] args, BlockPos pos) {
 		if (args.length == 1) {
 			return getListOfStringsMatchingLastWord(args, "gparty", "coords", "golden", "slayercount", "rngesusalerts",
-														  "splitfishing", "chatmaddox", "spiritbearalerts", "aotd", "lividdagger", "shadowfury",
+														  "splitfishing", "chatmaddox", "spiritbearalerts", "aotd", "lividdagger", "shadowfury", "specialhoe",
 														  "flowerweapons", "sceptremessages", "petcolors", "dungeontimer", "golemalerts",
 														  "expertiselore", "skill50display", "outlinetext", "midasstaffmessages",
 														  "implosionmessages", "healmessages", "cooldownmessages", "manamessages", "caketimer", "lowhealthnotify", "autoskilltracker",
@@ -170,6 +171,11 @@ public class ToggleCommand extends CommandBase implements ICommand {
 				shadowFuryToggled = !shadowFuryToggled;
 				ConfigHandler.writeBooleanConfig("toggles", "ShadowFury", shadowFuryToggled);
 				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Block Shadow Fury ability been set to " + DankersSkyblockMod.SECONDARY_COLOUR + shadowFuryToggled + DankersSkyblockMod.MAIN_COLOUR + "."));
+				break;
+			case "specialhoe":
+				specialHoeToggled = !specialHoeToggled;
+				ConfigHandler.writeBooleanConfig("toggles", "SpecialHoe", specialHoeToggled);
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Block Special Hoe recipe been set to " + DankersSkyblockMod.SECONDARY_COLOUR + specialHoeToggled + DankersSkyblockMod.MAIN_COLOUR + "."));
 				break;
 			case "flowerweapons":
 				flowerWeaponsToggled = !flowerWeaponsToggled;
@@ -373,6 +379,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 															DankersSkyblockMod.TYPE_COLOUR + " Spirit Bear alerts: " + DankersSkyblockMod.VALUE_COLOUR + spiritBearAlerts + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Block AOTD ability: " + DankersSkyblockMod.VALUE_COLOUR + aotdToggled + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Block Livid Dagger ability: " + DankersSkyblockMod.VALUE_COLOUR + lividDaggerToggled + "\n" +
+															DankersSkyblockMod.TYPE_COLOUR + " Block Special Hoe right click: " + DankersSkyblockMod.VALUE_COLOUR + specialHoeToggled + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Prevent Placing FoT/Spirit Sceptre: " + DankersSkyblockMod.VALUE_COLOUR + flowerWeaponsToggled + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Spirit Sceptre messages: " + DankersSkyblockMod.VALUE_COLOUR + sceptreMessages + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Midas Staff messages: " + DankersSkyblockMod.VALUE_COLOUR + midasStaffMessages + "\n" +

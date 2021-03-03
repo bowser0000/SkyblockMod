@@ -6,6 +6,7 @@ import me.Danker.handlers.ConfigHandler;
 import me.Danker.handlers.TextRenderer;
 import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;
@@ -49,6 +50,7 @@ public class DankerGui extends GuiScreen {
 	// Chat Messages
 	private GuiButton lividDagger;
 	private GuiButton shadowFury;
+	private GuiButton specialHoe;
 	private GuiButton sceptreMessages;
 	private GuiButton midasStaffMessages;
 	private GuiButton implosionMessages;
@@ -138,6 +140,8 @@ public class DankerGui extends GuiScreen {
 		necronNotifications = new GuiButton(0, width / 2 - 100, (int) (height * 0.1), "Necron Phase Notifications: " + Utils.getColouredBoolean(ToggleCommand.necronNotificationsToggled));
 		bonzoTimer = new GuiButton(0, width / 2 - 100, (int) (height * 0.2), "Bonzo's Mask Timer: " + Utils.getColouredBoolean(ToggleCommand.bonzoTimerToggled));
 		autoSkillTracker = new GuiButton(0, width / 2 - 100, (int) (height * 0.3), "Auto Start/Stop Skill Tracker: " + Utils.getColouredBoolean(ToggleCommand.autoSkillTrackerToggled));
+		specialHoe = new GuiButton(0, width / 2 - 100, (int) (height * 0.4), "Special Hoe right click: " + Utils.getColouredBoolean(ToggleCommand.specialHoeToggled));
+
 
 		switch (page) {
 			case 1:
@@ -199,6 +203,7 @@ public class DankerGui extends GuiScreen {
         		this.buttonList.add(necronNotifications);
 				this.buttonList.add(bonzoTimer);
 				this.buttonList.add(autoSkillTracker);
+				this.buttonList.add(specialHoe);
 				this.buttonList.add(backPage);
 				break;
 		}
@@ -278,11 +283,14 @@ public class DankerGui extends GuiScreen {
 			ToggleCommand.lividDaggerToggled = !ToggleCommand.lividDaggerToggled;
 			ConfigHandler.writeBooleanConfig("toggles", "LividDagger", ToggleCommand.lividDaggerToggled);
 			lividDagger.displayString = "Disable Livid Dagger Ability: " + Utils.getColouredBoolean(ToggleCommand.lividDaggerToggled);
-
-		} else if (button == shadowFury){
+		} else if (button == shadowFury) {
 			ToggleCommand.shadowFuryToggled = !ToggleCommand.shadowFuryToggled;
 			ConfigHandler.writeBooleanConfig("toggles", "ShadowFury", ToggleCommand.shadowFuryToggled);
 			shadowFury.displayString = "Disable Shadow Fury Ability: " + Utils.getColouredBoolean(ToggleCommand.shadowFuryToggled);
+		} else if (button == specialHoe) {
+			ToggleCommand.specialHoeToggled = !ToggleCommand.specialHoeToggled;
+			ConfigHandler.writeBooleanConfig("toggles", "SpecialHoe", ToggleCommand.specialHoeToggled);
+			specialHoe.displayString = "Special Hoe right click: " + Utils.getColouredBoolean(ToggleCommand.specialHoeToggled);
 		} else if (button == sceptreMessages) {
 			ToggleCommand.sceptreMessages = !ToggleCommand.sceptreMessages;
 			ConfigHandler.writeBooleanConfig("toggles", "SceptreMessages", ToggleCommand.sceptreMessages);
