@@ -2689,6 +2689,10 @@ public class DankersSkyblockMod {
                 event.toolTip.clear();
             }
 
+            if (ToggleCommand.melodyTooltips && chestName.startsWith("Harp")) {
+                event.toolTip.clear();
+            }
+
         }
     }
 

@@ -47,6 +47,7 @@ public class DankerGui extends GuiScreen {
 	private GuiButton skill50Display;
 	private GuiButton outlineText;
 	private GuiButton cakeTimer;
+	private GuiButton melodyTooltips;
 	// Chat Messages
 	private GuiButton lividDagger;
 	private GuiButton shadowFury;
@@ -141,7 +142,7 @@ public class DankerGui extends GuiScreen {
 		bonzoTimer = new GuiButton(0, width / 2 - 100, (int) (height * 0.2), "Bonzo's Mask Timer: " + Utils.getColouredBoolean(ToggleCommand.bonzoTimerToggled));
 		autoSkillTracker = new GuiButton(0, width / 2 - 100, (int) (height * 0.3), "Auto Start/Stop Skill Tracker: " + Utils.getColouredBoolean(ToggleCommand.autoSkillTrackerToggled));
 		specialHoe = new GuiButton(0, width / 2 - 100, (int) (height * 0.4), "Special Hoe right click: " + Utils.getColouredBoolean(ToggleCommand.specialHoeToggled));
-
+		melodyTooltips = new GuiButton(0, width / 2 - 100, (int) (height * 0.5), "Hide Tooltips in Melody's Harp: " + Utils.getColouredBoolean(ToggleCommand.melodyTooltips));
 
 		switch (page) {
 			case 1:
@@ -204,6 +205,7 @@ public class DankerGui extends GuiScreen {
 				this.buttonList.add(bonzoTimer);
 				this.buttonList.add(autoSkillTracker);
 				this.buttonList.add(specialHoe);
+				this.buttonList.add(melodyTooltips);
 				this.buttonList.add(backPage);
 				break;
 		}
@@ -291,6 +293,10 @@ public class DankerGui extends GuiScreen {
 			ToggleCommand.specialHoeToggled = !ToggleCommand.specialHoeToggled;
 			ConfigHandler.writeBooleanConfig("toggles", "SpecialHoe", ToggleCommand.specialHoeToggled);
 			specialHoe.displayString = "Special Hoe right click: " + Utils.getColouredBoolean(ToggleCommand.specialHoeToggled);
+		} else if (button == melodyTooltips) {
+			ToggleCommand.melodyTooltips = !ToggleCommand.melodyTooltips;
+			ConfigHandler.writeBooleanConfig("toggles", "MelodyTooltips", ToggleCommand.melodyTooltips);
+			melodyTooltips.displayString = "Hide Tooltips in Melody's Harp" + Utils.getColouredBoolean(ToggleCommand.melodyTooltips);
 		} else if (button == sceptreMessages) {
 			ToggleCommand.sceptreMessages = !ToggleCommand.sceptreMessages;
 			ConfigHandler.writeBooleanConfig("toggles", "SceptreMessages", ToggleCommand.sceptreMessages);
