@@ -9,6 +9,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;
+import scala.tools.reflect.ToolBoxFactory;
 
 import java.awt.*;
 import java.io.IOException;
@@ -46,6 +47,9 @@ public class DankerGui extends GuiScreen {
 	private GuiButton skill50Display;
 	private GuiButton outlineText;
 	private GuiButton cakeTimer;
+	private GuiButton shadowFury;
+	private GuiButton specialHoe;
+	private GuiButton melodyTooltips;
 	// Chat Messages
 	private GuiButton lividDagger;
 	private GuiButton sceptreMessages;
@@ -136,6 +140,9 @@ public class DankerGui extends GuiScreen {
 		necronNotifications = new GuiButton(0, width / 2 - 100, (int) (height * 0.1), "Necron Phase Notifications: " + Utils.getColouredBoolean(ToggleCommand.necronNotificationsToggled));
 		bonzoTimer = new GuiButton(0, width / 2 - 100, (int) (height * 0.2), "Bonzo's Mask Timer: " + Utils.getColouredBoolean(ToggleCommand.bonzoTimerToggled));
 		autoSkillTracker = new GuiButton(0, width / 2 - 100, (int) (height * 0.3), "Auto Start/Stop Skill Tracker: " + Utils.getColouredBoolean(ToggleCommand.autoSkillTrackerToggled));
+		shadowFury = new GuiButton(0, width / 2 - 100, (int) (height * 0.4), "Block Shadow Fury ability: " + Utils.getColouredBoolean(ToggleCommand.shadowFuryToggled));
+		specialHoe = new GuiButton(0, width / 2 - 100, (int) (height * 0.5), "Block Special Hoe right click: " + Utils.getColouredBoolean(ToggleCommand.specialHoeRightClick));
+		melodyTooltips = new GuiButton(0, width / 2 - 100, (int) (height * 0.6), "Hide tooltips in Melody's Harp: " + Utils.getColouredBoolean(ToggleCommand.melodyTooltips));
 
 		switch (page) {
 			case 1:
@@ -196,6 +203,9 @@ public class DankerGui extends GuiScreen {
         		this.buttonList.add(necronNotifications);
 				this.buttonList.add(bonzoTimer);
 				this.buttonList.add(autoSkillTracker);
+				this.buttonList.add(shadowFury);
+				this.buttonList.add(specialHoe);
+				this.buttonList.add(melodyTooltips);
 				this.buttonList.add(backPage);
 				break;
 		}
@@ -379,6 +389,18 @@ public class DankerGui extends GuiScreen {
 			ToggleCommand.autoSkillTrackerToggled = !ToggleCommand.autoSkillTrackerToggled;
 			ConfigHandler.writeBooleanConfig("toggles", "AutoSkillTracker", ToggleCommand.autoSkillTrackerToggled);
 			autoSkillTracker.displayString = "Auto Start/Stop Skill Tracker: " + Utils.getColouredBoolean(ToggleCommand.autoSkillTrackerToggled);
+		} else if (button == shadowFury) {
+			ToggleCommand.shadowFuryToggled = !ToggleCommand.shadowFuryToggled;
+			ConfigHandler.writeBooleanConfig("toggles", "ShadowFury", ToggleCommand.shadowFuryToggled);
+			shadowFury.displayString = "Block Shadow Fury ability: " + Utils.getColouredBoolean(ToggleCommand.shadowFuryToggled);
+		} else if (button == specialHoe) {
+			ToggleCommand.specialHoeRightClick = !ToggleCommand.specialHoeRightClick;
+			ConfigHandler.writeBooleanConfig("toggles", "SpecialHoe", ToggleCommand.specialHoeRightClick);
+			specialHoe.displayString = "Block Special Hoe right click: " + Utils.getColouredBoolean(ToggleCommand.specialHoeRightClick);
+		} else if (button == melodyTooltips) {
+			ToggleCommand.melodyTooltips = !ToggleCommand.melodyTooltips;
+			ConfigHandler.writeBooleanConfig("toggles", "MelodyTooltips", ToggleCommand.melodyTooltips);
+			melodyTooltips.displayString = "Hide tooltips in Melody's Harp: " + Utils.getColouredBoolean(ToggleCommand.melodyTooltips);
 		}
 	}
 	
