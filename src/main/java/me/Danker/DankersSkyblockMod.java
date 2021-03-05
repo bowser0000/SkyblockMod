@@ -65,8 +65,8 @@ public class DankersSkyblockMod {
     public static String titleText = "";
     public static int tickAmount = 1;
     public static KeyBinding[] keyBindings = new KeyBinding[3];
-    static boolean usingLabymod = false;
-    static boolean usingOAM = false;
+    public static boolean usingLabymod = false;
+    public static boolean usingOAM = false;
     static boolean OAMWarning = false;
     public static String guiToOpen = null;
     public static boolean firstLaunch = false;
@@ -92,6 +92,7 @@ public class DankersSkyblockMod {
         MinecraftForge.EVENT_BUS.register(new BlockWrongSlayer());
         MinecraftForge.EVENT_BUS.register(new BlockWrongTerminalClicks());
         MinecraftForge.EVENT_BUS.register(new BonzoMaskTimer());
+        MinecraftForge.EVENT_BUS.register(new BoulderSolver());
         MinecraftForge.EVENT_BUS.register(new CakeTimer());
         MinecraftForge.EVENT_BUS.register(new ChronomatronSolver());
         MinecraftForge.EVENT_BUS.register(new ClickInOrderSolver());
@@ -130,6 +131,7 @@ public class DankersSkyblockMod {
 
         ConfigHandler.reloadConfig();
         GoldenEnchants.init();
+        TriviaSolver.init();
 
         keyBindings[0] = new KeyBinding("Open Maddox Menu", Keyboard.KEY_M, "Danker's Skyblock Mod");
         keyBindings[1] = new KeyBinding("Regular Ability", Keyboard.KEY_NUMPAD4, "Danker's Skyblock Mod");

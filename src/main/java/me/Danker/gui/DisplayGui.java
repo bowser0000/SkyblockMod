@@ -1,7 +1,6 @@
 package me.Danker.gui;
 
 import me.Danker.DankersSkyblockMod;
-import me.Danker.commands.DisplayCommand;
 import me.Danker.features.loot.LootDisplay;
 import me.Danker.handlers.ConfigHandler;
 import me.Danker.handlers.TextRenderer;

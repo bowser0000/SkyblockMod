@@ -68,7 +68,7 @@ public class ThreeManSolver {
     @SubscribeEvent
     public void onWorldRender(RenderWorldLastEvent event) {
         if (ToggleCommand.threeManToggled && riddleChest != null) {
-            Utils.drawFilled3DBox(new AxisAlignedBB(riddleChest.getX() - 0.05, riddleChest.getY(), riddleChest.getZ() - 0.05, riddleChest.getX() + 1.05, riddleChest.getY() + 1, riddleChest.getZ() + 1.05), 0x197F19, true, event.partialTicks);
+            Utils.drawFilled3DBox(new AxisAlignedBB(riddleChest.getX() - 0.05, riddleChest.getY(), riddleChest.getZ() - 0.05, riddleChest.getX() + 1.05, riddleChest.getY() + 1, riddleChest.getZ() + 1.05), 0x197F19, true, true, event.partialTicks);
         }
     }
 

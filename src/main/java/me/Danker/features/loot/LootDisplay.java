@@ -1,6 +1,5 @@
 package me.Danker.features.loot;
 
-import me.Danker.commands.DisplayCommand;
 import me.Danker.commands.MoveCommand;
 import me.Danker.commands.ScaleCommand;
 import me.Danker.commands.ToggleCommand;

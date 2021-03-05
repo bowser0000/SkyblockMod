@@ -1,7 +1,6 @@
 package me.Danker.handlers;
 
 import me.Danker.DankersSkyblockMod;
-import me.Danker.commands.DisplayCommand;
 import me.Danker.commands.MoveCommand;
 import me.Danker.commands.ScaleCommand;
 import me.Danker.commands.ToggleCommand;
@@ -252,6 +251,7 @@ public class ConfigHandler {
 		ToggleCommand.creeperToggled = initBoolean("toggles", "CreeperPuzzle", false);
 		ToggleCommand.waterToggled = initBoolean("toggles", "WaterPuzzle", false);
 		ToggleCommand.ticTacToeToggled = initBoolean("toggles", "TicTacToePuzzle", false);
+		ToggleCommand.boulderToggled = initBoolean("toggles", "BoulderPuzzle", false);
 		ToggleCommand.startsWithToggled = initBoolean("toggles", "StartsWithTerminal", false);
 		ToggleCommand.selectAllToggled = initBoolean("toggles", "SelectAllTerminal", false);
 		ToggleCommand.clickInOrderToggled = initBoolean("toggles", "ClickInOrderTerminal", false);
@@ -508,6 +508,8 @@ public class ConfigHandler {
 		ChronomatronSolver.CHRONOMATRON_NEXT_TO_NEXT = initInt("colors", "chronomatronNextToNext", 0x40DAE6);
 		ClickInOrderSolver.CLICK_IN_ORDER_NEXT = initInt("colors", "clickInOrderNext", 0xFF00DD);
 		ClickInOrderSolver.CLICK_IN_ORDER_NEXT_TO_NEXT = initInt("colors", "clickInOrderNextToNext", 0x0BEFE7);
+		BoulderSolver.BOULDER_COLOUR = initInt("colors", "boulder", 0x197F19);
+		BoulderSolver.BOULDER_ARROW_COLOUR = initInt("colors", "boulderArrow", 0x006000);
 
 		// Commands
 		if (!hasKey("commands", "reparty")) writeBooleanConfig("commands", "reparty", false);

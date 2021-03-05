@@ -78,7 +78,7 @@ public class CreeperSolver {
     public void onWorldRender(RenderWorldLastEvent event) {
         if (ToggleCommand.creeperToggled && drawCreeperLines && !creeperLines.isEmpty()) {
             for (int i = 0; i < creeperLines.size(); i++) {
-                Utils.draw3DLine(creeperLines.get(i)[0], creeperLines.get(i)[1], CREEPER_COLOURS[i % 10], event.partialTicks);
+                Utils.draw3DLine(creeperLines.get(i)[0], creeperLines.get(i)[1], CREEPER_COLOURS[i % 10], 2, true, event.partialTicks);
             }
         }
     }

@@ -1,4 +1,4 @@
-package me.Danker.features.puzzlesolvers;
+package me.Danker.features;
 
 import me.Danker.commands.ToggleCommand;
 import me.Danker.utils.Utils;

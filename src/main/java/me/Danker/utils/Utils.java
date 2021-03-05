@@ -305,7 +305,7 @@ public class Utils {
 		});
 	}
 	
-	public static void draw3DLine(Vec3 pos1, Vec3 pos2, int colourInt, float partialTicks) {
+	public static void draw3DLine(Vec3 pos1, Vec3 pos2, int colourInt, int lineWidth, boolean depth, float partialTicks) {
 		Entity render = Minecraft.getMinecraft().getRenderViewEntity();
 		WorldRenderer worldRenderer = Tessellator.getInstance().getWorldRenderer();
 		Color colour = new Color(colourInt);
@@ -320,7 +320,11 @@ public class Utils {
 		GlStateManager.enableBlend();
 		GlStateManager.disableAlpha();
 		GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
-		GL11.glLineWidth(2);
+		GL11.glLineWidth(lineWidth);
+		if (!depth) {
+			GL11.glDisable(GL11.GL_DEPTH_TEST);
+			GlStateManager.depthMask(false);
+		}
 		GlStateManager.color(colour.getRed() / 255f, colour.getGreen() / 255f, colour.getBlue() / 255f, colour.getAlpha() / 255f);
 		worldRenderer.begin(GL11.GL_LINE_STRIP, DefaultVertexFormats.POSITION);
 		
@@ -329,6 +333,10 @@ public class Utils {
 		Tessellator.getInstance().draw();
 
 		GlStateManager.translate(realX, realY, realZ);
+		if (!depth) {
+			GL11.glEnable(GL11.GL_DEPTH_TEST);
+			GlStateManager.depthMask(true);
+		}
 		GlStateManager.disableBlend();
 		GlStateManager.enableAlpha();
 		GlStateManager.enableTexture2D();
@@ -386,7 +394,7 @@ public class Utils {
 		GlStateManager.popMatrix();
 	}
 
-	public static void drawFilled3DBox(AxisAlignedBB aabb, int colourInt, boolean translucent, float partialTicks) {
+	public static void drawFilled3DBox(AxisAlignedBB aabb, int colourInt, boolean translucent, boolean depth, float partialTicks) {
 		Entity render = Minecraft.getMinecraft().getRenderViewEntity();
 		WorldRenderer worldRenderer = Tessellator.getInstance().getWorldRenderer();
 		Color colour = new Color(colourInt);
@@ -401,8 +409,12 @@ public class Utils {
 		GlStateManager.disableTexture2D();
 		GlStateManager.enableAlpha();
 		GlStateManager.enableBlend();
-		GlStateManager.tryBlendFuncSeparate(770, translucent ? 1 : 771, 1, 0);
 		GlStateManager.disableCull();
+		GlStateManager.tryBlendFuncSeparate(770, translucent ? 1 : 771, 1, 0);
+		if (!depth) {
+			GL11.glDisable(GL11.GL_DEPTH_TEST);
+			GlStateManager.depthMask(false);
+		}
 		GlStateManager.color(colour.getRed() / 255f, colour.getGreen() / 255f, colour.getBlue() / 255f, colour.getAlpha() / 255f);
 		worldRenderer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION);
 		// Bottom
@@ -438,6 +450,10 @@ public class Utils {
 		Tessellator.getInstance().draw();
 
 		GlStateManager.translate(realX, realY, realZ);
+		if (!depth) {
+			GL11.glEnable(GL11.GL_DEPTH_TEST);
+			GlStateManager.depthMask(true);
+		}
 		GlStateManager.enableCull();
 		GlStateManager.disableAlpha();
 		GlStateManager.disableBlend();

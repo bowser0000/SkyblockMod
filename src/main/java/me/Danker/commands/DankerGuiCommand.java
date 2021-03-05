@@ -72,6 +72,7 @@ public class DankerGuiCommand extends CommandBase {
 			debug.append("[creeperpuzzle][").append(ToggleCommand.creeperToggled).append("]\n");
 			debug.append("[waterpuzzle][").append(ToggleCommand.waterToggled).append("]\n");
 			debug.append("[tictactoepuzzle][").append(ToggleCommand.ticTacToeToggled).append("]\n");
+			debug.append("[boulderpuzzle][").append(ToggleCommand.boulderToggled).append("]\n");
 			debug.append("[watchermessage][").append(ToggleCommand.watcherReadyToggled).append("]\n");
 			debug.append("[startswithterminal][").append(ToggleCommand.startsWithToggled).append("]\n");
 			debug.append("[selectallterminal][").append(ToggleCommand.selectAllToggled).append("]\n");
@@ -96,6 +97,9 @@ public class DankerGuiCommand extends CommandBase {
 			debug.append("[Current Display][").append(LootDisplay.display).append("]\n");
 			debug.append("[Auto Display][").append(LootDisplay.auto).append("]\n");
 			debug.append("[Skill Tracker Visible][").append(SkillTracker.showSkillTracker).append("]\n");
+			debug.append("# Problematic Mods\n");
+			debug.append("[LabyMod][").append(DankersSkyblockMod.usingLabymod).append("]\n");
+			debug.append("[OAM][").append(DankersSkyblockMod.usingOAM).append("]\n");
 			debug.append("# Resource Packs\n");
 			if (Minecraft.getMinecraft().getResourcePackRepository().getRepositoryEntries().size() == 0) {
 				debug.append("<None>\n");

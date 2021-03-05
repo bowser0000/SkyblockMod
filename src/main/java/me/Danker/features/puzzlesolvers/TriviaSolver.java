@@ -6,8 +6,6 @@ import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StringUtils;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -20,8 +18,7 @@ public class TriviaSolver {
     static String[] triviaAnswers = null;
     public static String TRIVIA_WRONG_ANSWER_COLOUR;
 
-    @Mod.EventHandler
-    public void init(FMLInitializationEvent event) {
+    public static void init() {
         triviaSolutions.put("What is the status of The Watcher?", new String[]{"Stalker"});
         triviaSolutions.put("What is the status of Bonzo?", new String[]{"New Necromancer"});
         triviaSolutions.put("What is the status of Scarf?", new String[]{"Apprentice Necromancer"});
