@@ -27,6 +27,12 @@ public class BlockAbilities {
             if (ToggleCommand.lividDaggerToggled && item.getDisplayName().contains("Livid Dagger")) {
                 event.setCanceled(true);
             }
+            if (ToggleCommand.shadowFuryToggled && item.getDisplayName().contains("Shadow Fury")) {
+                event.setCanceled(true);
+            }
+            if (ToggleCommand.specialHoeRightClick && (item.getDisplayName().contains("Mathematical Hoe") || item.getDisplayName().contains("Potato Hoe") || item.getDisplayName().contains("Wheat Hoe") || item.getDisplayName().contains("Carrot Hoe") || item.getDisplayName().contains("Sugar Cane Hoe") || item.getDisplayName().contains("Nether Warts Hoe"))) {
+                event.setCanceled(true);
+            }
         } else if (event.action == PlayerInteractEvent.Action.RIGHT_CLICK_BLOCK) {
             Block block = Minecraft.getMinecraft().theWorld.getBlockState(event.pos).getBlock();
 
@@ -77,6 +83,12 @@ public class BlockAbilities {
                 if (ToggleCommand.lividDaggerToggled && item.getDisplayName().contains("Livid Dagger")) {
                     event.setCanceled(true);
                 }
+                if (ToggleCommand.shadowFuryToggled && item.getDisplayName().contains("Shadow Fury")) {
+                    event.setCanceled(true);
+                }
+            }
+            if (ToggleCommand.specialHoeRightClick && (item.getDisplayName().contains("Mathematical Hoe") || item.getDisplayName().contains("Potato Hoe") || item.getDisplayName().contains("Wheat Hoe") || item.getDisplayName().contains("Carrot Hoe") || item.getDisplayName().contains("Sugar Cane Hoe") || item.getDisplayName().contains("Nether Warts Hoe"))) {
+                event.setCanceled(true);
             }
         }
     }

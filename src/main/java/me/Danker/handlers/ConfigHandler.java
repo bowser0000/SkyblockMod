@@ -219,12 +219,15 @@ public class ConfigHandler {
 		ToggleCommand.spiritBearAlerts = initBoolean("toggles", "SpiritBearAlerts", false);
 		ToggleCommand.aotdToggled = initBoolean("toggles", "AOTD", false);
 		ToggleCommand.lividDaggerToggled = initBoolean("toggles", "LividDagger", false);
+		ToggleCommand.shadowFuryToggled = initBoolean("toggles", "Shadow Fury", false);
 		ToggleCommand.petColoursToggled = initBoolean("toggles", "PetColors", false);
 		ToggleCommand.golemAlertToggled = initBoolean("toggles", "GolemAlerts", false);
 		ToggleCommand.expertiseLoreToggled = initBoolean("toggles", "ExpertiseLore", false);
 		ToggleCommand.skill50DisplayToggled = initBoolean("toggles", "Skill50Display", false);
 		ToggleCommand.outlineTextToggled = initBoolean("toggles", "OutlineText", false);
 		ToggleCommand.cakeTimerToggled = initBoolean("toggles", "CakeTimer", false);
+		ToggleCommand.specialHoeRightClick = initBoolean("toggles", "SpecialHoe", false);
+		ToggleCommand.melodyTooltips = initBoolean("toggles", "MelodyTooltips", false);
 		// Chat Messages
 		ToggleCommand.sceptreMessages = initBoolean("toggles", "SceptreMessages", true);
 		ToggleCommand.midasStaffMessages = initBoolean("toggles", "MidasStaffMessages", true);
