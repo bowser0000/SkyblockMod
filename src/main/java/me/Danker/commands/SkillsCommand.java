@@ -100,7 +100,7 @@ public class SkillsCommand extends CommandBase {
 					miningLevel = (double) Math.round(miningLevel * 100) / 100;
 				}
 				if (userObject.has("experience_skill_combat")) {
-					combatLevel = Utils.xpToSkillLevel(userObject.get("experience_skill_combat").getAsDouble(), 50);
+					combatLevel = Utils.xpToSkillLevel(userObject.get("experience_skill_combat").getAsDouble(), 60);
 					combatLevel = (double) Math.round(combatLevel * 100) / 100;
 				}
 				if (userObject.has("experience_skill_foraging")) {
