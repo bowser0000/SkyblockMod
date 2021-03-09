@@ -1,16 +1,10 @@
 package me.Danker.gui;
 
-import akka.event.Logging;
 import me.Danker.handlers.TextRenderer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.GuiLabel;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;
-
-import javax.xml.soap.Text;
-import java.util.ArrayList;
-import java.util.List;
 
 public class WarningGui extends GuiScreen {
     private GuiButton close;

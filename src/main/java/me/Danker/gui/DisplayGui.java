@@ -1,7 +1,7 @@
 package me.Danker.gui;
 
 import me.Danker.DankersSkyblockMod;
-import me.Danker.commands.DisplayCommand;
+import me.Danker.features.loot.LootDisplay;
 import me.Danker.handlers.ConfigHandler;
 import me.Danker.handlers.TextRenderer;
 import me.Danker.utils.Utils;
@@ -94,10 +94,10 @@ public class DisplayGui extends GuiScreen {
 		Minecraft mc = Minecraft.getMinecraft();
 		
 		String displayText;
-		if (DisplayCommand.auto) {
+		if (LootDisplay.auto) {
 			displayText = "Current Display: auto";
 		} else {
-			displayText = "Current Display: " + DisplayCommand.display;
+			displayText = "Current Display: " + LootDisplay.display;
 		}
 		int displayWidth = mc.fontRendererObj.getStringWidth(displayText);
 		new TextRenderer(mc, displayText, width / 2 - displayWidth / 2, 10, 1D);
@@ -125,7 +125,7 @@ public class DisplayGui extends GuiScreen {
 		} else if (button == wolf) {
 			setDisplay("wolf", false);
 		} else if (button == auto) {
-			DisplayCommand.auto = true;
+			LootDisplay.auto = true;
 			ConfigHandler.writeBooleanConfig("misc", "autoDisplay", true);
 		} else if (button == fishing) {
 			setDisplay("fishing", false);
@@ -156,8 +156,8 @@ public class DisplayGui extends GuiScreen {
 	
 	public void setDisplay(String display, boolean forceNoSession) {
 		if (!forceNoSession && addSession) display += "_session";
-		DisplayCommand.auto = false;
-		DisplayCommand.display = display;
+		LootDisplay.auto = false;
+		LootDisplay.display = display;
 		ConfigHandler.writeBooleanConfig("misc", "autoDisplay", false);
 		ConfigHandler.writeStringConfig("misc", "display", display);
 	}

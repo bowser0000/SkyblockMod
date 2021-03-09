@@ -28,10 +28,11 @@ Discord Server: https://discord.gg/QsEkNQS
 - Click anywhere on-screen to open Maddox
 - Maddox menu keybind
 - Block starting other slayer quests
+- Slayer slain alert
 - Fishing, jerry fishing, fishing festival, spooky fishing trackers
 - Expertise kills in fishing rod lore
 - Catacombs trackers
-- Dungeons puzzle solver (Riddle, trivia, blaze, creeper, water, tic tac toe)
+- Dungeons puzzle solver (Riddle, trivia, blaze, creeper, water, tic tac toe, boulder)
 - Dungeons timer (watcher, boss, deaths, and puzzle fails)
 - Watcher ready message
 - Catacombs F7 Stage 3 solvers (Starts with letter, select all colour, ignore arrows on sea lanterns)
@@ -52,14 +53,14 @@ Discord Server: https://discord.gg/QsEkNQS
 ## Commands
 - /dhelp - Returns this message in-game.
 - /dsm - Opens the GUI for Danker's Skyblock Mod.
-- /toggle <gparty/coords/golden/slayercount/rngesusalerts/splitfishing/chatmaddox/spiritbearalerts/aotd/lividdagger/flowerweapons/sceptremessages/petcolors/dungeontimer/golemalerts/expertiselore/skill50display/outlinetext/midasstaffmessages/implosionmessages/healmessages/cooldownmessages/manamessages/caketimer/lowhealthnotify/lividsolver/stopsalvagestarred/notifyslayerslain/threemanpuzzle/oruopuzzle/blazepuzzle/creeperpuzzle/waterpuzzle/tictactoepuzzle/watchermessage/startswithterminal/selectallterminal/clickinorderterminal/blockwrongterminalclicks/itemframeonsealanterns/ultrasequencer/chronomatron/superpairs/hidetooltipsinaddons/pickblock/list> - Toggles features. /toggle list returns values of every toggle.
+- /toggle <gparty/coords/golden/slayercount/rngesusalerts/splitfishing/chatmaddox/spiritbearalerts/aotd/lividdagger/flowerweapons/sceptremessages/midasstaffmessages/implosionmessages/healmessages/petcolors/dungeontimer/golemalerts/expertiselore/skill50display/outlinetext/caketimer/lowhealthnotify/lividsolver/stopsalvagestarred/notifyslayerslain/autoskilltracker/necronnotifications/bonzotimer/threemanpuzzle/oruopuzzle/blazepuzzle/creeperpuzzle/waterpuzzle/tictactoepuzzle/boulderpuzzle/watchermessage/startswithterminal/selectallterminal/clickinorderterminal/blockwrongterminalclicks/itemframeonsealanterns/ultrasequencer/chronomatron/superpairs/hidetooltipsinaddons/pickblock/list> - Toggles features. /toggle list returns values of every toggle.
 - /setkey <key> - Sets API key.
 - /getkey - Returns key set with /setkey and copies it to your clipboard.
-- /loot <zombie/spider/wolf/fishing/catacombs> [winter/spooky/f(1-7)/session] - Returns loot received from slayer quests or fishing stats. /loot fishing winter returns winter sea creatures instead.
-- /display <zombie/spider/wolf/fishing/catacombs/auto/off> [winter/spooky/f(1-7)/session] - Text display for trackers. /display fishing winter displays winter sea creatures instead. /display auto automatically displays the loot for the slayer quest you have active.
-- /resetloot <zombie/spider/wolf/fishing/catacombs/confirm/cancel> -  - Resets loot for trackers. /resetloot confirm confirms the reset.
-- /move <coords/display/dungeontimer/skill50/lividhp/caketimer/skilltracker/wateranswer> <x> <y> - Moves text display to specified X and Y coordinates.
-- /scale <coords/display/dungeontimer/skill50/lividhp/caketimer/skilltracker/wateranswer> <scale (0.1 - 10)> - Scales text display to a specified multipler between 0.1x and 10x.
+- /loot <zombie/spider/wolf/fishing/catacombs/mythological/> [winter/festival/spooky/f(1-7)/session] - Returns loot received from slayer quests or fishing stats. /loot fishing winter returns winter sea creatures instead.
+- /display <zombie/spider/wolf/fishing/catacombs/mythological/auto/off> [winter/festival/spooky/f(1-7)/session] - Text display for trackers. /display fishing winter displays winter sea creatures instead. /display auto automatically displays the loot for the slayer quest you have active.
+- /resetloot <zombie/spider/wolf/fishing/catacombs/mythological/confirm/cancel> -  - Resets loot for trackers. /resetloot confirm confirms the reset.
+- /move <coords/display/dungeontimer/skill50/lividhp/caketimer/skilltracker/wateranswer/bonzotimer> <x> <y> - Moves text display to specified X and Y coordinates.
+- /scale <coords/display/dungeontimer/skill50/lividhp/caketimer/skilltracker/wateranswer/bonzotimer> <scale (0.1 - 10)> - Scales text display to a specified multipler between 0.1x and 10x.
 - /slayer [player] - Uses API to get slayer xp of a person. If no name is provided, it checks yours.
 - /skills [player] - Uses API to get skill levels of a person. If no name is provided, it checks yours.
 - /lobbyskills - Uses API to find the average skills of the lobby, as well the three players with the highest skill average.
@@ -90,6 +91,5 @@ Credit to all the following open source software used in this mod.
 Software | License
 ------------ | -------------
 [SkyblockAddons](https://github.com/BiscuitDevelopment/SkyblockAddons/) | [MIT License](https://github.com/BiscuitDevelopment/SkyblockAddons/blob/master/LICENSE)
-[Zealot Counter](https://github.com/symt/zealot-counter/) | No License
+[Zealot Counter](https://github.com/symt/zealot-counter/) | [Apache License](https://github.com/symt/zealot-counter/blob/master/LICENSE.md)
 [NotEnoughUpdates](https://github.com/Moulberry/NotEnoughUpdates/) | [Creative Commons Public License](https://github.com/Moulberry/NotEnoughUpdates/blob/master/LICENSE)
-[ForgeHax](https://github.com/fr1kin/ForgeHax) | [MIT License](https://github.com/fr1kin/ForgeHax/blob/1.16/LICENSE)
