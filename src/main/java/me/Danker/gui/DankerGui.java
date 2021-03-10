@@ -198,7 +198,6 @@ public class DankerGui extends GuiScreen {
 				this.buttonList.add(stopSalvageStarred);
 				this.buttonList.add(watcherReadyMessage);
 				this.buttonList.add(flowerWeapons);
-				this.buttonList.add(notifySlayerSlain);
 				this.buttonList.add(nextPage);
 				this.buttonList.add(backPage);
 				break;
