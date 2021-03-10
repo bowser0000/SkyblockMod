@@ -16,6 +16,8 @@ Discord Server: https://discord.gg/QsEkNQS
 - Golden T10/T6/T4 enchant display
 - Block AOTD ability
 - Block Livid Dagger ability
+- Block Shadow Fury ability
+- Block right click with special hoes
 - Block placing Flower of Truth/Spirit Sceptre
 - Disable Spirit Sceptre messages
 - Disable Midas Staff messages
@@ -40,6 +42,7 @@ Discord Server: https://discord.gg/QsEkNQS
 - Find correct Livid (with graphic display of HP)
 - Experimentation solvers (Ultrasequencer, Chronomatron, Superpairs)
 - Hide tooltips in experiment addons
+- Hide tooltips in Melody's Harp
 - Pet background colors based on level
 - Golem spawning alerts
 - Skill xp/hour tracker
@@ -75,6 +78,7 @@ Discord Server: https://discord.gg/QsEkNQS
 - /onlyslayer <zombie/spider/wolf> <1/2/3/4> - Stops you from starting a slayer quest other than the one specified.
 - /skilltracker <start/stop/reset> - Text display for skill xp/hour.
 - /reparty - Disbands and reparties all members in the party
+- /fairysouls - Check the fairysouls of a player
 
 ## Keybinds
 - Open Maddox menu - M by default.

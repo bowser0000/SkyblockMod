@@ -55,6 +55,7 @@ public class DHelpCommand extends CommandBase {
 													EnumChatFormatting.GOLD + " /onlyslayer <zombie/spider/wolf> <1/2/3/4>" + EnumChatFormatting.AQUA + " - Stops you from starting a slayer quest other than the one specified.\n" +
 													EnumChatFormatting.GOLD + " /skilltracker <start/stop/reset>" + EnumChatFormatting.AQUA + " - Text display for skill xp/hour.\n" +
 													EnumChatFormatting.GOLD + " /reparty " + EnumChatFormatting.AQUA + " - Disbands and reparties all members in the party.\n" +
+													EnumChatFormatting.GOLD + " /lobbybank " + EnumChatFormatting.AQUA + " - Uses API to find the average bank total of the lobby, as well the three players with the highest total money in the bank(and purse).\n" +
 													EnumChatFormatting.GREEN + " Open Maddox Menu" + EnumChatFormatting.AQUA + " - M by default.\n" +
 													EnumChatFormatting.GREEN + " Start/Stop Skill Tracker" + EnumChatFormatting.AQUA + " - Numpad 5 by default.\n"));
 	}
