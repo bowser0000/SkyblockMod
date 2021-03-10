@@ -232,7 +232,8 @@ public class ConfigHandler {
 		ToggleCommand.healMessages = initBoolean("toggles", "HealMessages", true);
 		ToggleCommand.cooldownMessages = initBoolean("toggles", "CooldownMessages", true);
 		ToggleCommand.manaMessages = initBoolean("toggles", "ManaMessages", true);
-		//Dungeons
+		ToggleCommand.killComboMessages = initBoolean("toggles", "KillComboMessages", true);
+		// Dungeons
 		ToggleCommand.dungeonTimerToggled = initBoolean("toggles", "DungeonTimer", false);
 		ToggleCommand.lowHealthNotifyToggled = initBoolean("toggles", "LowHealthNotify", false);
 		ToggleCommand.lividSolverToggled = initBoolean("toggles", "LividSolver", false);

@@ -37,6 +37,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 	public static boolean healMessages;
 	public static boolean cooldownMessages;
 	public static boolean manaMessages;
+	public static boolean killComboMessages;
 	// Dungeons Messages
 	public static boolean lowHealthNotifyToggled;
 	public static boolean lividSolverToggled;
@@ -80,11 +81,11 @@ public class ToggleCommand extends CommandBase implements ICommand {
 		return "/" + getCommandName() + " <gparty/coords/golden/slayercount/rngesusalerts/splitfishing/chatmaddox/spiritbearalert/" + 
 										  "aotd/lividdagger/flowerweapons/sceptremessages/petcolors/dungeontimer/golemalerts/expertiselore/" +
 										  "skill50display/outlinetext/midasstaffmessages/implosionmessages/healmessages/cooldownmessages/" +
-										  "manamessages/caketimer/lowhealthnotify/lividsolver/stopsalvagestarred/notifyslayerslain/" +
-										  "necronnotifications/bonzotimer/threemanpuzzle/oruopuzzle/blazepuzzle/creeperpuzzle/waterpuzzle/" +
-										  "tictactoepuzzle/boulderpuzzle/silverfishpuzzle/watchermessage/startswithterminal/" +
-										  "selectallterminal/clickinorderterminal/blockwrongterminalclicks/itemframeonsealanterns/" +
-										  "ultrasequencer/chronomatron/superpairs/hidetooltipsinaddons/pickblock/list>";
+										  "manamessages/killcombomessages/caketimer/lowhealthnotify/lividsolver/stopsalvagestarred/" +
+										  "notifyslayerslain/necronnotifications/bonzotimer/threemanpuzzle/oruopuzzle/blazepuzzle/" +
+										  "creeperpuzzle/waterpuzzle/tictactoepuzzle/boulderpuzzle/silverfishpuzzle/watchermessage/" +
+										  "startswithterminal/selectallterminal/clickinorderterminal/blockwrongterminalclicks/" +
+										  "itemframeonsealanterns/ultrasequencer/chronomatron/superpairs/hidetooltipsinaddons/pickblock/list>";
 	}
 
 	@Override
@@ -100,7 +101,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 														  "flowerweapons", "sceptremessages", "petcolors", "dungeontimer", "golemalerts",
 														  "expertiselore", "skill50display", "outlinetext", "midasstaffmessages",
 														  "implosionmessages", "healmessages", "cooldownmessages", "manamessages",
-														  "caketimer", "lowhealthnotify", "autoskilltracker", "lividsolver",
+														  "killcombomessages", "caketimer", "lowhealthnotify", "autoskilltracker", "lividsolver",
 														  "stopsalvagestarred", "notifyslayerslain", "necronnotifications",
 														  "bonzotimer", "threemanpuzzle", "oruopuzzle", "blazepuzzle",
 														  "creeperpuzzle", "waterpuzzle", "tictactoepuzzle", "boulderpuzzle",
@@ -206,6 +207,11 @@ public class ToggleCommand extends CommandBase implements ICommand {
 				manaMessages = !manaMessages;
 				ConfigHandler.writeBooleanConfig("toggles", "ManaMessages", manaMessages);
 				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Out of mana messages has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + manaMessages + DankersSkyblockMod.MAIN_COLOUR + "."));
+				break;
+			case "killcombomessages":
+				killComboMessages = !killComboMessages;
+				ConfigHandler.writeBooleanConfig("toggles", "KillComboMessages", killComboMessages);
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Kill combo messages has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + killComboMessages + DankersSkyblockMod.MAIN_COLOUR + "."));
 				break;
 			case "petcolors":
 			case "petcolours":
@@ -391,6 +397,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 															DankersSkyblockMod.TYPE_COLOUR + " Heal messages: " + DankersSkyblockMod.VALUE_COLOUR + healMessages + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Ability cooldown messages: " + DankersSkyblockMod.VALUE_COLOUR + cooldownMessages + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Out of mana messages: " + DankersSkyblockMod.VALUE_COLOUR + manaMessages + "\n" +
+															DankersSkyblockMod.TYPE_COLOUR + " Kill combo messages: " + DankersSkyblockMod.VALUE_COLOUR + killComboMessages + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Pet colours: " + DankersSkyblockMod.VALUE_COLOUR + petColoursToggled + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Dungeon timer: " + DankersSkyblockMod.VALUE_COLOUR + dungeonTimerToggled + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Golem spawn alerts: " + DankersSkyblockMod.VALUE_COLOUR + golemAlertToggled + "\n" +

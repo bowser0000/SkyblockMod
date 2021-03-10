@@ -58,6 +58,9 @@ public class DankerGuiCommand extends CommandBase {
 			debug.append("[midasstaffmessages][").append(ToggleCommand.midasStaffMessages).append("]\n");
 			debug.append("[implosionmessages][").append(ToggleCommand.implosionMessages).append("]\n");
 			debug.append("[healmessages][").append(ToggleCommand.healMessages).append("]\n");
+			debug.append("[cooldownmessages][").append(ToggleCommand.cooldownMessages).append("]\n");
+			debug.append("[manamessages][").append(ToggleCommand.manaMessages).append("]\n");
+			debug.append("[killcombomessages][").append(ToggleCommand.killComboMessages).append("]\n");
 			debug.append("[caketimer][").append(ToggleCommand.cakeTimerToggled).append("]\n");
 			debug.append("[lowhealthnotify][").append(ToggleCommand.lowHealthNotifyToggled).append("]\n");
 			debug.append("[lividsolver][").append(ToggleCommand.lividSolverToggled).append("]\n");
