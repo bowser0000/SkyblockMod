@@ -36,7 +36,7 @@ public class Skill50Display {
                     double currentXp = Double.parseDouble(section.substring(section.indexOf("(") + 1, section.indexOf("/")).replace(",", ""));
                     int limit;
                     int totalXp;
-                    if (section.contains("Farming") || section.contains("Enchanting") || section.contains("Mining")) {
+                    if (section.contains("Farming") || section.contains("Enchanting") || section.contains("Mining") || section.contains("Combat")) {
                         limit = 60;
                         totalXp = 111672425;
                     } else {

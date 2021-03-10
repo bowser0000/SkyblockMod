@@ -44,6 +44,13 @@ public class SpamHider {
         if (!ToggleCommand.implosionMessages) {
             if (message.contains("Your Implosion hit ") || message.contains("There are blocks in the way")) {
                 event.setCanceled(true);
+                return;
+            }
+        }
+        // Kill Combo
+        if (!ToggleCommand.killComboMessages) {
+            if ((message.contains("+") && message.contains(" Kill Combo ")) || message.contains("Your Kill Combo has expired!")) {
+                event.setCanceled(true);
             }
         }
     }

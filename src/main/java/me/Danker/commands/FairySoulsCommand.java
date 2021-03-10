@@ -22,7 +22,7 @@ public class FairySoulsCommand extends CommandBase {
 
     @Override
     public String getCommandUsage(ICommandSender sender) {
-        return "/" + getCommandName() + "[name]";
+        return "/" + getCommandName() + " [name]";
     }
 
     @Override
@@ -84,7 +84,7 @@ public class FairySoulsCommand extends CommandBase {
             int fairy_souls = userObject.get("fairy_souls_collected").getAsInt();
             System.out.println(fairy_souls);
 
-            player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "The player " + username + " has " + DankersSkyblockMod.VALUE_COLOUR + fairy_souls + DankersSkyblockMod.MAIN_COLOUR + "/220" + " collected"));
+            player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "The player " + username + " has " + DankersSkyblockMod.VALUE_COLOUR + fairy_souls + DankersSkyblockMod.MAIN_COLOUR + "/222" + " collected"));
 
         }).start();
 
