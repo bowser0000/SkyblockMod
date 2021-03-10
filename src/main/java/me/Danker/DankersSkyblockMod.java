@@ -59,7 +59,7 @@ import java.util.Map;
 @Mod(modid = DankersSkyblockMod.MODID, version = DankersSkyblockMod.VERSION, clientSideOnly = true)
 public class DankersSkyblockMod {
     public static final String MODID = "Danker's Skyblock Mod";
-    public static final String VERSION = "1.8.6-beta1";
+    public static final String VERSION = "1.8.6-beta2";
     public static int titleTimer = -1;
     public static boolean showTitle = false;
     public static String titleText = "";
@@ -114,6 +114,7 @@ public class DankersSkyblockMod {
         MinecraftForge.EVENT_BUS.register(new PetColours());
         MinecraftForge.EVENT_BUS.register(new Reparty());
         MinecraftForge.EVENT_BUS.register(new SelectAllColourSolver());
+        MinecraftForge.EVENT_BUS.register(new SilverfishSolver());
         MinecraftForge.EVENT_BUS.register(new Skill50Display());
         MinecraftForge.EVENT_BUS.register(new SkillTracker());
         MinecraftForge.EVENT_BUS.register(new SpamHider());

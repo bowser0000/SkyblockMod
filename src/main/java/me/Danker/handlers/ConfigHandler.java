@@ -90,7 +90,7 @@ public class ConfigHandler {
 		}
 		return true;
 	}
-	
+
 	public static void writeIntConfig(String category, String key, int value) {
 		config = new Configuration(new File(file));
 		try {
@@ -232,7 +232,8 @@ public class ConfigHandler {
 		ToggleCommand.healMessages = initBoolean("toggles", "HealMessages", true);
 		ToggleCommand.cooldownMessages = initBoolean("toggles", "CooldownMessages", true);
 		ToggleCommand.manaMessages = initBoolean("toggles", "ManaMessages", true);
-		//Dungeons
+		ToggleCommand.killComboMessages = initBoolean("toggles", "KillComboMessages", true);
+		// Dungeons
 		ToggleCommand.dungeonTimerToggled = initBoolean("toggles", "DungeonTimer", false);
 		ToggleCommand.lowHealthNotifyToggled = initBoolean("toggles", "LowHealthNotify", false);
 		ToggleCommand.lividSolverToggled = initBoolean("toggles", "LividSolver", false);
@@ -252,6 +253,7 @@ public class ConfigHandler {
 		ToggleCommand.waterToggled = initBoolean("toggles", "WaterPuzzle", false);
 		ToggleCommand.ticTacToeToggled = initBoolean("toggles", "TicTacToePuzzle", false);
 		ToggleCommand.boulderToggled = initBoolean("toggles", "BoulderPuzzle", false);
+		ToggleCommand.silverfishToggled = initBoolean("toggles", "SilverfishPuzzle", false);
 		ToggleCommand.startsWithToggled = initBoolean("toggles", "StartsWithTerminal", false);
 		ToggleCommand.selectAllToggled = initBoolean("toggles", "SelectAllTerminal", false);
 		ToggleCommand.clickInOrderToggled = initBoolean("toggles", "ClickInOrderTerminal", false);
@@ -510,6 +512,7 @@ public class ConfigHandler {
 		ClickInOrderSolver.CLICK_IN_ORDER_NEXT_TO_NEXT = initInt("colors", "clickInOrderNextToNext", 0x0BEFE7);
 		BoulderSolver.BOULDER_COLOUR = initInt("colors", "boulder", 0x197F19);
 		BoulderSolver.BOULDER_ARROW_COLOUR = initInt("colors", "boulderArrow", 0x006000);
+		SilverfishSolver.SILVERFISH_LINE_COLOUR = initInt("colors", "silverfishLine", 0x40FF40);
 
 		// Commands
 		if (!hasKey("commands", "reparty")) writeBooleanConfig("commands", "reparty", false);

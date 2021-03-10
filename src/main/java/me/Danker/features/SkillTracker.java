@@ -63,7 +63,7 @@ public class SkillTracker {
                     }
                     timeSinceGained = System.currentTimeMillis() / 1000;
 
-                    int limit = section.contains("Farming") || section.contains("Enchanting") || section.contains("Mining") ? 60 : 50;
+                    int limit = section.contains("Farming") || section.contains("Enchanting") || section.contains("Mining") || section.contains("Combat") ? 60 : 50;
                     double currentXP = Double.parseDouble(section.substring(section.indexOf("(") + 1, section.indexOf("/")).replace(",", ""));
                     int xpToLevelUp = Integer.parseInt(section.substring(section.indexOf("/") + 1, section.indexOf(")")).replaceAll(",", ""));
                     xpLeft = xpToLevelUp - currentXP;

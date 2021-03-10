@@ -37,6 +37,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 	public static boolean healMessages;
 	public static boolean cooldownMessages;
 	public static boolean manaMessages;
+	public static boolean killComboMessages;
 	// Dungeons Messages
 	public static boolean lowHealthNotifyToggled;
 	public static boolean lividSolverToggled;
@@ -56,6 +57,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 	public static boolean waterToggled;
 	public static boolean ticTacToeToggled;
 	public static boolean boulderToggled;
+	public static boolean silverfishToggled;
 	// Terminal Helpers
 	public static boolean startsWithToggled;
 	public static boolean selectAllToggled;
@@ -79,11 +81,11 @@ public class ToggleCommand extends CommandBase implements ICommand {
 		return "/" + getCommandName() + " <gparty/coords/golden/slayercount/rngesusalerts/splitfishing/chatmaddox/spiritbearalert/" + 
 										  "aotd/lividdagger/flowerweapons/sceptremessages/petcolors/dungeontimer/golemalerts/expertiselore/" +
 										  "skill50display/outlinetext/midasstaffmessages/implosionmessages/healmessages/cooldownmessages/" +
-										  "manamessages/caketimer/lowhealthnotify/lividsolver/stopsalvagestarred/notifyslayerslain/" +
-										  "necronnotifications/bonzotimer/threemanpuzzle/oruopuzzle/blazepuzzle/creeperpuzzle/waterpuzzle/" +
-										  "tictactoepuzzle/boulderpuzzle/watchermessage/startswithterminal/selectallterminal/" +
-										  "clickinorderterminal/blockwrongterminalclicks/itemframeonsealanterns/ultrasequencer/" +
-										  "chronomatron/superpairs/hidetooltipsinaddons/pickblock/list>";
+										  "manamessages/killcombomessages/caketimer/lowhealthnotify/lividsolver/stopsalvagestarred/" +
+										  "notifyslayerslain/necronnotifications/bonzotimer/threemanpuzzle/oruopuzzle/blazepuzzle/" +
+										  "creeperpuzzle/waterpuzzle/tictactoepuzzle/boulderpuzzle/silverfishpuzzle/watchermessage/" +
+										  "startswithterminal/selectallterminal/clickinorderterminal/blockwrongterminalclicks/" +
+										  "itemframeonsealanterns/ultrasequencer/chronomatron/superpairs/hidetooltipsinaddons/pickblock/list>";
 	}
 
 	@Override
@@ -98,12 +100,15 @@ public class ToggleCommand extends CommandBase implements ICommand {
 														  "splitfishing", "chatmaddox", "spiritbearalerts", "aotd", "lividdagger",
 														  "flowerweapons", "sceptremessages", "petcolors", "dungeontimer", "golemalerts",
 														  "expertiselore", "skill50display", "outlinetext", "midasstaffmessages",
-														  "implosionmessages", "healmessages", "cooldownmessages", "manamessages", "caketimer", "lowhealthnotify", "autoskilltracker",
-														  "lividsolver", "stopsalvagestarred", "notifyslayerslain", "necronnotifications",
+														  "implosionmessages", "healmessages", "cooldownmessages", "manamessages",
+														  "killcombomessages", "caketimer", "lowhealthnotify", "autoskilltracker", "lividsolver",
+														  "stopsalvagestarred", "notifyslayerslain", "necronnotifications",
 														  "bonzotimer", "threemanpuzzle", "oruopuzzle", "blazepuzzle",
-														  "creeperpuzzle", "waterpuzzle", "tictactoepuzzle", "watchermessage", "startswithterminal",
-														  "selectallterminal", "clickinorderterminal", "blockwrongterminalclicks", "itemframeonsealanterns", "ultrasequencer",
-														  "chronomatron", "superpairs", "hidetooltipsinaddons", "pickblock", "list");
+														  "creeperpuzzle", "waterpuzzle", "tictactoepuzzle", "boulderpuzzle",
+														  "silverfishpuzzle", "watchermessage", "startswithterminal",
+														  "selectallterminal", "clickinorderterminal", "blockwrongterminalclicks",
+														  "itemframeonsealanterns", "ultrasequencer", "chronomatron", "superpairs",
+														  "hidetooltipsinaddons", "pickblock", "list");
 		}
 		return null;
 	}
@@ -202,6 +207,11 @@ public class ToggleCommand extends CommandBase implements ICommand {
 				manaMessages = !manaMessages;
 				ConfigHandler.writeBooleanConfig("toggles", "ManaMessages", manaMessages);
 				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Out of mana messages has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + manaMessages + DankersSkyblockMod.MAIN_COLOUR + "."));
+				break;
+			case "killcombomessages":
+				killComboMessages = !killComboMessages;
+				ConfigHandler.writeBooleanConfig("toggles", "KillComboMessages", killComboMessages);
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Kill combo messages has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + killComboMessages + DankersSkyblockMod.MAIN_COLOUR + "."));
 				break;
 			case "petcolors":
 			case "petcolours":
@@ -309,6 +319,11 @@ public class ToggleCommand extends CommandBase implements ICommand {
 				ConfigHandler.writeBooleanConfig("toggles", "BoulderPuzzle", boulderToggled);
 				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Boulder puzzle solver has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + boulderToggled + DankersSkyblockMod.MAIN_COLOUR + "."));
 				break;
+			case "silverfishpuzzle":
+				silverfishToggled = !silverfishToggled;
+				ConfigHandler.writeBooleanConfig("toggles", "SilverfishPuzzle", silverfishToggled);
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Silverfish puzzle solver has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + silverfishToggled + DankersSkyblockMod.MAIN_COLOUR + "."));
+				break;
 			case "watchermessage":
 				watcherReadyToggled = !watcherReadyToggled;
 				ConfigHandler.writeBooleanConfig("toggles", "WatcherReadyMessage", watcherReadyToggled);
@@ -382,6 +397,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 															DankersSkyblockMod.TYPE_COLOUR + " Heal messages: " + DankersSkyblockMod.VALUE_COLOUR + healMessages + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Ability cooldown messages: " + DankersSkyblockMod.VALUE_COLOUR + cooldownMessages + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Out of mana messages: " + DankersSkyblockMod.VALUE_COLOUR + manaMessages + "\n" +
+															DankersSkyblockMod.TYPE_COLOUR + " Kill combo messages: " + DankersSkyblockMod.VALUE_COLOUR + killComboMessages + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Pet colours: " + DankersSkyblockMod.VALUE_COLOUR + petColoursToggled + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Dungeon timer: " + DankersSkyblockMod.VALUE_COLOUR + dungeonTimerToggled + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Golem spawn alerts: " + DankersSkyblockMod.VALUE_COLOUR + golemAlertToggled + "\n" +
@@ -399,6 +415,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 															DankersSkyblockMod.TYPE_COLOUR + " Water puzzle solver: " + DankersSkyblockMod.VALUE_COLOUR + waterToggled + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Tic tac toe puzzle solver: " + DankersSkyblockMod.VALUE_COLOUR + ticTacToeToggled + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Boulder puzzle solver: " + DankersSkyblockMod.VALUE_COLOUR + boulderToggled + "\n" +
+															DankersSkyblockMod.TYPE_COLOUR + " Silverfish puzzle solver: " + DankersSkyblockMod.VALUE_COLOUR + silverfishToggled + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Watcher ready message: " + DankersSkyblockMod.VALUE_COLOUR + watcherReadyToggled + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Starts with letter terminal solver: " + DankersSkyblockMod.VALUE_COLOUR + startsWithToggled + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Select all color items terminal solver: " + DankersSkyblockMod.VALUE_COLOUR + selectAllToggled + "\n" +

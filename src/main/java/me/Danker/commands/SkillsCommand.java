@@ -144,7 +144,7 @@ public class SkillsCommand extends CommandBase {
 					miningLevel = achievementObject.get("skyblock_excavator").getAsInt();
 				}
 				if (achievementObject.has("skyblock_combat")) {
-					combatLevel = Math.min(achievementObject.get("skyblock_combat").getAsInt(), 50);
+					combatLevel = achievementObject.get("skyblock_combat").getAsInt();
 				}
 				if (achievementObject.has("skyblock_gatherer")) {
 					foragingLevel = Math.min(achievementObject.get("skyblock_gatherer").getAsInt(), 50);
