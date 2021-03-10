@@ -100,7 +100,7 @@ public class SkillsCommand extends CommandBase {
 					miningLevel = (double) Math.round(miningLevel * 100) / 100;
 				}
 				if (userObject.has("experience_skill_combat")) {
-					combatLevel = Utils.xpToSkillLevel(userObject.get("experience_skill_combat").getAsDouble(), 50);
+					combatLevel = Utils.xpToSkillLevel(userObject.get("experience_skill_combat").getAsDouble(), 60);
 					combatLevel = (double) Math.round(combatLevel * 100) / 100;
 				}
 				if (userObject.has("experience_skill_foraging")) {
@@ -144,7 +144,7 @@ public class SkillsCommand extends CommandBase {
 					miningLevel = achievementObject.get("skyblock_excavator").getAsInt();
 				}
 				if (achievementObject.has("skyblock_combat")) {
-					combatLevel = Math.min(achievementObject.get("skyblock_combat").getAsInt(), 50);
+					combatLevel = achievementObject.get("skyblock_combat").getAsInt();
 				}
 				if (achievementObject.has("skyblock_gatherer")) {
 					foragingLevel = Math.min(achievementObject.get("skyblock_gatherer").getAsInt(), 50);
