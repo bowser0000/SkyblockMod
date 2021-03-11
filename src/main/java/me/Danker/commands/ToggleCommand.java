@@ -18,6 +18,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 	public static boolean goldenToggled;
 	public static boolean slayerCountTotal;
 	public static boolean rngesusAlerts;
+	public static boolean ghostDisplay;
 	public static boolean splitFishing;
 	public static boolean chatMaddoxToggled;
 	public static boolean spiritBearAlerts;
@@ -25,6 +26,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 	public static boolean lividDaggerToggled;
 	public static boolean petColoursToggled;
 	public static boolean dungeonTimerToggled;
+	public static boolean ghostTimerToggled;
 	public static boolean golemAlertToggled;
 	public static boolean expertiseLoreToggled;
 	public static boolean skill50DisplayToggled;
@@ -78,8 +80,8 @@ public class ToggleCommand extends CommandBase implements ICommand {
 	@Override
 	public String getCommandUsage(ICommandSender arg0) {
 
-		return "/" + getCommandName() + " <gparty/coords/golden/slayercount/rngesusalerts/splitfishing/chatmaddox/spiritbearalert/" + 
-										  "aotd/lividdagger/flowerweapons/sceptremessages/petcolors/dungeontimer/golemalerts/expertiselore/" +
+		return "/" + getCommandName() + " <gparty/coords/golden/slayercount/rngesusalerts/ghostdisplay/splitfishing/chatmaddox/spiritbearalert/" +
+										  "aotd/lividdagger/flowerweapons/sceptremessages/petcolors/dungeontimer/golemalerts/expertiselore/" + //ghosttimer
 										  "skill50display/outlinetext/midasstaffmessages/implosionmessages/healmessages/cooldownmessages/" +
 										  "manamessages/killcombomessages/caketimer/lowhealthnotify/lividsolver/stopsalvagestarred/" +
 										  "notifyslayerslain/necronnotifications/bonzotimer/threemanpuzzle/oruopuzzle/blazepuzzle/" +
@@ -96,9 +98,9 @@ public class ToggleCommand extends CommandBase implements ICommand {
 	@Override
 	public List<String> addTabCompletionOptions(ICommandSender sender, String[] args, BlockPos pos) {
 		if (args.length == 1) {
-			return getListOfStringsMatchingLastWord(args, "gparty", "coords", "golden", "slayercount", "rngesusalerts",
+			return getListOfStringsMatchingLastWord(args, "gparty", "coords", "golden", "slayercount", "rngesusalerts", "ghostdisplay",
 														  "splitfishing", "chatmaddox", "spiritbearalerts", "aotd", "lividdagger",
-														  "flowerweapons", "sceptremessages", "petcolors", "dungeontimer", "golemalerts",
+														  "flowerweapons", "sceptremessages", "petcolors", "dungeontimer", /*"ghosttimer",*/ "golemalerts",
 														  "expertiselore", "skill50display", "outlinetext", "midasstaffmessages",
 														  "implosionmessages", "healmessages", "cooldownmessages", "manamessages",
 														  "killcombomessages", "caketimer", "lowhealthnotify", "autoskilltracker", "lividsolver",
@@ -147,6 +149,11 @@ public class ToggleCommand extends CommandBase implements ICommand {
 				rngesusAlerts = !rngesusAlerts;
 				ConfigHandler.writeBooleanConfig("toggles", "RNGesusAlerts", rngesusAlerts);
 				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Slayer RNGesus alerts has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + rngesusAlerts + DankersSkyblockMod.MAIN_COLOUR + "."));
+				break;
+			case "ghostDisplay":
+				ghostDisplay = !ghostDisplay;
+				ConfigHandler.writeBooleanConfig("toggles", "GhostDisplay", ghostDisplay);
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Ghost Display has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + ghostDisplay + DankersSkyblockMod.MAIN_COLOUR + "."));
 				break;
 			case "splitfishing":
 				splitFishing = !splitFishing;
@@ -224,6 +231,11 @@ public class ToggleCommand extends CommandBase implements ICommand {
 				ConfigHandler.writeBooleanConfig("toggles", "DungeonTimer", dungeonTimerToggled);
 				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Dungeon timer has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + dungeonTimerToggled + DankersSkyblockMod.MAIN_COLOUR + "."));
 				break;
+			/*case "ghostTimer":
+				ghostTimerToggled = !ghostTimerToggled;
+				ConfigHandler.writeBooleanConfig("toggles", "GhostTimer", ghostTimerToggled);
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Ghost timer has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + ghostTimerToggled + DankersSkyblockMod.MAIN_COLOUR + "."));
+				break; */
 			case "golemalerts":
 				golemAlertToggled = !golemAlertToggled;
 				ConfigHandler.writeBooleanConfig("toggles", "GolemAlerts", golemAlertToggled);

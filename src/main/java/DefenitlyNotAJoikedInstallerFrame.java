@@ -155,7 +155,7 @@ public class DefenitlyNotAJoikedInstallerFrame extends JFrame implements ActionL
                 versionInfo.setFont(new Font(Font.DIALOG, Font.BOLD, 14));
                 versionInfo.setHorizontalAlignment(SwingConstants.CENTER);
                 versionInfo.setPreferredSize(new Dimension(w, h));
-                versionInfo.setText("<html><body>Danker's SkyblockMod - Installer by Biscuit <br><center> for Minecraft 1.8.9</center></body></html>");
+                versionInfo.setText("<html><body>Danker's Skyblock Mod - Installer by Biscuit <br><center> for Minecraft 1.8.9</center></body></html>");
 
                 y += h-5;
             } catch (Throwable ivjExc) {
@@ -175,7 +175,7 @@ public class DefenitlyNotAJoikedInstallerFrame extends JFrame implements ActionL
                 descriptionText = new JTextArea();
                 descriptionText.setName("TextArea");
                 setTextAreaProperties(descriptionText);
-                descriptionText.setText("This installer will copy Danker's SkyblockMod into your forge mods folder for you, and replace any old versions that already exist. " +
+                descriptionText.setText("This installer will copy Danker's Skyblock Mod into your forge mods folder for you, and replace any old versions that already exist. " +
                         "Close this if you prefer to do this yourself!");
                 descriptionText.setWrapStyleWord(true);
 
@@ -479,7 +479,7 @@ public class DefenitlyNotAJoikedInstallerFrame extends JFrame implements ActionL
                     if (mcModInfo != null) {
                         InputStream inputStream = jarFile.getInputStream(mcModInfo);
                         String modID = getModIDFromInputStream(inputStream);
-                        if (modID.equals("dankersskyblockmod")) {
+                        if (modID.equals("Danker's Skyblock Mod")) {
                             jarFile.close();
                             try {
                                 boolean deleted = file.delete();
@@ -589,11 +589,11 @@ public class DefenitlyNotAJoikedInstallerFrame extends JFrame implements ActionL
     }
 
     public void showMessage(String message) {
-        JOptionPane.showMessageDialog(null, message, "Danker's SkyblockMod", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(null, message, "Danker's Skyblock Mod", JOptionPane.INFORMATION_MESSAGE);
     }
 
     public void showErrorMessage(String message) {
-        JOptionPane.showMessageDialog(null, message, "Danker's SkyblockMod - Error", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(null, message, "Danker's Skyblock Mod - Error", JOptionPane.ERROR_MESSAGE);
     }
 
     public enum OperatingSystem {
