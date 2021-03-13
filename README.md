@@ -53,6 +53,7 @@ Discord Server: https://discord.gg/QsEkNQS
 - API commands
 - Update checker
 - Reparty command
+- Highlight Slayer Bosses
 
 ## Commands
 - /dhelp - Returns this message in-game.
