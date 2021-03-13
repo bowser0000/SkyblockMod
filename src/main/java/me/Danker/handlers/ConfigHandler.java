@@ -214,6 +214,8 @@ public class ConfigHandler {
 		ToggleCommand.goldenToggled = initBoolean("toggles", "Golden", false);
 		ToggleCommand.slayerCountTotal = initBoolean("toggles", "SlayerCount", true);
 		ToggleCommand.rngesusAlerts = initBoolean("toggles", "RNGesusAlerts", false);
+		ToggleCommand.ghostDisplay = initBoolean("toggles", "GhostDisplay", true);
+		ToggleCommand.dungeonTimerToggled = initBoolean("toggles", "GhostTimer", false);
 		ToggleCommand.splitFishing = initBoolean("toggles", "SplitFishing", true);
 		ToggleCommand.chatMaddoxToggled = initBoolean("toggles", "ChatMaddox", false);
 		ToggleCommand.spiritBearAlerts = initBoolean("toggles", "SpiritBearAlerts", false);
@@ -437,7 +439,15 @@ public class ConfigHandler {
 		LootTracker.witherBoots = initInt("catacombs", "witherBoot", 0);
 		LootTracker.f7CoinsSpent = initDouble("catacombs", "floorSevenCoins", 0);
 		LootTracker.f7TimeSpent = initDouble("catacombs", "floorSevenTime", 0);
-		
+
+		// Ghost
+		LootTracker.sorrows = initInt("ghosts", "sorrow", 0);
+		LootTracker.voltas = initInt("ghosts", "volta", 0);
+		LootTracker.plasmas = initInt("ghosts", "plasma", 0);
+		LootTracker.ghostlyBoots = initInt("ghosts", "ghostlyBoots", 0);
+		LootTracker.bagOfCashs = initInt("ghosts", "bagOfCash", 0);
+
+
 		// Misc
 		LootDisplay.display = initString("misc", "display", "off");
 		LootDisplay.auto = initBoolean("misc", "autoDisplay", false);
