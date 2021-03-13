@@ -80,7 +80,7 @@ public class SlayerESP {
     public void onChat(ClientChatReceivedEvent event) {
         if (!Utils.inSkyblock) return;
         String message = StringUtils.stripControlCodes(event.message.getUnformattedText());
-        if (message.contains("SLAYER QUEST COMPLETE!")) {
+        if (message.contains("SLAYER QUEST COMPLETE!") || message.contains("SLAYER QUEST FAILED!")) {
             slayerActive = false;
         }
 
