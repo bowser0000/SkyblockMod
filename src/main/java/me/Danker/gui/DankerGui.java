@@ -30,6 +30,7 @@ public class DankerGui extends GuiScreen {
 	private GuiButton puzzleSolvers;
 	private GuiButton experimentationTableSolvers;
 	private GuiButton skillTracker;
+	private GuiButton highlightArachne;
 	// Toggles
 	private GuiButton gparty;
 	private GuiButton coords;
@@ -70,7 +71,7 @@ public class DankerGui extends GuiScreen {
 	private GuiButton necronNotifications;
 	private GuiButton bonzoTimer;
 	private GuiButton autoSkillTracker;
-	
+
 	public DankerGui(int page) {
 		this.page = page;
 	}
@@ -144,6 +145,9 @@ public class DankerGui extends GuiScreen {
 		shadowFury = new GuiButton(0, width / 2 - 100, (int) (height * 0.5), "Block Shadow Fury ability: " + Utils.getColouredBoolean(ToggleCommand.shadowFuryToggled));
 		specialHoe = new GuiButton(0, width / 2 - 100, (int) (height * 0.6), "Block Special Hoe right click: " + Utils.getColouredBoolean(ToggleCommand.specialHoeRightClick));
 		melodyTooltips = new GuiButton(0, width / 2 - 100, (int) (height * 0.7), "Hide tooltips in Melody's Harp: " + Utils.getColouredBoolean(ToggleCommand.melodyTooltips));
+		//Page 7
+		highlightArachne =new GuiButton(0, width / 2 - 100, (int) (height * 0.1), "Highlight Arachne: " + Utils.getColouredBoolean(ToggleCommand.highlightArachne));
+
 
 		switch (page) {
 			case 1:
@@ -211,6 +215,8 @@ public class DankerGui extends GuiScreen {
 				this.buttonList.add(melodyTooltips);
 				this.buttonList.add(backPage);
 				break;
+			case 7:
+				this.buttonList.add(highlightArachne);
 		}
 		
 		this.buttonList.add(githubLink);
