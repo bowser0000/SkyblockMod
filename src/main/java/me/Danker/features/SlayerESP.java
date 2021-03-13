@@ -17,6 +17,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
@@ -46,10 +47,19 @@ public class SlayerESP {
     public void onTick(TickEvent.ClientTickEvent event) {
         //if (!Utils.inSkyblock) return;
         if (event.phase != TickEvent.Phase.START) return;
-        
+
         World world = Minecraft.getMinecraft().theWorld;
-        if (DankersSkyblockMod.tickAmount % 2 == 0) {
+        if (DankersSkyblockMod.tickAmount % 2 == 0 && ToggleCommand.highlightSlayers) {
             if (world != null) {
+                for (String line : ScoreboardHandler.getSidebarLines()) {
+
+                    String cleanedLine = ScoreboardHandler.cleanSB(line);
+                    if (cleanedLine.contains("Slay the boss!")) {
+                        slayerActive = true;
+                        break;
+                    }
+                }
+                if (!slayerActive) return;
                 List<Entity> entities = world.getLoadedEntityList();
                 for (Entity e : entities) {
                     System.out.println(e.getName());
@@ -68,32 +78,19 @@ public class SlayerESP {
 
     @SubscribeEvent
     public void onChat(ClientChatReceivedEvent event) {
-        //if (!Utils.inSkyblock) return;
+        if (!Utils.inSkyblock) return;
         String message = StringUtils.stripControlCodes(event.message.getUnformattedText());
         if (message.contains("SLAYER QUEST COMPLETE!")) {
             slayerActive = false;
         }
 
     }
-    @SubscribeEvent
-    public void onAttackingEntity(AttackEntityEvent event) {
-        if (event.target instanceof EntityZombie || event.target instanceof EntitySpider || event.target instanceof EntityWolf) {
-            List<String> scoreboard = ScoreboardHandler.getSidebarLines();
 
-            for (String line : scoreboard) {
-                String cleanedLine = ScoreboardHandler.cleanSB(line);
-                if (cleanedLine.contains("Slay the boss!")) {
-                    slayerActive = true;
-                    break;
-                }
-            }
-        }
-    }
 
     @SubscribeEvent
     public void onWorldRender(RenderWorldLastEvent event) {
-        //if (!Utils.inSkyblock) return;
-        if (slayerActive) {
+        if (!Utils.inSkyblock) return;
+        if (slayerActive && ToggleCommand.highlightSlayers) {
             if (zombie != null) {
                 AxisAlignedBB aabb = new AxisAlignedBB(zombie.posX - 0.5, zombie.posY - 2, zombie.posZ - 0.5, zombie.posX + 0.5, zombie.posY, zombie.posZ + 0.5);
                 Utils.draw3DBox(aabb, SLAYER_COLOUR, event.partialTicks);

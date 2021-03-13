@@ -33,6 +33,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 	public static boolean skill50DisplayToggled;
 	public static boolean outlineTextToggled;
 	public static boolean cakeTimerToggled;
+	public static boolean highlightSlayers;
 	// Chat Messages
 	public static boolean sceptreMessages;
 	public static boolean midasStaffMessages;
@@ -90,7 +91,8 @@ public class ToggleCommand extends CommandBase implements ICommand {
 										  "notifyslayerslain/necronnotifications/bonzotimer/threemanpuzzle/oruopuzzle/blazepuzzle/" +
 										  "creeperpuzzle/waterpuzzle/tictactoepuzzle/boulderpuzzle/silverfishpuzzle/watchermessage/" +
 										  "startswithterminal/selectallterminal/clickinorderterminal/blockwrongterminalclicks/" +
-										  "itemframeonsealanterns/ultrasequencer/chronomatron/superpairs/hidetooltipsinaddons/pickblock/list>";
+										  "itemframeonsealanterns/ultrasequencer/chronomatron/superpairs/hidetooltipsinaddons/pickblock/ " +
+										  "/specialhoe/melodytooltips/highlightslayers/list>";
 	}
 
 	@Override
@@ -101,9 +103,9 @@ public class ToggleCommand extends CommandBase implements ICommand {
 	@Override
 	public List<String> addTabCompletionOptions(ICommandSender sender, String[] args, BlockPos pos) {
 		if (args.length == 1) {
-			return getListOfStringsMatchingLastWord(args, "gparty", "coords", "golden", "slayercount", "rngesusalerts", "ghostdisplay",
+			return getListOfStringsMatchingLastWord(args, "gparty", "coords", "golden", "slayercount", "rngesusalerts",
 														  "splitfishing", "chatmaddox", "spiritbearalerts", "aotd", "lividdagger", "shadowfury",
-														  "flowerweapons", "sceptremessages", "petcolors", "dungeontimer", /*"ghosttimer",*/"golemalerts",
+														  "flowerweapons", "sceptremessages", "petcolors", "dungeontimer", "golemalerts",
 														  "expertiselore", "skill50display", "outlinetext", "midasstaffmessages",
 														  "implosionmessages", "healmessages", "cooldownmessages", "manamessages",
 														  "killcombomessages", "caketimer", "lowhealthnotify", "autoskilltracker", "lividsolver",
@@ -113,7 +115,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 														  "silverfishpuzzle", "watchermessage", "startswithterminal",
 														  "selectallterminal", "clickinorderterminal", "blockwrongterminalclicks",
 														  "itemframeonsealanterns", "ultrasequencer", "chronomatron", "superpairs",
-														  "hidetooltipsinaddons", "pickblock", "specialhoe", "melodytooltips", "list");
+														  "hidetooltipsinaddons", "pickblock", "specialhoe", "melodytooltips", "highlightslayers", "list");
 		}
 		return null;
 	}
@@ -409,6 +411,11 @@ public class ToggleCommand extends CommandBase implements ICommand {
 				ConfigHandler.writeBooleanConfig("toggles", "MelodyTooltips", melodyTooltips);
 				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Hide tooltips in Melody's Harp " + DankersSkyblockMod.SECONDARY_COLOUR + melodyTooltips + DankersSkyblockMod.MAIN_COLOUR + "."));
 				break;
+			case "highlightslayers":
+				highlightSlayers = !highlightSlayers;
+				ConfigHandler.writeBooleanConfig("toggles", "HighlightSlayers", highlightSlayers);
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Highlight Slayer Bosses " + DankersSkyblockMod.SECONDARY_COLOUR + highlightSlayers + DankersSkyblockMod.MAIN_COLOUR + "."));
+				break;
 			case "list":
 				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.TYPE_COLOUR + "Guild party notifications: " + DankersSkyblockMod.VALUE_COLOUR + gpartyToggled + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Coord/Angle display: " + DankersSkyblockMod.VALUE_COLOUR + coordsToggled + "\n" +
@@ -427,7 +434,6 @@ public class ToggleCommand extends CommandBase implements ICommand {
 															DankersSkyblockMod.TYPE_COLOUR + " Heal messages: " + DankersSkyblockMod.VALUE_COLOUR + healMessages + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Ability cooldown messages: " + DankersSkyblockMod.VALUE_COLOUR + cooldownMessages + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Out of mana messages: " + DankersSkyblockMod.VALUE_COLOUR + manaMessages + "\n" +
-															DankersSkyblockMod.TYPE_COLOUR + " Kill combo messages: " + DankersSkyblockMod.VALUE_COLOUR + killComboMessages + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Pet colours: " + DankersSkyblockMod.VALUE_COLOUR + petColoursToggled + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Dungeon timer: " + DankersSkyblockMod.VALUE_COLOUR + dungeonTimerToggled + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Golem spawn alerts: " + DankersSkyblockMod.VALUE_COLOUR + golemAlertToggled + "\n" +
@@ -456,7 +462,8 @@ public class ToggleCommand extends CommandBase implements ICommand {
 															DankersSkyblockMod.TYPE_COLOUR + " Hide tooltips in experiment addons: " + DankersSkyblockMod.VALUE_COLOUR + hideTooltipsInExperimentAddonsToggled + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Auto-swap to pick block " + DankersSkyblockMod.VALUE_COLOUR + swapToPickBlockToggled + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Block Special Hoe right click " + DankersSkyblockMod.VALUE_COLOUR + specialHoeRightClick + "\n" +
-															DankersSkyblockMod.TYPE_COLOUR + " Hide tooltips in Melody's Harp " + DankersSkyblockMod.VALUE_COLOUR + melodyTooltips
+															DankersSkyblockMod.TYPE_COLOUR + " Hide tooltips in Melody's Harp " + DankersSkyblockMod.VALUE_COLOUR + melodyTooltips + "\n" +
+															DankersSkyblockMod.TYPE_COLOUR + " Highlight Slayer Bosses " + DankersSkyblockMod.VALUE_COLOUR + highlightSlayers
 				));
 				break;
 			default:
