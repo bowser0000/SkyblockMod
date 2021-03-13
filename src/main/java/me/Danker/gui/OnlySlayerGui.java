@@ -1,10 +1,13 @@
 package me.Danker.gui;
 
 import me.Danker.DankersSkyblockMod;
+import me.Danker.commands.ToggleCommand;
 import me.Danker.features.BlockWrongSlayer;
 import me.Danker.handlers.ConfigHandler;
 import me.Danker.handlers.TextRenderer;
+import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;
@@ -23,6 +26,7 @@ public class OnlySlayerGui extends GuiScreen {
 	private GuiButton two;
 	private GuiButton three;
 	private GuiButton four;
+	private GuiButton highlightSlayers;
 	
 	@Override
 	public boolean doesGuiPauseGame() {
@@ -62,6 +66,7 @@ public class OnlySlayerGui extends GuiScreen {
 		two = new GuiButton(0, width / 2 - 95, (int) (height * 0.6), 85, 20, "II");
 		three = new GuiButton(0, width / 2 + 10, (int) (height * 0.6), 85, 20, "III");
 		four = new GuiButton(0, width / 2 + 115, (int) (height * 0.6), 85, 20, "IV");
+		highlightSlayers = new GuiButton(0, width / 2 - 100, (int) (height * 0.7), "Highlight Slayer Bosses: " + Utils.getColouredBoolean(ToggleCommand.highlightSlayers));
 		
 		this.buttonList.add(off);
 		this.buttonList.add(zombie);
@@ -71,6 +76,7 @@ public class OnlySlayerGui extends GuiScreen {
 		this.buttonList.add(two);
 		this.buttonList.add(three);
 		this.buttonList.add(four);
+		this.buttonList.add(highlightSlayers);
 		this.buttonList.add(goBack);
 	}
 	
@@ -115,6 +121,10 @@ public class OnlySlayerGui extends GuiScreen {
 			onlyNumberInt = 3;
 		} else if (button == four) {
 			onlyNumberInt = 4;
+		} else if (button == highlightSlayers) {
+			ToggleCommand.highlightSlayers = !ToggleCommand.highlightSlayers;
+			ConfigHandler.writeBooleanConfig("toggles", "HighlightSlayers", ToggleCommand.highlightSlayers);
+			highlightSlayers.displayString = "Highlight Slayer Bosses: " + Utils.getColouredBoolean(ToggleCommand.highlightSlayers);
 		}
 		
 		String onlyNumber;
