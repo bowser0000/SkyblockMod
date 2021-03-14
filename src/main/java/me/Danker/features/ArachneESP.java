@@ -42,7 +42,7 @@ public class ArachneESP {
         arachne = null;
     }
 
-    public boolean isSpidersDen(List<String> scoreboard) {
+    public boolean inSpidersDen(List<String> scoreboard) {
         for (String s : scoreboard) {
             if (ScoreboardHandler.cleanSB(s).contains("Spiders Den")) {
                 return true;
@@ -52,48 +52,34 @@ public class ArachneESP {
     }
 
     @SubscribeEvent
-    public void onTick(TickEvent.ClientTickEvent event) {
-        if (!Utils.inSkyblock) return;
-        if (event.phase != TickEvent.Phase.START) return;
-
-        World world = Minecraft.getMinecraft().theWorld;
-        if (DankersSkyblockMod.tickAmount % 2 == 0 && ToggleCommand.highlightArachne) {
-            if (world != null) {
-
-                List<Entity> entities = world.getLoadedEntityList();
-                List<String> scoreboard = ScoreboardHandler.getSidebarLines();
-                if (!isSpidersDen(scoreboard)) return;
-                if (!arachneActive) return;
-                for (Entity e : entities) {
-                    if (e.getName().contains("Arachne") && !e.getName().contains("Arachne's Brood")) {
-                            arachne = e;
-                    }
-                }
-            }
-        }
-    }
-
-    @SubscribeEvent
     public void onChat(ClientChatReceivedEvent event) {
         if (!Utils.inSkyblock) return;
+        if (!inSpidersDen(ScoreboardHandler.getSidebarLines())) return;
         String message = StringUtils.stripControlCodes(event.message.getUnformattedText());
         if (message.contains("Something is awakening")){
             arachneActive = true;
+            World world = Minecraft.getMinecraft().theWorld;
+            List<Entity> entities = world.getLoadedEntityList();
+            for (Entity e : entities) {
+                if (e.getName().contains("Arachne") && !e.getName().contains("Arachne's Brood")) {
+                    arachne = e;
+                }
+            }
         }
         if (message.contains("ARACHNE DOWN!")) {
             arachneActive = false;
+            arachne = null;
         }
     }
-
 
     @SubscribeEvent
     public void onWorldRender(RenderWorldLastEvent event) {
         if (!Utils.inSkyblock) return;
-        if (arachneActive && ToggleCommand.highlightArachne) {
-            if (arachne != null) {
-                AxisAlignedBB aabb = new AxisAlignedBB(arachne.posX - 0.5, arachne.posY - 1, arachne.posZ - 0.5, arachne.posX + 0.5, arachne.posY, arachne.posZ + 0.5);
-                Utils.draw3DBox(aabb, ARACHANE_COLOUR, event.partialTicks);
-            }
+        if (arachne != null) {
+            if (arachneActive && ToggleCommand.highlightArachne) {
+                    AxisAlignedBB aabb = new AxisAlignedBB(arachne.posX - 0.5, arachne.posY - 1, arachne.posZ - 0.5, arachne.posX + 0.5, arachne.posY, arachne.posZ + 0.5);
+                    Utils.draw3DBox(aabb, ARACHANE_COLOUR, event.partialTicks);
+                }
         }
     }
 
