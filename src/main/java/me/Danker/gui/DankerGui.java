@@ -420,7 +420,7 @@ public class DankerGui extends GuiScreen {
 		} else if (button == highlightArachne) {
 			ToggleCommand.highlightArachne = !ToggleCommand.highlightArachne;
 			ConfigHandler.writeBooleanConfig("toggles", "HighlightArachne", ToggleCommand.highlightArachne);
-			highlightArachne.displayString = "Kill Combo Messages: " + Utils.getColouredBoolean(ToggleCommand.highlightArachne);
+			highlightArachne.displayString = "Highlight Arachne: " + Utils.getColouredBoolean(ToggleCommand.highlightArachne);
 		}
 	}
 	

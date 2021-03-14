@@ -42,27 +42,33 @@ public class ArachneESP {
         arachne = null;
     }
 
+    public boolean isSpidersDen(List<String> scoreboard) {
+        for (String s : scoreboard) {
+            if (ScoreboardHandler.cleanSB(s).contains("Spiders Den")) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     @SubscribeEvent
     public void onTick(TickEvent.ClientTickEvent event) {
-        //if (!Utils.inSkyblock) return;
+        if (!Utils.inSkyblock) return;
         if (event.phase != TickEvent.Phase.START) return;
 
         World world = Minecraft.getMinecraft().theWorld;
         if (DankersSkyblockMod.tickAmount % 2 == 0 && ToggleCommand.highlightArachne) {
             if (world != null) {
-                if (!arachneActive) return;
+
                 List<Entity> entities = world.getLoadedEntityList();
                 List<String> scoreboard = ScoreboardHandler.getSidebarLines();
+                //if (!isSpidersDen(scoreboard)) return;
+                if (!arachneActive) return;
                 for (Entity e : entities) {
                     System.out.println(e.getName());
-                    if (e.getName().contains("Arachne")) {
-                        for (String s : scoreboard) {
-                            if (ScoreboardHandler.cleanSB(s).contains("Spiders Den")) {
-                                arachne = e;
-                            }
-                        }
+                    if (e.getName().contains("Arachne") && !e.getName().contains("Arachne's Brood")) {
+                            arachne = e;
                     }
-
                 }
             }
         }
@@ -72,8 +78,7 @@ public class ArachneESP {
     public void onChat(ClientChatReceivedEvent event) {
         if (!Utils.inSkyblock) return;
         String message = StringUtils.stripControlCodes(event.message.getUnformattedText());
-
-        if (message.contains("You dare call me, the queen of the dark, to accept you. I'll accept no excuses, you shall die!") || message.contains("Hahahahaha, YOU MORTAL FOOL! You dare to summon me at my full strength to this plane, you are seeking death. With this power, I will not let a weakling survive here, this land will be a brilliant place to start a new invasion of my empire. Tremble beneath me if you wish to survive!") || message.contains("placed an Arachne Keeper Fragment! Something is awakening! (4/4)")){
+        if (message.contains("Something is awakening (4/4)") || message.contains("Hahahahaha, YOU MORTAL FOOL! You dare to summon me at my full strength to this plane, you are seeking death. With this power, I will not let a weakling survive here, this land will be a brilliant place to start a new invasion of my empire. Tremble beneath me if you wish to survive!") || message.contains("placed an Arachne Keeper Fragment! Something is awakening! (4/4)")){
             arachneActive = true;
         }
         if (message.contains("You are lucky this time, you only called out a portion of my power, if you dared to my face me at my peak, you would not survive!") || message.contains("How can this be...how could I lose to a puny being like you...I shall get my revenge") || message.contains("Arachne is bored with your feeble attempt!" ) || message.contains (" dealt the final blow")){
@@ -85,11 +90,11 @@ public class ArachneESP {
     @SubscribeEvent
     public void onWorldRender(RenderWorldLastEvent event) {
         if (!Utils.inSkyblock) return;
-                if (arachneActive && ToggleCommand.highlightArachne) {
-                    if (arachne != null) {
-                        AxisAlignedBB aabb = new AxisAlignedBB(arachne.posX - 0.5, arachne.posY - 1, arachne.posZ - 0.5, arachne.posX + 0.5, arachne.posY, arachne.posZ + 0.5);
-                        Utils.draw3DBox(aabb, ARACHANE_COLOUR, event.partialTicks);
-                    }
+        if (arachneActive && ToggleCommand.highlightArachne) {
+            if (arachne != null) {
+                AxisAlignedBB aabb = new AxisAlignedBB(arachne.posX - 0.5, arachne.posY - 1, arachne.posZ - 0.5, arachne.posX + 0.5, arachne.posY, arachne.posZ + 0.5);
+                Utils.draw3DBox(aabb, ARACHANE_COLOUR, event.partialTicks);
+            }
         }
     }
 
