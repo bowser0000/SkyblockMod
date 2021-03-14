@@ -59,7 +59,7 @@ import java.util.Map;
 @Mod(modid = DankersSkyblockMod.MODID, version = DankersSkyblockMod.VERSION, clientSideOnly = true)
 public class DankersSkyblockMod {
     public static final String MODID = "Danker's Skyblock Mod";
-    public static final String VERSION = "1.8.6-beta2";
+    public static final String VERSION = "1.8.6-beta3";
     public static int titleTimer = -1;
     public static boolean showTitle = false;
     public static String titleText = "";
@@ -104,6 +104,7 @@ public class DankersSkyblockMod {
         MinecraftForge.EVENT_BUS.register(new GolemSpawningAlert());
         MinecraftForge.EVENT_BUS.register(new GpartyNotifications());
         MinecraftForge.EVENT_BUS.register(new HideTooltipsInExperiments());
+        MinecraftForge.EVENT_BUS.register(new IceWalkSolver());
         MinecraftForge.EVENT_BUS.register(new LividSolver());
         MinecraftForge.EVENT_BUS.register(new LootDisplay());
         MinecraftForge.EVENT_BUS.register(new LootTracker());

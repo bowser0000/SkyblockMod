@@ -254,6 +254,7 @@ public class ConfigHandler {
 		ToggleCommand.ticTacToeToggled = initBoolean("toggles", "TicTacToePuzzle", false);
 		ToggleCommand.boulderToggled = initBoolean("toggles", "BoulderPuzzle", false);
 		ToggleCommand.silverfishToggled = initBoolean("toggles", "SilverfishPuzzle", false);
+		ToggleCommand.iceWalkToggled = initBoolean("toggles", "IceWalkPuzzle", false);
 		ToggleCommand.startsWithToggled = initBoolean("toggles", "StartsWithTerminal", false);
 		ToggleCommand.selectAllToggled = initBoolean("toggles", "SelectAllTerminal", false);
 		ToggleCommand.clickInOrderToggled = initBoolean("toggles", "ClickInOrderTerminal", false);
@@ -513,6 +514,7 @@ public class ConfigHandler {
 		BoulderSolver.BOULDER_COLOUR = initInt("colors", "boulder", 0x197F19);
 		BoulderSolver.BOULDER_ARROW_COLOUR = initInt("colors", "boulderArrow", 0x006000);
 		SilverfishSolver.SILVERFISH_LINE_COLOUR = initInt("colors", "silverfishLine", 0x40FF40);
+		IceWalkSolver.ICE_WALK_LINE_COLOUR = initInt("colors", "iceWalkLine", 0x40FF40);
 
 		// Commands
 		if (!hasKey("commands", "reparty")) writeBooleanConfig("commands", "reparty", false);

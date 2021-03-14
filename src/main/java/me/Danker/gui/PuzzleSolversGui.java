@@ -24,6 +24,7 @@ public class PuzzleSolversGui extends GuiScreen {
 	private GuiButton ticTacToe;
 	private GuiButton boulder;
 	private GuiButton silverfish;
+	private GuiButton iceWalk;
 	private GuiButton startsWith;
 	private GuiButton selectAll;
 	private GuiButton clickOrder;
@@ -61,11 +62,12 @@ public class PuzzleSolversGui extends GuiScreen {
 		boulder = new GuiButton(0, width / 2 - 100, (int) (height * 0.7), "Boulder Solver: " + Utils.getColouredBoolean(ToggleCommand.boulderToggled));
 		// Page 2
 		silverfish = new GuiButton(0, width / 2 - 100, (int) (height * 0.1), "Silverfish Solver: " + Utils.getColouredBoolean(ToggleCommand.silverfishToggled));
-		startsWith = new GuiButton(0, width / 2 - 100, (int) (height * 0.2), "Starts With Letter Terminal Solver: " + Utils.getColouredBoolean(ToggleCommand.startsWithToggled));
-		selectAll = new GuiButton(0, width / 2 - 100, (int) (height * 0.3), "Select All Color Terminal Solver: " + Utils.getColouredBoolean(ToggleCommand.selectAllToggled));
-		clickOrder = new GuiButton(0, width / 2 - 100, (int) (height * 0.4), "Click in Order Terminal Helper: " + Utils.getColouredBoolean(ToggleCommand.clickInOrderToggled));
-		blockClicks = new GuiButton(0, width / 2 - 100, (int) (height * 0.5), "Block Wrong Clicks on Terminals: " + Utils.getColouredBoolean(ToggleCommand.blockWrongTerminalClicksToggled));
-		itemFrameOnSeaLanterns = new GuiButton(0, width / 2 - 100, (int) (height * 0.6), "Ignore Arrows On Sea Lanterns: " + Utils.getColouredBoolean(ToggleCommand.itemFrameOnSeaLanternsToggled));
+		iceWalk = new GuiButton(0, width / 2 - 100, (int) (height * 0.2), "Ice Walk Solver: " + Utils.getColouredBoolean(ToggleCommand.iceWalkToggled));
+		startsWith = new GuiButton(0, width / 2 - 100, (int) (height * 0.3), "Starts With Letter Terminal Solver: " + Utils.getColouredBoolean(ToggleCommand.startsWithToggled));
+		selectAll = new GuiButton(0, width / 2 - 100, (int) (height * 0.4), "Select All Color Terminal Solver: " + Utils.getColouredBoolean(ToggleCommand.selectAllToggled));
+		clickOrder = new GuiButton(0, width / 2 - 100, (int) (height * 0.5), "Click in Order Terminal Helper: " + Utils.getColouredBoolean(ToggleCommand.clickInOrderToggled));
+		blockClicks = new GuiButton(0, width / 2 - 100, (int) (height * 0.6), "Block Wrong Clicks on Terminals: " + Utils.getColouredBoolean(ToggleCommand.blockWrongTerminalClicksToggled));
+		itemFrameOnSeaLanterns = new GuiButton(0, width / 2 - 100, (int) (height * 0.7), "Ignore Arrows On Sea Lanterns: " + Utils.getColouredBoolean(ToggleCommand.itemFrameOnSeaLanternsToggled));
 		
 		switch (page) {
 			case 1:
@@ -80,6 +82,7 @@ public class PuzzleSolversGui extends GuiScreen {
 				break;
 			case 2:
 				this.buttonList.add(silverfish);
+				this.buttonList.add(iceWalk);
 				this.buttonList.add(startsWith);
 				this.buttonList.add(selectAll);
 				this.buttonList.add(clickOrder);
@@ -137,6 +140,10 @@ public class PuzzleSolversGui extends GuiScreen {
 			ToggleCommand.silverfishToggled = !ToggleCommand.silverfishToggled;
 			ConfigHandler.writeBooleanConfig("toggles", "SilverfishPuzzle", ToggleCommand.silverfishToggled);
 			silverfish.displayString = "Silverfish Solver: " + Utils.getColouredBoolean(ToggleCommand.silverfishToggled);
+		} else if (button == iceWalk) {
+			ToggleCommand.iceWalkToggled = !ToggleCommand.iceWalkToggled;
+			ConfigHandler.writeBooleanConfig("toggles", "IceWalkPuzzle", ToggleCommand.iceWalkToggled);
+			iceWalk.displayString = "Ice Walk Solver: " + Utils.getColouredBoolean(ToggleCommand.iceWalkToggled);
 		} else if (button == startsWith) {
 			ToggleCommand.startsWithToggled = !ToggleCommand.startsWithToggled;
 			ConfigHandler.writeBooleanConfig("toggles", "StartsWithTerminal", ToggleCommand.startsWithToggled);
