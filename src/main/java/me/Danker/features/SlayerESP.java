@@ -6,6 +6,7 @@ import me.Danker.handlers.ScoreboardHandler;
 import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.item.EntityArmorStand;
 import net.minecraft.entity.monster.EntitySpider;
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.passive.EntityWolf;
@@ -45,32 +46,29 @@ public class SlayerESP {
     
     @SubscribeEvent
     public void onTick(TickEvent.ClientTickEvent event) {
-        //if (!Utils.inSkyblock) return;
+        if (!Utils.inSkyblock) return;
         if (event.phase != TickEvent.Phase.START) return;
 
         World world = Minecraft.getMinecraft().theWorld;
+        if (world == null) return;
         if (DankersSkyblockMod.tickAmount % 2 == 0 && ToggleCommand.highlightSlayers) {
-            if (world != null) {
-                for (String line : ScoreboardHandler.getSidebarLines()) {
+            for (String line : ScoreboardHandler.getSidebarLines()) {
 
-                    String cleanedLine = ScoreboardHandler.cleanSB(line);
-                    if (cleanedLine.contains("Slay the boss!")) {
-                        slayerActive = true;
-                        break;
-                    }
+                String cleanedLine = ScoreboardHandler.cleanSB(line);
+                if (cleanedLine.contains("Slay the boss!")) {
+                    slayerActive = true;
+                    break;
                 }
-                if (!slayerActive) return;
-                List<Entity> entities = world.getLoadedEntityList();
-                for (Entity e : entities) {
-                    System.out.println(e.getName());
-                    if (e.getName().contains("Revenant Horror")) {
-                        zombie = e;
-                    } else if (e.getName().contains("Tarantula Broodfather")) {
-                        spider = e;
-                    } else if (e.getName().contains("Sven Packmaster")) {
-                        wolf = e;
-                    }
-
+            }
+            if (!slayerActive) return;
+            List<Entity> entities = world.getLoadedEntityList();
+            for (Entity e : entities) {
+                if (e.getName().contains("Revenant Horror")) {
+                    zombie = e;
+                } else if (e.getName().contains("Tarantula Broodfather")) {
+                    spider = e;
+                } else if (e.getName().contains("Sven Packmaster")) {
+                    wolf = e;
                 }
             }
         }

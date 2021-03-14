@@ -62,10 +62,9 @@ public class ArachneESP {
 
                 List<Entity> entities = world.getLoadedEntityList();
                 List<String> scoreboard = ScoreboardHandler.getSidebarLines();
-                //if (!isSpidersDen(scoreboard)) return;
+                if (!isSpidersDen(scoreboard)) return;
                 if (!arachneActive) return;
                 for (Entity e : entities) {
-                    System.out.println(e.getName());
                     if (e.getName().contains("Arachne") && !e.getName().contains("Arachne's Brood")) {
                             arachne = e;
                     }
