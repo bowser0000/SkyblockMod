@@ -78,10 +78,10 @@ public class ArachneESP {
     public void onChat(ClientChatReceivedEvent event) {
         if (!Utils.inSkyblock) return;
         String message = StringUtils.stripControlCodes(event.message.getUnformattedText());
-        if (message.contains("Something is awakening (4/4)") || message.contains("Hahahahaha, YOU MORTAL FOOL! You dare to summon me at my full strength to this plane, you are seeking death. With this power, I will not let a weakling survive here, this land will be a brilliant place to start a new invasion of my empire. Tremble beneath me if you wish to survive!") || message.contains("placed an Arachne Keeper Fragment! Something is awakening! (4/4)")){
+        if (message.contains("Something is awakening")){
             arachneActive = true;
         }
-        if (message.contains("You are lucky this time, you only called out a portion of my power, if you dared to my face me at my peak, you would not survive!") || message.contains("How can this be...how could I lose to a puny being like you...I shall get my revenge") || message.contains("Arachne is bored with your feeble attempt!" ) || message.contains (" dealt the final blow")){
+        if (message.contains("ARACHNE DOWN!")) {
             arachneActive = false;
         }
     }
