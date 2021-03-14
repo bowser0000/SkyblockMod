@@ -34,7 +34,7 @@ public class SlayerESP {
     static Entity spider = null;
     static Entity wolf = null;
     static boolean slayerActive = false;
-    public static final int SLAYER_COLOUR = 0xFF0000;
+    public static final int SLAYER_COLOUR = 0x0000FF;
 
     @SubscribeEvent
     public void onWorldChange(WorldEvent.Load event) {

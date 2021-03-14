@@ -214,9 +214,12 @@ public class DankerGui extends GuiScreen {
 				this.buttonList.add(specialHoe);
 				this.buttonList.add(melodyTooltips);
 				this.buttonList.add(backPage);
+				this.buttonList.add(nextPage);
 				break;
 			case 7:
 				this.buttonList.add(highlightArachne);
+				this.buttonList.add(backPage);
+				break;
 		}
 		
 		this.buttonList.add(githubLink);
@@ -228,7 +231,7 @@ public class DankerGui extends GuiScreen {
 	@Override
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
 		this.drawDefaultBackground();
-		String pageText = "Page: " + page + "/6";
+		String pageText = "Page: " + page + "/7";
 		int pageWidth = mc.fontRendererObj.getStringWidth(pageText);
 		new TextRenderer(mc, pageText, width / 2 - pageWidth / 2, 10, 1D);
 		super.drawScreen(mouseX, mouseY, partialTicks);
@@ -414,6 +417,10 @@ public class DankerGui extends GuiScreen {
 			ToggleCommand.killComboMessages = !ToggleCommand.killComboMessages;
 			ConfigHandler.writeBooleanConfig("toggles", "KillComboMessages", ToggleCommand.killComboMessages);
 			killComboMessages.displayString = "Kill Combo Messages: " + Utils.getColouredBoolean(ToggleCommand.killComboMessages);
+		} else if (button == highlightArachne) {
+			ToggleCommand.highlightArachne = !ToggleCommand.highlightArachne;
+			ConfigHandler.writeBooleanConfig("toggles", "HighlightArachne", ToggleCommand.highlightArachne);
+			highlightArachne.displayString = "Kill Combo Messages: " + Utils.getColouredBoolean(ToggleCommand.highlightArachne);
 		}
 	}
 	

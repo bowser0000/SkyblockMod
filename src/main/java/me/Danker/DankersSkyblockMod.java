@@ -130,6 +130,7 @@ public class DankersSkyblockMod {
         MinecraftForge.EVENT_BUS.register(new WatcherReadyAlert());
         MinecraftForge.EVENT_BUS.register(new WaterSolver());
         MinecraftForge.EVENT_BUS.register(new SlayerESP());
+        MinecraftForge.EVENT_BUS.register(new ArachneESP());
 
         ConfigHandler.reloadConfig();
         GoldenEnchants.init();
