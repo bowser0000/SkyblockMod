@@ -221,6 +221,8 @@ public class LootDisplay {
                             EnumChatFormatting.RED + "Revenant Catalysts:\n" +
                             EnumChatFormatting.DARK_GREEN + "Snake Runes:\n" +
                             EnumChatFormatting.GOLD + "Scythe Blades:\n" +
+                            EnumChatFormatting.RED + "Shard of Shreddeds:\n" +
+                            EnumChatFormatting.RED + "Warden Hearts:\n" +
                             EnumChatFormatting.AQUA + "Time Since RNG:\n" +
                             EnumChatFormatting.AQUA + "Bosses Since RNG:";
                     countText = EnumChatFormatting.GOLD + nf.format(LootTracker.zombieRevs) + "\n" +
@@ -233,6 +235,8 @@ public class LootDisplay {
                             EnumChatFormatting.RED + LootTracker.zombieRevCatas + "\n" +
                             EnumChatFormatting.DARK_GREEN + LootTracker.zombieSnakes + "\n" +
                             EnumChatFormatting.GOLD + LootTracker.zombieScythes + "\n" +
+                            EnumChatFormatting.RED + LootTracker.zombieShards + "\n" +
+                            EnumChatFormatting.RED + LootTracker.zombieWardenHearts + "\n" +
                             EnumChatFormatting.AQUA + timeBetween + "\n" +
                             EnumChatFormatting.AQUA + bossesBetween;
                     break;
@@ -263,6 +267,8 @@ public class LootDisplay {
                             EnumChatFormatting.RED + "Revenant Catalysts:\n" +
                             EnumChatFormatting.DARK_GREEN + "Snake Runes:\n" +
                             EnumChatFormatting.GOLD + "Scythe Blades:\n" +
+                            EnumChatFormatting.RED + "Shard of Shreddeds:\n" +
+                            EnumChatFormatting.RED + "Warden Hearts:\n" +
                             EnumChatFormatting.AQUA + "Time Since RNG:\n" +
                             EnumChatFormatting.AQUA + "Bosses Since RNG:";
                     countText = EnumChatFormatting.GOLD + nf.format(LootTracker.zombieRevsSession) + "\n" +
@@ -275,6 +281,8 @@ public class LootDisplay {
                             EnumChatFormatting.RED + LootTracker.zombieRevCatasSession + "\n" +
                             EnumChatFormatting.DARK_GREEN + LootTracker.zombieSnakesSession + "\n" +
                             EnumChatFormatting.GOLD + LootTracker.zombieScythes + "\n" +
+                            EnumChatFormatting.RED + LootTracker.zombieShardsSession + "\n" +
+                            EnumChatFormatting.RED + LootTracker.zombieWardenHeartsSession + "\n" +
                             EnumChatFormatting.AQUA + timeBetween + "\n" +
                             EnumChatFormatting.AQUA + bossesBetween;
                     break;

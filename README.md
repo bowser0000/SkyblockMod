@@ -72,7 +72,7 @@ Discord Server: https://discord.gg/QsEkNQS
 - /dungeons [player] - Uses API to get dungeon levels of a person. If no name is provided, it checks yours.
 - /importfishing - Imports your fishing stats from your latest profile to your fishing tracker using the API.
 - /sbplayers - Uses API to find how many players are on each Skyblock island.
-- /onlyslayer <zombie/spider/wolf> <1/2/3/4> - Stops you from starting a slayer quest other than the one specified.
+- /onlyslayer <zombie/spider/wolf> <1/2/3/4/5> - Stops you from starting a slayer quest other than the one specified.
 - /skilltracker <start/stop/reset> - Text display for skill xp/hour.
 - /reparty - Disbands and reparties all members in the party
 

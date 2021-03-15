@@ -227,6 +227,8 @@ public class LootCommand extends CommandBase {
 																EnumChatFormatting.RED + "    Revenant Catalysts: " + LootTracker.zombieRevCatasSession + "\n" +
 																EnumChatFormatting.DARK_GREEN + "    Snake Runes: " + LootTracker.zombieSnakesSession + "\n" +
 																EnumChatFormatting.GOLD + "    Scythe Blades: " + LootTracker.zombieScythesSession + "\n" +
+																EnumChatFormatting.RED + "    Shard of the Shreddeds: " + LootTracker.zombieShardsSession + "\n" +
+																EnumChatFormatting.RED + "    Warden Hearts: " + LootTracker.zombieWardenHeartsSession + "\n" +
 																EnumChatFormatting.AQUA + "    Time Since RNG: " + timeBetween + "\n" +
 																EnumChatFormatting.AQUA + "    Bosses Since RNG: " + bossesBetween + "\n" +
 																EnumChatFormatting.GREEN + EnumChatFormatting.BOLD + " -------------------"));
@@ -261,6 +263,8 @@ public class LootCommand extends CommandBase {
 															EnumChatFormatting.RED + "    Revenant Catalysts: " + LootTracker.zombieRevCatas + "\n" +
 															EnumChatFormatting.DARK_GREEN + "    Snake Runes: " + LootTracker.zombieSnakes + "\n" +
 															EnumChatFormatting.GOLD + "    Scythe Blades: " + LootTracker.zombieScythes + "\n" +
+															EnumChatFormatting.RED + "    Shard of the Shreddeds: " + LootTracker.zombieShards + "\n" +
+															EnumChatFormatting.RED + "    Warden Hearts: " + LootTracker.zombieWardenHearts + "\n" +
 															EnumChatFormatting.AQUA + "    Time Since RNG: " + timeBetween + "\n" +
 															EnumChatFormatting.AQUA + "    Bosses Since RNG: " + bossesBetween + "\n" +
 															EnumChatFormatting.GREEN + EnumChatFormatting.BOLD + " -------------------"));

@@ -21,7 +21,7 @@ public class BlockSlayerCommand extends CommandBase {
 
 	@Override
 	public String getCommandUsage(ICommandSender arg0) {
-		return "/" + getCommandName() + " <zombie/spider/wolf> <1/2/3/4>";
+		return "/" + getCommandName() + " <zombie/spider/wolf> <1/2/3/4/5>";
 	}
 
 	@Override
@@ -34,7 +34,7 @@ public class BlockSlayerCommand extends CommandBase {
 		if (args.length == 1) {
 			return getListOfStringsMatchingLastWord(args, "zombie", "spider", "wolf");
 		} else if (args.length == 2) {
-			return getListOfStringsMatchingLastWord(args, "1", "2", "3", "4");
+			return getListOfStringsMatchingLastWord(args, "1", "2", "3", "4", "5");
 		}
 		return null;
 	}
@@ -83,6 +83,9 @@ public class BlockSlayerCommand extends CommandBase {
 				break;
 			case 4:
 				BlockWrongSlayer.onlySlayerNumber = "IV";
+				break;
+			case 5:
+				BlockWrongSlayer.onlySlayerNumber = "V";
 				break;
 			default:
 				BlockWrongSlayer.onlySlayerName = "";

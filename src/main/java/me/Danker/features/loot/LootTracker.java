@@ -56,6 +56,8 @@ public class LootTracker {
     public static int zombieRevCatas;
     public static int zombieSnakes;
     public static int zombieScythes;
+    public static int zombieShards;
+    public static int zombieWardenHearts;
     public static double zombieTime;
     public static int zombieBosses;
 
@@ -216,6 +218,8 @@ public class LootTracker {
     public static int zombieRevCatasSession = 0;
     public static int zombieSnakesSession = 0;
     public static int zombieScythesSession = 0;
+    public static int zombieShardsSession = 0;
+    public static int zombieWardenHeartsSession = 0;
     public static double zombieTimeSession = -1;
     public static int zombieBossesSession = -1;
 
@@ -373,7 +377,7 @@ public class LootTracker {
         }
 
         // Wolf
-        if (message.contains("Talk to Maddox to claim your Wolf Slayer XP!")) {
+        if (message.contains("   Wolf Slayer LVL ")) {
             wolfSvens++;
             wolfSvensSession++;
             if (wolfBosses != -1) {
@@ -416,7 +420,7 @@ public class LootTracker {
             wolfFluxesSession++;
             ConfigHandler.writeIntConfig("wolf", "flux", wolfFluxes);
             if (ToggleCommand.rngesusAlerts) Utils.createTitle(EnumChatFormatting.DARK_PURPLE + "OVERFLUX CAPACITOR!", 5);
-        } else if (message.contains("Talk to Maddox to claim your Spider Slayer XP!")) { // Spider
+        } else if (message.contains("   Spider Slayer LVL ")) { // Spider
             spiderTarantulas++;
             spiderTarantulasSession++;
             if (spiderBosses != -1) {
@@ -457,7 +461,7 @@ public class LootTracker {
             spiderMosquitosSession++;
             ConfigHandler.writeIntConfig("spider", "mosquito", spiderMosquitos);
             if (ToggleCommand.rngesusAlerts) Utils.createTitle(EnumChatFormatting.GOLD + "DIGESTED MOSQUITO!", 5);
-        } else if (message.contains("Talk to Maddox to claim your Zombie Slayer XP!")) { // Zombie
+        } else if (message.contains("   Zombie Slayer LVL ")) { // Zombie
             zombieRevs++;
             zombieRevsSession++;
             if (zombieBosses != -1) {
@@ -502,6 +506,18 @@ public class LootTracker {
             zombieScythesSession++;
             ConfigHandler.writeIntConfig("zombie", "scythe", zombieScythes);
             if (ToggleCommand.rngesusAlerts) Utils.createTitle(EnumChatFormatting.GOLD + "SCYTHE BLADE!", 5);
+        } else if (message.contains("INSANE DROP!  (Shard of the Shredded)")) {
+            zombieRNG = true;
+            zombieShards++;
+            zombieShardsSession++;
+            ConfigHandler.writeIntConfig("zombie", "shard", zombieShards);
+            if (ToggleCommand.rngesusAlerts) Utils.createTitle(EnumChatFormatting.RED + "SHARD OF THE SHREDDED!", 5);
+        } else if (message.contains("INSANE DROP!  (Warden Heart)")) {
+            zombieRNG = true;
+            zombieWardenHearts++;
+            zombieWardenHeartsSession++;
+            ConfigHandler.writeIntConfig("zombie", "heart", zombieWardenHearts);
+            if (ToggleCommand.rngesusAlerts) Utils.createTitle(EnumChatFormatting.RED + "WARDEN HEART!", 5);
         }
 
         if (wolfRNG) {

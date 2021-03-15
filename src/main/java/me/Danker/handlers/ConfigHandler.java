@@ -315,6 +315,8 @@ public class ConfigHandler {
 		LootTracker.zombieRevCatas = initInt("zombie", "revCatalyst", 0);
 		LootTracker.zombieSnakes = initInt("zombie", "snake", 0);
 		LootTracker.zombieScythes = initInt("zombie", "scythe", 0);
+		LootTracker.zombieShards = initInt("zombie", "shard", 0);
+		LootTracker.zombieWardenHearts = initInt("zombie", "heart", 0);
 		LootTracker.zombieTime = initDouble("zombie", "timeRNG", -1);
 		LootTracker.zombieBosses = initInt("zombie", "bossRNG", -1);
 		
