@@ -1006,13 +1006,7 @@ public class LootTracker {
                     bagOfCashSession++;
                     ConfigHandler.writeIntConfig("ghosts", "bagOfCash", bagOfCashs);
                 }
-
-
-
             }
-
-
-
     }
 
     @SubscribeEvent

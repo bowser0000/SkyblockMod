@@ -1,3 +1,5 @@
+import me.Danker.DankersSkyblockMod;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -424,7 +426,8 @@ public class DefenitlyNotAJoikedInstallerFrame extends JFrame implements ActionL
                 inSubFolder = true;
             }
 
-            File newFile = new File(modsFolder, "Danker's Skyblock Mod-"+getVersionFromMcmodInfo()+".jar");
+            File newFile = new File(modsFolder, getVersionFromMcmodInfo() + ".Danker.s.Skyblock.Mod.-." + DankersSkyblockMod.VERSION + ".jar");
+
             if (thisFile.equals(newFile)) {
                 showErrorMessage("You are opening this file from where the file should be installed... there's nothing to be done!");
                 return;
@@ -462,7 +465,7 @@ public class DefenitlyNotAJoikedInstallerFrame extends JFrame implements ActionL
                 return;
             }
 
-            showMessage("Danker's SkyblockMod has been successfully installed into your mods folder.");
+            showMessage("Danker's Skyblock Mod has been successfully installed into your mods folder.");
             dispose();
             System.exit(0);
         }

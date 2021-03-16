@@ -60,6 +60,7 @@ public class DisplayGui extends GuiScreen {
 		fishingFestival = new GuiButton(0, width / 2 + 10, (int) (height * 0.4), 100, 20, "Fishing Festival");
 		fishingSpooky = new GuiButton(0, width / 2 + 130, (int) (height * 0.4), 100, 20, "Fishing Spooky");
 		mythological = new GuiButton(0, width / 2 - 100, (int) (height * 0.5), 95, 20, "Mythological");
+		ghost = new GuiButton(0, width / 2 + 5, (int) (height * 0.5), 95, 20, "Ghost");
 		catacombsF1 = new GuiButton(0, width / 2 - 205, (int) (height * 0.65), 50, 20, "F1");
 		catacombsF2 = new GuiButton(0, width / 2 - 145, (int) (height * 0.65), 50, 20, "F2");
 		catacombsF3 = new GuiButton(0, width / 2 - 85, (int) (height * 0.65), 50, 20, "F3");
@@ -67,8 +68,7 @@ public class DisplayGui extends GuiScreen {
 		catacombsF5 = new GuiButton(0, width / 2 + 35, (int) (height * 0.65), 50, 20, "F5");
 		catacombsF6 = new GuiButton(0, width / 2 + 95, (int) (height * 0.65), 50, 20, "F6");
 		catacombsF7 = new GuiButton(0, width / 2 + 155, (int) (height * 0.65), 50, 20, "F7");
-		ghost = new GuiButton(0, width / 2 + 5, (int) (height * 0.5), 95, 20, "Ghost");
-		
+
 		this.buttonList.add(showSession);
 		this.buttonList.add(off);
 		this.buttonList.add(auto);

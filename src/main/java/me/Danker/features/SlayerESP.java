@@ -84,7 +84,7 @@ public class SlayerESP {
         if (message.contains("SLAYER QUEST STARTED!")) {
             slayerStarted = true;
         }
-        if (message.contains("NICE! SLAYER QUEST COMPLETE!") || message.contains("SLAYER QUEST FAILED!")) {
+        if (message.contains("NICE! SLAYER BOSS SLAIN!") || message.contains("SLAYER QUEST COMPLETE!") || message.contains("SLAYER QUEST FAILED!")) {
             slayerActive = false;
             slayerStarted = false;
             zombie = null;
