@@ -508,6 +508,8 @@ public class ConfigHandler {
 		BonzoMaskTimer.BONZO_COLOR = initString("colors", "bonzoDisplay", EnumChatFormatting.RED.toString());
 		BlazeSolver.LOWEST_BLAZE_COLOUR = initInt("colors", "blazeLowest", 0xFF0000);
 		BlazeSolver.HIGHEST_BLAZE_COLOUR = initInt("colors", "blazeHighest", 0x40FF40);
+		SlayerESP.SLAYER_COLOUR = initInt("colors", "slayerColor", 0x0000FF);
+		ArachneESP.ARACHANE_COLOUR = initInt("colors", "arachneColor", 0x00FF00);
 		PetColours.PET_1_TO_9 = initInt("colors", "pet1To9", 0x999999); // Grey
 		PetColours.PET_10_TO_19 = initInt("colors", "pet10To19", 0xD62440); // Red
 		PetColours.PET_20_TO_29 = initInt("colors", "pet20To29", 0xEF5230); // Orange

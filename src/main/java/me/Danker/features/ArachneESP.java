@@ -34,7 +34,7 @@ public class ArachneESP {
 
     static Entity arachne = null;
     static boolean arachneActive = true;
-    public static final int ARACHANE_COLOUR =  0x00FF00;
+    public static int ARACHANE_COLOUR;
 
 
     @SubscribeEvent
