@@ -261,6 +261,7 @@ public class ConfigHandler {
 		ToggleCommand.ticTacToeToggled = initBoolean("toggles", "TicTacToePuzzle", false);
 		ToggleCommand.boulderToggled = initBoolean("toggles", "BoulderPuzzle", false);
 		ToggleCommand.silverfishToggled = initBoolean("toggles", "SilverfishPuzzle", false);
+		ToggleCommand.iceWalkToggled = initBoolean("toggles", "IceWalkPuzzle", false);
 		ToggleCommand.startsWithToggled = initBoolean("toggles", "StartsWithTerminal", false);
 		ToggleCommand.selectAllToggled = initBoolean("toggles", "SelectAllTerminal", false);
 		ToggleCommand.clickInOrderToggled = initBoolean("toggles", "ClickInOrderTerminal", false);
@@ -271,6 +272,8 @@ public class ConfigHandler {
 		ToggleCommand.chronomatronToggled = initBoolean("toggles", "Chronomatron", false);
 		ToggleCommand.superpairsToggled = initBoolean("toggles", "Superpairs", false);
 		ToggleCommand.hideTooltipsInExperimentAddonsToggled = initBoolean("toggles", "HideTooltipsInExperimentAddons", false);
+		// Custom Music
+		ToggleCommand.dungeonBossMusic = initBoolean("toggles", "DungeonBossMusic", false);
 
 		// API
 		if (!hasKey("api", "APIKey")) writeStringConfig("api", "APIKey", "");
@@ -321,6 +324,8 @@ public class ConfigHandler {
 		LootTracker.zombieRevCatas = initInt("zombie", "revCatalyst", 0);
 		LootTracker.zombieSnakes = initInt("zombie", "snake", 0);
 		LootTracker.zombieScythes = initInt("zombie", "scythe", 0);
+		LootTracker.zombieShards = initInt("zombie", "shard", 0);
+		LootTracker.zombieWardenHearts = initInt("zombie", "heart", 0);
 		LootTracker.zombieTime = initDouble("zombie", "timeRNG", -1);
 		LootTracker.zombieBosses = initInt("zombie", "bossRNG", -1);
 		
@@ -530,6 +535,7 @@ public class ConfigHandler {
 		BoulderSolver.BOULDER_COLOUR = initInt("colors", "boulder", 0x197F19);
 		BoulderSolver.BOULDER_ARROW_COLOUR = initInt("colors", "boulderArrow", 0x006000);
 		SilverfishSolver.SILVERFISH_LINE_COLOUR = initInt("colors", "silverfishLine", 0x40FF40);
+		IceWalkSolver.ICE_WALK_LINE_COLOUR = initInt("colors", "iceWalkLine", 0x40FF40);
 
 		// Commands
 		if (!hasKey("commands", "reparty")) writeBooleanConfig("commands", "reparty", false);

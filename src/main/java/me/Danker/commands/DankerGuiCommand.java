@@ -77,6 +77,7 @@ public class DankerGuiCommand extends CommandBase {
 			debug.append("[tictactoepuzzle][").append(ToggleCommand.ticTacToeToggled).append("]\n");
 			debug.append("[boulderpuzzle][").append(ToggleCommand.boulderToggled).append("]\n");
 			debug.append("[silverfishpuzzle][").append(ToggleCommand.silverfishToggled).append("]\n");
+			debug.append("[icewalkpuzzle][").append(ToggleCommand.iceWalkToggled).append("]\n");
 			debug.append("[watchermessage][").append(ToggleCommand.watcherReadyToggled).append("]\n");
 			debug.append("[startswithterminal][").append(ToggleCommand.startsWithToggled).append("]\n");
 			debug.append("[selectallterminal][").append(ToggleCommand.selectAllToggled).append("]\n");
@@ -91,6 +92,7 @@ public class DankerGuiCommand extends CommandBase {
 			debug.append("[shadowFuryAbility][").append(ToggleCommand.shadowFuryToggled).append("]\n");
 			debug.append("[specialhoe][").append(ToggleCommand.specialHoeRightClick).append("]\n");
 			debug.append("[melodyTooltips][").append(ToggleCommand.melodyTooltips).append("]\n");
+			debug.append("[dungeonbossmusic][").append(ToggleCommand.dungeonBossMusic).append("]\n");
 			debug.append("# Locations\n");
 			debug.append("[coords][").append(MoveCommand.coordsXY[0]).append(", ").append(MoveCommand.coordsXY[1]).append("]\n");
 			debug.append("[display][").append(MoveCommand.displayXY[0]).append(", ").append(MoveCommand.displayXY[1]).append("]\n");
@@ -112,7 +114,7 @@ public class DankerGuiCommand extends CommandBase {
 				debug.append("<None>\n");
 			} else {
 				for (ResourcePackRepository.Entry resource : Minecraft.getMinecraft().getResourcePackRepository().getRepositoryEntries()) {
-					debug.append("< ").append(StringUtils.stripControlCodes(resource.getResourcePackName())).append(" >\n");
+					debug.append("<").append(StringUtils.stripControlCodes(resource.getResourcePackName())).append(">\n");
 				}
 			}
 			debug.append("```");

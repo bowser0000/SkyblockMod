@@ -26,6 +26,8 @@ public class OnlySlayerGui extends GuiScreen {
 	private GuiButton two;
 	private GuiButton three;
 	private GuiButton four;
+  private GuiButton five;
+  
 	private GuiButton highlightSlayers;
 	
 	@Override
@@ -52,9 +54,14 @@ public class OnlySlayerGui extends GuiScreen {
 			case "III":
 				onlyNumberInt = 3;
 				break;
-			default:
+			case "IV":
 				onlyNumberInt = 4;
 				break;
+			case "V":
+				onlyNumberInt = 5;
+				break;
+			default:
+				return;
 		}
 		
 		goBack = new GuiButton(0, 2, height - 30, 100, 20, "Go Back");
@@ -62,11 +69,12 @@ public class OnlySlayerGui extends GuiScreen {
 		zombie = new GuiButton(0, width / 2 - 200, (int) (height * 0.4), 120, 20, "Zombie");
 		spider = new GuiButton(0, width / 2 - 60, (int) (height * 0.4), 120, 20, "Spider");
 		wolf = new GuiButton(0, width / 2 + 80, (int) (height * 0.4), 120, 20, "Wolf");
-		one = new GuiButton(0, width / 2 - 190, (int) (height * 0.6), 85, 20, "I");
-		two = new GuiButton(0, width / 2 - 95, (int) (height * 0.6), 85, 20, "II");
-		three = new GuiButton(0, width / 2 + 10, (int) (height * 0.6), 85, 20, "III");
-		four = new GuiButton(0, width / 2 + 115, (int) (height * 0.6), 85, 20, "IV");
-		highlightSlayers = new GuiButton(0, width / 2 - 100, (int) (height * 0.7), "Highlight Slayer Bosses: " + Utils.getColouredBoolean(ToggleCommand.highlightSlayers));
+		one = new GuiButton(0, width / 2 - 190, (int) (height * 0.6), 60, 20, "I");
+		two = new GuiButton(0, width / 2 - 110, (int) (height * 0.6), 60, 20, "II");
+		three = new GuiButton(0, width / 2 - 30, (int) (height * 0.6), 60, 20, "III");
+		four = new GuiButton(0, width / 2 + 50, (int) (height * 0.6), 60, 20, "IV");
+		five = new GuiButton(0, width / 2 + 130, (int) (height * 0.6), 60, 20, "V");
+    highlightSlayers = new GuiButton(0, width / 2 - 100, (int) (height * 0.7), "Highlight Slayer Bosses: " + Utils.getColouredBoolean(ToggleCommand.highlightSlayers));
 		
 		this.buttonList.add(off);
 		this.buttonList.add(zombie);
@@ -76,7 +84,8 @@ public class OnlySlayerGui extends GuiScreen {
 		this.buttonList.add(two);
 		this.buttonList.add(three);
 		this.buttonList.add(four);
-		this.buttonList.add(highlightSlayers);
+		this.buttonList.add(five);
+    this.buttonList.add(highlightSlayers);
 		this.buttonList.add(goBack);
 	}
 	
@@ -121,11 +130,14 @@ public class OnlySlayerGui extends GuiScreen {
 			onlyNumberInt = 3;
 		} else if (button == four) {
 			onlyNumberInt = 4;
+		} else if (button == five) {
+			onlyNumberInt = 5;
 		} else if (button == highlightSlayers) {
 			ToggleCommand.highlightSlayers = !ToggleCommand.highlightSlayers;
 			ConfigHandler.writeBooleanConfig("toggles", "HighlightSlayers", ToggleCommand.highlightSlayers);
 			highlightSlayers.displayString = "Highlight Slayer Bosses: " + Utils.getColouredBoolean(ToggleCommand.highlightSlayers);
-		}
+      return;
+    }
 		
 		String onlyNumber;
 		switch (onlyNumberInt) {
@@ -139,6 +151,11 @@ public class OnlySlayerGui extends GuiScreen {
 				onlyNumber = "III";
 				break;
 			case 4:
+				onlyNumber = "IV";
+				break;
+			case 5:
+				onlyNumber = "V";
+				break;
 			default:
 				onlyNumber = "IV";
 		}

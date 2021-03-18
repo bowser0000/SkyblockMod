@@ -1,6 +1,7 @@
 package me.Danker.commands;
 
 import me.Danker.DankersSkyblockMod;
+import me.Danker.features.CustomMusic;
 import me.Danker.handlers.ConfigHandler;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
@@ -63,6 +64,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 	public static boolean ticTacToeToggled;
 	public static boolean boulderToggled;
 	public static boolean silverfishToggled;
+	public static boolean iceWalkToggled;
 	// Terminal Helpers
 	public static boolean startsWithToggled;
 	public static boolean selectAllToggled;
@@ -76,6 +78,8 @@ public class ToggleCommand extends CommandBase implements ICommand {
 	public static boolean hideTooltipsInExperimentAddonsToggled;
 	public static boolean specialHoeRightClick;
 	public static boolean melodyTooltips;
+	// Custom Music
+	public static boolean dungeonBossMusic;
 
 	@Override
 	public String getCommandName() {
@@ -90,10 +94,10 @@ public class ToggleCommand extends CommandBase implements ICommand {
 										  "skill50display/outlinetext/midasstaffmessages/implosionmessages/healmessages/cooldownmessages/" +
 										  "manamessages/killcombomessages/caketimer/lowhealthnotify/lividsolver/stopsalvagestarred/" +
 										  "notifyslayerslain/necronnotifications/bonzotimer/threemanpuzzle/oruopuzzle/blazepuzzle/" +
-										  "creeperpuzzle/waterpuzzle/tictactoepuzzle/boulderpuzzle/silverfishpuzzle/watchermessage/" +
+										  "creeperpuzzle/waterpuzzle/tictactoepuzzle/boulderpuzzle/silverfishpuzzle/icewalkpuzzle/watchermessage/" +
 										  "startswithterminal/selectallterminal/clickinorderterminal/blockwrongterminalclicks/" +
 										  "itemframeonsealanterns/ultrasequencer/chronomatron/superpairs/hidetooltipsinaddons/pickblock/ " +
-										  "/specialhoe/melodytooltips/highlightslayers/highlightArachne/,list>";
+										  "/specialhoe/melodytooltips/highlightslayers/highlightArachne/dungeonbossmusic/list>";
 	}
 
 	@Override
@@ -113,10 +117,10 @@ public class ToggleCommand extends CommandBase implements ICommand {
 														  "stopsalvagestarred", "notifyslayerslain", "necronnotifications",
 														  "bonzotimer", "threemanpuzzle", "oruopuzzle", "blazepuzzle",
 														  "creeperpuzzle", "waterpuzzle", "tictactoepuzzle", "boulderpuzzle",
-														  "silverfishpuzzle", "watchermessage", "startswithterminal",
+														  "silverfishpuzzle", "icewalkpuzzle", "watchermessage", "startswithterminal",
 														  "selectallterminal", "clickinorderterminal", "blockwrongterminalclicks",
 														  "itemframeonsealanterns", "ultrasequencer", "chronomatron", "superpairs",
-														  "hidetooltipsinaddons", "pickblock", "specialhoe", "melodytooltips", "highlightslayers", "list");
+														  "hidetooltipsinaddons", "pickblock", "specialhoe", "melodytooltips", "highlightslayers", "dungeonbossmusic", "list");
 		}
 		return null;
 	}
@@ -347,6 +351,11 @@ public class ToggleCommand extends CommandBase implements ICommand {
 				ConfigHandler.writeBooleanConfig("toggles", "SilverfishPuzzle", silverfishToggled);
 				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Silverfish puzzle solver has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + silverfishToggled + DankersSkyblockMod.MAIN_COLOUR + "."));
 				break;
+			case "icewalkpuzzle":
+				iceWalkToggled = !iceWalkToggled;
+				ConfigHandler.writeBooleanConfig("toggles", "IceWalkPuzzle", iceWalkToggled);
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Ice walk puzzle solver has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + iceWalkToggled + DankersSkyblockMod.MAIN_COLOUR + "."));
+				break;
 			case "watchermessage":
 				watcherReadyToggled = !watcherReadyToggled;
 				ConfigHandler.writeBooleanConfig("toggles", "WatcherReadyMessage", watcherReadyToggled);
@@ -421,6 +430,17 @@ public class ToggleCommand extends CommandBase implements ICommand {
 				highlightArachne = !highlightArachne;
 				ConfigHandler.writeBooleanConfig("toggles", "HighlightArachne", highlightArachne);
 				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Highlight Arachne " + DankersSkyblockMod.SECONDARY_COLOUR + highlightArachne + DankersSkyblockMod.MAIN_COLOUR + "."));
+			case "dungeonbossmusic":
+				dungeonBossMusic = !dungeonBossMusic;
+				if (CustomMusic.dungeonboss != null) {
+					if (dungeonBossMusic) {
+						CustomMusic.start();
+					} else {
+						CustomMusic.dungeonboss.stop();
+					}
+				}
+				ConfigHandler.writeBooleanConfig("toggles", "DungeonBossMusic", dungeonBossMusic);
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Custom dungeon boss music has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + dungeonBossMusic + DankersSkyblockMod.MAIN_COLOUR + "."));
 				break;
 			case "list":
 				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.TYPE_COLOUR + "Guild party notifications: " + DankersSkyblockMod.VALUE_COLOUR + gpartyToggled + "\n" +
@@ -458,6 +478,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 															DankersSkyblockMod.TYPE_COLOUR + " Tic tac toe puzzle solver: " + DankersSkyblockMod.VALUE_COLOUR + ticTacToeToggled + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Boulder puzzle solver: " + DankersSkyblockMod.VALUE_COLOUR + boulderToggled + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Silverfish puzzle solver: " + DankersSkyblockMod.VALUE_COLOUR + silverfishToggled + "\n" +
+															DankersSkyblockMod.TYPE_COLOUR + " Ice walk puzzle solver: " + DankersSkyblockMod.VALUE_COLOUR + iceWalkToggled + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Watcher ready message: " + DankersSkyblockMod.VALUE_COLOUR + watcherReadyToggled + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Starts with letter terminal solver: " + DankersSkyblockMod.VALUE_COLOUR + startsWithToggled + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Select all color items terminal solver: " + DankersSkyblockMod.VALUE_COLOUR + selectAllToggled + "\n" +
@@ -471,7 +492,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 															DankersSkyblockMod.TYPE_COLOUR + " Hide tooltips in Melody's Harp " + DankersSkyblockMod.VALUE_COLOUR + melodyTooltips + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Highlight Slayer Bosses " + DankersSkyblockMod.VALUE_COLOUR + highlightSlayers + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Highlight Arachne Boss " + DankersSkyblockMod.VALUE_COLOUR + highlightArachne
-
+															DankersSkyblockMod.TYPE_COLOUR + " Custom dungeon boss music: " + DankersSkyblockMod.VALUE_COLOUR + dungeonBossMusic
 				));
 				break;
 			default:
