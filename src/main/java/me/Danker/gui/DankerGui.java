@@ -2,6 +2,7 @@ package me.Danker.gui;
 
 import me.Danker.DankersSkyblockMod;
 import me.Danker.commands.ToggleCommand;
+import me.Danker.features.CustomMusic;
 import me.Danker.handlers.ConfigHandler;
 import me.Danker.handlers.TextRenderer;
 import me.Danker.utils.Utils;
@@ -46,6 +47,7 @@ public class DankerGui extends GuiScreen {
 	private GuiButton skill50Display;
 	private GuiButton outlineText;
 	private GuiButton cakeTimer;
+	private GuiButton dungeonBossMusic;
 	// Chat Messages
 	private GuiButton lividDagger;
 	private GuiButton sceptreMessages;
@@ -55,7 +57,7 @@ public class DankerGui extends GuiScreen {
 	private GuiButton cooldownMessages;
 	private GuiButton manaMessages;
 	private GuiButton killComboMessages;
-	//Dungeons
+	// Dungeons
 	private GuiButton dungeonTimer;
 	private GuiButton lowHealthNotify;
 	private GuiButton lividSolver;
@@ -138,6 +140,7 @@ public class DankerGui extends GuiScreen {
 		necronNotifications = new GuiButton(0, width / 2 - 100, (int) (height * 0.2), "Necron Phase Notifications: " + Utils.getColouredBoolean(ToggleCommand.necronNotificationsToggled));
 		bonzoTimer = new GuiButton(0, width / 2 - 100, (int) (height * 0.3), "Bonzo's Mask Timer: " + Utils.getColouredBoolean(ToggleCommand.bonzoTimerToggled));
 		autoSkillTracker = new GuiButton(0, width / 2 - 100, (int) (height * 0.4), "Auto Start/Stop Skill Tracker: " + Utils.getColouredBoolean(ToggleCommand.autoSkillTrackerToggled));
+		dungeonBossMusic = new GuiButton(0, width / 2 - 100, (int) (height * 0.5), "Custom Dungeon Boss Music: " + Utils.getColouredBoolean(ToggleCommand.dungeonBossMusic));
 
 		switch (page) {
 			case 1:
@@ -199,6 +202,7 @@ public class DankerGui extends GuiScreen {
         		this.buttonList.add(necronNotifications);
 				this.buttonList.add(bonzoTimer);
 				this.buttonList.add(autoSkillTracker);
+				this.buttonList.add(dungeonBossMusic);
 				this.buttonList.add(backPage);
 				break;
 		}
@@ -386,6 +390,17 @@ public class DankerGui extends GuiScreen {
 			ToggleCommand.killComboMessages = !ToggleCommand.killComboMessages;
 			ConfigHandler.writeBooleanConfig("toggles", "KillComboMessages", ToggleCommand.killComboMessages);
 			killComboMessages.displayString = "Kill Combo Messages: " + Utils.getColouredBoolean(ToggleCommand.killComboMessages);
+		} else if (button == dungeonBossMusic) {
+			ToggleCommand.dungeonBossMusic = !ToggleCommand.dungeonBossMusic;
+			if (CustomMusic.dungeonboss != null) {
+				if (ToggleCommand.dungeonBossMusic) {
+					CustomMusic.start();
+				} else {
+					CustomMusic.dungeonboss.stop();
+				}
+			}
+			ConfigHandler.writeBooleanConfig("toggles", "DungeonBossMusic", ToggleCommand.dungeonBossMusic);
+			dungeonBossMusic.displayString = "Custom Dungeon Boss Music: " + Utils.getColouredBoolean(ToggleCommand.dungeonBossMusic);
 		}
 	}
 	

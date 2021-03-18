@@ -89,6 +89,7 @@ public class DankerGuiCommand extends CommandBase {
 			debug.append("[superpairs][").append(ToggleCommand.superpairsToggled).append("]\n");
 			debug.append("[hidetooltipsinaddons][").append(ToggleCommand.hideTooltipsInExperimentAddonsToggled).append("]\n");
 			debug.append("[pickblock][").append(ToggleCommand.swapToPickBlockToggled).append("]\n");
+			debug.append("[dungeonbossmusic][").append(ToggleCommand.dungeonBossMusic).append("]\n");
 			debug.append("# Locations\n");
 			debug.append("[coords][").append(MoveCommand.coordsXY[0]).append(", ").append(MoveCommand.coordsXY[1]).append("]\n");
 			debug.append("[display][").append(MoveCommand.displayXY[0]).append(", ").append(MoveCommand.displayXY[1]).append("]\n");
@@ -110,7 +111,7 @@ public class DankerGuiCommand extends CommandBase {
 				debug.append("<None>\n");
 			} else {
 				for (ResourcePackRepository.Entry resource : Minecraft.getMinecraft().getResourcePackRepository().getRepositoryEntries()) {
-					debug.append("< ").append(StringUtils.stripControlCodes(resource.getResourcePackName())).append(" >\n");
+					debug.append("<").append(StringUtils.stripControlCodes(resource.getResourcePackName())).append(">\n");
 				}
 			}
 			debug.append("```");

@@ -1,6 +1,7 @@
 package me.Danker.commands;
 
 import me.Danker.DankersSkyblockMod;
+import me.Danker.features.CustomMusic;
 import me.Danker.handlers.ConfigHandler;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
@@ -70,7 +71,9 @@ public class ToggleCommand extends CommandBase implements ICommand {
 	public static boolean chronomatronToggled;
 	public static boolean superpairsToggled;
 	public static boolean hideTooltipsInExperimentAddonsToggled;
-	
+	// Custom Music
+	public static boolean dungeonBossMusic;
+
 	@Override
 	public String getCommandName() {
 		return "toggle";
@@ -86,7 +89,8 @@ public class ToggleCommand extends CommandBase implements ICommand {
 										  "notifyslayerslain/necronnotifications/bonzotimer/threemanpuzzle/oruopuzzle/blazepuzzle/" +
 										  "creeperpuzzle/waterpuzzle/tictactoepuzzle/boulderpuzzle/silverfishpuzzle/icewalkpuzzle/watchermessage/" +
 										  "startswithterminal/selectallterminal/clickinorderterminal/blockwrongterminalclicks/" +
-										  "itemframeonsealanterns/ultrasequencer/chronomatron/superpairs/hidetooltipsinaddons/pickblock/list>";
+										  "itemframeonsealanterns/ultrasequencer/chronomatron/superpairs/hidetooltipsinaddons/" +
+										  "pickblock/dungeonbossmusic/list>";
 	}
 
 	@Override
@@ -109,7 +113,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 														  "silverfishpuzzle", "icewalkpuzzle", "watchermessage", "startswithterminal",
 														  "selectallterminal", "clickinorderterminal", "blockwrongterminalclicks",
 														  "itemframeonsealanterns", "ultrasequencer", "chronomatron", "superpairs",
-														  "hidetooltipsinaddons", "pickblock", "list");
+														  "hidetooltipsinaddons", "pickblock", "dungeonbossmusic", "list");
 		}
 		return null;
 	}
@@ -385,6 +389,18 @@ public class ToggleCommand extends CommandBase implements ICommand {
 				ConfigHandler.writeBooleanConfig("toggles", "PickBlock", swapToPickBlockToggled);
 				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Auto-swap to pick block has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + swapToPickBlockToggled + DankersSkyblockMod.MAIN_COLOUR + "."));
 				break;
+			case "dungeonbossmusic":
+				dungeonBossMusic = !dungeonBossMusic;
+				if (CustomMusic.dungeonboss != null) {
+					if (dungeonBossMusic) {
+						CustomMusic.start();
+					} else {
+						CustomMusic.dungeonboss.stop();
+					}
+				}
+				ConfigHandler.writeBooleanConfig("toggles", "DungeonBossMusic", dungeonBossMusic);
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Custom dungeon boss music has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + dungeonBossMusic + DankersSkyblockMod.MAIN_COLOUR + "."));
+				break;
 			case "list":
 				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.TYPE_COLOUR + "Guild party notifications: " + DankersSkyblockMod.VALUE_COLOUR + gpartyToggled + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Coord/Angle display: " + DankersSkyblockMod.VALUE_COLOUR + coordsToggled + "\n" +
@@ -431,7 +447,8 @@ public class ToggleCommand extends CommandBase implements ICommand {
 															DankersSkyblockMod.TYPE_COLOUR + " Chronomatron solver: " + DankersSkyblockMod.VALUE_COLOUR + chronomatronToggled + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Superpairs solver: " + DankersSkyblockMod.VALUE_COLOUR + superpairsToggled + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Hide tooltips in experiment addons: " + DankersSkyblockMod.VALUE_COLOUR + hideTooltipsInExperimentAddonsToggled + "\n" +
-															DankersSkyblockMod.TYPE_COLOUR + " Auto-swap to pick block " + DankersSkyblockMod.VALUE_COLOUR + swapToPickBlockToggled 
+															DankersSkyblockMod.TYPE_COLOUR + " Auto-swap to pick block: " + DankersSkyblockMod.VALUE_COLOUR + swapToPickBlockToggled  + "\n" +
+															DankersSkyblockMod.TYPE_COLOUR + " Custom dungeon boss music: " + DankersSkyblockMod.VALUE_COLOUR + dungeonBossMusic
 				));
 				break;
 			default:

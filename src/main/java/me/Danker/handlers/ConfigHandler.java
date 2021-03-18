@@ -265,6 +265,8 @@ public class ConfigHandler {
 		ToggleCommand.chronomatronToggled = initBoolean("toggles", "Chronomatron", false);
 		ToggleCommand.superpairsToggled = initBoolean("toggles", "Superpairs", false);
 		ToggleCommand.hideTooltipsInExperimentAddonsToggled = initBoolean("toggles", "HideTooltipsInExperimentAddons", false);
+		// Custom Music
+		ToggleCommand.dungeonBossMusic = initBoolean("toggles", "DungeonBossMusic", false);
 
 		// API
 		if (!hasKey("api", "APIKey")) writeStringConfig("api", "APIKey", "");

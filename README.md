@@ -38,6 +38,7 @@ Discord Server: https://discord.gg/QsEkNQS
 - Watcher ready message
 - Catacombs F7 Stage 3 solvers (Starts with letter, select all colour, ignore arrows on sea lanterns)
 - Find correct Livid (with graphic display of HP)
+- Use custom music in dungeon boss room
 - Experimentation solvers (Ultrasequencer, Chronomatron, Superpairs)
 - Hide tooltips in experiment addons
 - Pet background colors based on level
@@ -54,7 +55,7 @@ Discord Server: https://discord.gg/QsEkNQS
 ## Commands
 - /dhelp - Returns this message in-game.
 - /dsm - Opens the GUI for Danker's Skyblock Mod.
-- /toggle <gparty/coords/golden/slayercount/rngesusalerts/splitfishing/chatmaddox/spiritbearalerts/aotd/lividdagger/flowerweapons/sceptremessages/midasstaffmessages/implosionmessages/healmessages/cooldownmessages/manamessages/killcombomessages/petcolors/dungeontimer/golemalerts/expertiselore/skill50display/outlinetext/caketimer/lowhealthnotify/lividsolver/stopsalvagestarred/notifyslayerslain/autoskilltracker/necronnotifications/bonzotimer/threemanpuzzle/oruopuzzle/blazepuzzle/creeperpuzzle/waterpuzzle/tictactoepuzzle/boulderpuzzle/silverfishpuzzle/icewalkpuzzle/watchermessage/startswithterminal/selectallterminal/clickinorderterminal/blockwrongterminalclicks/itemframeonsealanterns/ultrasequencer/chronomatron/superpairs/hidetooltipsinaddons/pickblock/list> - Toggles features. /toggle list returns values of every toggle.
+- /toggle <gparty/coords/golden/slayercount/rngesusalerts/splitfishing/chatmaddox/spiritbearalerts/aotd/lividdagger/flowerweapons/sceptremessages/midasstaffmessages/implosionmessages/healmessages/cooldownmessages/manamessages/killcombomessages/petcolors/dungeontimer/golemalerts/expertiselore/skill50display/outlinetext/caketimer/lowhealthnotify/lividsolver/stopsalvagestarred/notifyslayerslain/autoskilltracker/necronnotifications/bonzotimer/threemanpuzzle/oruopuzzle/blazepuzzle/creeperpuzzle/waterpuzzle/tictactoepuzzle/boulderpuzzle/silverfishpuzzle/icewalkpuzzle/watchermessage/startswithterminal/selectallterminal/clickinorderterminal/blockwrongterminalclicks/itemframeonsealanterns/ultrasequencer/chronomatron/superpairs/hidetooltipsinaddons/pickblock/dungeonbossmusic/list> - Toggles features. /toggle list returns values of every toggle.
 - /setkey <key> - Sets API key.
 - /getkey - Returns key set with /setkey and copies it to your clipboard.
 - /loot <zombie/spider/wolf/fishing/catacombs/mythological/> [winter/festival/spooky/f(1-7)/session] - Returns loot received from slayer quests or fishing stats. /loot fishing winter returns winter sea creatures instead.
@@ -75,10 +76,22 @@ Discord Server: https://discord.gg/QsEkNQS
 - /onlyslayer <zombie/spider/wolf> <1/2/3/4/5> - Stops you from starting a slayer quest other than the one specified.
 - /skilltracker <start/stop/reset> - Text display for skill xp/hour.
 - /reparty - Disbands and reparties all members in the party
+- /dsmmusic <stop/reload> - Stops or reloads the custom music.
 
 ## Keybinds
 - Open Maddox menu - M by default.
+- Regular Ability - Numpad 4 by default.
 - Start/Stop Skill Tracker - Numpad 5 by default.
+
+## Custom Music
+- Supported audio formats:
+  - .wav
+  - .mid
+  - .aiff
+  - .au
+  - .rmf
+- For the following custom music, place a supported music file with the given name in the `.minecraft/config/dsmmusic` folder.
+  - Dungeon boss music: `dungeonboss`
 
 ### Notes
 - Slayer tracker for token drops and 20% chance drops uses a 12x12x12 bounding box centered on the player to detect the drops. If you are out of the range of the item drop, it will not count on the tracker.

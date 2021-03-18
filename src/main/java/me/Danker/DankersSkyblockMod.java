@@ -53,6 +53,9 @@ import net.minecraftforge.fml.common.network.FMLNetworkEvent.ClientConnectedToSe
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -70,6 +73,7 @@ public class DankersSkyblockMod {
     static boolean OAMWarning = false;
     public static String guiToOpen = null;
     public static boolean firstLaunch = false;
+    public static String configDirectory;
     
     public static String MAIN_COLOUR;
     public static String SECONDARY_COLOUR;
@@ -97,6 +101,7 @@ public class DankersSkyblockMod {
         MinecraftForge.EVENT_BUS.register(new ChronomatronSolver());
         MinecraftForge.EVENT_BUS.register(new ClickInOrderSolver());
         MinecraftForge.EVENT_BUS.register(new CreeperSolver());
+        MinecraftForge.EVENT_BUS.register(new CustomMusic());
         MinecraftForge.EVENT_BUS.register(new DungeonTimer());
         MinecraftForge.EVENT_BUS.register(new ExpertiseLore());
         MinecraftForge.EVENT_BUS.register(new FasterMaddoxCalling());
@@ -145,31 +150,35 @@ public class DankersSkyblockMod {
     }
 
     @EventHandler
-    public void preInit(final FMLPreInitializationEvent event) {
-    	ClientCommandHandler.instance.registerCommand(new ToggleCommand());
-    	ClientCommandHandler.instance.registerCommand(new SetkeyCommand());
-    	ClientCommandHandler.instance.registerCommand(new GetkeyCommand());
-    	ClientCommandHandler.instance.registerCommand(new LootCommand());
-    	ClientCommandHandler.instance.registerCommand(new ReloadConfigCommand());
-    	ClientCommandHandler.instance.registerCommand(new DisplayCommand());
-    	ClientCommandHandler.instance.registerCommand(new MoveCommand());
-    	ClientCommandHandler.instance.registerCommand(new SlayerCommand());
-    	ClientCommandHandler.instance.registerCommand(new SkillsCommand());
-    	ClientCommandHandler.instance.registerCommand(new GuildOfCommand());
-    	ClientCommandHandler.instance.registerCommand(new DHelpCommand());
-    	ClientCommandHandler.instance.registerCommand(new PetsCommand());
-    	ClientCommandHandler.instance.registerCommand(new BankCommand());
-    	ClientCommandHandler.instance.registerCommand(new ArmourCommand());
-    	ClientCommandHandler.instance.registerCommand(new ImportFishingCommand());
-    	ClientCommandHandler.instance.registerCommand(new ResetLootCommand());
-    	ClientCommandHandler.instance.registerCommand(new ScaleCommand());
-    	ClientCommandHandler.instance.registerCommand(new SkyblockPlayersCommand());
-    	ClientCommandHandler.instance.registerCommand(new BlockSlayerCommand());
-    	ClientCommandHandler.instance.registerCommand(new DungeonsCommand());
-    	ClientCommandHandler.instance.registerCommand(new LobbySkillsCommand());
-    	ClientCommandHandler.instance.registerCommand(new DankerGuiCommand());
-		ClientCommandHandler.instance.registerCommand(new SkillTrackerCommand());
-		ClientCommandHandler.instance.registerCommand(new FairySoulsCommand());
+    public void preInit(final FMLPreInitializationEvent event) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
+        ClientCommandHandler.instance.registerCommand(new ArmourCommand());
+        ClientCommandHandler.instance.registerCommand(new BankCommand());
+        ClientCommandHandler.instance.registerCommand(new BlockSlayerCommand());
+        ClientCommandHandler.instance.registerCommand(new CustomMusicCommand());
+        ClientCommandHandler.instance.registerCommand(new DHelpCommand());
+        ClientCommandHandler.instance.registerCommand(new DankerGuiCommand());
+        ClientCommandHandler.instance.registerCommand(new DisplayCommand());
+        ClientCommandHandler.instance.registerCommand(new DungeonsCommand());
+        ClientCommandHandler.instance.registerCommand(new FairySoulsCommand());
+        ClientCommandHandler.instance.registerCommand(new GetkeyCommand());
+        ClientCommandHandler.instance.registerCommand(new GuildOfCommand());
+        ClientCommandHandler.instance.registerCommand(new ImportFishingCommand());
+        ClientCommandHandler.instance.registerCommand(new LobbySkillsCommand());
+        ClientCommandHandler.instance.registerCommand(new LootCommand());
+        ClientCommandHandler.instance.registerCommand(new MoveCommand());
+        ClientCommandHandler.instance.registerCommand(new PetsCommand());
+        ClientCommandHandler.instance.registerCommand(new ReloadConfigCommand());
+        ClientCommandHandler.instance.registerCommand(new ResetLootCommand());
+        ClientCommandHandler.instance.registerCommand(new ScaleCommand());
+        ClientCommandHandler.instance.registerCommand(new SetkeyCommand());
+        ClientCommandHandler.instance.registerCommand(new SkillTrackerCommand());
+        ClientCommandHandler.instance.registerCommand(new SkillsCommand());
+        ClientCommandHandler.instance.registerCommand(new SkyblockPlayersCommand());
+        ClientCommandHandler.instance.registerCommand(new SlayerCommand());
+        ClientCommandHandler.instance.registerCommand(new ToggleCommand());
+
+        configDirectory = event.getModConfigurationDirectory().toString();
+		CustomMusic.init(configDirectory);
     }
 
     @EventHandler
