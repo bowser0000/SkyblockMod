@@ -21,7 +21,7 @@ public class DisplayCommand extends CommandBase {
 
 	@Override
 	public String getCommandUsage(ICommandSender arg0) {
-		return "/" + getCommandName() + " <zombie/spider/wolf/fishing/catacombs/mythological/auto/off> [winter/festival/spooky/session/f(1-7)]";
+		return "/" + getCommandName() + " <zombie/spider/wolf/fishing/catacombs/mythological/ghost/auto/off> [winter/festival/spooky/session/f(1-7)]";
 	}
 
 	@Override
@@ -32,7 +32,7 @@ public class DisplayCommand extends CommandBase {
 	@Override
 	public List<String> addTabCompletionOptions(ICommandSender sender, String[] args, BlockPos pos) {
 		if (args.length == 1) {
-			return getListOfStringsMatchingLastWord(args, "wolf", "spider", "zombie", "fishing", "catacombs", "mythological", "auto", "off");
+			return getListOfStringsMatchingLastWord(args, "wolf", "spider", "zombie", "fishing", "catacombs", "mythological", "ghost", "auto", "off");
 		} else if (args.length == 2 && args[0].equalsIgnoreCase("fishing")) {
 			return getListOfStringsMatchingLastWord(args, "winter", "festival", "spooky", "session");
 		} else if (args.length == 2 && args[0].equalsIgnoreCase("catacombs")) {
@@ -192,6 +192,13 @@ public class DisplayCommand extends CommandBase {
 					return;
 			}
 			break;
+		case "ghost":
+			if (showSession) {
+				LootDisplay.display = "ghost_session";
+			} else {
+				LootDisplay.display = "ghost";
+			}
+
 		case "auto":
 			LootDisplay.auto = true;
 			player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Display set to " + DankersSkyblockMod.SECONDARY_COLOUR + "auto" + DankersSkyblockMod.MAIN_COLOUR + "."));

@@ -87,6 +87,7 @@ public class DankersSkyblockMod {
     @EventHandler
     public void init(FMLInitializationEvent event) {
         MinecraftForge.EVENT_BUS.register(this);
+        MinecraftForge.EVENT_BUS.register(new ArachneESP());
         MinecraftForge.EVENT_BUS.register(new ArrowTerminalSolver());
         MinecraftForge.EVENT_BUS.register(new AutoDisplay());
         MinecraftForge.EVENT_BUS.register(new AutoSwapToPickBlock());
@@ -123,6 +124,7 @@ public class DankersSkyblockMod {
         MinecraftForge.EVENT_BUS.register(new SilverfishSolver());
         MinecraftForge.EVENT_BUS.register(new Skill50Display());
         MinecraftForge.EVENT_BUS.register(new SkillTracker());
+        MinecraftForge.EVENT_BUS.register(new SlayerESP());
         MinecraftForge.EVENT_BUS.register(new SpamHider());
         MinecraftForge.EVENT_BUS.register(new SpiritBearAlert());
         MinecraftForge.EVENT_BUS.register(new StartsWithSolver());
@@ -163,6 +165,7 @@ public class DankersSkyblockMod {
         ClientCommandHandler.instance.registerCommand(new GetkeyCommand());
         ClientCommandHandler.instance.registerCommand(new GuildOfCommand());
         ClientCommandHandler.instance.registerCommand(new ImportFishingCommand());
+        ClientCommandHandler.instance.registerCommand(new LobbyBankCommand());
         ClientCommandHandler.instance.registerCommand(new LobbySkillsCommand());
         ClientCommandHandler.instance.registerCommand(new LootCommand());
         ClientCommandHandler.instance.registerCommand(new MoveCommand());
@@ -178,7 +181,7 @@ public class DankersSkyblockMod {
         ClientCommandHandler.instance.registerCommand(new ToggleCommand());
 
         configDirectory = event.getModConfigurationDirectory().toString();
-		CustomMusic.init(configDirectory);
+        CustomMusic.init(configDirectory);
     }
 
     @EventHandler

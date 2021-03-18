@@ -214,17 +214,24 @@ public class ConfigHandler {
 		ToggleCommand.goldenToggled = initBoolean("toggles", "Golden", false);
 		ToggleCommand.slayerCountTotal = initBoolean("toggles", "SlayerCount", true);
 		ToggleCommand.rngesusAlerts = initBoolean("toggles", "RNGesusAlerts", false);
+		ToggleCommand.ghostDisplay = initBoolean("toggles", "GhostDisplay", true);
+		ToggleCommand.dungeonTimerToggled = initBoolean("toggles", "GhostTimer", false);
 		ToggleCommand.splitFishing = initBoolean("toggles", "SplitFishing", true);
 		ToggleCommand.chatMaddoxToggled = initBoolean("toggles", "ChatMaddox", false);
 		ToggleCommand.spiritBearAlerts = initBoolean("toggles", "SpiritBearAlerts", false);
 		ToggleCommand.aotdToggled = initBoolean("toggles", "AOTD", false);
 		ToggleCommand.lividDaggerToggled = initBoolean("toggles", "LividDagger", false);
+		ToggleCommand.shadowFuryToggled = initBoolean("toggles", "Shadow Fury", false);
 		ToggleCommand.petColoursToggled = initBoolean("toggles", "PetColors", false);
 		ToggleCommand.golemAlertToggled = initBoolean("toggles", "GolemAlerts", false);
 		ToggleCommand.expertiseLoreToggled = initBoolean("toggles", "ExpertiseLore", false);
 		ToggleCommand.skill50DisplayToggled = initBoolean("toggles", "Skill50Display", false);
 		ToggleCommand.outlineTextToggled = initBoolean("toggles", "OutlineText", false);
 		ToggleCommand.cakeTimerToggled = initBoolean("toggles", "CakeTimer", false);
+		ToggleCommand.specialHoeRightClick = initBoolean("toggles", "SpecialHoe", false);
+		ToggleCommand.melodyTooltips = initBoolean("toggles", "MelodyTooltips", false);
+		ToggleCommand.highlightSlayers = initBoolean("toggles", "HighlightSlayers", false);
+		ToggleCommand.highlightArachne = initBoolean("toggles", "HighlightArachne", false);
 		// Chat Messages
 		ToggleCommand.sceptreMessages = initBoolean("toggles", "SceptreMessages", true);
 		ToggleCommand.midasStaffMessages = initBoolean("toggles", "MidasStaffMessages", true);
@@ -439,7 +446,15 @@ public class ConfigHandler {
 		LootTracker.witherBoots = initInt("catacombs", "witherBoot", 0);
 		LootTracker.f7CoinsSpent = initDouble("catacombs", "floorSevenCoins", 0);
 		LootTracker.f7TimeSpent = initDouble("catacombs", "floorSevenTime", 0);
-		
+
+		// Ghost
+		LootTracker.sorrows = initInt("ghosts", "sorrow", 0);
+		LootTracker.voltas = initInt("ghosts", "volta", 0);
+		LootTracker.plasmas = initInt("ghosts", "plasma", 0);
+		LootTracker.ghostlyBoots = initInt("ghosts", "ghostlyBoots", 0);
+		LootTracker.bagOfCashs = initInt("ghosts", "bagOfCash", 0);
+
+
 		// Misc
 		LootDisplay.display = initString("misc", "display", "off");
 		LootDisplay.auto = initBoolean("misc", "autoDisplay", false);
@@ -498,6 +513,8 @@ public class ConfigHandler {
 		BonzoMaskTimer.BONZO_COLOR = initString("colors", "bonzoDisplay", EnumChatFormatting.RED.toString());
 		BlazeSolver.LOWEST_BLAZE_COLOUR = initInt("colors", "blazeLowest", 0xFF0000);
 		BlazeSolver.HIGHEST_BLAZE_COLOUR = initInt("colors", "blazeHighest", 0x40FF40);
+		SlayerESP.SLAYER_COLOUR = initInt("colors", "slayerColor", 0x0000FF);
+		ArachneESP.ARACHANE_COLOUR = initInt("colors", "arachneColor", 0x00FF00);
 		PetColours.PET_1_TO_9 = initInt("colors", "pet1To9", 0x999999); // Grey
 		PetColours.PET_10_TO_19 = initInt("colors", "pet10To19", 0xD62440); // Red
 		PetColours.PET_20_TO_29 = initInt("colors", "pet20To29", 0xEF5230); // Orange

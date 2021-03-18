@@ -29,6 +29,9 @@ public class HideTooltipsInExperiments {
             if (ToggleCommand.hideTooltipsInExperimentAddonsToggled && (chestName.startsWith("Ultrasequencer (") || chestName.startsWith("Chronomatron ("))) {
                 event.toolTip.clear();
             }
+            if (ToggleCommand.melodyTooltips && chestName.startsWith("Harp")) {
+                event.toolTip.clear();
+            }
         }
     }
 

@@ -37,6 +37,9 @@ public class AutoDisplay {
                     } else if (sCleaned.contains("Revenant Horror")) {
                         LootDisplay.display = "zombie";
                         found = true;
+                    } else if (sCleaned.contains("The Mist")){
+                        LootDisplay.display = "ghost";
+                        found = true;
                     } else if (sCleaned.contains("The Catacombs (")) {
                         if (sCleaned.contains("F1")) {
                             LootDisplay.display = "catacombs_floor_one";

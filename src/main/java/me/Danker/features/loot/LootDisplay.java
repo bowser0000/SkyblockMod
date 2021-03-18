@@ -900,6 +900,36 @@ public class LootDisplay {
                             EnumChatFormatting.AQUA + Utils.getMoneySpent(LootTracker.f7CoinsSpentSession) + "\n" +
                             EnumChatFormatting.AQUA + Utils.getTimeBetween(0, LootTracker.f7TimeSpentSession);
                     break;
+                case "ghost_session":
+                    dropsText = EnumChatFormatting.GOLD + "Bags of Cash:\n" +
+                            EnumChatFormatting.BLUE + "Sorrows:\n" +
+                            EnumChatFormatting.DARK_PURPLE + "Ghosty Boots:\n" +
+                            EnumChatFormatting.DARK_PURPLE + "Voltas:\n" +
+                            EnumChatFormatting.DARK_PURPLE + "Plasmas:" ; // + \n
+                           // EnumChatFormatting.AQUA + "Time Spent:" +
+                    countText = EnumChatFormatting.GOLD + nf.format(LootTracker.bagOfCashSession) + "\n" +
+                            EnumChatFormatting.BLUE + nf.format(LootTracker.sorrowSession) + "\n" +
+                            EnumChatFormatting.DARK_PURPLE + nf.format(LootTracker.ghostlyBootsSession) + "\n" +
+                            EnumChatFormatting.DARK_PURPLE + nf.format(LootTracker.voltaSession) + "\n" +
+                            EnumChatFormatting.DARK_PURPLE + nf.format(LootTracker.plasmaSession); //+ "\n" +
+                         //   EnumChatFormatting.AQUA + nf.format(LootTracker.ghostsTimeSpentSession);
+                    break;
+                case "ghost":
+                    dropsText = EnumChatFormatting.GOLD + "Bags of Cash:\n" +
+                            EnumChatFormatting.BLUE + "Sorrows:\n" +
+                            EnumChatFormatting.DARK_PURPLE + "Ghosty Boots:\n" +
+                            EnumChatFormatting.DARK_PURPLE + "Voltas:\n" +
+                            EnumChatFormatting.DARK_PURPLE + "Plasmas:" ; // + \n
+                    // EnumChatFormatting.AQUA + "Time Spent:" +
+                    countText = EnumChatFormatting.GOLD + nf.format(LootTracker.bagOfCashSession) + "\n" +
+                            EnumChatFormatting.BLUE + nf.format(LootTracker.sorrowSession) + "\n" +
+                            EnumChatFormatting.DARK_PURPLE + nf.format(LootTracker.ghostlyBootsSession) + "\n" +
+                            EnumChatFormatting.DARK_PURPLE + nf.format(LootTracker.voltaSession) + "\n" +
+                            EnumChatFormatting.DARK_PURPLE + nf.format(LootTracker.plasmaSession); //+ "\n" +
+                    //   EnumChatFormatting.AQUA + nf.format(LootTracker.ghostsTimeSpentSession);
+                    break;
+
+
                 default:
                     System.out.println("Display was an unknown value, turning off.");
                     display = "off";

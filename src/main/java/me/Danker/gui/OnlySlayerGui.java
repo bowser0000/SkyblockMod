@@ -1,10 +1,13 @@
 package me.Danker.gui;
 
 import me.Danker.DankersSkyblockMod;
+import me.Danker.commands.ToggleCommand;
 import me.Danker.features.BlockWrongSlayer;
 import me.Danker.handlers.ConfigHandler;
 import me.Danker.handlers.TextRenderer;
+import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;
@@ -23,7 +26,9 @@ public class OnlySlayerGui extends GuiScreen {
 	private GuiButton two;
 	private GuiButton three;
 	private GuiButton four;
-	private GuiButton five;
+  private GuiButton five;
+  
+	private GuiButton highlightSlayers;
 	
 	@Override
 	public boolean doesGuiPauseGame() {
@@ -69,6 +74,7 @@ public class OnlySlayerGui extends GuiScreen {
 		three = new GuiButton(0, width / 2 - 30, (int) (height * 0.6), 60, 20, "III");
 		four = new GuiButton(0, width / 2 + 50, (int) (height * 0.6), 60, 20, "IV");
 		five = new GuiButton(0, width / 2 + 130, (int) (height * 0.6), 60, 20, "V");
+    highlightSlayers = new GuiButton(0, width / 2 - 100, (int) (height * 0.7), "Highlight Slayer Bosses: " + Utils.getColouredBoolean(ToggleCommand.highlightSlayers));
 		
 		this.buttonList.add(off);
 		this.buttonList.add(zombie);
@@ -79,6 +85,7 @@ public class OnlySlayerGui extends GuiScreen {
 		this.buttonList.add(three);
 		this.buttonList.add(four);
 		this.buttonList.add(five);
+    this.buttonList.add(highlightSlayers);
 		this.buttonList.add(goBack);
 	}
 	
@@ -125,7 +132,12 @@ public class OnlySlayerGui extends GuiScreen {
 			onlyNumberInt = 4;
 		} else if (button == five) {
 			onlyNumberInt = 5;
-		}
+		} else if (button == highlightSlayers) {
+			ToggleCommand.highlightSlayers = !ToggleCommand.highlightSlayers;
+			ConfigHandler.writeBooleanConfig("toggles", "HighlightSlayers", ToggleCommand.highlightSlayers);
+			highlightSlayers.displayString = "Highlight Slayer Bosses: " + Utils.getColouredBoolean(ToggleCommand.highlightSlayers);
+      return;
+    }
 		
 		String onlyNumber;
 		switch (onlyNumberInt) {

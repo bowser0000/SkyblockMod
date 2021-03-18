@@ -16,6 +16,8 @@ Discord Server: https://discord.gg/QsEkNQS
 - Golden T10/T6/T4 enchant display
 - Block AOTD ability
 - Block Livid Dagger ability
+- Block Shadow Fury ability
+- Block right click with special hoes
 - Block placing Flower of Truth/Spirit Sceptre
 - Disable Spirit Sceptre messages
 - Disable Midas Staff messages
@@ -25,6 +27,7 @@ Discord Server: https://discord.gg/QsEkNQS
 - Disable out of mana messages
 - Disable kill combo messages
 - Slayer item tracker
+- Ghosts item tracker  
 - RNGesus drop alerts
 - Click anywhere on-screen to open Maddox
 - Maddox menu keybind
@@ -41,6 +44,7 @@ Discord Server: https://discord.gg/QsEkNQS
 - Use custom music in dungeon boss room
 - Experimentation solvers (Ultrasequencer, Chronomatron, Superpairs)
 - Hide tooltips in experiment addons
+- Hide tooltips in Melody's Harp
 - Pet background colors based on level
 - Golem spawning alerts
 - Skill xp/hour tracker
@@ -51,6 +55,9 @@ Discord Server: https://discord.gg/QsEkNQS
 - API commands
 - Update checker
 - Reparty command
+- Highlight Slayer Bosses
+- Highlight Arachne
+
 
 ## Commands
 - /dhelp - Returns this message in-game.
@@ -59,7 +66,7 @@ Discord Server: https://discord.gg/QsEkNQS
 - /setkey <key> - Sets API key.
 - /getkey - Returns key set with /setkey and copies it to your clipboard.
 - /loot <zombie/spider/wolf/fishing/catacombs/mythological/> [winter/festival/spooky/f(1-7)/session] - Returns loot received from slayer quests or fishing stats. /loot fishing winter returns winter sea creatures instead.
-- /display <zombie/spider/wolf/fishing/catacombs/mythological/auto/off> [winter/festival/spooky/f(1-7)/session] - Text display for trackers. /display fishing winter displays winter sea creatures instead. /display auto automatically displays the loot for the slayer quest you have active.
+- /display <zombie/spider/wolf/fishing/catacombs/mythological/ghosts/auto/off> [winter/festival/spooky/f(1-7)/session] - Text display for trackers. /display fishing winter displays winter sea creatures instead. /display auto automatically displays the loot for the slayer quest you have active.
 - /resetloot <zombie/spider/wolf/fishing/catacombs/mythological/confirm/cancel> -  - Resets loot for trackers. /resetloot confirm confirms the reset.
 - /move <coords/display/dungeontimer/skill50/lividhp/caketimer/skilltracker/wateranswer/bonzotimer> <x> <y> - Moves text display to specified X and Y coordinates.
 - /scale <coords/display/dungeontimer/skill50/lividhp/caketimer/skilltracker/wateranswer/bonzotimer> <scale (0.1 - 10)> - Scales text display to a specified multipler between 0.1x and 10x.
@@ -76,6 +83,8 @@ Discord Server: https://discord.gg/QsEkNQS
 - /onlyslayer <zombie/spider/wolf> <1/2/3/4/5> - Stops you from starting a slayer quest other than the one specified.
 - /skilltracker <start/stop/reset> - Text display for skill xp/hour.
 - /reparty - Disbands and reparties all members in the party
+- /fairysouls - Check the fairysouls of a player
+- /lobbybank - Uses API to find the average bank total of the lobby, as well the three players with the highest total money in the bank (and purse).
 - /dsmmusic <stop/reload> - Stops or reloads the custom music.
 
 ## Keybinds

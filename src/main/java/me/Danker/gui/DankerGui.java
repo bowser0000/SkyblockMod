@@ -31,6 +31,7 @@ public class DankerGui extends GuiScreen {
 	private GuiButton puzzleSolvers;
 	private GuiButton experimentationTableSolvers;
 	private GuiButton skillTracker;
+	private GuiButton highlightArachne;
 	// Toggles
 	private GuiButton gparty;
 	private GuiButton coords;
@@ -47,6 +48,9 @@ public class DankerGui extends GuiScreen {
 	private GuiButton skill50Display;
 	private GuiButton outlineText;
 	private GuiButton cakeTimer;
+	private GuiButton shadowFury;
+	private GuiButton specialHoe;
+	private GuiButton melodyTooltips;
 	private GuiButton dungeonBossMusic;
 	// Chat Messages
 	private GuiButton lividDagger;
@@ -69,7 +73,7 @@ public class DankerGui extends GuiScreen {
 	private GuiButton necronNotifications;
 	private GuiButton bonzoTimer;
 	private GuiButton autoSkillTracker;
-	
+
 	public DankerGui(int page) {
 		this.page = page;
 	}
@@ -135,13 +139,18 @@ public class DankerGui extends GuiScreen {
 		stopSalvageStarred = new GuiButton(0, width / 2 - 100, (int) (height * 0.5), "Stop Salvaging Starred Items: " + Utils.getColouredBoolean(ToggleCommand.stopSalvageStarredToggled));
 		watcherReadyMessage = new GuiButton(0, width / 2 - 100, (int) (height * 0.6), "Display Watcher Ready Message: " + Utils.getColouredBoolean(ToggleCommand.watcherReadyToggled));
 		flowerWeapons = new GuiButton(0, width / 2 - 100, (int) (height * 0.7), "Prevent Placing FoT/Spirit Sceptre: " + Utils.getColouredBoolean(ToggleCommand.flowerWeaponsToggled));
-		//Page 6
+		// Page 6
 		notifySlayerSlain = new GuiButton(0, width / 2 - 100, (int) (height * 0.1), "Notify when Slayer Slain: " + Utils.getColouredBoolean(ToggleCommand.notifySlayerSlainToggled));
 		necronNotifications = new GuiButton(0, width / 2 - 100, (int) (height * 0.2), "Necron Phase Notifications: " + Utils.getColouredBoolean(ToggleCommand.necronNotificationsToggled));
 		bonzoTimer = new GuiButton(0, width / 2 - 100, (int) (height * 0.3), "Bonzo's Mask Timer: " + Utils.getColouredBoolean(ToggleCommand.bonzoTimerToggled));
 		autoSkillTracker = new GuiButton(0, width / 2 - 100, (int) (height * 0.4), "Auto Start/Stop Skill Tracker: " + Utils.getColouredBoolean(ToggleCommand.autoSkillTrackerToggled));
 		dungeonBossMusic = new GuiButton(0, width / 2 - 100, (int) (height * 0.5), "Custom Dungeon Boss Music: " + Utils.getColouredBoolean(ToggleCommand.dungeonBossMusic));
-
+		shadowFury = new GuiButton(0, width / 2 - 100, (int) (height * 0.6), "Block Shadow Fury ability: " + Utils.getColouredBoolean(ToggleCommand.shadowFuryToggled));
+		specialHoe = new GuiButton(0, width / 2 - 100, (int) (height * 0.7), "Block Special Hoe right click: " + Utils.getColouredBoolean(ToggleCommand.specialHoeRightClick));
+		// Page 7
+		melodyTooltips = new GuiButton(0, width / 2 - 100, (int) (height * 0.1), "Hide tooltips in Melody's Harp: " + Utils.getColouredBoolean(ToggleCommand.melodyTooltips));
+    highlightArachne =new GuiButton(0, width / 2 - 100, (int) (height * 0.2), "Highlight Arachne: " + Utils.getColouredBoolean(ToggleCommand.highlightArachne));
+    
 		switch (page) {
 			case 1:
 				this.buttonList.add(changeDisplay);
@@ -183,6 +192,7 @@ public class DankerGui extends GuiScreen {
 				this.buttonList.add(gparty);
 				this.buttonList.add(golemAlerts);
 				this.buttonList.add(rngesusAlert);
+				this.buttonList.add(splitFishing);
 				this.buttonList.add(nextPage);
 				this.buttonList.add(backPage);
 				break;
@@ -199,10 +209,18 @@ public class DankerGui extends GuiScreen {
 				break;
 			case 6:
 				this.buttonList.add(notifySlayerSlain);
-        		this.buttonList.add(necronNotifications);
+				this.buttonList.add(necronNotifications);
 				this.buttonList.add(bonzoTimer);
 				this.buttonList.add(autoSkillTracker);
 				this.buttonList.add(dungeonBossMusic);
+				this.buttonList.add(shadowFury);
+				this.buttonList.add(specialHoe);
+				this.buttonList.add(nextPage);
+				this.buttonList.add(backPage);
+				break;
+			case 7:
+				this.buttonList.add(melodyTooltips);
+				this.buttonList.add(highlightArachne);
 				this.buttonList.add(backPage);
 				break;
 		}
@@ -216,7 +234,7 @@ public class DankerGui extends GuiScreen {
 	@Override
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
 		this.drawDefaultBackground();
-		String pageText = "Page: " + page + "/6";
+		String pageText = "Page: " + page + "/7";
 		int pageWidth = mc.fontRendererObj.getStringWidth(pageText);
 		new TextRenderer(mc, pageText, width / 2 - pageWidth / 2, 10, 1D);
 		super.drawScreen(mouseX, mouseY, partialTicks);
@@ -386,10 +404,26 @@ public class DankerGui extends GuiScreen {
 			ToggleCommand.autoSkillTrackerToggled = !ToggleCommand.autoSkillTrackerToggled;
 			ConfigHandler.writeBooleanConfig("toggles", "AutoSkillTracker", ToggleCommand.autoSkillTrackerToggled);
 			autoSkillTracker.displayString = "Auto Start/Stop Skill Tracker: " + Utils.getColouredBoolean(ToggleCommand.autoSkillTrackerToggled);
+		} else if (button == shadowFury) {
+			ToggleCommand.shadowFuryToggled = !ToggleCommand.shadowFuryToggled;
+			ConfigHandler.writeBooleanConfig("toggles", "ShadowFury", ToggleCommand.shadowFuryToggled);
+			shadowFury.displayString = "Block Shadow Fury ability: " + Utils.getColouredBoolean(ToggleCommand.shadowFuryToggled);
+		} else if (button == specialHoe) {
+			ToggleCommand.specialHoeRightClick = !ToggleCommand.specialHoeRightClick;
+			ConfigHandler.writeBooleanConfig("toggles", "SpecialHoe", ToggleCommand.specialHoeRightClick);
+			specialHoe.displayString = "Block Special Hoe right click: " + Utils.getColouredBoolean(ToggleCommand.specialHoeRightClick);
+		} else if (button == melodyTooltips) {
+			ToggleCommand.melodyTooltips = !ToggleCommand.melodyTooltips;
+			ConfigHandler.writeBooleanConfig("toggles", "MelodyTooltips", ToggleCommand.melodyTooltips);
+			melodyTooltips.displayString = "Hide tooltips in Melody's Harp: " + Utils.getColouredBoolean(ToggleCommand.melodyTooltips);
 		} else if (button == killComboMessages) {
 			ToggleCommand.killComboMessages = !ToggleCommand.killComboMessages;
 			ConfigHandler.writeBooleanConfig("toggles", "KillComboMessages", ToggleCommand.killComboMessages);
 			killComboMessages.displayString = "Kill Combo Messages: " + Utils.getColouredBoolean(ToggleCommand.killComboMessages);
+		} else if (button == highlightArachne) {
+			ToggleCommand.highlightArachne = !ToggleCommand.highlightArachne;
+			ConfigHandler.writeBooleanConfig("toggles", "HighlightArachne", ToggleCommand.highlightArachne);
+			highlightArachne.displayString = "Highlight Arachne: " + Utils.getColouredBoolean(ToggleCommand.highlightArachne);
 		} else if (button == dungeonBossMusic) {
 			ToggleCommand.dungeonBossMusic = !ToggleCommand.dungeonBossMusic;
 			if (CustomMusic.dungeonboss != null) {

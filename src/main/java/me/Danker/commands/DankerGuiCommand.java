@@ -89,6 +89,9 @@ public class DankerGuiCommand extends CommandBase {
 			debug.append("[superpairs][").append(ToggleCommand.superpairsToggled).append("]\n");
 			debug.append("[hidetooltipsinaddons][").append(ToggleCommand.hideTooltipsInExperimentAddonsToggled).append("]\n");
 			debug.append("[pickblock][").append(ToggleCommand.swapToPickBlockToggled).append("]\n");
+			debug.append("[shadowFuryAbility][").append(ToggleCommand.shadowFuryToggled).append("]\n");
+			debug.append("[specialhoe][").append(ToggleCommand.specialHoeRightClick).append("]\n");
+			debug.append("[melodyTooltips][").append(ToggleCommand.melodyTooltips).append("]\n");
 			debug.append("[dungeonbossmusic][").append(ToggleCommand.dungeonBossMusic).append("]\n");
 			debug.append("# Locations\n");
 			debug.append("[coords][").append(MoveCommand.coordsXY[0]).append(", ").append(MoveCommand.coordsXY[1]).append("]\n");
