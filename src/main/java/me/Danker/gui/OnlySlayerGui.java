@@ -26,9 +26,8 @@ public class OnlySlayerGui extends GuiScreen {
 	private GuiButton two;
 	private GuiButton three;
 	private GuiButton four;
-  private GuiButton five;
-  
-	private GuiButton highlightSlayers;
+  	private GuiButton five;
+  	private GuiButton highlightSlayers;
 	
 	@Override
 	public boolean doesGuiPauseGame() {
@@ -55,13 +54,12 @@ public class OnlySlayerGui extends GuiScreen {
 				onlyNumberInt = 3;
 				break;
 			case "IV":
+			default:
 				onlyNumberInt = 4;
 				break;
 			case "V":
 				onlyNumberInt = 5;
 				break;
-			default:
-				return;
 		}
 		
 		goBack = new GuiButton(0, 2, height - 30, 100, 20, "Go Back");
@@ -74,7 +72,7 @@ public class OnlySlayerGui extends GuiScreen {
 		three = new GuiButton(0, width / 2 - 30, (int) (height * 0.6), 60, 20, "III");
 		four = new GuiButton(0, width / 2 + 50, (int) (height * 0.6), 60, 20, "IV");
 		five = new GuiButton(0, width / 2 + 130, (int) (height * 0.6), 60, 20, "V");
-    highlightSlayers = new GuiButton(0, width / 2 - 100, (int) (height * 0.7), "Highlight Slayer Bosses: " + Utils.getColouredBoolean(ToggleCommand.highlightSlayers));
+		highlightSlayers = new GuiButton(0, width / 2 - 100, (int) (height * 0.7), "Highlight Slayer Bosses: " + Utils.getColouredBoolean(ToggleCommand.highlightSlayers));
 		
 		this.buttonList.add(off);
 		this.buttonList.add(zombie);
@@ -85,7 +83,7 @@ public class OnlySlayerGui extends GuiScreen {
 		this.buttonList.add(three);
 		this.buttonList.add(four);
 		this.buttonList.add(five);
-    this.buttonList.add(highlightSlayers);
+    	this.buttonList.add(highlightSlayers);
 		this.buttonList.add(goBack);
 	}
 	
@@ -136,8 +134,8 @@ public class OnlySlayerGui extends GuiScreen {
 			ToggleCommand.highlightSlayers = !ToggleCommand.highlightSlayers;
 			ConfigHandler.writeBooleanConfig("toggles", "HighlightSlayers", ToggleCommand.highlightSlayers);
 			highlightSlayers.displayString = "Highlight Slayer Bosses: " + Utils.getColouredBoolean(ToggleCommand.highlightSlayers);
-      return;
-    }
+      		return;
+    	}
 		
 		String onlyNumber;
 		switch (onlyNumberInt) {
