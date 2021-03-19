@@ -192,7 +192,6 @@ public class DankerGui extends GuiScreen {
 				this.buttonList.add(gparty);
 				this.buttonList.add(golemAlerts);
 				this.buttonList.add(rngesusAlert);
-				this.buttonList.add(splitFishing);
 				this.buttonList.add(nextPage);
 				this.buttonList.add(backPage);
 				break;

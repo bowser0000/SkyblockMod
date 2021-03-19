@@ -426,7 +426,7 @@ public class DefenitlyNotAJoikedInstallerFrame extends JFrame implements ActionL
                 inSubFolder = true;
             }
 
-            File newFile = new File(modsFolder, getVersionFromMcmodInfo() + ".Danker.s.Skyblock.Mod.-." + DankersSkyblockMod.VERSION + ".jar");
+            File newFile = new File(modsFolder, "Danker's Skyblock Mod - " + DankersSkyblockMod.VERSION + ".jar");
 
             if (thisFile.equals(newFile)) {
                 showErrorMessage("You are opening this file from where the file should be installed... there's nothing to be done!");

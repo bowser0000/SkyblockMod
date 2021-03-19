@@ -15,6 +15,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 
+import java.text.NumberFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -110,8 +111,9 @@ public class LobbyBankCommand extends CommandBase {
 
                 String[] sortedBankListKeys = sortedBankList.keySet().toArray(new String[0]);
                 String top3 = "";
+                NumberFormat nf = NumberFormat.getIntegerInstance(Locale.US);
                 for (int i = 0; i < 3 && i < sortedBankListKeys.length; i++) {
-                    top3 += "\n " + EnumChatFormatting.AQUA + sortedBankListKeys[i] + ": " + DankersSkyblockMod.SKILL_AVERAGE_COLOUR + EnumChatFormatting.BOLD + Math.round(sortedBankList.get(sortedBankListKeys[i]));
+                    top3 += "\n " + EnumChatFormatting.AQUA + sortedBankListKeys[i] + ": " + DankersSkyblockMod.SKILL_AVERAGE_COLOUR + EnumChatFormatting.BOLD + nf.format(Math.round(sortedBankList.get(sortedBankListKeys[i])));
                 }
 
                 // Get lobby sa
@@ -123,7 +125,7 @@ public class LobbyBankCommand extends CommandBase {
 
                 // Finally say skill lobby avg and highest SA users
                 playerSP.addChatMessage(new ChatComponentText(DankersSkyblockMod.DELIMITER_COLOUR + "" + EnumChatFormatting.BOLD + "-------------------\n" +
-                        DankersSkyblockMod.TYPE_COLOUR + " Lobby Bank Average: " + DankersSkyblockMod.SKILL_AVERAGE_COLOUR + EnumChatFormatting.BOLD + Math.round(lobbyBank) + "\n" +
+                        DankersSkyblockMod.TYPE_COLOUR + " Lobby Bank Average: " + DankersSkyblockMod.SKILL_AVERAGE_COLOUR + EnumChatFormatting.BOLD + nf.format(Math.round(lobbyBank)) + "\n" +
                         DankersSkyblockMod.TYPE_COLOUR + " Highest Bank Averages:" + top3 + "\n" +
                         DankersSkyblockMod.DELIMITER_COLOUR + "" + EnumChatFormatting.BOLD + " -------------------"));
 
