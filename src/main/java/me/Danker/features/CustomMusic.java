@@ -79,7 +79,7 @@ public class CustomMusic {
     @SubscribeEvent
     public void onSound(PlaySoundEvent event) {
         if (ToggleCommand.dungeonBossMusic && Utils.inDungeons && inDungeonBossRoom) {
-            if (event.name.startsWith("note.")) event.setCanceled(true);
+            if (event.isCancelable() && event.name.startsWith("note.")) event.setCanceled(true);
         }
     }
 
