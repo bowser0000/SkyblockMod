@@ -27,6 +27,10 @@ public class SkillsCommand extends CommandBase {
 		return "/" + getCommandName() + " [name]";
 	}
 
+	public static String usage(ICommandSender arg0) {
+		return new SkillsCommand().getCommandUsage(arg0);
+	}
+
 	@Override
 	public int getRequiredPermissionLevel() {
 		return 0;

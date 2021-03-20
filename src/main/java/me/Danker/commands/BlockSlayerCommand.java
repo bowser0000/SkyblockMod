@@ -24,6 +24,10 @@ public class BlockSlayerCommand extends CommandBase {
 		return "/" + getCommandName() + " <zombie/spider/wolf> <1/2/3/4/5>";
 	}
 
+	public static String usage(ICommandSender arg0) {
+		return new BlockSlayerCommand().getCommandUsage(arg0);
+	}
+
 	@Override
 	public int getRequiredPermissionLevel() {
 		return 0;

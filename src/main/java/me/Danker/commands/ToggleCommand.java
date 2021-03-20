@@ -100,6 +100,10 @@ public class ToggleCommand extends CommandBase implements ICommand {
 										  "/specialhoe/melodytooltips/highlightslayers/highlightArachne/dungeonbossmusic/list>";
 	}
 
+	public static String usage(ICommandSender arg0) {
+		return new ToggleCommand().getCommandUsage(arg0);
+	}
+
 	@Override
 	public int getRequiredPermissionLevel() {
 		return 0;

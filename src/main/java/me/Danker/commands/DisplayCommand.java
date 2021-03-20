@@ -24,6 +24,10 @@ public class DisplayCommand extends CommandBase {
 		return "/" + getCommandName() + " <zombie/spider/wolf/fishing/catacombs/mythological/ghost/auto/off> [winter/festival/spooky/session/f(1-7)]";
 	}
 
+	public static String usage(ICommandSender arg0) {
+		return new DisplayCommand().getCommandUsage(arg0);
+	}
+
 	@Override
 	public int getRequiredPermissionLevel() {
 		return 0;

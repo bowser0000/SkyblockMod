@@ -31,6 +31,10 @@ public class LobbyBankCommand extends CommandBase {
         return "/" + getCommandName();
     }
 
+    public static String usage(ICommandSender arg0) {
+        return new LobbyBankCommand().getCommandUsage(arg0);
+    }
+
     @Override
     public int getRequiredPermissionLevel() {
         return 0;

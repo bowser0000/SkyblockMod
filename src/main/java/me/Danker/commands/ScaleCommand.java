@@ -32,6 +32,10 @@ public class ScaleCommand extends CommandBase {
 	public String getCommandUsage(ICommandSender arg0) {
 		return "/" + getCommandName() + " <coords/display/dungeontimer/skill50/lividhp/caketimer/skilltracker/wateranswer/bonzotimer> <size (0.1 - 10)>";
 	}
+
+	public static String usage(ICommandSender arg0) {
+		return new ScaleCommand().getCommandUsage(arg0);
+	}
 	
 	@Override
 	public int getRequiredPermissionLevel() {

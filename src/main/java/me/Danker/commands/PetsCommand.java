@@ -128,6 +128,10 @@ public class PetsCommand extends CommandBase {
 		return "/" + getCommandName() + " [name]";
 	}
 
+	public static String usage(ICommandSender arg0) {
+		return new PetsCommand().getCommandUsage(arg0);
+	}
+
 	@Override
 	public int getRequiredPermissionLevel() {
 		return 0;

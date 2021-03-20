@@ -32,7 +32,11 @@ public class LobbySkillsCommand extends CommandBase {
 	public String getCommandUsage(ICommandSender arg0) {
 		return "/" + getCommandName();
 	}
-	
+
+	public static String usage(ICommandSender arg0) {
+		return new LobbySkillsCommand().getCommandUsage(arg0);
+	}
+
 	@Override
 	public int getRequiredPermissionLevel() {
 		return 0;

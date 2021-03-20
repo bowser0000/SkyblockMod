@@ -20,7 +20,11 @@ public class SetkeyCommand extends CommandBase implements ICommand {
 	public String getCommandUsage(ICommandSender arg0) {
 		return "/" + getCommandName() + " <key>";
 	}
-	
+
+	public static String usage(ICommandSender arg0) {
+		return new SetkeyCommand().getCommandUsage(arg0);
+	}
+
 	@Override
 	public int getRequiredPermissionLevel() {
 		return 0;

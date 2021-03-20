@@ -32,6 +32,10 @@ public class MoveCommand extends CommandBase {
 	public String getCommandUsage(ICommandSender arg0) {
 		return "/" + getCommandName() + " <coords/display/dungeontimer/skill50/lividhp/caketimer/skilltracker/wateranswer/bonzotimer> <x> <y>";
 	}
+
+	public static String usage(ICommandSender arg0) {
+		return new MoveCommand().getCommandUsage(arg0);
+	}
 	
 	@Override
 	public int getRequiredPermissionLevel() {

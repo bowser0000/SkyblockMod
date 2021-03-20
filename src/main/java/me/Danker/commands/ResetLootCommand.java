@@ -28,6 +28,10 @@ public class ResetLootCommand extends CommandBase {
 		return "/" + getCommandName() + "<zombie/spider/wolf/fishing/mythological/catacombs/confirm/cancel>";
 	}
 
+	public static String usage(ICommandSender arg0) {
+		return new ResetLootCommand().getCommandUsage(arg0);
+	}
+
 	@Override
 	public int getRequiredPermissionLevel() {
 		return 0;

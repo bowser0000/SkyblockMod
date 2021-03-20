@@ -26,6 +26,10 @@ public class CustomMusicCommand extends CommandBase {
         return "/" + getCommandName() + " <stop/reload>";
     }
 
+    public static String usage(ICommandSender arg0) {
+        return new CustomMusicCommand().getCommandUsage(arg0);
+    }
+
     @Override
     public int getRequiredPermissionLevel() {
         return 0;

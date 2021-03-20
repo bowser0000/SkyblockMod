@@ -27,7 +27,11 @@ public class DungeonsCommand extends CommandBase {
 	public String getCommandUsage(ICommandSender arg0) {
 		return "/" + getCommandName() + " [name]";
 	}
-	
+
+	public static String usage(ICommandSender arg0) {
+		return new DungeonsCommand().getCommandUsage(arg0);
+	}
+
 	@Override
 	public int getRequiredPermissionLevel() {
 		return 0;

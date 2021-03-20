@@ -23,7 +23,11 @@ public class DankerGuiCommand extends CommandBase {
 
 	@Override
 	public String getCommandUsage(ICommandSender arg0) {
-		return null;
+		return "/" + getCommandName();
+	}
+
+	public static String usage(ICommandSender arg0) {
+		return new DankerGuiCommand().getCommandUsage(arg0);
 	}
 
 	@Override

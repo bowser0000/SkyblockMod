@@ -26,6 +26,10 @@ public class SkillTrackerCommand extends CommandBase {
 		return "/" + getCommandName() + " <start/stop/reset>";
 	}
 
+	public static String usage(ICommandSender arg0) {
+		return new SkillTrackerCommand().getCommandUsage(arg0);
+	}
+
 	@Override
 	public int getRequiredPermissionLevel() {
 		return 0;

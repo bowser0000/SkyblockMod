@@ -34,7 +34,11 @@ public class BankCommand extends CommandBase {
 	public String getCommandUsage(ICommandSender arg0) {
 		return "/" + getCommandName() + " [name]";
 	}
-	
+
+	public static String usage(ICommandSender arg0) {
+		return new BankCommand().getCommandUsage(arg0);
+	}
+
 	@Override
 	public int getRequiredPermissionLevel() {
 		return 0;

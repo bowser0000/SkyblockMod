@@ -36,6 +36,10 @@ public class RepartyCommand extends CommandBase implements ICommand {
         return "/" + getCommandName(); 
     }
 
+    public static String usage(ICommandSender arg0) {
+        return new RepartyCommand().getCommandUsage(arg0);
+    }
+
     @Override
     public List<String> getCommandAliases() {
         return Collections.singletonList("rp");
