@@ -85,13 +85,14 @@ public class CustomMusic {
 
     public static void init(String configDirectory) throws IOException, LineUnavailableException, UnsupportedAudioFileException {
         if (configDirectory == null) return;
-        File directory = new File(configDirectory + "\\dsmmusic");
+        File directory = new File(configDirectory + "/dsmmusic");
         if (!directory.exists()) directory.mkdir();
 
         reset();
 
         dungeonboss = AudioSystem.getClip();
-        File dungeonBossFile = new File(configDirectory + "\\dsmmusic\\dungeonboss.wav");
+        File dungeonBossFile = new File(configDirectory + "/dsmmusic/dungeonboss.wav");
+        System.out.println("dungeonboss.wav exists?: " + dungeonBossFile.exists());
         if (dungeonBossFile.exists()) {
             AudioInputStream ais = AudioSystem.getAudioInputStream(dungeonBossFile);
             dungeonboss.open(ais);

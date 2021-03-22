@@ -93,14 +93,8 @@ Discord Server: https://discord.gg/QsEkNQS
 - Start/Stop Skill Tracker - Numpad 5 by default.
 
 ## Custom Music
-- Supported audio formats:
-  - .wav
-  - .mid
-  - .aiff
-  - .au
-  - .rmf
-- For the following custom music, place a supported music file with the given name in the `.minecraft/config/dsmmusic` folder.
-  - Dungeon boss music: `dungeonboss`
+- To use custom music, place a music file with the given name in the `.minecraft/config/dsmmusic` folder and enable the custom song in /dsm.
+  - Dungeon boss music: `dungeonboss.wav`
 
 ### Notes
 - Slayer tracker for token drops and 20% chance drops uses a 12x12x12 bounding box centered on the player to detect the drops. If you are out of the range of the item drop, it will not count on the tracker.
