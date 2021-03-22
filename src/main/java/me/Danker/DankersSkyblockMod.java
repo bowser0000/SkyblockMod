@@ -319,7 +319,7 @@ public class DankersSkyblockMod {
             Minecraft mc = Minecraft.getMinecraft();
             if (guiToOpen.startsWith("dankergui")) {
                 int page = Character.getNumericValue(guiToOpen.charAt(guiToOpen.length() - 1));
-                mc.displayGuiScreen(new DankerGui(page));
+                mc.displayGuiScreen(new DankerGui(page, ""));
             } else {
                 switch (guiToOpen) {
                     case "displaygui":
