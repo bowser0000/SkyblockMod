@@ -85,7 +85,7 @@ public class DankersSkyblockMod {
     public static String ANSWER_COLOUR;
 
     @EventHandler
-    public void init(FMLInitializationEvent event) {
+    public void init(FMLInitializationEvent event) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
         MinecraftForge.EVENT_BUS.register(this);
         MinecraftForge.EVENT_BUS.register(new ArachneESP());
         MinecraftForge.EVENT_BUS.register(new ArrowTerminalSolver());
@@ -141,6 +141,7 @@ public class DankersSkyblockMod {
         ConfigHandler.reloadConfig();
         GoldenEnchants.init();
         TriviaSolver.init();
+        CustomMusic.init(configDirectory);
 
         keyBindings[0] = new KeyBinding("Open Maddox Menu", Keyboard.KEY_M, "Danker's Skyblock Mod");
         keyBindings[1] = new KeyBinding("Regular Ability", Keyboard.KEY_NUMPAD4, "Danker's Skyblock Mod");
@@ -152,7 +153,7 @@ public class DankersSkyblockMod {
     }
 
     @EventHandler
-    public void preInit(final FMLPreInitializationEvent event) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
+    public void preInit(final FMLPreInitializationEvent event) {
         ClientCommandHandler.instance.registerCommand(new ArmourCommand());
         ClientCommandHandler.instance.registerCommand(new BankCommand());
         ClientCommandHandler.instance.registerCommand(new BlockSlayerCommand());
@@ -181,7 +182,6 @@ public class DankersSkyblockMod {
         ClientCommandHandler.instance.registerCommand(new ToggleCommand());
 
         configDirectory = event.getModConfigurationDirectory().toString();
-        CustomMusic.init(configDirectory);
     }
 
     @EventHandler

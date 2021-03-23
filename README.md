@@ -85,7 +85,7 @@ Discord Server: https://discord.gg/QsEkNQS
 - /reparty - Disbands and reparties all members in the party
 - /fairysouls - Check the fairysouls of a player
 - /lobbybank - Uses API to find the average bank total of the lobby, as well the three players with the highest total money in the bank (and purse).
-- /dsmmusic <stop/reload> - Stops or reloads the custom music.
+- /dsmmusic <stop/reload/volume> [dungeonboss] [#] - Stops or reloads the custom music.
 
 ## Keybinds
 - Open Maddox menu - M by default.

@@ -274,6 +274,7 @@ public class ConfigHandler {
 		ToggleCommand.hideTooltipsInExperimentAddonsToggled = initBoolean("toggles", "HideTooltipsInExperimentAddons", false);
 		// Custom Music
 		ToggleCommand.dungeonBossMusic = initBoolean("toggles", "DungeonBossMusic", false);
+		CustomMusic.dungeonbossDecibels = (float) initInt("music", "DungeonBossDecibels", -20);
 
 		// API
 		if (!hasKey("api", "APIKey")) writeStringConfig("api", "APIKey", "");

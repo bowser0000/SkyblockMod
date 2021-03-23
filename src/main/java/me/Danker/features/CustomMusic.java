@@ -25,6 +25,7 @@ public class CustomMusic {
     static boolean prevInDungeonBossRoom = false;
     static boolean inDungeonBossRoom = false;
     public static Clip dungeonboss;
+    public static float dungeonbossDecibels;
 
     @SubscribeEvent
     public void onWorldChange(WorldEvent.Load event) {
@@ -98,7 +99,7 @@ public class CustomMusic {
             dungeonboss.open(ais);
 
             FloatControl volume = (FloatControl) dungeonboss.getControl(FloatControl.Type.MASTER_GAIN);
-            volume.setValue(-20F);
+            volume.setValue(dungeonbossDecibels);
         }
     }
 
