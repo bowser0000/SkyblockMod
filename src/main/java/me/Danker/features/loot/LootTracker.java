@@ -527,7 +527,7 @@ public class LootTracker {
             zombieScythesSession++;
             ConfigHandler.writeIntConfig("zombie", "scythe", zombieScythes);
             if (ToggleCommand.rngesusAlerts) Utils.createTitle(EnumChatFormatting.GOLD + "SCYTHE BLADE!", 5);
-        } else if (message.contains("INSANE DROP!  (Shard of the Shredded)")) {
+        } else if (message.contains("CRAZY RARE DROP!  (Shard of the Shredded)")) {
             zombieRNG = true;
             zombieShards++;
             zombieShardsSession++;
