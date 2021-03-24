@@ -41,7 +41,7 @@ Discord Server: https://discord.gg/QsEkNQS
 - Watcher ready message
 - Catacombs F7 Stage 3 solvers (Starts with letter, select all colour, ignore arrows on sea lanterns)
 - Find correct Livid (with graphic display of HP)
-- Use custom music in dungeon boss room
+- Use custom music in supported locations
 - Experimentation solvers (Ultrasequencer, Chronomatron, Superpairs)
 - Hide tooltips in experiment addons
 - Hide tooltips in Melody's Harp
@@ -85,7 +85,7 @@ Discord Server: https://discord.gg/QsEkNQS
 - /reparty - Disbands and reparties all members in the party
 - /fairysouls - Check the fairysouls of a player
 - /lobbybank - Uses API to find the average bank total of the lobby, as well the three players with the highest total money in the bank (and purse).
-- /dsmmusic <stop/reload/volume> [dungeonboss] [#] - Stops or reloads the custom music.
+- /dsmmusic <stop/reload/volume> [dungeonboss/bloodroom/dungeon] [#] - Stops, reloads or changes the volume of custom music.
 
 ## Keybinds
 - Open Maddox menu - M by default.
@@ -93,7 +93,9 @@ Discord Server: https://discord.gg/QsEkNQS
 - Start/Stop Skill Tracker - Numpad 5 by default.
 
 ## Custom Music
-- To use custom music, place a music file with the given name in the `.minecraft/config/dsmmusic` folder and enable the custom song in /dsm.
+- To use custom music, place a music file with the given name in the `.minecraft/config/dsmmusic` folder, either run `/dsmmusic reload` or restart your game, and enable the custom song in `/dsm`.
+  - Dungeon music: `dungeon.wav`
+  - Blood room music: `bloodroom.wav`
   - Dungeon boss music: `dungeonboss.wav`
 
 ### Notes

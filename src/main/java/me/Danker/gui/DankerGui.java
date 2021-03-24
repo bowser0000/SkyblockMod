@@ -2,7 +2,6 @@ package me.Danker.gui;
 
 import me.Danker.DankersSkyblockMod;
 import me.Danker.commands.ToggleCommand;
-import me.Danker.features.CustomMusic;
 import me.Danker.handlers.ConfigHandler;
 import me.Danker.handlers.TextRenderer;
 import me.Danker.utils.Utils;
@@ -40,7 +39,7 @@ public class DankerGui extends GuiScreen {
 	private GuiButton puzzleSolvers;
 	private GuiButton experimentationTableSolvers;
 	private GuiButton skillTracker;
-	private GuiButton highlightArachne;
+	private GuiButton customMusic;
 	// Toggles
 	private GuiButton gparty;
 	private GuiButton coords;
@@ -57,10 +56,13 @@ public class DankerGui extends GuiScreen {
 	private GuiButton skill50Display;
 	private GuiButton outlineText;
 	private GuiButton cakeTimer;
+	private GuiButton pickBlock;
+	private GuiButton notifySlayerSlain;
 	private GuiButton shadowFury;
 	private GuiButton specialHoe;
 	private GuiButton melodyTooltips;
-	private GuiButton dungeonBossMusic;
+	private GuiButton autoSkillTracker;
+	private GuiButton highlightArachne;
 	// Chat Messages
 	private GuiButton lividDagger;
 	private GuiButton sceptreMessages;
@@ -77,11 +79,8 @@ public class DankerGui extends GuiScreen {
 	private GuiButton stopSalvageStarred;
 	private GuiButton watcherReadyMessage;
 	private GuiButton flowerWeapons;
-	private GuiButton pickBlock;
-	private GuiButton notifySlayerSlain;
 	private GuiButton necronNotifications;
 	private GuiButton bonzoTimer;
-	private GuiButton autoSkillTracker;
 
 	public DankerGui(int page, String searchText) {
 		this.page = page;
@@ -110,15 +109,14 @@ public class DankerGui extends GuiScreen {
 		editLocations = new GuiButton(0, 2, 5, 100, 20, "Edit Locations");
 		search = new GuiTextField(0, this.fontRendererObj, width - 202, 5, 200, 20);
 
-		// Page 1
 		changeDisplay = new GuiButton(0, 0, 0, "Change Display Settings");
 		onlySlayer = new GuiButton(0, 0, 0, "Set Slayer Quest");
 		puzzleSolvers = new GuiButton(0, 0, 0, "Toggle Dungeons Puzzle Solvers");
 		experimentationTableSolvers = new GuiButton(0, 0, 0, "Toggle Experimentation Table Solvers");
 		skillTracker = new GuiButton(0, 0, 0, "Toggle Skill XP/Hour Tracking");
+		customMusic = new GuiButton(0, 0, 0, "Custom Music");
 		outlineText = new GuiButton(0, 0, 0, "Outline Displayed Text: " + Utils.getColouredBoolean(ToggleCommand.outlineTextToggled));
 		pickBlock = new GuiButton(0, 0, 0, "Auto-Swap to Pick Block: " + Utils.getColouredBoolean(ToggleCommand.swapToPickBlockToggled));
-		// Page 2
 		coords = new GuiButton(0, 0, 0, "Coordinate/Angle Display: " + Utils.getColouredBoolean(ToggleCommand.coordsToggled));
 		chatMaddox = new GuiButton(0, 0, 0, "Click On-Screen to Open Maddox: " + Utils.getColouredBoolean(ToggleCommand.chatMaddoxToggled));
 		cakeTimer = new GuiButton(0, 0, 0, "Cake Timer: " + Utils.getColouredBoolean(ToggleCommand.cakeTimerToggled));
@@ -126,7 +124,6 @@ public class DankerGui extends GuiScreen {
 		slayerCount = new GuiButton(0, 0, 0, "Count Total 20% Drops: " + Utils.getColouredBoolean(ToggleCommand.slayerCountTotal));
 		aotd = new GuiButton(0, 0, 0, "Disable AOTD Ability: " + Utils.getColouredBoolean(ToggleCommand.aotdToggled));
 		lividDagger = new GuiButton(0, 0, 0, "Disable Livid Dagger Ability: " + Utils.getColouredBoolean(ToggleCommand.lividDaggerToggled));
-		// Page 3
 		spiritBearAlert = new GuiButton(0, 0, 0, "Spirit Bear Spawn Alerts: " + Utils.getColouredBoolean(ToggleCommand.spiritBearAlerts));
 		sceptreMessages = new GuiButton(0, 0, 0, "Spirit Sceptre Messages: " + Utils.getColouredBoolean(ToggleCommand.sceptreMessages));
 		midasStaffMessages = new GuiButton(0, 0, 0, "Midas Staff Messages: " + Utils.getColouredBoolean(ToggleCommand.midasStaffMessages));
@@ -134,7 +131,6 @@ public class DankerGui extends GuiScreen {
 		healMessages = new GuiButton(0, 0, 0, "Heal Messages: " + Utils.getColouredBoolean(ToggleCommand.healMessages));
 		cooldownMessages = new GuiButton(0, 0, 0, "Cooldown Messages: " + Utils.getColouredBoolean(ToggleCommand.cooldownMessages));
 		manaMessages = new GuiButton(0, 0, 0, "Mana Messages: " + Utils.getColouredBoolean(ToggleCommand.manaMessages));
-		// Page 4
 		killComboMessages = new GuiButton(0, 0, 0, "Kill Combo Messages: " + Utils.getColouredBoolean(ToggleCommand.killComboMessages));
 		goldenEnch = new GuiButton(0, 0, 0, "Golden T10/T6/T4 Enchantments: " + Utils.getColouredBoolean(ToggleCommand.goldenToggled));
 		petColours = new GuiButton(0, 0, 0, "Colour Pet Backgrounds: " + Utils.getColouredBoolean(ToggleCommand.petColoursToggled));
@@ -142,7 +138,6 @@ public class DankerGui extends GuiScreen {
 		gparty = new GuiButton(0, 0, 0, "Guild Party Notifications: " + Utils.getColouredBoolean(ToggleCommand.gpartyToggled));
 		golemAlerts = new GuiButton(0, 0, 0, "Alert When Golem Spawns: " + Utils.getColouredBoolean(ToggleCommand.golemAlertToggled));
 		rngesusAlert = new GuiButton(0, 0, 0, "RNGesus Alerts: " + Utils.getColouredBoolean(ToggleCommand.rngesusAlerts));
-		// Page 5
 		splitFishing = new GuiButton(0, 0, 0, "Split Fishing Display: " + Utils.getColouredBoolean(ToggleCommand.splitFishing));
 		lowHealthNotify = new GuiButton(0, 0, 0, "Low Health Notifications: " + Utils.getColouredBoolean(ToggleCommand.lowHealthNotifyToggled));
 		lividSolver = new GuiButton(0, 0, 0, "Find Correct Livid: " + Utils.getColouredBoolean(ToggleCommand.lividSolverToggled));
@@ -150,15 +145,12 @@ public class DankerGui extends GuiScreen {
 		stopSalvageStarred = new GuiButton(0, 0, 0, "Stop Salvaging Starred Items: " + Utils.getColouredBoolean(ToggleCommand.stopSalvageStarredToggled));
 		watcherReadyMessage = new GuiButton(0, 0, 0, "Display Watcher Ready Message: " + Utils.getColouredBoolean(ToggleCommand.watcherReadyToggled));
 		flowerWeapons = new GuiButton(0, 0, 0, "Prevent Placing FoT/Spirit Sceptre: " + Utils.getColouredBoolean(ToggleCommand.flowerWeaponsToggled));
-		// Page 6
 		notifySlayerSlain = new GuiButton(0, 0, 0, "Notify when Slayer Slain: " + Utils.getColouredBoolean(ToggleCommand.notifySlayerSlainToggled));
 		necronNotifications = new GuiButton(0, 0, 0, "Necron Phase Notifications: " + Utils.getColouredBoolean(ToggleCommand.necronNotificationsToggled));
 		bonzoTimer = new GuiButton(0, 0, 0, "Bonzo's Mask Timer: " + Utils.getColouredBoolean(ToggleCommand.bonzoTimerToggled));
 		autoSkillTracker = new GuiButton(0, 0, 0, "Auto Start/Stop Skill Tracker: " + Utils.getColouredBoolean(ToggleCommand.autoSkillTrackerToggled));
-		dungeonBossMusic = new GuiButton(0, 0, 0, "Custom Dungeon Boss Music: " + Utils.getColouredBoolean(ToggleCommand.dungeonBossMusic));
 		shadowFury = new GuiButton(0, 0, 0, "Block Shadow Fury ability: " + Utils.getColouredBoolean(ToggleCommand.shadowFuryToggled));
 		specialHoe = new GuiButton(0, 0, 0, "Block Special Hoe right click: " + Utils.getColouredBoolean(ToggleCommand.specialHoeRightClick));
-		// Page 7
 		melodyTooltips = new GuiButton(0, 0, 0, "Hide tooltips in Melody's Harp: " + Utils.getColouredBoolean(ToggleCommand.melodyTooltips));
 		highlightArachne = new GuiButton(0, 0, 0, "Highlight Arachne: " + Utils.getColouredBoolean(ToggleCommand.highlightArachne));
 
@@ -167,6 +159,7 @@ public class DankerGui extends GuiScreen {
 		allButtons.add(puzzleSolvers);
 		allButtons.add(experimentationTableSolvers);
 		allButtons.add(skillTracker);
+		allButtons.add(customMusic);
 		allButtons.add(outlineText);
 		allButtons.add(pickBlock);
 		allButtons.add(coords);
@@ -201,7 +194,6 @@ public class DankerGui extends GuiScreen {
 		allButtons.add(necronNotifications);
 		allButtons.add(bonzoTimer);
 		allButtons.add(autoSkillTracker);
-		allButtons.add(dungeonBossMusic);
 		allButtons.add(shadowFury);
 		allButtons.add(specialHoe);
 		allButtons.add(melodyTooltips);
@@ -289,6 +281,8 @@ public class DankerGui extends GuiScreen {
 			DankersSkyblockMod.guiToOpen = "experimentsolvers";
 		} else if (button == skillTracker) {
 			DankersSkyblockMod.guiToOpen = "skilltracker";
+		} else if (button == customMusic) {
+			DankersSkyblockMod.guiToOpen = "custommusic";
 		} else if (button == outlineText) {
 			ToggleCommand.outlineTextToggled = !ToggleCommand.outlineTextToggled;
 			ConfigHandler.writeBooleanConfig("toggles", "OutlineText", ToggleCommand.outlineTextToggled);
@@ -441,17 +435,6 @@ public class DankerGui extends GuiScreen {
 			ToggleCommand.highlightArachne = !ToggleCommand.highlightArachne;
 			ConfigHandler.writeBooleanConfig("toggles", "HighlightArachne", ToggleCommand.highlightArachne);
 			highlightArachne.displayString = "Highlight Arachne: " + Utils.getColouredBoolean(ToggleCommand.highlightArachne);
-		} else if (button == dungeonBossMusic) {
-			ToggleCommand.dungeonBossMusic = !ToggleCommand.dungeonBossMusic;
-			if (CustomMusic.dungeonboss != null) {
-				if (ToggleCommand.dungeonBossMusic) {
-					CustomMusic.start();
-				} else {
-					CustomMusic.dungeonboss.stop();
-				}
-			}
-			ConfigHandler.writeBooleanConfig("toggles", "DungeonBossMusic", ToggleCommand.dungeonBossMusic);
-			dungeonBossMusic.displayString = "Custom Dungeon Boss Music: " + Utils.getColouredBoolean(ToggleCommand.dungeonBossMusic);
 		}
 	}
 

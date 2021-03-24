@@ -340,6 +340,9 @@ public class DankersSkyblockMod {
                     case "skilltracker":
                         mc.displayGuiScreen(new SkillTrackerGui());
                         break;
+                    case "custommusic":
+                        mc.displayGuiScreen(new CustomMusicGui());
+                        break;
                 }
             }
             guiToOpen = null;

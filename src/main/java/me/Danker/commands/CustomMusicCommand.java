@@ -10,8 +10,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
 
-import javax.sound.sampled.Clip;
-import javax.sound.sampled.FloatControl;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import java.io.IOException;
@@ -26,7 +24,7 @@ public class CustomMusicCommand extends CommandBase {
 
     @Override
     public String getCommandUsage(ICommandSender arg0) {
-        return "/" + getCommandName() + " <stop/reload/volume> [dungeonboss] [#]";
+        return "/" + getCommandName() + " <stop/reload/volume> [dungeonboss/bloodroom/dungeon] [#]";
     }
 
     public static String usage(ICommandSender arg0) {
@@ -43,7 +41,7 @@ public class CustomMusicCommand extends CommandBase {
         if (args.length == 1) {
             return getListOfStringsMatchingLastWord(args, "stop", "reload", "volume");
         } else if (args.length == 2) {
-            return getListOfStringsMatchingLastWord(args, "dungeonboss");
+            return getListOfStringsMatchingLastWord(args, "dungeonboss", "bloodroom", "dungeon");
         }
         return null;
     }
@@ -59,7 +57,7 @@ public class CustomMusicCommand extends CommandBase {
 
         switch (arg1[0].toLowerCase()) {
             case "stop":
-                if (CustomMusic.dungeonboss != null) CustomMusic.dungeonboss.stop();
+                CustomMusic.reset();
                 player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Stopped custom music."));
                 break;
             case "reload":
@@ -77,28 +75,43 @@ public class CustomMusicCommand extends CommandBase {
                     return;
                 }
 
+                float volume = Float.parseFloat(arg1[2]);
+                boolean success;
+
                 switch (arg1[1].toLowerCase()) {
                     case "dungeonboss":
-                        try {
-                            float volume = Float.parseFloat(arg1[2]);
-
-                            FloatControl bounds = (FloatControl) CustomMusic.dungeonboss.getControl(FloatControl.Type.MASTER_GAIN);
-                            if (volume <= bounds.getMinimum() || volume >= bounds.getMaximum()) {
-                                player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Volume can only be set between " + bounds.getMinimum() + " and " + bounds.getMaximum() + "."));
-                                return;
-                            }
-
-                            CustomMusic.dungeonbossDecibels = volume;
-                            ConfigHandler.writeIntConfig("music", "DungeonBossDecibels", (int) volume);
-                            CustomMusic.init(DankersSkyblockMod.configDirectory);
-                        } catch (IOException | LineUnavailableException | UnsupportedAudioFileException e) {
-                            player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "An error occurred while trying to reload music."));
-                            e.printStackTrace();
+                        success = CustomMusic.dungeonboss.setVolume(volume);
+                        if (!success) {
+                            return;
                         }
+
+                        CustomMusic.dungeonbossDecibels = volume;
+                        ConfigHandler.writeIntConfig("music", "DungeonBossDecibels", (int) volume);
+                        break;
+                    case "bloodroom":
+                        success = CustomMusic.bloodroom.setVolume(volume);
+                        if (!success) {
+                            return;
+                        }
+
+                        CustomMusic.bloodroomDecibels = volume;
+                        ConfigHandler.writeIntConfig("music", "BloodRoomDecibels", (int) volume);
+                        break;
+                    case "dungeon":
+                        success = CustomMusic.dungeon.setVolume(volume);
+                        if (!success) {
+                            return;
+                        }
+
+                        CustomMusic.dungeonDecibels = volume;
+                        ConfigHandler.writeIntConfig("music", "DungeonDecibels", (int) volume);
                         break;
                     default:
                         player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Usage: " + getCommandUsage(arg0)));
+                        return;
                 }
+
+                player.addChatMessage(new ChatComponentText(DankersSkyblockMod.SECONDARY_COLOUR + arg1[1] + DankersSkyblockMod.MAIN_COLOUR + " was set to " + DankersSkyblockMod.SECONDARY_COLOUR + volume + "db"));
                 break;
             default:
                 player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Usage: " + getCommandUsage(arg0)));

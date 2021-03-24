@@ -80,6 +80,8 @@ public class ToggleCommand extends CommandBase implements ICommand {
 	public static boolean melodyTooltips;
 	// Custom Music
 	public static boolean dungeonBossMusic;
+	public static boolean bloodRoomMusic;
+	public static boolean dungeonMusic;
 
 	@Override
 	public String getCommandName() {
@@ -96,8 +98,9 @@ public class ToggleCommand extends CommandBase implements ICommand {
 										  "notifyslayerslain/necronnotifications/bonzotimer/threemanpuzzle/oruopuzzle/blazepuzzle/" +
 										  "creeperpuzzle/waterpuzzle/tictactoepuzzle/boulderpuzzle/silverfishpuzzle/icewalkpuzzle/watchermessage/" +
 										  "startswithterminal/selectallterminal/clickinorderterminal/blockwrongterminalclicks/" +
-										  "itemframeonsealanterns/ultrasequencer/chronomatron/superpairs/hidetooltipsinaddons/pickblock/ " +
-										  "/specialhoe/melodytooltips/highlightslayers/highlightArachne/dungeonbossmusic/list>";
+										  "itemframeonsealanterns/ultrasequencer/chronomatron/superpairs/hidetooltipsinaddons/pickblock/" +
+										  "specialhoe/melodytooltips/highlightslayers/highlightarachne/dungeonbossmusic/bloodroommusic/" +
+										  "dungeonmusic/list>";
 	}
 
 	public static String usage(ICommandSender arg0) {
@@ -124,7 +127,8 @@ public class ToggleCommand extends CommandBase implements ICommand {
 														  "silverfishpuzzle", "icewalkpuzzle", "watchermessage", "startswithterminal",
 														  "selectallterminal", "clickinorderterminal", "blockwrongterminalclicks",
 														  "itemframeonsealanterns", "ultrasequencer", "chronomatron", "superpairs",
-														  "hidetooltipsinaddons", "pickblock", "specialhoe", "melodytooltips", "highlightslayers", "dungeonbossmusic", "list");
+														  "hidetooltipsinaddons", "pickblock", "specialhoe", "melodytooltips", "highlightslayers",
+														  "dungeonbossmusic", "bloodroommusic", "dungeonmusic", "list");
 		}
 		return null;
 	}
@@ -436,15 +440,21 @@ public class ToggleCommand extends CommandBase implements ICommand {
 				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Highlight Arachne " + DankersSkyblockMod.SECONDARY_COLOUR + highlightArachne + DankersSkyblockMod.MAIN_COLOUR + "."));
 			case "dungeonbossmusic":
 				dungeonBossMusic = !dungeonBossMusic;
-				if (CustomMusic.dungeonboss != null) {
-					if (dungeonBossMusic) {
-						CustomMusic.start();
-					} else {
-						CustomMusic.dungeonboss.stop();
-					}
-				}
+				CustomMusic.dungeonboss.stop();
 				ConfigHandler.writeBooleanConfig("toggles", "DungeonBossMusic", dungeonBossMusic);
 				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Custom dungeon boss music has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + dungeonBossMusic + DankersSkyblockMod.MAIN_COLOUR + "."));
+				break;
+			case "bloodroommusic":
+				bloodRoomMusic = !bloodRoomMusic;
+				CustomMusic.bloodroom.stop();
+				ConfigHandler.writeBooleanConfig("toggles", "BloodRoomMusic", bloodRoomMusic);
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Custom blood room music has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + bloodRoomMusic + DankersSkyblockMod.MAIN_COLOUR + "."));
+				break;
+			case "dungeonmusic":
+				dungeonMusic = !dungeonMusic;
+				CustomMusic.dungeon.stop();
+				ConfigHandler.writeBooleanConfig("toggles", "DungeonMusic", dungeonMusic);
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Custom dungeon music has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + dungeonMusic + DankersSkyblockMod.MAIN_COLOUR + "."));
 				break;
 			case "list":
 				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.TYPE_COLOUR + "Guild party notifications: " + DankersSkyblockMod.VALUE_COLOUR + gpartyToggled + "\n" +
@@ -496,7 +506,9 @@ public class ToggleCommand extends CommandBase implements ICommand {
 															DankersSkyblockMod.TYPE_COLOUR + " Hide tooltips in Melody's Harp " + DankersSkyblockMod.VALUE_COLOUR + melodyTooltips + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Highlight Slayer Bosses " + DankersSkyblockMod.VALUE_COLOUR + highlightSlayers + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Highlight Arachne Boss " + DankersSkyblockMod.VALUE_COLOUR + highlightArachne + "\n" +
-															DankersSkyblockMod.TYPE_COLOUR + " Custom dungeon boss music: " + DankersSkyblockMod.VALUE_COLOUR + dungeonBossMusic
+															DankersSkyblockMod.TYPE_COLOUR + " Custom dungeon boss music: " + DankersSkyblockMod.VALUE_COLOUR + dungeonBossMusic + "\n" +
+															DankersSkyblockMod.TYPE_COLOUR + " Custom blood room music: " + DankersSkyblockMod.VALUE_COLOUR + bloodRoomMusic + "\n" +
+															DankersSkyblockMod.TYPE_COLOUR + " Custom dungeon music: " + DankersSkyblockMod.VALUE_COLOUR + dungeonMusic
 				));
 				break;
 			default:
