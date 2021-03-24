@@ -101,7 +101,7 @@ public class BlockWrongTerminalClicks {
                             (SelectAllColourSolver.terminalColorNeeded.equals("WHITE") && (itemName.equals("WOOL") || itemName.equals("BONE MEAL"))) ||
                             (SelectAllColourSolver.terminalColorNeeded.equals("BLACK") && itemName.equals("INK SACK")) ||
                             (SelectAllColourSolver.terminalColorNeeded.equals("BLUE") && itemName.equals("LAPIS LAZULI")) ||
-                            (SelectAllColourSolver.terminalColorNeeded.equals("BROWN") && itemName.equals("COCOA BEANS")));
+                            (SelectAllColourSolver.terminalColorNeeded.equals("BROWN") && itemName.equals("COCOA BEAN")));
                 }
             }
 

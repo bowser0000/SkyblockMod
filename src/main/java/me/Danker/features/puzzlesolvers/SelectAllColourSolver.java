@@ -44,7 +44,7 @@ public class SelectAllColourSolver {
                         (terminalColorNeeded.equals("WHITE") && (itemName.equals("WOOL") || itemName.equals("BONE MEAL"))) ||
                         (terminalColorNeeded.equals("BLACK") && itemName.equals("INK SACK")) ||
                         (terminalColorNeeded.equals("BLUE") && itemName.equals("LAPIS LAZULI")) ||
-                        (terminalColorNeeded.equals("BROWN") && itemName.equals("COCOA BEANS"))) {
+                        (terminalColorNeeded.equals("BROWN") && itemName.equals("COCOA BEAN"))) {
                     Utils.drawOnSlot(event.chestSize, slot.xDisplayPosition, slot.yDisplayPosition, 0xBF40FF40);
                 }
             }
