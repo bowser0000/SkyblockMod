@@ -22,7 +22,7 @@ public class DungeonTimer {
     static int dungeonDeaths = 0;
     static int puzzleFails = 0;
 
-    @SubscribeEvent
+    @SubscribeEvent(receiveCanceled = true)
     public void onChat(ClientChatReceivedEvent event) {
         String message = StringUtils.stripControlCodes(event.message.getUnformattedText());
 
