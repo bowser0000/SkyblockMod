@@ -28,11 +28,11 @@ public class CustomMusic {
     static boolean prevInDungeonBossRoom = false;
     public static boolean inDungeonBossRoom = false;
     public static Song dungeonboss;
-    public static float dungeonbossDecibels;
+    public static int dungeonbossVolume;
     public static Song bloodroom;
-    public static float bloodroomDecibels;
+    public static int bloodroomVolume;
     public static Song dungeon;
-    public static float dungeonDecibels;
+    public static int dungeonVolume;
 
     @SubscribeEvent
     public void onWorldChange(WorldEvent.Load event) {
@@ -66,9 +66,6 @@ public class CustomMusic {
                         if (!prevInDungeonBossRoom) {
                             dungeonboss.start();
                         }
-                    } else {
-                        inDungeonBossRoom = false;
-                        dungeonboss.stop();
                     }
                 }
             }
@@ -100,8 +97,8 @@ public class CustomMusic {
 
     @SubscribeEvent
     public void onSound(PlaySoundEvent event) {
-        if (cancelNotes) {
-            if (event.isCancelable() && event.name.startsWith("note.")) event.setCanceled(true);
+        if (cancelNotes && event.name.startsWith("note.")) {
+            event.result = null;
         }
     }
 
@@ -114,19 +111,18 @@ public class CustomMusic {
 
         File dungeonBossFile = new File(directory + "/dungeonboss.wav");
         System.out.println("dungeonboss.wav exists?: " + dungeonBossFile.exists());
-        dungeonboss = new Song(dungeonBossFile, dungeonbossDecibels);
+        dungeonboss = new Song(dungeonBossFile, dungeonbossVolume);
 
         File bloodRoomFile = new File(directory + "/bloodroom.wav");
         System.out.println("bloodroom.wav exists?: " + bloodRoomFile.exists());
-        bloodroom = new Song(bloodRoomFile, bloodroomDecibels);
+        bloodroom = new Song(bloodRoomFile, bloodroomVolume);
 
         File dungeonFile = new File(directory + "/dungeon.wav");
         System.out.println("dungeon.wav exists?: " + dungeonFile.exists());
-        dungeon = new Song(dungeonFile, dungeonDecibels);
+        dungeon = new Song(dungeonFile, dungeonVolume);
     }
 
     public static void reset() {
-        cancelNotes = false;
         if (dungeonboss != null) dungeonboss.stop();
         if (bloodroom != null) bloodroom.stop();
         if (dungeon != null) dungeon.stop();
@@ -136,20 +132,20 @@ public class CustomMusic {
 
         public Clip music;
 
-        public Song(File file, float decibels) throws IOException, UnsupportedAudioFileException, LineUnavailableException {
+        public Song(File file, int volume) throws IOException, UnsupportedAudioFileException, LineUnavailableException {
             if (file.exists()) {
                 music = AudioSystem.getClip();
                 AudioInputStream ais = AudioSystem.getAudioInputStream(file);
                 music.open(ais);
 
-                setVolume(decibels);
+                setVolume(volume);
             }
         }
 
         public void start() {
             reset();
-            cancelNotes = true;
             if (music != null) {
+                cancelNotes = true;
                 music.setMicrosecondPosition(0);
                 music.start();
                 music.loop(Clip.LOOP_CONTINUOUSLY);
@@ -161,13 +157,17 @@ public class CustomMusic {
             if (music != null) music.stop();
         }
 
-        public boolean setVolume(float decibels) {
+        public boolean setVolume(int volume) {
+            EntityPlayer player = Minecraft.getMinecraft().thePlayer;
             if (music == null) return false;
+            if (volume <= 0 || volume > 100) {
+                if (player != null) player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Volume can only be set between 0% and 100%."));
+                return false;
+            }
 
+            float decibels = (float) (20 * Math.log(volume / 100.0));
             FloatControl control = (FloatControl) music.getControl(FloatControl.Type.MASTER_GAIN);
             if (decibels <= control.getMinimum() || decibels >= control.getMaximum()) {
-                EntityPlayer player = Minecraft.getMinecraft().thePlayer;
-                if (player != null) player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Volume can only be set between " + control.getMinimum() + " and " + control.getMaximum() + "."));
                 return false;
             }
 

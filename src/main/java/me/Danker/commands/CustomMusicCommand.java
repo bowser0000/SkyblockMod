@@ -24,7 +24,7 @@ public class CustomMusicCommand extends CommandBase {
 
     @Override
     public String getCommandUsage(ICommandSender arg0) {
-        return "/" + getCommandName() + " <stop/reload/volume> [dungeonboss/bloodroom/dungeon] [#]";
+        return "/" + getCommandName() + " <stop/reload/volume> [dungeonboss/bloodroom/dungeon] [1-100]";
     }
 
     public static String usage(ICommandSender arg0) {
@@ -75,7 +75,7 @@ public class CustomMusicCommand extends CommandBase {
                     return;
                 }
 
-                float volume = Float.parseFloat(arg1[2]);
+                int volume = Integer.parseInt(arg1[2]);
                 boolean success;
 
                 switch (arg1[1].toLowerCase()) {
@@ -85,8 +85,8 @@ public class CustomMusicCommand extends CommandBase {
                             return;
                         }
 
-                        CustomMusic.dungeonbossDecibels = volume;
-                        ConfigHandler.writeIntConfig("music", "DungeonBossDecibels", (int) volume);
+                        CustomMusic.dungeonbossVolume = volume;
+                        ConfigHandler.writeIntConfig("music", "DungeonBossVolume", volume);
                         break;
                     case "bloodroom":
                         success = CustomMusic.bloodroom.setVolume(volume);
@@ -94,8 +94,8 @@ public class CustomMusicCommand extends CommandBase {
                             return;
                         }
 
-                        CustomMusic.bloodroomDecibels = volume;
-                        ConfigHandler.writeIntConfig("music", "BloodRoomDecibels", (int) volume);
+                        CustomMusic.bloodroomVolume = volume;
+                        ConfigHandler.writeIntConfig("music", "BloodRoomVolume", volume);
                         break;
                     case "dungeon":
                         success = CustomMusic.dungeon.setVolume(volume);
@@ -103,15 +103,15 @@ public class CustomMusicCommand extends CommandBase {
                             return;
                         }
 
-                        CustomMusic.dungeonDecibels = volume;
-                        ConfigHandler.writeIntConfig("music", "DungeonDecibels", (int) volume);
+                        CustomMusic.dungeonVolume = volume;
+                        ConfigHandler.writeIntConfig("music", "DungeonVolume", volume);
                         break;
                     default:
                         player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Usage: " + getCommandUsage(arg0)));
                         return;
                 }
 
-                player.addChatMessage(new ChatComponentText(DankersSkyblockMod.SECONDARY_COLOUR + arg1[1] + DankersSkyblockMod.MAIN_COLOUR + " was set to " + DankersSkyblockMod.SECONDARY_COLOUR + volume + "db"));
+                player.addChatMessage(new ChatComponentText(DankersSkyblockMod.SECONDARY_COLOUR + arg1[1] + DankersSkyblockMod.MAIN_COLOUR + " was set to " + DankersSkyblockMod.SECONDARY_COLOUR + volume + "%"));
                 break;
             default:
                 player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Usage: " + getCommandUsage(arg0)));

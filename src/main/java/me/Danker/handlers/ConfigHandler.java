@@ -277,9 +277,9 @@ public class ConfigHandler {
 		ToggleCommand.bloodRoomMusic = initBoolean("toggles", "BloodRoomMusic", false);
 		ToggleCommand.dungeonMusic = initBoolean("toggles", "DungeonMusic", false);
 		// Music Volume
-		CustomMusic.dungeonbossDecibels = (float) initInt("music", "DungeonBossDecibels", -20);
-		CustomMusic.bloodroomDecibels = (float) initInt("music", "BloodRoomDecibels", -20);
-		CustomMusic.dungeonDecibels = (float) initInt("music", "DungeonDecibels", -20);
+		CustomMusic.dungeonbossVolume = initInt("music", "DungeonBossVolume", 50);
+		CustomMusic.bloodroomVolume = initInt("music", "BloodRoomVolume", 50);
+		CustomMusic.dungeonVolume = initInt("music", "DungeonVolume", 50);
 
 		// API
 		if (!hasKey("api", "APIKey")) writeStringConfig("api", "APIKey", "");

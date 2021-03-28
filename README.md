@@ -85,7 +85,7 @@ Discord Server: https://discord.gg/QsEkNQS
 - /reparty - Disbands and reparties all members in the party
 - /fairysouls - Check the fairysouls of a player
 - /lobbybank - Uses API to find the average bank total of the lobby, as well the three players with the highest total money in the bank (and purse).
-- /dsmmusic <stop/reload/volume> [dungeonboss/bloodroom/dungeon] [#] - Stops, reloads or changes the volume of custom music.
+- /dsmmusic <stop/reload/volume> [dungeonboss/bloodroom/dungeon] [1-100] - Stops, reloads or changes the volume of custom music.
 
 ## Keybinds
 - Open Maddox menu - M by default.
@@ -93,10 +93,13 @@ Discord Server: https://discord.gg/QsEkNQS
 - Start/Stop Skill Tracker - Numpad 5 by default.
 
 ## Custom Music
-- To use custom music, place a music file with the given name in the `.minecraft/config/dsmmusic` folder, either run `/dsmmusic reload` or restart your game, and enable the custom song in `/dsm`.
+1. Place a music file with the given name in the `.mincraft/config/dsmmusic` folder:
   - Dungeon music: `dungeon.wav`
   - Blood room music: `bloodroom.wav`
   - Dungeon boss music: `dungeonboss.wav`
+2. Either run `/dsmmusic reload` or restart your game.
+3. Enable the custom music in `/dsm`.
+4. (Optional) Change the volume of the music with `/dsmmusic volume`.
 
 ### Notes
 - Slayer tracker for token drops and 20% chance drops uses a 12x12x12 bounding box centered on the player to detect the drops. If you are out of the range of the item drop, it will not count on the tracker.
