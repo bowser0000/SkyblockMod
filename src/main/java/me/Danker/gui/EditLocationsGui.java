@@ -28,6 +28,7 @@ public class EditLocationsGui extends GuiScreen {
 	private LocationButton skillTracker;
 	private LocationButton waterAnswer;
 	private LocationButton bonzoTimer;
+	private LocationButton golemTimer;
 	
 	@Override
 	public boolean doesGuiPauseGame() {
@@ -93,8 +94,8 @@ public class EditLocationsGui extends GuiScreen {
 		cakeTimer = new LocationButton(0, MoveCommand.cakeTimerXY[0], MoveCommand.cakeTimerXY[1] + 5, 85 * ScaleCommand.cakeTimerScale, 18 * ScaleCommand.cakeTimerScale, ScaleCommand.cakeTimerScale, CakeTimer.CAKE_COLOUR + "     11h16m", null, null);
 		skillTracker = new LocationButton(0, MoveCommand.skillTrackerXY[0], MoveCommand.skillTrackerXY[1], 150 * ScaleCommand.skillTrackerScale, 28 * ScaleCommand.skillTrackerScale, ScaleCommand.skillTrackerScale, skillTrackerText, null, null);
 		waterAnswer = new LocationButton(0, MoveCommand.waterAnswerXY[0], MoveCommand.waterAnswerXY[1], 190 * ScaleCommand.waterAnswerScale, 54 * ScaleCommand.waterAnswerScale, ScaleCommand.waterAnswerScale, waterAnswerText, null, null);
-		bonzoTimer = new LocationButton(0, MoveCommand.bonzoTimerXY[0], MoveCommand.bonzoTimerXY[1] + 5, 85 * ScaleCommand.bonzoTimerScale, 18 * ScaleCommand.bonzoTimerScale, ScaleCommand.bonzoTimerScale, BonzoMaskTimer.BONZO_COLOR + "     3m30s", null, null);
-
+		bonzoTimer = new LocationButton(0, MoveCommand.bonzoTimerXY[0], MoveCommand.bonzoTimerXY[1] + 5, 53 * ScaleCommand.bonzoTimerScale, 18 * ScaleCommand.bonzoTimerScale, ScaleCommand.bonzoTimerScale, BonzoMaskTimer.BONZO_COLOR + "     3m30s", null, null);
+		golemTimer = new LocationButton(0, MoveCommand.golemTimerXY[0], MoveCommand.golemTimerXY[1] + 5, 42 * ScaleCommand.golemTimerScale, 18 * ScaleCommand.golemTimerScale, ScaleCommand.golemTimerScale, GolemSpawningAlert.GOLEM_COLOUR + "     20s", null, null);
 
 		this.buttonList.add(coords);
 		this.buttonList.add(dungeonTimer);
@@ -105,6 +106,7 @@ public class EditLocationsGui extends GuiScreen {
 		this.buttonList.add(bonzoTimer);
 		this.buttonList.add(display);
 		this.buttonList.add(skill50);
+		this.buttonList.add(golemTimer);
 	}
 	
 	@Override
@@ -126,6 +128,12 @@ public class EditLocationsGui extends GuiScreen {
 		Gui.drawModalRectWithCustomSizedTexture(MoveCommand.bonzoTimerXY[0], MoveCommand.bonzoTimerXY[1], 0, 0, 16, 16, 16, 16);
 		GL11.glScaled(bonzoTimerScaleReset, bonzoTimerScaleReset, bonzoTimerScaleReset);
 
+		double golemTimerScale = ScaleCommand.golemTimerScale;
+		double golemTimerScaleReset = Math.pow(golemTimerScale, -1);
+		GL11.glScaled(golemTimerScale, golemTimerScale, golemTimerScale);
+		mc.getTextureManager().bindTexture(GolemSpawningAlert.GOLEM_ICON);
+		Gui.drawModalRectWithCustomSizedTexture(MoveCommand.golemTimerXY[0], MoveCommand.golemTimerXY[1], 0, 0, 16, 16, 16, 16);
+		GL11.glScaled(golemTimerScaleReset, golemTimerScaleReset, golemTimerScaleReset);
 
 		super.drawScreen(mouseX, mouseY, partialTicks);
 	}
@@ -190,6 +198,12 @@ public class EditLocationsGui extends GuiScreen {
 					bonzoTimer.xPosition = MoveCommand.bonzoTimerXY[0];
 					bonzoTimer.yPosition = MoveCommand.bonzoTimerXY[1];
 					break;
+				case "golemTimer":
+					MoveCommand.golemTimerXY[0] += xMoved;
+					MoveCommand.golemTimerXY[1] += yMoved;
+					golemTimer.xPosition = MoveCommand.golemTimerXY[0];
+					golemTimer.yPosition = MoveCommand.golemTimerXY[1];
+					break;
 			}
 			this.buttonList.clear();
 			initGui();
@@ -220,6 +234,8 @@ public class EditLocationsGui extends GuiScreen {
 				moving = "waterAnswer";
 			} else if (button == bonzoTimer) {
 				moving = "bonzoTimer";
+			} else if (button == golemTimer) {
+				moving = "golemTimer";
 			}
 		}
 	}
@@ -246,6 +262,8 @@ public class EditLocationsGui extends GuiScreen {
 		ConfigHandler.writeIntConfig("locations", "waterAnswerY", MoveCommand.waterAnswerXY[1]);
 		ConfigHandler.writeIntConfig("locations", "bonzoTimerX", MoveCommand.bonzoTimerXY[0]);
 		ConfigHandler.writeIntConfig("locations", "bonzoTimerY", MoveCommand.bonzoTimerXY[1]);
+		ConfigHandler.writeIntConfig("locations", "golemTimerX", MoveCommand.golemTimerXY[0]);
+		ConfigHandler.writeIntConfig("locations", "golemTimerY", MoveCommand.golemTimerXY[1]);
 	}
 	
 }

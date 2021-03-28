@@ -46,7 +46,7 @@ Discord Server: https://discord.gg/QsEkNQS
 - Hide tooltips in experiment addons
 - Hide tooltips in Melody's Harp
 - Pet background colors based on level
-- Golem spawning alerts
+- Golem spawning alerts + 20 second timer
 - Skill xp/hour tracker
 - Show total skill xp instead of progress to next level
 - Show time until century cakes run out
@@ -68,8 +68,8 @@ Discord Server: https://discord.gg/QsEkNQS
 - /loot <zombie/spider/wolf/fishing/catacombs/mythological/> [winter/festival/spooky/f(1-7)/session] - Returns loot received from slayer quests or fishing stats. /loot fishing winter returns winter sea creatures instead.
 - /display <zombie/spider/wolf/fishing/catacombs/mythological/ghosts/auto/off> [winter/festival/spooky/f(1-7)/session] - Text display for trackers. /display fishing winter displays winter sea creatures instead. /display auto automatically displays the loot for the slayer quest you have active.
 - /resetloot <zombie/spider/wolf/fishing/catacombs/mythological/confirm/cancel> -  - Resets loot for trackers. /resetloot confirm confirms the reset.
-- /move <coords/display/dungeontimer/skill50/lividhp/caketimer/skilltracker/wateranswer/bonzotimer> <x> <y> - Moves text display to specified X and Y coordinates.
-- /scale <coords/display/dungeontimer/skill50/lividhp/caketimer/skilltracker/wateranswer/bonzotimer> <scale (0.1 - 10)> - Scales text display to a specified multipler between 0.1x and 10x.
+- /move <coords/display/dungeontimer/skill50/lividhp/caketimer/skilltracker/wateranswer/bonzotimer/golemtimer> <x> <y> - Moves text display to specified X and Y coordinates.
+- /scale <coords/display/dungeontimer/skill50/lividhp/caketimer/skilltracker/wateranswer/bonzotimer/golemtimer> <scale (0.1 - 10)> - Scales text display to a specified multipler between 0.1x and 10x.
 - /slayer [player] - Uses API to get slayer xp of a person. If no name is provided, it checks yours.
 - /skills [player] - Uses API to get skill levels of a person. If no name is provided, it checks yours.
 - /lobbyskills - Uses API to find the average skills of the lobby, as well the three players with the highest skill average.

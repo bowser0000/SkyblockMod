@@ -136,7 +136,7 @@ public class DankerGui extends GuiScreen {
 		petColours = new GuiButton(0, 0, 0, "Colour Pet Backgrounds: " + Utils.getColouredBoolean(ToggleCommand.petColoursToggled));
 		expertiseLore = new GuiButton(0, 0, 0, "Expertise Kills In Lore: " + Utils.getColouredBoolean(ToggleCommand.expertiseLoreToggled));
 		gparty = new GuiButton(0, 0, 0, "Guild Party Notifications: " + Utils.getColouredBoolean(ToggleCommand.gpartyToggled));
-		golemAlerts = new GuiButton(0, 0, 0, "Alert When Golem Spawns: " + Utils.getColouredBoolean(ToggleCommand.golemAlertToggled));
+		golemAlerts = new GuiButton(0, 0, 0, "Golem Spawn Alert And Timer: " + Utils.getColouredBoolean(ToggleCommand.golemAlertToggled));
 		rngesusAlert = new GuiButton(0, 0, 0, "RNGesus Alerts: " + Utils.getColouredBoolean(ToggleCommand.rngesusAlerts));
 		splitFishing = new GuiButton(0, 0, 0, "Split Fishing Display: " + Utils.getColouredBoolean(ToggleCommand.splitFishing));
 		lowHealthNotify = new GuiButton(0, 0, 0, "Low Health Notifications: " + Utils.getColouredBoolean(ToggleCommand.lowHealthNotifyToggled));
@@ -326,7 +326,7 @@ public class DankerGui extends GuiScreen {
 		} else if (button == golemAlerts) {
 			ToggleCommand.golemAlertToggled = !ToggleCommand.golemAlertToggled;
 			ConfigHandler.writeBooleanConfig("toggles", "GolemAlerts", ToggleCommand.golemAlertToggled);
-			golemAlerts.displayString = "Alert When Golem Spawns: " + Utils.getColouredBoolean(ToggleCommand.golemAlertToggled);
+			golemAlerts.displayString = "Golem Spawn Alert And Timer: " + Utils.getColouredBoolean(ToggleCommand.golemAlertToggled);
 		} else if (button == expertiseLore) {
 			ToggleCommand.expertiseLoreToggled = !ToggleCommand.expertiseLoreToggled;
 			ConfigHandler.writeBooleanConfig("toggles", "ExpertiseLore", ToggleCommand.expertiseLoreToggled);

@@ -490,6 +490,8 @@ public class ConfigHandler {
 		MoveCommand.waterAnswerXY[1] = initInt("locations", "waterAnswerY", 100);
 		MoveCommand.bonzoTimerXY[0] = initInt("locations", "bonzoTimerX", 40);
 		MoveCommand.bonzoTimerXY[1] = initInt("locations", "bonzoTimerY", 80);
+		MoveCommand.golemTimerXY[0] = initInt("locations", "golemTimerX", 100);
+		MoveCommand.golemTimerXY[1] = initInt("locations", "golemTimerY", 30);
 
 		// Scales
 		ScaleCommand.coordsScale = initDouble("scales", "coordsScale", 1);
@@ -501,6 +503,7 @@ public class ConfigHandler {
 		ScaleCommand.skillTrackerScale = initDouble("scales", "skillTrackerScale", 1);
 		ScaleCommand.waterAnswerScale = initDouble("scales", "waterAnswerScale", 1);
 		ScaleCommand.bonzoTimerScale = initDouble("scales", "bonzoTimerScale", 1);
+		ScaleCommand.golemTimerScale = initDouble("scales", "golemTimerScale", 1);
 
 		// Colours
 		DankersSkyblockMod.MAIN_COLOUR = initString("colors", "main", EnumChatFormatting.GREEN.toString());
@@ -517,6 +520,7 @@ public class ConfigHandler {
 		SkillTracker.SKILL_TRACKER_COLOUR = initString("colors", "skillTracker", EnumChatFormatting.AQUA.toString());
 		TriviaSolver.TRIVIA_WRONG_ANSWER_COLOUR = initString("colors", "triviaWrongAnswer", EnumChatFormatting.RED.toString());
 		BonzoMaskTimer.BONZO_COLOR = initString("colors", "bonzoDisplay", EnumChatFormatting.RED.toString());
+		GolemSpawningAlert.GOLEM_COLOUR = initString("colors", "golemDisplay", EnumChatFormatting.GOLD.toString());
 		BlazeSolver.LOWEST_BLAZE_COLOUR = initInt("colors", "blazeLowest", 0xFF0000);
 		BlazeSolver.HIGHEST_BLAZE_COLOUR = initInt("colors", "blazeHighest", 0x40FF40);
 		SlayerESP.SLAYER_COLOUR = initInt("colors", "slayerColor", 0x0000FF);
