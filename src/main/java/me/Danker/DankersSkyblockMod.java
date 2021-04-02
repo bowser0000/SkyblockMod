@@ -88,14 +88,9 @@ public class DankersSkyblockMod {
     public void init(FMLInitializationEvent event) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
         MinecraftForge.EVENT_BUS.register(this);
         MinecraftForge.EVENT_BUS.register(new ArachneESP());
-        MinecraftForge.EVENT_BUS.register(new ArrowTerminalSolver());
         MinecraftForge.EVENT_BUS.register(new AutoDisplay());
         MinecraftForge.EVENT_BUS.register(new AutoSwapToPickBlock());
         MinecraftForge.EVENT_BUS.register(new BlazeSolver());
-        MinecraftForge.EVENT_BUS.register(new BlockAbilities());
-        MinecraftForge.EVENT_BUS.register(new BlockPlacingFlowers());
-        MinecraftForge.EVENT_BUS.register(new BlockWrongSlayer());
-        MinecraftForge.EVENT_BUS.register(new BlockWrongTerminalClicks());
         MinecraftForge.EVENT_BUS.register(new BonzoMaskTimer());
         MinecraftForge.EVENT_BUS.register(new BoulderSolver());
         MinecraftForge.EVENT_BUS.register(new CakeTimer());
@@ -156,7 +151,6 @@ public class DankersSkyblockMod {
     public void preInit(final FMLPreInitializationEvent event) {
         ClientCommandHandler.instance.registerCommand(new ArmourCommand());
         ClientCommandHandler.instance.registerCommand(new BankCommand());
-        ClientCommandHandler.instance.registerCommand(new BlockSlayerCommand());
         ClientCommandHandler.instance.registerCommand(new CustomMusicCommand());
         ClientCommandHandler.instance.registerCommand(new DHelpCommand());
         ClientCommandHandler.instance.registerCommand(new DankerGuiCommand());
@@ -324,9 +318,6 @@ public class DankersSkyblockMod {
                 switch (guiToOpen) {
                     case "displaygui":
                         mc.displayGuiScreen(new DisplayGui());
-                        break;
-                    case "onlyslayergui":
-                        mc.displayGuiScreen(new OnlySlayerGui());
                         break;
                     case "editlocations":
                         mc.displayGuiScreen(new EditLocationsGui());

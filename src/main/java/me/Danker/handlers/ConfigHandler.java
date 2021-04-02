@@ -219,16 +219,12 @@ public class ConfigHandler {
 		ToggleCommand.splitFishing = initBoolean("toggles", "SplitFishing", true);
 		ToggleCommand.chatMaddoxToggled = initBoolean("toggles", "ChatMaddox", false);
 		ToggleCommand.spiritBearAlerts = initBoolean("toggles", "SpiritBearAlerts", false);
-		ToggleCommand.aotdToggled = initBoolean("toggles", "AOTD", false);
-		ToggleCommand.lividDaggerToggled = initBoolean("toggles", "LividDagger", false);
-		ToggleCommand.shadowFuryToggled = initBoolean("toggles", "Shadow Fury", false);
 		ToggleCommand.petColoursToggled = initBoolean("toggles", "PetColors", false);
 		ToggleCommand.golemAlertToggled = initBoolean("toggles", "GolemAlerts", false);
 		ToggleCommand.expertiseLoreToggled = initBoolean("toggles", "ExpertiseLore", false);
 		ToggleCommand.skill50DisplayToggled = initBoolean("toggles", "Skill50Display", false);
 		ToggleCommand.outlineTextToggled = initBoolean("toggles", "OutlineText", false);
 		ToggleCommand.cakeTimerToggled = initBoolean("toggles", "CakeTimer", false);
-		ToggleCommand.specialHoeRightClick = initBoolean("toggles", "SpecialHoe", false);
 		ToggleCommand.melodyTooltips = initBoolean("toggles", "MelodyTooltips", false);
 		ToggleCommand.highlightSlayers = initBoolean("toggles", "HighlightSlayers", false);
 		ToggleCommand.highlightArachne = initBoolean("toggles", "HighlightArachne", false);
@@ -250,7 +246,6 @@ public class ConfigHandler {
 		ToggleCommand.necronNotificationsToggled = initBoolean("toggles", "NecronNotifications", false);
 		ToggleCommand.bonzoTimerToggled = initBoolean("toggles", "BonzoTimer", false);
 		ToggleCommand.swapToPickBlockToggled = initBoolean("toggles", "PickBlock", false);
-		ToggleCommand.flowerWeaponsToggled = initBoolean("toggles", "FlowerWeapons", false);
 		ToggleCommand.autoSkillTrackerToggled =  initBoolean("toggles", "AutoSkillTracker", false);
 		// Puzzle Solvers
 		ToggleCommand.threeManToggled = initBoolean("toggles", "ThreeManPuzzle", false);
@@ -265,8 +260,6 @@ public class ConfigHandler {
 		ToggleCommand.startsWithToggled = initBoolean("toggles", "StartsWithTerminal", false);
 		ToggleCommand.selectAllToggled = initBoolean("toggles", "SelectAllTerminal", false);
 		ToggleCommand.clickInOrderToggled = initBoolean("toggles", "ClickInOrderTerminal", false);
-		ToggleCommand.blockWrongTerminalClicksToggled = initBoolean("toggles", "BlockWrongTerminalClicks", false);
-		ToggleCommand.itemFrameOnSeaLanternsToggled = initBoolean("toggles", "IgnoreItemFrameOnSeaLanterns", false);
 		// Experiment Solvers
 		ToggleCommand.ultrasequencerToggled = initBoolean("toggles", "UltraSequencer", false);
 		ToggleCommand.chronomatronToggled = initBoolean("toggles", "Chronomatron", false);
@@ -283,14 +276,6 @@ public class ConfigHandler {
 
 		// API
 		if (!hasKey("api", "APIKey")) writeStringConfig("api", "APIKey", "");
-
-		// Block Wrong Slayer
-		if (!hasKey("toggles", "BlockSlayer")) writeStringConfig("toggles", "BlockSlayer", "");
-		String onlySlayer = getString("toggles", "BlockSlayer");
-		if (!onlySlayer.equals("")) {
-			BlockWrongSlayer.onlySlayerName = onlySlayer.substring(0, onlySlayer.lastIndexOf(" "));
-			BlockWrongSlayer.onlySlayerNumber = onlySlayer.substring(onlySlayer.lastIndexOf(" ") + 1);
-		}
 		
 		// Wolf
 		LootTracker.wolfSvens = initInt("wolf", "svens", 0);

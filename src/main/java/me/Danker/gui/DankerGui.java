@@ -35,7 +35,6 @@ public class DankerGui extends GuiScreen {
 	private GuiTextField search;
 
 	private GuiButton changeDisplay;
-	private GuiButton onlySlayer;
 	private GuiButton puzzleSolvers;
 	private GuiButton experimentationTableSolvers;
 	private GuiButton skillTracker;
@@ -49,7 +48,6 @@ public class DankerGui extends GuiScreen {
 	private GuiButton splitFishing;
 	private GuiButton chatMaddox;
 	private GuiButton spiritBearAlert;
-	private GuiButton aotd;
 	private GuiButton petColours;
 	private GuiButton golemAlerts;
 	private GuiButton expertiseLore;
@@ -58,13 +56,11 @@ public class DankerGui extends GuiScreen {
 	private GuiButton cakeTimer;
 	private GuiButton pickBlock;
 	private GuiButton notifySlayerSlain;
-	private GuiButton shadowFury;
-	private GuiButton specialHoe;
 	private GuiButton melodyTooltips;
 	private GuiButton autoSkillTracker;
 	private GuiButton highlightArachne;
+	private GuiButton highlightSlayer;
 	// Chat Messages
-	private GuiButton lividDagger;
 	private GuiButton sceptreMessages;
 	private GuiButton midasStaffMessages;
 	private GuiButton implosionMessages;
@@ -78,7 +74,6 @@ public class DankerGui extends GuiScreen {
 	private GuiButton lividSolver;
 	private GuiButton stopSalvageStarred;
 	private GuiButton watcherReadyMessage;
-	private GuiButton flowerWeapons;
 	private GuiButton necronNotifications;
 	private GuiButton bonzoTimer;
 
@@ -110,7 +105,6 @@ public class DankerGui extends GuiScreen {
 		search = new GuiTextField(0, this.fontRendererObj, width - 202, 5, 200, 20);
 
 		changeDisplay = new GuiButton(0, 0, 0, "Change Display Settings");
-		onlySlayer = new GuiButton(0, 0, 0, "Set Slayer Quest");
 		puzzleSolvers = new GuiButton(0, 0, 0, "Toggle Dungeons Puzzle Solvers");
 		experimentationTableSolvers = new GuiButton(0, 0, 0, "Toggle Experimentation Table Solvers");
 		skillTracker = new GuiButton(0, 0, 0, "Toggle Skill XP/Hour Tracking");
@@ -122,8 +116,6 @@ public class DankerGui extends GuiScreen {
 		cakeTimer = new GuiButton(0, 0, 0, "Cake Timer: " + Utils.getColouredBoolean(ToggleCommand.cakeTimerToggled));
 		skill50Display = new GuiButton(0, 0, 0, "Display Progress To Skill Level 50: " + Utils.getColouredBoolean(ToggleCommand.skill50DisplayToggled));
 		slayerCount = new GuiButton(0, 0, 0, "Count Total 20% Drops: " + Utils.getColouredBoolean(ToggleCommand.slayerCountTotal));
-		aotd = new GuiButton(0, 0, 0, "Disable AOTD Ability: " + Utils.getColouredBoolean(ToggleCommand.aotdToggled));
-		lividDagger = new GuiButton(0, 0, 0, "Disable Livid Dagger Ability: " + Utils.getColouredBoolean(ToggleCommand.lividDaggerToggled));
 		spiritBearAlert = new GuiButton(0, 0, 0, "Spirit Bear Spawn Alerts: " + Utils.getColouredBoolean(ToggleCommand.spiritBearAlerts));
 		sceptreMessages = new GuiButton(0, 0, 0, "Spirit Sceptre Messages: " + Utils.getColouredBoolean(ToggleCommand.sceptreMessages));
 		midasStaffMessages = new GuiButton(0, 0, 0, "Midas Staff Messages: " + Utils.getColouredBoolean(ToggleCommand.midasStaffMessages));
@@ -144,18 +136,15 @@ public class DankerGui extends GuiScreen {
 		dungeonTimer = new GuiButton(0, 0, 0, "Display Dungeon Timers: " + Utils.getColouredBoolean(ToggleCommand.dungeonTimerToggled));
 		stopSalvageStarred = new GuiButton(0, 0, 0, "Stop Salvaging Starred Items: " + Utils.getColouredBoolean(ToggleCommand.stopSalvageStarredToggled));
 		watcherReadyMessage = new GuiButton(0, 0, 0, "Display Watcher Ready Message: " + Utils.getColouredBoolean(ToggleCommand.watcherReadyToggled));
-		flowerWeapons = new GuiButton(0, 0, 0, "Prevent Placing FoT/Spirit Sceptre: " + Utils.getColouredBoolean(ToggleCommand.flowerWeaponsToggled));
 		notifySlayerSlain = new GuiButton(0, 0, 0, "Notify when Slayer Slain: " + Utils.getColouredBoolean(ToggleCommand.notifySlayerSlainToggled));
 		necronNotifications = new GuiButton(0, 0, 0, "Necron Phase Notifications: " + Utils.getColouredBoolean(ToggleCommand.necronNotificationsToggled));
 		bonzoTimer = new GuiButton(0, 0, 0, "Bonzo's Mask Timer: " + Utils.getColouredBoolean(ToggleCommand.bonzoTimerToggled));
 		autoSkillTracker = new GuiButton(0, 0, 0, "Auto Start/Stop Skill Tracker: " + Utils.getColouredBoolean(ToggleCommand.autoSkillTrackerToggled));
-		shadowFury = new GuiButton(0, 0, 0, "Block Shadow Fury ability: " + Utils.getColouredBoolean(ToggleCommand.shadowFuryToggled));
-		specialHoe = new GuiButton(0, 0, 0, "Block Special Hoe right click: " + Utils.getColouredBoolean(ToggleCommand.specialHoeRightClick));
 		melodyTooltips = new GuiButton(0, 0, 0, "Hide tooltips in Melody's Harp: " + Utils.getColouredBoolean(ToggleCommand.melodyTooltips));
 		highlightArachne = new GuiButton(0, 0, 0, "Highlight Arachne: " + Utils.getColouredBoolean(ToggleCommand.highlightArachne));
+		highlightSlayer = new GuiButton(0, 0, 0, "Highlight Slayer: " + Utils.getColouredBoolean(ToggleCommand.highlightSlayers));
 
 		allButtons.add(changeDisplay);
-		allButtons.add(onlySlayer);
 		allButtons.add(puzzleSolvers);
 		allButtons.add(experimentationTableSolvers);
 		allButtons.add(skillTracker);
@@ -167,8 +156,6 @@ public class DankerGui extends GuiScreen {
 		allButtons.add(cakeTimer);
 		allButtons.add(skill50Display);
 		allButtons.add(slayerCount);
-		allButtons.add(aotd);
-		allButtons.add(lividDagger);
 		allButtons.add(spiritBearAlert);
 		allButtons.add(sceptreMessages);
 		allButtons.add(midasStaffMessages);
@@ -189,15 +176,13 @@ public class DankerGui extends GuiScreen {
 		allButtons.add(dungeonTimer);
 		allButtons.add(stopSalvageStarred);
 		allButtons.add(watcherReadyMessage);
-		allButtons.add(flowerWeapons);
 		allButtons.add(notifySlayerSlain);
 		allButtons.add(necronNotifications);
 		allButtons.add(bonzoTimer);
 		allButtons.add(autoSkillTracker);
-		allButtons.add(shadowFury);
-		allButtons.add(specialHoe);
 		allButtons.add(melodyTooltips);
 		allButtons.add(highlightArachne);
+		allButtons.add(highlightSlayer);
 
 		search.setText(initSearchText);
 		search.setVisible(true);
@@ -273,8 +258,6 @@ public class DankerGui extends GuiScreen {
 			}
 		} else if (button == changeDisplay) {
 			DankersSkyblockMod.guiToOpen = "displaygui";
-		} else if (button == onlySlayer) {
-			DankersSkyblockMod.guiToOpen = "onlyslayergui";
 		} else if (button == puzzleSolvers) {
 			DankersSkyblockMod.guiToOpen = "puzzlesolvers";
 		} else if (button == experimentationTableSolvers) {
@@ -303,14 +286,6 @@ public class DankerGui extends GuiScreen {
 			ToggleCommand.slayerCountTotal = !ToggleCommand.slayerCountTotal;
 			ConfigHandler.writeBooleanConfig("toggles", "SlayerCount", ToggleCommand.slayerCountTotal);
 			slayerCount.displayString = "Count Total 20% Drops: " + Utils.getColouredBoolean(ToggleCommand.slayerCountTotal);
-		} else if (button == aotd) {
-			ToggleCommand.aotdToggled = !ToggleCommand.aotdToggled;
-			ConfigHandler.writeBooleanConfig("toggles", "AOTD", ToggleCommand.aotdToggled);
-			aotd.displayString = "Disable AOTD Ability: " + Utils.getColouredBoolean(ToggleCommand.aotdToggled);
-		} else if (button == lividDagger) {
-			ToggleCommand.lividDaggerToggled = !ToggleCommand.lividDaggerToggled;
-			ConfigHandler.writeBooleanConfig("toggles", "LividDagger", ToggleCommand.lividDaggerToggled);
-			lividDagger.displayString = "Disable Livid Dagger Ability: " + Utils.getColouredBoolean(ToggleCommand.lividDaggerToggled);
 		} else if (button == sceptreMessages) {
 			ToggleCommand.sceptreMessages = !ToggleCommand.sceptreMessages;
 			ConfigHandler.writeBooleanConfig("toggles", "SceptreMessages", ToggleCommand.sceptreMessages);
@@ -407,22 +382,10 @@ public class DankerGui extends GuiScreen {
 			ToggleCommand.swapToPickBlockToggled = !ToggleCommand.swapToPickBlockToggled;
 			ConfigHandler.writeBooleanConfig("toggles", "PickBlock", ToggleCommand.swapToPickBlockToggled);
 			pickBlock.displayString = "Auto-Swap to Pick Block: " + Utils.getColouredBoolean(ToggleCommand.swapToPickBlockToggled);
-		} else if (button == flowerWeapons) {
-			ToggleCommand.flowerWeaponsToggled = !ToggleCommand.flowerWeaponsToggled;
-			ConfigHandler.writeBooleanConfig("toggles", "FlowerWeapons", ToggleCommand.flowerWeaponsToggled);
-			flowerWeapons.displayString = "Prevent Placing FoT/Spirit Sceptre: " + Utils.getColouredBoolean(ToggleCommand.flowerWeaponsToggled);
 		} else if (button == autoSkillTracker) {
 			ToggleCommand.autoSkillTrackerToggled = !ToggleCommand.autoSkillTrackerToggled;
 			ConfigHandler.writeBooleanConfig("toggles", "AutoSkillTracker", ToggleCommand.autoSkillTrackerToggled);
 			autoSkillTracker.displayString = "Auto Start/Stop Skill Tracker: " + Utils.getColouredBoolean(ToggleCommand.autoSkillTrackerToggled);
-		} else if (button == shadowFury) {
-			ToggleCommand.shadowFuryToggled = !ToggleCommand.shadowFuryToggled;
-			ConfigHandler.writeBooleanConfig("toggles", "ShadowFury", ToggleCommand.shadowFuryToggled);
-			shadowFury.displayString = "Block Shadow Fury ability: " + Utils.getColouredBoolean(ToggleCommand.shadowFuryToggled);
-		} else if (button == specialHoe) {
-			ToggleCommand.specialHoeRightClick = !ToggleCommand.specialHoeRightClick;
-			ConfigHandler.writeBooleanConfig("toggles", "SpecialHoe", ToggleCommand.specialHoeRightClick);
-			specialHoe.displayString = "Block Special Hoe right click: " + Utils.getColouredBoolean(ToggleCommand.specialHoeRightClick);
 		} else if (button == melodyTooltips) {
 			ToggleCommand.melodyTooltips = !ToggleCommand.melodyTooltips;
 			ConfigHandler.writeBooleanConfig("toggles", "MelodyTooltips", ToggleCommand.melodyTooltips);
@@ -435,6 +398,10 @@ public class DankerGui extends GuiScreen {
 			ToggleCommand.highlightArachne = !ToggleCommand.highlightArachne;
 			ConfigHandler.writeBooleanConfig("toggles", "HighlightArachne", ToggleCommand.highlightArachne);
 			highlightArachne.displayString = "Highlight Arachne: " + Utils.getColouredBoolean(ToggleCommand.highlightArachne);
+		} else if (button == highlightSlayer) {
+			ToggleCommand.highlightSlayers = !ToggleCommand.highlightSlayers;
+			ConfigHandler.writeBooleanConfig("toggles", "HighlightSlayers", ToggleCommand.highlightSlayers);
+			highlightSlayer.displayString = "Highlight Slayer: " + Utils.getColouredBoolean(ToggleCommand.highlightSlayers);
 		}
 	}
 

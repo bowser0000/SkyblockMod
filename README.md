@@ -8,17 +8,12 @@ Discord Server: https://discord.gg/QsEkNQS
 - Old Animations 2.6.4
   - Pet colors does not color slots
   - Catacombs F7 terminal solvers do not color slots
-  - Ultrasequencer solver does not color slots
+  - Enchanting solvers do not color slots
 
 ## Current features
 - Guild party desktop notifications
 - Coordinate and angle display
 - Golden T10/T6/T4 enchant display
-- Block AOTD ability
-- Block Livid Dagger ability
-- Block Shadow Fury ability
-- Block right click with special hoes
-- Block placing Flower of Truth/Spirit Sceptre
 - Disable Spirit Sceptre messages
 - Disable Midas Staff messages
 - Disable Implosion messages
@@ -31,7 +26,6 @@ Discord Server: https://discord.gg/QsEkNQS
 - RNGesus drop alerts
 - Click anywhere on-screen to open Maddox
 - Maddox menu keybind
-- Block starting other slayer quests
 - Slayer slain alert
 - Fishing, jerry fishing, fishing festival, spooky fishing trackers
 - Expertise kills in fishing rod lore
@@ -39,7 +33,7 @@ Discord Server: https://discord.gg/QsEkNQS
 - Dungeons puzzle solver (Riddle, trivia, blaze, creeper, water, tic tac toe, boulder, silverfish, ice walk)
 - Dungeons timer (watcher, boss, deaths, and puzzle fails)
 - Watcher ready message
-- Catacombs F7 Stage 3 solvers (Starts with letter, select all colour, ignore arrows on sea lanterns)
+- Catacombs F7 Stage 3 solvers (Starts with letter, select all colour)
 - Find correct Livid (with graphic display of HP)
 - Use custom music in supported locations
 - Experimentation solvers (Ultrasequencer, Chronomatron, Superpairs)
@@ -62,7 +56,7 @@ Discord Server: https://discord.gg/QsEkNQS
 ## Commands
 - /dhelp - Returns this message in-game.
 - /dsm - Opens the GUI for Danker's Skyblock Mod.
-- /toggle <gparty/coords/golden/slayercount/rngesusalerts/splitfishing/chatmaddox/spiritbearalerts/aotd/lividdagger/flowerweapons/sceptremessages/midasstaffmessages/implosionmessages/healmessages/cooldownmessages/manamessages/killcombomessages/petcolors/dungeontimer/golemalerts/expertiselore/skill50display/outlinetext/caketimer/lowhealthnotify/lividsolver/stopsalvagestarred/notifyslayerslain/autoskilltracker/necronnotifications/bonzotimer/threemanpuzzle/oruopuzzle/blazepuzzle/creeperpuzzle/waterpuzzle/tictactoepuzzle/boulderpuzzle/silverfishpuzzle/icewalkpuzzle/watchermessage/startswithterminal/selectallterminal/clickinorderterminal/blockwrongterminalclicks/itemframeonsealanterns/ultrasequencer/chronomatron/superpairs/hidetooltipsinaddons/pickblock/dungeonbossmusic/list> - Toggles features. /toggle list returns values of every toggle.
+- /toggle <gparty/coords/golden/slayercount/rngesusalerts/splitfishing/ghostdisplay/chatmaddox/spiritbearalert/sceptremessages/petcolors/dungeontimer/golemalerts/expertiselore/skill50display/outlinetext/midasstaffmessages/implosionmessages/healmessages/cooldownmessages/manamessages/killcombomessages/caketimer/lowhealthnotify/lividsolver/stopsalvagestarred/notifyslayerslain/necronnotifications/bonzotimer/threemanpuzzle/oruopuzzle/blazepuzzle/creeperpuzzle/waterpuzzle/tictactoepuzzle/boulderpuzzle/silverfishpuzzle/icewalkpuzzle/watchermessage/startswithterminal/selectallterminal/clickinorderterminal/ultrasequencer/chronomatron/superpairs/hidetooltipsinaddons/pickblock/melodytooltips/highlightslayers/highlightarachne/dungeonbossmusic/bloodroommusic/dungeonmusic/list> - Toggles features. /toggle list returns values of every toggle.
 - /setkey <key> - Sets API key.
 - /getkey - Returns key set with /setkey and copies it to your clipboard.
 - /loot <zombie/spider/wolf/fishing/catacombs/mythological/> [winter/festival/spooky/f(1-7)/session] - Returns loot received from slayer quests or fishing stats. /loot fishing winter returns winter sea creatures instead.
@@ -80,7 +74,6 @@ Discord Server: https://discord.gg/QsEkNQS
 - /dungeons [player] - Uses API to get dungeon levels of a person. If no name is provided, it checks yours.
 - /importfishing - Imports your fishing stats from your latest profile to your fishing tracker using the API.
 - /sbplayers - Uses API to find how many players are on each Skyblock island.
-- /onlyslayer <zombie/spider/wolf> <1/2/3/4/5> - Stops you from starting a slayer quest other than the one specified.
 - /skilltracker <start/stop/reset> - Text display for skill xp/hour.
 - /reparty - Disbands and reparties all members in the party
 - /fairysouls - Check the fairysouls of a player
