@@ -133,6 +133,8 @@ public class DankersSkyblockMod {
         MinecraftForge.EVENT_BUS.register(new WatcherReadyAlert());
         MinecraftForge.EVENT_BUS.register(new WaterSolver());
 
+        MinecraftForge.EVENT_BUS.register(new HighlightCommissions());
+
         ConfigHandler.reloadConfig();
         GoldenEnchants.init();
         TriviaSolver.init();
@@ -380,7 +382,7 @@ public class DankersSkyblockMod {
 
     @SubscribeEvent
     public void onGuiRender(GuiScreenEvent.BackgroundDrawnEvent event) {
-        if (!Utils.inSkyblock) return;
+        //if (!Utils.inSkyblock) return;
         if (event.gui instanceof GuiChest) {
             GuiChest inventory = (GuiChest) event.gui;
             Container containerChest = inventory.inventorySlots;

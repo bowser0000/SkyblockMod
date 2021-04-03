@@ -6,10 +6,7 @@ import me.Danker.handlers.ConfigHandler;
 import me.Danker.handlers.TextRenderer;
 import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.gui.GuiTextField;
-import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.gui.*;
 import net.minecraft.util.StringUtils;
 
 import java.awt.*;
@@ -60,6 +57,7 @@ public class DankerGui extends GuiScreen {
 	private GuiButton autoSkillTracker;
 	private GuiButton highlightArachne;
 	private GuiButton highlightSlayer;
+	private GuiButton highlightCommissions;
 	// Chat Messages
 	private GuiButton sceptreMessages;
 	private GuiButton midasStaffMessages;
@@ -143,6 +141,7 @@ public class DankerGui extends GuiScreen {
 		melodyTooltips = new GuiButton(0, 0, 0, "Hide tooltips in Melody's Harp: " + Utils.getColouredBoolean(ToggleCommand.melodyTooltips));
 		highlightArachne = new GuiButton(0, 0, 0, "Highlight Arachne: " + Utils.getColouredBoolean(ToggleCommand.highlightArachne));
 		highlightSlayer = new GuiButton(0, 0, 0, "Highlight Slayer: " + Utils.getColouredBoolean(ToggleCommand.highlightSlayers));
+		highlightCommissions = new GuiButton(0, 0, 0, "Highlight Commissions: " + Utils.getColouredBoolean(ToggleCommand.highlightCommissions));
 
 		allButtons.add(changeDisplay);
 		allButtons.add(puzzleSolvers);
@@ -183,6 +182,7 @@ public class DankerGui extends GuiScreen {
 		allButtons.add(melodyTooltips);
 		allButtons.add(highlightArachne);
 		allButtons.add(highlightSlayer);
+		allButtons.add(highlightCommissions);
 
 		search.setText(initSearchText);
 		search.setVisible(true);
@@ -402,6 +402,10 @@ public class DankerGui extends GuiScreen {
 			ToggleCommand.highlightSlayers = !ToggleCommand.highlightSlayers;
 			ConfigHandler.writeBooleanConfig("toggles", "HighlightSlayers", ToggleCommand.highlightSlayers);
 			highlightSlayer.displayString = "Highlight Slayer: " + Utils.getColouredBoolean(ToggleCommand.highlightSlayers);
+		} else if (button == highlightCommissions) {
+			ToggleCommand.highlightCommissions = !ToggleCommand.highlightCommissions;
+			ConfigHandler.writeBooleanConfig("toggles", "HighlightCommissions", ToggleCommand.highlightCommissions);
+			highlightCommissions.displayString = "Highlight Commissions: " + Utils.getColouredBoolean(ToggleCommand.highlightCommissions);
 		}
 	}
 

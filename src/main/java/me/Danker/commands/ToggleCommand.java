@@ -33,6 +33,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 	public static boolean cakeTimerToggled;
 	public static boolean highlightSlayers;
 	public static boolean highlightArachne;
+	public static boolean highlightCommissions;
 	// Chat Messages
 	public static boolean sceptreMessages;
 	public static boolean midasStaffMessages;
@@ -76,7 +77,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 	public static boolean bloodRoomMusic;
 	public static boolean dungeonMusic;
 
-	@Override
+    @Override
 	public String getCommandName() {
 		return "toggle";
 	}
@@ -93,7 +94,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 										  "startswithterminal/selectallterminal/clickinorderterminal/" +
 										  "ultrasequencer/chronomatron/superpairs/hidetooltipsinaddons/pickblock/" +
 										  "melodytooltips/highlightslayers/highlightarachne/dungeonbossmusic/bloodroommusic/" +
-										  "dungeonmusic/list>";
+										  "dungeonmusic/highlightcommissions/list>";
 	}
 
 	public static String usage(ICommandSender arg0) {
@@ -121,7 +122,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 														  "selectallterminal", "clickinorderterminal",
 														  "ultrasequencer", "chronomatron", "superpairs",
 														  "hidetooltipsinaddons", "pickblock", "melodytooltips", "highlightslayers",
-														  "dungeonbossmusic", "bloodroommusic", "dungeonmusic", "list");
+														  "dungeonbossmusic", "bloodroommusic", "dungeonmusic", "highlightcommissions", "list");
 		}
 		return null;
 	}
@@ -396,6 +397,10 @@ public class ToggleCommand extends CommandBase implements ICommand {
 				highlightArachne = !highlightArachne;
 				ConfigHandler.writeBooleanConfig("toggles", "HighlightArachne", highlightArachne);
 				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Highlight Arachne " + DankersSkyblockMod.SECONDARY_COLOUR + highlightArachne + DankersSkyblockMod.MAIN_COLOUR + "."));
+			case "highlightcommissions":
+				highlightCommissions = !highlightCommissions;
+				ConfigHandler.writeBooleanConfig("toggles", "HighlightCommissions", highlightCommissions);
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Highlight Commissions " + DankersSkyblockMod.SECONDARY_COLOUR + highlightCommissions + DankersSkyblockMod.MAIN_COLOUR + "."));
 			case "dungeonbossmusic":
 				dungeonBossMusic = !dungeonBossMusic;
 				CustomMusic.dungeonboss.stop();
