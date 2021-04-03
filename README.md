@@ -51,6 +51,7 @@ Discord Server: https://discord.gg/QsEkNQS
 - Reparty command
 - Highlight Slayer Bosses
 - Highlight Arachne
+- Highlighting completed commissions
 
 
 ## Commands
