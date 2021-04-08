@@ -1,6 +1,8 @@
 package me.Danker.commands;
 
 import me.Danker.DankersSkyblockMod;
+import me.Danker.features.SkillTracker;
+import me.Danker.features.loot.LootDisplay;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.ResourcePackRepository;
 import net.minecraft.command.CommandBase;
@@ -21,7 +23,11 @@ public class DankerGuiCommand extends CommandBase {
 
 	@Override
 	public String getCommandUsage(ICommandSender arg0) {
-		return null;
+		return "/" + getCommandName();
+	}
+
+	public static String usage(ICommandSender arg0) {
+		return new DankerGuiCommand().getCommandUsage(arg0);
 	}
 
 	@Override
@@ -43,9 +49,6 @@ public class DankerGuiCommand extends CommandBase {
 			debug.append("[splitfishing][").append(ToggleCommand.splitFishing).append("]\n");
 			debug.append("[chatmaddox][").append(ToggleCommand.chatMaddoxToggled).append("]\n");
 			debug.append("[spiritbearalerts][").append(ToggleCommand.spiritBearAlerts).append("]\n");
-			debug.append("[aotd][").append(ToggleCommand.aotdToggled).append("]\n");
-			debug.append("[lividdagger][").append(ToggleCommand.lividDaggerToggled).append("]\n");
-			debug.append("[flowerweapons][").append(ToggleCommand.flowerWeaponsToggled).append("]\n");
 			debug.append("[sceptremessages][").append(ToggleCommand.sceptreMessages).append("]\n");
 			debug.append("[petcolors][").append(ToggleCommand.petColoursToggled).append("]\n");
 			debug.append("[dungeontimer][").append(ToggleCommand.dungeonTimerToggled).append("]\n");
@@ -56,6 +59,9 @@ public class DankerGuiCommand extends CommandBase {
 			debug.append("[midasstaffmessages][").append(ToggleCommand.midasStaffMessages).append("]\n");
 			debug.append("[implosionmessages][").append(ToggleCommand.implosionMessages).append("]\n");
 			debug.append("[healmessages][").append(ToggleCommand.healMessages).append("]\n");
+			debug.append("[cooldownmessages][").append(ToggleCommand.cooldownMessages).append("]\n");
+			debug.append("[manamessages][").append(ToggleCommand.manaMessages).append("]\n");
+			debug.append("[killcombomessages][").append(ToggleCommand.killComboMessages).append("]\n");
 			debug.append("[caketimer][").append(ToggleCommand.cakeTimerToggled).append("]\n");
 			debug.append("[lowhealthnotify][").append(ToggleCommand.lowHealthNotifyToggled).append("]\n");
 			debug.append("[lividsolver][").append(ToggleCommand.lividSolverToggled).append("]\n");
@@ -70,17 +76,22 @@ public class DankerGuiCommand extends CommandBase {
 			debug.append("[creeperpuzzle][").append(ToggleCommand.creeperToggled).append("]\n");
 			debug.append("[waterpuzzle][").append(ToggleCommand.waterToggled).append("]\n");
 			debug.append("[tictactoepuzzle][").append(ToggleCommand.ticTacToeToggled).append("]\n");
+			debug.append("[boulderpuzzle][").append(ToggleCommand.boulderToggled).append("]\n");
+			debug.append("[silverfishpuzzle][").append(ToggleCommand.silverfishToggled).append("]\n");
+			debug.append("[icewalkpuzzle][").append(ToggleCommand.iceWalkToggled).append("]\n");
 			debug.append("[watchermessage][").append(ToggleCommand.watcherReadyToggled).append("]\n");
 			debug.append("[startswithterminal][").append(ToggleCommand.startsWithToggled).append("]\n");
 			debug.append("[selectallterminal][").append(ToggleCommand.selectAllToggled).append("]\n");
 			debug.append("[clickinorderterminal][").append(ToggleCommand.clickInOrderToggled).append("]\n");
-			debug.append("[blockwrongterminalclicks][").append(ToggleCommand.blockWrongTerminalClicksToggled).append("]\n");
-			debug.append("[itemframeonsealanterns][").append(ToggleCommand.itemFrameOnSeaLanternsToggled).append("]\n");
 			debug.append("[ultrasequencer][").append(ToggleCommand.ultrasequencerToggled).append("]\n");
 			debug.append("[chronomatron][").append(ToggleCommand.chronomatronToggled).append("]\n");
 			debug.append("[superpairs][").append(ToggleCommand.superpairsToggled).append("]\n");
 			debug.append("[hidetooltipsinaddons][").append(ToggleCommand.hideTooltipsInExperimentAddonsToggled).append("]\n");
 			debug.append("[pickblock][").append(ToggleCommand.swapToPickBlockToggled).append("]\n");
+			debug.append("[melodyTooltips][").append(ToggleCommand.melodyTooltips).append("]\n");
+			debug.append("[dungeonbossmusic][").append(ToggleCommand.dungeonBossMusic).append("]\n");
+			debug.append("[bloodroommusic][").append(ToggleCommand.bloodRoomMusic).append("]\n");
+			debug.append("[dungeonmusic][").append(ToggleCommand.dungeonMusic).append("]\n");
 			debug.append("# Locations\n");
 			debug.append("[coords][").append(MoveCommand.coordsXY[0]).append(", ").append(MoveCommand.coordsXY[1]).append("]\n");
 			debug.append("[display][").append(MoveCommand.displayXY[0]).append(", ").append(MoveCommand.displayXY[1]).append("]\n");
@@ -91,15 +102,18 @@ public class DankerGuiCommand extends CommandBase {
 			debug.append("[skilltracker][").append(MoveCommand.skillTrackerXY[0]).append(", ").append(MoveCommand.skillTrackerXY[1]).append("]\n");
 			debug.append("[wateranswer][").append(MoveCommand.waterAnswerXY[0]).append(", ").append(MoveCommand.waterAnswerXY[1]).append("]\n");
 			debug.append("# Other Settings\n");
-			debug.append("[Current Display][").append(DisplayCommand.display).append("]\n");
-			debug.append("[Auto Display][").append(DisplayCommand.auto).append("]\n");
-			debug.append("[Skill Tracker Visible][").append(DankersSkyblockMod.showSkillTracker).append("]\n");
+			debug.append("[Current Display][").append(LootDisplay.display).append("]\n");
+			debug.append("[Auto Display][").append(LootDisplay.auto).append("]\n");
+			debug.append("[Skill Tracker Visible][").append(SkillTracker.showSkillTracker).append("]\n");
+			debug.append("# Problematic Mods\n");
+			debug.append("[LabyMod][").append(DankersSkyblockMod.usingLabymod).append("]\n");
+			debug.append("[OAM][").append(DankersSkyblockMod.usingOAM).append("]\n");
 			debug.append("# Resource Packs\n");
 			if (Minecraft.getMinecraft().getResourcePackRepository().getRepositoryEntries().size() == 0) {
 				debug.append("<None>\n");
 			} else {
 				for (ResourcePackRepository.Entry resource : Minecraft.getMinecraft().getResourcePackRepository().getRepositoryEntries()) {
-					debug.append("< ").append(StringUtils.stripControlCodes(resource.getResourcePackName())).append(" >\n");
+					debug.append("<").append(StringUtils.stripControlCodes(resource.getResourcePackName())).append(">\n");
 				}
 			}
 			debug.append("```");

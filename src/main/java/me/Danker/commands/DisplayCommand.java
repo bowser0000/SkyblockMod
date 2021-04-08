@@ -1,6 +1,7 @@
 package me.Danker.commands;
 
 import me.Danker.DankersSkyblockMod;
+import me.Danker.features.loot.LootDisplay;
 import me.Danker.handlers.ConfigHandler;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
@@ -12,8 +13,6 @@ import net.minecraft.util.ChatComponentText;
 import java.util.List;
 
 public class DisplayCommand extends CommandBase {
-	public static String display;
-	public static boolean auto;
 
 	@Override
 	public String getCommandName() {
@@ -22,7 +21,11 @@ public class DisplayCommand extends CommandBase {
 
 	@Override
 	public String getCommandUsage(ICommandSender arg0) {
-		return "/" + getCommandName() + " <zombie/spider/wolf/fishing/catacombs/mythological/auto/off> [winter/festival/spooky/session/f(1-7)]";
+		return "/" + getCommandName() + " <zombie/spider/wolf/fishing/catacombs/mythological/ghost/auto/off> [winter/festival/spooky/session/f(1-7)]";
+	}
+
+	public static String usage(ICommandSender arg0) {
+		return new DisplayCommand().getCommandUsage(arg0);
 	}
 
 	@Override
@@ -33,7 +36,7 @@ public class DisplayCommand extends CommandBase {
 	@Override
 	public List<String> addTabCompletionOptions(ICommandSender sender, String[] args, BlockPos pos) {
 		if (args.length == 1) {
-			return getListOfStringsMatchingLastWord(args, "wolf", "spider", "zombie", "fishing", "catacombs", "mythological", "auto", "off");
+			return getListOfStringsMatchingLastWord(args, "wolf", "spider", "zombie", "fishing", "catacombs", "mythological", "ghost", "auto", "off");
 		} else if (args.length == 2 && args[0].equalsIgnoreCase("fishing")) {
 			return getListOfStringsMatchingLastWord(args, "winter", "festival", "spooky", "session");
 		} else if (args.length == 2 && args[0].equalsIgnoreCase("catacombs")) {
@@ -60,23 +63,23 @@ public class DisplayCommand extends CommandBase {
 		switch (arg1[0].toLowerCase()) {
 		case "wolf":
 			if (showSession) {
-				display = "wolf_session";
+				LootDisplay.display = "wolf_session";
 			} else {
-				display = "wolf";
+				LootDisplay.display = "wolf";
 			}
 			break;
 		case "spider":
 			if (showSession) {
-				display = "spider_session";
+				LootDisplay.display = "spider_session";
 			} else {
-				display = "spider";
+				LootDisplay.display = "spider";
 			}
 			break;
 		case "zombie":
 			if (showSession) {
-				display = "zombie_session";
+				LootDisplay.display = "zombie_session";
 			} else {
-				display = "zombie";
+				LootDisplay.display = "zombie";
 			}
 			break;
 		case "fishing":
@@ -84,45 +87,45 @@ public class DisplayCommand extends CommandBase {
 				switch (arg1[1].toLowerCase()) {
 					case "winter":
 						if (showSession) {
-							display = "fishing_winter_session";
+							LootDisplay.display = "fishing_winter_session";
 						} else {
-							display = "fishing_winter";
+							LootDisplay.display = "fishing_winter";
 						}
 						break;
 					case "festival":
 						if (showSession) {
-							display = "fishing_festival_session";
+							LootDisplay.display = "fishing_festival_session";
 						} else {
-							display = "fishing_festival";
+							LootDisplay.display = "fishing_festival";
 						}
 						break;
 					case "spooky":
 						if (showSession) {
-							display = "fishing_spooky_session";
+							LootDisplay.display = "fishing_spooky_session";
 						} else {
-							display = "fishing_spooky";
+							LootDisplay.display = "fishing_spooky";
 						}
 						break;
 					default:
 						if (showSession) {
-							display = "fishing_session";
+							LootDisplay.display = "fishing_session";
 						} else {
-							display = "fishing";
+							LootDisplay.display = "fishing";
 						}
 				}
 			} else {
 				if (showSession) {
-					display = "fishing_session";
+					LootDisplay.display = "fishing_session";
 				} else {
-					display = "fishing";
+					LootDisplay.display = "fishing";
 				}
 			}
 			break;
 		case "mythological":
 			if (showSession) {
-				display = "mythological_session";
+				LootDisplay.display = "mythological_session";
 			} else {
-				display = "mythological";
+				LootDisplay.display = "mythological";
 			}
 			break;
 		case "catacombs":
@@ -135,57 +138,57 @@ public class DisplayCommand extends CommandBase {
 				case "f1":
 				case "floor1":
 					if (showSession) {
-						display = "catacombs_floor_one_session";
+						LootDisplay.display = "catacombs_floor_one_session";
 					} else {
-						display = "catacombs_floor_one";
+						LootDisplay.display = "catacombs_floor_one";
 					}
 					break;
 				case "f2":
 				case "floor2":
 					if (showSession) {
-						display = "catacombs_floor_two_session";
+						LootDisplay.display = "catacombs_floor_two_session";
 					} else {
-						display = "catacombs_floor_two";
+						LootDisplay.display = "catacombs_floor_two";
 					}
 					break;
 				case "f3":
 				case "floor3":
 					if (showSession) {
-						display = "catacombs_floor_three_session";
+						LootDisplay.display = "catacombs_floor_three_session";
 					} else {
-						display = "catacombs_floor_three";
+						LootDisplay.display = "catacombs_floor_three";
 					}
 					break;
 				case "f4":
 				case "floor4":
 					if (showSession) {
-						display = "catacombs_floor_four_session";
+						LootDisplay.display = "catacombs_floor_four_session";
 					} else {
-						display = "catacombs_floor_four";
+						LootDisplay.display = "catacombs_floor_four";
 					}
 					break;
 				case "f5":
 				case "floor5":
 					if (showSession) {
-						display = "catacombs_floor_five_session";
+						LootDisplay.display = "catacombs_floor_five_session";
 					} else {
-						display = "catacombs_floor_five";
+						LootDisplay.display = "catacombs_floor_five";
 					}
 					break;
 				case "f6":
 				case "floor6":
 					if (showSession) {
-						display = "catacombs_floor_six_session";
+						LootDisplay.display = "catacombs_floor_six_session";
 					} else {
-						display = "catacombs_floor_six";
+						LootDisplay.display = "catacombs_floor_six";
 					}
 					break;
 				case "f7":
 				case "floor7":
 					if (showSession) {
-						display = "catacombs_floor_seven_session";
+						LootDisplay.display = "catacombs_floor_seven_session";
 					} else {
-						display = "catacombs_floor_seven";
+						LootDisplay.display = "catacombs_floor_seven";
 					}
 					break;
 				default:
@@ -193,23 +196,30 @@ public class DisplayCommand extends CommandBase {
 					return;
 			}
 			break;
+		case "ghost":
+			if (showSession) {
+				LootDisplay.display = "ghost_session";
+			} else {
+				LootDisplay.display = "ghost";
+			}
+
 		case "auto":
-			auto = true;
+			LootDisplay.auto = true;
 			player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Display set to " + DankersSkyblockMod.SECONDARY_COLOUR + "auto" + DankersSkyblockMod.MAIN_COLOUR + "."));
 			ConfigHandler.writeBooleanConfig("misc", "autoDisplay", true);
 			return;
 		case "off":
-			display = "off";
+			LootDisplay.display = "off";
 			break;
 		default:
 			player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Usage: " + getCommandUsage(arg0)));
 			return;
 		}
-		
-		auto = false;
-		player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Display set to " + DankersSkyblockMod.SECONDARY_COLOUR + display + DankersSkyblockMod.MAIN_COLOUR + "."));
+
+		LootDisplay.auto = false;
+		player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Display set to " + DankersSkyblockMod.SECONDARY_COLOUR + LootDisplay.display + DankersSkyblockMod.MAIN_COLOUR + "."));
 		ConfigHandler.writeBooleanConfig("misc", "autoDisplay", false);
-		ConfigHandler.writeStringConfig("misc", "display", display);
+		ConfigHandler.writeStringConfig("misc", "display", LootDisplay.display);
 	}
 
 }

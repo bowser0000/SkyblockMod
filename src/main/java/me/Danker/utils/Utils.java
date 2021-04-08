@@ -1,6 +1,7 @@
 package me.Danker.utils;
 
 import me.Danker.DankersSkyblockMod;
+import me.Danker.features.GoldenEnchants;
 import me.Danker.handlers.ScoreboardHandler;
 import me.Danker.handlers.TextRenderer;
 import net.minecraft.block.Block;
@@ -24,7 +25,9 @@ import net.minecraft.util.*;
 import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.regex.Matcher;
 
@@ -62,11 +65,11 @@ public class Utils {
     }
     
     public static String returnGoldenEnchants(String line) {
-    	Matcher matcher = DankersSkyblockMod.t6EnchantPattern.matcher(line);
+    	Matcher matcher = GoldenEnchants.t6EnchantPattern.matcher(line);
     	StringBuffer out = new StringBuffer();
     	
     	while (matcher.find()) {
-    		matcher.appendReplacement(out, DankersSkyblockMod.t6Enchants.get(matcher.group(1)));
+    		matcher.appendReplacement(out, GoldenEnchants.t6Enchants.get(matcher.group(1)));
     	}
     	matcher.appendTail(out);
     	
@@ -118,7 +121,7 @@ public class Utils {
 		}
 	}
 
-	public static boolean isOnHypixel () {
+	public static boolean isOnHypixel() {
 		Minecraft mc = Minecraft.getMinecraft();
 		if (mc != null && mc.theWorld != null && !mc.isSingleplayer()) {
 			return mc.getCurrentServerData().serverIP.toLowerCase().contains("hypixel");
@@ -270,7 +273,7 @@ public class Utils {
 		return bool ? EnumChatFormatting.GREEN + "On" : EnumChatFormatting.RED + "Off";
 	}
 
-	//Taken from SkyblockAddons
+	// Taken from SkyblockAddons
 	public static List<String> getItemLore(ItemStack itemStack) {
 		final int NBT_INTEGER = 3;
 		final int NBT_STRING = 8;
@@ -296,14 +299,13 @@ public class Utils {
 	}
 
 	public static boolean hasRightClickAbility(ItemStack itemStack) {
-		return Utils.getItemLore(itemStack).stream().anyMatch(line->{
+		return Utils.getItemLore(itemStack).stream().anyMatch(line -> {
 			String stripped = StringUtils.stripControlCodes(line);
 			return stripped.startsWith("Item Ability:") && stripped.endsWith("RIGHT CLICK");
 		});
 	}
-
-
-	public static void draw3DLine(Vec3 pos1, Vec3 pos2, int colourInt, float partialTicks) {
+	
+	public static void draw3DLine(Vec3 pos1, Vec3 pos2, int colourInt, int lineWidth, boolean depth, float partialTicks) {
 		Entity render = Minecraft.getMinecraft().getRenderViewEntity();
 		WorldRenderer worldRenderer = Tessellator.getInstance().getWorldRenderer();
 		Color colour = new Color(colourInt);
@@ -318,7 +320,11 @@ public class Utils {
 		GlStateManager.enableBlend();
 		GlStateManager.disableAlpha();
 		GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
-		GL11.glLineWidth(2);
+		GL11.glLineWidth(lineWidth);
+		if (!depth) {
+			GL11.glDisable(GL11.GL_DEPTH_TEST);
+			GlStateManager.depthMask(false);
+		}
 		GlStateManager.color(colour.getRed() / 255f, colour.getGreen() / 255f, colour.getBlue() / 255f, colour.getAlpha() / 255f);
 		worldRenderer.begin(GL11.GL_LINE_STRIP, DefaultVertexFormats.POSITION);
 		
@@ -327,6 +333,10 @@ public class Utils {
 		Tessellator.getInstance().draw();
 
 		GlStateManager.translate(realX, realY, realZ);
+		if (!depth) {
+			GL11.glEnable(GL11.GL_DEPTH_TEST);
+			GlStateManager.depthMask(true);
+		}
 		GlStateManager.disableBlend();
 		GlStateManager.enableAlpha();
 		GlStateManager.enableTexture2D();
@@ -357,11 +367,9 @@ public class Utils {
 		GlStateManager.disableBlend();
 		GlStateManager.popMatrix();
 	}
-	
-	// Yoinked from ForgeHax
+
 	public static void draw3DBox(AxisAlignedBB aabb, int colourInt, float partialTicks) {
-		Entity render = Minecraft.getMinecraft().getRenderViewEntity();
-		WorldRenderer worldRenderer = Tessellator.getInstance().getWorldRenderer();
+    	Entity render = Minecraft.getMinecraft().getRenderViewEntity();
 		Color colour = new Color(colourInt);
 		
 		double realX = render.lastTickPosX + (render.posX - render.lastTickPosX) * partialTicks;
@@ -375,33 +383,9 @@ public class Utils {
 		GlStateManager.disableAlpha();
 		GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
 		GL11.glLineWidth(2);
-		GlStateManager.color(colour.getRed() / 255f, colour.getGreen() / 255f, colour.getBlue() / 255f, colour.getAlpha() / 255f);
-		worldRenderer.begin(GL11.GL_LINE_STRIP, DefaultVertexFormats.POSITION);
-		
-		worldRenderer.pos(aabb.minX, aabb.minY, aabb.minZ).endVertex();
-		worldRenderer.pos(aabb.maxX, aabb.minY, aabb.minZ).endVertex();
-		worldRenderer.pos(aabb.maxX, aabb.minY, aabb.maxZ).endVertex();
-		worldRenderer.pos(aabb.minX, aabb.minY, aabb.maxZ).endVertex();
-		worldRenderer.pos(aabb.minX, aabb.minY, aabb.minZ).endVertex();
-		Tessellator.getInstance().draw();
-		worldRenderer.begin(GL11.GL_LINE_STRIP, DefaultVertexFormats.POSITION);
-		worldRenderer.pos(aabb.minX, aabb.maxY, aabb.minZ).endVertex();
-		worldRenderer.pos(aabb.maxX, aabb.maxY, aabb.minZ).endVertex();
-		worldRenderer.pos(aabb.maxX, aabb.maxY, aabb.maxZ).endVertex();
-		worldRenderer.pos(aabb.minX, aabb.maxY, aabb.maxZ).endVertex();
-		worldRenderer.pos(aabb.minX, aabb.maxY, aabb.minZ).endVertex();
-		Tessellator.getInstance().draw();
-		worldRenderer.begin(GL11.GL_LINE_STRIP, DefaultVertexFormats.POSITION);
-		worldRenderer.pos(aabb.minX, aabb.minY, aabb.minZ).endVertex();
-		worldRenderer.pos(aabb.minX, aabb.maxY, aabb.minZ).endVertex();
-		worldRenderer.pos(aabb.maxX, aabb.minY, aabb.minZ).endVertex();
-		worldRenderer.pos(aabb.maxX, aabb.maxY, aabb.minZ).endVertex();
-		worldRenderer.pos(aabb.maxX, aabb.minY, aabb.maxZ).endVertex();
-		worldRenderer.pos(aabb.maxX, aabb.maxY, aabb.maxZ).endVertex();
-		worldRenderer.pos(aabb.minX, aabb.minY, aabb.maxZ).endVertex();
-		worldRenderer.pos(aabb.minX, aabb.maxY, aabb.maxZ).endVertex();
-		Tessellator.getInstance().draw();
-		
+
+		RenderGlobal.drawOutlinedBoundingBox(aabb, colour.getRed(), colour.getGreen(), colour.getBlue(), colour.getAlpha());
+
 		GlStateManager.translate(realX, realY, realZ);
 		GlStateManager.disableBlend();
 		GlStateManager.enableAlpha();
@@ -410,7 +394,7 @@ public class Utils {
 		GlStateManager.popMatrix();
 	}
 
-	public static void drawFilled3DBox(AxisAlignedBB aabb, int colourInt, boolean translucent, float partialTicks) {
+	public static void drawFilled3DBox(AxisAlignedBB aabb, int colourInt, boolean translucent, boolean depth, float partialTicks) {
 		Entity render = Minecraft.getMinecraft().getRenderViewEntity();
 		WorldRenderer worldRenderer = Tessellator.getInstance().getWorldRenderer();
 		Color colour = new Color(colourInt);
@@ -425,8 +409,12 @@ public class Utils {
 		GlStateManager.disableTexture2D();
 		GlStateManager.enableAlpha();
 		GlStateManager.enableBlend();
-		GlStateManager.tryBlendFuncSeparate(770, translucent ? 1 : 771, 1, 0);
 		GlStateManager.disableCull();
+		GlStateManager.tryBlendFuncSeparate(770, translucent ? 1 : 771, 1, 0);
+		if (!depth) {
+			GL11.glDisable(GL11.GL_DEPTH_TEST);
+			GlStateManager.depthMask(false);
+		}
 		GlStateManager.color(colour.getRed() / 255f, colour.getGreen() / 255f, colour.getBlue() / 255f, colour.getAlpha() / 255f);
 		worldRenderer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION);
 		// Bottom
@@ -462,6 +450,10 @@ public class Utils {
 		Tessellator.getInstance().draw();
 
 		GlStateManager.translate(realX, realY, realZ);
+		if (!depth) {
+			GL11.glEnable(GL11.GL_DEPTH_TEST);
+			GlStateManager.depthMask(true);
+		}
 		GlStateManager.enableCull();
 		GlStateManager.disableAlpha();
 		GlStateManager.disableBlend();

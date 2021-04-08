@@ -16,7 +16,6 @@ import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 public class PetsCommand extends CommandBase {
@@ -127,6 +126,10 @@ public class PetsCommand extends CommandBase {
 	@Override
 	public String getCommandUsage(ICommandSender arg0) {
 		return "/" + getCommandName() + " [name]";
+	}
+
+	public static String usage(ICommandSender arg0) {
+		return new PetsCommand().getCommandUsage(arg0);
 	}
 
 	@Override

@@ -1,7 +1,7 @@
 package me.Danker.gui;
 
 import me.Danker.DankersSkyblockMod;
-import me.Danker.commands.DisplayCommand;
+import me.Danker.features.loot.LootDisplay;
 import me.Danker.handlers.ConfigHandler;
 import me.Danker.handlers.TextRenderer;
 import me.Danker.utils.Utils;
@@ -33,6 +33,7 @@ public class DisplayGui extends GuiScreen {
 	private GuiButton catacombsF5;
 	private GuiButton catacombsF6;
 	private GuiButton catacombsF7;
+	private GuiButton ghost;
 	
 	@Override
 	public boolean doesGuiPauseGame() {
@@ -58,7 +59,8 @@ public class DisplayGui extends GuiScreen {
 		fishingWinter = new GuiButton(0, width / 2 - 110, (int) (height * 0.4), 100, 20, "Fishing Winter");
 		fishingFestival = new GuiButton(0, width / 2 + 10, (int) (height * 0.4), 100, 20, "Fishing Festival");
 		fishingSpooky = new GuiButton(0, width / 2 + 130, (int) (height * 0.4), 100, 20, "Fishing Spooky");
-		mythological = new GuiButton(0, width / 2 - 100, (int) (height * 0.5), 200, 20, "Mythological");
+		mythological = new GuiButton(0, width / 2 - 100, (int) (height * 0.5), 95, 20, "Mythological");
+		ghost = new GuiButton(0, width / 2 + 5, (int) (height * 0.5), 95, 20, "Ghost");
 		catacombsF1 = new GuiButton(0, width / 2 - 205, (int) (height * 0.65), 50, 20, "F1");
 		catacombsF2 = new GuiButton(0, width / 2 - 145, (int) (height * 0.65), 50, 20, "F2");
 		catacombsF3 = new GuiButton(0, width / 2 - 85, (int) (height * 0.65), 50, 20, "F3");
@@ -66,7 +68,7 @@ public class DisplayGui extends GuiScreen {
 		catacombsF5 = new GuiButton(0, width / 2 + 35, (int) (height * 0.65), 50, 20, "F5");
 		catacombsF6 = new GuiButton(0, width / 2 + 95, (int) (height * 0.65), 50, 20, "F6");
 		catacombsF7 = new GuiButton(0, width / 2 + 155, (int) (height * 0.65), 50, 20, "F7");
-		
+
 		this.buttonList.add(showSession);
 		this.buttonList.add(off);
 		this.buttonList.add(auto);
@@ -85,6 +87,7 @@ public class DisplayGui extends GuiScreen {
 		this.buttonList.add(catacombsF5);
 		this.buttonList.add(catacombsF6);
 		this.buttonList.add(catacombsF7);
+		this.buttonList.add(ghost);
 		this.buttonList.add(goBack);
 	}
 	
@@ -94,10 +97,10 @@ public class DisplayGui extends GuiScreen {
 		Minecraft mc = Minecraft.getMinecraft();
 		
 		String displayText;
-		if (DisplayCommand.auto) {
+		if (LootDisplay.auto) {
 			displayText = "Current Display: auto";
 		} else {
-			displayText = "Current Display: " + DisplayCommand.display;
+			displayText = "Current Display: " + LootDisplay.display;
 		}
 		int displayWidth = mc.fontRendererObj.getStringWidth(displayText);
 		new TextRenderer(mc, displayText, width / 2 - displayWidth / 2, 10, 1D);
@@ -125,7 +128,7 @@ public class DisplayGui extends GuiScreen {
 		} else if (button == wolf) {
 			setDisplay("wolf", false);
 		} else if (button == auto) {
-			DisplayCommand.auto = true;
+			LootDisplay.auto = true;
 			ConfigHandler.writeBooleanConfig("misc", "autoDisplay", true);
 		} else if (button == fishing) {
 			setDisplay("fishing", false);
@@ -151,13 +154,14 @@ public class DisplayGui extends GuiScreen {
 			setDisplay("catacombs_floor_six", false);
 		} else if (button == catacombsF7) {
 			setDisplay("catacombs_floor_seven", false);
-		}
+		} else if (button == ghost)
+			setDisplay("ghost",false);
 	}
 	
 	public void setDisplay(String display, boolean forceNoSession) {
 		if (!forceNoSession && addSession) display += "_session";
-		DisplayCommand.auto = false;
-		DisplayCommand.display = display;
+		LootDisplay.auto = false;
+		LootDisplay.display = display;
 		ConfigHandler.writeBooleanConfig("misc", "autoDisplay", false);
 		ConfigHandler.writeStringConfig("misc", "display", display);
 	}

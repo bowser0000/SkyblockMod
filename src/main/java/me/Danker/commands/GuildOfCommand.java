@@ -29,6 +29,10 @@ public class GuildOfCommand extends CommandBase {
 		return "/" + getCommandName() + " [name]";
 	}
 
+	public static String usage(ICommandSender arg0) {
+		return new GuildOfCommand().getCommandUsage(arg0);
+	}
+
 	@Override
 	public int getRequiredPermissionLevel() {
 		return 0;

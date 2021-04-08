@@ -35,6 +35,10 @@ public class SlayerCommand extends CommandBase {
 		return "/" + getCommandName() + " [name]";
 	}
 
+	public static String usage(ICommandSender arg0) {
+		return new SlayerCommand().getCommandUsage(arg0);
+	}
+
 	@Override
 	public int getRequiredPermissionLevel() {
 		return 0;
