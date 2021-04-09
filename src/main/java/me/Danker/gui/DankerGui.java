@@ -146,6 +146,7 @@ public class DankerGui extends GuiScreen {
 		highlightArachne = new FeatureButton("Highlight Arachne: " + Utils.getColouredBoolean(ToggleCommand.highlightArachne), "Highlights Arachne boss.");
 		highlightSlayer = new FeatureButton("Highlight Slayer: " + Utils.getColouredBoolean(ToggleCommand.highlightSlayers), "Highlights Slayer boss.");
 
+		allButtons.clear();
 		allButtons.add(changeDisplay);
 		allButtons.add(puzzleSolvers);
 		allButtons.add(experimentationTableSolvers);
@@ -424,6 +425,7 @@ public class DankerGui extends GuiScreen {
 	protected void keyTyped(char typedChar, int keyCode) throws IOException {
 		super.keyTyped(typedChar, keyCode);
 		search.textboxKeyTyped(typedChar, keyCode);
+		initSearchText = search.getText();
 		reInit();
 	}
 	
