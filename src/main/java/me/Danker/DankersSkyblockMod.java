@@ -1,6 +1,7 @@
 package me.Danker;
 
 import me.Danker.commands.*;
+import me.Danker.commands.warp.*;
 import me.Danker.events.ChestSlotClickedEvent;
 import me.Danker.events.GuiChestBackgroundDrawnEvent;
 import me.Danker.events.RenderOverlay;
@@ -157,7 +158,6 @@ public class DankersSkyblockMod {
         ClientCommandHandler.instance.registerCommand(new DHelpCommand());
         ClientCommandHandler.instance.registerCommand(new DankerGuiCommand());
         ClientCommandHandler.instance.registerCommand(new DisplayCommand());
-        ClientCommandHandler.instance.registerCommand(new DungeonsCommand());
         ClientCommandHandler.instance.registerCommand(new FairySoulsCommand());
         ClientCommandHandler.instance.registerCommand(new GetkeyCommand());
         ClientCommandHandler.instance.registerCommand(new GuildOfCommand());
@@ -176,6 +176,15 @@ public class DankersSkyblockMod {
         ClientCommandHandler.instance.registerCommand(new SkyblockPlayersCommand());
         ClientCommandHandler.instance.registerCommand(new SlayerCommand());
         ClientCommandHandler.instance.registerCommand(new ToggleCommand());
+
+
+        ClientCommandHandler.instance.registerCommand(new Crypt());
+        ClientCommandHandler.instance.registerCommand(new DarkAuction());
+        ClientCommandHandler.instance.registerCommand(new Dragon());
+        ClientCommandHandler.instance.registerCommand(new DungeonHub());
+        ClientCommandHandler.instance.registerCommand(new HowlingCave());
+        ClientCommandHandler.instance.registerCommand(new Magma());
+        ClientCommandHandler.instance.registerCommand(new SpidersNest());
 
         configDirectory = event.getModConfigurationDirectory().toString();
     }
