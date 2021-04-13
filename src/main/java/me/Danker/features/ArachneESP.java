@@ -21,11 +21,9 @@ import java.util.List;
 
 public class ArachneESP {
 
-
     static Entity arachne = null;
     static boolean arachneActive = true;
     public static int ARACHANE_COLOUR;
-
 
     @SubscribeEvent
     public void onWorldChange(WorldEvent.Load event) {
@@ -67,9 +65,9 @@ public class ArachneESP {
         if (!Utils.inSkyblock) return;
         if (arachne != null) {
             if (arachneActive && ToggleCommand.highlightArachne) {
-                    AxisAlignedBB aabb = new AxisAlignedBB(arachne.posX - 0.5, arachne.posY - 1, arachne.posZ - 0.5, arachne.posX + 0.5, arachne.posY, arachne.posZ + 0.5);
-                    Utils.draw3DBox(aabb, ARACHANE_COLOUR, event.partialTicks);
-                }
+                AxisAlignedBB aabb = new AxisAlignedBB(arachne.posX - 0.75, arachne.posY - 1, arachne.posZ - 0.75, arachne.posX + 0.75, arachne.posY, arachne.posZ + 0.75);
+                Utils.draw3DBox(aabb, ARACHANE_COLOUR, event.partialTicks);
+            }
         }
     }
 
