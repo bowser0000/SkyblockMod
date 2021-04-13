@@ -81,6 +81,16 @@ Discord Server: https://discord.gg/QsEkNQS
 - /lobbybank - Uses API to find the average bank total of the lobby, as well the three players with the highest total money in the bank (and purse).
 - /dsmmusic <stop/reload/volume> [dungeonboss/bloodroom/dungeon] [1-100] - Stops, reloads or changes the volume of custom music.
 
+##Warps
+Commands for to warp to the MVP+ exclusive warps
+- /crypt - Warps you to the Crypt in the Hub.
+- /da - Warps you to the Dark Auction in the Hub.
+- /drag - Warps you to the Dragons Nest in the End.
+- /dun - Warps you to the Dungeon Hub.
+- /howl - Warps you to the Howling Cave in the Park.
+- /magma - Warps you to the Magma Fields in the Blazing Fortress.
+- /nest - Warps you to the Top of the Spider's Nest in the Spider's Den.
+
 ## Keybinds
 - Open Maddox menu - M by default.
 - Regular Ability - Numpad 4 by default.

@@ -1,6 +1,7 @@
 package me.Danker.commands;
 
 import me.Danker.DankersSkyblockMod;
+import me.Danker.commands.warp.*;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
@@ -55,6 +56,13 @@ public class DHelpCommand extends CommandBase {
                           							EnumChatFormatting.GOLD + LobbyBankCommand.usage(arg0) + EnumChatFormatting.AQUA + " - Uses API to find the average bank total of the lobby, as well the three players with the highest total money in the bank(and purse).\n" +
 													EnumChatFormatting.GOLD + RepartyCommand.usage(arg0) + EnumChatFormatting.AQUA + " - Disbands and reparties all members in the party.\n" +
 													EnumChatFormatting.GOLD + CustomMusicCommand.usage(arg0) + EnumChatFormatting.AQUA + " - Stops or reloads the custom music.\n" +
+													EnumChatFormatting.GOLD + Crypt.usage(arg0) + EnumChatFormatting.AQUA + " - Warps you to the Crypt in the Hub. \n" +
+													EnumChatFormatting.GOLD + DarkAuction.usage(arg0) + EnumChatFormatting.AQUA + " - Warps you to the Dark Auction in the Hub. \n" +
+													EnumChatFormatting.GOLD + Dragon.usage(arg0) + EnumChatFormatting.AQUA + " - Warps you to the Dragons Nest in the End. \n" +
+													EnumChatFormatting.GOLD + DungeonHub.usage(arg0) + EnumChatFormatting.AQUA + " - Warps you to the Dungeon Hub. \n" +
+													EnumChatFormatting.GOLD + HowlingCave.usage(arg0) + EnumChatFormatting.AQUA + " - Warps you to the Howling Cave in the Park. \n" +
+													EnumChatFormatting.GOLD + Magma.usage(arg0) + EnumChatFormatting.AQUA + " - Warps you to the Magma Fields in the Blazing Fortress. \n" +
+													EnumChatFormatting.GOLD + SpidersNest.usage(arg0) + EnumChatFormatting.AQUA + " - Warps you to the Top of the Spider's Nest in the Spider's Den. \n" +
 													EnumChatFormatting.GREEN + " Open Maddox Menu" + EnumChatFormatting.AQUA + " - M by default.\n" +
 													EnumChatFormatting.GREEN + " Start/Stop Skill Tracker" + EnumChatFormatting.AQUA + " - Numpad 5 by default.\n"));
 	}
