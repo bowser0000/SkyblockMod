@@ -145,17 +145,22 @@ public class Utils {
 	}
 
 	public static void checkForDungeons() {
-		if (inSkyblock) {
-			List<String> scoreboard = ScoreboardHandler.getSidebarLines();
-			for (String s : scoreboard) {
-				String sCleaned = ScoreboardHandler.cleanSB(s);
-				if (sCleaned.contains("The Catacombs")) {
-					inDungeons = true;
-					return;
-				}
+    	if (inSkyblock) {
+    		if (isInScoreboard("The Catacombs")) {
+    			inDungeons = true;
+    			return;
 			}
 		}
-		inDungeons = false;
+    	inDungeons = false;
+	}
+
+	public static boolean isInScoreboard(String text) {
+		List<String> scoreboard = ScoreboardHandler.getSidebarLines();
+		for (String s : scoreboard) {
+			String sCleaned = ScoreboardHandler.cleanSB(s);
+			if (sCleaned.contains(text)) return true;
+		}
+		return false;
 	}
 	
 	public static String capitalizeString(String string) {

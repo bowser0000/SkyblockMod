@@ -228,6 +228,7 @@ public class ConfigHandler {
 		ToggleCommand.melodyTooltips = initBoolean("toggles", "MelodyTooltips", false);
 		ToggleCommand.highlightSlayers = initBoolean("toggles", "HighlightSlayers", false);
 		ToggleCommand.highlightArachne = initBoolean("toggles", "HighlightArachne", false);
+		ToggleCommand.highlightSkeletonMasters = initBoolean("toggles", "HighlightSkeletonMasters", false);
 		// Chat Messages
 		ToggleCommand.sceptreMessages = initBoolean("toggles", "SceptreMessages", true);
 		ToggleCommand.midasStaffMessages = initBoolean("toggles", "MidasStaffMessages", true);
@@ -510,6 +511,7 @@ public class ConfigHandler {
 		BlazeSolver.HIGHEST_BLAZE_COLOUR = initInt("colors", "blazeHighest", 0x40FF40);
 		SlayerESP.SLAYER_COLOUR = initInt("colors", "slayerColor", 0x0000FF);
 		ArachneESP.ARACHANE_COLOUR = initInt("colors", "arachneColor", 0x00FF00);
+		HighlightSkeletonMasters.SKELETON_MASTER_COLOUR = initInt("colors", "skeletonMaster", 0xFF0000);
 		PetColours.PET_1_TO_9 = initInt("colors", "pet1To9", 0x999999); // Grey
 		PetColours.PET_10_TO_19 = initInt("colors", "pet10To19", 0xD62440); // Red
 		PetColours.PET_20_TO_29 = initInt("colors", "pet20To29", 0xEF5230); // Orange

@@ -5,7 +5,6 @@ import me.Danker.commands.MoveCommand;
 import me.Danker.commands.ScaleCommand;
 import me.Danker.commands.ToggleCommand;
 import me.Danker.events.RenderOverlay;
-import me.Danker.handlers.ScoreboardHandler;
 import me.Danker.handlers.TextRenderer;
 import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;
@@ -39,18 +38,7 @@ public class LividSolver {
         World world = Minecraft.getMinecraft().theWorld;
         if (DankersSkyblockMod.tickAmount % 20 == 0) {
             if (ToggleCommand.lividSolverToggled && Utils.inDungeons && !foundLivid && world != null) {
-                boolean inF5 = false;
-
-                List<String> scoreboard = ScoreboardHandler.getSidebarLines();
-                for (String s : scoreboard) {
-                    String sCleaned = ScoreboardHandler.cleanSB(s);
-                    if (sCleaned.contains("The Catacombs (F5)")) {
-                        inF5 = true;
-                        break;
-                    }
-                }
-
-                if (inF5) {
+                if (Utils.isInScoreboard("The Catacombs (F5)")) {
                     List<Entity> loadedLivids = new ArrayList<>();
                     List<Entity> entities = world.getLoadedEntityList();
                     for (Entity entity : entities) {

@@ -62,6 +62,7 @@ public class DankerGui extends GuiScreen {
 	private GuiButton autoSkillTracker;
 	private GuiButton highlightArachne;
 	private GuiButton highlightSlayer;
+	private GuiButton highlightSkeletonMasters;
 	// Chat Messages
 	private GuiButton sceptreMessages;
 	private GuiButton midasStaffMessages;
@@ -143,8 +144,9 @@ public class DankerGui extends GuiScreen {
 		bonzoTimer = new FeatureButton("Bonzo's Mask Timer: " + Utils.getColouredBoolean(ToggleCommand.bonzoTimerToggled), "Displays cooldown of Bonzo Mask ability.");
 		autoSkillTracker = new FeatureButton("Auto Start/Stop Skill Tracker: " + Utils.getColouredBoolean(ToggleCommand.autoSkillTrackerToggled), "Automatically pauses skill tracker when opening a gui.");
 		melodyTooltips = new FeatureButton("Hide tooltips in Melody's Harp: " + Utils.getColouredBoolean(ToggleCommand.melodyTooltips), "Hides tooltips in Melody's Harp.");
-		highlightArachne = new FeatureButton("Highlight Arachne: " + Utils.getColouredBoolean(ToggleCommand.highlightArachne), "Highlights Arachne boss.");
-		highlightSlayer = new FeatureButton("Highlight Slayer: " + Utils.getColouredBoolean(ToggleCommand.highlightSlayers), "Highlights Slayer boss.");
+		highlightArachne = new FeatureButton("Highlight Arachne: " + Utils.getColouredBoolean(ToggleCommand.highlightArachne), "Highlights Arachne bosses.");
+		highlightSlayer = new FeatureButton("Highlight Slayer: " + Utils.getColouredBoolean(ToggleCommand.highlightSlayers), "Highlights Slayer bosses.");
+		highlightSkeletonMasters = new FeatureButton("Highlight Skeleton Masters: " + Utils.getColouredBoolean(ToggleCommand.highlightSkeletonMasters), "Highlights Skeleton Masters.");
 
 		allButtons.clear();
 		allButtons.add(changeDisplay);
@@ -186,6 +188,7 @@ public class DankerGui extends GuiScreen {
 		allButtons.add(melodyTooltips);
 		allButtons.add(highlightArachne);
 		allButtons.add(highlightSlayer);
+		allButtons.add(highlightSkeletonMasters);
 
 		search.setText(initSearchText);
 		search.setVisible(true);
@@ -412,6 +415,10 @@ public class DankerGui extends GuiScreen {
 			ToggleCommand.highlightSlayers = !ToggleCommand.highlightSlayers;
 			ConfigHandler.writeBooleanConfig("toggles", "HighlightSlayers", ToggleCommand.highlightSlayers);
 			highlightSlayer.displayString = "Highlight Slayer: " + Utils.getColouredBoolean(ToggleCommand.highlightSlayers);
+		} else if (button == highlightSkeletonMasters) {
+			ToggleCommand.highlightSkeletonMasters = !ToggleCommand.highlightSkeletonMasters;
+			ConfigHandler.writeBooleanConfig("toggles", "HighlightSkeletonMasters", ToggleCommand.highlightSkeletonMasters);
+			highlightSkeletonMasters.displayString = "Highlight Skeleton Masters: " + Utils.getColouredBoolean(ToggleCommand.highlightSkeletonMasters);
 		}
 	}
 
