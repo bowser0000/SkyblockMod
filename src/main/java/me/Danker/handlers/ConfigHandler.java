@@ -229,6 +229,7 @@ public class ConfigHandler {
 		ToggleCommand.highlightSlayers = initBoolean("toggles", "HighlightSlayers", false);
 		ToggleCommand.highlightArachne = initBoolean("toggles", "HighlightArachne", false);
 		ToggleCommand.highlightSkeletonMasters = initBoolean("toggles", "HighlightSkeletonMasters", false);
+		ToggleCommand.teammatesInRadius = initBoolean("toggles", "TeammatesInRadius", false);
 		// Chat Messages
 		ToggleCommand.sceptreMessages = initBoolean("toggles", "SceptreMessages", true);
 		ToggleCommand.midasStaffMessages = initBoolean("toggles", "MidasStaffMessages", true);
@@ -478,6 +479,8 @@ public class ConfigHandler {
 		MoveCommand.bonzoTimerXY[1] = initInt("locations", "bonzoTimerY", 80);
 		MoveCommand.golemTimerXY[0] = initInt("locations", "golemTimerX", 100);
 		MoveCommand.golemTimerXY[1] = initInt("locations", "golemTimerY", 30);
+		MoveCommand.teammatesInRadiusXY[0] = initInt("locations", "teammatesInRadiusX", 80);
+		MoveCommand.teammatesInRadiusXY[1] = initInt("locations", "teammatesInRadiusY", 100);
 
 		// Scales
 		ScaleCommand.coordsScale = initDouble("scales", "coordsScale", 1);
@@ -490,6 +493,7 @@ public class ConfigHandler {
 		ScaleCommand.waterAnswerScale = initDouble("scales", "waterAnswerScale", 1);
 		ScaleCommand.bonzoTimerScale = initDouble("scales", "bonzoTimerScale", 1);
 		ScaleCommand.golemTimerScale = initDouble("scales", "golemTimerScale", 1);
+		ScaleCommand.teammatesInRadiusScale = initDouble("scales", "teammatesInRadiusScale", 1);
 
 		// Colours
 		DankersSkyblockMod.MAIN_COLOUR = initString("colors", "main", EnumChatFormatting.GREEN.toString());

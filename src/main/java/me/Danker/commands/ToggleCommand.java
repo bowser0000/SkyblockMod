@@ -34,6 +34,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 	public static boolean highlightSlayers;
 	public static boolean highlightArachne;
 	public static boolean highlightSkeletonMasters;
+	public static boolean teammatesInRadius;
 	// Chat Messages
 	public static boolean sceptreMessages;
 	public static boolean midasStaffMessages;
@@ -93,8 +94,8 @@ public class ToggleCommand extends CommandBase implements ICommand {
 										  "creeperpuzzle/waterpuzzle/tictactoepuzzle/boulderpuzzle/silverfishpuzzle/icewalkpuzzle/watchermessage/" +
 										  "startswithterminal/selectallterminal/clickinorderterminal/" +
 										  "ultrasequencer/chronomatron/superpairs/hidetooltipsinaddons/pickblock/" +
-										  "melodytooltips/highlightslayers/highlightarachne/highlightskeletonmasters/dungeonbossmusic/bloodroommusic/" +
-										  "dungeonmusic/list>";
+										  "melodytooltips/highlightslayers/highlightarachne/highlightskeletonmasters/teammatesinradius/" +
+										  "dungeonbossmusic/bloodroommusic/dungeonmusic/list>";
 	}
 
 	public static String usage(ICommandSender arg0) {
@@ -122,7 +123,8 @@ public class ToggleCommand extends CommandBase implements ICommand {
 														  "selectallterminal", "clickinorderterminal",
 														  "ultrasequencer", "chronomatron", "superpairs",
 														  "hidetooltipsinaddons", "pickblock", "melodytooltips", "highlightslayers",
-														  "highlightskeletonmasters", "dungeonbossmusic", "bloodroommusic", "dungeonmusic", "list");
+														  "highlightskeletonmasters", "dungeonbossmusic", "bloodroommusic", "dungeonmusic",
+														  "teammatesinradius", "list");
 		}
 		return null;
 	}
@@ -386,22 +388,27 @@ public class ToggleCommand extends CommandBase implements ICommand {
 			case "melodytooltips":
 				melodyTooltips = !melodyTooltips;
 				ConfigHandler.writeBooleanConfig("toggles", "MelodyTooltips", melodyTooltips);
-				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Hide tooltips in Melody's Harp " + DankersSkyblockMod.SECONDARY_COLOUR + melodyTooltips + DankersSkyblockMod.MAIN_COLOUR + "."));
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Hide tooltips in Melody's Harp has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + melodyTooltips + DankersSkyblockMod.MAIN_COLOUR + "."));
 				break;
 			case "highlightslayers":
 				highlightSlayers = !highlightSlayers;
 				ConfigHandler.writeBooleanConfig("toggles", "HighlightSlayers", highlightSlayers);
-				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Highlight Slayer Bosses " + DankersSkyblockMod.SECONDARY_COLOUR + highlightSlayers + DankersSkyblockMod.MAIN_COLOUR + "."));
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Highlight Slayer Bosses has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + highlightSlayers + DankersSkyblockMod.MAIN_COLOUR + "."));
 				break;
 			case "highlightarachne":
 				highlightArachne = !highlightArachne;
 				ConfigHandler.writeBooleanConfig("toggles", "HighlightArachne", highlightArachne);
-				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Highlight Arachne " + DankersSkyblockMod.SECONDARY_COLOUR + highlightArachne + DankersSkyblockMod.MAIN_COLOUR + "."));
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Highlight Arachne has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + highlightArachne + DankersSkyblockMod.MAIN_COLOUR + "."));
 				break;
 			case "highlightskeletonmasters":
 				highlightSkeletonMasters = !highlightSkeletonMasters;
 				ConfigHandler.writeBooleanConfig("toggles", "HighlightSkeletonMasters", highlightSkeletonMasters);
-				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Highlight Skeleton Masters " + DankersSkyblockMod.SECONDARY_COLOUR + highlightSkeletonMasters + DankersSkyblockMod.MAIN_COLOUR + "."));
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Highlight Skeleton Masters has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + highlightSkeletonMasters + DankersSkyblockMod.MAIN_COLOUR + "."));
+				break;
+			case "teammatesinradius":
+				teammatesInRadius = !teammatesInRadius;
+				ConfigHandler.writeBooleanConfig("toggles", "TeammatesInRadius", teammatesInRadius);
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Teammates in radius has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + teammatesInRadius + DankersSkyblockMod.MAIN_COLOUR + "."));
 				break;
 			case "dungeonbossmusic":
 				dungeonBossMusic = !dungeonBossMusic;
@@ -467,6 +474,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 															DankersSkyblockMod.TYPE_COLOUR + " Highlight Slayer Bosses: " + DankersSkyblockMod.VALUE_COLOUR + highlightSlayers + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Highlight Arachne Boss: " + DankersSkyblockMod.VALUE_COLOUR + highlightArachne + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Highlight Skeleton Masters: " + DankersSkyblockMod.VALUE_COLOUR + highlightSkeletonMasters + "\n" +
+															DankersSkyblockMod.TYPE_COLOUR + " Teammates in radius: " + DankersSkyblockMod.VALUE_COLOUR + teammatesInRadius + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Custom dungeon boss music: " + DankersSkyblockMod.VALUE_COLOUR + dungeonBossMusic + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Custom blood room music: " + DankersSkyblockMod.VALUE_COLOUR + bloodRoomMusic + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Custom dungeon music: " + DankersSkyblockMod.VALUE_COLOUR + dungeonMusic

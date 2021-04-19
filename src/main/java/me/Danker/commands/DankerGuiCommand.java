@@ -92,6 +92,7 @@ public class DankerGuiCommand extends CommandBase {
 			debug.append("[highlightslayers][").append(ToggleCommand.highlightSlayers).append("]\n");
 			debug.append("[highlightarachne][").append(ToggleCommand.highlightArachne).append("]\n");
 			debug.append("[highlightskeletonmasters][").append(ToggleCommand.highlightSkeletonMasters).append("]\n");
+			debug.append("[teammatesinradius][").append(ToggleCommand.teammatesInRadius).append("]\n");
 			debug.append("[dungeonbossmusic][").append(ToggleCommand.dungeonBossMusic).append("]\n");
 			debug.append("[bloodroommusic][").append(ToggleCommand.bloodRoomMusic).append("]\n");
 			debug.append("[dungeonmusic][").append(ToggleCommand.dungeonMusic).append("]\n");

@@ -13,6 +13,8 @@ import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.EnumChatFormatting;
 import org.lwjgl.opengl.GL11;
 
+import javax.xml.stream.Location;
+
 public class EditLocationsGui extends GuiScreen {
 
 	private String moving = null;
@@ -29,6 +31,7 @@ public class EditLocationsGui extends GuiScreen {
 	private LocationButton waterAnswer;
 	private LocationButton bonzoTimer;
 	private LocationButton golemTimer;
+	private LocationButton teammatesInRadius;
 	
 	@Override
 	public boolean doesGuiPauseGame() {
@@ -86,6 +89,13 @@ public class EditLocationsGui extends GuiScreen {
 								 EnumChatFormatting.GREEN + "Green: " + EnumChatFormatting.YELLOW + "Gold, " + EnumChatFormatting.GREEN + "Emerald\n" +
 								 EnumChatFormatting.RED + "Red: " + EnumChatFormatting.YELLOW + "Gold, " + EnumChatFormatting.AQUA + "Diamond, " + EnumChatFormatting.GREEN + "Emerald, " + EnumChatFormatting.RED + "Clay";
 
+		String teammatesInRadiusText = EnumChatFormatting.AQUA + "Teammates In Radius:\n" +
+									   EnumChatFormatting.GREEN + "NoticeMehSenpai\n" +
+									   EnumChatFormatting.GREEN + "DeathStreeks\n" +
+									   EnumChatFormatting.GREEN + "Not_A_Neko\n" +
+									   EnumChatFormatting.GREEN + "Minikloon";
+
+		// ive lost my marbles
 		display = new LocationButton(0, MoveCommand.displayXY[0], MoveCommand.displayXY[1], 145 * ScaleCommand.displayScale, 102 * ScaleCommand.displayScale, ScaleCommand.displayScale, displayText, displayNums, 110);
 		dungeonTimer = new LocationButton(0, MoveCommand.dungeonTimerXY[0], MoveCommand.dungeonTimerXY[1], 113 * ScaleCommand.dungeonTimerScale, 57 * ScaleCommand.dungeonTimerScale, ScaleCommand.dungeonTimerScale, dungeonTimerText, dungeonTimerNums, 80);
 		coords = new LocationButton(0, MoveCommand.coordsXY[0], MoveCommand.coordsXY[1], 141 * ScaleCommand.coordsScale, 12 * ScaleCommand.coordsScale, ScaleCommand.coordsScale, NoF3Coords.COORDS_COLOUR + "74 / 14 / -26 (141.1 / 6.7)", null, null);
@@ -96,6 +106,7 @@ public class EditLocationsGui extends GuiScreen {
 		waterAnswer = new LocationButton(0, MoveCommand.waterAnswerXY[0], MoveCommand.waterAnswerXY[1], 190 * ScaleCommand.waterAnswerScale, 54 * ScaleCommand.waterAnswerScale, ScaleCommand.waterAnswerScale, waterAnswerText, null, null);
 		bonzoTimer = new LocationButton(0, MoveCommand.bonzoTimerXY[0], MoveCommand.bonzoTimerXY[1] + 5, 53 * ScaleCommand.bonzoTimerScale, 18 * ScaleCommand.bonzoTimerScale, ScaleCommand.bonzoTimerScale, BonzoMaskTimer.BONZO_COLOR + "     3m30s", null, null);
 		golemTimer = new LocationButton(0, MoveCommand.golemTimerXY[0], MoveCommand.golemTimerXY[1] + 5, 42 * ScaleCommand.golemTimerScale, 18 * ScaleCommand.golemTimerScale, ScaleCommand.golemTimerScale, GolemSpawningAlert.GOLEM_COLOUR + "     20s", null, null);
+		teammatesInRadius = new LocationButton(0, MoveCommand.teammatesInRadiusXY[0], MoveCommand.teammatesInRadiusXY[1], 107 * ScaleCommand.teammatesInRadiusScale, 45 * ScaleCommand.teammatesInRadiusScale, ScaleCommand.teammatesInRadiusScale, teammatesInRadiusText, null, null);
 
 		this.buttonList.add(coords);
 		this.buttonList.add(dungeonTimer);
@@ -107,6 +118,7 @@ public class EditLocationsGui extends GuiScreen {
 		this.buttonList.add(display);
 		this.buttonList.add(skill50);
 		this.buttonList.add(golemTimer);
+		this.buttonList.add(teammatesInRadius);
 	}
 	
 	@Override
@@ -204,6 +216,12 @@ public class EditLocationsGui extends GuiScreen {
 					golemTimer.xPosition = MoveCommand.golemTimerXY[0];
 					golemTimer.yPosition = MoveCommand.golemTimerXY[1];
 					break;
+				case "teammatesInRadius":
+					MoveCommand.teammatesInRadiusXY[0] += xMoved;
+					MoveCommand.teammatesInRadiusXY[1] += yMoved;
+					teammatesInRadius.xPosition = MoveCommand.teammatesInRadiusXY[0];
+					teammatesInRadius.yPosition = MoveCommand.teammatesInRadiusXY[1];
+					break;
 			}
 			this.buttonList.clear();
 			initGui();
@@ -236,6 +254,8 @@ public class EditLocationsGui extends GuiScreen {
 				moving = "bonzoTimer";
 			} else if (button == golemTimer) {
 				moving = "golemTimer";
+			} else if (button == teammatesInRadius) {
+				moving = "teammatesInRadius";
 			}
 		}
 	}
@@ -264,6 +284,8 @@ public class EditLocationsGui extends GuiScreen {
 		ConfigHandler.writeIntConfig("locations", "bonzoTimerY", MoveCommand.bonzoTimerXY[1]);
 		ConfigHandler.writeIntConfig("locations", "golemTimerX", MoveCommand.golemTimerXY[0]);
 		ConfigHandler.writeIntConfig("locations", "golemTimerY", MoveCommand.golemTimerXY[1]);
+		ConfigHandler.writeIntConfig("locations", "teammatesInRadiusX", MoveCommand.teammatesInRadiusXY[0]);
+		ConfigHandler.writeIntConfig("locations", "teammatesInRadiusY", MoveCommand.teammatesInRadiusXY[1]);
 	}
 	
 }

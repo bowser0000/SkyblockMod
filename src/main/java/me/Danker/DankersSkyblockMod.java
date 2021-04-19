@@ -126,6 +126,7 @@ public class DankersSkyblockMod {
         MinecraftForge.EVENT_BUS.register(new StartsWithSolver());
         MinecraftForge.EVENT_BUS.register(new StopSalvagingStarredItems());
         MinecraftForge.EVENT_BUS.register(new SuperpairsSolver());
+        MinecraftForge.EVENT_BUS.register(new TetherDisplay());
         MinecraftForge.EVENT_BUS.register(new ThreeManSolver());
         MinecraftForge.EVENT_BUS.register(new TicTacToeSolver());
         MinecraftForge.EVENT_BUS.register(new TriviaSolver());

@@ -538,5 +538,9 @@ public class Utils {
 				return null;
 		}
 	}
+
+	public static boolean isRealPlayer(EntityPlayer player) {
+    	return player.getUniqueID().version() == 4 && !player.isPlayerSleeping();
+	}
 	
 }

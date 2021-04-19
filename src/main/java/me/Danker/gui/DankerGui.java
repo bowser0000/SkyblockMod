@@ -63,6 +63,7 @@ public class DankerGui extends GuiScreen {
 	private GuiButton highlightArachne;
 	private GuiButton highlightSlayer;
 	private GuiButton highlightSkeletonMasters;
+	private GuiButton teammatesInRadius;
 	// Chat Messages
 	private GuiButton sceptreMessages;
 	private GuiButton midasStaffMessages;
@@ -147,6 +148,7 @@ public class DankerGui extends GuiScreen {
 		highlightArachne = new FeatureButton("Highlight Arachne: " + Utils.getColouredBoolean(ToggleCommand.highlightArachne), "Highlights Arachne bosses.");
 		highlightSlayer = new FeatureButton("Highlight Slayer: " + Utils.getColouredBoolean(ToggleCommand.highlightSlayers), "Highlights Slayer bosses.");
 		highlightSkeletonMasters = new FeatureButton("Highlight Skeleton Masters: " + Utils.getColouredBoolean(ToggleCommand.highlightSkeletonMasters), "Highlights Skeleton Masters.");
+		teammatesInRadius = new FeatureButton("Display Players in 30 Block Radius: " + Utils.getColouredBoolean(ToggleCommand.teammatesInRadius), "Displays dungeon teammates in 30 block radius for tether and diversion.");
 
 		allButtons.clear();
 		allButtons.add(changeDisplay);
@@ -189,6 +191,7 @@ public class DankerGui extends GuiScreen {
 		allButtons.add(highlightArachne);
 		allButtons.add(highlightSlayer);
 		allButtons.add(highlightSkeletonMasters);
+		allButtons.add(teammatesInRadius);
 
 		search.setText(initSearchText);
 		search.setVisible(true);
@@ -419,6 +422,10 @@ public class DankerGui extends GuiScreen {
 			ToggleCommand.highlightSkeletonMasters = !ToggleCommand.highlightSkeletonMasters;
 			ConfigHandler.writeBooleanConfig("toggles", "HighlightSkeletonMasters", ToggleCommand.highlightSkeletonMasters);
 			highlightSkeletonMasters.displayString = "Highlight Skeleton Masters: " + Utils.getColouredBoolean(ToggleCommand.highlightSkeletonMasters);
+		} else if (button == teammatesInRadius) {
+			ToggleCommand.teammatesInRadius = !ToggleCommand.teammatesInRadius;
+			ConfigHandler.writeBooleanConfig("toggles", "TeammatesInRadius", ToggleCommand.teammatesInRadius);
+			teammatesInRadius.displayString = "Display Players in 30 Block Radius: " + Utils.getColouredBoolean(ToggleCommand.teammatesInRadius);
 		}
 	}
 
