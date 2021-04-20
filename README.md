@@ -66,7 +66,7 @@ Discord Server: https://discord.gg/QsEkNQS
 - /move <coords/display/dungeontimer/skill50/lividhp/caketimer/skilltracker/wateranswer/bonzotimer/golemtimer/teammatesinradius> <x> <y> - Moves text display to specified X and Y coordinates.
 - /scale <coords/display/dungeontimer/skill50/lividhp/caketimer/skilltracker/wateranswer/bonzotimer/golemtimer/teammatesinradius> <scale (0.1 - 10)> - Scales text display to a specified multipler between 0.1x and 10x.
 - /slayer [player] - Uses API to get slayer xp of a person. If no name is provided, it checks yours.
-- /skills [player] - Uses API to get skill levels of a person. If no name is provided, it checks yours.
+- /skill [player] - Uses API to get skill levels of a person. If no name is provided, it checks yours.
 - /lobbyskills - Uses API to find the average skills of the lobby, as well the three players with the highest skill average.
 - /guildof [player] - Uses API to get guild name and guild master of a person. If no name is provided, it checks yours.
 - /petsof [player] - Uses API to get pets of a person. If no name is provided, it checks yours.
