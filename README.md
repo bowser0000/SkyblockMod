@@ -80,6 +80,7 @@ Discord Server: https://discord.gg/QsEkNQS
 - /fairysouls - Check the fairysouls of a player
 - /lobbybank - Uses API to find the average bank total of the lobby, as well the three players with the highest total money in the bank (and purse).
 - /dsmmusic <stop/reload/volume> [dungeonboss/bloodroom/dungeon] [1-100] - Stops, reloads or changes the volume of custom music.
+- /player [player] - Uses API to find skills, slayers, coins and weight of a player.
 
 ## Keybinds
 - Open Maddox menu - M by default.

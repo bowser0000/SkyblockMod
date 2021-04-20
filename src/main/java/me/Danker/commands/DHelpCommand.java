@@ -56,6 +56,7 @@ public class DHelpCommand extends CommandBase {
                           							EnumChatFormatting.GOLD + LobbyBankCommand.usage(arg0) + EnumChatFormatting.AQUA + " - Uses API to find the average bank total of the lobby, as well the three players with the highest total money in the bank(and purse).\n" +
 													EnumChatFormatting.GOLD + RepartyCommand.usage(arg0) + EnumChatFormatting.AQUA + " - Disbands and reparties all members in the party.\n" +
 													EnumChatFormatting.GOLD + CustomMusicCommand.usage(arg0) + EnumChatFormatting.AQUA + " - Stops or reloads the custom music.\n" +
+													EnumChatFormatting.GOLD + PlayerCommand.usage(arg0) + EnumChatFormatting.AQUA + " - Uses API to find skills, slayers, coins and weight of a player.\n" +
 													EnumChatFormatting.GREEN + " Open Maddox Menu" + EnumChatFormatting.AQUA + " - M by default.\n" +
 													EnumChatFormatting.GREEN + " Start/Stop Skill Tracker" + EnumChatFormatting.AQUA + " - Numpad 5 by default.\n"));
 	}
