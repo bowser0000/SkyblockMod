@@ -49,7 +49,7 @@ public class SpamHider {
         }
         // Kill Combo
         if (!ToggleCommand.killComboMessages) {
-            if ((message.contains("+") && message.contains(" Kill Combo ")) || message.contains("Your Kill Combo has expired!")) {
+            if ((message.contains("+") && message.contains(" Kill Combo")) || message.contains("Your Kill Combo has expired!")) {
                 event.setCanceled(true);
             }
         }
