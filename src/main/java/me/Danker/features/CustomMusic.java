@@ -66,6 +66,8 @@ public class CustomMusic {
                         if (!prevInDungeonBossRoom) {
                             dungeonboss.start();
                         }
+                    } else {
+                        inDungeonBossRoom = false;
                     }
                 }
             }
