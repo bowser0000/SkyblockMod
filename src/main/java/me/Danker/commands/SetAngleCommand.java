@@ -35,6 +35,6 @@ public class SetAngleCommand extends CommandBase {
 
         Minecraft.getMinecraft().thePlayer.rotationPitch = Float.parseFloat(args[1]);
         Minecraft.getMinecraft().thePlayer.rotationYaw = Float.parseFloat(args[0]);
-        sender.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Set your rotation to y=" + DankersSkyblockMod.SECONDARY_COLOUR + args[0] + DankersSkyblockMod.MAIN_COLOUR + ", x=" + DankersSkyblockMod.SECONDARY_COLOUR +args[1]));
+        sender.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Set your rotation to yaw=" + DankersSkyblockMod.SECONDARY_COLOUR + args[0] + DankersSkyblockMod.MAIN_COLOUR + ", pitch=" + DankersSkyblockMod.SECONDARY_COLOUR +args[1]));
     }
 }
