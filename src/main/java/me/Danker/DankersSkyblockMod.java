@@ -176,7 +176,7 @@ public class DankersSkyblockMod {
         ClientCommandHandler.instance.registerCommand(new SkyblockPlayersCommand());
         ClientCommandHandler.instance.registerCommand(new SlayerCommand());
         ClientCommandHandler.instance.registerCommand(new ToggleCommand());
-
+        ClientCommandHandler.instance.registerCommand(new SetAngleCommand());
 
         ClientCommandHandler.instance.registerCommand(new Crypt());
         ClientCommandHandler.instance.registerCommand(new DarkAuction());
