@@ -101,6 +101,7 @@ public class DankersSkyblockMod {
         MinecraftForge.EVENT_BUS.register(new DungeonTimer());
         MinecraftForge.EVENT_BUS.register(new ExpertiseLore());
         MinecraftForge.EVENT_BUS.register(new FasterMaddoxCalling());
+        MinecraftForge.EVENT_BUS.register(new GiantHPDisplay());
         MinecraftForge.EVENT_BUS.register(new GoldenEnchants());
         MinecraftForge.EVENT_BUS.register(new GolemSpawningAlert());
         MinecraftForge.EVENT_BUS.register(new GpartyNotifications());

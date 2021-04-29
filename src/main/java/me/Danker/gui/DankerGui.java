@@ -64,6 +64,7 @@ public class DankerGui extends GuiScreen {
 	private GuiButton highlightSlayer;
 	private GuiButton highlightSkeletonMasters;
 	private GuiButton teammatesInRadius;
+	private GuiButton giantHP;
 	// Chat Messages
 	private GuiButton sceptreMessages;
 	private GuiButton midasStaffMessages;
@@ -149,6 +150,7 @@ public class DankerGui extends GuiScreen {
 		highlightSlayer = new FeatureButton("Highlight Slayer: " + Utils.getColouredBoolean(ToggleCommand.highlightSlayers), "Highlights Slayer bosses.");
 		highlightSkeletonMasters = new FeatureButton("Highlight Skeleton Masters: " + Utils.getColouredBoolean(ToggleCommand.highlightSkeletonMasters), "Highlights Skeleton Masters.");
 		teammatesInRadius = new FeatureButton("Display Players in 30 Block Radius: " + Utils.getColouredBoolean(ToggleCommand.teammatesInRadius), "Displays dungeon teammates in 30 block radius for tether and diversion.");
+		giantHP = new FeatureButton("Display Giant HP: " + Utils.getColouredBoolean(ToggleCommand.giantHP), "Displays health of Sadan's giants during F6 bossfight and F7 blood room.");
 
 		allButtons.clear();
 		allButtons.add(changeDisplay);
@@ -192,6 +194,7 @@ public class DankerGui extends GuiScreen {
 		allButtons.add(highlightSlayer);
 		allButtons.add(highlightSkeletonMasters);
 		allButtons.add(teammatesInRadius);
+		allButtons.add(giantHP);
 
 		search.setText(initSearchText);
 		search.setVisible(true);
@@ -426,6 +429,10 @@ public class DankerGui extends GuiScreen {
 			ToggleCommand.teammatesInRadius = !ToggleCommand.teammatesInRadius;
 			ConfigHandler.writeBooleanConfig("toggles", "TeammatesInRadius", ToggleCommand.teammatesInRadius);
 			teammatesInRadius.displayString = "Display Players in 30 Block Radius: " + Utils.getColouredBoolean(ToggleCommand.teammatesInRadius);
+		} else if (button == giantHP) {
+			ToggleCommand.giantHP = !ToggleCommand.giantHP;
+			ConfigHandler.writeBooleanConfig("toggles", "GiantHP", ToggleCommand.giantHP);
+			giantHP.displayString = "Display Giant HP: " + Utils.getColouredBoolean(ToggleCommand.giantHP);
 		}
 	}
 

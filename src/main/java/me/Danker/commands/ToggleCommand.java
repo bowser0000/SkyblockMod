@@ -35,6 +35,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 	public static boolean highlightArachne;
 	public static boolean highlightSkeletonMasters;
 	public static boolean teammatesInRadius;
+	public static boolean giantHP;
 	// Chat Messages
 	public static boolean sceptreMessages;
 	public static boolean midasStaffMessages;
@@ -95,7 +96,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 										  "startswithterminal/selectallterminal/clickinorderterminal/" +
 										  "ultrasequencer/chronomatron/superpairs/hidetooltipsinaddons/pickblock/" +
 										  "melodytooltips/highlightslayers/highlightarachne/highlightskeletonmasters/teammatesinradius/" +
-										  "dungeonbossmusic/bloodroommusic/dungeonmusic/list>";
+										  "gianthp/dungeonbossmusic/bloodroommusic/dungeonmusic/list>";
 	}
 
 	public static String usage(ICommandSender arg0) {
@@ -124,7 +125,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 														  "ultrasequencer", "chronomatron", "superpairs",
 														  "hidetooltipsinaddons", "pickblock", "melodytooltips", "highlightslayers",
 														  "highlightskeletonmasters", "dungeonbossmusic", "bloodroommusic", "dungeonmusic",
-														  "teammatesinradius", "list");
+														  "teammatesinradius", "gianthp", "list");
 		}
 		return null;
 	}
@@ -410,6 +411,11 @@ public class ToggleCommand extends CommandBase implements ICommand {
 				ConfigHandler.writeBooleanConfig("toggles", "TeammatesInRadius", teammatesInRadius);
 				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Teammates in radius has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + teammatesInRadius + DankersSkyblockMod.MAIN_COLOUR + "."));
 				break;
+			case "gianthp":
+				giantHP = !giantHP;
+				ConfigHandler.writeBooleanConfig("toggles", "GiantHP", giantHP);
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Giant HP display has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + giantHP + DankersSkyblockMod.MAIN_COLOUR + "."));
+				break;
 			case "dungeonbossmusic":
 				dungeonBossMusic = !dungeonBossMusic;
 				CustomMusic.dungeonboss.stop();
@@ -475,6 +481,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 															DankersSkyblockMod.TYPE_COLOUR + " Highlight Arachne Boss: " + DankersSkyblockMod.VALUE_COLOUR + highlightArachne + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Highlight Skeleton Masters: " + DankersSkyblockMod.VALUE_COLOUR + highlightSkeletonMasters + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Teammates in radius: " + DankersSkyblockMod.VALUE_COLOUR + teammatesInRadius + "\n" +
+															DankersSkyblockMod.TYPE_COLOUR + " Giant HP display: " + DankersSkyblockMod.VALUE_COLOUR + giantHP + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Custom dungeon boss music: " + DankersSkyblockMod.VALUE_COLOUR + dungeonBossMusic + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Custom blood room music: " + DankersSkyblockMod.VALUE_COLOUR + bloodRoomMusic + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Custom dungeon music: " + DankersSkyblockMod.VALUE_COLOUR + dungeonMusic

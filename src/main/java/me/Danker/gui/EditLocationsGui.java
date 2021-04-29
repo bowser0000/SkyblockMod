@@ -1,5 +1,6 @@
 package me.Danker.gui;
 
+import javafx.scene.transform.Scale;
 import me.Danker.DankersSkyblockMod;
 import me.Danker.commands.MoveCommand;
 import me.Danker.commands.ScaleCommand;
@@ -32,6 +33,7 @@ public class EditLocationsGui extends GuiScreen {
 	private LocationButton bonzoTimer;
 	private LocationButton golemTimer;
 	private LocationButton teammatesInRadius;
+	private LocationButton giantHP;
 	
 	@Override
 	public boolean doesGuiPauseGame() {
@@ -95,18 +97,24 @@ public class EditLocationsGui extends GuiScreen {
 									   EnumChatFormatting.GREEN + "Not_A_Neko\n" +
 									   EnumChatFormatting.GREEN + "Minikloon";
 
-		// ive lost my marbles
-		display = new LocationButton(0, MoveCommand.displayXY[0], MoveCommand.displayXY[1], 145 * ScaleCommand.displayScale, 102 * ScaleCommand.displayScale, ScaleCommand.displayScale, displayText, displayNums, 110);
-		dungeonTimer = new LocationButton(0, MoveCommand.dungeonTimerXY[0], MoveCommand.dungeonTimerXY[1], 113 * ScaleCommand.dungeonTimerScale, 57 * ScaleCommand.dungeonTimerScale, ScaleCommand.dungeonTimerScale, dungeonTimerText, dungeonTimerNums, 80);
-		coords = new LocationButton(0, MoveCommand.coordsXY[0], MoveCommand.coordsXY[1], 141 * ScaleCommand.coordsScale, 12 * ScaleCommand.coordsScale, ScaleCommand.coordsScale, NoF3Coords.COORDS_COLOUR + "74 / 14 / -26 (141.1 / 6.7)", null, null);
-		skill50 = new LocationButton(0, MoveCommand.skill50XY[0], MoveCommand.skill50XY[1], 233 * ScaleCommand.skill50Scale, 12 * ScaleCommand.skill50Scale, ScaleCommand.skill50Scale, Skill50Display.SKILL_50_COLOUR + "+3.5 Farming (28,882,117.7/55,172,425) 52.34%", null, null);
-		lividHP = new LocationButton(0, MoveCommand.lividHpXY[0], MoveCommand.lividHpXY[1], 85 * ScaleCommand.lividHpScale, 12 * ScaleCommand.lividHpScale, ScaleCommand.lividHpScale, EnumChatFormatting.WHITE + "﴾ Livid " + EnumChatFormatting.YELLOW + "6.9M" + EnumChatFormatting.RED + "❤ " + EnumChatFormatting.WHITE + "﴿", null, null);
-		cakeTimer = new LocationButton(0, MoveCommand.cakeTimerXY[0], MoveCommand.cakeTimerXY[1] + 5, 85 * ScaleCommand.cakeTimerScale, 18 * ScaleCommand.cakeTimerScale, ScaleCommand.cakeTimerScale, CakeTimer.CAKE_COLOUR + "     11h16m", null, null);
-		skillTracker = new LocationButton(0, MoveCommand.skillTrackerXY[0], MoveCommand.skillTrackerXY[1], 150 * ScaleCommand.skillTrackerScale, 28 * ScaleCommand.skillTrackerScale, ScaleCommand.skillTrackerScale, skillTrackerText, null, null);
-		waterAnswer = new LocationButton(0, MoveCommand.waterAnswerXY[0], MoveCommand.waterAnswerXY[1], 190 * ScaleCommand.waterAnswerScale, 54 * ScaleCommand.waterAnswerScale, ScaleCommand.waterAnswerScale, waterAnswerText, null, null);
-		bonzoTimer = new LocationButton(0, MoveCommand.bonzoTimerXY[0], MoveCommand.bonzoTimerXY[1] + 5, 53 * ScaleCommand.bonzoTimerScale, 18 * ScaleCommand.bonzoTimerScale, ScaleCommand.bonzoTimerScale, BonzoMaskTimer.BONZO_COLOR + "     3m30s", null, null);
-		golemTimer = new LocationButton(0, MoveCommand.golemTimerXY[0], MoveCommand.golemTimerXY[1] + 5, 42 * ScaleCommand.golemTimerScale, 18 * ScaleCommand.golemTimerScale, ScaleCommand.golemTimerScale, GolemSpawningAlert.GOLEM_COLOUR + "     20s", null, null);
-		teammatesInRadius = new LocationButton(0, MoveCommand.teammatesInRadiusXY[0], MoveCommand.teammatesInRadiusXY[1], 107 * ScaleCommand.teammatesInRadiusScale, 45 * ScaleCommand.teammatesInRadiusScale, ScaleCommand.teammatesInRadiusScale, teammatesInRadiusText, null, null);
+		String giantHPText = EnumChatFormatting.DARK_RED + "L.A.S.R. " + EnumChatFormatting.GREEN + "25M" + EnumChatFormatting.RED + "❤\n" +
+							 EnumChatFormatting.RED + "Bigfoot " + EnumChatFormatting.GREEN + "25M" + EnumChatFormatting.RED + "❤\n" +
+							 EnumChatFormatting.LIGHT_PURPLE + "Jolly Pink Giant " + EnumChatFormatting.GREEN + "25M" + EnumChatFormatting.RED + "❤\n" +
+							 EnumChatFormatting.DARK_AQUA + "The Diamond Giant " + EnumChatFormatting.GREEN + "25M" + EnumChatFormatting.RED + "❤";
+
+
+		display = new LocationButton(MoveCommand.displayXY[0], MoveCommand.displayXY[1], ScaleCommand.displayScale, displayText, displayNums, 110);
+		dungeonTimer = new LocationButton(MoveCommand.dungeonTimerXY[0], MoveCommand.dungeonTimerXY[1], ScaleCommand.dungeonTimerScale, dungeonTimerText, dungeonTimerNums, 80);
+		coords = new LocationButton(MoveCommand.coordsXY[0], MoveCommand.coordsXY[1], ScaleCommand.coordsScale, NoF3Coords.COORDS_COLOUR + "74 / 14 / -26 (141.1 / 6.7)", null, null);
+		skill50 = new LocationButton(MoveCommand.skill50XY[0], MoveCommand.skill50XY[1], ScaleCommand.skill50Scale, Skill50Display.SKILL_50_COLOUR + "+3.5 Farming (28,882,117.7/55,172,425) 52.34%", null, null);
+		lividHP = new LocationButton(MoveCommand.lividHpXY[0], MoveCommand.lividHpXY[1], ScaleCommand.lividHpScale, EnumChatFormatting.WHITE + "﴾ Livid " + EnumChatFormatting.YELLOW + "6.9M" + EnumChatFormatting.RED + "❤ " + EnumChatFormatting.WHITE + "﴿", null, null);
+		cakeTimer = new LocationButton(MoveCommand.cakeTimerXY[0], MoveCommand.cakeTimerXY[1] + 5, ScaleCommand.cakeTimerScale, CakeTimer.CAKE_COLOUR + "     11h16m", null, null);
+		skillTracker = new LocationButton(MoveCommand.skillTrackerXY[0], MoveCommand.skillTrackerXY[1], ScaleCommand.skillTrackerScale, skillTrackerText, null, null);
+		waterAnswer = new LocationButton(MoveCommand.waterAnswerXY[0], MoveCommand.waterAnswerXY[1], ScaleCommand.waterAnswerScale, waterAnswerText, null, null);
+		bonzoTimer = new LocationButton(MoveCommand.bonzoTimerXY[0], MoveCommand.bonzoTimerXY[1] + 5, ScaleCommand.bonzoTimerScale, BonzoMaskTimer.BONZO_COLOR + "     3m30s", null, null);
+		golemTimer = new LocationButton(MoveCommand.golemTimerXY[0], MoveCommand.golemTimerXY[1] + 5, ScaleCommand.golemTimerScale, GolemSpawningAlert.GOLEM_COLOUR + "     20s", null, null);
+		teammatesInRadius = new LocationButton(MoveCommand.teammatesInRadiusXY[0], MoveCommand.teammatesInRadiusXY[1], ScaleCommand.teammatesInRadiusScale, teammatesInRadiusText, null, null);
+		giantHP = new LocationButton(MoveCommand.giantHPXY[0], MoveCommand.giantHPXY[1], ScaleCommand.giantHPScale, giantHPText, null, null);
 
 		this.buttonList.add(coords);
 		this.buttonList.add(dungeonTimer);
@@ -119,6 +127,7 @@ public class EditLocationsGui extends GuiScreen {
 		this.buttonList.add(skill50);
 		this.buttonList.add(golemTimer);
 		this.buttonList.add(teammatesInRadius);
+		this.buttonList.add(giantHP);
 	}
 	
 	@Override
@@ -222,6 +231,12 @@ public class EditLocationsGui extends GuiScreen {
 					teammatesInRadius.xPosition = MoveCommand.teammatesInRadiusXY[0];
 					teammatesInRadius.yPosition = MoveCommand.teammatesInRadiusXY[1];
 					break;
+				case "giantHP":
+					MoveCommand.giantHPXY[0] += xMoved;
+					MoveCommand.giantHPXY[1] += yMoved;
+					giantHP.xPosition = MoveCommand.giantHPXY[0];
+					giantHP.yPosition = MoveCommand.giantHPXY[1];
+					break;
 			}
 			this.buttonList.clear();
 			initGui();
@@ -256,6 +271,8 @@ public class EditLocationsGui extends GuiScreen {
 				moving = "golemTimer";
 			} else if (button == teammatesInRadius) {
 				moving = "teammatesInRadius";
+			} else if (button == giantHP) {
+				moving = "giantHP";
 			}
 		}
 	}
@@ -286,6 +303,8 @@ public class EditLocationsGui extends GuiScreen {
 		ConfigHandler.writeIntConfig("locations", "golemTimerY", MoveCommand.golemTimerXY[1]);
 		ConfigHandler.writeIntConfig("locations", "teammatesInRadiusX", MoveCommand.teammatesInRadiusXY[0]);
 		ConfigHandler.writeIntConfig("locations", "teammatesInRadiusY", MoveCommand.teammatesInRadiusXY[1]);
+		ConfigHandler.writeIntConfig("locations", "giantHPX", MoveCommand.giantHPXY[0]);
+		ConfigHandler.writeIntConfig("locations", "giantHPY", MoveCommand.giantHPXY[1]);
 	}
 	
 }

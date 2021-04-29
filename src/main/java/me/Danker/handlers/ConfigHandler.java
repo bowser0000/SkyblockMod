@@ -105,9 +105,7 @@ public class ConfigHandler {
 	}
 	
 	public static void writeDoubleConfig(String category, String key, double value) {
-		config = new Configuration(new File(file));
 		try {
-			config.load();
 			double set = config.get(category, key, value).getDouble();
 			config.getCategory(category).get(key).set(value);
 		} catch (Exception ex) {
@@ -131,9 +129,7 @@ public class ConfigHandler {
 	}
 	
 	public static void writeBooleanConfig(String category, String key, boolean value) {
-		config = new Configuration(new File(file));
 		try {
-			config.load();
 			boolean set = config.get(category, key, value).getBoolean();
 			config.getCategory(category).get(key).set(value);
 		} catch (Exception ex) {
@@ -208,6 +204,8 @@ public class ConfigHandler {
 	}
 	
 	public static void reloadConfig() {
+		init();
+
 		// Toggles
 		ToggleCommand.gpartyToggled = initBoolean("toggles", "GParty", false);
 		ToggleCommand.coordsToggled = initBoolean("toggles", "Coords", false);
@@ -230,6 +228,7 @@ public class ConfigHandler {
 		ToggleCommand.highlightArachne = initBoolean("toggles", "HighlightArachne", false);
 		ToggleCommand.highlightSkeletonMasters = initBoolean("toggles", "HighlightSkeletonMasters", false);
 		ToggleCommand.teammatesInRadius = initBoolean("toggles", "TeammatesInRadius", false);
+		ToggleCommand.giantHP = initBoolean("toggles", "GiantHP", false);
 		// Chat Messages
 		ToggleCommand.sceptreMessages = initBoolean("toggles", "SceptreMessages", true);
 		ToggleCommand.midasStaffMessages = initBoolean("toggles", "MidasStaffMessages", true);
@@ -481,6 +480,8 @@ public class ConfigHandler {
 		MoveCommand.golemTimerXY[1] = initInt("locations", "golemTimerY", 30);
 		MoveCommand.teammatesInRadiusXY[0] = initInt("locations", "teammatesInRadiusX", 80);
 		MoveCommand.teammatesInRadiusXY[1] = initInt("locations", "teammatesInRadiusY", 100);
+		MoveCommand.giantHPXY[0] = initInt("locations", "giantHPX", 80);
+		MoveCommand.giantHPXY[1] = initInt("locations", "giantHPY", 150);
 
 		// Scales
 		ScaleCommand.coordsScale = initDouble("scales", "coordsScale", 1);
@@ -494,6 +495,7 @@ public class ConfigHandler {
 		ScaleCommand.bonzoTimerScale = initDouble("scales", "bonzoTimerScale", 1);
 		ScaleCommand.golemTimerScale = initDouble("scales", "golemTimerScale", 1);
 		ScaleCommand.teammatesInRadiusScale = initDouble("scales", "teammatesInRadiusScale", 1);
+		ScaleCommand.giantHPScale = initDouble("scales", "giantHPScale", 1);
 
 		// Colours
 		DankersSkyblockMod.MAIN_COLOUR = initString("colors", "main", EnumChatFormatting.GREEN.toString());
