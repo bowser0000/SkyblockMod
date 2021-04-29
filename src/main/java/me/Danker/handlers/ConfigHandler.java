@@ -32,9 +32,7 @@ public class ConfigHandler {
 	}
 	
 	public static int getInt(String category, String key) {
-		config = new Configuration(new File(file));
 		try {
-			config.load();
 			if (config.getCategory(category).containsKey(key)) {
 				return config.get(category, key, 0).getInt();
 			}
@@ -47,9 +45,7 @@ public class ConfigHandler {
 	}
 	
 	public static double getDouble(String category, String key) {
-		config = new Configuration(new File(file));
 		try {
-			config.load();
 			if (config.getCategory(category).containsKey(key)) {
 				return config.get(category, key, 0D).getDouble();
 			}
@@ -62,9 +58,7 @@ public class ConfigHandler {
 	}
 	
 	public static String getString(String category, String key) {
-		config = new Configuration(new File(file));
 		try {
-			config.load();
 			if (config.getCategory(category).containsKey(key)) {
 				return config.get(category, key, "").getString();
 			}
@@ -77,9 +71,7 @@ public class ConfigHandler {
 	}
 	
 	public static boolean getBoolean(String category, String key) {
-		config = new Configuration(new File(file));
 		try {
-			config.load();
 			if (config.getCategory(category).containsKey(key)) {
 				return config.get(category, key, false).getBoolean();
 			}
@@ -92,9 +84,7 @@ public class ConfigHandler {
 	}
 
 	public static void writeIntConfig(String category, String key, int value) {
-		config = new Configuration(new File(file));
 		try {
-			config.load();
 			int set = config.get(category, key, value).getInt();
 			config.getCategory(category).get(key).set(value);
 		} catch (Exception ex) {
@@ -116,9 +106,7 @@ public class ConfigHandler {
 	}
 	
 	public static void writeStringConfig(String category, String key, String value) {
-		config = new Configuration(new File(file));
 		try {
-			config.load();
 			String set = config.get(category, key, value).getString();
 			config.getCategory(category).get(key).set(value);
 		} catch (Exception ex) {
@@ -140,9 +128,7 @@ public class ConfigHandler {
 	}
 	
 	public static boolean hasKey(String category, String key) {
-		config = new Configuration(new File(file));
 		try {
-			config.load();
 			if (!config.hasCategory(category)) return false;
 			return config.getCategory(category).containsKey(key);
 		} catch (Exception ex) {
@@ -154,9 +140,7 @@ public class ConfigHandler {
 	}
 	
 	public static void deleteCategory(String category) {
-		config = new Configuration(new File(file));
 		try {
-			config.load();
 			if (config.hasCategory(category)) {
 				config.removeCategory(new ConfigCategory(category));
 			}
