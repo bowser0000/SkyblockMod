@@ -65,6 +65,7 @@ public class DankerGui extends GuiScreen {
 	private GuiButton highlightSkeletonMasters;
 	private GuiButton teammatesInRadius;
 	private GuiButton giantHP;
+	private GuiButton hidePetCandy;
 	// Chat Messages
 	private GuiButton sceptreMessages;
 	private GuiButton midasStaffMessages;
@@ -151,6 +152,7 @@ public class DankerGui extends GuiScreen {
 		highlightSkeletonMasters = new FeatureButton("Highlight Skeleton Masters: " + Utils.getColouredBoolean(ToggleCommand.highlightSkeletonMasters), "Highlights Skeleton Masters.");
 		teammatesInRadius = new FeatureButton("Display Players in 30 Block Radius: " + Utils.getColouredBoolean(ToggleCommand.teammatesInRadius), "Displays dungeon teammates in 30 block radius for tether and diversion.");
 		giantHP = new FeatureButton("Display Giant HP: " + Utils.getColouredBoolean(ToggleCommand.giantHP), "Displays health of Sadan's giants during F6 bossfight and F7 blood room.");
+		hidePetCandy = new FeatureButton("Hide Pet Candy: " + Utils.getColouredBoolean(ToggleCommand.hidePetCandy), "Hide pet candy in pet tooltips.");
 
 		allButtons.clear();
 		allButtons.add(changeDisplay);
@@ -195,6 +197,7 @@ public class DankerGui extends GuiScreen {
 		allButtons.add(highlightSkeletonMasters);
 		allButtons.add(teammatesInRadius);
 		allButtons.add(giantHP);
+		allButtons.add(hidePetCandy);
 
 		search.setText(initSearchText);
 		search.setVisible(true);
@@ -433,6 +436,10 @@ public class DankerGui extends GuiScreen {
 			ToggleCommand.giantHP = !ToggleCommand.giantHP;
 			ConfigHandler.writeBooleanConfig("toggles", "GiantHP", ToggleCommand.giantHP);
 			giantHP.displayString = "Display Giant HP: " + Utils.getColouredBoolean(ToggleCommand.giantHP);
+		} else if (button == hidePetCandy) {
+			ToggleCommand.hidePetCandy = !ToggleCommand.hidePetCandy;
+			ConfigHandler.writeBooleanConfig("toggles", "HidePetCandy", ToggleCommand.hidePetCandy);
+			hidePetCandy.displayString = "Hide Pet Candy: " + Utils.getColouredBoolean(ToggleCommand.hidePetCandy);
 		}
 	}
 

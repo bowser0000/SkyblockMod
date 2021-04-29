@@ -105,6 +105,7 @@ public class DankersSkyblockMod {
         MinecraftForge.EVENT_BUS.register(new GoldenEnchants());
         MinecraftForge.EVENT_BUS.register(new GolemSpawningAlert());
         MinecraftForge.EVENT_BUS.register(new GpartyNotifications());
+        MinecraftForge.EVENT_BUS.register(new HidePetCandy());
         MinecraftForge.EVENT_BUS.register(new HideTooltipsInExperiments());
         MinecraftForge.EVENT_BUS.register(new HighlightSkeletonMasters());
         MinecraftForge.EVENT_BUS.register(new IceWalkSolver());
