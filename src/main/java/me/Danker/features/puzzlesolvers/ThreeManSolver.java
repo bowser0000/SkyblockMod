@@ -1,5 +1,6 @@
 package me.Danker.features.puzzlesolvers;
 
+import com.google.gson.JsonArray;
 import me.Danker.DankersSkyblockMod;
 import me.Danker.commands.ToggleCommand;
 import me.Danker.utils.Utils;
@@ -16,6 +17,7 @@ import java.util.List;
 
 public class ThreeManSolver {
 
+    // Hard coded solutions if api call fails
     static String[] riddleSolutions = {"The reward is not in my chest!", "At least one of them is lying, and the reward is not in",
             "My chest doesn't have the reward. We are all telling the truth", "My chest has the reward and I'm telling the truth",
             "The reward isn't in any of our chests", "Both of them are telling the truth."};
@@ -33,33 +35,22 @@ public class ThreeManSolver {
         if (!Utils.inDungeons) return;
 
         if (ToggleCommand.threeManToggled && message.contains("[NPC]")) {
-            for (String solution : riddleSolutions) {
-                if (message.contains(solution)) {
-                    Minecraft mc = Minecraft.getMinecraft();
-                    String npcName = message.substring(message.indexOf("]") + 2, message.indexOf(":"));
-                    mc.thePlayer.addChatMessage(new ChatComponentText(DankersSkyblockMod.ANSWER_COLOUR + EnumChatFormatting.BOLD + StringUtils.stripControlCodes(npcName) + DankersSkyblockMod.MAIN_COLOUR + " has the blessing."));
-                    if (riddleChest == null) {
-                        List<Entity> entities = mc.theWorld.getLoadedEntityList();
-                        for (Entity entity : entities) {
-                            if (entity == null || !entity.hasCustomName()) continue;
-                            if (entity.getCustomNameTag().contains(npcName)) {
-                                BlockPos npcLocation = new BlockPos(entity.posX, 69, entity.posZ);
-                                if (mc.theWorld.getBlockState(npcLocation.north()).getBlock() == Blocks.chest) {
-                                    riddleChest = npcLocation.north();
-                                } else if (mc.theWorld.getBlockState(npcLocation.east()).getBlock() == Blocks.chest) {
-                                    riddleChest = npcLocation.east();
-                                } else if (mc.theWorld.getBlockState(npcLocation.south()).getBlock() == Blocks.chest) {
-                                    riddleChest = npcLocation.south();
-                                } else if (mc.theWorld.getBlockState(npcLocation.west()).getBlock() == Blocks.chest) {
-                                    riddleChest = npcLocation.west();
-                                } else {
-                                    System.out.print("Could not find correct riddle chest.");
-                                }
-                                break;
-                            }
-                        }
+            if (DankersSkyblockMod.data != null && DankersSkyblockMod.data.has("threeman")) {
+                JsonArray riddleSolutions = DankersSkyblockMod.data.get("threeman").getAsJsonArray();
+
+                for (int i = 0; i < riddleSolutions.size(); i++) {
+                    String solution = riddleSolutions.get(i).getAsString();
+                    if (message.contains(solution)) {
+                        answer(message);
+                        break;
                     }
-                    break;
+                }
+            } else {
+                for (String solution : riddleSolutions) {
+                    if (message.contains(solution)) {
+                        answer(message);
+                        break;
+                    }
                 }
             }
         }
@@ -69,6 +60,34 @@ public class ThreeManSolver {
     public void onWorldRender(RenderWorldLastEvent event) {
         if (ToggleCommand.threeManToggled && riddleChest != null) {
             Utils.drawFilled3DBox(new AxisAlignedBB(riddleChest.getX() - 0.05, riddleChest.getY(), riddleChest.getZ() - 0.05, riddleChest.getX() + 1.05, riddleChest.getY() + 1, riddleChest.getZ() + 1.05), 0x197F19, true, true, event.partialTicks);
+        }
+    }
+
+    public static void answer(String message) {
+        Minecraft mc = Minecraft.getMinecraft();
+        String npcName = message.substring(message.indexOf("]") + 2, message.indexOf(":"));
+        mc.thePlayer.addChatMessage(new ChatComponentText(DankersSkyblockMod.ANSWER_COLOUR + EnumChatFormatting.BOLD + StringUtils.stripControlCodes(npcName) + DankersSkyblockMod.MAIN_COLOUR + " has the blessing."));
+
+        if (riddleChest == null) {
+            List<Entity> entities = mc.theWorld.getLoadedEntityList();
+            for (Entity entity : entities) {
+                if (entity == null || !entity.hasCustomName()) continue;
+                if (entity.getCustomNameTag().contains(npcName)) {
+                    BlockPos npcLocation = new BlockPos(entity.posX, 69, entity.posZ);
+                    if (mc.theWorld.getBlockState(npcLocation.north()).getBlock() == Blocks.chest) {
+                        riddleChest = npcLocation.north();
+                    } else if (mc.theWorld.getBlockState(npcLocation.east()).getBlock() == Blocks.chest) {
+                        riddleChest = npcLocation.east();
+                    } else if (mc.theWorld.getBlockState(npcLocation.south()).getBlock() == Blocks.chest) {
+                        riddleChest = npcLocation.south();
+                    } else if (mc.theWorld.getBlockState(npcLocation.west()).getBlock() == Blocks.chest) {
+                        riddleChest = npcLocation.west();
+                    } else {
+                        System.out.print("Could not find correct riddle chest.");
+                    }
+                    break;
+                }
+            }
         }
     }
 

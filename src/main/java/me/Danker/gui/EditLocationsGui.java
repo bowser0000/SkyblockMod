@@ -1,6 +1,5 @@
 package me.Danker.gui;
 
-import javafx.scene.transform.Scale;
 import me.Danker.DankersSkyblockMod;
 import me.Danker.commands.MoveCommand;
 import me.Danker.commands.ScaleCommand;
@@ -13,8 +12,6 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.EnumChatFormatting;
 import org.lwjgl.opengl.GL11;
-
-import javax.xml.stream.Location;
 
 public class EditLocationsGui extends GuiScreen {
 

@@ -1,5 +1,6 @@
 package me.Danker;
 
+import com.google.gson.JsonObject;
 import me.Danker.commands.*;
 import me.Danker.events.ChestSlotClickedEvent;
 import me.Danker.events.GuiChestBackgroundDrawnEvent;
@@ -9,6 +10,7 @@ import me.Danker.features.loot.LootDisplay;
 import me.Danker.features.loot.LootTracker;
 import me.Danker.features.puzzlesolvers.*;
 import me.Danker.gui.*;
+import me.Danker.handlers.APIHandler;
 import me.Danker.handlers.ConfigHandler;
 import me.Danker.handlers.PacketHandler;
 import me.Danker.utils.Utils;
@@ -74,6 +76,7 @@ public class DankersSkyblockMod {
     public static String guiToOpen = null;
     public static boolean firstLaunch = false;
     public static String configDirectory;
+    public static JsonObject data = null;
     
     public static String MAIN_COLOUR;
     public static String SECONDARY_COLOUR;
@@ -149,6 +152,11 @@ public class DankersSkyblockMod {
         for (KeyBinding keyBinding : keyBindings) {
             ClientRegistry.registerKeyBinding(keyBinding);
         }
+
+        new Thread(() -> {
+            DankersSkyblockMod.data = APIHandler.getResponse("https://raw.githubusercontent.com/bowser0000/SkyblockMod-REPO/main/data.json");
+            System.out.println("Loaded data from GitHub?: " + (DankersSkyblockMod.data != null && DankersSkyblockMod.data.has("trivia")));
+        }).start();
     }
 
     @EventHandler
