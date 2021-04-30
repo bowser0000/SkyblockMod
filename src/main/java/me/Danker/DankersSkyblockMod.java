@@ -1,5 +1,6 @@
 package me.Danker;
 
+import com.google.gson.JsonObject;
 import me.Danker.commands.*;
 import me.Danker.commands.warp.*;
 import me.Danker.events.ChestSlotClickedEvent;
@@ -10,6 +11,7 @@ import me.Danker.features.loot.LootDisplay;
 import me.Danker.features.loot.LootTracker;
 import me.Danker.features.puzzlesolvers.*;
 import me.Danker.gui.*;
+import me.Danker.handlers.APIHandler;
 import me.Danker.handlers.ConfigHandler;
 import me.Danker.handlers.PacketHandler;
 import me.Danker.utils.Utils;
@@ -63,7 +65,7 @@ import java.util.Map;
 @Mod(modid = DankersSkyblockMod.MODID, version = DankersSkyblockMod.VERSION, clientSideOnly = true)
 public class DankersSkyblockMod {
     public static final String MODID = "Danker's Skyblock Mod";
-    public static final String VERSION = "1.8.6";
+    public static final String VERSION = "1.8.7-beta1";
     public static int titleTimer = -1;
     public static boolean showTitle = false;
     public static String titleText = "";
@@ -75,6 +77,7 @@ public class DankersSkyblockMod {
     public static String guiToOpen = null;
     public static boolean firstLaunch = false;
     public static String configDirectory;
+    public static JsonObject data = null;
     
     public static String MAIN_COLOUR;
     public static String SECONDARY_COLOUR;
@@ -102,10 +105,13 @@ public class DankersSkyblockMod {
         MinecraftForge.EVENT_BUS.register(new DungeonTimer());
         MinecraftForge.EVENT_BUS.register(new ExpertiseLore());
         MinecraftForge.EVENT_BUS.register(new FasterMaddoxCalling());
+        MinecraftForge.EVENT_BUS.register(new GiantHPDisplay());
         MinecraftForge.EVENT_BUS.register(new GoldenEnchants());
         MinecraftForge.EVENT_BUS.register(new GolemSpawningAlert());
         MinecraftForge.EVENT_BUS.register(new GpartyNotifications());
+        MinecraftForge.EVENT_BUS.register(new HidePetCandy());
         MinecraftForge.EVENT_BUS.register(new HideTooltipsInExperiments());
+        MinecraftForge.EVENT_BUS.register(new HighlightSkeletonMasters());
         MinecraftForge.EVENT_BUS.register(new IceWalkSolver());
         MinecraftForge.EVENT_BUS.register(new LividSolver());
         MinecraftForge.EVENT_BUS.register(new LootDisplay());
@@ -126,6 +132,7 @@ public class DankersSkyblockMod {
         MinecraftForge.EVENT_BUS.register(new StartsWithSolver());
         MinecraftForge.EVENT_BUS.register(new StopSalvagingStarredItems());
         MinecraftForge.EVENT_BUS.register(new SuperpairsSolver());
+        MinecraftForge.EVENT_BUS.register(new TetherDisplay());
         MinecraftForge.EVENT_BUS.register(new ThreeManSolver());
         MinecraftForge.EVENT_BUS.register(new TicTacToeSolver());
         MinecraftForge.EVENT_BUS.register(new TriviaSolver());
@@ -148,6 +155,11 @@ public class DankersSkyblockMod {
         for (KeyBinding keyBinding : keyBindings) {
             ClientRegistry.registerKeyBinding(keyBinding);
         }
+
+        new Thread(() -> {
+            DankersSkyblockMod.data = APIHandler.getResponse("https://raw.githubusercontent.com/bowser0000/SkyblockMod-REPO/main/data.json");
+            System.out.println("Loaded data from GitHub?: " + (DankersSkyblockMod.data != null && DankersSkyblockMod.data.has("trivia")));
+        }).start();
     }
 
     @EventHandler
@@ -167,6 +179,7 @@ public class DankersSkyblockMod {
         ClientCommandHandler.instance.registerCommand(new LootCommand());
         ClientCommandHandler.instance.registerCommand(new MoveCommand());
         ClientCommandHandler.instance.registerCommand(new PetsCommand());
+        ClientCommandHandler.instance.registerCommand(new PlayerCommand());
         ClientCommandHandler.instance.registerCommand(new ReloadConfigCommand());
         ClientCommandHandler.instance.registerCommand(new ResetLootCommand());
         ClientCommandHandler.instance.registerCommand(new ScaleCommand());

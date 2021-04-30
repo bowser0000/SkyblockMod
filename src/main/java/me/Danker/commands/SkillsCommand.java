@@ -19,7 +19,7 @@ public class SkillsCommand extends CommandBase {
 	
 	@Override
 	public String getCommandName() {
-		return "skills";
+		return "skill";
 	}
 
 	@Override

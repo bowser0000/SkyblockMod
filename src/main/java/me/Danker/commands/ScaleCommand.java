@@ -23,6 +23,8 @@ public class ScaleCommand extends CommandBase {
 	public static double waterAnswerScale;
 	public static double bonzoTimerScale;
 	public static double golemTimerScale;
+	public static double teammatesInRadiusScale;
+	public static double giantHPScale;
 	
 	@Override
 	public String getCommandName() {
@@ -31,7 +33,7 @@ public class ScaleCommand extends CommandBase {
 
 	@Override
 	public String getCommandUsage(ICommandSender arg0) {
-		return "/" + getCommandName() + " <coords/display/dungeontimer/skill50/lividhp/caketimer/skilltracker/wateranswer/bonzotimer/golemtimer> <size (0.1 - 10)>";
+		return "/" + getCommandName() + " <coords/display/dungeontimer/skill50/lividhp/caketimer/skilltracker/wateranswer/bonzotimer/golemtimer/teammatesinradius/gianthp> <size (0.1 - 10)>";
 	}
 
 	public static String usage(ICommandSender arg0) {
@@ -46,7 +48,9 @@ public class ScaleCommand extends CommandBase {
 	@Override
 	public List<String> addTabCompletionOptions(ICommandSender sender, String[] args, BlockPos pos) {
 		if (args.length == 1) {
-			return getListOfStringsMatchingLastWord(args, "coords", "display", "dungeontimer", "skill50", "lividhp", "caketimer", "skilltracker", "wateranswer", "bonzotimer", "golemtimer");
+			return getListOfStringsMatchingLastWord(args, "coords", "display", "dungeontimer", "skill50", "lividhp", "caketimer",
+														  "skilltracker", "wateranswer", "bonzotimer", "golemtimer", "teammatesinradius",
+														  "gianthp");
 		}
 		return null;
 	}
@@ -116,6 +120,16 @@ public class ScaleCommand extends CommandBase {
 				golemTimerScale = scaleAmount;
 				ConfigHandler.writeDoubleConfig("scales", "golemTimerScale", golemTimerScale);
 				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Golem timer has been scaled to " + DankersSkyblockMod.SECONDARY_COLOUR + golemTimerScale + "x"));
+				break;
+			case "teammatesinradius":
+				teammatesInRadiusScale = scaleAmount;
+				ConfigHandler.writeDoubleConfig("scales", "teammatesInRadiusScale", teammatesInRadiusScale);
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Teammates in radius has been scaled to " + DankersSkyblockMod.SECONDARY_COLOUR + teammatesInRadiusScale + "x"));
+				break;
+			case "gianthp":
+				giantHPScale = scaleAmount;
+				ConfigHandler.writeDoubleConfig("scales", "giantHPScale", giantHPScale);
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Giant hp has been scaled to " + DankersSkyblockMod.SECONDARY_COLOUR + giantHPScale + "x"));
 				break;
 			default:
 				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Usage: " + getCommandUsage(arg0)));

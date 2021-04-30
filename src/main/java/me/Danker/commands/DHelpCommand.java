@@ -50,12 +50,14 @@ public class DHelpCommand extends CommandBase {
 													EnumChatFormatting.GOLD + PetsCommand.usage(arg0) + EnumChatFormatting.AQUA + " - Uses API to get pets of a person. If no name is provided, it checks yours.\n" +
 													EnumChatFormatting.GOLD + BankCommand.usage(arg0) + EnumChatFormatting.AQUA + " - Uses API to get bank and purse coins of a person. If no name is provided, it checks yours.\n" +
 													EnumChatFormatting.GOLD + ArmourCommand.usage(arg0) + EnumChatFormatting.AQUA + " - Uses API to get armour of a person. If no name is provided, it checks yours.\n" +
+													EnumChatFormatting.GOLD + DungeonHub.usage(arg0) + EnumChatFormatting.AQUA + " - Uses API to get dungeon levels of a person. If no name is provided, it checks yours.\n" +
 													EnumChatFormatting.GOLD + ImportFishingCommand.usage(arg0) + EnumChatFormatting.AQUA + " - Imports your fishing stats from your latest profile to your fishing tracker using the API.\n" +
 													EnumChatFormatting.GOLD + SkyblockPlayersCommand.usage(arg0) + EnumChatFormatting.AQUA + " - Uses API to find how many players are on each Skyblock island.\n" +
 													EnumChatFormatting.GOLD + SkillTrackerCommand.usage(arg0) + EnumChatFormatting.AQUA + " - Text display for skill xp/hour.\n" +
                           							EnumChatFormatting.GOLD + LobbyBankCommand.usage(arg0) + EnumChatFormatting.AQUA + " - Uses API to find the average bank total of the lobby, as well the three players with the highest total money in the bank(and purse).\n" +
 													EnumChatFormatting.GOLD + RepartyCommand.usage(arg0) + EnumChatFormatting.AQUA + " - Disbands and reparties all members in the party.\n" +
 													EnumChatFormatting.GOLD + CustomMusicCommand.usage(arg0) + EnumChatFormatting.AQUA + " - Stops or reloads the custom music.\n" +
+													EnumChatFormatting.GOLD + PlayerCommand.usage(arg0) + EnumChatFormatting.AQUA + " - Uses API to find skills, slayers, coins and weight of a player.\n" +
 													EnumChatFormatting.GOLD + Crypt.usage(arg0) + EnumChatFormatting.AQUA + " - Warps you to the Crypt in the Hub. \n" +
 													EnumChatFormatting.GOLD + DarkAuction.usage(arg0) + EnumChatFormatting.AQUA + " - Warps you to the Dark Auction in the Hub. \n" +
 													EnumChatFormatting.GOLD + Dragon.usage(arg0) + EnumChatFormatting.AQUA + " - Warps you to the Dragons Nest in the End. \n" +

@@ -23,6 +23,8 @@ public class MoveCommand extends CommandBase {
 	public static int[] waterAnswerXY = {0, 0};
 	public static int[] bonzoTimerXY = {0, 0};
 	public static int[] golemTimerXY = {0 ,0};
+	public static int[] teammatesInRadiusXY = {0, 0};
+	public static int[] giantHPXY = {0, 0};
 
 	@Override
 	public String getCommandName() {
@@ -31,7 +33,7 @@ public class MoveCommand extends CommandBase {
 
 	@Override
 	public String getCommandUsage(ICommandSender arg0) {
-		return "/" + getCommandName() + " <coords/display/dungeontimer/skill50/lividhp/caketimer/skilltracker/wateranswer/bonzotimer/golemtimer> <x> <y>";
+		return "/" + getCommandName() + " <coords/display/dungeontimer/skill50/lividhp/caketimer/skilltracker/wateranswer/bonzotimer/golemtimer/teammatesinradius/gianthp> <x> <y>";
 	}
 
 	public static String usage(ICommandSender arg0) {
@@ -46,7 +48,9 @@ public class MoveCommand extends CommandBase {
 	@Override
 	public List<String> addTabCompletionOptions(ICommandSender sender, String[] args, BlockPos pos) {
 		if (args.length == 1) {
-			return getListOfStringsMatchingLastWord(args, "coords", "display", "dungeontimer", "skill50", "lividhp", "caketimer", "skilltracker", "wateranswer", "bonzotimer", "golemtimer");
+			return getListOfStringsMatchingLastWord(args, "coords", "display", "dungeontimer", "skill50", "lividhp", "caketimer",
+														  "skilltracker", "wateranswer", "bonzotimer", "golemtimer", "teammatesinradius",
+														  "gianthp");
 		}
 		return null;
 	}
@@ -130,6 +134,20 @@ public class MoveCommand extends CommandBase {
 				ConfigHandler.writeIntConfig("locations", "golemTimerX", golemTimerXY[0]);
 				ConfigHandler.writeIntConfig("locations", "golemTimerY", golemTimerXY[1]);
 				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Golem timer has been moved to " + DankersSkyblockMod.SECONDARY_COLOUR + arg1[1] + ", " + arg1[2]));
+				break;
+			case "teammatesinradius":
+				teammatesInRadiusXY[0] = Integer.parseInt(arg1[1]);
+				teammatesInRadiusXY[1] = Integer.parseInt(arg1[2]);
+				ConfigHandler.writeIntConfig("locations", "teammatesInRadiusX", teammatesInRadiusXY[0]);
+				ConfigHandler.writeIntConfig("locations", "teammatesInRadiusY", teammatesInRadiusXY[1]);
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Teammates in radius has been moved to " + DankersSkyblockMod.SECONDARY_COLOUR + arg1[1] + ", " + arg1[2]));
+				break;
+			case "gianthp":
+				giantHPXY[0] = Integer.parseInt(arg1[1]);
+				giantHPXY[1] = Integer.parseInt(arg1[2]);
+				ConfigHandler.writeIntConfig("locations", "giantHPX", giantHPXY[0]);
+				ConfigHandler.writeIntConfig("locations", "giantHPY", giantHPXY[1]);
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Giant HP has been moved to " + DankersSkyblockMod.SECONDARY_COLOUR + arg1[1] + ", " + arg1[2]));
 				break;
 			default:
 				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Usage: " + getCommandUsage(arg0)));

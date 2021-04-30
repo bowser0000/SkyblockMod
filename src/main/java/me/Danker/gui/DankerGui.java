@@ -2,10 +2,16 @@ package me.Danker.gui;
 
 import me.Danker.DankersSkyblockMod;
 import me.Danker.commands.ToggleCommand;
+import me.Danker.gui.buttons.FeatureButton;
 import me.Danker.handlers.ConfigHandler;
 import me.Danker.handlers.TextRenderer;
 import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.GuiTextField;
+import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.client.gui.*;
 import net.minecraft.util.StringUtils;
 
@@ -57,6 +63,10 @@ public class DankerGui extends GuiScreen {
 	private GuiButton autoSkillTracker;
 	private GuiButton highlightArachne;
 	private GuiButton highlightSlayer;
+	private GuiButton highlightSkeletonMasters;
+	private GuiButton teammatesInRadius;
+	private GuiButton giantHP;
+	private GuiButton hidePetCandy;
 	private GuiButton highlightCommissions;
 	// Chat Messages
 	private GuiButton sceptreMessages;
@@ -107,42 +117,47 @@ public class DankerGui extends GuiScreen {
 		experimentationTableSolvers = new GuiButton(0, 0, 0, "Toggle Experimentation Table Solvers");
 		skillTracker = new GuiButton(0, 0, 0, "Toggle Skill XP/Hour Tracking");
 		customMusic = new GuiButton(0, 0, 0, "Custom Music");
-		outlineText = new GuiButton(0, 0, 0, "Outline Displayed Text: " + Utils.getColouredBoolean(ToggleCommand.outlineTextToggled));
-		pickBlock = new GuiButton(0, 0, 0, "Auto-Swap to Pick Block: " + Utils.getColouredBoolean(ToggleCommand.swapToPickBlockToggled));
-		coords = new GuiButton(0, 0, 0, "Coordinate/Angle Display: " + Utils.getColouredBoolean(ToggleCommand.coordsToggled));
-		chatMaddox = new GuiButton(0, 0, 0, "Click On-Screen to Open Maddox: " + Utils.getColouredBoolean(ToggleCommand.chatMaddoxToggled));
-		cakeTimer = new GuiButton(0, 0, 0, "Cake Timer: " + Utils.getColouredBoolean(ToggleCommand.cakeTimerToggled));
-		skill50Display = new GuiButton(0, 0, 0, "Display Progress To Skill Level 50: " + Utils.getColouredBoolean(ToggleCommand.skill50DisplayToggled));
-		slayerCount = new GuiButton(0, 0, 0, "Count Total 20% Drops: " + Utils.getColouredBoolean(ToggleCommand.slayerCountTotal));
-		spiritBearAlert = new GuiButton(0, 0, 0, "Spirit Bear Spawn Alerts: " + Utils.getColouredBoolean(ToggleCommand.spiritBearAlerts));
-		sceptreMessages = new GuiButton(0, 0, 0, "Spirit Sceptre Messages: " + Utils.getColouredBoolean(ToggleCommand.sceptreMessages));
-		midasStaffMessages = new GuiButton(0, 0, 0, "Midas Staff Messages: " + Utils.getColouredBoolean(ToggleCommand.midasStaffMessages));
-		implosionMessages = new GuiButton(0, 0, 0, "Implosion Messages: " + Utils.getColouredBoolean(ToggleCommand.implosionMessages));
-		healMessages = new GuiButton(0, 0, 0, "Heal Messages: " + Utils.getColouredBoolean(ToggleCommand.healMessages));
-		cooldownMessages = new GuiButton(0, 0, 0, "Cooldown Messages: " + Utils.getColouredBoolean(ToggleCommand.cooldownMessages));
-		manaMessages = new GuiButton(0, 0, 0, "Mana Messages: " + Utils.getColouredBoolean(ToggleCommand.manaMessages));
-		killComboMessages = new GuiButton(0, 0, 0, "Kill Combo Messages: " + Utils.getColouredBoolean(ToggleCommand.killComboMessages));
-		goldenEnch = new GuiButton(0, 0, 0, "Golden T10/T6/T4 Enchantments: " + Utils.getColouredBoolean(ToggleCommand.goldenToggled));
-		petColours = new GuiButton(0, 0, 0, "Colour Pet Backgrounds: " + Utils.getColouredBoolean(ToggleCommand.petColoursToggled));
-		expertiseLore = new GuiButton(0, 0, 0, "Expertise Kills In Lore: " + Utils.getColouredBoolean(ToggleCommand.expertiseLoreToggled));
-		gparty = new GuiButton(0, 0, 0, "Guild Party Notifications: " + Utils.getColouredBoolean(ToggleCommand.gpartyToggled));
-		golemAlerts = new GuiButton(0, 0, 0, "Golem Spawn Alert And Timer: " + Utils.getColouredBoolean(ToggleCommand.golemAlertToggled));
-		rngesusAlert = new GuiButton(0, 0, 0, "RNGesus Alerts: " + Utils.getColouredBoolean(ToggleCommand.rngesusAlerts));
-		splitFishing = new GuiButton(0, 0, 0, "Split Fishing Display: " + Utils.getColouredBoolean(ToggleCommand.splitFishing));
-		lowHealthNotify = new GuiButton(0, 0, 0, "Low Health Notifications: " + Utils.getColouredBoolean(ToggleCommand.lowHealthNotifyToggled));
-		lividSolver = new GuiButton(0, 0, 0, "Find Correct Livid: " + Utils.getColouredBoolean(ToggleCommand.lividSolverToggled));
-		dungeonTimer = new GuiButton(0, 0, 0, "Display Dungeon Timers: " + Utils.getColouredBoolean(ToggleCommand.dungeonTimerToggled));
-		stopSalvageStarred = new GuiButton(0, 0, 0, "Stop Salvaging Starred Items: " + Utils.getColouredBoolean(ToggleCommand.stopSalvageStarredToggled));
-		watcherReadyMessage = new GuiButton(0, 0, 0, "Display Watcher Ready Message: " + Utils.getColouredBoolean(ToggleCommand.watcherReadyToggled));
-		notifySlayerSlain = new GuiButton(0, 0, 0, "Notify when Slayer Slain: " + Utils.getColouredBoolean(ToggleCommand.notifySlayerSlainToggled));
-		necronNotifications = new GuiButton(0, 0, 0, "Necron Phase Notifications: " + Utils.getColouredBoolean(ToggleCommand.necronNotificationsToggled));
-		bonzoTimer = new GuiButton(0, 0, 0, "Bonzo's Mask Timer: " + Utils.getColouredBoolean(ToggleCommand.bonzoTimerToggled));
-		autoSkillTracker = new GuiButton(0, 0, 0, "Auto Start/Stop Skill Tracker: " + Utils.getColouredBoolean(ToggleCommand.autoSkillTrackerToggled));
-		melodyTooltips = new GuiButton(0, 0, 0, "Hide tooltips in Melody's Harp: " + Utils.getColouredBoolean(ToggleCommand.melodyTooltips));
-		highlightArachne = new GuiButton(0, 0, 0, "Highlight Arachne: " + Utils.getColouredBoolean(ToggleCommand.highlightArachne));
-		highlightSlayer = new GuiButton(0, 0, 0, "Highlight Slayer: " + Utils.getColouredBoolean(ToggleCommand.highlightSlayers));
-		highlightCommissions = new GuiButton(0, 0, 0, "Highlight Commissions: " + Utils.getColouredBoolean(ToggleCommand.highlightCommissions));
+		outlineText = new FeatureButton("Outline Displayed Text: " + Utils.getColouredBoolean(ToggleCommand.outlineTextToggled), "Adds bold outline to on-screen text.");
+		pickBlock = new FeatureButton("Auto-Swap to Pick Block: " + Utils.getColouredBoolean(ToggleCommand.swapToPickBlockToggled), "Automatically changes left clicks to middle clicks.\nHelpful when lagging.");
+		coords = new FeatureButton("Coordinate/Angle Display: " + Utils.getColouredBoolean(ToggleCommand.coordsToggled), "Displays coordinates and angle.");
+		chatMaddox = new FeatureButton("Click On-Screen to Open Maddox: " + Utils.getColouredBoolean(ToggleCommand.chatMaddoxToggled), "Open chat then click anywhere after calling Maddox to open the menu.");
+		cakeTimer = new FeatureButton("Cake Timer: " + Utils.getColouredBoolean(ToggleCommand.cakeTimerToggled), "Displays time until century cake buffs run out.");
+		skill50Display = new FeatureButton("Display Progress To Skill Level 50: " + Utils.getColouredBoolean(ToggleCommand.skill50DisplayToggled), "Display total progress to max skill level.");
+		slayerCount = new FeatureButton("Count Total 20% Drops: " + Utils.getColouredBoolean(ToggleCommand.slayerCountTotal), "Counts times dropped instead of amount dropped.\nE.x. Hamster Wheels: 40 -> Hamster Wheels: 10 times.");
+		spiritBearAlert = new FeatureButton("Spirit Bear Spawn Alerts: " + Utils.getColouredBoolean(ToggleCommand.spiritBearAlerts), "Alert when Spirit Bear spawns.");
+		sceptreMessages = new FeatureButton("Spirit Sceptre Messages: " + Utils.getColouredBoolean(ToggleCommand.sceptreMessages), "Turn " + EnumChatFormatting.RED + "off" + EnumChatFormatting.RESET + " to hide Spirit Sceptre messages.");
+		midasStaffMessages = new FeatureButton("Midas Staff Messages: " + Utils.getColouredBoolean(ToggleCommand.midasStaffMessages), "Turn " + EnumChatFormatting.RED + "off" + EnumChatFormatting.RESET + " to hide Midas Staff messages.");
+		implosionMessages = new FeatureButton("Implosion Messages: " + Utils.getColouredBoolean(ToggleCommand.implosionMessages), "Turn " + EnumChatFormatting.RED + "off" + EnumChatFormatting.RESET + " to hide Implosion messages.");
+		healMessages = new FeatureButton("Heal Messages: " + Utils.getColouredBoolean(ToggleCommand.healMessages), "Turn " + EnumChatFormatting.RED + "off" + EnumChatFormatting.RESET + " to hide healing messages.");
+		cooldownMessages = new FeatureButton("Cooldown Messages: " + Utils.getColouredBoolean(ToggleCommand.cooldownMessages), "Turn " + EnumChatFormatting.RED + "off" + EnumChatFormatting.RESET + " to hide cooldown messages.");
+		manaMessages = new FeatureButton("Mana Messages: " + Utils.getColouredBoolean(ToggleCommand.manaMessages), "Turn " + EnumChatFormatting.RED + "off" + EnumChatFormatting.RESET + " to hide out of mana messages.");
+		killComboMessages = new FeatureButton("Kill Combo Messages: " + Utils.getColouredBoolean(ToggleCommand.killComboMessages), "Turn " + EnumChatFormatting.RED + "off" + EnumChatFormatting.RESET + " to hide kill combo messages.");
+		goldenEnch = new FeatureButton("Golden T10/T6/T4 Enchantments: " + Utils.getColouredBoolean(ToggleCommand.goldenToggled), "Turns expensive enchants golden in tooltips.");
+		petColours = new FeatureButton("Colour Pet Backgrounds: " + Utils.getColouredBoolean(ToggleCommand.petColoursToggled), "Colors pets based on their level.");
+		expertiseLore = new FeatureButton("Expertise Kills In Lore: " + Utils.getColouredBoolean(ToggleCommand.expertiseLoreToggled), "Adds expertise kills to fishing rod tooltip.");
+		gparty = new FeatureButton("Guild Party Notifications: " + Utils.getColouredBoolean(ToggleCommand.gpartyToggled), "Creates desktop notification on guild party.");
+		golemAlerts = new FeatureButton("Golem Spawn Alert And Timer: " + Utils.getColouredBoolean(ToggleCommand.golemAlertToggled), "Creates alert with 20s countdown when golem is spawning.");
+		rngesusAlert = new FeatureButton("RNGesus Alerts: " + Utils.getColouredBoolean(ToggleCommand.rngesusAlerts), "Alerts when an RNGesus item is dropped.");
+		splitFishing = new FeatureButton("Split Fishing Display: " + Utils.getColouredBoolean(ToggleCommand.splitFishing), "Splits fishing display in half to save vertical space.");
+		lowHealthNotify = new FeatureButton("Low Health Notifications: " + Utils.getColouredBoolean(ToggleCommand.lowHealthNotifyToggled), "Alerts when dungeon teammate has low health.");
+		lividSolver = new FeatureButton("Find Correct Livid: " + Utils.getColouredBoolean(ToggleCommand.lividSolverToggled), "Shows health and color of correct Livid.");
+		dungeonTimer = new FeatureButton("Display Dungeon Timers: " + Utils.getColouredBoolean(ToggleCommand.dungeonTimerToggled), "Displays timing of certain dungeon objectives and other information.");
+		stopSalvageStarred = new FeatureButton("Stop Salvaging Starred Items: " + Utils.getColouredBoolean(ToggleCommand.stopSalvageStarredToggled), "Blocks salvaging starred items.");
+		watcherReadyMessage = new FeatureButton("Display Watcher Ready Message: " + Utils.getColouredBoolean(ToggleCommand.watcherReadyToggled), "Alerts when Watcher finishes spawning mobs.");
+		notifySlayerSlain = new FeatureButton("Notify when Slayer Slain: " + Utils.getColouredBoolean(ToggleCommand.notifySlayerSlainToggled), "Alerts when slayer boss has been slain.");
+		necronNotifications = new FeatureButton("Necron Phase Notifications: " + Utils.getColouredBoolean(ToggleCommand.necronNotificationsToggled), "Creates alert on different phases of the Necron fight.");
+		bonzoTimer = new FeatureButton("Bonzo's Mask Timer: " + Utils.getColouredBoolean(ToggleCommand.bonzoTimerToggled), "Displays cooldown of Bonzo Mask ability.");
+		autoSkillTracker = new FeatureButton("Auto Start/Stop Skill Tracker: " + Utils.getColouredBoolean(ToggleCommand.autoSkillTrackerToggled), "Automatically pauses skill tracker when opening a gui.");
+		melodyTooltips = new FeatureButton("Hide tooltips in Melody's Harp: " + Utils.getColouredBoolean(ToggleCommand.melodyTooltips), "Hides tooltips in Melody's Harp.");
+		highlightArachne = new FeatureButton("Highlight Arachne: " + Utils.getColouredBoolean(ToggleCommand.highlightArachne), "Highlights Arachne bosses.");
+		highlightSlayer = new FeatureButton("Highlight Slayer: " + Utils.getColouredBoolean(ToggleCommand.highlightSlayers), "Highlights Slayer bosses.");
+		highlightSkeletonMasters = new FeatureButton("Highlight Skeleton Masters: " + Utils.getColouredBoolean(ToggleCommand.highlightSkeletonMasters), "Highlights Skeleton Masters.");
+		teammatesInRadius = new FeatureButton("Display Players in 30 Block Radius: " + Utils.getColouredBoolean(ToggleCommand.teammatesInRadius), "Displays dungeon teammates in 30 block radius for tether and diversion.");
+		giantHP = new FeatureButton("Display Giant HP: " + Utils.getColouredBoolean(ToggleCommand.giantHP), "Displays health of Sadan's giants during F6 bossfight and F7 blood room.");
+		hidePetCandy = new FeatureButton("Hide Pet Candy: " + Utils.getColouredBoolean(ToggleCommand.hidePetCandy), "Hide pet candy in pet tooltips.");
+		highlightCommissions = new FeatureButton("Highlight Commissions: " + Utils.getColouredBoolean(ToggleCommand.highlightCommissions), "Show which commissions are completed.");
 
+		allButtons.clear();
 		allButtons.add(changeDisplay);
 		allButtons.add(puzzleSolvers);
 		allButtons.add(experimentationTableSolvers);
@@ -182,6 +197,10 @@ public class DankerGui extends GuiScreen {
 		allButtons.add(melodyTooltips);
 		allButtons.add(highlightArachne);
 		allButtons.add(highlightSlayer);
+		allButtons.add(highlightSkeletonMasters);
+		allButtons.add(teammatesInRadius);
+		allButtons.add(giantHP);
+		allButtons.add(hidePetCandy);
 		allButtons.add(highlightCommissions);
 
 		search.setText(initSearchText);
@@ -230,6 +249,13 @@ public class DankerGui extends GuiScreen {
 		String pageText = "Page: " + page + "/" + (int) Math.ceil(foundButtons.size() / 7D);
 		int pageWidth = mc.fontRendererObj.getStringWidth(pageText);
 		new TextRenderer(mc, pageText, width / 2 - pageWidth / 2, 10, 1D);
+
+		for (GuiButton button : this.buttonList) {
+			if (button instanceof FeatureButton && button.isMouseOver()) {
+				FeatureButton feature = (FeatureButton) button;
+				drawHoveringText(feature.hoverText, mouseX - 5, mouseY);
+			}
+		}
 
 		search.drawTextBox();
 	}
@@ -402,6 +428,22 @@ public class DankerGui extends GuiScreen {
 			ToggleCommand.highlightSlayers = !ToggleCommand.highlightSlayers;
 			ConfigHandler.writeBooleanConfig("toggles", "HighlightSlayers", ToggleCommand.highlightSlayers);
 			highlightSlayer.displayString = "Highlight Slayer: " + Utils.getColouredBoolean(ToggleCommand.highlightSlayers);
+		} else if (button == highlightSkeletonMasters) {
+			ToggleCommand.highlightSkeletonMasters = !ToggleCommand.highlightSkeletonMasters;
+			ConfigHandler.writeBooleanConfig("toggles", "HighlightSkeletonMasters", ToggleCommand.highlightSkeletonMasters);
+			highlightSkeletonMasters.displayString = "Highlight Skeleton Masters: " + Utils.getColouredBoolean(ToggleCommand.highlightSkeletonMasters);
+		} else if (button == teammatesInRadius) {
+			ToggleCommand.teammatesInRadius = !ToggleCommand.teammatesInRadius;
+			ConfigHandler.writeBooleanConfig("toggles", "TeammatesInRadius", ToggleCommand.teammatesInRadius);
+			teammatesInRadius.displayString = "Display Players in 30 Block Radius: " + Utils.getColouredBoolean(ToggleCommand.teammatesInRadius);
+		} else if (button == giantHP) {
+			ToggleCommand.giantHP = !ToggleCommand.giantHP;
+			ConfigHandler.writeBooleanConfig("toggles", "GiantHP", ToggleCommand.giantHP);
+			giantHP.displayString = "Display Giant HP: " + Utils.getColouredBoolean(ToggleCommand.giantHP);
+		} else if (button == hidePetCandy) {
+			ToggleCommand.hidePetCandy = !ToggleCommand.hidePetCandy;
+			ConfigHandler.writeBooleanConfig("toggles", "HidePetCandy", ToggleCommand.hidePetCandy);
+			hidePetCandy.displayString = "Hide Pet Candy: " + Utils.getColouredBoolean(ToggleCommand.hidePetCandy);
 		} else if (button == highlightCommissions) {
 			ToggleCommand.highlightCommissions = !ToggleCommand.highlightCommissions;
 			ConfigHandler.writeBooleanConfig("toggles", "HighlightCommissions", ToggleCommand.highlightCommissions);
@@ -419,6 +461,7 @@ public class DankerGui extends GuiScreen {
 	protected void keyTyped(char typedChar, int keyCode) throws IOException {
 		super.keyTyped(typedChar, keyCode);
 		search.textboxKeyTyped(typedChar, keyCode);
+		initSearchText = search.getText();
 		reInit();
 	}
 	

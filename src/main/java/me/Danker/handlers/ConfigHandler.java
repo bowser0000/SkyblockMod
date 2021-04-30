@@ -32,9 +32,7 @@ public class ConfigHandler {
 	}
 	
 	public static int getInt(String category, String key) {
-		config = new Configuration(new File(file));
 		try {
-			config.load();
 			if (config.getCategory(category).containsKey(key)) {
 				return config.get(category, key, 0).getInt();
 			}
@@ -47,9 +45,7 @@ public class ConfigHandler {
 	}
 	
 	public static double getDouble(String category, String key) {
-		config = new Configuration(new File(file));
 		try {
-			config.load();
 			if (config.getCategory(category).containsKey(key)) {
 				return config.get(category, key, 0D).getDouble();
 			}
@@ -62,9 +58,7 @@ public class ConfigHandler {
 	}
 	
 	public static String getString(String category, String key) {
-		config = new Configuration(new File(file));
 		try {
-			config.load();
 			if (config.getCategory(category).containsKey(key)) {
 				return config.get(category, key, "").getString();
 			}
@@ -77,9 +71,7 @@ public class ConfigHandler {
 	}
 	
 	public static boolean getBoolean(String category, String key) {
-		config = new Configuration(new File(file));
 		try {
-			config.load();
 			if (config.getCategory(category).containsKey(key)) {
 				return config.get(category, key, false).getBoolean();
 			}
@@ -92,9 +84,7 @@ public class ConfigHandler {
 	}
 
 	public static void writeIntConfig(String category, String key, int value) {
-		config = new Configuration(new File(file));
 		try {
-			config.load();
 			int set = config.get(category, key, value).getInt();
 			config.getCategory(category).get(key).set(value);
 		} catch (Exception ex) {
@@ -105,9 +95,7 @@ public class ConfigHandler {
 	}
 	
 	public static void writeDoubleConfig(String category, String key, double value) {
-		config = new Configuration(new File(file));
 		try {
-			config.load();
 			double set = config.get(category, key, value).getDouble();
 			config.getCategory(category).get(key).set(value);
 		} catch (Exception ex) {
@@ -118,9 +106,7 @@ public class ConfigHandler {
 	}
 	
 	public static void writeStringConfig(String category, String key, String value) {
-		config = new Configuration(new File(file));
 		try {
-			config.load();
 			String set = config.get(category, key, value).getString();
 			config.getCategory(category).get(key).set(value);
 		} catch (Exception ex) {
@@ -131,9 +117,7 @@ public class ConfigHandler {
 	}
 	
 	public static void writeBooleanConfig(String category, String key, boolean value) {
-		config = new Configuration(new File(file));
 		try {
-			config.load();
 			boolean set = config.get(category, key, value).getBoolean();
 			config.getCategory(category).get(key).set(value);
 		} catch (Exception ex) {
@@ -144,9 +128,7 @@ public class ConfigHandler {
 	}
 	
 	public static boolean hasKey(String category, String key) {
-		config = new Configuration(new File(file));
 		try {
-			config.load();
 			if (!config.hasCategory(category)) return false;
 			return config.getCategory(category).containsKey(key);
 		} catch (Exception ex) {
@@ -158,9 +140,7 @@ public class ConfigHandler {
 	}
 	
 	public static void deleteCategory(String category) {
-		config = new Configuration(new File(file));
 		try {
-			config.load();
 			if (config.hasCategory(category)) {
 				config.removeCategory(new ConfigCategory(category));
 			}
@@ -208,6 +188,8 @@ public class ConfigHandler {
 	}
 	
 	public static void reloadConfig() {
+		init();
+
 		// Toggles
 		ToggleCommand.gpartyToggled = initBoolean("toggles", "GParty", false);
 		ToggleCommand.coordsToggled = initBoolean("toggles", "Coords", false);
@@ -229,6 +211,10 @@ public class ConfigHandler {
 		ToggleCommand.highlightSlayers = initBoolean("toggles", "HighlightSlayers", false);
 		ToggleCommand.highlightArachne = initBoolean("toggles", "HighlightArachne", false);
 		ToggleCommand.highlightCommissions = initBoolean("toggles", "HighlightCommissions", false);
+		ToggleCommand.highlightSkeletonMasters = initBoolean("toggles", "HighlightSkeletonMasters", false);
+		ToggleCommand.teammatesInRadius = initBoolean("toggles", "TeammatesInRadius", false);
+		ToggleCommand.giantHP = initBoolean("toggles", "GiantHP", false);
+		ToggleCommand.hidePetCandy = initBoolean("toggles", "HidePetCandy", false);
 		// Chat Messages
 		ToggleCommand.sceptreMessages = initBoolean("toggles", "SceptreMessages", true);
 		ToggleCommand.midasStaffMessages = initBoolean("toggles", "MidasStaffMessages", true);
@@ -478,6 +464,10 @@ public class ConfigHandler {
 		MoveCommand.bonzoTimerXY[1] = initInt("locations", "bonzoTimerY", 80);
 		MoveCommand.golemTimerXY[0] = initInt("locations", "golemTimerX", 100);
 		MoveCommand.golemTimerXY[1] = initInt("locations", "golemTimerY", 30);
+		MoveCommand.teammatesInRadiusXY[0] = initInt("locations", "teammatesInRadiusX", 80);
+		MoveCommand.teammatesInRadiusXY[1] = initInt("locations", "teammatesInRadiusY", 100);
+		MoveCommand.giantHPXY[0] = initInt("locations", "giantHPX", 80);
+		MoveCommand.giantHPXY[1] = initInt("locations", "giantHPY", 150);
 
 		// Scales
 		ScaleCommand.coordsScale = initDouble("scales", "coordsScale", 1);
@@ -490,6 +480,8 @@ public class ConfigHandler {
 		ScaleCommand.waterAnswerScale = initDouble("scales", "waterAnswerScale", 1);
 		ScaleCommand.bonzoTimerScale = initDouble("scales", "bonzoTimerScale", 1);
 		ScaleCommand.golemTimerScale = initDouble("scales", "golemTimerScale", 1);
+		ScaleCommand.teammatesInRadiusScale = initDouble("scales", "teammatesInRadiusScale", 1);
+		ScaleCommand.giantHPScale = initDouble("scales", "giantHPScale", 1);
 
 		// Colours
 		DankersSkyblockMod.MAIN_COLOUR = initString("colors", "main", EnumChatFormatting.GREEN.toString());
@@ -511,6 +503,7 @@ public class ConfigHandler {
 		BlazeSolver.HIGHEST_BLAZE_COLOUR = initInt("colors", "blazeHighest", 0x40FF40);
 		SlayerESP.SLAYER_COLOUR = initInt("colors", "slayerColor", 0x0000FF);
 		ArachneESP.ARACHANE_COLOUR = initInt("colors", "arachneColor", 0x00FF00);
+		HighlightSkeletonMasters.SKELETON_MASTER_COLOUR = initInt("colors", "skeletonMaster", 0xFF0000);
 		PetColours.PET_1_TO_9 = initInt("colors", "pet1To9", 0x999999); // Grey
 		PetColours.PET_10_TO_19 = initInt("colors", "pet10To19", 0xD62440); // Red
 		PetColours.PET_20_TO_29 = initInt("colors", "pet20To29", 0xEF5230); // Orange

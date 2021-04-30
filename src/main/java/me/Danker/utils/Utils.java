@@ -30,6 +30,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Utils {
 	
@@ -45,6 +46,7 @@ public class Utils {
 									  1065000, 1410000, 1900000, 2500000, 3300000, 4300000, 5600000, 7200000, 9200000, 12000000, 15000000,
 									  19000000, 24000000, 30000000, 38000000, 48000000, 60000000, 75000000, 93000000, 116250000};
 	static int[] expertiseKills = {50, 100, 250, 500, 1000, 2500, 5500, 10000, 15000};
+	static Pattern boldPattern = Pattern.compile("(?i)\\u00A7L");
 	
     public static int getItems(String item) {
     	Minecraft mc = Minecraft.getMinecraft();
@@ -145,17 +147,22 @@ public class Utils {
 	}
 
 	public static void checkForDungeons() {
-		if (inSkyblock) {
-			List<String> scoreboard = ScoreboardHandler.getSidebarLines();
-			for (String s : scoreboard) {
-				String sCleaned = ScoreboardHandler.cleanSB(s);
-				if (sCleaned.contains("The Catacombs")) {
-					inDungeons = true;
-					return;
-				}
+    	if (inSkyblock) {
+    		if (isInScoreboard("The Catacombs")) {
+    			inDungeons = true;
+    			return;
 			}
 		}
-		inDungeons = false;
+    	inDungeons = false;
+	}
+
+	public static boolean isInScoreboard(String text) {
+		List<String> scoreboard = ScoreboardHandler.getSidebarLines();
+		for (String s : scoreboard) {
+			String sCleaned = ScoreboardHandler.cleanSB(s);
+			if (sCleaned.contains(text)) return true;
+		}
+		return false;
 	}
 	
 	public static String capitalizeString(String string) {
@@ -532,6 +539,14 @@ public class Utils {
 			default:
 				return null;
 		}
+	}
+
+	public static boolean isRealPlayer(EntityPlayer player) {
+    	return player.getUniqueID().version() == 4 && !player.isPlayerSleeping();
+	}
+
+	public static String removeBold(String text) {
+		return boldPattern.matcher(text).replaceAll("");
 	}
 	
 }

@@ -33,6 +33,10 @@ public class ToggleCommand extends CommandBase implements ICommand {
 	public static boolean cakeTimerToggled;
 	public static boolean highlightSlayers;
 	public static boolean highlightArachne;
+	public static boolean highlightSkeletonMasters;
+	public static boolean teammatesInRadius;
+	public static boolean giantHP;
+	public static boolean hidePetCandy;
 	public static boolean highlightCommissions;
 	// Chat Messages
 	public static boolean sceptreMessages;
@@ -93,8 +97,8 @@ public class ToggleCommand extends CommandBase implements ICommand {
 										  "creeperpuzzle/waterpuzzle/tictactoepuzzle/boulderpuzzle/silverfishpuzzle/icewalkpuzzle/watchermessage/" +
 										  "startswithterminal/selectallterminal/clickinorderterminal/" +
 										  "ultrasequencer/chronomatron/superpairs/hidetooltipsinaddons/pickblock/" +
-										  "melodytooltips/highlightslayers/highlightarachne/dungeonbossmusic/bloodroommusic/" +
-										  "dungeonmusic/highlightcommissions/list>";
+										  "melodytooltips/highlightslayers/highlightarachne/highlightskeletonmasters/teammatesinradius/" +
+										  "gianthp/hidepetcandy/dungeonbossmusic/bloodroommusic/dungeonmusic/highlightcommissions/list>";
 	}
 
 	public static String usage(ICommandSender arg0) {
@@ -122,7 +126,8 @@ public class ToggleCommand extends CommandBase implements ICommand {
 														  "selectallterminal", "clickinorderterminal",
 														  "ultrasequencer", "chronomatron", "superpairs",
 														  "hidetooltipsinaddons", "pickblock", "melodytooltips", "highlightslayers",
-														  "dungeonbossmusic", "bloodroommusic", "dungeonmusic", "highlightcommissions", "list");
+														  "highlightskeletonmasters", "dungeonbossmusic", "bloodroommusic", "dungeonmusic",
+														  "teammatesinradius", "gianthp", "hidepetcandy", "highlightcommissions", "list");
 		}
 		return null;
 	}
@@ -386,21 +391,43 @@ public class ToggleCommand extends CommandBase implements ICommand {
 			case "melodytooltips":
 				melodyTooltips = !melodyTooltips;
 				ConfigHandler.writeBooleanConfig("toggles", "MelodyTooltips", melodyTooltips);
-				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Hide tooltips in Melody's Harp " + DankersSkyblockMod.SECONDARY_COLOUR + melodyTooltips + DankersSkyblockMod.MAIN_COLOUR + "."));
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Hide tooltips in Melody's Harp has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + melodyTooltips + DankersSkyblockMod.MAIN_COLOUR + "."));
 				break;
 			case "highlightslayers":
 				highlightSlayers = !highlightSlayers;
 				ConfigHandler.writeBooleanConfig("toggles", "HighlightSlayers", highlightSlayers);
-				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Highlight Slayer Bosses " + DankersSkyblockMod.SECONDARY_COLOUR + highlightSlayers + DankersSkyblockMod.MAIN_COLOUR + "."));
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Highlight Slayer Bosses has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + highlightSlayers + DankersSkyblockMod.MAIN_COLOUR + "."));
 				break;
-			case "highlightArachne":
+			case "highlightarachne":
 				highlightArachne = !highlightArachne;
 				ConfigHandler.writeBooleanConfig("toggles", "HighlightArachne", highlightArachne);
-				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Highlight Arachne " + DankersSkyblockMod.SECONDARY_COLOUR + highlightArachne + DankersSkyblockMod.MAIN_COLOUR + "."));
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Highlight Arachne has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + highlightArachne + DankersSkyblockMod.MAIN_COLOUR + "."));
+				break;
+			case "highlightskeletonmasters":
+				highlightSkeletonMasters = !highlightSkeletonMasters;
+				ConfigHandler.writeBooleanConfig("toggles", "HighlightSkeletonMasters", highlightSkeletonMasters);
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Highlight Skeleton Masters has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + highlightSkeletonMasters + DankersSkyblockMod.MAIN_COLOUR + "."));
+				break;
+			case "teammatesinradius":
+				teammatesInRadius = !teammatesInRadius;
+				ConfigHandler.writeBooleanConfig("toggles", "TeammatesInRadius", teammatesInRadius);
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Teammates in radius has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + teammatesInRadius + DankersSkyblockMod.MAIN_COLOUR + "."));
+				break;
+			case "gianthp":
+				giantHP = !giantHP;
+				ConfigHandler.writeBooleanConfig("toggles", "GiantHP", giantHP);
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Giant HP display has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + giantHP + DankersSkyblockMod.MAIN_COLOUR + "."));
+				break;
+			case "hidepetcandy":
+				hidePetCandy = !hidePetCandy;
+				ConfigHandler.writeBooleanConfig("toggles", "HidePetCandy", hidePetCandy);
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Hide pet candy has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + hidePetCandy + DankersSkyblockMod.MAIN_COLOUR + "."));
+				break;
 			case "highlightcommissions":
 				highlightCommissions = !highlightCommissions;
 				ConfigHandler.writeBooleanConfig("toggles", "HighlightCommissions", highlightCommissions);
-				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Highlight Commissions " + DankersSkyblockMod.SECONDARY_COLOUR + highlightCommissions + DankersSkyblockMod.MAIN_COLOUR + "."));
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Highlight Commissions has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + highlightCommissions + DankersSkyblockMod.MAIN_COLOUR + "."));
+				break;
 			case "dungeonbossmusic":
 				dungeonBossMusic = !dungeonBossMusic;
 				CustomMusic.dungeonboss.stop();
@@ -460,10 +487,15 @@ public class ToggleCommand extends CommandBase implements ICommand {
 															DankersSkyblockMod.TYPE_COLOUR + " Chronomatron solver: " + DankersSkyblockMod.VALUE_COLOUR + chronomatronToggled + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Superpairs solver: " + DankersSkyblockMod.VALUE_COLOUR + superpairsToggled + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Hide tooltips in experiment addons: " + DankersSkyblockMod.VALUE_COLOUR + hideTooltipsInExperimentAddonsToggled + "\n" +
-															DankersSkyblockMod.TYPE_COLOUR + " Auto-swap to pick block " + DankersSkyblockMod.VALUE_COLOUR + swapToPickBlockToggled + "\n" +
-															DankersSkyblockMod.TYPE_COLOUR + " Hide tooltips in Melody's Harp " + DankersSkyblockMod.VALUE_COLOUR + melodyTooltips + "\n" +
-															DankersSkyblockMod.TYPE_COLOUR + " Highlight Slayer Bosses " + DankersSkyblockMod.VALUE_COLOUR + highlightSlayers + "\n" +
-															DankersSkyblockMod.TYPE_COLOUR + " Highlight Arachne Boss " + DankersSkyblockMod.VALUE_COLOUR + highlightArachne + "\n" +
+															DankersSkyblockMod.TYPE_COLOUR + " Auto-swap to pick block: " + DankersSkyblockMod.VALUE_COLOUR + swapToPickBlockToggled + "\n" +
+															DankersSkyblockMod.TYPE_COLOUR + " Hide tooltips in Melody's Harp: " + DankersSkyblockMod.VALUE_COLOUR + melodyTooltips + "\n" +
+															DankersSkyblockMod.TYPE_COLOUR + " Highlight Slayer Bosses: " + DankersSkyblockMod.VALUE_COLOUR + highlightSlayers + "\n" +
+															DankersSkyblockMod.TYPE_COLOUR + " Highlight Arachne Boss: " + DankersSkyblockMod.VALUE_COLOUR + highlightArachne + "\n" +
+															DankersSkyblockMod.TYPE_COLOUR + " Highlight Skeleton Masters: " + DankersSkyblockMod.VALUE_COLOUR + highlightSkeletonMasters + "\n" +
+															DankersSkyblockMod.TYPE_COLOUR + " Teammates in radius: " + DankersSkyblockMod.VALUE_COLOUR + teammatesInRadius + "\n" +
+															DankersSkyblockMod.TYPE_COLOUR + " Giant HP display: " + DankersSkyblockMod.VALUE_COLOUR + giantHP + "\n" +
+															DankersSkyblockMod.TYPE_COLOUR + " Hide pet candy: " + DankersSkyblockMod.VALUE_COLOUR + hidePetCandy + "\n" +
+															DankersSkyblockMod.TYPE_COLOUR + " Highlight commissions: " + DankersSkyblockMod.VALUE_COLOUR + highlightCommissions + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Custom dungeon boss music: " + DankersSkyblockMod.VALUE_COLOUR + dungeonBossMusic + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Custom blood room music: " + DankersSkyblockMod.VALUE_COLOUR + bloodRoomMusic + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Custom dungeon music: " + DankersSkyblockMod.VALUE_COLOUR + dungeonMusic

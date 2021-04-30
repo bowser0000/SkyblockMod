@@ -25,6 +25,7 @@ public class APIHandler {
 			URL url = new URL(urlString);
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			conn.setRequestMethod("GET");
+			conn.setRequestProperty("User-Agent", "Dsm/1.0");
 			
 			if (conn.getResponseCode() == HttpURLConnection.HTTP_OK) {
 				BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
@@ -40,7 +41,7 @@ public class APIHandler {
 
 				return gson.fromJson(response.toString(), JsonObject.class);
 			} else {
-				if (urlString.startsWith("https://api.hypixel.net/")) {
+				if (urlString.startsWith("https://api.hypixel.net/") || urlString.startsWith("https://hypixel-api.senither.com")) {
 					InputStream errorStream = conn.getErrorStream();
 					try (Scanner scanner = new Scanner(errorStream)) {
 						scanner.useDelimiter("\\Z");
