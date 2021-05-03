@@ -58,13 +58,15 @@ import org.lwjgl.input.Mouse;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Mod(modid = DankersSkyblockMod.MODID, version = DankersSkyblockMod.VERSION, clientSideOnly = true)
 public class DankersSkyblockMod {
     public static final String MODID = "Danker's Skyblock Mod";
-    public static final String VERSION = "1.8.7-beta1";
+    public static final String VERSION = "1.8.7-beta2";
     public static int titleTimer = -1;
     public static boolean showTitle = false;
     public static String titleText = "";
@@ -99,6 +101,7 @@ public class DankersSkyblockMod {
         MinecraftForge.EVENT_BUS.register(new CakeTimer());
         MinecraftForge.EVENT_BUS.register(new ChronomatronSolver());
         MinecraftForge.EVENT_BUS.register(new ClickInOrderSolver());
+        MinecraftForge.EVENT_BUS.register(new ColouredNames());
         MinecraftForge.EVENT_BUS.register(new CreeperSolver());
         MinecraftForge.EVENT_BUS.register(new CustomMusic());
         MinecraftForge.EVENT_BUS.register(new DungeonTimer());
@@ -154,8 +157,11 @@ public class DankersSkyblockMod {
         }
 
         new Thread(() -> {
-            DankersSkyblockMod.data = APIHandler.getResponse("https://raw.githubusercontent.com/bowser0000/SkyblockMod-REPO/main/data.json");
+            data = APIHandler.getResponse("https://raw.githubusercontent.com/bowser0000/SkyblockMod-REPO/main/data.json");
             System.out.println("Loaded data from GitHub?: " + (DankersSkyblockMod.data != null && DankersSkyblockMod.data.has("trivia")));
+            ColouredNames.users = data.get("colourednames").getAsJsonObject().entrySet().stream()
+                                  .map(Map.Entry::getKey)
+                                  .collect(Collectors.toCollection(ArrayList::new));
         }).start();
     }
 

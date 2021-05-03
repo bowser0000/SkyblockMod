@@ -37,6 +37,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 	public static boolean teammatesInRadius;
 	public static boolean giantHP;
 	public static boolean hidePetCandy;
+	public static boolean customColouredNames;
 	// Chat Messages
 	public static boolean sceptreMessages;
 	public static boolean midasStaffMessages;
@@ -97,7 +98,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 										  "startswithterminal/selectallterminal/clickinorderterminal/" +
 										  "ultrasequencer/chronomatron/superpairs/hidetooltipsinaddons/pickblock/" +
 										  "melodytooltips/highlightslayers/highlightarachne/highlightskeletonmasters/teammatesinradius/" +
-										  "gianthp/hidepetcandy/dungeonbossmusic/bloodroommusic/dungeonmusic/list>";
+										  "gianthp/hidepetcandy/customcolorednames/dungeonbossmusic/bloodroommusic/dungeonmusic/list>";
 	}
 
 	public static String usage(ICommandSender arg0) {
@@ -126,7 +127,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 														  "ultrasequencer", "chronomatron", "superpairs",
 														  "hidetooltipsinaddons", "pickblock", "melodytooltips", "highlightslayers",
 														  "highlightskeletonmasters", "dungeonbossmusic", "bloodroommusic", "dungeonmusic",
-														  "teammatesinradius", "gianthp", "hidepetcandy", "list");
+														  "teammatesinradius", "gianthp", "hidepetcandy", "customcolorednames", "list");
 		}
 		return null;
 	}
@@ -422,6 +423,12 @@ public class ToggleCommand extends CommandBase implements ICommand {
 				ConfigHandler.writeBooleanConfig("toggles", "HidePetCandy", hidePetCandy);
 				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Hide pet candy has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + hidePetCandy + DankersSkyblockMod.MAIN_COLOUR + "."));
 				break;
+			case "customcolorednames":
+			case "customcolourednames":
+				customColouredNames = !customColouredNames;
+				ConfigHandler.writeBooleanConfig("toggles", "CustomColouredNames", customColouredNames);
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Custom name colors has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + customColouredNames + DankersSkyblockMod.MAIN_COLOUR + "."));
+				break;
 			case "dungeonbossmusic":
 				dungeonBossMusic = !dungeonBossMusic;
 				CustomMusic.dungeonboss.stop();
@@ -489,6 +496,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 															DankersSkyblockMod.TYPE_COLOUR + " Teammates in radius: " + DankersSkyblockMod.VALUE_COLOUR + teammatesInRadius + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Giant HP display: " + DankersSkyblockMod.VALUE_COLOUR + giantHP + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Hide pet candy: " + DankersSkyblockMod.VALUE_COLOUR + hidePetCandy + "\n" +
+															DankersSkyblockMod.TYPE_COLOUR + " Custom name colors: " + DankersSkyblockMod.VALUE_COLOUR + customColouredNames + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Custom dungeon boss music: " + DankersSkyblockMod.VALUE_COLOUR + dungeonBossMusic + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Custom blood room music: " + DankersSkyblockMod.VALUE_COLOUR + bloodRoomMusic + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Custom dungeon music: " + DankersSkyblockMod.VALUE_COLOUR + dungeonMusic

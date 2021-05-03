@@ -66,6 +66,7 @@ public class DankerGui extends GuiScreen {
 	private GuiButton teammatesInRadius;
 	private GuiButton giantHP;
 	private GuiButton hidePetCandy;
+	private GuiButton customColouredNames;
 	// Chat Messages
 	private GuiButton sceptreMessages;
 	private GuiButton midasStaffMessages;
@@ -153,6 +154,7 @@ public class DankerGui extends GuiScreen {
 		teammatesInRadius = new FeatureButton("Display Players in 30 Block Radius: " + Utils.getColouredBoolean(ToggleCommand.teammatesInRadius), "Displays dungeon teammates in 30 block radius for tether and diversion.");
 		giantHP = new FeatureButton("Display Giant HP: " + Utils.getColouredBoolean(ToggleCommand.giantHP), "Displays health of Sadan's giants during F6 bossfight and F7 blood room.");
 		hidePetCandy = new FeatureButton("Hide Pet Candy: " + Utils.getColouredBoolean(ToggleCommand.hidePetCandy), "Hide pet candy in pet tooltips.");
+		customColouredNames = new FeatureButton("Custom Name Colors: " + Utils.getColouredBoolean(ToggleCommand.customColouredNames), "Replaces some player's usernames with a custom color.");
 
 		allButtons.clear();
 		allButtons.add(changeDisplay);
@@ -198,6 +200,7 @@ public class DankerGui extends GuiScreen {
 		allButtons.add(teammatesInRadius);
 		allButtons.add(giantHP);
 		allButtons.add(hidePetCandy);
+		allButtons.add(customColouredNames);
 
 		search.setText(initSearchText);
 		search.setVisible(true);
@@ -440,6 +443,10 @@ public class DankerGui extends GuiScreen {
 			ToggleCommand.hidePetCandy = !ToggleCommand.hidePetCandy;
 			ConfigHandler.writeBooleanConfig("toggles", "HidePetCandy", ToggleCommand.hidePetCandy);
 			hidePetCandy.displayString = "Hide Pet Candy: " + Utils.getColouredBoolean(ToggleCommand.hidePetCandy);
+		} else if (button == customColouredNames) {
+			ToggleCommand.customColouredNames = !ToggleCommand.customColouredNames;
+			ConfigHandler.writeBooleanConfig("toggles", "CustomColouredNames", ToggleCommand.customColouredNames);
+			customColouredNames.displayString = "Custom Name Colors: " + Utils.getColouredBoolean(ToggleCommand.customColouredNames);
 		}
 	}
 

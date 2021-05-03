@@ -214,6 +214,7 @@ public class ConfigHandler {
 		ToggleCommand.teammatesInRadius = initBoolean("toggles", "TeammatesInRadius", false);
 		ToggleCommand.giantHP = initBoolean("toggles", "GiantHP", false);
 		ToggleCommand.hidePetCandy = initBoolean("toggles", "HidePetCandy", false);
+		ToggleCommand.customColouredNames = initBoolean("toggles", "CustomColouredNames", true);
 		// Chat Messages
 		ToggleCommand.sceptreMessages = initBoolean("toggles", "SceptreMessages", true);
 		ToggleCommand.midasStaffMessages = initBoolean("toggles", "MidasStaffMessages", true);

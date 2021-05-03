@@ -55,11 +55,12 @@ Discord Server: https://discord.gg/QsEkNQS
 - Highlight Skeleton Masters
 - Show teammates in 30 block radius
 - Hide pet candy in pet tooltip
+- Custom name colors
 
 ## Commands
 - /dhelp - Returns this message in-game.
 - /dsm - Opens the GUI for Danker's Skyblock Mod.
-- /toggle <gparty/coords/golden/slayercount/rngesusalerts/splitfishing/ghostdisplay/chatmaddox/spiritbearalert/sceptremessages/petcolors/dungeontimer/golemalerts/expertiselore/skill50display/outlinetext/midasstaffmessages/implosionmessages/healmessages/cooldownmessages/manamessages/killcombomessages/caketimer/lowhealthnotify/lividsolver/stopsalvagestarred/notifyslayerslain/necronnotifications/bonzotimer/threemanpuzzle/oruopuzzle/blazepuzzle/creeperpuzzle/waterpuzzle/tictactoepuzzle/boulderpuzzle/silverfishpuzzle/icewalkpuzzle/watchermessage/startswithterminal/selectallterminal/clickinorderterminal/ultrasequencer/chronomatron/superpairs/hidetooltipsinaddons/pickblock/melodytooltips/highlightslayers/highlightarachne/highlightskeletonmasters/teammatesinradius/gianthp/hidepetcandy/dungeonbossmusic/bloodroommusic/dungeonmusic/list> - Toggles features. /toggle list returns values of every toggle.
+- /toggle <gparty/coords/golden/slayercount/rngesusalerts/splitfishing/ghostdisplay/chatmaddox/spiritbearalert/sceptremessages/petcolors/dungeontimer/golemalerts/expertiselore/skill50display/outlinetext/midasstaffmessages/implosionmessages/healmessages/cooldownmessages/manamessages/killcombomessages/caketimer/lowhealthnotify/lividsolver/stopsalvagestarred/notifyslayerslain/necronnotifications/bonzotimer/threemanpuzzle/oruopuzzle/blazepuzzle/creeperpuzzle/waterpuzzle/tictactoepuzzle/boulderpuzzle/silverfishpuzzle/icewalkpuzzle/watchermessage/startswithterminal/selectallterminal/clickinorderterminal/ultrasequencer/chronomatron/superpairs/hidetooltipsinaddons/pickblock/melodytooltips/highlightslayers/highlightarachne/highlightskeletonmasters/teammatesinradius/gianthp/hidepetcandy/customcolorednames/dungeonbossmusic/bloodroommusic/dungeonmusic/list> - Toggles features. /toggle list returns values of every toggle.
 - /setkey <key> - Sets API key.
 - /getkey - Returns key set with /setkey and copies it to your clipboard.
 - /loot <zombie/spider/wolf/fishing/catacombs/mythological/> [winter/festival/spooky/f(1-7)/session] - Returns loot received from slayer quests or fishing stats. /loot fishing winter returns winter sea creatures instead.
@@ -112,3 +113,5 @@ Software | License
 [SkyblockAddons](https://github.com/BiscuitDevelopment/SkyblockAddons/) | [MIT License](https://github.com/BiscuitDevelopment/SkyblockAddons/blob/master/LICENSE)
 [Zealot Counter](https://github.com/symt/zealot-counter/) | [Apache License](https://github.com/symt/zealot-counter/blob/master/LICENSE.md)
 [NotEnoughUpdates](https://github.com/Moulberry/NotEnoughUpdates/) | [Creative Commons Public License](https://github.com/Moulberry/NotEnoughUpdates/blob/master/LICENSE)
+[HyChat](https://github.com/Moulberry/Hychat) | [Creative Commons Public License](https://github.com/Moulberry/Hychat/blob/master/LICENSE)
+[SkyblockCatia](https://github.com/SteveKunG/SkyBlockcatia) | [MIT License](https://github.com/SteveKunG/SkyBlockcatia/blob/1.8.9/LICENSE.md)
