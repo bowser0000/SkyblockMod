@@ -6,6 +6,8 @@ import me.Danker.handlers.ConfigHandler;
 import me.Danker.handlers.ScoreboardHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.client.settings.GameSettings;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -65,6 +67,16 @@ public class AutoDisplay {
                     if (hotbarItem.getDisplayName().contains("Ancestral Spade")) {
                         LootDisplay.display = "mythological";
                         found = true;
+                        break;
+                    } else if (hotbarItem.getItem() == Items.fishing_rod) {
+                        List<String> lore = hotbarItem.getTooltip(player, mc.gameSettings.advancedItemTooltips);
+                        for (int j = lore.size() - 1; j >= 0; j--) { // reverse
+                            if (lore.get(j).contains("FISHING ROD")) {
+                                LootDisplay.display = "fishing";
+                                found = true;
+                                break;
+                            }
+                        }
                     }
                 }
                 if (!found) LootDisplay.display = "off";
