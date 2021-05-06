@@ -20,7 +20,9 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 import javax.sound.sampled.*;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class CustomMusic {
 
@@ -47,7 +49,7 @@ public class CustomMusic {
         EntityPlayerSP player = mc.thePlayer;
         World world = mc.theWorld;
         if (DankersSkyblockMod.tickAmount % 10 == 0) {
-            if (ToggleCommand.dungeonBossMusic && Utils.inDungeons && world != null && player != null) {
+            if (Utils.inDungeons && world != null && player != null) {
                 prevInDungeonBossRoom = inDungeonBossRoom;
                 List<String> scoreboard = ScoreboardHandler.getSidebarLines();
                 if (scoreboard.size() > 2) {
@@ -64,7 +66,8 @@ public class CustomMusic {
 
                         inDungeonBossRoom = true;
                         if (!prevInDungeonBossRoom) {
-                            dungeonboss.start();
+                            bloodroom.stop();
+                            if (ToggleCommand.dungeonBossMusic) dungeonboss.start();
                         }
                     } else {
                         inDungeonBossRoom = false;
@@ -91,8 +94,9 @@ public class CustomMusic {
                 dungeonboss.stop();
                 bloodroom.stop();
                 dungeon.stop();
-            } else if (ToggleCommand.bloodRoomMusic && message.contains("The BLOOD DOOR has been opened!")) {
-                bloodroom.start();
+            } else if (message.contains("The BLOOD DOOR has been opened!")) {
+                dungeon.stop();
+                if (ToggleCommand.bloodRoomMusic) bloodroom.start();
             }
         }
     }
@@ -111,17 +115,9 @@ public class CustomMusic {
 
         reset();
 
-        File dungeonBossFile = new File(directory + "/dungeonboss.wav");
-        System.out.println("dungeonboss.wav exists?: " + dungeonBossFile.exists());
-        dungeonboss = new Song(dungeonBossFile, dungeonbossVolume);
-
-        File bloodRoomFile = new File(directory + "/bloodroom.wav");
-        System.out.println("bloodroom.wav exists?: " + bloodRoomFile.exists());
-        bloodroom = new Song(bloodRoomFile, bloodroomVolume);
-
-        File dungeonFile = new File(directory + "/dungeon.wav");
-        System.out.println("dungeon.wav exists?: " + dungeonFile.exists());
-        dungeon = new Song(dungeonFile, dungeonVolume);
+        dungeonboss = new Song(directory, "dungeonboss", dungeonbossVolume);
+        bloodroom = new Song(directory, "bloodroom", bloodroomVolume);
+        dungeon = new Song(directory, "dungeon", dungeonVolume);
     }
 
     public static void reset() {
@@ -133,20 +129,33 @@ public class CustomMusic {
     public static class Song {
 
         public Clip music;
+        private final List<Clip> playlist = new ArrayList<>();
 
-        public Song(File file, int volume) throws IOException, UnsupportedAudioFileException, LineUnavailableException {
-            if (file.exists()) {
-                music = AudioSystem.getClip();
-                AudioInputStream ais = AudioSystem.getAudioInputStream(file);
-                music.open(ais);
+        public Song(File directory, String songName, int volume) throws IOException, UnsupportedAudioFileException, LineUnavailableException {
+            File[] files = directory.listFiles();
+            if (files != null) {
+                for (File file : files) {
+                    if (!file.isDirectory() && file.getName().matches(songName + "\\d*(?:\\.wav)?\\.wav")) { // .wav.wav moment
+                        Clip music = AudioSystem.getClip();
+                        AudioInputStream ais = AudioSystem.getAudioInputStream(file);
+                        music.open(ais);
+                        playlist.add(music);
+                        System.out.println("Added " + file.getName() + " to " + songName + " playlist.");
+                    }
+                }
+            }
 
-                setVolume(volume);
+            setVolume(volume);
+
+            if (playlist.size() > 0) {
+                music = playlist.get(0);
             }
         }
 
         public void start() {
             reset();
             if (music != null) {
+                shuffle();
                 cancelNotes = true;
                 music.setMicrosecondPosition(0);
                 music.start();
@@ -159,21 +168,27 @@ public class CustomMusic {
             if (music != null) music.stop();
         }
 
+        public void shuffle() {
+            if (playlist.size() > 0) music = playlist.get(new Random().nextInt(playlist.size()));
+        }
+
         public boolean setVolume(int volume) {
-            EntityPlayer player = Minecraft.getMinecraft().thePlayer;
-            if (music == null) return false;
+            if (playlist.size() < 1) return false;
             if (volume <= 0 || volume > 100) {
+                EntityPlayer player = Minecraft.getMinecraft().thePlayer;
                 if (player != null) player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Volume can only be set between 0% and 100%."));
                 return false;
             }
 
             float decibels = (float) (20 * Math.log(volume / 100.0));
-            FloatControl control = (FloatControl) music.getControl(FloatControl.Type.MASTER_GAIN);
-            if (decibels <= control.getMinimum() || decibels >= control.getMaximum()) {
-                return false;
+            for (Clip music : playlist) {
+                FloatControl control = (FloatControl) music.getControl(FloatControl.Type.MASTER_GAIN);
+                if (decibels <= control.getMinimum() || decibels >= control.getMaximum()) {
+                    return false;
+                }
+                control.setValue(decibels);
             }
 
-            control.setValue(decibels);
             return true;
         }
 

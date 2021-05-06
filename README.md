@@ -99,6 +99,13 @@ Discord Server: https://discord.gg/QsEkNQS
 3. Enable the custom music in `/dsm`.
 4. (Optional) Change the volume of the music with `/dsmmusic volume`.
 
+#### Shuffling
+By adding numbers to the end of the file, you can have multiple music files for the same area. One of them will be randomly selected (the same song could play twice in a row). For example:
+- dungeon.wav
+- dungeon1.wav
+- dungeon2.wav
+- dungeon99.wav
+
 ### Notes
 - Slayer tracker for token drops and 20% chance drops uses a 12x12x12 bounding box centered on the player to detect the drops. If you are out of the range of the item drop, it will not count on the tracker.
 - API commands may take a while depending on your internet connection. The API may also go down.
