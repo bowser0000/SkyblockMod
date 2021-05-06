@@ -91,7 +91,7 @@ Discord Server: https://discord.gg/QsEkNQS
 - Start/Stop Skill Tracker - Numpad 5 by default.
 
 ## Custom Music
-1. Place a music file with the given name in the `.mincraft/config/dsmmusic` folder:
+1. Place a music file with the given name in the `.minecraft/config/dsmmusic` folder:
   - Dungeon music: `dungeon.wav`
   - Blood room music: `bloodroom.wav`
   - Dungeon boss music: `dungeonboss.wav`
