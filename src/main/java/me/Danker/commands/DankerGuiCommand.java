@@ -74,6 +74,7 @@ public class DankerGuiCommand extends CommandBase {
 			debug.append("[oruopuzzle][").append(ToggleCommand.oruoToggled).append("]\n");
 			debug.append("[blazepuzzle][").append(ToggleCommand.blazeToggled).append("]\n");
 			debug.append("[creeperpuzzle][").append(ToggleCommand.creeperToggled).append("]\n");
+			debug.append("[creeperlines][").append(ToggleCommand.creeperLinesToggled).append("]\n");
 			debug.append("[waterpuzzle][").append(ToggleCommand.waterToggled).append("]\n");
 			debug.append("[tictactoepuzzle][").append(ToggleCommand.ticTacToeToggled).append("]\n");
 			debug.append("[boulderpuzzle][").append(ToggleCommand.boulderToggled).append("]\n");

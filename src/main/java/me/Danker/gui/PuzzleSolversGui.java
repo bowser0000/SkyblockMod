@@ -20,6 +20,7 @@ public class PuzzleSolversGui extends GuiScreen {
 	private GuiButton trivia;
 	private GuiButton blaze;
 	private GuiButton creeper;
+	private GuiButton creeperLines;
 	private GuiButton water;
 	private GuiButton ticTacToe;
 	private GuiButton boulder;
@@ -55,15 +56,16 @@ public class PuzzleSolversGui extends GuiScreen {
 		trivia = new GuiButton(0, width / 2 - 100, (int) (height * 0.2), "Trivia Solver: " + Utils.getColouredBoolean(ToggleCommand.oruoToggled));
 		blaze = new GuiButton(0, width / 2 - 100, (int) (height * 0.3), "Blaze Solver: " + Utils.getColouredBoolean(ToggleCommand.blazeToggled));
 		creeper = new GuiButton(0, width / 2 - 100, (int) (height * 0.4), "Creeper Solver: " + Utils.getColouredBoolean(ToggleCommand.creeperToggled));
-		water = new GuiButton(0, width / 2 - 100, (int) (height * 0.5), "Water Solver: " + Utils.getColouredBoolean(ToggleCommand.waterToggled));
-		ticTacToe = new GuiButton(0, width / 2 - 100, (int) (height * 0.6), "Tic Tac Toe Solver: " + Utils.getColouredBoolean(ToggleCommand.ticTacToeToggled));
-		boulder = new GuiButton(0, width / 2 - 100, (int) (height * 0.7), "Boulder Solver: " + Utils.getColouredBoolean(ToggleCommand.boulderToggled));
+		creeperLines = new GuiButton(0, width / 2 - 100, (int) (height * 0.5), "Lines In Creeper Solver: " + Utils.getColouredBoolean(ToggleCommand.creeperLinesToggled));
+		water = new GuiButton(0, width / 2 - 100, (int) (height * 0.6), "Water Solver: " + Utils.getColouredBoolean(ToggleCommand.waterToggled));
+		ticTacToe = new GuiButton(0, width / 2 - 100, (int) (height * 0.7), "Tic Tac Toe Solver: " + Utils.getColouredBoolean(ToggleCommand.ticTacToeToggled));
 		// Page 2
-		silverfish = new GuiButton(0, width / 2 - 100, (int) (height * 0.1), "Silverfish Solver: " + Utils.getColouredBoolean(ToggleCommand.silverfishToggled));
-		iceWalk = new GuiButton(0, width / 2 - 100, (int) (height * 0.2), "Ice Walk Solver: " + Utils.getColouredBoolean(ToggleCommand.iceWalkToggled));
-		startsWith = new GuiButton(0, width / 2 - 100, (int) (height * 0.3), "Starts With Letter Terminal Solver: " + Utils.getColouredBoolean(ToggleCommand.startsWithToggled));
-		selectAll = new GuiButton(0, width / 2 - 100, (int) (height * 0.4), "Select All Color Terminal Solver: " + Utils.getColouredBoolean(ToggleCommand.selectAllToggled));
-		clickOrder = new GuiButton(0, width / 2 - 100, (int) (height * 0.5), "Click in Order Terminal Helper: " + Utils.getColouredBoolean(ToggleCommand.clickInOrderToggled));
+		boulder = new GuiButton(0, width / 2 - 100, (int) (height * 0.1), "Boulder Solver: " + Utils.getColouredBoolean(ToggleCommand.boulderToggled));
+		silverfish = new GuiButton(0, width / 2 - 100, (int) (height * 0.2), "Silverfish Solver: " + Utils.getColouredBoolean(ToggleCommand.silverfishToggled));
+		iceWalk = new GuiButton(0, width / 2 - 100, (int) (height * 0.3), "Ice Walk Solver: " + Utils.getColouredBoolean(ToggleCommand.iceWalkToggled));
+		startsWith = new GuiButton(0, width / 2 - 100, (int) (height * 0.4), "Starts With Letter Terminal Solver: " + Utils.getColouredBoolean(ToggleCommand.startsWithToggled));
+		selectAll = new GuiButton(0, width / 2 - 100, (int) (height * 0.5), "Select All Color Terminal Solver: " + Utils.getColouredBoolean(ToggleCommand.selectAllToggled));
+		clickOrder = new GuiButton(0, width / 2 - 100, (int) (height * 0.6), "Click in Order Terminal Helper: " + Utils.getColouredBoolean(ToggleCommand.clickInOrderToggled));
 		
 		switch (page) {
 			case 1:
@@ -71,12 +73,13 @@ public class PuzzleSolversGui extends GuiScreen {
 				this.buttonList.add(trivia);
 				this.buttonList.add(blaze);
 				this.buttonList.add(creeper);
+				this.buttonList.add(creeperLines);
 				this.buttonList.add(water);
 				this.buttonList.add(ticTacToe);
-				this.buttonList.add(boulder);
 				this.buttonList.add(nextPage);
 				break;
 			case 2:
+				this.buttonList.add(boulder);
 				this.buttonList.add(silverfish);
 				this.buttonList.add(iceWalk);
 				this.buttonList.add(startsWith);
@@ -118,6 +121,10 @@ public class PuzzleSolversGui extends GuiScreen {
 			ToggleCommand.creeperToggled = !ToggleCommand.creeperToggled;
 			ConfigHandler.writeBooleanConfig("toggles", "CreeperPuzzle", ToggleCommand.creeperToggled);
 			creeper.displayString = "Creeper Solver: " + Utils.getColouredBoolean(ToggleCommand.creeperToggled);
+		} else if (button == creeperLines) {
+			ToggleCommand.creeperLinesToggled = !ToggleCommand.creeperLinesToggled;
+			ConfigHandler.writeBooleanConfig("toggles", "CreeperLines", ToggleCommand.creeperLinesToggled);
+			creeperLines.displayString = "Lines In Creeper Solver: " + Utils.getColouredBoolean(ToggleCommand.creeperLinesToggled);
 		} else if (button == water) {
 			ToggleCommand.waterToggled = !ToggleCommand.waterToggled;
 			ConfigHandler.writeBooleanConfig("toggles", "WaterPuzzle", ToggleCommand.waterToggled);

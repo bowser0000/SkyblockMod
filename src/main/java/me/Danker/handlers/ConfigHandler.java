@@ -239,6 +239,7 @@ public class ConfigHandler {
 		ToggleCommand.oruoToggled = initBoolean("toggles", "OruoPuzzle", false);
 		ToggleCommand.blazeToggled = initBoolean("toggles", "BlazePuzzle", false);
 		ToggleCommand.creeperToggled = initBoolean("toggles", "CreeperPuzzle", false);
+		ToggleCommand.creeperLinesToggled = initBoolean("toggles", "CreeperLines", true);
 		ToggleCommand.waterToggled = initBoolean("toggles", "WaterPuzzle", false);
 		ToggleCommand.ticTacToeToggled = initBoolean("toggles", "TicTacToePuzzle", false);
 		ToggleCommand.boulderToggled = initBoolean("toggles", "BoulderPuzzle", false);

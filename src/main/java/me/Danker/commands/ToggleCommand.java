@@ -61,6 +61,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 	public static boolean oruoToggled;
 	public static boolean blazeToggled;
 	public static boolean creeperToggled;
+	public static boolean creeperLinesToggled;
 	public static boolean waterToggled;
 	public static boolean ticTacToeToggled;
 	public static boolean boulderToggled;
@@ -94,7 +95,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 										  "skill50display/outlinetext/midasstaffmessages/implosionmessages/healmessages/cooldownmessages/" +
 										  "manamessages/killcombomessages/caketimer/lowhealthnotify/lividsolver/stopsalvagestarred/" +
 										  "notifyslayerslain/necronnotifications/bonzotimer/threemanpuzzle/oruopuzzle/blazepuzzle/" +
-										  "creeperpuzzle/waterpuzzle/tictactoepuzzle/boulderpuzzle/silverfishpuzzle/icewalkpuzzle/watchermessage/" +
+										  "creeperpuzzle/creeperlines/waterpuzzle/tictactoepuzzle/boulderpuzzle/silverfishpuzzle/icewalkpuzzle/watchermessage/" +
 										  "startswithterminal/selectallterminal/clickinorderterminal/" +
 										  "ultrasequencer/chronomatron/superpairs/hidetooltipsinaddons/pickblock/" +
 										  "melodytooltips/highlightslayers/highlightarachne/highlightskeletonmasters/teammatesinradius/" +
@@ -121,7 +122,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 														  "killcombomessages", "caketimer", "lowhealthnotify", "autoskilltracker", "lividsolver",
 														  "stopsalvagestarred", "notifyslayerslain", "necronnotifications",
 														  "bonzotimer", "threemanpuzzle", "oruopuzzle", "blazepuzzle",
-														  "creeperpuzzle", "waterpuzzle", "tictactoepuzzle", "boulderpuzzle",
+														  "creeperpuzzle", "creeperlines", "waterpuzzle", "tictactoepuzzle", "boulderpuzzle",
 														  "silverfishpuzzle", "icewalkpuzzle", "watchermessage", "startswithterminal",
 														  "selectallterminal", "clickinorderterminal",
 														  "ultrasequencer", "chronomatron", "superpairs",
@@ -318,6 +319,11 @@ public class ToggleCommand extends CommandBase implements ICommand {
 				ConfigHandler.writeBooleanConfig("toggles", "CreeperPuzzle", creeperToggled);
 				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Creeper puzzle solver has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + creeperToggled + DankersSkyblockMod.MAIN_COLOUR + "."));
 				break;
+			case "creeperlines":
+				creeperLinesToggled = !creeperLinesToggled;
+				ConfigHandler.writeBooleanConfig("toggles", "CreeperLines", creeperLinesToggled);
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Creeper lines has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + creeperLinesToggled + DankersSkyblockMod.MAIN_COLOUR + "."));
+				break;
 			case "waterpuzzle":
 				waterToggled = !waterToggled;
 				ConfigHandler.writeBooleanConfig("toggles", "WaterPuzzle", waterToggled);
@@ -476,6 +482,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 															DankersSkyblockMod.TYPE_COLOUR + " Oruo trivia solver: " + DankersSkyblockMod.VALUE_COLOUR + oruoToggled + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Blaze puzzle solver: " + DankersSkyblockMod.VALUE_COLOUR + blazeToggled + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Creeper puzzle solver: " + DankersSkyblockMod.VALUE_COLOUR + creeperToggled + "\n" +
+															DankersSkyblockMod.TYPE_COLOUR + " Creeper lines: " + DankersSkyblockMod.VALUE_COLOUR + creeperLinesToggled + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Water puzzle solver: " + DankersSkyblockMod.VALUE_COLOUR + waterToggled + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Tic tac toe puzzle solver: " + DankersSkyblockMod.VALUE_COLOUR + ticTacToeToggled + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Boulder puzzle solver: " + DankersSkyblockMod.VALUE_COLOUR + boulderToggled + "\n" +
