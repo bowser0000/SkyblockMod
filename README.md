@@ -1,4 +1,19 @@
-# Danker's Skyblock Mod
+# Hael9
+**(Based on Danker's Skyblock Mod)**
+
+**Features:**
+ - Automatic Terminal Solver
+ - Bonemerang Macro
+ - Hyperion Autoclicker
+ - Ghost Block creator
+ - And more!
+ 
+ **Note: This mod is BANNABLE on Hypixel Skyblock**
+
+
+
+
+### Below is the default Danker's Skyblock Mod README:
 QOL changes that enhances your Hypixel Skyblock experience. Created to add features I couldn't find in a mod, or if the mod was paid (which is against the [Mojang TOS](https://account.mojang.com/documents/commercial_guidelines)).
 
 Discord Server: https://discord.gg/QsEkNQS

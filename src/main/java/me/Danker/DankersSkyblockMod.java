@@ -69,6 +69,7 @@ import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
+import java.lang.reflect.Method;
 import java.net.URLDecoder;
 import java.text.NumberFormat;
 import java.util.List;
@@ -93,10 +94,13 @@ public class DankersSkyblockMod {
     public static int skillTimer = -1;
     public static boolean showSkill = false;
     public static String skillText = "";
+    public static int until = 0;
+    public static int lastSlot = -1;
+    public static int slotIn = -1;
     static int tickAmount = 1;
     static String lastMaddoxCommand = "/cb placeholder";
     static double lastMaddoxTime = 0;
-    static KeyBinding[] keyBindings = new KeyBinding[3];
+    static KeyBinding[] keyBindings = new KeyBinding[8];
     static boolean usingLabymod = false;
     static boolean usingOAM = false;
     static boolean OAMWarning = false;
@@ -106,6 +110,9 @@ public class DankersSkyblockMod {
     public static double cakeTime;
     public static double nextBonzoUse = 0;
     public static boolean firstLaunch = false;
+    static String[] harpInv = new String[54];
+    public static int chestOpen = 0;
+    public static long lastInteractTime;
 
     public static final ResourceLocation CAKE_ICON = new ResourceLocation("dsm", "icons/cake.png");
     public static final ResourceLocation BONZO_ICON = new ResourceLocation("dsm", "icons/bonzo.png");
@@ -136,7 +143,8 @@ public class DankersSkyblockMod {
     static int pickBlockBind;
     static boolean pickBlockBindSwapped = false;
     static String terminalColorNeeded;
-    static int[] terminalNumberNeeded = new int[4];
+    static int[] terminalNumberNeeded = new int[13];
+    static int[] chest = new int[54];
 
     static double dungeonStartTime = 0;
     static double bloodOpenTime = 0;
@@ -145,6 +153,10 @@ public class DankersSkyblockMod {
     static int witherDoors = 0;
     static int dungeonDeaths = 0;
     static int puzzleFails = 0;
+
+    public int mazeId = 0;
+    public int sword = 10;
+    public int bow = 10;
 
     static String lastSkill = "Farming";
     public static boolean showSkillTracker;
@@ -165,7 +177,7 @@ public class DankersSkyblockMod {
 	public static double alchemyXPGained = 0;
 	static double xpLeft = 0;
 	static double timeSinceGained = 0;
-    
+
     public static String MAIN_COLOUR;
     public static String SECONDARY_COLOUR;
     public static String ERROR_COLOUR;
@@ -278,6 +290,11 @@ public class DankersSkyblockMod {
         keyBindings[0] = new KeyBinding("Open Maddox Menu", Keyboard.KEY_M, "Danker's Skyblock Mod");
         keyBindings[1] = new KeyBinding("Regular Ability", Keyboard.KEY_NUMPAD4, "Danker's Skyblock Mod");
         keyBindings[2] = new KeyBinding("Start/Stop Skill Tracker", Keyboard.KEY_NUMPAD5, "Danker's Skyblock Mod");
+        keyBindings[3] = new KeyBinding("Bone Macro", Keyboard.KEY_B, "Danker's Skyblock Mod");
+        keyBindings[4] = new KeyBinding("Reset Fake ID", Keyboard.KEY_P, "Danker's Skyblock Mod");
+        keyBindings[5] = new KeyBinding("Right Click Spam", Keyboard.KEY_X, "Danker's Skyblock Mod");
+        keyBindings[6] = new KeyBinding("Hyperion Bind", Keyboard.KEY_I, "Danker's Skyblock Mod");
+        keyBindings[7] = new KeyBinding("Ghost Block Bind", Keyboard.KEY_G, "Danker's Skyblock Mod");
 
         for (KeyBinding keyBinding : keyBindings) {
             ClientRegistry.registerKeyBinding(keyBinding);
@@ -289,6 +306,11 @@ public class DankersSkyblockMod {
     	ClientCommandHandler.instance.registerCommand(new ToggleCommand());
     	ClientCommandHandler.instance.registerCommand(new SetkeyCommand());
     	ClientCommandHandler.instance.registerCommand(new GetkeyCommand());
+        ClientCommandHandler.instance.registerCommand(new DelayCommand());
+        ClientCommandHandler.instance.registerCommand(new SimonCommand());
+        ClientCommandHandler.instance.registerCommand(new SwapCommand());
+        ClientCommandHandler.instance.registerCommand(new ToggleNoRotateCommand());
+        ClientCommandHandler.instance.registerCommand(new SleepCommand());
     	ClientCommandHandler.instance.registerCommand(new LootCommand());
     	ClientCommandHandler.instance.registerCommand(new ReloadConfigCommand());
     	ClientCommandHandler.instance.registerCommand(new DisplayCommand());
@@ -323,7 +345,7 @@ public class DankersSkyblockMod {
 
     	usingLabymod = Loader.isModLoaded("labymod");
     	System.out.println("LabyMod detection: " + usingLabymod);
-    	
+
         if(!ClientCommandHandler.instance.getCommands().containsKey("reparty")) {
             ClientCommandHandler.instance.registerCommand(new RepartyCommand());
         } else if (ConfigHandler.getBoolean("commands", "reparty")) {
@@ -417,13 +439,14 @@ public class DankersSkyblockMod {
         foundLivid = false;
         livid = null;
         nextBonzoUse = 0;
+        mazeId = 0;
     }
 
     // It randomly broke, so I had to make it the highest priority
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void onChat(ClientChatReceivedEvent event) {
     	String message = StringUtils.stripControlCodes(event.message.getUnformattedText());
-        
+
         if (message.startsWith("Your new API key is ") && Utils.isOnHypixel()) {
             String apiKey = event.message.getSiblings().get(0).getChatStyle().getChatClickEvent().getValue();
             ConfigHandler.writeStringConfig("api", "APIKey", apiKey);
@@ -555,12 +578,12 @@ public class DankersSkyblockMod {
         }
 
     	if (!Utils.inSkyblock) return;
-    	
+
     	// Action Bar
     	if (event.type == 2) {
 			EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
 			String[] actionBarSections = event.message.getUnformattedText().split(" {3,}");
-			
+
 			for (String section : actionBarSections) {
     			if (section.contains("+") && section.contains("/") && section.contains("(")) {
     				if (!section.contains("Runecrafting") && !section.contains("Carpentry")) {
@@ -572,14 +595,14 @@ public class DankersSkyblockMod {
 							}
 						}
 						timeSinceGained = System.currentTimeMillis() / 1000;
-						
+
 						int limit = section.contains("Farming") || section.contains("Enchanting") ? 60 : 50;
 						double currentXP = Double.parseDouble(section.substring(section.indexOf("(") + 1, section.indexOf("/")).replace(",", ""));
     					int xpToLevelUp = Integer.parseInt(section.substring(section.indexOf("/") + 1, section.indexOf(")")).replaceAll(",", ""));
     					xpLeft = xpToLevelUp - currentXP;
     					int previousXP = Utils.getPastXpEarned(xpToLevelUp, limit);
 						double totalXP = currentXP + previousXP;
-						
+
     					String skill = section.substring(section.indexOf(" ") + 1, section.lastIndexOf(" "));
     					switch (skill) {
 	    					case "Farming":
@@ -635,7 +658,7 @@ public class DankersSkyblockMod {
 	    						System.err.println("Unknown skill.");
     					}
     				}
-    				
+
     				if (ToggleCommand.skill50DisplayToggled && !section.contains("Runecrafting")) {
     					String xpGained = section.substring(section.indexOf("+"), section.indexOf("(") - 1);
     					double currentXp = Double.parseDouble(section.substring(section.indexOf("(") + 1, section.indexOf("/")).replace(",", ""));
@@ -650,7 +673,7 @@ public class DankersSkyblockMod {
     					}
     					int previousXp = Utils.getPastXpEarned(Integer.parseInt(section.substring(section.indexOf("/") + 1, section.indexOf(")")).replaceAll(",", "")), limit);
     					double percentage = Math.floor(((currentXp + previousXp) / totalXp) * 10000D) / 100D;
-    					
+
     					NumberFormat nf = NumberFormat.getNumberInstance(Locale.US);
     					skillTimer = SKILL_TIME;
     					showSkill = true;
@@ -660,7 +683,7 @@ public class DankersSkyblockMod {
     		}
     		return;
     	}
-        
+
         if (ToggleCommand.bonzoTimerToggled && Utils.inDungeons && message.contains("Bonzo's Mask") && message.contains("saved your life!")) {
             double usedTime = System.currentTimeMillis() / 1000;
             Minecraft mc = Minecraft.getMinecraft();
@@ -783,7 +806,7 @@ public class DankersSkyblockMod {
                 return;
             }
         }
-  
+
         if (ToggleCommand.oruoToggled && Utils.inDungeons) {
         	if (message.contains("What SkyBlock year is it?")) {
                 double currentTime = System.currentTimeMillis() /1000L;
@@ -800,7 +823,7 @@ public class DankersSkyblockMod {
                     }
                 }
             }
-        	
+
         	// Set wrong answers to red and remove click events
         	if (triviaAnswers != null && (message.contains("ⓐ") || message.contains("ⓑ") || message.contains("ⓒ"))) {
         		boolean isSolution = false;
@@ -818,7 +841,7 @@ public class DankersSkyblockMod {
         		}
         	}
         }
-    	
+
 		if (ToggleCommand.gpartyToggled) {
 			if (message.contains(" has invited all members of ")) {
 				try {
@@ -841,12 +864,12 @@ public class DankersSkyblockMod {
 				Utils.createTitle(EnumChatFormatting.RED + "GOLEM SPAWNING!", 3);
 			}
 		}
-		
+
 		if (message.contains("Yum! You gain +") && message.contains(" for 48 hours!")) {
 			cakeTime = System.currentTimeMillis() / 1000 + 172800; // Add 48 hours
 			ConfigHandler.writeDoubleConfig("misc", "cakeTime", cakeTime);
 		}
-		
+
 		boolean wolfRNG = false;
 		boolean spiderRNG = false;
 		boolean zombieRNG = false;
@@ -1074,7 +1097,7 @@ public class DankersSkyblockMod {
 			increaseSeaCreatures();
 		} else if (message.contains("The Sea Emperor arises from the depths")) {
 			increaseSeaCreatures();
-			
+
 			LootCommand.seaEmperors++;
 			LootCommand.empTime = System.currentTimeMillis() / 1000;
 			LootCommand.empSCs = 0;
@@ -1217,7 +1240,7 @@ public class DankersSkyblockMod {
 				}
 			}
 		}
-		
+
 		if (wolfRNG) {
 			LootCommand.wolfTime = System.currentTimeMillis() / 1000;
 			LootCommand.wolfBosses = 0;
@@ -1242,7 +1265,7 @@ public class DankersSkyblockMod {
 			ConfigHandler.writeDoubleConfig("zombie", "timeRNG", LootCommand.zombieTime);
 			ConfigHandler.writeIntConfig("zombie", "bossRNG", 0);
 		}
-		
+
 		// Mythological Tracker
 		if (message.contains("You dug out")) {
 			if (message.contains(" coins!")) {
@@ -1288,7 +1311,7 @@ public class DankersSkyblockMod {
 				ConfigHandler.writeIntConfig("mythological", "minosInquisitor", LootCommand.minosInquisitors);
 			}
 		}
-		
+
 		// Dungeons Trackers
 		if (message.contains("    ")) {
 			if (message.contains("Recombobulator 3000")) {
@@ -1350,7 +1373,7 @@ public class DankersSkyblockMod {
 					LootCommand.legSpiritPets++;
 					LootCommand.legSpiritPetsSession++;
 					ConfigHandler.writeIntConfig("catacombs", "spiritPetLeg", LootCommand.legSpiritPets);
-				} 
+				}
 			} else if (message.contains("Spirit Sword")) {
 				LootCommand.spiritSwords++;
 				LootCommand.spiritSwordsSession++;
@@ -1465,7 +1488,7 @@ public class DankersSkyblockMod {
 				ConfigHandler.writeIntConfig("catacombs", "witherBoot", LootCommand.witherBoots);
 			}
 		}
-		
+
 		// Chat Maddox
 		if (message.contains("[OPEN MENU]")) {
 			List<IChatComponent> listOfSiblings = event.message.getSiblings();
@@ -1477,7 +1500,7 @@ public class DankersSkyblockMod {
 			}
 			if (ToggleCommand.chatMaddoxToggled) Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(MAIN_COLOUR + "Open chat then click anywhere on-screen to open Maddox"));
 		}
-		
+
 		// Spirit Bear alerts
 		if (ToggleCommand.spiritBearAlerts && message.contains("The Spirit Bear has appeared!")) {
 			Utils.createTitle(EnumChatFormatting.DARK_PURPLE + "SPIRIT BEAR", 2);
@@ -2659,6 +2682,33 @@ public class DankersSkyblockMod {
         World world = mc.theWorld;
         EntityPlayerSP player = mc.thePlayer;
 
+        if (mc.currentScreen == null && System.currentTimeMillis() - lastInteractTime >= 250L) {
+            slotIn = -1;
+            lastSlot = -1;
+            mazeId = 0;
+        }
+        if (keyBindings[6].isKeyDown())
+            for (int i = 0; i <= 8; i++) {
+                ItemStack item = player.inventory.getStackInSlot(i);
+                if ((item != null && item.getDisplayName().contains("Hyperion")) || (item != null && item.getDisplayName().contains("Aspect of the End"))) {
+                    player.inventory.currentItem = i;
+                    mc.playerController.sendUseItem(mc.thePlayer, world, player.inventory.getStackInSlot(i));
+                    break;
+                }
+            }
+        if (keyBindings[7].isKeyDown()) {
+            if (mc.objectMouseOver.getBlockPos() == null) return;
+            Block block = (Minecraft.getMinecraft()).theWorld.getBlockState(mc.objectMouseOver.getBlockPos()).getBlock();
+            ArrayList<Block> interactables = new ArrayList<>(Arrays.asList(new Block[] {
+                    Blocks.acacia_door, Blocks.anvil, Blocks.beacon, Blocks.bed, Blocks.birch_door, Blocks.brewing_stand, Blocks.command_block, Blocks.crafting_table, Blocks.chest, Blocks.dark_oak_door,
+                    Blocks.daylight_detector, Blocks.daylight_detector_inverted, Blocks.dispenser, Blocks.dropper, Blocks.enchanting_table, Blocks.ender_chest, Blocks.furnace, Blocks.hopper, Blocks.jungle_door, Blocks.lever,
+                    Blocks.noteblock, Blocks.powered_comparator, Blocks.unpowered_comparator, Blocks.powered_repeater, Blocks.unpowered_repeater, Blocks.standing_sign, Blocks.wall_sign, Blocks.trapdoor, Blocks.trapped_chest, Blocks.wooden_button,
+                    Blocks.stone_button, Blocks.oak_door, Blocks.skull }));
+            if (!interactables.contains(block)) {
+                world.setBlockToAir(mc.objectMouseOver.getBlockPos());
+            }
+        }
+
         // Checks every second
         tickAmount++;
         if (tickAmount % 20 == 0) {
@@ -3049,6 +3099,34 @@ public class DankersSkyblockMod {
                 }
             }
 
+            if (chestName.equals("Click in order!") && until == 100000) {
+                for (int i = 10; i <= 25; i++) {
+                    if (i != 17 && i != 18) {
+                        Container container = mc.thePlayer.openContainer;
+                        IInventory chestInventory = ((ContainerChest) container).getLowerChestInventory();
+                        ItemStack click = chestInventory.getStackInSlot(i);
+                        if (click != null) {
+                            if (click.getItemDamage() != 14) break;
+                            if ((chestInventory.getStackInSlot(i)).stackSize == 1 && terminalNumberNeeded[0] == 0) {
+                                terminalNumberNeeded[0] = i;
+                            }
+                            if (terminalNumberNeeded[0] != 0 || terminalNumberNeeded[1] != 0) {
+                                for (int j = 1; j < terminalNumberNeeded.length; j++) {
+                                    ItemStack prevClick = chestInventory.getStackInSlot(terminalNumberNeeded[j - 1]);
+                                    if (prevClick != null) {
+                                        if (prevClick.getItemDamage() != 14)
+                                            break;
+                                        if (terminalNumberNeeded[j] == 0 && click.stackSize - (chestInventory.getStackInSlot(terminalNumberNeeded[j - 1])).stackSize == 1) {
+                                            terminalNumberNeeded[j] = i;
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
             if (ToggleCommand.superpairsToggled && chestName.startsWith("Superpairs (")) {
                 for (int i = 0; i < 53; i++) {
                     ItemStack itemStack = invSlots.get(i).getStack();
@@ -3066,31 +3144,6 @@ public class DankersSkyblockMod {
                     experimentTableSlots[i] = itemStack.copy().setStackDisplayName(itemName);
                 }
             }
-
-            if (ToggleCommand.clickInOrderToggled && chestName.equals("Click in order!")) {
-                if (terminalNumberNeeded[0] == 0) terminalNumberNeeded[0] = 15;
-                if (terminalNumberNeeded[2] == 0) terminalNumberNeeded[2] = 15;
-                for (int i = 10; i <= 25; i++) {
-                    if (i == 17 || i == 18) continue;
-                    ItemStack prevStack = invSlots.get(terminalNumberNeeded[1]).getStack();
-                    if (prevStack == null) terminalNumberNeeded[0] = 15;
-                    else if (prevStack.getItem() != Item.getItemFromBlock(Blocks.stained_glass_pane)) terminalNumberNeeded[0] = 15;
-                    else if (prevStack.getItemDamage() == 5) terminalNumberNeeded[0] = 15;
-
-                    ItemStack itemStack = invSlots.get(i).getStack();
-                    if (itemStack == null) continue;
-                    if (itemStack.getItem() != Item.getItemFromBlock(Blocks.stained_glass_pane)) continue;
-                    if (itemStack.getItemDamage() != 14) continue;
-                    if (itemStack.stackSize < terminalNumberNeeded[0]) {
-                        terminalNumberNeeded[0] = itemStack.stackSize;
-                        terminalNumberNeeded[1] = i;
-                    } else if (itemStack.stackSize == terminalNumberNeeded[0] + 1) {
-                        terminalNumberNeeded[2] = itemStack.stackSize;
-                        terminalNumberNeeded[3] = i;
-                    }
-                }
-            }
-
         }
 
         if (titleTimer >= 0) {
@@ -3357,6 +3410,8 @@ public class DankersSkyblockMod {
     @SubscribeEvent
     public void onKey(KeyInputEvent event) {
         if (!Utils.inSkyblock) return;
+        Minecraft mc = Minecraft.getMinecraft();
+        World world = mc.theWorld;
 
         EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
         if (keyBindings[0].isPressed()) {
@@ -3377,6 +3432,55 @@ public class DankersSkyblockMod {
             } else if (skillStopwatch.isStarted() && !skillStopwatch.isSuspended()) {
                 skillStopwatch.suspend();
                 player.addChatMessage(new ChatComponentText(MAIN_COLOUR + "Skill tracker paused."));
+            }
+        }
+        if (keyBindings[3].isPressed()) {
+            int[] order = new int[9];
+            for (int i = 0; i <= 8; i++) {
+                ItemStack item = player.inventory.getStackInSlot(i);
+                if (item != null && item.getDisplayName().contains("Bonemerang"))
+                    order[i] = 1;
+                if ((item != null && item.getDisplayName().contains("Giant's Sword")) || (item != null && item.getDisplayName().contains("Emerald")))
+                    this.sword = i;
+                if (item != null && item.getDisplayName().contains("Bow"))
+                    this.bow = i;
+            }
+            new Thread(() -> {
+                for (int i = 0; i <= 8; i++) {
+                    if (order[i] != 0) {
+                        player.inventory.currentItem = i;
+                        mc.playerController.sendUseItem(mc.thePlayer, world, player.inventory.getStackInSlot(i));
+                        try {
+                           Thread.sleep(DelayCommand.boneDelay);
+                        } catch (InterruptedException e) {
+                           e.printStackTrace();
+                        }
+                    }
+                }
+                if (this.sword != 10 && this.bow != 10 && SwapCommand.swapDelay != 0) {
+                  player.inventory.currentItem = this.sword;
+                  try {
+                    Thread.sleep(SwapCommand.swapDelay);
+                  } catch (InterruptedException e) {
+                    e.printStackTrace();
+                  }
+                  player.inventory.currentItem = this.bow;
+                }
+            }).start();
+        }
+        if (keyBindings[4].isPressed()) {
+          mazeId = 0;
+          slotIn = -1;
+        }
+        if (keyBindings[5].isPressed()) {
+            for (int i = 0; i <= SimonCommand.simonAmount; i++) {
+                try {
+                    Method method = mc.getClass().getDeclaredMethod("func_147121_ag", new Class[0]);
+                    method.setAccessible(true);
+                    method.invoke(mc, new Object[0]);
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                }
             }
         }
     }
@@ -3631,7 +3735,7 @@ public class DankersSkyblockMod {
                 GuiChest chest = (GuiChest) event.gui;
                 IInventory inventory = ((ContainerChest) containerChest).getLowerChestInventory();
                 String inventoryName = inventory.getDisplayName().getUnformattedText();
-                
+
                 if (ToggleCommand.swapToPickBlockToggled) {
                     if (inventoryName.startsWith("Chronomatron (") || inventoryName.startsWith("Superpairs (") || inventoryName.startsWith("Ultrasequencer (") || inventoryName.startsWith("What starts with:") || inventoryName.startsWith("Select all the") || inventoryName.startsWith("Navigate the maze!") || inventoryName.startsWith("Correct all the panes!") || inventoryName.startsWith("Click in order!") || inventoryName.startsWith("Harp -")) {
                         if (!pickBlockBindSwapped) {
@@ -3722,52 +3826,199 @@ public class DankersSkyblockMod {
                         }
                     }
                 }
+                if (ToggleCommand.clickInOrderToggled && Utils.inDungeons && displayName.equals("Chest") && tickAmount != until) {
+                    if (chestOpen == 0) {
+                        until = tickAmount;
+                        chestOpen = 1;
+                        return;
+                    }
+                    mc.thePlayer.closeScreen();
+                    chestOpen = 0;
+                }
+                if (displayName.contains("Harp") && ToggleCommand.startsWithToggled) {
+                    String[] currentInv = new String[54];
+                    Container playerContainer = mc.thePlayer.openContainer;
+                    IInventory chestInventory = ((ContainerChest)playerContainer).getLowerChestInventory();
+                    for (int i = 37; i <= 43; i++) {
+                        ItemStack itemStack = chestInventory.getStackInSlot(i);
+                        if (itemStack != null &&
+                                itemStack.getUnlocalizedName().toLowerCase().contains("quartz")) {
+                            for (int j = 0; j <= 53; j++) {
+                                ItemStack name = chestInventory.getStackInSlot(j);
+                                if (name != null)
+                                    currentInv[j] = name.toString();
+                            }
+                            if (!Arrays.toString(currentInv).equals(Arrays.toString(harpInv))) {
+                                mc.playerController.windowClick(mc.thePlayer.openContainer.windowId, i, 2, 0, mc.thePlayer);
+                                mc.thePlayer.addChatMessage(new ChatComponentText("clicked"));
+                                until = tickAmount;
+                                harpInv = currentInv;
+                            }
+                        }
+                    }
+                }
+                if (displayName.equals("Navigate the maze!") && invSlots.size() == 90 && ToggleCommand.startsWithToggled && System.currentTimeMillis() - lastInteractTime >= SleepCommand.waitAmount) {
+                    if (mazeId <= mc.thePlayer.openContainer.windowId) {
+                        mazeId = mc.thePlayer.openContainer.windowId;
+                    }
+                    Container playerContainer = mc.thePlayer.openContainer;
+                    IInventory chestInventory = ((ContainerChest)playerContainer).getLowerChestInventory();
+                    if (slotIn == -1) {
+                        System.out.println("checking chest");
+                        for (int i = 0; i <= 53; i++) {
+                            ItemStack itemStack = chestInventory.getStackInSlot(i);
+                            if (itemStack != null) {
+                                int type = itemStack.getItemDamage();
+                                if (type == 0)
+                                    chest[i] = 1;
+                                if (type == 5) {
+                                    slotIn = i;
+                                    chest[i] = 2;
+                                }
+                            }
+                        }
+                    }
+                    int firstCheck = slotIn + 1;
+                    int secondCheck = slotIn + 9;
+                    int thirdCheck = slotIn - 1;
+                    int fourthCheck = slotIn - 9;
+                    System.out.println("attempt " + slotIn);
+                    if (firstCheck % 9 != 0 && firstCheck <= 53 &&
+                            chest[firstCheck] == 1) {
+                        chest[firstCheck] = 0;
+                        slotIn = firstCheck;
+                        System.out.println("1");
+                        mc.playerController.windowClick(mazeId, firstCheck, 0, 0, mc.thePlayer);
+                        mazeId++;
+                        lastInteractTime = System.currentTimeMillis();
+                    } else if (secondCheck <= 53 &&
+                            chest[secondCheck] == 1) {
+                        chest[secondCheck] = 0;
+                        slotIn = secondCheck;
+                        System.out.println("2");
+                        mc.playerController.windowClick(mazeId, secondCheck, 0, 0, mc.thePlayer);
+                        mazeId++;
+                        lastInteractTime = System.currentTimeMillis();
+                    } else if (thirdCheck % 9 != 8 && thirdCheck >= 0 && thirdCheck <= 53 &&
+                            chest[thirdCheck] == 1) {
+                        chest[thirdCheck] = 0;
+                        slotIn = thirdCheck;
+                        System.out.println("3");
+                        mc.playerController.windowClick(mazeId, thirdCheck, 0, 0, mc.thePlayer);
+                        mazeId++;
+                        lastInteractTime = System.currentTimeMillis();
+                    } else if (fourthCheck >= 0 && (Minecraft.getMinecraft()).currentScreen != null &&
+                            chest[fourthCheck] == 1) {
+                        chest[fourthCheck] = 0;
+                        slotIn = fourthCheck;
+                        System.out.println("4");
+                        mc.playerController.windowClick(mazeId, fourthCheck, 0, 0, mc.thePlayer);
+                        mazeId++;
+                        lastInteractTime = System.currentTimeMillis();
+                    }
+                }
 
-                if (ToggleCommand.startsWithToggled && Utils.inDungeons && displayName.startsWith("What starts with:")) {
+                if (ToggleCommand.startsWithToggled && System.currentTimeMillis() - lastInteractTime >= SleepCommand.waitAmount && displayName.startsWith("What starts with:")) {
                     char letter = displayName.charAt(displayName.indexOf("'") + 1);
-                    for (Slot slot : invSlots) {
-                        if (slot.getSlotIndex() > 53) continue;
-                        ItemStack item = slot.getStack();
-                        if (item == null) continue;
-                        if (item.isItemEnchanted()) continue;
+                    if (mazeId <= mc.thePlayer.openContainer.windowId)
+                        mazeId = mc.thePlayer.openContainer.windowId;
+                    for (Slot startsWith : invSlots) {
+                        if (startsWith.slotNumber <= lastSlot ||
+                                startsWith.getSlotIndex() <= lastSlot)
+                            continue;
+                        ItemStack item = startsWith.getStack();
+                        if (item == null ||
+                                item.isItemEnchanted())
+                            continue;
                         if (StringUtils.stripControlCodes(item.getDisplayName()).charAt(0) == letter) {
-                            Utils.drawOnSlot(chestSize, slot.xDisplayPosition, slot.yDisplayPosition, 0xBF40FF40);
+                            mc.playerController.windowClick(mazeId, startsWith.slotNumber, 0, 0, mc.thePlayer);
+                            mazeId++;
+                            lastSlot = startsWith.getSlotIndex();
+                            lastInteractTime = System.currentTimeMillis();
+                            break;
                         }
+                        if (mazeId - 15 > mc.thePlayer.openContainer.windowId)
+                            break;
                     }
                 }
 
-                if (ToggleCommand.selectAllToggled && Utils.inDungeons && displayName.startsWith("Select all the")) {
-                    String colour;
-                    List<String> colourParts = new ArrayList<>();
-                    Matcher colourMatcher = startsWithTerminalPattern.matcher(displayName);
-                    while (colourMatcher.find()) {
-                        colourParts.add(colourMatcher.group());
+                if (ToggleCommand.startsWithToggled && System.currentTimeMillis() - lastInteractTime >= SleepCommand.waitAmount && displayName.equals("Correct all the panes!")) {
+                    for (Slot startsWith : invSlots) {
+                        if (startsWith.getSlotIndex() > 53 ||
+                                startsWith.getSlotIndex() <= lastSlot)
+                            continue;
+                        ItemStack item = startsWith.getStack();
+                        if (item == null ||
+                                item.isItemEnchanted())
+                            continue;
+                        if (item.getDisplayName().contains("Off") && (Minecraft.getMinecraft()).currentScreen != null) {
+                            if (mazeId <= mc.thePlayer.openContainer.windowId)
+                                mazeId = mc.thePlayer.openContainer.windowId;
+                            mc.playerController.windowClick(mazeId, startsWith.slotNumber, 0, 0, mc.thePlayer);
+                            mazeId++;
+                            lastSlot = startsWith.getSlotIndex();
+                            lastInteractTime = System.currentTimeMillis();
+                            break;
+                        }
+                        if (mazeId - 15 > mc.thePlayer.openContainer.windowId)
+                            break;
                     }
-                    colour = String.join(" ", colourParts);
-                    terminalColorNeeded = colour;
+                }
 
+                if (ToggleCommand.startsWithToggled && System.currentTimeMillis() - lastInteractTime >= SleepCommand.waitAmount && displayName.startsWith("Select all the")) {
+                    String colour = displayName.split(" ")[3];
                     for (Slot slot : invSlots) {
-                        if (slot.getSlotIndex() > 53) continue;
+                        if (slot.getSlotIndex() > 53 || slot.getSlotIndex() <= lastSlot) continue;
                         ItemStack item = slot.getStack();
-                        if (item == null) continue;
-                        if (item.isItemEnchanted()) continue;
+                        if (item == null || item.isItemEnchanted()) continue;
                         String itemName = StringUtils.stripControlCodes(item.getDisplayName()).toUpperCase();
-                        if (itemName.contains(colour) || (colour.equals("SILVER") && itemName.contains("LIGHT GRAY")) || (colour.equals("WHITE") && itemName.equals("WOOL"))) {
-                            Utils.drawOnSlot(chestSize, slot.xDisplayPosition, slot.yDisplayPosition, 0xBF40FF40);
+                        if (item.getDisplayName().toUpperCase().contains(colour) || (colour.equals("SILVER") && itemName.contains("LIGHT GRAY")) || (colour.equals("WHITE") && itemName.equals("WOOL")) || (colour.equals("BLACK") && itemName.contains("INK")) || (colour.equals("BROWN") && itemName.contains("COCOA")) || (colour.equals("BLUE") && itemName.contains("LAPIS")) || (colour.equals("WHITE") && itemName.contains("BONE"))) {
+                            if (mazeId <= mc.thePlayer.openContainer.windowId)
+                                mazeId = mc.thePlayer.openContainer.windowId;
+                            lastInteractTime = System.currentTimeMillis();
+                            mc.playerController.windowClick(mazeId, slot.slotNumber, 2, 0, mc.thePlayer);
+                            lastSlot = slot.getSlotIndex();
+                            mazeId++;
+                            break;
                         }
+                        if (mazeId - 15 > mc.thePlayer.openContainer.windowId)
+                            break;
                     }
                 }
-
-                if (ToggleCommand.clickInOrderToggled && displayName.equals("Click in order!")) {
-                    Slot slot = invSlots.get(terminalNumberNeeded[1]);
-                    Utils.drawOnSlot(chestSize, slot.xDisplayPosition, slot.yDisplayPosition, new Color(255, 0, 221, 255).getRGB());
-                    Slot nextSlot = invSlots.get(terminalNumberNeeded[3]);
-                    if (nextSlot != slot && nextSlot.getSlotIndex() != 0) {
-                        Utils.drawOnSlot(chestSize, nextSlot.xDisplayPosition, nextSlot.yDisplayPosition, new Color(11, 239, 231, 255).getRGB());
+                if (displayName.equals("Click in order!") && System.currentTimeMillis() - lastInteractTime >= SleepCommand.waitAmount && ToggleCommand.startsWithToggled) {
+                    Container playerContainer = mc.thePlayer.openContainer;
+                    IInventory chestInventory = ((ContainerChest)playerContainer).getLowerChestInventory();
+                    if (mazeId <= mc.thePlayer.openContainer.windowId)
+                        mazeId = mc.thePlayer.openContainer.windowId;
+                    int[] order = new int[14];
+                    int i;
+                    for (i = 10; i <= 25; i++) {
+                        if (i != 17 && i != 18) {
+                            ItemStack click = chestInventory.getStackInSlot(i);
+                            if (click == null)
+                                break;
+                            order[(chestInventory.getStackInSlot(i)).stackSize - 1] = i;
+                        }
+                    }
+                    for (i = 0; i < order.length &&
+                            order[i] != 0; i++) {
+                        if (i > lastSlot) {
+                            ItemStack check = chestInventory.getStackInSlot(order[i]);
+                            if (order[i] != 0 && check != null && check.getItemDamage() == 14) {
+                                mc.playerController.windowClick(mazeId, order[i], 2, 0, mc.thePlayer);
+                                mazeId++;
+                                lastSlot = i;
+                                lastInteractTime = System.currentTimeMillis();
+                                break;
+                            }
+                            if (mazeId - 15 > mc.thePlayer.openContainer.windowId)
+                                break;
+                        }
                     }
                 }
 
                 if (ToggleCommand.ultrasequencerToggled && displayName.startsWith("Ultrasequencer (")) {
+                    EntityPlayerSP player = mc.thePlayer;
                     if (invSlots.size() > 48 && invSlots.get(49).getStack() != null) {
                         if (invSlots.get(49).getStack().getDisplayName().startsWith("§7Timer: §a")) {
                             lastUltraSequencerClicked = 0;
@@ -3779,22 +4030,33 @@ public class DankersSkyblockMod {
                                     }
                                 }
                             }
-                            if (clickInOrderSlots[lastUltraSequencerClicked] != null) {
+                            if (clickInOrderSlots[lastUltraSequencerClicked] != null && player.inventory.getItemStack() == null && tickAmount % 2 == 0 && lastUltraSequencerClicked != 0 && until == lastUltraSequencerClicked) {
                                 Slot nextSlot = clickInOrderSlots[lastUltraSequencerClicked];
-                                Utils.drawOnSlot(chestSize, nextSlot.xDisplayPosition, nextSlot.yDisplayPosition, 0xE540FF40);
+                                new TextRenderer(mc, String.valueOf(mc.thePlayer.openContainer.windowId), 50, 50, 1.0D);
+                                mc.playerController.windowClick(mc.thePlayer.openContainer.windowId, nextSlot.slotNumber, 0, 0, mc.thePlayer);
+                                Utils.drawOnSlot(chestSize, nextSlot.xDisplayPosition, nextSlot.yDisplayPosition, -448725184);
+                                until = lastUltraSequencerClicked + 1;
+                                tickAmount = 0;
                             }
-                            if (lastUltraSequencerClicked + 1 < clickInOrderSlots.length) {
-                                if (clickInOrderSlots[lastUltraSequencerClicked + 1] != null) {
-                                    Slot nextSlot = clickInOrderSlots[lastUltraSequencerClicked + 1];
-                                    Utils.drawOnSlot(chestSize, nextSlot.xDisplayPosition, nextSlot.yDisplayPosition, 0xD740DAE6);
-                                }
+                            if (clickInOrderSlots[lastUltraSequencerClicked] != null && player.inventory.getItemStack() == null && tickAmount == 18 && lastUltraSequencerClicked < 1) {
+                                Slot nextSlot = clickInOrderSlots[lastUltraSequencerClicked];
+                                new TextRenderer(mc, String.valueOf(mc.thePlayer.openContainer.windowId), 50, 50, 1.0D);
+                                mc.playerController.windowClick(mc.thePlayer.openContainer.windowId, nextSlot.slotNumber, 0, 0, mc.thePlayer);
+                                Utils.drawOnSlot(chestSize, nextSlot.xDisplayPosition, nextSlot.yDisplayPosition, -448725184);
+                                tickAmount = 0;
+                                until = 1;
+                            }
+                            if (lastUltraSequencerClicked + 1 < clickInOrderSlots.length && clickInOrderSlots[lastUltraSequencerClicked + 1] != null) {
+                                Slot nextSlot = clickInOrderSlots[lastUltraSequencerClicked + 1];
+                                Utils.drawOnSlot(chestSize, nextSlot.xDisplayPosition, nextSlot.yDisplayPosition, -683615514);
                             }
                         }
                     }
                 }
 
                 if (ToggleCommand.chronomatronToggled && displayName.startsWith("Chronomatron (")) {
-                    if (invSlots.size() > 48 && invSlots.get(49).getStack() != null) {
+                    EntityPlayerSP player = mc.thePlayer;
+                    if (player.inventory.getItemStack() == null && invSlots.size() > 48 && invSlots.get(49).getStack() != null) {
                         if (invSlots.get(49).getStack().getDisplayName().startsWith("§7Timer: §a") && invSlots.get(4).getStack() != null) {
                             int round = invSlots.get(4).getStack().stackSize;
                             int timerSeconds = Integer.parseInt(StringUtils.stripControlCodes(invSlots.get(49).getStack().getDisplayName()).replaceAll("[^\\d]", ""));
@@ -3809,25 +4071,17 @@ public class DankersSkyblockMod {
                                     }
                                 }
                             }
-                            if (chronomatronMouseClicks < chronomatronPattern.size()) {
+                            if (chronomatronMouseClicks < chronomatronPattern.size() && player.inventory.getItemStack() == null) {
                                 for (int i = 10; i <= 43; i++) {
-                                    ItemStack glass = invSlots.get(i).getStack();
-                                    if (glass == null) continue;
-
-                                    Slot glassSlot = invSlots.get(i);
-
-                                    if (chronomatronMouseClicks + 1 < chronomatronPattern.size()) {
-                                        if (chronomatronPattern.get(chronomatronMouseClicks).equals(chronomatronPattern.get(chronomatronMouseClicks + 1))) {
-                                            if (glass.getDisplayName().equals(chronomatronPattern.get(chronomatronMouseClicks))) {
-                                                Utils.drawOnSlot(chestSize, glassSlot.xDisplayPosition, glassSlot.yDisplayPosition, 0xE540FF40);
-                                            }
-                                        } else if (glass.getDisplayName().equals(chronomatronPattern.get(chronomatronMouseClicks))) {
-                                            Utils.drawOnSlot(chestSize, glassSlot.xDisplayPosition, glassSlot.yDisplayPosition, 0xE540FF40);
-                                        } else if (glass.getDisplayName().equals(chronomatronPattern.get(chronomatronMouseClicks + 1))) {
-                                            Utils.drawOnSlot(chestSize, glassSlot.xDisplayPosition, glassSlot.yDisplayPosition, 0xBE40DAE6);
+                                    ItemStack glass = (invSlots.get(i)).getStack();
+                                    if (glass != null && player.inventory.getItemStack() == null && tickAmount % 5 == 0) {
+                                        Slot glassSlot = invSlots.get(i);
+                                        if (glass.getDisplayName().equals(chronomatronPattern.get(chronomatronMouseClicks))) {
+                                            Utils.drawOnSlot(chestSize, glassSlot.xDisplayPosition, glassSlot.yDisplayPosition, -448725184);
+                                            mc.playerController.windowClick(mc.thePlayer.openContainer.windowId, glassSlot.slotNumber, 0, 0, mc.thePlayer);
+                                            chronomatronMouseClicks++;
+                                            break;
                                         }
-                                    } else if (glass.getDisplayName().equals(chronomatronPattern.get(chronomatronMouseClicks))) {
-                                        Utils.drawOnSlot(chestSize, glassSlot.xDisplayPosition, glassSlot.yDisplayPosition, 0xE540FF40);
                                     }
                                 }
                             }
@@ -3839,6 +4093,7 @@ public class DankersSkyblockMod {
                 }
 
                 if (ToggleCommand.superpairsToggled && displayName.contains("Superpairs (")) {
+                    new TextRenderer(mc, String.valueOf(mc.thePlayer.openContainer.windowId), 50, 50, 1.0D);
                     HashMap<String, HashSet<Integer>> matches = new HashMap<>();
                     for (int i = 0; i < 53; i++) {
                         ItemStack itemStack = experimentTableSlots[i];

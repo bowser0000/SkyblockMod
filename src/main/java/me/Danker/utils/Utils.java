@@ -157,6 +157,14 @@ public class Utils {
 		}
 		inDungeons = false;
 	}
+
+	public static void sleep(int time) {
+		try {
+			Thread.sleep(time);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
 	
 	public static String capitalizeString(String string) {
 		String[] words = string.split("_");

@@ -455,6 +455,12 @@ public class ConfigHandler {
 
 		//Commands
 		if (!hasKey("commands", "reparty")) writeBooleanConfig("commands", "reparty", false);
+
+		//Macro
+        if (!hasKey("macro", "delay")) writeIntConfig("macro", "delay", 0);
+        if (!hasKey("macro", "delay")) writeIntConfig("macro", "terminal", 150);
+        if (!hasKey("macro", "swap")) writeIntConfig("macro", "swap", 150);
+        if (!hasKey("macro", "simon")) writeIntConfig("macro", "simon", 50);
 		
 		ToggleCommand.gpartyToggled = getBoolean("toggles", "GParty");
 		ToggleCommand.coordsToggled = getBoolean("toggles", "Coords");
@@ -740,6 +746,11 @@ public class ConfigHandler {
 		DankersSkyblockMod.PET_80_TO_89 = getInt("colors", "pet80To89");
 		DankersSkyblockMod.PET_90_TO_99 = getInt("colors", "pet90To99");
 		DankersSkyblockMod.PET_100 = getInt("colors", "pet100");
+
+        DelayCommand.boneDelay = getInt("macro", "delay");
+        SwapCommand.swapDelay = getInt("macro", "swap");
+        SleepCommand.waitAmount = getInt("macro", "terminal");
+        SimonCommand.simonAmount = getInt("macro", "simon");
 	}
 	
 }
