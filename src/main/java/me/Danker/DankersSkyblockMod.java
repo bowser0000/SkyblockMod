@@ -404,7 +404,7 @@ public class DankersSkyblockMod {
 
     @SubscribeEvent
     public void onGuiRender(GuiScreenEvent.BackgroundDrawnEvent event) {
-        //if (!Utils.inSkyblock) return;
+        if (!Utils.inSkyblock) return;
         if (event.gui instanceof GuiChest) {
             GuiChest inventory = (GuiChest) event.gui;
             Container containerChest = inventory.inventorySlots;
