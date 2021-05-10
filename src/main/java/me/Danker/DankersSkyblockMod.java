@@ -1,7 +1,5 @@
 package me.Danker;
 
-import akka.event.Logging;
-import com.google.gson.JsonObject;
 import me.Danker.commands.*;
 import me.Danker.gui.*;
 import me.Danker.handlers.*;
@@ -24,9 +22,6 @@ import net.minecraft.entity.monster.EntitySpider;
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.passive.EntityWolf;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.event.ClickEvent;
-import net.minecraft.event.ClickEvent.Action;
-import net.minecraft.event.HoverEvent;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.Container;
@@ -80,9 +75,7 @@ import java.util.regex.Pattern;
 @Mod(modid = DankersSkyblockMod.MODID, version = DankersSkyblockMod.VERSION, clientSideOnly = true)
 public class DankersSkyblockMod {
     public static final String MODID = "Danker's Skyblock Mod";
-    public static final String VERSION = "1.8.5-beta8";
-    static double checkItemsNow = 0;
-    static double itemsChecked = 0;
+    public static final String VERSION = "1.8.6-beta2";
     public static Map<String, String> t6Enchants = new HashMap<>();
     public static Pattern t6EnchantPattern = Pattern.compile("");
     static Pattern petPattern = Pattern.compile("\\[Lvl [\\d]{1,3}]");
@@ -367,72 +360,6 @@ public class DankersSkyblockMod {
 			}
 		}
 	}
-
-    // Update checker
-    @SubscribeEvent
-    public void onJoin(EntityJoinWorldEvent event) {
-
-        if (firstLaunch) {
-            firstLaunch = false;
-            ConfigHandler.writeBooleanConfig("misc", "firstLaunch", false);
-
-            IChatComponent chatComponent = new ChatComponentText(
-                    EnumChatFormatting.GOLD + "Thank you for downloading Danker's Skyblock Mod.\n" +
-                         "To get started, run the command " + EnumChatFormatting.GOLD + "/dsm" + EnumChatFormatting.RESET + " to view all the mod features."
-            );
-            chatComponent.setChatStyle(chatComponent.getChatStyle().setChatHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ChatComponentText("Click to open the DSM menu."))).setChatClickEvent(new ClickEvent(Action.RUN_COMMAND, "/dsm")));
-
-            new Thread(() -> {
-                while (true) {
-                    if (Minecraft.getMinecraft().thePlayer == null) {
-                        try {
-                            Thread.sleep(500);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                        continue;
-                    }
-                    try {
-                        Thread.sleep(2000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    Minecraft.getMinecraft().thePlayer.addChatMessage(chatComponent);
-                    break;
-                }
-            }).start();
-        }
-
-        if (!updateChecked) {
-            updateChecked = true;
-
-            // MULTI THREAD DRIFTING
-            new Thread(() -> {
-                EntityPlayer player = Minecraft.getMinecraft().thePlayer;
-
-                System.out.println("Checking for updates...");
-                JsonObject latestRelease = APIHandler.getResponse("https://api.github.com/repos/bowser0000/SkyblockMod/releases/latest");
-
-                String latestTag = latestRelease.get("tag_name").getAsString();
-                DefaultArtifactVersion currentVersion = new DefaultArtifactVersion(VERSION);
-                DefaultArtifactVersion latestVersion = new DefaultArtifactVersion(latestTag.substring(1));
-
-                if (currentVersion.compareTo(latestVersion) < 0) {
-                    String releaseURL = latestRelease.get("html_url").getAsString();
-
-                    ChatComponentText update = new ChatComponentText(EnumChatFormatting.GREEN + "" + EnumChatFormatting.BOLD + "  [UPDATE]  ");
-                    update.setChatStyle(update.getChatStyle().setChatClickEvent(new ClickEvent(Action.OPEN_URL, releaseURL)));
-
-                    try {
-                        Thread.sleep(2000);
-                    } catch (InterruptedException ex) {
-                        ex.printStackTrace();
-                    }
-                    player.addChatMessage(new ChatComponentText(ERROR_COLOUR + MODID + " is outdated. Please update to " + latestTag + ".\n").appendSibling(update));
-                }
-            }).start();
-        }
-    }
 
     @SubscribeEvent
     public void onWorldChange(WorldEvent.Load event) {
@@ -1561,7 +1488,7 @@ public class DankersSkyblockMod {
             new TextRenderer(mc, livid.getName().replace("" + EnumChatFormatting.BOLD, ""), MoveCommand.lividHpXY[0], MoveCommand.lividHpXY[1], ScaleCommand.lividHpScale);
         }
 
-        if (ToggleCommand.cakeTimerToggled && Utils.inSkyblock) {
+        if (ToggleCommand.cakeTimerToggled) {
             double scale = ScaleCommand.cakeTimerScale;
             double scaleReset = Math.pow(scale, -1);
             GL11.glScaled(scale, scale, scale);
@@ -1606,7 +1533,7 @@ public class DankersSkyblockMod {
             }
         }
 
-        if (showSkillTracker && Utils.inSkyblock) {
+        if (showSkillTracker) {
             int xpPerHour;
             double xpToShow = 0;
             switch (lastSkill) {
@@ -2540,119 +2467,8 @@ public class DankersSkyblockMod {
         }
     }
 
-    @SubscribeEvent(priority = EventPriority.HIGHEST)
-    public void onSound(final PlaySoundEvent event) {
-        if (!Utils.inSkyblock) return;
-        if (event.name.equals("note.pling")) {
-            // Don't check twice within 3 seconds
-            checkItemsNow = System.currentTimeMillis() / 1000;
-            if (checkItemsNow - itemsChecked < 3) return;
-
-            List<String> scoreboard = ScoreboardHandler.getSidebarLines();
-
-            for (String line : scoreboard) {
-                String cleanedLine = ScoreboardHandler.cleanSB(line);
-                // If Hypixel lags and scoreboard doesn't update
-                if (cleanedLine.contains("Boss slain!") || cleanedLine.contains("Slay the boss!")) {
-                    int itemTeeth = Utils.getItems("Wolf Tooth");
-                    int itemWheels = Utils.getItems("Hamster Wheel");
-                    int itemWebs = Utils.getItems("Tarantula Web");
-                    int itemTAP = Utils.getItems("Toxic Arrow Poison");
-                    int itemRev = Utils.getItems("Revenant Flesh");
-                    int itemFoul = Utils.getItems("Foul Flesh");
-
-                    // If no items, are detected, allow check again. Should fix items not being found
-                    if (itemTeeth + itemWheels + itemWebs + itemTAP + itemRev + itemFoul > 0) {
-                        itemsChecked = System.currentTimeMillis() / 1000;
-                        LootCommand.wolfTeeth += itemTeeth;
-                        LootCommand.wolfWheels += itemWheels;
-                        LootCommand.spiderWebs += itemWebs;
-                        LootCommand.spiderTAP += itemTAP;
-                        LootCommand.zombieRevFlesh += itemRev;
-                        LootCommand.zombieFoulFlesh += itemFoul;
-                        LootCommand.wolfTeethSession += itemTeeth;
-                        LootCommand.wolfWheelsSession += itemWheels;
-                        LootCommand.spiderWebsSession += itemWebs;
-                        LootCommand.spiderTAPSession += itemTAP;
-                        LootCommand.zombieRevFleshSession += itemRev;
-                        LootCommand.zombieFoulFleshSession += itemFoul;
-
-                        ConfigHandler.writeIntConfig("wolf", "teeth", LootCommand.wolfTeeth);
-                        ConfigHandler.writeIntConfig("wolf", "wheel", LootCommand.wolfWheels);
-                        ConfigHandler.writeIntConfig("spider", "web", LootCommand.spiderWebs);
-                        ConfigHandler.writeIntConfig("spider", "tap", LootCommand.spiderTAP);
-                        ConfigHandler.writeIntConfig("zombie", "revFlesh", LootCommand.zombieRevFlesh);
-                        ConfigHandler.writeIntConfig("zombie", "foulFlesh", LootCommand.zombieFoulFlesh);
-                    }
-                }
-            }
-        }
-    }
-
-    @SubscribeEvent(priority = EventPriority.HIGHEST)
-    public void onTooltip(ItemTooltipEvent event) {
-        if (!Utils.inSkyblock) return;
-        if (event.toolTip == null) return;
-
-        ItemStack item = event.itemStack;
-        Minecraft mc = Minecraft.getMinecraft();
-        EntityPlayerSP player = mc.thePlayer;
-
-        if (ToggleCommand.goldenToggled) {
-            for (int i = 0; i < event.toolTip.size(); i++) {
-                event.toolTip.set(i, Utils.returnGoldenEnchants(event.toolTip.get(i)));
-            }
-        }
-
-        if (ToggleCommand.expertiseLoreToggled) {
-            if (item.hasTagCompound()) {
-                NBTTagCompound tags = item.getSubCompound("ExtraAttributes", false);
-                if (tags != null) {
-                    if (tags.hasKey("expertise_kills")) {
-                        int index = 4;
-                        if (!Minecraft.getMinecraft().gameSettings.advancedItemTooltips) index -= 2;
-
-                        event.toolTip.add(event.toolTip.size() - index, "");
-                        event.toolTip.add(event.toolTip.size() - index, "Expertise Kills: " + EnumChatFormatting.RED + tags.getInteger("expertise_kills"));
-                        if (Utils.expertiseKillsLeft(tags.getInteger("expertise_kills")) != -1) {
-                            event.toolTip.add(event.toolTip.size() - index, Utils.expertiseKillsLeft(tags.getInteger("expertise_kills")) + " kills to tier up!");
-                        }
-                    }
-                }
-            }
-        }
-
-        if (mc.currentScreen instanceof GuiChest) {
-            ContainerChest chest = (ContainerChest) player.openContainer;
-            IInventory inv = chest.getLowerChestInventory();
-            String chestName = inv.getDisplayName().getUnformattedText();
-
-            if (ToggleCommand.superpairsToggled && chestName.contains("Superpairs (")) {
-                if (Item.getIdFromItem(item.getItem()) != 95) return;
-                if (item.getDisplayName().contains("Click any button") || item.getDisplayName().contains("Click a second button") || item.getDisplayName().contains("Next button is instantly rewarded") || item.getDisplayName().contains("Stained Glass")) {
-                    Slot slot = ((GuiChest) mc.currentScreen).getSlotUnderMouse();
-                    ItemStack itemStack = experimentTableSlots[slot.getSlotIndex()];
-                    if (itemStack == null) return;
-                    String itemName = itemStack.getDisplayName();
-
-                    if (event.toolTip.stream().anyMatch(x -> StringUtils.stripControlCodes(x).equals(StringUtils.stripControlCodes(itemName))))
-                        return;
-                    event.toolTip.removeIf(x -> {
-                        x = StringUtils.stripControlCodes(x);
-                        if (x.equals("minecraft:stained_glass")) return true;
-                        return x.startsWith("NBT: ");
-                    });
-                    event.toolTip.add(itemName);
-                    event.toolTip.add(itemStack.getItem().getRegistryName());
-                }
-
-            }
-        }
-    }
-
     @SubscribeEvent(priority = EventPriority.LOW)
     public void onTooltipLow(ItemTooltipEvent event) {
-        if (!Utils.inSkyblock) return;
         if (event.toolTip == null) return;
 
         Minecraft mc = Minecraft.getMinecraft();
@@ -3222,7 +3038,7 @@ public class DankersSkyblockMod {
 
     @SubscribeEvent
     public void onInteract(PlayerInteractEvent event) {
-        if (!Utils.inSkyblock || Minecraft.getMinecraft().thePlayer != event.entityPlayer) return;
+        if (Minecraft.getMinecraft().thePlayer != event.entityPlayer) return;
         ItemStack item = event.entityPlayer.getHeldItem();
         if (item == null) return;
 
@@ -3260,6 +3076,7 @@ public class DankersSkyblockMod {
         }
 
         if (event.action == PlayerInteractEvent.Action.RIGHT_CLICK_AIR) {
+            Minecraft mc = Minecraft.getMinecraft();
             if (ToggleCommand.aotdToggled && item.getDisplayName().contains("Aspect of the Dragons")) {
                 event.setCanceled(true);
             }
@@ -3293,6 +3110,7 @@ public class DankersSkyblockMod {
         }
 
         if (event.action == PlayerInteractEvent.Action.RIGHT_CLICK_BLOCK) {
+            Minecraft mc = Minecraft.getMinecraft();
             Block block = Minecraft.getMinecraft().theWorld.getBlockState(event.pos).getBlock();
 
             ArrayList<Block> interactables = new ArrayList<>(Arrays.asList(
@@ -3361,37 +3179,6 @@ public class DankersSkyblockMod {
     }
 
     @SubscribeEvent
-    public void onArrowNock(ArrowNockEvent event) {
-        if (!Utils.inSkyblock || Minecraft.getMinecraft().thePlayer != event.entityPlayer) return;
-
-        if (ToggleCommand.notifySlayerSlainToggled) {
-            if (ScoreboardHandler.getSidebarLines().stream().anyMatch(x -> ScoreboardHandler.cleanSB(x).contains("Boss slain!"))) {
-                if (ScoreboardHandler.getSidebarLines().stream().anyMatch(x -> {
-                    String line = ScoreboardHandler.cleanSB(x);
-                    return Arrays.stream(new String[]{"Howling Cave", "Ruins", "Graveyard", "Coal Mine", "Spider's Den"}).anyMatch(line::contains);
-                })) {
-                    Utils.createTitle(EnumChatFormatting.RED + "Boss slain!", 2);
-                }
-            }
-        }
-    }
-
-    @SubscribeEvent
-    public void onAttackingEntity(AttackEntityEvent event) {
-        if (ToggleCommand.notifySlayerSlainToggled && (event.target instanceof EntityZombie || event.target instanceof EntitySpider || event.target instanceof EntityWolf)) {
-            List<String> scoreboard = ScoreboardHandler.getSidebarLines();
-
-            for (String line : scoreboard) {
-                String cleanedLine = ScoreboardHandler.cleanSB(line);
-                if (cleanedLine.contains("Boss slain!")) {
-                    Utils.createTitle(EnumChatFormatting.RED + "Boss slain!", 2);
-                    break;
-                }
-            }
-        }
-    }
-
-    @SubscribeEvent
     public void onEntityInteract(EntityInteractEvent event) {
         Minecraft mc = Minecraft.getMinecraft();
         if (mc.thePlayer != event.entityPlayer) return;
@@ -3409,11 +3196,10 @@ public class DankersSkyblockMod {
 
     @SubscribeEvent
     public void onKey(KeyInputEvent event) {
-        if (!Utils.inSkyblock) return;
+        EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
         Minecraft mc = Minecraft.getMinecraft();
         World world = mc.theWorld;
 
-        EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
         if (keyBindings[0].isPressed()) {
             player.sendChatMessage(lastMaddoxCommand);
         }
@@ -3487,7 +3273,6 @@ public class DankersSkyblockMod {
 
     @SubscribeEvent
     public void onGuiMouseInputPre(GuiScreenEvent.MouseInputEvent.Pre event) {
-        if (!Utils.inSkyblock) return;
         if (Mouse.getEventButton() != 0 && Mouse.getEventButton() != 1 && Mouse.getEventButton() != 2)
             return; // Left click, middle click or right click
         if (!Mouse.getEventButtonState()) return;
@@ -3513,7 +3298,6 @@ public class DankersSkyblockMod {
                         inSalvageGui = true;
                     }
                     if (item.getDisplayName().contains("✪") && (mouseSlot.slotNumber > 53 || inSalvageGui)) {
-                        Minecraft.getMinecraft().thePlayer.playSound("note.bass", 1, 0.5f);
                         Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(ERROR_COLOUR + "Danker's Skyblock Mod has stopped you from salvaging that item!"));
                         event.setCanceled(true);
                         return;
@@ -3696,7 +3480,6 @@ public class DankersSkyblockMod {
                             return;
                         if (!item.getDisplayName().contains(BlockSlayerCommand.onlySlayerName)) {
                             Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(ERROR_COLOUR + "Danker's Skyblock Mod has stopped you from starting this quest (Set to " + BlockSlayerCommand.onlySlayerName + " " + BlockSlayerCommand.onlySlayerNumber + ")"));
-                            Minecraft.getMinecraft().thePlayer.playSound("note.bass", 1, (float) 0.5);
                             event.setCanceled(true);
                         }
                     } else if (inventoryName.equals("Revenant Horror") || inventoryName.equals("Tarantula Broodfather") || inventoryName.equals("Sven Packmaster")) {
@@ -3705,7 +3488,6 @@ public class DankersSkyblockMod {
                             String slayerNumber = item.getDisplayName().substring(item.getDisplayName().lastIndexOf(" ") + 1);
                             if (!slayerNumber.equals(BlockSlayerCommand.onlySlayerNumber)) {
                                 Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(ERROR_COLOUR + "Danker's Skyblock Mod has stopped you from starting this quest (Set to " + BlockSlayerCommand.onlySlayerName + " " + BlockSlayerCommand.onlySlayerNumber + ")"));
-                                Minecraft.getMinecraft().thePlayer.playSound("note.bass", 1, (float) 0.5);
                                 event.setCanceled(true);
                             }
                         }
@@ -3717,7 +3499,6 @@ public class DankersSkyblockMod {
 
     @SubscribeEvent
     public void onMouseInputPost(GuiScreenEvent.MouseInputEvent.Post event) {
-        if (!Utils.inSkyblock) return;
         if (Mouse.getEventButton() == 0 && event.gui instanceof GuiChat) {
             if (ToggleCommand.chatMaddoxToggled && System.currentTimeMillis() / 1000 - lastMaddoxTime < 10) {
                 Minecraft.getMinecraft().thePlayer.sendChatMessage(lastMaddoxCommand);
@@ -3770,12 +3551,10 @@ public class DankersSkyblockMod {
         chronomatronMouseClicks = 0;
         experimentTableSlots = new ItemStack[54];
         terminalColorNeeded = null;
-        terminalNumberNeeded = new int[4];
     }
 
     @SubscribeEvent
     public void onGuiRender(GuiScreenEvent.BackgroundDrawnEvent event) {
-        if (!Utils.inSkyblock) return;
         if (event.gui instanceof GuiChest) {
             GuiChest inventory = (GuiChest) event.gui;
             Container containerChest = inventory.inventorySlots;
@@ -3841,18 +3620,19 @@ public class DankersSkyblockMod {
                     IInventory chestInventory = ((ContainerChest)playerContainer).getLowerChestInventory();
                     for (int i = 37; i <= 43; i++) {
                         ItemStack itemStack = chestInventory.getStackInSlot(i);
-                        if (itemStack != null &&
-                                itemStack.getUnlocalizedName().toLowerCase().contains("quartz")) {
-                            for (int j = 0; j <= 53; j++) {
-                                ItemStack name = chestInventory.getStackInSlot(j);
-                                if (name != null)
-                                    currentInv[j] = name.toString();
-                            }
-                            if (!Arrays.toString(currentInv).equals(Arrays.toString(harpInv))) {
-                                mc.playerController.windowClick(mc.thePlayer.openContainer.windowId, i, 2, 0, mc.thePlayer);
-                                mc.thePlayer.addChatMessage(new ChatComponentText("clicked"));
-                                until = tickAmount;
-                                harpInv = currentInv;
+                        if (itemStack != null) {
+                            if (itemStack.getUnlocalizedName().toLowerCase().contains("quartz")) {
+                                for (int j = 0; j <= 53; j++) {
+                                    ItemStack name = chestInventory.getStackInSlot(j);
+                                    if (name != null)
+                                        currentInv[j] = name.toString();
+                                }
+                                if (!Arrays.toString(currentInv).equals(Arrays.toString(harpInv))) {
+                                    mc.playerController.windowClick(mc.thePlayer.openContainer.windowId, i, 2, 0, mc.thePlayer);
+                                    mc.thePlayer.addChatMessage(new ChatComponentText("clicked"));
+                                    until = tickAmount;
+                                    harpInv = currentInv;
+                                }
                             }
                         }
                     }
@@ -3883,32 +3663,28 @@ public class DankersSkyblockMod {
                     int thirdCheck = slotIn - 1;
                     int fourthCheck = slotIn - 9;
                     System.out.println("attempt " + slotIn);
-                    if (firstCheck % 9 != 0 && firstCheck <= 53 &&
-                            chest[firstCheck] == 1) {
+                    if (firstCheck % 9 != 0 && firstCheck <= 53 && chest[firstCheck] == 1) {
                         chest[firstCheck] = 0;
                         slotIn = firstCheck;
                         System.out.println("1");
                         mc.playerController.windowClick(mazeId, firstCheck, 0, 0, mc.thePlayer);
                         mazeId++;
                         lastInteractTime = System.currentTimeMillis();
-                    } else if (secondCheck <= 53 &&
-                            chest[secondCheck] == 1) {
+                    } else if (secondCheck <= 53 && chest[secondCheck] == 1) {
                         chest[secondCheck] = 0;
                         slotIn = secondCheck;
                         System.out.println("2");
                         mc.playerController.windowClick(mazeId, secondCheck, 0, 0, mc.thePlayer);
                         mazeId++;
                         lastInteractTime = System.currentTimeMillis();
-                    } else if (thirdCheck % 9 != 8 && thirdCheck >= 0 && thirdCheck <= 53 &&
-                            chest[thirdCheck] == 1) {
+                    } else if (thirdCheck % 9 != 8 && thirdCheck >= 0 && thirdCheck <= 53 && chest[thirdCheck] == 1) {
                         chest[thirdCheck] = 0;
                         slotIn = thirdCheck;
                         System.out.println("3");
                         mc.playerController.windowClick(mazeId, thirdCheck, 0, 0, mc.thePlayer);
                         mazeId++;
                         lastInteractTime = System.currentTimeMillis();
-                    } else if (fourthCheck >= 0 && (Minecraft.getMinecraft()).currentScreen != null &&
-                            chest[fourthCheck] == 1) {
+                    } else if (fourthCheck >= 0 && (Minecraft.getMinecraft()).currentScreen != null && chest[fourthCheck] == 1) {
                         chest[fourthCheck] = 0;
                         slotIn = fourthCheck;
                         System.out.println("4");
@@ -4019,7 +3795,7 @@ public class DankersSkyblockMod {
 
                 if (ToggleCommand.ultrasequencerToggled && displayName.startsWith("Ultrasequencer (")) {
                     EntityPlayerSP player = mc.thePlayer;
-                    if (invSlots.size() > 48 && invSlots.get(49).getStack() != null) {
+                    if (invSlots.size() > 48 && invSlots.get(49).getStack() != null && player.inventory.getItemStack() == null) {
                         if (invSlots.get(49).getStack().getDisplayName().startsWith("§7Timer: §a")) {
                             lastUltraSequencerClicked = 0;
                             for (Slot slot : clickInOrderSlots) {
@@ -4074,13 +3850,17 @@ public class DankersSkyblockMod {
                             if (chronomatronMouseClicks < chronomatronPattern.size() && player.inventory.getItemStack() == null) {
                                 for (int i = 10; i <= 43; i++) {
                                     ItemStack glass = (invSlots.get(i)).getStack();
-                                    if (glass != null && player.inventory.getItemStack() == null && tickAmount % 5 == 0) {
-                                        Slot glassSlot = invSlots.get(i);
-                                        if (glass.getDisplayName().equals(chronomatronPattern.get(chronomatronMouseClicks))) {
-                                            Utils.drawOnSlot(chestSize, glassSlot.xDisplayPosition, glassSlot.yDisplayPosition, -448725184);
-                                            mc.playerController.windowClick(mc.thePlayer.openContainer.windowId, glassSlot.slotNumber, 0, 0, mc.thePlayer);
-                                            chronomatronMouseClicks++;
-                                            break;
+                                    if (glass != null) {
+                                        if (player.inventory.getItemStack() == null) {
+                                            if (tickAmount % 5 == 0) {
+                                                Slot glassSlot = invSlots.get(i);
+                                                if (glass.getDisplayName().equals(chronomatronPattern.get(chronomatronMouseClicks))) {
+                                                    Utils.drawOnSlot(chestSize, glassSlot.xDisplayPosition, glassSlot.yDisplayPosition, -448725184);
+                                                    mc.playerController.windowClick(mc.thePlayer.openContainer.windowId, glassSlot.slotNumber, 0, 0, mc.thePlayer);
+                                                    chronomatronMouseClicks++;
+                                                    break;
+                                                }
+                                            }
                                         }
                                     }
                                 }
