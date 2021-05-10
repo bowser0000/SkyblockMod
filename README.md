@@ -10,6 +10,7 @@
  - Ghost Block creator
  - Right click spammer
  - NoRotate (prevents AOTE/Hyperion from changing head rotation)
+ - Harp Solver
  
 **Controls/Hotkeys can be set in controls menu**
 
