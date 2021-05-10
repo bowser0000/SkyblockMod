@@ -39,9 +39,6 @@ public class SpidersNest extends CommandBase {
     public void processCommand(ICommandSender sender, String[] args) throws CommandException {
         if (!Utils.inSkyblock) return;
         EntityPlayer player = ((EntityPlayer) sender);
-        // MULTI THREAD DRIFTING
-        new Thread(() -> {
-            Minecraft.getMinecraft().thePlayer.sendChatMessage("/warp nest");
-        }).start();
+        Minecraft.getMinecraft().thePlayer.sendChatMessage("/warp nest");
     }
 }

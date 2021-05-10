@@ -13,6 +13,8 @@ import java.util.List;
 
 public class HighlightCommissions {
 
+    public static int HIGHLIGHT_COLOUR;
+
     @SubscribeEvent
     public void onGuiRender(GuiChestBackgroundDrawnEvent event) {
         if(!Utils.inSkyblock) return;
@@ -25,7 +27,7 @@ public class HighlightCommissions {
             if (slot.getStack().getItem() instanceof ItemWritableBook) {
                 for (String line : Utils.getItemLore(slot.getStack())) {
                     if (line.contains("COMPLETED")) {
-                        Utils.drawOnSlot(event.chestSize, slot.xDisplayPosition, slot.yDisplayPosition, 0x51FF51 + 0xD7000000);
+                        Utils.drawOnSlot(event.chestSize, slot.xDisplayPosition, slot.yDisplayPosition, HIGHLIGHT_COLOUR + 0xD7000000);
                         break;
                     }
                 }

@@ -40,9 +40,6 @@ public class DarkAuction extends CommandBase {
     public void processCommand(ICommandSender sender, String[] args) throws CommandException {
         if (!Utils.inSkyblock) return;
         EntityPlayer player = ((EntityPlayer) sender);
-        // MULTI THREAD DRIFTING
-        new Thread(() -> {
-            Minecraft.getMinecraft().thePlayer.sendChatMessage("/warp da");
-        }).start();
+        Minecraft.getMinecraft().thePlayer.sendChatMessage("/warp da");
     }
 }
