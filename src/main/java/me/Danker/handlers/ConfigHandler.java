@@ -166,7 +166,8 @@ public class ConfigHandler {
 	}
 	
 	public static void reloadConfig() {
-		// Config init
+        if (!hasKey("toggles", "NoRotate")) writeBooleanConfig("toggles", "NoRotate", ToggleNoRotateCommand.norotatetoggled);
+        // Config init
 		if (!hasKey("toggles", "GParty")) writeBooleanConfig("toggles", "GParty", false);
 		if (!hasKey("toggles", "Coords")) writeBooleanConfig("toggles", "Coords", false);
 		if (!hasKey("toggles", "Golden")) writeBooleanConfig("toggles", "Golden", false);
@@ -268,8 +269,12 @@ public class ConfigHandler {
 		if (!hasKey("zombie", "scythe")) writeIntConfig("zombie", "scythe", 0);
 		if (!hasKey("zombie", "timeRNG")) writeDoubleConfig("zombie", "timeRNG", -1);
 		if (!hasKey("zombie", "bossRNG")) writeIntConfig("zombie", "bossRNG", -1);
-		
-		// Fishing
+		//Macro
+        if (!hasKey("macro", "delay")) writeIntConfig("macro", "delay", 0);
+        if (!hasKey("macro", "delay")) writeIntConfig("macro", "terminal", 150);
+        if (!hasKey("macro", "swap")) writeIntConfig("macro", "swap", 150);
+        if (!hasKey("macro", "simon")) writeIntConfig("macro", "simon", 50);
+        // Fishing
 		if (!hasKey("fishing", "seaCreature")) writeIntConfig("fishing", "seaCreature", 0);
 		if (!hasKey("fishing", "goodCatch")) writeIntConfig("fishing", "goodCatch", 0);
 		if (!hasKey("fishing", "greatCatch")) writeIntConfig("fishing", "greatCatch", 0);
@@ -456,12 +461,6 @@ public class ConfigHandler {
 		//Commands
 		if (!hasKey("commands", "reparty")) writeBooleanConfig("commands", "reparty", false);
 
-		//Macro
-        if (!hasKey("macro", "delay")) writeIntConfig("macro", "delay", 0);
-        if (!hasKey("macro", "delay")) writeIntConfig("macro", "terminal", 150);
-        if (!hasKey("macro", "swap")) writeIntConfig("macro", "swap", 150);
-        if (!hasKey("macro", "simon")) writeIntConfig("macro", "simon", 50);
-		
 		ToggleCommand.gpartyToggled = getBoolean("toggles", "GParty");
 		ToggleCommand.coordsToggled = getBoolean("toggles", "Coords");
 		ToggleCommand.goldenToggled = getBoolean("toggles", "Golden");
@@ -562,7 +561,13 @@ public class ConfigHandler {
 		LootCommand.zombieScythes = getInt("zombie", "scythe");
 		LootCommand.zombieTime = getDouble("zombie", "timeRNG");
 		LootCommand.zombieBosses = getInt("zombie", "bossRNG");
-		
+
+		//Macro
+        DelayCommand.boneDelay = getInt("macro", "delay");
+        SwapCommand.swapDelay = getInt("macro", "swap");
+        SleepCommand.waitAmount = getInt("macro", "terminal");
+        SimonCommand.simonAmount = getInt("macro", "simon");
+
 		// Fishing
 		LootCommand.seaCreatures = getInt("fishing", "seaCreature");
 		LootCommand.goodCatches = getInt("fishing", "goodCatch");
@@ -746,11 +751,6 @@ public class ConfigHandler {
 		DankersSkyblockMod.PET_80_TO_89 = getInt("colors", "pet80To89");
 		DankersSkyblockMod.PET_90_TO_99 = getInt("colors", "pet90To99");
 		DankersSkyblockMod.PET_100 = getInt("colors", "pet100");
-
-        DelayCommand.boneDelay = getInt("macro", "delay");
-        SwapCommand.swapDelay = getInt("macro", "swap");
-        SleepCommand.waitAmount = getInt("macro", "terminal");
-        SimonCommand.simonAmount = getInt("macro", "simon");
 	}
 	
 }
