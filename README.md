@@ -1,16 +1,26 @@
 # Hael9
 **(Based on Danker's Skyblock Mod)**
 
+### Note: This mod is BANNABLE on Hypixel Skyblock
+
 **Features:**
  - Automatic Terminal Solver
  - Bonemerang Macro
  - Hyperion Autoclicker
  - Ghost Block creator
- - And more!
+ - Right click spammer
+ - NoRotate (prevents AOTE/Hyperion from changing head rotation)
  
- **Note: This mod is BANNABLE on Hypixel Skyblock**
+**Controls/Hotkeys can be set in controls menu**
 
+**Delays and values for the different features can be set with the following commands:**
+- /bonedelay [time between switching bonemerangs in ms]
+- /rightclickamount [# of clicks per physical right click]
+- /sleepamount [time between terminal solver clicks in ms]
+- /swapdelay [delay in ms]
+- /norotate
 
+To turn on terminal solvers, do "/dsm", click "Toggle Dungeon Puzzle Solvers", and turn on any of the buttons with the word "Terminal" on it.
 
 
 ### Below is the default Danker's Skyblock Mod README:
