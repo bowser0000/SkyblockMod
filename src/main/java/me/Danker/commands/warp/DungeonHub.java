@@ -39,7 +39,6 @@ public class DungeonHub extends CommandBase {
     @Override
     public void processCommand(ICommandSender sender, String[] args) throws CommandException {
         if (!Utils.inSkyblock) return;
-        EntityPlayer player = ((EntityPlayer) sender);
         Minecraft.getMinecraft().thePlayer.sendChatMessage("/warp dungeon_hub");
     }
 }
