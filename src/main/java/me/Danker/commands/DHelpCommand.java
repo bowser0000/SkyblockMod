@@ -65,7 +65,6 @@ public class DHelpCommand extends CommandBase {
 													EnumChatFormatting.GOLD + HowlingCave.usage(arg0) + EnumChatFormatting.AQUA + " - Warps you to the Howling Cave in the Park. \n" +
 													EnumChatFormatting.GOLD + Magma.usage(arg0) + EnumChatFormatting.AQUA + " - Warps you to the Magma Fields in the Blazing Fortress. \n" +
 													EnumChatFormatting.GOLD + SpidersNest.usage(arg0) + EnumChatFormatting.AQUA + " - Warps you to the Top of the Spider's Nest in the Spider's Den. \n" +
-													EnumChatFormatting.GOLD + SetAngleCommand.usage(arg0) + EnumChatFormatting.AQUA + " - Sets your yaw and pitch. \n" +
 													EnumChatFormatting.GREEN + " Open Maddox Menu" + EnumChatFormatting.AQUA + " - M by default.\n" +
 													EnumChatFormatting.GREEN + " Start/Stop Skill Tracker" + EnumChatFormatting.AQUA + " - Numpad 5 by default.\n"));
 	}
