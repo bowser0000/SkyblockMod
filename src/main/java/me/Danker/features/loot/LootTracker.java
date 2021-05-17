@@ -1017,7 +1017,7 @@ public class LootTracker {
                     ghostlyBootsSession++;
                     ConfigHandler.writeIntConfig("ghosts", "ghostlyBoots", ghostlyBoots);
                 }
-                if (message.contains("Bag of Cash")) {
+                if (message.contains("The ghost's death materialized ")) {
                     bagOfCashs++;
                     bagOfCashSession++;
                     ConfigHandler.writeIntConfig("ghosts", "bagOfCash", bagOfCashs);
