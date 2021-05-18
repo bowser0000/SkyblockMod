@@ -83,9 +83,11 @@ public class BlazeSolver {
                                 if (blockbelow == Blocks.stone) {
                                     higherToLower = false;
                                     foundChest = true;
+                                    player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Chest located. Sorting from lowest to highest."));
                                 } else if (blockbelow == Blocks.air) {
                                     higherToLower = true;
                                     foundChest = true;
+                                    player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Chest located. Sorting from highest to lowest."));
                                 } else {
                                     return;
                                 }
