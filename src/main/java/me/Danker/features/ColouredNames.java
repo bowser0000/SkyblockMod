@@ -22,14 +22,12 @@ public class ColouredNames {
     @SubscribeEvent
     public void onChat(ClientChatReceivedEvent event) {
         if (!ToggleCommand.customColouredNames || !Utils.inSkyblock || event.type != 0) return;
-        long startTime = System.currentTimeMillis();
 
         for (String user : users) {
             if (event.message.getFormattedText().contains(user)) {
                 event.message = replaceChat(event.message, user);
             }
         }
-        System.out.println("Chat time: " + ((System.currentTimeMillis() - startTime) / 1000D) + "s");
     }
 
     @SubscribeEvent

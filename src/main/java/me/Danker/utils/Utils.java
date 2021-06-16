@@ -25,10 +25,8 @@ import net.minecraft.util.*;
 import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -47,6 +45,15 @@ public class Utils {
 									  19000000, 24000000, 30000000, 38000000, 48000000, 60000000, 75000000, 93000000, 116250000};
 	static int[] expertiseKills = {50, 100, 250, 500, 1000, 2500, 5500, 10000, 15000};
 	static Pattern boldPattern = Pattern.compile("(?i)\\u00A7L");
+	static Map<Character, Integer> romanNumerals = new HashMap<Character, Integer>(){{
+		put('I', 1);
+		put('V', 5);
+		put('X', 10);
+		put('L', 50);
+		put('C', 100);
+		put('D', 500);
+		put('M', 1000);
+	}};
 	
     public static int getItems(String item) {
     	Minecraft mc = Minecraft.getMinecraft();
@@ -260,7 +267,8 @@ public class Utils {
 		}
 		return -1;
 	}
-	
+
+	// Only used when over limit
 	public static int getPastXpEarned(int currentLevelXp, int limit) {
 		if (currentLevelXp == 0) {
 			int xpAdded = 0;
@@ -274,6 +282,16 @@ public class Utils {
 			if (currentLevelXp == skillXPPerLevel[i]) return xpAdded;
 		}
 		return 0;
+	}
+
+	public static double getTotalXpEarned(int currentLevel, double percentage) {
+    	double progress = 0;
+    	if (currentLevel < 60) progress = skillXPPerLevel[currentLevel + 1] * (percentage / 100D);
+    	double xpAdded = 0;
+    	for (int i = 1; i <= currentLevel; i++) {
+    		xpAdded += skillXPPerLevel[i];
+		}
+    	return xpAdded + progress;
 	}
 	
 	public static String getColouredBoolean(boolean bool) {
@@ -546,7 +564,33 @@ public class Utils {
 	}
 
 	public static String removeBold(String text) {
-		return boldPattern.matcher(text).replaceAll("");
+    	return boldPattern.matcher(text).replaceAll("");
 	}
-	
+
+	public static int getIntFromString(String text, boolean romanNumeral) {
+    	if (text.matches(".*\\d.*")) {
+			return Integer.parseInt(StringUtils.stripControlCodes(text).replaceAll("[^\\d]", ""));
+		} else if (romanNumeral) {
+    		int number = 0;
+
+    		for (int i = 0; i < text.length(); i++) {
+    			int roman = romanNumerals.get(text.charAt(i));
+
+				if (i != text.length() - 1 && roman < romanNumerals.get(text.charAt(i + 1))) {
+					number += romanNumerals.get(text.charAt(i + 1)) - roman;
+					i++;
+				} else {
+					number += roman;
+				}
+			}
+
+    		return number;
+		}
+    	return -1;
+	}
+
+	public static boolean skillsInitialized() {
+    	return DankersSkyblockMod.miningLevel != -1;
+	}
+
 }

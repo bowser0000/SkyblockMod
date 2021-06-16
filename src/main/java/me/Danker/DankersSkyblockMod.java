@@ -60,6 +60,7 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -79,6 +80,15 @@ public class DankersSkyblockMod {
     public static boolean firstLaunch = false;
     public static String configDirectory;
     public static JsonObject data = null;
+
+    public static int farmingLevel;
+    public static int miningLevel;
+    public static int combatLevel;
+    public static int foragingLevel;
+    public static int fishingLevel;
+    public static int enchantingLevel;
+    public static int alchemyLevel;
+    public static int carpentryLevel;
     
     public static String MAIN_COLOUR;
     public static String SECONDARY_COLOUR;
@@ -268,12 +278,47 @@ public class DankersSkyblockMod {
 
     @SubscribeEvent
     public void onChat(ClientChatReceivedEvent event) {
-    	String message = StringUtils.stripControlCodes(event.message.getUnformattedText());
+        String message = StringUtils.stripControlCodes(event.message.getUnformattedText());
 
         if (message.startsWith("Your new API key is ") && Utils.isOnHypixel()) {
             String apiKey = event.message.getSiblings().get(0).getChatStyle().getChatClickEvent().getValue();
             ConfigHandler.writeStringConfig("api", "APIKey", apiKey);
             Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Set API key to " + DankersSkyblockMod.SECONDARY_COLOUR + apiKey));
+        } else if (Utils.inSkyblock && !message.contains(":") && message.contains("  SKILL LEVEL UP ")) {
+            // Handle skill level ups
+            String skill = message.substring(message.indexOf("UP") + 3, message.lastIndexOf(" "));
+            int level = Utils.getIntFromString(message.substring(message.indexOf("➜") + 1), true);
+
+            switch (skill) {
+                case "Farming":
+                    DankersSkyblockMod.farmingLevel = level;
+                    break;
+                case "Mining":
+                    DankersSkyblockMod.miningLevel = level;
+                    break;
+                case "Combat":
+                    DankersSkyblockMod.combatLevel = level;
+                    break;
+                case "Foraging":
+                    DankersSkyblockMod.foragingLevel = level;
+                    break;
+                case "Fishing":
+                    DankersSkyblockMod.fishingLevel = level;
+                    break;
+                case "Enchanting":
+                    DankersSkyblockMod.enchantingLevel = level;
+                    break;
+                case "Alchemy":
+                    DankersSkyblockMod.alchemyLevel = level;
+                    break;
+                case "Carpentry":
+                    DankersSkyblockMod.carpentryLevel = level;
+                    break;
+                default:
+                    System.err.println("Unknown skill leveled up.");
+            }
+
+            ConfigHandler.writeIntConfig("skills", skill.toLowerCase(Locale.US), level);
         }
     }
 
@@ -306,7 +351,8 @@ public class DankersSkyblockMod {
     public void onTick(TickEvent.ClientTickEvent event) {
         if (event.phase != Phase.START) return;
 
-        EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
+        Minecraft mc = Minecraft.getMinecraft();
+        EntityPlayerSP player = mc.thePlayer;
 
         tickAmount++;
         if (tickAmount % 20 == 0) {
@@ -323,6 +369,36 @@ public class DankersSkyblockMod {
                 showTitle = false;
             }
             titleTimer--;
+        }
+
+        // New skill level detection
+        if (mc.currentScreen instanceof GuiChest && tickAmount % 5 == 0 && player != null) {
+            ContainerChest chest = (ContainerChest) player.openContainer;
+            String chestName = chest.getLowerChestInventory().getDisplayName().getUnformattedText().trim();
+
+            if (chestName.equals("Your Skills")) {
+                List<Slot> invSlots = ((GuiChest) mc.currentScreen).inventorySlots.inventorySlots;
+
+                farmingLevel = Utils.getIntFromString(invSlots.get(19).getStack().getDisplayName().substring(invSlots.get(19).getStack().getDisplayName().indexOf(" ") + 1), true);
+                miningLevel = Utils.getIntFromString(invSlots.get(20).getStack().getDisplayName().substring(invSlots.get(20).getStack().getDisplayName().indexOf(" ") + 1), true);
+                combatLevel = Utils.getIntFromString(invSlots.get(21).getStack().getDisplayName().substring(invSlots.get(21).getStack().getDisplayName().indexOf(" ") + 1), true);
+                foragingLevel = Utils.getIntFromString(invSlots.get(22).getStack().getDisplayName().substring(invSlots.get(22).getStack().getDisplayName().indexOf(" ") + 1), true);
+                fishingLevel = Utils.getIntFromString(invSlots.get(23).getStack().getDisplayName().substring(invSlots.get(23).getStack().getDisplayName().indexOf(" ") + 1), true);
+                enchantingLevel = Utils.getIntFromString(invSlots.get(24).getStack().getDisplayName().substring(invSlots.get(24).getStack().getDisplayName().indexOf(" ") + 1), true);
+                alchemyLevel = Utils.getIntFromString(invSlots.get(25).getStack().getDisplayName().substring(invSlots.get(25).getStack().getDisplayName().indexOf(" ") + 1), true);
+                carpentryLevel = Utils.getIntFromString(invSlots.get(29).getStack().getDisplayName().substring(invSlots.get(29).getStack().getDisplayName().indexOf(" ") + 1), true);
+
+                ConfigHandler.writeIntConfig("skills", "farming", farmingLevel);
+                ConfigHandler.writeIntConfig("skills", "mining", miningLevel);
+                ConfigHandler.writeIntConfig("skills", "combat", combatLevel);
+                ConfigHandler.writeIntConfig("skills", "foraging", foragingLevel);
+                ConfigHandler.writeIntConfig("skills", "fishing", fishingLevel);
+                ConfigHandler.writeIntConfig("skills", "enchanting", enchantingLevel);
+                ConfigHandler.writeIntConfig("skills", "alchemy", alchemyLevel);
+                ConfigHandler.writeIntConfig("skills", "carpentry", carpentryLevel);
+
+                System.out.println("Updated skill levels.");
+            }
         }
     }
 

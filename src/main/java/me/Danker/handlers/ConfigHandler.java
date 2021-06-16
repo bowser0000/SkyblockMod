@@ -484,6 +484,16 @@ public class ConfigHandler {
 		ScaleCommand.teammatesInRadiusScale = initDouble("scales", "teammatesInRadiusScale", 1);
 		ScaleCommand.giantHPScale = initDouble("scales", "giantHPScale", 1);
 
+		// Skills
+		DankersSkyblockMod.farmingLevel = initInt("skills", "farming", -1);
+		DankersSkyblockMod.miningLevel = initInt("skills", "mining", -1);
+		DankersSkyblockMod.combatLevel = initInt("skills", "combat", -1);
+		DankersSkyblockMod.foragingLevel = initInt("skills", "foraging", -1);
+		DankersSkyblockMod.fishingLevel = initInt("skills", "fishing", -1);
+		DankersSkyblockMod.enchantingLevel = initInt("skills", "enchanting", -1);
+		DankersSkyblockMod.alchemyLevel = initInt("skills", "alchemy", -1);
+		DankersSkyblockMod.carpentryLevel = initInt("skills", "carpentry", -1);
+
 		// Colours
 		DankersSkyblockMod.MAIN_COLOUR = initString("colors", "main", EnumChatFormatting.GREEN.toString());
 		DankersSkyblockMod.SECONDARY_COLOUR = initString("colors", "secondary", EnumChatFormatting.DARK_GREEN.toString());

@@ -1,5 +1,6 @@
 package me.Danker.features;
 
+import me.Danker.DankersSkyblockMod;
 import me.Danker.commands.MoveCommand;
 import me.Danker.commands.ScaleCommand;
 import me.Danker.commands.ToggleCommand;
@@ -7,6 +8,7 @@ import me.Danker.events.RenderOverlay;
 import me.Danker.handlers.TextRenderer;
 import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -30,8 +32,8 @@ public class Skill50Display {
         String[] actionBarSections = event.message.getUnformattedText().split(" {3,}");
 
         for (String section : actionBarSections) {
-            if (section.contains("+") && section.contains("/") && section.contains("(")) {
-                if (ToggleCommand.skill50DisplayToggled && !section.contains("Runecrafting")) {
+            if (ToggleCommand.skill50DisplayToggled && section.contains("+") && section.contains("(") && section.contains(")") && !section.contains("Runecrafting")) {
+                if (section.contains("/")) {
                     String xpGained = section.substring(section.indexOf("+"), section.indexOf("(") - 1);
                     double currentXp = Double.parseDouble(section.substring(section.indexOf("(") + 1, section.indexOf("/")).replace(",", ""));
                     int limit;
@@ -50,6 +52,40 @@ public class Skill50Display {
                     skillTimer = SKILL_TIME;
                     showSkill = true;
                     skillText = SKILL_50_COLOUR + xpGained + " (" + nf.format(currentXp + previousXp) + "/" + nf.format(totalXp) + ") " + percentage + "%";
+                } else {
+                    if (!Utils.skillsInitialized()) {
+                        return;
+                    }
+
+                    String xpGained = section.substring(section.indexOf("+"), section.indexOf("(") - 1);
+                    double percentage = Double.parseDouble(section.substring(section.indexOf("(") + 1, section.indexOf("%")));
+                    int level = 1;
+                    if (section.contains("Farming")) {
+                        level = DankersSkyblockMod.farmingLevel;
+                    } else if (section.contains("Mining")) {
+                        level = DankersSkyblockMod.miningLevel;
+                    } else if (section.contains("Combat")) {
+                        level = DankersSkyblockMod.combatLevel;
+                    } else if (section.contains("Foraging")) {
+                        level = DankersSkyblockMod.foragingLevel;
+                    } else if (section.contains("Fishing")) {
+                        level = DankersSkyblockMod.fishingLevel;
+                    } else if (section.contains("Enchanting")) {
+                        level = DankersSkyblockMod.enchantingLevel;
+                    } else if (section.contains("Alchemy")) {
+                        level = DankersSkyblockMod.alchemyLevel;
+                    } else if (section.contains("Carpentry")) {
+                        level = DankersSkyblockMod.carpentryLevel;
+                    }
+
+                    double currentXp = Utils.getTotalXpEarned(level, percentage);
+                    int totalXp = section.contains("Farming") || section.contains("Enchanting") || section.contains("Mining") || section.contains("Combat") ? 111672425 : 55172425;
+                    double percentageTo50 = Math.floor((currentXp / totalXp) * 10000D) / 100D;
+
+                    NumberFormat nf = NumberFormat.getNumberInstance(Locale.US);
+                    skillTimer = SKILL_TIME;
+                    showSkill = true;
+                    skillText = SKILL_50_COLOUR + xpGained + " (" + nf.format(currentXp) + "/" + nf.format(totalXp) + ") " + percentageTo50 + "%";
                 }
             }
         }
@@ -69,6 +105,11 @@ public class Skill50Display {
 
     @SubscribeEvent
     public void renderPlayerInfo(RenderOverlay event) {
+        if (!Utils.skillsInitialized()) {
+            new TextRenderer(Minecraft.getMinecraft(), EnumChatFormatting.RED + "Please open the skill menu to use skill features.", MoveCommand.skill50XY[0], MoveCommand.skill50XY[0], ScaleCommand.skill50Scale);
+            return;
+        }
+
         if (showSkill) {
             new TextRenderer(Minecraft.getMinecraft(), skillText, MoveCommand.skill50XY[0], MoveCommand.skill50XY[1], ScaleCommand.skill50Scale);
         }
