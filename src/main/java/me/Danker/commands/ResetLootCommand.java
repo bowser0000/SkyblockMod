@@ -25,7 +25,7 @@ public class ResetLootCommand extends CommandBase {
 
 	@Override
 	public String getCommandUsage(ICommandSender arg0) {
-		return "/" + getCommandName() + "<zombie/spider/wolf/fishing/mythological/catacombs/confirm/cancel>";
+		return "/" + getCommandName() + "<zombie/spider/wolf/enderman/fishing/mythological/catacombs/confirm/cancel>";
 	}
 
 	public static String usage(ICommandSender arg0) {
@@ -44,7 +44,7 @@ public class ResetLootCommand extends CommandBase {
 		if (confirmReset) {
 			return getListOfStringsMatchingLastWord(args, "confirm", "cancel");
 		} else {
-			return getListOfStringsMatchingLastWord(args, "zombie", "spider", "wolf", "fishing", "mythological", "catacombs");
+			return getListOfStringsMatchingLastWord(args, "zombie", "spider", "wolf", "enderman", "fishing", "mythological", "catacombs");
 		}
 	}
 	
@@ -72,6 +72,9 @@ public class ResetLootCommand extends CommandBase {
 						case "wolf":
 							resetWolf();
 							break;
+						case "enderman":
+							resetEnderman();
+							break;
 						case "fishing":
 							resetFishing();
 							break;
@@ -98,6 +101,7 @@ public class ResetLootCommand extends CommandBase {
 				case "zombie":
 				case "spider":
 				case "wolf":
+				case "enderman":
 				case "fishing":
 				case "mythological":
 				case "catacombs":
@@ -120,6 +124,7 @@ public class ResetLootCommand extends CommandBase {
 	static void resetZombie() {		
 		LootTracker.zombieRevsSession = 0;
 		LootTracker.zombieRevFleshSession = 0;
+		LootTracker.zombieRevVisceraSession = 0;
 		LootTracker.zombieFoulFleshSession = 0;
 		LootTracker.zombieFoulFleshDropsSession = 0;
 		LootTracker.zombiePestilencesSession = 0;
@@ -166,6 +171,33 @@ public class ResetLootCommand extends CommandBase {
 		LootTracker.wolfTimeSession = -1;
 		LootTracker.wolfBossesSession = -1;
 		ConfigHandler.deleteCategory("wolf");
+		ConfigHandler.reloadConfig();
+	}
+
+	static void resetEnderman() {
+		LootTracker.endermanVoidgloomsSession = 0;
+		LootTracker.endermanNullSpheresSession = 0;
+		LootTracker.endermanTAPSession = 0;
+		LootTracker.endermanTAPDropsSession = 0;
+		LootTracker.endermanEndersnakesSession = 0;
+		LootTracker.endermanSummoningEyesSession = 0;
+		LootTracker.endermanManaBooksSession = 0;
+		LootTracker.endermanTunersSession = 0;
+		LootTracker.endermanAtomsSession = 0;
+		LootTracker.endermanEspressoMachinesSession = 0;
+		LootTracker.endermanSmartyBooksSession = 0;
+		LootTracker.endermanEndRunesSession = 0;
+		LootTracker.endermanChalicesSession = 0;
+		LootTracker.endermanDiceSession = 0;
+		LootTracker.endermanArtifactsSession = 0;
+		LootTracker.endermanSkinsSession = 0;
+		LootTracker.endermanMergersSession = 0;
+		LootTracker.endermanCoresSession = 0;
+		LootTracker.endermanEnchantRunesSession = 0;
+		LootTracker.endermanEnderBooksSession = 0;
+		LootTracker.endermanTimeSession = -1;
+		LootTracker.endermanBossesSession = -1;
+		ConfigHandler.deleteCategory("enderman");
 		ConfigHandler.reloadConfig();
 	}
 	

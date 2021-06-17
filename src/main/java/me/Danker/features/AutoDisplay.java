@@ -38,6 +38,9 @@ public class AutoDisplay {
                     } else if (sCleaned.contains("Revenant Horror")) {
                         LootDisplay.display = "zombie";
                         found = true;
+                    } else if (sCleaned.contains("Voidgloom Seraph")) {
+                        LootDisplay.display = "enderman";
+                        found = true;
                     } else if (sCleaned.contains("The Mist")){
                         LootDisplay.display = "ghost";
                         found = true;

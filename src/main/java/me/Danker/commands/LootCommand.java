@@ -24,7 +24,7 @@ public class LootCommand extends CommandBase {
 
 	@Override
 	public String getCommandUsage(ICommandSender arg0) {
-		return "/" + getCommandName() + " <zombie/spider/wolf/fishing/catacombs/mythological> [winter/festival/spooky/f(1-7)/session]";
+		return "/" + getCommandName() + " <zombie/spider/wolf/enderman/fishing/catacombs/mythological> [winter/festival/spooky/f(1-7)/session]";
 	}
 
 	public static String usage(ICommandSender arg0) {
@@ -39,7 +39,7 @@ public class LootCommand extends CommandBase {
 	@Override
 	public List<String> addTabCompletionOptions(ICommandSender sender, String[] args, BlockPos pos) {
 		if (args.length == 1) {
-			return getListOfStringsMatchingLastWord(args, "wolf", "spider", "zombie", "fishing", "catacombs", "mythological");
+			return getListOfStringsMatchingLastWord(args, "wolf", "spider", "zombie", "enderman", "fishing", "catacombs", "mythological");
 		} else if (args.length == 2 && args[0].equalsIgnoreCase("fishing")) {
 			return getListOfStringsMatchingLastWord(args, "winter", "festival", "spooky", "session");
 		} else if (args.length == 2 && args[0].equalsIgnoreCase("catacombs")) {
@@ -223,6 +223,7 @@ public class LootCommand extends CommandBase {
 																EnumChatFormatting.DARK_GREEN + EnumChatFormatting.BOLD + "  Zombie Loot Summary (Current Session):\n" +
 																EnumChatFormatting.GOLD + "    Revs Killed: " + nf.format(LootTracker.zombieRevsSession) + "\n" +
 																EnumChatFormatting.GREEN + "    Revenant Flesh: " + nf.format(LootTracker.zombieRevFleshSession) + "\n" +
+																EnumChatFormatting.GREEN + "    Revenant Viscera: " + nf.format(LootTracker.zombieRevVisceraSession) + "\n" +
 																EnumChatFormatting.BLUE + "    Foul Flesh: " + drop20 + "\n" +
 																EnumChatFormatting.DARK_GREEN + "    Pestilence Runes: " +LootTracker.zombiePestilencesSession + "\n" +
 																EnumChatFormatting.WHITE + "    Smite VI Books: " + LootTracker.zombieBooksSession + "\n" +
@@ -259,6 +260,7 @@ public class LootCommand extends CommandBase {
 															EnumChatFormatting.DARK_GREEN + EnumChatFormatting.BOLD + "  Zombie Loot Summary:\n" +
 															EnumChatFormatting.GOLD + "    Revs Killed: " + nf.format(LootTracker.zombieRevs) + "\n" +
 															EnumChatFormatting.GREEN + "    Revenant Flesh: " + nf.format(LootTracker.zombieRevFlesh) + "\n" +
+															EnumChatFormatting.GREEN + "    Revenant Viscera: " + nf.format(LootTracker.zombieRevViscera) + "\n" +
 															EnumChatFormatting.BLUE + "    Foul Flesh: " + drop20 + "\n" +
 															EnumChatFormatting.DARK_GREEN + "    Pestilence Runes: " + LootTracker.zombiePestilences + "\n" +
 															EnumChatFormatting.WHITE + "    Smite VI Books: " + LootTracker.zombieBooks + "\n" +
@@ -272,6 +274,92 @@ public class LootCommand extends CommandBase {
 															EnumChatFormatting.AQUA + "    Time Since RNG: " + timeBetween + "\n" +
 															EnumChatFormatting.AQUA + "    Bosses Since RNG: " + bossesBetween + "\n" +
 															EnumChatFormatting.GREEN + EnumChatFormatting.BOLD + " -------------------"));
+				break;
+			case "enderman":
+				if (showSession) {
+					if (LootTracker.endermanTimeSession == -1) {
+						timeBetween = "Never";
+					} else {
+						timeBetween = Utils.getTimeBetween(LootTracker.endermanTimeSession, timeNow);
+					}
+					if (LootTracker.endermanBossesSession == -1) {
+						bossesBetween = "Never";
+					} else {
+						bossesBetween = nf.format(LootTracker.endermanBossesSession);
+					}
+					if (ToggleCommand.slayerCountTotal) {
+						drop20 = nf.format(LootTracker.endermanTAPSession);
+					} else {
+						drop20 = nf.format(LootTracker.endermanTAPDropsSession) + " times";
+					}
+
+					player.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_PURPLE + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+							EnumChatFormatting.DARK_GREEN + EnumChatFormatting.BOLD + "  Enderman Loot Summary (Current Session):\n" +
+							EnumChatFormatting.GOLD + "    Voidglooms Killed: " + nf.format(LootTracker.endermanVoidgloomsSession) + "\n" +
+							EnumChatFormatting.DARK_GRAY + "    Null Spheres: " + nf.format(LootTracker.endermanNullSpheresSession) + "\n" +
+							EnumChatFormatting.DARK_PURPLE + "    Arrow Poison: " + drop20 + "\n" +
+							EnumChatFormatting.LIGHT_PURPLE + "    Endersnake Runes: " + LootTracker.endermanEndersnakesSession + "\n" +
+							EnumChatFormatting.DARK_GREEN + "    Summoning Eyes: " + LootTracker.endermanSummoningEyesSession + "\n" +
+							EnumChatFormatting.AQUA + "    Mana Steal Books: " + LootTracker.endermanManaBooksSession + "\n" +
+							EnumChatFormatting.BLUE + "    Transmission Tuners: " + LootTracker.endermanTunersSession + "\n" +
+							EnumChatFormatting.YELLOW + "    Null Atoms: " + LootTracker.endermanAtomsSession + "\n" +
+							EnumChatFormatting.AQUA + "    Espresso Machines: " + LootTracker.endermanEspressoMachinesSession + "\n" +
+							EnumChatFormatting.WHITE + "    Smarty Pants Books: " + LootTracker.endermanSmartyBooksSession + "\n" +
+							EnumChatFormatting.LIGHT_PURPLE + "    End Runes: " + LootTracker.endermanEndRunesSession + "\n" +
+							EnumChatFormatting.RED + "    Blood Chalices: " + LootTracker.endermanChalicesSession + "\n" +
+							EnumChatFormatting.RED + "    Sinful Dice: " + LootTracker.endermanDiceSession + "\n" +
+							EnumChatFormatting.DARK_PURPLE + "    Artifact Upgrader: " + LootTracker.endermanArtifactsSession + "\n" +
+							EnumChatFormatting.DARK_PURPLE + "    Enderman Skins: " + LootTracker.endermanSkinsSession + "\n" +
+							EnumChatFormatting.GRAY + "    Enchant Runes: " + LootTracker.endermanEnchantRunesSession + "\n" +
+							EnumChatFormatting.GOLD + "    Etherwarp Mergers: " + LootTracker.endermanMergersSession + "\n" +
+							EnumChatFormatting.GOLD + "    Judgement Cores: " + LootTracker.endermanCoresSession + "\n" +
+							EnumChatFormatting.RED + "    Ender Slayer VII Books: " + LootTracker.endermanEnderBooksSession + "\n" +
+							EnumChatFormatting.AQUA + "    Time Since RNG: " + timeBetween + "\n" +
+							EnumChatFormatting.AQUA + "    Bosses Since RNG: " + bossesBetween + "\n" +
+							EnumChatFormatting.DARK_PURPLE + EnumChatFormatting.BOLD + " -------------------"));
+					return;
+				}
+
+				if (LootTracker.endermanTime == -1) {
+					timeBetween = "Never";
+				} else {
+					timeBetween = Utils.getTimeBetween(LootTracker.endermanTime, timeNow);
+				}
+				if (LootTracker.endermanBosses == -1) {
+					bossesBetween = "Never";
+				} else {
+					bossesBetween = nf.format(LootTracker.endermanBosses);
+				}
+				if (ToggleCommand.slayerCountTotal) {
+					drop20 = nf.format(LootTracker.endermanTAP);
+				} else {
+					drop20 = nf.format(LootTracker.endermanTAPDrops) + " times";
+				}
+
+				player.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_PURPLE + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+						EnumChatFormatting.DARK_GREEN + EnumChatFormatting.BOLD + "  Enderman Loot Summary:\n" +
+						EnumChatFormatting.GOLD + "    Voidglooms Killed: " + nf.format(LootTracker.endermanVoidglooms) + "\n" +
+						EnumChatFormatting.DARK_GRAY + "    Null Spheres: " + nf.format(LootTracker.endermanNullSpheres) + "\n" +
+						EnumChatFormatting.DARK_PURPLE + "    Arrow Poison: " + drop20 + "\n" +
+						EnumChatFormatting.LIGHT_PURPLE + "    Endersnake Runes: " + LootTracker.endermanEndersnakes + "\n" +
+						EnumChatFormatting.DARK_GREEN + "    Summoning Eyes: " + LootTracker.endermanSummoningEyes + "\n" +
+						EnumChatFormatting.AQUA + "    Mana Steal Books: " + LootTracker.endermanManaBooks + "\n" +
+						EnumChatFormatting.BLUE + "    Transmission Tuners: " + LootTracker.endermanTuners + "\n" +
+						EnumChatFormatting.YELLOW + "    Null Atoms: " + LootTracker.endermanAtoms + "\n" +
+						EnumChatFormatting.AQUA + "    Espresso Machines: " + LootTracker.endermanEspressoMachines + "\n" +
+						EnumChatFormatting.WHITE + "    Smarty Pants Books: " + LootTracker.endermanSmartyBooks + "\n" +
+						EnumChatFormatting.LIGHT_PURPLE + "    End Runes: " + LootTracker.endermanEndRunes + "\n" +
+						EnumChatFormatting.RED + "    Blood Chalices: " + LootTracker.endermanChalices + "\n" +
+						EnumChatFormatting.RED + "    Sinful Dice: " + LootTracker.endermanDice + "\n" +
+						EnumChatFormatting.DARK_PURPLE + "    Artifact Upgrader: " + LootTracker.endermanArtifacts + "\n" +
+						EnumChatFormatting.DARK_PURPLE + "    Enderman Skins: " + LootTracker.endermanSkins + "\n" +
+						EnumChatFormatting.GRAY + "    Enchant Runes: " + LootTracker.endermanEnchantRunes + "\n" +
+						EnumChatFormatting.GOLD + "    Etherwarp Mergers: " + LootTracker.endermanMergers + "\n" +
+						EnumChatFormatting.GOLD + "    Judgement Cores: " + LootTracker.endermanCores + "\n" +
+						EnumChatFormatting.RED + "    Ender Slayer VII Books: " + LootTracker.endermanEnderBooks + "\n" +
+						EnumChatFormatting.AQUA + "    Time Since RNG: " + timeBetween + "\n" +
+						EnumChatFormatting.AQUA + "    Bosses Since RNG: " + bossesBetween + "\n" +
+						EnumChatFormatting.DARK_PURPLE + EnumChatFormatting.BOLD + " -------------------"));
 				break;
 			case "fishing":
 				if (arg1.length > 1) {

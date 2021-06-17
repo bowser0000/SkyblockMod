@@ -20,6 +20,7 @@ public class DisplayGui extends GuiScreen {
 	private GuiButton zombie;
 	private GuiButton spider;
 	private GuiButton wolf;
+	private GuiButton enderman;
 	private GuiButton auto;
 	private GuiButton fishing;
 	private GuiButton fishingWinter;
@@ -52,9 +53,10 @@ public class DisplayGui extends GuiScreen {
 		showSession = new GuiButton(0, width / 2 - 100, (int) (height * 0.1), "Current Session Only: " + Utils.getColouredBoolean(addSession));
 		off = new GuiButton(0, width / 2 - 210, (int) (height * 0.2), "Off");
 		auto = new GuiButton(0, width / 2 + 10, (int) (height * 0.2), "Auto");
-		zombie = new GuiButton(0, width / 2 - 190, (int) (height * 0.3), 110, 20, "Zombie");
-		spider = new GuiButton(0, width / 2 - 55, (int) (height * 0.3), 110, 20, "Spider");
-		wolf = new GuiButton(0, width / 2 + 75, (int) (height * 0.3), 110, 20, "Wolf");
+		zombie = new GuiButton(0, width / 2 - 230, (int) (height * 0.3), 100, 20, "Zombie");
+		spider = new GuiButton(0, width / 2 - 110, (int) (height * 0.3), 100, 20, "Spider");
+		wolf = new GuiButton(0, width / 2 + 10, (int) (height * 0.3), 100, 20, "Wolf");
+		enderman = new GuiButton(0, width / 2 + 130, (int) (height * 0.3), 100, 20, "Enderman");
 		fishing = new GuiButton(0, width / 2 - 230, (int) (height * 0.4), 100, 20, "Fishing");
 		fishingWinter = new GuiButton(0, width / 2 - 110, (int) (height * 0.4), 100, 20, "Fishing Winter");
 		fishingFestival = new GuiButton(0, width / 2 + 10, (int) (height * 0.4), 100, 20, "Fishing Festival");
@@ -75,6 +77,7 @@ public class DisplayGui extends GuiScreen {
 		this.buttonList.add(zombie);
 		this.buttonList.add(spider);
 		this.buttonList.add(wolf);
+		this.buttonList.add(enderman);
 		this.buttonList.add(fishing);
 		this.buttonList.add(fishingWinter);
 		this.buttonList.add(fishingFestival);
@@ -127,6 +130,8 @@ public class DisplayGui extends GuiScreen {
 			setDisplay("spider", false);
 		} else if (button == wolf) {
 			setDisplay("wolf", false);
+		} else if (button == enderman) {
+			setDisplay("enderman", false);
 		} else if (button == auto) {
 			LootDisplay.auto = true;
 			ConfigHandler.writeBooleanConfig("misc", "autoDisplay", true);

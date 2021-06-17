@@ -294,6 +294,7 @@ public class ConfigHandler {
 		// Zombie
 		LootTracker.zombieRevs = initInt("zombie", "revs", 0);
 		LootTracker.zombieRevFlesh = initInt("zombie", "revFlesh", 0);
+		LootTracker.zombieRevViscera = initInt("zombie", "revViscera", 0);
 		LootTracker.zombieFoulFlesh = initInt("zombie", "foulFlesh", 0);
 		LootTracker.zombieFoulFleshDrops = initInt("zombie", "foulFleshDrops", 0);
 		LootTracker.zombiePestilences = initInt("zombie", "pestilence", 0);
@@ -307,6 +308,29 @@ public class ConfigHandler {
 		LootTracker.zombieWardenHearts = initInt("zombie", "heart", 0);
 		LootTracker.zombieTime = initDouble("zombie", "timeRNG", -1);
 		LootTracker.zombieBosses = initInt("zombie", "bossRNG", -1);
+		// Enderman
+		LootTracker.endermanVoidglooms = initInt("enderman", "voidglooms", 0);
+		LootTracker.endermanNullSpheres = initInt("enderman", "nullSpheres", 0);
+		LootTracker.endermanTAP = initInt("enderman", "tap", 0);
+		LootTracker.endermanTAPDrops = initInt("enderman", "tapDrops", 0);
+		LootTracker.endermanEndersnakes = initInt("enderman", "endersnakes", 0);
+		LootTracker.endermanSummoningEyes = initInt("enderman", "summoningEyes", 0);
+		LootTracker.endermanManaBooks = initInt("enderman", "manaBooks", 0);
+		LootTracker.endermanTuners = initInt("enderman", "tuners", 0);
+		LootTracker.endermanAtoms = initInt("enderman", "atoms", 0);
+		LootTracker.endermanEspressoMachines = initInt("enderman", "espressoMachines", 0);
+		LootTracker.endermanSmartyBooks = initInt("enderman", "smartyBooks", 0);
+		LootTracker.endermanEndRunes = initInt("enderman", "endRunes", 0);
+		LootTracker.endermanChalices = initInt("enderman", "chalices", 0);
+		LootTracker.endermanDice = initInt("enderman", "dice", 0);
+		LootTracker.endermanArtifacts = initInt("enderman", "artifacts", 0);
+		LootTracker.endermanSkins = initInt("enderman", "skins", 0);
+		LootTracker.endermanMergers = initInt("enderman", "mergers", 0);
+		LootTracker.endermanCores = initInt("enderman", "cores", 0);
+		LootTracker.endermanEnchantRunes = initInt("enderman", "enchantRunes", 0);
+		LootTracker.endermanEnderBooks = initInt("enderman", "enderBooks", 0);
+		LootTracker.endermanTime = initDouble("enderman", "timeRNG", -1);
+		LootTracker.endermanBosses = initInt("enderman", "bossRNG", -1);
 		
 		// Fishing
 		LootTracker.seaCreatures = initInt("fishing", "seaCreature", 0);

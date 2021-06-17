@@ -47,6 +47,7 @@ public class LootTracker {
     // Zombie
     public static int zombieRevs;
     public static int zombieRevFlesh;
+    public static int zombieRevViscera;
     public static int zombieFoulFlesh;
     public static int zombieFoulFleshDrops;
     public static int zombiePestilences;
@@ -60,6 +61,29 @@ public class LootTracker {
     public static int zombieWardenHearts;
     public static double zombieTime;
     public static int zombieBosses;
+    // Enderman
+    public static int endermanVoidglooms;
+    public static int endermanNullSpheres;
+    public static int endermanTAP;
+    public static int endermanTAPDrops;
+    public static int endermanEndersnakes;
+    public static int endermanSummoningEyes;
+    public static int endermanManaBooks;
+    public static int endermanTuners;
+    public static int endermanAtoms;
+    public static int endermanEspressoMachines;
+    public static int endermanSmartyBooks;
+    public static int endermanEndRunes;
+    public static int endermanChalices;
+    public static int endermanDice;
+    public static int endermanArtifacts;
+    public static int endermanSkins;
+    public static int endermanMergers;
+    public static int endermanCores;
+    public static int endermanEnchantRunes;
+    public static int endermanEnderBooks;
+    public static double endermanTime;
+    public static int endermanBosses;
 
     // Fishing
     public static int seaCreatures;
@@ -184,9 +208,7 @@ public class LootTracker {
     public static int voltas  = 0;
     public static int plasmas  = 0;
     public static int ghostlyBoots = 0;
-   // public static double ghostsTimeSpent = -1;
-
-
+    // public static double ghostsTimeSpent = -1;
 
     // Single sessions (No config saves)
     // Wolf
@@ -218,6 +240,7 @@ public class LootTracker {
     // Zombie
     public static int zombieRevsSession = 0;
     public static int zombieRevFleshSession = 0;
+    public static int zombieRevVisceraSession = 0;
     public static int zombieFoulFleshSession = 0;
     public static int zombieFoulFleshDropsSession = 0;
     public static int zombiePestilencesSession = 0;
@@ -231,6 +254,29 @@ public class LootTracker {
     public static int zombieWardenHeartsSession = 0;
     public static double zombieTimeSession = -1;
     public static int zombieBossesSession = -1;
+    // Enderman
+    public static int endermanVoidgloomsSession = 0;
+    public static int endermanNullSpheresSession = 0;
+    public static int endermanTAPSession = 0;
+    public static int endermanTAPDropsSession = 0;
+    public static int endermanEndersnakesSession = 0;
+    public static int endermanSummoningEyesSession = 0;
+    public static int endermanManaBooksSession = 0;
+    public static int endermanTunersSession = 0;
+    public static int endermanAtomsSession = 0;
+    public static int endermanEspressoMachinesSession = 0;
+    public static int endermanSmartyBooksSession = 0;
+    public static int endermanEndRunesSession = 0;
+    public static int endermanChalicesSession = 0;
+    public static int endermanDiceSession = 0;
+    public static int endermanArtifactsSession = 0;
+    public static int endermanSkinsSession = 0;
+    public static int endermanMergersSession = 0;
+    public static int endermanCoresSession = 0;
+    public static int endermanEnchantRunesSession = 0;
+    public static int endermanEnderBooksSession = 0;
+    public static double endermanTimeSession = -1;
+    public static int endermanBossesSession = -1;
 
     // Fishing
     public static int seaCreaturesSession = 0;
@@ -355,8 +401,7 @@ public class LootTracker {
     public static int voltaSession = 0;
     public static int plasmaSession = 0;
     public static int ghostlyBootsSession = 0;
-   // public static double ghostsSecondsSinceStarts = 0;
-
+    // public static double ghostsSecondsSinceStarts = 0;
 
     static double checkItemsNow = 0;
     static double itemsChecked = 0;
@@ -365,7 +410,6 @@ public class LootTracker {
     public void onChat(ClientChatReceivedEvent event) {
         String message = StringUtils.stripControlCodes(event.message.getUnformattedText());
 
-
         if (!Utils.inSkyblock) return;
         if (event.type == 2) return;
         if (message.contains(":")) return;
@@ -373,8 +417,7 @@ public class LootTracker {
         boolean wolfRNG = false;
         boolean spiderRNG = false;
         boolean zombieRNG = false;
-
-
+        boolean endermanRNG = false;
 
         // Slayer tracker
         // T6 books
@@ -409,9 +452,13 @@ public class LootTracker {
             }
             ConfigHandler.writeIntConfig("wolf", "svens", wolfSvens);
             ConfigHandler.writeIntConfig("wolf", "bossRNG", wolfBosses);
-        } else if (message.contains("RARE DROP! (Hamster Wheel)")) {
+        } else if (message.contains("RARE DROP! (") && message.contains("Hamster Wheel)")) {
+            int amount = getAmountfromMessage(message);
+            wolfWheels += amount;
+            wolfWheelsSession += amount;
             wolfWheelsDrops++;
             wolfWheelsDropsSession++;
+            ConfigHandler.writeIntConfig("wolf", "wheel", wolfWheels);
             ConfigHandler.writeIntConfig("wolf", "wheelDrops", wolfWheelsDrops);
         } else if (message.contains("VERY RARE DROP!  (") && message.contains(" Spirit Rune I)")) { // Removing the unicode here *should* fix rune drops not counting
             wolfSpirits++;
@@ -452,9 +499,13 @@ public class LootTracker {
             }
             ConfigHandler.writeIntConfig("spider", "tarantulas", spiderTarantulas);
             ConfigHandler.writeIntConfig("spider", "bossRNG", spiderBosses);
-        } else if (message.contains("RARE DROP! (Toxic Arrow Poison)")) {
+        } else if (message.contains("RARE DROP! (") && message.contains("Toxic Arrow Poison)")) {
+            int amount = getAmountfromMessage(message);
+            spiderTAP += amount;
+            spiderTAPSession += amount;
             spiderTAPDrops++;
             spiderTAPDropsSession++;
+            ConfigHandler.writeIntConfig("spider", "tap", spiderTAP);
             ConfigHandler.writeIntConfig("spider", "tapDrops", spiderTAPDrops);
         } else if (message.contains("VERY RARE DROP!  (") && message.contains(" Bite Rune I)")) {
             spiderBites++;
@@ -493,9 +544,18 @@ public class LootTracker {
             }
             ConfigHandler.writeIntConfig("zombie", "revs", zombieRevs);
             ConfigHandler.writeIntConfig("zombie", "bossRNG", zombieBosses);
-        } else if (message.contains("RARE DROP! (Foul Flesh)")) {
+        } else if (message.contains("RARE DROP! (") && message.contains("Revenant Viscera)")) {
+            int amount = getAmountfromMessage(message);
+            zombieRevViscera += amount;
+            zombieRevVisceraSession += amount;
+            ConfigHandler.writeIntConfig("zombie", "revViscera", zombieRevViscera);
+        } else if (message.contains("RARE DROP! (") && message.contains("Foul Flesh)")) {
+            int amount = getAmountfromMessage(message);
+            zombieFoulFlesh += amount;
+            zombieFoulFleshSession += amount;
             zombieFoulFleshDrops++;
             zombieFoulFleshDropsSession++;
+            ConfigHandler.writeIntConfig("zombie", "foulFlesh", zombieFoulFlesh);
             ConfigHandler.writeIntConfig("zombie", "foulFleshDrops", zombieFoulFleshDrops);
         } else if (message.contains("VERY RARE DROP!  (Revenant Catalyst)")) {
             zombieRevCatas++;
@@ -533,12 +593,109 @@ public class LootTracker {
             zombieShardsSession++;
             ConfigHandler.writeIntConfig("zombie", "shard", zombieShards);
             if (ToggleCommand.rngesusAlerts) Utils.createTitle(EnumChatFormatting.RED + "SHARD OF THE SHREDDED!", 5);
-        } else if (message.contains("INSANE DROP!  (Warden Heart)")) {
+        } else if (message.contains("INSANE DROP!  (Warden Heart)") || message.contains("CRAZY RARE DROP!  (Warden Heart)")) {
             zombieRNG = true;
             zombieWardenHearts++;
             zombieWardenHeartsSession++;
             ConfigHandler.writeIntConfig("zombie", "heart", zombieWardenHearts);
             if (ToggleCommand.rngesusAlerts) Utils.createTitle(EnumChatFormatting.RED + "WARDEN HEART!", 5);
+        } else if (message.contains("   Enderman Slayer LVL ")) {
+            endermanVoidglooms++;
+            endermanVoidgloomsSession++;
+            if (endermanBosses != -1) {
+                endermanBosses++;
+            }
+            if (endermanBossesSession != -1) {
+                endermanBossesSession++;
+            }
+            ConfigHandler.writeIntConfig("enderman", "voidglooms", endermanVoidglooms);
+            ConfigHandler.writeIntConfig("enderman", "bossRNG", endermanBosses);
+        } else if (message.contains("RARE DROP! (") && message.contains("Twilight Arrow Poison)")) {
+            int amount = getAmountfromMessage(message);
+            endermanTAP += amount;
+            endermanTAPSession += amount;
+            endermanTAPDrops++;
+            endermanTAPDropsSession++;
+            ConfigHandler.writeIntConfig("enderman", "tap", endermanTAP);
+            ConfigHandler.writeIntConfig("enderman", "tapDrops", endermanTAPDrops);
+        } else if (message.contains("VERY RARE DROP!  (") && message.contains(" Endersnake Rune I)")) {
+            endermanEndersnakes++;
+            endermanEndersnakesSession++;
+            ConfigHandler.writeIntConfig("enderman", "endersnakes", endermanEndersnakes);
+        } else if (message.contains("VERY RARE DROP!  (Summoning Eye)")) {
+            endermanSummoningEyes++;
+            endermanSummoningEyesSession++;
+            ConfigHandler.writeIntConfig("enderman", "summoningEyes", endermanSummoningEyes);
+        } else if (message.contains("VERY RARE DROP!  (Mana Steal I)")) {
+            endermanManaBooks++;
+            endermanManaBooksSession++;
+            ConfigHandler.writeIntConfig("enderman", "manaBooks", endermanManaBooks);
+        } else if (message.contains("VERY RARE DROP!  (Transmission Tuner)")) {
+            endermanTuners++;
+            endermanTunersSession++;
+            ConfigHandler.writeIntConfig("enderman", "tuners", endermanTuners);
+        } else if (message.contains("VERY RARE DROP!  (Null Atom)")) {
+            endermanAtoms++;
+            endermanAtomsSession++;
+            ConfigHandler.writeIntConfig("enderman", "atoms", endermanAtoms);
+        } else if (message.contains("CRAZY RARE DROP!  (Pocket Espresso Machine)")) {
+            endermanRNG = true;
+            endermanEspressoMachines++;
+            endermanEspressoMachinesSession++;
+            ConfigHandler.writeIntConfig("enderman", "espressoMachines", endermanEspressoMachines);
+            if (ToggleCommand.rngesusAlerts) Utils.createTitle(EnumChatFormatting.AQUA + "POCKET ESPRESSO MACHINE!", 3);
+        } else if (message.contains("VERY RARE DROP!  (Smarty Pants I)")) {
+            endermanSmartyBooks++;
+            endermanSmartyBooksSession++;
+            ConfigHandler.writeIntConfig("enderman", "smartyBooks", endermanSmartyBooks);
+        } else if (message.contains("VERY RARE DROP!  (") && message.contains(" End Rune I)")) {
+            endermanEndRunes++;
+            endermanEndRunesSession++;
+            ConfigHandler.writeIntConfig("enderman", "endRunes", endermanEndRunes);
+        } else if (message.contains("CRAZY RARE DROP!  (Handy Blood Chalice)")) {
+            endermanRNG = true;
+            endermanChalices++;
+            endermanChalicesSession++;
+            ConfigHandler.writeIntConfig("enderman", "chalices", endermanChalices);
+            if (ToggleCommand.rngesusAlerts) Utils.createTitle(EnumChatFormatting.RED + "HANDY BLOOD CHALICE!", 3);
+        } else if (message.contains("VERY RARE DROP!  (Sinful Dice)")) {
+            endermanDice++;
+            endermanDiceSession++;
+            ConfigHandler.writeIntConfig("enderman", "dice", endermanDice);
+        } else if (message.contains("CRAZY RARE DROP!  (Exceedingly Rare Ender Artifact Upgrader)")) {
+            endermanRNG = true;
+            endermanArtifacts++;
+            endermanArtifactsSession++;
+            ConfigHandler.writeIntConfig("enderman", "artifacts", endermanArtifacts);
+            if (ToggleCommand.rngesusAlerts) Utils.createTitle(EnumChatFormatting.DARK_PURPLE + "ENDER ARTIFACT UPGRADER!", 3);
+        } else if (message.contains("CRAZY RARE DROP!  (Void Conqueror Enderman Skin)")) {
+            endermanRNG = true;
+            endermanSkins++;
+            endermanSkinsSession++;
+            ConfigHandler.writeIntConfig("enderman", "skins", endermanSkins);
+            if (ToggleCommand.rngesusAlerts) Utils.createTitle(EnumChatFormatting.DARK_PURPLE + "ENDERMAN SKIN!", 3);
+        } else if (message.contains("VERY RARE DROP!  (Etherwarp Merger)")) {
+            endermanMergers++;
+            endermanMergersSession++;
+            ConfigHandler.writeIntConfig("enderman", "mergers", endermanMergers);
+        } else if (message.contains("CRAZY RARE DROP!  (Judgement Core)")) {
+            endermanRNG = true;
+            endermanCores++;
+            endermanCoresSession++;
+            ConfigHandler.writeIntConfig("enderman", "cores", endermanCores);
+            if (ToggleCommand.rngesusAlerts) Utils.createTitle(EnumChatFormatting.GOLD + "JUDGEMENT CORE!", 5);
+        } else if (message.contains("CRAZY RARE DROP!  (") && message.contains(" Enchant Rune I)")) {
+            endermanRNG = true;
+            endermanEnchantRunes++;
+            endermanEnchantRunesSession++;
+            ConfigHandler.writeIntConfig("enderman", "enchantRunes", endermanEnchantRunes);
+            if (ToggleCommand.rngesusAlerts) Utils.createTitle(EnumChatFormatting.GRAY + "ENCHANT RUNE!", 3);
+        } else if (message.contains("INSANE DROP!  (Ender Slayer VII)") || message.contains("CRAZY RARE DROP!  (Ender Slayer VII)")) {
+            endermanRNG = true;
+            endermanEnderBooks++;
+            endermanEnderBooksSession++;
+            ConfigHandler.writeIntConfig("enderman", "enderBooks", endermanEnderBooks);
+            if (ToggleCommand.rngesusAlerts) Utils.createTitle(EnumChatFormatting.RED + "ENDER SLAYER VII!", 3);
         }
 
         if (wolfRNG) {
@@ -564,6 +721,14 @@ public class LootTracker {
             zombieBossesSession = 0;
             ConfigHandler.writeDoubleConfig("zombie", "timeRNG", zombieTime);
             ConfigHandler.writeIntConfig("zombie", "bossRNG", 0);
+        }
+        if (endermanRNG) {
+            endermanTime = System.currentTimeMillis() / 1000;
+            endermanBosses = 0;
+            endermanTimeSession = System.currentTimeMillis() / 1000;
+            endermanBossesSession = 0;
+            ConfigHandler.writeDoubleConfig("enderman", "timeRNG", endermanTime);
+            ConfigHandler.writeIntConfig("enderman", "bossRNG", 0);
         }
 
         // Fishing tracker
@@ -1095,34 +1260,26 @@ public class LootTracker {
                 // If Hypixel lags and scoreboard doesn't update
                 if (cleanedLine.contains("Boss slain!") || cleanedLine.contains("Slay the boss!")) {
                     int itemTeeth = Utils.getItems("Wolf Tooth");
-                    int itemWheels = Utils.getItems("Hamster Wheel");
                     int itemWebs = Utils.getItems("Tarantula Web");
-                    int itemTAP = Utils.getItems("Toxic Arrow Poison");
                     int itemRev = Utils.getItems("Revenant Flesh");
-                    int itemFoul = Utils.getItems("Foul Flesh");
+                    int itemNullSphere = Utils.getItems("Null Sphere");
 
                     // If no items, are detected, allow check again. Should fix items not being found
-                    if (itemTeeth + itemWheels + itemWebs + itemTAP + itemRev + itemFoul > 0) {
+                    if (itemTeeth + itemWebs + itemRev + itemNullSphere > 0) {
                         itemsChecked = System.currentTimeMillis() / 1000;
                         wolfTeeth += itemTeeth;
-                        wolfWheels += itemWheels;
                         spiderWebs += itemWebs;
-                        spiderTAP += itemTAP;
                         zombieRevFlesh += itemRev;
-                        zombieFoulFlesh += itemFoul;
+                        endermanNullSpheres += itemNullSphere;
                         wolfTeethSession += itemTeeth;
-                        wolfWheelsSession += itemWheels;
                         spiderWebsSession += itemWebs;
-                        spiderTAPSession += itemTAP;
                         zombieRevFleshSession += itemRev;
-                        zombieFoulFleshSession += itemFoul;
+                        endermanNullSpheresSession += itemNullSphere;
 
                         ConfigHandler.writeIntConfig("wolf", "teeth", wolfTeeth);
-                        ConfigHandler.writeIntConfig("wolf", "wheel", wolfWheels);
                         ConfigHandler.writeIntConfig("spider", "web", spiderWebs);
-                        ConfigHandler.writeIntConfig("spider", "tap", spiderTAP);
                         ConfigHandler.writeIntConfig("zombie", "revFlesh", zombieRevFlesh);
-                        ConfigHandler.writeIntConfig("zombie", "foulFlesh", zombieFoulFlesh);
+                        ConfigHandler.writeIntConfig("enderman", "nullSpheres", endermanNullSpheres);
                     }
                 }
             }
@@ -1158,6 +1315,14 @@ public class LootTracker {
         ConfigHandler.writeIntConfig("fishing", "milestone", fishingMilestone);
         ConfigHandler.writeIntConfig("fishing", "empSC", empSCs);
         ConfigHandler.writeIntConfig("fishing", "yetiSC", yetiSCs);
+    }
+
+    public int getAmountfromMessage(String message) {
+        if (message.charAt(message.indexOf("(") + 1) == 'x') {
+            return Integer.parseInt(message.substring(message.indexOf("(") + 1, message.indexOf("x")));
+        } else {
+            return 1;
+        }
     }
     
 }

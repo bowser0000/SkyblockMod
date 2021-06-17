@@ -213,6 +213,7 @@ public class LootDisplay {
 
                     dropsText = EnumChatFormatting.GOLD + "Revs Killed:\n" +
                             EnumChatFormatting.GREEN + "Revenant Flesh:\n" +
+                            EnumChatFormatting.GREEN + "Revenant Viscera:\n" +
                             EnumChatFormatting.BLUE + "Foul Flesh:\n" +
                             EnumChatFormatting.DARK_GREEN + "Pestilence Runes:\n" +
                             EnumChatFormatting.WHITE + "Smite VI Books:\n" +
@@ -227,6 +228,7 @@ public class LootDisplay {
                             EnumChatFormatting.AQUA + "Bosses Since RNG:";
                     countText = EnumChatFormatting.GOLD + nf.format(LootTracker.zombieRevs) + "\n" +
                             EnumChatFormatting.GREEN + nf.format(LootTracker.zombieRevFlesh) + "\n" +
+                            EnumChatFormatting.GREEN + nf.format(LootTracker.zombieRevViscera) + "\n" +
                             EnumChatFormatting.BLUE + drop20 + "\n" +
                             EnumChatFormatting.DARK_GREEN + LootTracker.zombiePestilences + "\n" +
                             EnumChatFormatting.WHITE + LootTracker.zombieBooks + "\n" +
@@ -259,6 +261,7 @@ public class LootDisplay {
 
                     dropsText = EnumChatFormatting.GOLD + "Revs Killed:\n" +
                             EnumChatFormatting.GREEN + "Revenant Flesh:\n" +
+                            EnumChatFormatting.GREEN + "Revenant Viscera:\n" +
                             EnumChatFormatting.BLUE + "Foul Flesh:\n" +
                             EnumChatFormatting.DARK_GREEN + "Pestilence Runes:\n" +
                             EnumChatFormatting.WHITE + "Smite VI Books:\n" +
@@ -273,6 +276,7 @@ public class LootDisplay {
                             EnumChatFormatting.AQUA + "Bosses Since RNG:";
                     countText = EnumChatFormatting.GOLD + nf.format(LootTracker.zombieRevsSession) + "\n" +
                             EnumChatFormatting.GREEN + nf.format(LootTracker.zombieRevFleshSession) + "\n" +
+                            EnumChatFormatting.GREEN + nf.format(LootTracker.zombieRevVisceraSession) + "\n" +
                             EnumChatFormatting.BLUE + drop20 + "\n" +
                             EnumChatFormatting.DARK_GREEN + LootTracker.zombiePestilencesSession + "\n" +
                             EnumChatFormatting.WHITE + LootTracker.zombieBooksSession + "\n" +
@@ -283,6 +287,126 @@ public class LootDisplay {
                             EnumChatFormatting.GOLD + LootTracker.zombieScythes + "\n" +
                             EnumChatFormatting.RED + LootTracker.zombieShardsSession + "\n" +
                             EnumChatFormatting.RED + LootTracker.zombieWardenHeartsSession + "\n" +
+                            EnumChatFormatting.AQUA + timeBetween + "\n" +
+                            EnumChatFormatting.AQUA + bossesBetween;
+                    break;
+                case "enderman":
+                    if (LootTracker.endermanTime == -1) {
+                        timeBetween = "Never";
+                    } else {
+                        timeBetween = Utils.getTimeBetween(LootTracker.endermanTime, timeNow);
+                    }
+                    if (LootTracker.endermanBosses == -1) {
+                        bossesBetween = "Never";
+                    } else {
+                        bossesBetween = nf.format(LootTracker.endermanBosses);
+                    }
+                    if (ToggleCommand.slayerCountTotal) {
+                        drop20 = nf.format(LootTracker.endermanTAP);
+                    } else {
+                        drop20 = nf.format(LootTracker.endermanTAPDrops) + " times";
+                    }
+                    
+                    dropsText = EnumChatFormatting.GOLD + "Voidglooms Killed:\n" +
+                            EnumChatFormatting.DARK_GRAY + "Null Spheres:\n" +
+                            EnumChatFormatting.DARK_PURPLE + "Arrow Poison:\n" +
+                            EnumChatFormatting.LIGHT_PURPLE + "Endersnake Runes:\n" +
+                            EnumChatFormatting.DARK_GREEN + "Summoning Eyes:\n" +
+                            EnumChatFormatting.AQUA + "Mana Steal Books:\n" +
+                            EnumChatFormatting.BLUE + "Transmission Tuners:\n" +
+                            EnumChatFormatting.YELLOW + "Null Atoms:\n" +
+                            EnumChatFormatting.AQUA + "Espresso Machines:\n" +
+                            EnumChatFormatting.WHITE + "Smarty Pants Books:\n" +
+                            EnumChatFormatting.LIGHT_PURPLE + "End Runes:\n" +
+                            EnumChatFormatting.RED + "Blood Chalices:\n" +
+                            EnumChatFormatting.RED + "Sinful Dice:\n" +
+                            EnumChatFormatting.DARK_PURPLE + "Artifact Upgrader:\n" +
+                            EnumChatFormatting.DARK_PURPLE + "Enderman Skins:\n" +
+                            EnumChatFormatting.GRAY + "Enchant Runes:\n" +
+                            EnumChatFormatting.GOLD + "Etherwarp Mergers:\n" +
+                            EnumChatFormatting.GOLD + "Judgement Cores:\n" +
+                            EnumChatFormatting.RED + "Ender Slayer Books:\n" +
+                            EnumChatFormatting.AQUA + "Time Since RNG:\n" +
+                            EnumChatFormatting.AQUA + "Bosses Since RNG:";
+                    countText = EnumChatFormatting.GOLD + nf.format(LootTracker.endermanVoidglooms) + "\n" +
+                            EnumChatFormatting.DARK_GRAY + nf.format(LootTracker.endermanNullSpheres) + "\n" +
+                            EnumChatFormatting.DARK_PURPLE + drop20 + "\n" +
+                            EnumChatFormatting.LIGHT_PURPLE + LootTracker.endermanEndersnakes + "\n" +
+                            EnumChatFormatting.DARK_GREEN + LootTracker.endermanSummoningEyes + "\n" +
+                            EnumChatFormatting.AQUA + LootTracker.endermanManaBooks + "\n" +
+                            EnumChatFormatting.BLUE + LootTracker.endermanTuners + "\n" +
+                            EnumChatFormatting.YELLOW + LootTracker.endermanAtoms + "\n" +
+                            EnumChatFormatting.AQUA + LootTracker.endermanEspressoMachines + "\n" +
+                            EnumChatFormatting.WHITE + LootTracker.endermanSmartyBooks + "\n" +
+                            EnumChatFormatting.LIGHT_PURPLE + LootTracker.endermanEndRunes + "\n" +
+                            EnumChatFormatting.RED + LootTracker.endermanChalices + "\n" +
+                            EnumChatFormatting.RED + LootTracker.endermanDice + "\n" +
+                            EnumChatFormatting.DARK_PURPLE + LootTracker.endermanArtifacts + "\n" +
+                            EnumChatFormatting.DARK_PURPLE + LootTracker.endermanSkins + "\n" +
+                            EnumChatFormatting.GRAY + LootTracker.endermanEnchantRunes + "\n" +
+                            EnumChatFormatting.GOLD + LootTracker.endermanMergers + "\n" +
+                            EnumChatFormatting.GOLD + LootTracker.endermanCores + "\n" +
+                            EnumChatFormatting.RED + LootTracker.endermanEnderBooks + "\n" +
+                            EnumChatFormatting.AQUA + timeBetween + "\n" +
+                            EnumChatFormatting.AQUA + bossesBetween;
+                    break;
+                case "enderman_session":
+                    if (LootTracker.endermanTimeSession == -1) {
+                        timeBetween = "Never";
+                    } else {
+                        timeBetween = Utils.getTimeBetween(LootTracker.endermanTimeSession, timeNow);
+                    }
+                    if (LootTracker.endermanBossesSession == -1) {
+                        bossesBetween = "Never";
+                    } else {
+                        bossesBetween = nf.format(LootTracker.endermanBossesSession);
+                    }
+                    if (ToggleCommand.slayerCountTotal) {
+                        drop20 = nf.format(LootTracker.endermanTAPSession);
+                    } else {
+                        drop20 = nf.format(LootTracker.endermanTAPDropsSession) + " times";
+                    }
+
+                    dropsText = EnumChatFormatting.GOLD + "Voidglooms Killed:\n" +
+                            EnumChatFormatting.DARK_GRAY + "Null Spheres:\n" +
+                            EnumChatFormatting.DARK_PURPLE + "Arrow Poison:\n" +
+                            EnumChatFormatting.LIGHT_PURPLE + "Endersnake Runes:\n" +
+                            EnumChatFormatting.DARK_GREEN + "Summoning Eyes:\n" +
+                            EnumChatFormatting.AQUA + "Mana Steal Books:\n" +
+                            EnumChatFormatting.BLUE + "Transmission Tuners:\n" +
+                            EnumChatFormatting.YELLOW + "Null Atoms:\n" +
+                            EnumChatFormatting.AQUA + "Espresso Machines:\n" +
+                            EnumChatFormatting.WHITE + "Smarty Pants Books:\n" +
+                            EnumChatFormatting.LIGHT_PURPLE + "End Runes:\n" +
+                            EnumChatFormatting.RED + "Blood Chalices:\n" +
+                            EnumChatFormatting.RED + "Sinful Dice:\n" +
+                            EnumChatFormatting.DARK_PURPLE + "Artifact Upgrader:\n" +
+                            EnumChatFormatting.DARK_PURPLE + "Enderman Skins:\n" +
+                            EnumChatFormatting.GRAY + "Enchant Runes:\n" +
+                            EnumChatFormatting.GOLD + "Etherwarp Mergers:\n" +
+                            EnumChatFormatting.GOLD + "Judgement Cores:\n" +
+                            EnumChatFormatting.RED + "Ender Slayer Books:\n" +
+                            EnumChatFormatting.AQUA + "Time Since RNG:\n" +
+                            EnumChatFormatting.AQUA + "Bosses Since RNG:";
+                    countText = EnumChatFormatting.GOLD + nf.format(LootTracker.endermanVoidgloomsSession) + "\n" +
+                            EnumChatFormatting.DARK_GRAY + nf.format(LootTracker.endermanNullSpheresSession) + "\n" +
+                            EnumChatFormatting.DARK_PURPLE + drop20 + "\n" +
+                            EnumChatFormatting.LIGHT_PURPLE + LootTracker.endermanEndersnakesSession + "\n" +
+                            EnumChatFormatting.DARK_GREEN + LootTracker.endermanSummoningEyesSession + "\n" +
+                            EnumChatFormatting.AQUA + LootTracker.endermanManaBooksSession + "\n" +
+                            EnumChatFormatting.BLUE + LootTracker.endermanTunersSession + "\n" +
+                            EnumChatFormatting.YELLOW + LootTracker.endermanAtomsSession + "\n" +
+                            EnumChatFormatting.AQUA + LootTracker.endermanEspressoMachinesSession + "\n" +
+                            EnumChatFormatting.WHITE + LootTracker.endermanSmartyBooksSession + "\n" +
+                            EnumChatFormatting.LIGHT_PURPLE + LootTracker.endermanEndRunesSession + "\n" +
+                            EnumChatFormatting.RED + LootTracker.endermanChalicesSession + "\n" +
+                            EnumChatFormatting.RED + LootTracker.endermanDiceSession + "\n" +
+                            EnumChatFormatting.DARK_PURPLE + LootTracker.endermanArtifactsSession + "\n" +
+                            EnumChatFormatting.DARK_PURPLE + LootTracker.endermanSkinsSession + "\n" +
+                            EnumChatFormatting.GRAY + LootTracker.endermanEnchantRunesSession + "\n" +
+                            EnumChatFormatting.GOLD + LootTracker.endermanMergersSession + "\n" +
+                            EnumChatFormatting.GOLD + LootTracker.endermanCoresSession + "\n" +
+                            EnumChatFormatting.RED + LootTracker.endermanEnderBooksSession + "\n" +
                             EnumChatFormatting.AQUA + timeBetween + "\n" +
                             EnumChatFormatting.AQUA + bossesBetween;
                     break;
