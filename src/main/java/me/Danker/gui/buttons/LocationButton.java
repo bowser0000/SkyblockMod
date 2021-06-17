@@ -40,24 +40,19 @@ public class LocationButton extends GuiButton {
 		}
 
 		this.longestText = longestText;
+		int offset = text2Offset == null ? 0 : text2Offset;
 		this.height = (int) ((splitText.length * 9 + 3) * scale);
-		this.width = (int) ((this.longestText + 3) * scale);
+		this.width = (int) ((this.longestText + offset + 3) * scale);
 	}
 	
 	@Override
 	public void drawButton(Minecraft mc, int mouseX, int mouseY) {
-		if (text2 == null) {
-			drawRect(x - 2, y - 2, x + width, y + height, 0x40D3D3D3);
-		} else {
-			drawRect(x - 2, y - 2, (int) (x + (longestText + text2Offset + 3) * scale), y + height, 0x40D3D3D3);
-			new TextRenderer(mc, text2, (int) (x + (text2Offset * scale)), y, scale);
-		}
+		drawRect(x - 2, y - 2, x + width, y + height, 0x40D3D3D3);
+		if (text2 != null) new TextRenderer(mc, text2, (int) (x + (text2Offset * scale)), y, scale);
 		new TextRenderer(mc, text, x, y, scale);
 	}
 	
 	@Override
-	public void playPressSound(SoundHandler soundHandler) {
-		
-	}
+	public void playPressSound(SoundHandler soundHandler) {}
 	
 }
