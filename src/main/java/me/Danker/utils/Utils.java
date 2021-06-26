@@ -2,6 +2,7 @@ package me.Danker.utils;
 
 import me.Danker.DankersSkyblockMod;
 import me.Danker.features.GoldenEnchants;
+import me.Danker.handlers.ConfigHandler;
 import me.Danker.handlers.ScoreboardHandler;
 import me.Danker.handlers.TextRenderer;
 import net.minecraft.block.Block;
@@ -574,6 +575,7 @@ public class Utils {
     		int number = 0;
 
     		for (int i = 0; i < text.length(); i++) {
+    			if (!romanNumerals.containsKey(text.charAt(i))) continue;
     			int roman = romanNumerals.get(text.charAt(i));
 
 				if (i != text.length() - 1 && roman < romanNumerals.get(text.charAt(i + 1))) {
@@ -586,11 +588,30 @@ public class Utils {
 
     		return number;
 		}
+
     	return -1;
 	}
 
 	public static boolean skillsInitialized() {
     	return DankersSkyblockMod.miningLevel != -1;
+	}
+
+	public static int initializeSkill(ItemStack skillStack, String configValue) {
+    	int level = -1;
+
+    	if (skillStack != null) {
+    		String display = skillStack.getDisplayName();
+    		if (display.startsWith("§a")) {
+    			if (display.contains(" ")) {
+    				level = Utils.getIntFromString(display.substring(display.indexOf(" ") + 1), true);
+				} else {
+    				level = 0;
+				}
+			}
+		}
+
+		ConfigHandler.writeIntConfig("skills", configValue, level);
+		return level;
 	}
 
 }

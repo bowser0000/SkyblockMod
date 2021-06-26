@@ -379,23 +379,14 @@ public class DankersSkyblockMod {
             if (chestName.equals("Your Skills")) {
                 List<Slot> invSlots = ((GuiChest) mc.currentScreen).inventorySlots.inventorySlots;
 
-                farmingLevel = Utils.getIntFromString(invSlots.get(19).getStack().getDisplayName().substring(invSlots.get(19).getStack().getDisplayName().indexOf(" ") + 1), true);
-                miningLevel = Utils.getIntFromString(invSlots.get(20).getStack().getDisplayName().substring(invSlots.get(20).getStack().getDisplayName().indexOf(" ") + 1), true);
-                combatLevel = Utils.getIntFromString(invSlots.get(21).getStack().getDisplayName().substring(invSlots.get(21).getStack().getDisplayName().indexOf(" ") + 1), true);
-                foragingLevel = Utils.getIntFromString(invSlots.get(22).getStack().getDisplayName().substring(invSlots.get(22).getStack().getDisplayName().indexOf(" ") + 1), true);
-                fishingLevel = Utils.getIntFromString(invSlots.get(23).getStack().getDisplayName().substring(invSlots.get(23).getStack().getDisplayName().indexOf(" ") + 1), true);
-                enchantingLevel = Utils.getIntFromString(invSlots.get(24).getStack().getDisplayName().substring(invSlots.get(24).getStack().getDisplayName().indexOf(" ") + 1), true);
-                alchemyLevel = Utils.getIntFromString(invSlots.get(25).getStack().getDisplayName().substring(invSlots.get(25).getStack().getDisplayName().indexOf(" ") + 1), true);
-                carpentryLevel = Utils.getIntFromString(invSlots.get(29).getStack().getDisplayName().substring(invSlots.get(29).getStack().getDisplayName().indexOf(" ") + 1), true);
-
-                ConfigHandler.writeIntConfig("skills", "farming", farmingLevel);
-                ConfigHandler.writeIntConfig("skills", "mining", miningLevel);
-                ConfigHandler.writeIntConfig("skills", "combat", combatLevel);
-                ConfigHandler.writeIntConfig("skills", "foraging", foragingLevel);
-                ConfigHandler.writeIntConfig("skills", "fishing", fishingLevel);
-                ConfigHandler.writeIntConfig("skills", "enchanting", enchantingLevel);
-                ConfigHandler.writeIntConfig("skills", "alchemy", alchemyLevel);
-                ConfigHandler.writeIntConfig("skills", "carpentry", carpentryLevel);
+                farmingLevel = Utils.initializeSkill(invSlots.get(19).getStack(), "farming");
+                miningLevel = Utils.initializeSkill(invSlots.get(20).getStack(), "mining");
+                combatLevel = Utils.initializeSkill(invSlots.get(21).getStack(), "combat");
+                foragingLevel = Utils.initializeSkill(invSlots.get(22).getStack(), "foraging");
+                fishingLevel = Utils.initializeSkill(invSlots.get(23).getStack(), "fishing");
+                enchantingLevel = Utils.initializeSkill(invSlots.get(24).getStack(), "enchanting");
+                alchemyLevel = Utils.initializeSkill(invSlots.get(25).getStack(), "alchemy");
+                carpentryLevel = Utils.initializeSkill(invSlots.get(29).getStack(), "carpentry");
 
                 System.out.println("Updated skill levels.");
             }

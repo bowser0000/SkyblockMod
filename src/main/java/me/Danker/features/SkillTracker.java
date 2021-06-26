@@ -68,7 +68,15 @@ public class SkillTracker {
                 if (section.contains("/")) {
                     int limit = section.contains("Farming") || section.contains("Enchanting") || section.contains("Mining") || section.contains("Combat") ? 60 : 50;
                     double currentXP = Double.parseDouble(section.substring(section.indexOf("(") + 1, section.indexOf("/")).replace(",", ""));
-                    int xpToLevelUp = Integer.parseInt(section.substring(section.indexOf("/") + 1, section.indexOf(")")).replaceAll(",", ""));
+
+                    int xpToLevelUp;
+                    String nextLevelXpString = section.substring(section.indexOf("/") + 1, section.indexOf(")")).replaceAll(",", "");
+                    if (nextLevelXpString.contains("k")) {
+                        xpToLevelUp = Integer.parseInt(nextLevelXpString.substring(0, nextLevelXpString.indexOf("k"))) * 1000;
+                    } else {
+                        xpToLevelUp = Integer.parseInt(nextLevelXpString);
+                    }
+
                     xpLeft = xpToLevelUp - currentXP;
                     int previousXP = Utils.getPastXpEarned(xpToLevelUp, limit);
                     totalXP = currentXP + previousXP;

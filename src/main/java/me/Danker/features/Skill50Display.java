@@ -45,7 +45,16 @@ public class Skill50Display {
                         limit = 50;
                         totalXp = 55172425;
                     }
-                    int previousXp = Utils.getPastXpEarned(Integer.parseInt(section.substring(section.indexOf("/") + 1, section.indexOf(")")).replaceAll(",", "")), limit);
+
+                    int nextLevelXp;
+                    String nextLevelXpString = section.substring(section.indexOf("/") + 1, section.indexOf(")")).replaceAll(",", "");
+                    if (nextLevelXpString.contains("k")) {
+                        nextLevelXp = Integer.parseInt(nextLevelXpString.substring(0, nextLevelXpString.indexOf("k"))) * 1000;
+                    } else {
+                        nextLevelXp = Integer.parseInt(nextLevelXpString);
+                    }
+
+                    int previousXp = Utils.getPastXpEarned(nextLevelXp, limit);
                     double percentage = Math.floor(((currentXp + previousXp) / totalXp) * 10000D) / 100D;
 
                     NumberFormat nf = NumberFormat.getNumberInstance(Locale.US);
