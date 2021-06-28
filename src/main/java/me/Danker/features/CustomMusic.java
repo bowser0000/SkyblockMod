@@ -31,8 +31,10 @@ public class CustomMusic {
     public static boolean inDungeonBossRoom = false;
     public static Song dungeonboss;
     public static int dungeonbossVolume;
+    public static boolean inBloodRoom;
     public static Song bloodroom;
     public static int bloodroomVolume;
+    public static boolean inDungeon;
     public static Song dungeon;
     public static int dungeonVolume;
 
@@ -52,6 +54,13 @@ public class CustomMusic {
             if (Utils.inDungeons && world != null && player != null) {
                 prevInDungeonBossRoom = inDungeonBossRoom;
                 List<String> scoreboard = ScoreboardHandler.getSidebarLines();
+                if(inDungeonBossRoom){
+                    if (ToggleCommand.dungeonBossMusic && dungeonboss != null && !dungeonboss.isRunning()) dungeonboss.start();
+                }else if(inBloodRoom){
+                    if (ToggleCommand.bloodRoomMusic && bloodroom != null && !bloodroom.isRunning()) bloodroom.start();
+                }else if(inDungeon){
+                    if (ToggleCommand.dungeonMusic && dungeon != null && !dungeon.isRunning()) dungeon.start();
+                }
                 if (scoreboard.size() > 2) {
                     String firstLine = ScoreboardHandler.cleanSB(scoreboard.get(scoreboard.size() - 1));
                     String secondLine = ScoreboardHandler.cleanSB(scoreboard.get(scoreboard.size() - 2));
@@ -90,6 +99,9 @@ public class CustomMusic {
         if (message.contains(":")) return;
 
         if (Utils.inDungeons) {
+            if(!inBloodRoom && !inDungeonBossRoom){
+                inDungeon = true;
+            }
             if (message.contains("EXTRA STATS ")) {
                 dungeonboss.stop();
                 bloodroom.stop();
@@ -159,7 +171,6 @@ public class CustomMusic {
                 cancelNotes = true;
                 music.setMicrosecondPosition(0);
                 music.start();
-                music.loop(Clip.LOOP_CONTINUOUSLY);
             }
         }
 
