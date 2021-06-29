@@ -193,6 +193,11 @@ public class PlayerCommand extends CommandBase {
             if (slayersObject.get("wolf").getAsJsonObject().has("xp")) {
                 wolfXP = slayersObject.get("wolf").getAsJsonObject().get("xp").getAsInt();
             }
+            // Enderman
+            int endermanXP = 0;
+            if (slayersObject.get("enderman").getAsJsonObject().has("xp")) {
+                endermanXP = slayersObject.get("enderman").getAsJsonObject().get("xp").getAsInt();
+            }
 
             // Bank
             System.out.println("Fetching bank + purse coins...");
@@ -233,10 +238,11 @@ public class PlayerCommand extends CommandBase {
                                                         DankersSkyblockMod.TYPE_COLOUR + " Taming: " + DankersSkyblockMod.VALUE_COLOUR + EnumChatFormatting.BOLD + tamingLevel + "\n" +
                                                         EnumChatFormatting.AQUA + " Average Skill Level: " + DankersSkyblockMod.SKILL_AVERAGE_COLOUR + EnumChatFormatting.BOLD + skillAvg + "\n" +
                                                         EnumChatFormatting.AQUA + " True Average Skill Level: " + DankersSkyblockMod.SKILL_AVERAGE_COLOUR + EnumChatFormatting.BOLD + trueAvg + "\n\n" +
-                                                        EnumChatFormatting.AQUA + " " + username + "'s Total Slayer XP: " + EnumChatFormatting.GOLD + EnumChatFormatting.BOLD + nf.format(zombieXP + spiderXP + wolfXP) + "\n" +
+                                                        EnumChatFormatting.AQUA + " " + username + "'s Total Slayer XP: " + EnumChatFormatting.GOLD + EnumChatFormatting.BOLD + nf.format(zombieXP + spiderXP + wolfXP + endermanXP) + "\n" +
                                                         DankersSkyblockMod.TYPE_COLOUR + " Zombie XP: " + DankersSkyblockMod.VALUE_COLOUR + EnumChatFormatting.BOLD + nf.format(zombieXP) + "\n" +
                                                         DankersSkyblockMod.TYPE_COLOUR + " Spider XP: " + DankersSkyblockMod.VALUE_COLOUR + EnumChatFormatting.BOLD + nf.format(spiderXP) + "\n" +
-                                                        DankersSkyblockMod.TYPE_COLOUR + " Wolf XP: " + DankersSkyblockMod.VALUE_COLOUR + EnumChatFormatting.BOLD + nf.format(wolfXP) + "\n\n" +
+                                                        DankersSkyblockMod.TYPE_COLOUR + " Wolf XP: " + DankersSkyblockMod.VALUE_COLOUR + EnumChatFormatting.BOLD + nf.format(wolfXP) + "\n" +
+                                                        DankersSkyblockMod.TYPE_COLOUR + " Enderman XP: " + DankersSkyblockMod.VALUE_COLOUR + EnumChatFormatting.BOLD + nf.format(endermanXP) + "\n\n" +
                                                         EnumChatFormatting.AQUA + " " + username + "'s Coins:\n" +
                                                         DankersSkyblockMod.TYPE_COLOUR + " Bank: " + (bankCoins == 0 ? EnumChatFormatting.RED + "Bank API disabled." : EnumChatFormatting.GOLD + nf.format(bankCoins)) + "\n" +
                                                         DankersSkyblockMod.TYPE_COLOUR + " Purse: " + EnumChatFormatting.GOLD + nf.format(purseCoins) + "\n" +
