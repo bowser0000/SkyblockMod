@@ -195,6 +195,7 @@ public class DankersSkyblockMod {
         ClientCommandHandler.instance.registerCommand(new PetsCommand());
         ClientCommandHandler.instance.registerCommand(new PlayerCommand());
         ClientCommandHandler.instance.registerCommand(new ReloadConfigCommand());
+        ClientCommandHandler.instance.registerCommand(new ReloadRepoCommand());
         ClientCommandHandler.instance.registerCommand(new ResetLootCommand());
         ClientCommandHandler.instance.registerCommand(new ScaleCommand());
         ClientCommandHandler.instance.registerCommand(new SetkeyCommand());

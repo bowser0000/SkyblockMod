@@ -57,6 +57,8 @@ public class DHelpCommand extends CommandBase {
 													EnumChatFormatting.GOLD + RepartyCommand.usage(arg0) + EnumChatFormatting.AQUA + " - Disbands and reparties all members in the party.\n" +
 													EnumChatFormatting.GOLD + CustomMusicCommand.usage(arg0) + EnumChatFormatting.AQUA + " - Stops or reloads the custom music.\n" +
 													EnumChatFormatting.GOLD + PlayerCommand.usage(arg0) + EnumChatFormatting.AQUA + " - Uses API to find skills, slayers, coins and weight of a player.\n" +
+													EnumChatFormatting.GOLD + ReloadConfigCommand.usage(arg0) + EnumChatFormatting.AQUA + " - Reloads Danker's Skyblock Mod config.\n" +
+													EnumChatFormatting.GOLD + ReloadRepoCommand.usage(arg0) + EnumChatFormatting.AQUA + " - Reloads Danker's Skyblock Mod repository.\n" +
 													EnumChatFormatting.GREEN + " Open Maddox Menu" + EnumChatFormatting.AQUA + " - M by default.\n" +
 													EnumChatFormatting.GREEN + " Start/Stop Skill Tracker" + EnumChatFormatting.AQUA + " - Numpad 5 by default.\n"));
 	}
