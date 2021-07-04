@@ -74,6 +74,7 @@ public class CustomMusic {
                         firstLine.contains("necron")) { // F7
 
                         inDungeonBossRoom = true;
+                        inBloodRoom = false;
                         if (!prevInDungeonBossRoom) {
                             bloodroom.stop();
                             if (ToggleCommand.dungeonBossMusic) dungeonboss.start();
@@ -108,6 +109,7 @@ public class CustomMusic {
                 dungeon.stop();
             } else if (message.contains("The BLOOD DOOR has been opened!")) {
                 dungeon.stop();
+                inDungeon = false;
                 if (ToggleCommand.bloodRoomMusic) bloodroom.start();
             }
         }
