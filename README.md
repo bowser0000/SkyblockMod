@@ -86,6 +86,7 @@ Discord Server: https://discord.gg/QsEkNQS
 - /player [player] - Uses API to find skills, slayers, coins and weight of a player.
 - /reloadconfig - Reloads Danker's Skyblock Mod config.
 - /reloaddsmrepo - Reloads Danker's Skyblock Mod repository.
+- /dsmfarmlength <min coords> <max coords> - Sets coords to be used for end of farm alert.
 
 ## Keybinds
 - Open Maddox menu - M by default.

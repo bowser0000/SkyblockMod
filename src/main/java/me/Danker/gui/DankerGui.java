@@ -67,6 +67,7 @@ public class DankerGui extends GuiScreen {
 	private GuiButton giantHP;
 	private GuiButton hidePetCandy;
 	private GuiButton customColouredNames;
+	private GuiButton endOfFarmAlert;
 	// Chat Messages
 	private GuiButton sceptreMessages;
 	private GuiButton midasStaffMessages;
@@ -155,6 +156,7 @@ public class DankerGui extends GuiScreen {
 		giantHP = new FeatureButton("Display Giant HP: " + Utils.getColouredBoolean(ToggleCommand.giantHP), "Displays health of Sadan's giants during F6 bossfight and F7 blood room.");
 		hidePetCandy = new FeatureButton("Hide Pet Candy: " + Utils.getColouredBoolean(ToggleCommand.hidePetCandy), "Hide pet candy in pet tooltips.");
 		customColouredNames = new FeatureButton("Custom Name Colors: " + Utils.getColouredBoolean(ToggleCommand.customColouredNames), "Replaces some player's usernames with a custom color.");
+		endOfFarmAlert = new FeatureButton("Alert When Reaching End of Farm: " + Utils.getColouredBoolean(ToggleCommand.endOfFarmAlert), "Alerts when you go past coords set with /dsmfarmlength.");
 
 		allButtons.clear();
 		allButtons.add(changeDisplay);
@@ -201,6 +203,7 @@ public class DankerGui extends GuiScreen {
 		allButtons.add(giantHP);
 		allButtons.add(hidePetCandy);
 		allButtons.add(customColouredNames);
+		allButtons.add(endOfFarmAlert);
 
 		search.setText(initSearchText);
 		search.setVisible(true);
@@ -447,6 +450,10 @@ public class DankerGui extends GuiScreen {
 			ToggleCommand.customColouredNames = !ToggleCommand.customColouredNames;
 			ConfigHandler.writeBooleanConfig("toggles", "CustomColouredNames", ToggleCommand.customColouredNames);
 			customColouredNames.displayString = "Custom Name Colors: " + Utils.getColouredBoolean(ToggleCommand.customColouredNames);
+		} else if (button == endOfFarmAlert) {
+			ToggleCommand.endOfFarmAlert = !ToggleCommand.endOfFarmAlert;
+			ConfigHandler.writeBooleanConfig("toggles", "EndOfFarmAlert", ToggleCommand.endOfFarmAlert);
+			endOfFarmAlert.displayString = "Alert When Reaching End of Farm: " + Utils.getColouredBoolean(ToggleCommand.endOfFarmAlert);
 		}
 	}
 

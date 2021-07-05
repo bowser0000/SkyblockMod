@@ -215,6 +215,7 @@ public class ConfigHandler {
 		ToggleCommand.giantHP = initBoolean("toggles", "GiantHP", false);
 		ToggleCommand.hidePetCandy = initBoolean("toggles", "HidePetCandy", false);
 		ToggleCommand.customColouredNames = initBoolean("toggles", "CustomColouredNames", true);
+		ToggleCommand.endOfFarmAlert = initBoolean("toggles", "EndOfFarmAlert", false);
 		// Chat Messages
 		ToggleCommand.sceptreMessages = initBoolean("toggles", "SceptreMessages", true);
 		ToggleCommand.midasStaffMessages = initBoolean("toggles", "MidasStaffMessages", true);
@@ -457,7 +458,6 @@ public class ConfigHandler {
 		LootTracker.ghostlyBoots = initInt("ghosts", "ghostlyBoots", 0);
 		LootTracker.bagOfCashs = initInt("ghosts", "bagOfCash", 0);
 
-
 		// Misc
 		LootDisplay.display = initString("misc", "display", "off");
 		LootDisplay.auto = initBoolean("misc", "autoDisplay", false);
@@ -465,6 +465,8 @@ public class ConfigHandler {
 		CakeTimer.cakeTime = initDouble("misc", "cakeTime", 0);
 		SkillTracker.showSkillTracker = initBoolean("misc", "showSkillTracker", false);
 		DankersSkyblockMod.firstLaunch = initBoolean("misc", "firstLaunch", true);
+		EndOfFarmAlert.min = initDouble("misc", "farmMin", -78.5);
+		EndOfFarmAlert.max = initDouble("misc", "farmMax", 79.5);
 
 		// Locations
 		ScaledResolution scaled = new ScaledResolution(Minecraft.getMinecraft());

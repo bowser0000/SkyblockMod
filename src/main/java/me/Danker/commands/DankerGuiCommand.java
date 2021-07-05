@@ -1,6 +1,7 @@
 package me.Danker.commands;
 
 import me.Danker.DankersSkyblockMod;
+import me.Danker.features.EndOfFarmAlert;
 import me.Danker.features.SkillTracker;
 import me.Danker.features.loot.LootDisplay;
 import net.minecraft.client.Minecraft;
@@ -97,6 +98,7 @@ public class DankerGuiCommand extends CommandBase {
 			debug.append("[gianthp][").append(ToggleCommand.giantHP).append("]\n");
 			debug.append("[hidepetcandy][").append(ToggleCommand.hidePetCandy).append("]\n");
 			debug.append("[customcolourednames][").append(ToggleCommand.customColouredNames).append("]\n");
+			debug.append("[endoffarmalert][").append(ToggleCommand.endOfFarmAlert).append("]\n");
 			debug.append("[dungeonbossmusic][").append(ToggleCommand.dungeonBossMusic).append("]\n");
 			debug.append("[bloodroommusic][").append(ToggleCommand.bloodRoomMusic).append("]\n");
 			debug.append("[dungeonmusic][").append(ToggleCommand.dungeonMusic).append("]\n");
@@ -113,6 +115,7 @@ public class DankerGuiCommand extends CommandBase {
 			debug.append("[Current Display][").append(LootDisplay.display).append("]\n");
 			debug.append("[Auto Display][").append(LootDisplay.auto).append("]\n");
 			debug.append("[Skill Tracker Visible][").append(SkillTracker.showSkillTracker).append("]\n");
+			debug.append("[Farm Length][").append(EndOfFarmAlert.min).append(" to ").append(EndOfFarmAlert.max).append("]\n");
 			debug.append("# Problematic Mods\n");
 			debug.append("[LabyMod][").append(DankersSkyblockMod.usingLabymod).append("]\n");
 			debug.append("[OAM][").append(DankersSkyblockMod.usingOAM).append("]\n");

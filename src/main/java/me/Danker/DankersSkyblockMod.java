@@ -67,7 +67,7 @@ import java.util.stream.Collectors;
 @Mod(modid = DankersSkyblockMod.MODID, version = DankersSkyblockMod.VERSION, clientSideOnly = true)
 public class DankersSkyblockMod {
     public static final String MODID = "Danker's Skyblock Mod";
-    public static final String VERSION = "1.8.7-beta2";
+    public static final String VERSION = "1.8.7-beta3";
     public static int titleTimer = -1;
     public static boolean showTitle = false;
     public static String titleText = "";
@@ -115,6 +115,7 @@ public class DankersSkyblockMod {
         MinecraftForge.EVENT_BUS.register(new CreeperSolver());
         MinecraftForge.EVENT_BUS.register(new CustomMusic());
         MinecraftForge.EVENT_BUS.register(new DungeonTimer());
+        MinecraftForge.EVENT_BUS.register(new EndOfFarmAlert());
         MinecraftForge.EVENT_BUS.register(new ExpertiseLore());
         MinecraftForge.EVENT_BUS.register(new FasterMaddoxCalling());
         MinecraftForge.EVENT_BUS.register(new GiantHPDisplay());
@@ -185,6 +186,7 @@ public class DankersSkyblockMod {
         ClientCommandHandler.instance.registerCommand(new DisplayCommand());
         ClientCommandHandler.instance.registerCommand(new DungeonsCommand());
         ClientCommandHandler.instance.registerCommand(new FairySoulsCommand());
+        ClientCommandHandler.instance.registerCommand(new FarmLengthCommand());
         ClientCommandHandler.instance.registerCommand(new GetkeyCommand());
         ClientCommandHandler.instance.registerCommand(new GuildOfCommand());
         ClientCommandHandler.instance.registerCommand(new ImportFishingCommand());
