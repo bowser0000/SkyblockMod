@@ -578,7 +578,7 @@ public class Utils {
     			if (!romanNumerals.containsKey(text.charAt(i))) continue;
     			int roman = romanNumerals.get(text.charAt(i));
 
-				if (i != text.length() - 1 && roman < romanNumerals.get(text.charAt(i + 1))) {
+				if (i != text.length() - 1 && romanNumerals.containsKey(text.charAt(i + 1)) && roman < romanNumerals.get(text.charAt(i + 1))) {
 					number += romanNumerals.get(text.charAt(i + 1)) - roman;
 					i++;
 				} else {

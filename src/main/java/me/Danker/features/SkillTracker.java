@@ -72,7 +72,7 @@ public class SkillTracker {
                     int xpToLevelUp;
                     String nextLevelXpString = section.substring(section.indexOf("/") + 1, section.indexOf(")")).replaceAll(",", "");
                     if (nextLevelXpString.contains("k")) {
-                        xpToLevelUp = Integer.parseInt(nextLevelXpString.substring(0, nextLevelXpString.indexOf("k"))) * 1000;
+                        xpToLevelUp = (int) (Double.parseDouble(nextLevelXpString.substring(0, nextLevelXpString.indexOf("k"))) * 1000);
                     } else {
                         xpToLevelUp = Integer.parseInt(nextLevelXpString);
                     }

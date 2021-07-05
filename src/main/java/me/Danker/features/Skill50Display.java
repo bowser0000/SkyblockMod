@@ -49,7 +49,7 @@ public class Skill50Display {
                     int nextLevelXp;
                     String nextLevelXpString = section.substring(section.indexOf("/") + 1, section.indexOf(")")).replaceAll(",", "");
                     if (nextLevelXpString.contains("k")) {
-                        nextLevelXp = Integer.parseInt(nextLevelXpString.substring(0, nextLevelXpString.indexOf("k"))) * 1000;
+                        nextLevelXp = (int) (Double.parseDouble(nextLevelXpString.substring(0, nextLevelXpString.indexOf("k"))) * 1000);
                     } else {
                         nextLevelXp = Integer.parseInt(nextLevelXpString);
                     }
