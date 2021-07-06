@@ -1,7 +1,9 @@
 package me.Danker.utils;
 
 import me.Danker.DankersSkyblockMod;
+import me.Danker.features.ColouredNames;
 import me.Danker.features.GoldenEnchants;
+import me.Danker.handlers.APIHandler;
 import me.Danker.handlers.ConfigHandler;
 import me.Danker.handlers.ScoreboardHandler;
 import me.Danker.handlers.TextRenderer;
@@ -30,6 +32,7 @@ import java.util.List;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 public class Utils {
 	
@@ -612,6 +615,15 @@ public class Utils {
 
 		ConfigHandler.writeIntConfig("skills", configValue, level);
 		return level;
+	}
+
+	public static void refreshRepo() {
+		DankersSkyblockMod.data = APIHandler.getResponse("https://raw.githubusercontent.com/bowser0000/SkyblockMod-REPO/main/data.json");
+		System.out.println("Loaded data from GitHub?: " + (DankersSkyblockMod.data != null && DankersSkyblockMod.data.has("trivia")));
+		ColouredNames.users = DankersSkyblockMod.data.get("colourednames").getAsJsonObject().entrySet().stream()
+				.map(Map.Entry::getKey)
+				.collect(Collectors.toCollection(ArrayList::new));
+		System.out.println("Refreshed DSM repo at " + System.currentTimeMillis());
 	}
 
 }

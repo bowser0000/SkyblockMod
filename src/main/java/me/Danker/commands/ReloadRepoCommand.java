@@ -1,17 +1,12 @@
 package me.Danker.commands;
 
 import me.Danker.DankersSkyblockMod;
-import me.Danker.features.ColouredNames;
-import me.Danker.handlers.APIHandler;
+import me.Danker.utils.Utils;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ChatComponentText;
-
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 public class ReloadRepoCommand extends CommandBase {
 
@@ -39,13 +34,7 @@ public class ReloadRepoCommand extends CommandBase {
         // MULTI THREAD DRIFTING
         new Thread(() -> {
             EntityPlayer player = (EntityPlayer) arg0;
-
-            DankersSkyblockMod.data = APIHandler.getResponse("https://raw.githubusercontent.com/bowser0000/SkyblockMod-REPO/main/data.json");
-            System.out.println("Loaded data from GitHub?: " + (DankersSkyblockMod.data != null && DankersSkyblockMod.data.has("trivia")));
-            ColouredNames.users = DankersSkyblockMod.data.get("colourednames").getAsJsonObject().entrySet().stream()
-                    .map(Map.Entry::getKey)
-                    .collect(Collectors.toCollection(ArrayList::new));
-
+            Utils.refreshRepo();
             player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Refreshed Danker's Skyblock Mod repo."));
         }).start();
     }

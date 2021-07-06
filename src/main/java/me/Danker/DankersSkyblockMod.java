@@ -10,7 +10,6 @@ import me.Danker.features.loot.LootDisplay;
 import me.Danker.features.loot.LootTracker;
 import me.Danker.features.puzzlesolvers.*;
 import me.Danker.gui.*;
-import me.Danker.handlers.APIHandler;
 import me.Danker.handlers.ConfigHandler;
 import me.Danker.handlers.PacketHandler;
 import me.Danker.utils.Utils;
@@ -58,11 +57,9 @@ import org.lwjgl.input.Mouse;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @Mod(modid = DankersSkyblockMod.MODID, version = DankersSkyblockMod.VERSION, clientSideOnly = true)
 public class DankersSkyblockMod {
@@ -72,6 +69,7 @@ public class DankersSkyblockMod {
     public static boolean showTitle = false;
     public static String titleText = "";
     public static int tickAmount = 1;
+    public static int repoTickAmount = 1;
     public static KeyBinding[] keyBindings = new KeyBinding[3];
     public static boolean usingLabymod = false;
     public static boolean usingOAM = false;
@@ -167,13 +165,7 @@ public class DankersSkyblockMod {
             ClientRegistry.registerKeyBinding(keyBinding);
         }
 
-        new Thread(() -> {
-            data = APIHandler.getResponse("https://raw.githubusercontent.com/bowser0000/SkyblockMod-REPO/main/data.json");
-            System.out.println("Loaded data from GitHub?: " + (DankersSkyblockMod.data != null && DankersSkyblockMod.data.has("trivia")));
-            ColouredNames.users = data.get("colourednames").getAsJsonObject().entrySet().stream()
-                                  .map(Map.Entry::getKey)
-                                  .collect(Collectors.toCollection(ArrayList::new));
-        }).start();
+        new Thread(Utils::refreshRepo).start();
     }
 
     @EventHandler
@@ -359,12 +351,19 @@ public class DankersSkyblockMod {
 
         tickAmount++;
         if (tickAmount % 20 == 0) {
+            repoTickAmount++;
             if (player != null) {
                 Utils.checkForSkyblock();
                 Utils.checkForDungeons();
             }
 
             tickAmount = 0;
+        }
+
+        if (repoTickAmount % 3601 == 0) {
+            // I didn't want to change everything so I just made a new tick variable
+            new Thread(Utils::refreshRepo).start();
+            repoTickAmount = 1;
         }
 
         if (titleTimer >= 0) {
