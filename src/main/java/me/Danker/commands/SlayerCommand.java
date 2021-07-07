@@ -27,7 +27,7 @@ public class SlayerCommand extends CommandBase {
 
 	@Override
 	public List<String> getCommandAliases() {
-		return Collections.singletonList("slayer");
+		return Collections.singletonList("slayers");
 	}
 
 	@Override
