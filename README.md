@@ -2,14 +2,20 @@
 QOL changes that enhances your Hypixel Skyblock experience. Created to add features I couldn't find in a mod, or if the mod was paid (which is against the [Mojang TOS](https://account.mojang.com/documents/commercial_guidelines)).
 
 Discord Server: https://discord.gg/QsEkNQS
-
+</details>
+<details>
+  <summary>Incompatbilities</summary>
+  
 ## Incompatibilities
 - Old Animations <2.6.4 - Frequent crashes
 - Old Animations 2.6.4
   - Pet colors does not color slots
   - Catacombs F7 terminal solvers do not color slots
   - Enchanting solvers do not color slots
-
+</details>
+<details>
+  <summary>Current Features</summary>
+  
 ## Current features
 - Guild party desktop notifications
 - Coordinate and angle display
@@ -51,8 +57,10 @@ Discord Server: https://discord.gg/QsEkNQS
 - Reparty command
 - Highlight Slayer Bosses
 - Highlight Arachne
-
-
+</details>
+<details>
+  <summary>Commands</summary>
+  
 ## Commands
 - /dhelp - Returns this message in-game.
 - /dsm - Opens the GUI for Danker's Skyblock Mod.
@@ -79,12 +87,18 @@ Discord Server: https://discord.gg/QsEkNQS
 - /fairysouls - Check the fairysouls of a player
 - /lobbybank - Uses API to find the average bank total of the lobby, as well the three players with the highest total money in the bank (and purse).
 - /dsmmusic <stop/reload/volume> [dungeonboss/bloodroom/dungeon] [1-100] - Stops, reloads or changes the volume of custom music.
-
+</details>
+<details>
+  <summary>Keybinds</summary>
+  
 ## Keybinds
 - Open Maddox menu - M by default.
 - Regular Ability - Numpad 4 by default.
 - Start/Stop Skill Tracker - Numpad 5 by default.
-
+</details>
+<details>
+  <summary>Custom Music</summary>
+  
 ## Custom Music
 1. Place a music file with the given name in the `.mincraft/config/dsmmusic` folder:
   - Dungeon music: `dungeon.wav`
@@ -93,13 +107,32 @@ Discord Server: https://discord.gg/QsEkNQS
 2. Either run `/dsmmusic reload` or restart your game.
 3. Enable the custom music in `/dsm`.
 4. (Optional) Change the volume of the music with `/dsmmusic volume`.
-
+</details>
+<details>
+  <summary>Notes</summary>
+  
 ### Notes
 - Slayer tracker for token drops and 20% chance drops uses a 12x12x12 bounding box centered on the player to detect the drops. If you are out of the range of the item drop, it will not count on the tracker.
 - API commands may take a while depending on your internet connection. The API may also go down.
 - If you use too many API commands too fast, you can and will get rate-limited.
 - Importing fishing uses your sea creature kills, which may not always be exactly correct (e.x. someone else kills your sea creature).
+</details>
+<details>
+  <summary>Todo</summary>
 
+- [x] Your mom
+- [ ] A way to get custom coloured names
+- [ ] Estimated dungeons score display
+- [ ] Multiple displays at once
+- [ ] Nearby players display (For legion/dolphin)
+- [ ] Dungeon armour colours
+- [ ] Rework slayer item detection
+- [ ] Change display to % of screen instead of x, y
+- [ ] Golem Tracker
+- [ ] /dragonparty
+- [ ] Multiple language support
+</details>
+  
 ### Credits to Open Source Software
 Credit to all the following open source software used in this mod.
 
