@@ -32,7 +32,7 @@ public class ArachneESP {
 
     public boolean inSpidersDen(List<String> scoreboard) {
         for (String s : scoreboard) {
-            if (ScoreboardHandler.cleanSB(s).contains("Spiders Den")) {
+            if (ScoreboardHandler.cleanSB(s).contains("Spider's Den")) {
                 return true;
             }
         }

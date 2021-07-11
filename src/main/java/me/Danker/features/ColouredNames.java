@@ -3,11 +3,15 @@ package me.Danker.features;
 import me.Danker.DankersSkyblockMod;
 import me.Danker.commands.ToggleCommand;
 import me.Danker.utils.Utils;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IChatComponent;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
+import net.minecraftforge.client.event.RenderLivingEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.util.ArrayList;
@@ -38,6 +42,29 @@ public class ColouredNames {
             for (int i = 0; i < event.toolTip.size(); i++) {
                 if (event.toolTip.get(i).contains(user)) {
                     event.toolTip.set(i, replaceName(event.toolTip.get(i), user, getColourFromName(user)));
+                }
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public void onRenderNametag(PlayerEvent.NameFormat event) {
+        if (!ToggleCommand.customColouredNames || !Utils.inSkyblock) return;
+
+        if (users.contains(event.username)) {
+            event.displayname = replaceName(event.displayname, event.username, getColourFromName(event.username));
+        }
+    }
+
+    @SubscribeEvent
+    public void onRenderLiving(RenderLivingEvent.Specials.Pre<EntityLivingBase> event) {
+        if (!ToggleCommand.customColouredNames || !Utils.inSkyblock) return;
+
+        Entity entity = event.entity;
+        if (entity.hasCustomName()) {
+            for (String user : users) {
+                if (entity.getCustomNameTag().contains(user)) {
+                    entity.setCustomNameTag(replaceName(entity.getCustomNameTag(), user, getColourFromName(user)));
                 }
             }
         }
