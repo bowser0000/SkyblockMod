@@ -68,6 +68,7 @@ public class DankerGui extends GuiScreen {
 	private GuiButton hidePetCandy;
 	private GuiButton customColouredNames;
 	private GuiButton endOfFarmAlert;
+	private GuiButton gemstoneLore;
 	// Chat Messages
 	private GuiButton sceptreMessages;
 	private GuiButton midasStaffMessages;
@@ -157,6 +158,7 @@ public class DankerGui extends GuiScreen {
 		hidePetCandy = new FeatureButton("Hide Pet Candy: " + Utils.getColouredBoolean(ToggleCommand.hidePetCandy), "Hide pet candy in pet tooltips.");
 		customColouredNames = new FeatureButton("Custom Name Colors: " + Utils.getColouredBoolean(ToggleCommand.customColouredNames), "Replaces some player's usernames with a custom color.");
 		endOfFarmAlert = new FeatureButton("Alert When Reaching End of Farm: " + Utils.getColouredBoolean(ToggleCommand.endOfFarmAlert), "Alerts when you go past coords set with /dsmfarmlength.");
+		gemstoneLore = new FeatureButton("Applied Gemstones in Lore: " + Utils.getColouredBoolean(ToggleCommand.gemstoneLore), "Adds applied gemstones to item tooltip.");
 
 		allButtons.clear();
 		allButtons.add(changeDisplay);
@@ -204,6 +206,7 @@ public class DankerGui extends GuiScreen {
 		allButtons.add(hidePetCandy);
 		allButtons.add(customColouredNames);
 		allButtons.add(endOfFarmAlert);
+		allButtons.add(gemstoneLore);
 
 		search.setText(initSearchText);
 		search.setVisible(true);
@@ -454,6 +457,10 @@ public class DankerGui extends GuiScreen {
 			ToggleCommand.endOfFarmAlert = !ToggleCommand.endOfFarmAlert;
 			ConfigHandler.writeBooleanConfig("toggles", "EndOfFarmAlert", ToggleCommand.endOfFarmAlert);
 			endOfFarmAlert.displayString = "Alert When Reaching End of Farm: " + Utils.getColouredBoolean(ToggleCommand.endOfFarmAlert);
+		} else if (button == gemstoneLore) {
+			ToggleCommand.gemstoneLore = !ToggleCommand.gemstoneLore;
+			ConfigHandler.writeBooleanConfig("toggles", "GemstoneLore", ToggleCommand.gemstoneLore);
+			gemstoneLore.displayString = "Applied Gemstones in Lore: " + Utils.getColouredBoolean(ToggleCommand.gemstoneLore);
 		}
 	}
 

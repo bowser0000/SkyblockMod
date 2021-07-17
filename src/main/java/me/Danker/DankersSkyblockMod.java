@@ -64,7 +64,7 @@ import java.util.Map;
 @Mod(modid = DankersSkyblockMod.MODID, version = DankersSkyblockMod.VERSION, clientSideOnly = true)
 public class DankersSkyblockMod {
     public static final String MODID = "Danker's Skyblock Mod";
-    public static final String VERSION = "1.8.7-beta3";
+    public static final String VERSION = "1.8.7-beta4";
     public static int titleTimer = -1;
     public static boolean showTitle = false;
     public static String titleText = "";
@@ -116,6 +116,7 @@ public class DankersSkyblockMod {
         MinecraftForge.EVENT_BUS.register(new EndOfFarmAlert());
         MinecraftForge.EVENT_BUS.register(new ExpertiseLore());
         MinecraftForge.EVENT_BUS.register(new FasterMaddoxCalling());
+        MinecraftForge.EVENT_BUS.register(new GemstonesLore());
         MinecraftForge.EVENT_BUS.register(new GiantHPDisplay());
         MinecraftForge.EVENT_BUS.register(new GoldenEnchants());
         MinecraftForge.EVENT_BUS.register(new GolemSpawningAlert());
@@ -156,6 +157,7 @@ public class DankersSkyblockMod {
         GoldenEnchants.init();
         TriviaSolver.init();
         CustomMusic.init(configDirectory);
+        GemstonesLore.init();
 
         keyBindings[0] = new KeyBinding("Open Maddox Menu", Keyboard.KEY_M, "Danker's Skyblock Mod");
         keyBindings[1] = new KeyBinding("Regular Ability", Keyboard.KEY_NUMPAD4, "Danker's Skyblock Mod");

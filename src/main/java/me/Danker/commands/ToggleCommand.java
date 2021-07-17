@@ -14,6 +14,7 @@ import net.minecraft.util.ChatComponentText;
 import java.util.List;
 
 public class ToggleCommand extends CommandBase implements ICommand {
+	// Some of these end with toggled and some don't, I don't want to go back and fix them all for consistency
 	public static boolean gpartyToggled;
 	public static boolean coordsToggled;
 	public static boolean goldenToggled;
@@ -39,6 +40,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 	public static boolean hidePetCandy;
 	public static boolean customColouredNames;
 	public static boolean endOfFarmAlert;
+	public static boolean gemstoneLore;
 	// Chat Messages
 	public static boolean sceptreMessages;
 	public static boolean midasStaffMessages;
@@ -100,7 +102,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 										  "startswithterminal/selectallterminal/clickinorderterminal/" +
 										  "ultrasequencer/chronomatron/superpairs/hidetooltipsinaddons/pickblock/" +
 										  "melodytooltips/highlightslayers/highlightarachne/highlightskeletonmasters/teammatesinradius/" +
-										  "gianthp/hidepetcandy/customcolorednames/endoffarmalert/dungeonbossmusic/bloodroommusic/dungeonmusic/list>";
+										  "gianthp/hidepetcandy/customcolorednames/endoffarmalert/gemstonelore/dungeonbossmusic/bloodroommusic/dungeonmusic/list>";
 	}
 
 	public static String usage(ICommandSender arg0) {
@@ -129,7 +131,8 @@ public class ToggleCommand extends CommandBase implements ICommand {
 														  "ultrasequencer", "chronomatron", "superpairs",
 														  "hidetooltipsinaddons", "pickblock", "melodytooltips", "highlightslayers",
 														  "highlightskeletonmasters", "dungeonbossmusic", "bloodroommusic", "dungeonmusic",
-														  "teammatesinradius", "gianthp", "hidepetcandy", "customcolorednames", "endoffarmalert", "list");
+														  "teammatesinradius", "gianthp", "hidepetcandy", "customcolorednames", "endoffarmalert",
+														  "gemstonelore", "list");
 		}
 		return null;
 	}
@@ -441,6 +444,11 @@ public class ToggleCommand extends CommandBase implements ICommand {
 				ConfigHandler.writeBooleanConfig("toggles", "EndOfFarmAlert", endOfFarmAlert);
 				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "End of farm alert has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + endOfFarmAlert + DankersSkyblockMod.MAIN_COLOUR + "."));
 				break;
+			case "gemstonelore":
+				gemstoneLore = !gemstoneLore;
+				ConfigHandler.writeBooleanConfig("toggles", "GemstoneLore", gemstoneLore);
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Gemstone in lore has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + gemstoneLore + DankersSkyblockMod.MAIN_COLOUR + "."));
+				break;
 			case "dungeonbossmusic":
 				dungeonBossMusic = !dungeonBossMusic;
 				CustomMusic.dungeonboss.stop();
@@ -511,6 +519,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 															DankersSkyblockMod.TYPE_COLOUR + " Hide pet candy: " + DankersSkyblockMod.VALUE_COLOUR + hidePetCandy + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Custom name colors: " + DankersSkyblockMod.VALUE_COLOUR + customColouredNames + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " End of farm alert: " + DankersSkyblockMod.VALUE_COLOUR + endOfFarmAlert + "\n" +
+															DankersSkyblockMod.TYPE_COLOUR + " Gemstone in lore: " + DankersSkyblockMod.VALUE_COLOUR + gemstoneLore + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Custom dungeon boss music: " + DankersSkyblockMod.VALUE_COLOUR + dungeonBossMusic + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Custom blood room music: " + DankersSkyblockMod.VALUE_COLOUR + bloodRoomMusic + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Custom dungeon music: " + DankersSkyblockMod.VALUE_COLOUR + dungeonMusic

@@ -216,6 +216,7 @@ public class ConfigHandler {
 		ToggleCommand.hidePetCandy = initBoolean("toggles", "HidePetCandy", false);
 		ToggleCommand.customColouredNames = initBoolean("toggles", "CustomColouredNames", true);
 		ToggleCommand.endOfFarmAlert = initBoolean("toggles", "EndOfFarmAlert", false);
+		ToggleCommand.gemstoneLore = initBoolean("toggles", "GemstoneLore", false);
 		// Chat Messages
 		ToggleCommand.sceptreMessages = initBoolean("toggles", "SceptreMessages", true);
 		ToggleCommand.midasStaffMessages = initBoolean("toggles", "MidasStaffMessages", true);
