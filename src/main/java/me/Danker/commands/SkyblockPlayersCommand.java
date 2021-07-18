@@ -75,6 +75,7 @@ public class SkyblockPlayersCommand extends CommandBase {
 			int goldMine = 0; // mining_1
 			int deepCaverns = 0; // mining_2
 			int dwarvenMines = 0; // mining_3
+			int crystalHollows = 0; // crystal_hollows
 			int spidersDen = 0; // combat_1
 			int blazingFortress = 0; // combat_2
 			int end = 0; // combat_3
@@ -108,6 +109,9 @@ public class SkyblockPlayersCommand extends CommandBase {
 				}
 				if (skyblockPlayers.has("mining_3")) {
 					dwarvenMines = skyblockPlayers.get("mining_3").getAsInt();
+				}
+				if (skyblockPlayers.has("crystal_hollows")) {
+					crystalHollows = skyblockPlayers.get("crystal_hollows").getAsInt();
 				}
 				if (skyblockPlayers.has("combat_1")) {
 					spidersDen = skyblockPlayers.get("combat_1").getAsInt();
@@ -144,6 +148,7 @@ public class SkyblockPlayersCommand extends CommandBase {
 														DankersSkyblockMod.TYPE_COLOUR + " Gold Mine: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(goldMine) + " / " + Utils.getPercentage(goldMine, skyblockTotalPlayers) + "%\n" +
 														DankersSkyblockMod.TYPE_COLOUR + " Deep Caverns: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(deepCaverns) + " / " + Utils.getPercentage(deepCaverns, skyblockTotalPlayers) + "%\n" +
 														DankersSkyblockMod.TYPE_COLOUR + " Dwarven Mines: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(dwarvenMines) + " / " + Utils.getPercentage(dwarvenMines, skyblockTotalPlayers) + "%\n" +
+														DankersSkyblockMod.TYPE_COLOUR + " Crystal Hollows: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(crystalHollows) + " / " + Utils.getPercentage(crystalHollows, skyblockTotalPlayers) + "%\n" +
 														DankersSkyblockMod.TYPE_COLOUR + " Spider's Den: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(spidersDen) + " / " + Utils.getPercentage(spidersDen, skyblockTotalPlayers) + "%\n" +
 														DankersSkyblockMod.TYPE_COLOUR + " Blazing Fortress: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(blazingFortress) + " / " + Utils.getPercentage(blazingFortress, skyblockTotalPlayers) + "%\n" +
 														DankersSkyblockMod.TYPE_COLOUR + " The End: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(end) + " / " + Utils.getPercentage(end, skyblockTotalPlayers) + "%\n" +
