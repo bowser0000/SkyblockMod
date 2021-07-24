@@ -41,6 +41,7 @@ public class DankerGui extends GuiScreen {
 	private GuiButton experimentationTableSolvers;
 	private GuiButton skillTracker;
 	private GuiButton customMusic;
+	private GuiButton crystalHollowWaypoints;
 	// Toggles
 	private GuiButton gparty;
 	private GuiButton coords;
@@ -118,6 +119,7 @@ public class DankerGui extends GuiScreen {
 		experimentationTableSolvers = new GuiButton(0, 0, 0, "Toggle Experimentation Table Solvers");
 		skillTracker = new GuiButton(0, 0, 0, "Toggle Skill XP/Hour Tracking");
 		customMusic = new GuiButton(0, 0, 0, "Custom Music");
+		crystalHollowWaypoints = new GuiButton(0, 0, 0, "Crystal Hollows Waypoints");
 		outlineText = new FeatureButton("Outline Displayed Text: " + Utils.getColouredBoolean(ToggleCommand.outlineTextToggled), "Adds bold outline to on-screen text.");
 		pickBlock = new FeatureButton("Auto-Swap to Pick Block: " + Utils.getColouredBoolean(ToggleCommand.swapToPickBlockToggled), "Automatically changes left clicks to middle clicks.\nHelpful when lagging.");
 		coords = new FeatureButton("Coordinate/Angle Display: " + Utils.getColouredBoolean(ToggleCommand.coordsToggled), "Displays coordinates and angle.");
@@ -166,6 +168,7 @@ public class DankerGui extends GuiScreen {
 		allButtons.add(experimentationTableSolvers);
 		allButtons.add(skillTracker);
 		allButtons.add(customMusic);
+		allButtons.add(crystalHollowWaypoints);
 		allButtons.add(outlineText);
 		allButtons.add(pickBlock);
 		allButtons.add(coords);
@@ -297,6 +300,8 @@ public class DankerGui extends GuiScreen {
 			DankersSkyblockMod.guiToOpen = "skilltracker";
 		} else if (button == customMusic) {
 			DankersSkyblockMod.guiToOpen = "custommusic";
+		} else if (button == crystalHollowWaypoints) {
+			DankersSkyblockMod.guiToOpen = "crystalwaypoints";
 		} else if (button == outlineText) {
 			ToggleCommand.outlineTextToggled = !ToggleCommand.outlineTextToggled;
 			ConfigHandler.writeBooleanConfig("toggles", "OutlineText", ToggleCommand.outlineTextToggled);

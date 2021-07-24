@@ -217,6 +217,8 @@ public class ConfigHandler {
 		ToggleCommand.customColouredNames = initBoolean("toggles", "CustomColouredNames", true);
 		ToggleCommand.endOfFarmAlert = initBoolean("toggles", "EndOfFarmAlert", false);
 		ToggleCommand.gemstoneLore = initBoolean("toggles", "GemstoneLore", false);
+		ToggleCommand.crystalHollowWaypoints = initBoolean("toggles", "CrystalHollowWaypoints", false);
+		ToggleCommand.crystalAutoWaypoints = initBoolean("toggles", "CrystalAutoWaypoints", true);
 		// Chat Messages
 		ToggleCommand.sceptreMessages = initBoolean("toggles", "SceptreMessages", true);
 		ToggleCommand.midasStaffMessages = initBoolean("toggles", "MidasStaffMessages", true);

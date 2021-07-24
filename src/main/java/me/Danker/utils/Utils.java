@@ -2,6 +2,7 @@ package me.Danker.utils;
 
 import me.Danker.DankersSkyblockMod;
 import me.Danker.features.ColouredNames;
+import me.Danker.features.CrystalHollowWaypoints;
 import me.Danker.features.GoldenEnchants;
 import me.Danker.handlers.APIHandler;
 import me.Danker.handlers.ConfigHandler;
@@ -9,6 +10,7 @@ import me.Danker.handlers.ScoreboardHandler;
 import me.Danker.handlers.TextRenderer;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.network.NetworkPlayerInfo;
@@ -38,6 +40,7 @@ public class Utils {
 	
 	public static boolean inSkyblock = false;
 	public static boolean inDungeons = false;
+	public static boolean inCrystalHollows = false;
 	public static int[] skillXPPerLevel = {0, 50, 125, 200, 300, 500, 750, 1000, 1500, 2000, 3500, 5000, 7500, 10000, 15000, 20000, 30000, 50000,
 										   75000, 100000, 200000, 300000, 400000, 500000, 600000, 700000, 800000, 900000, 1000000, 1100000,
 										   1200000, 1300000, 1400000, 1500000, 1600000, 1700000, 1800000, 1900000, 2000000, 2100000, 2200000,
@@ -165,6 +168,20 @@ public class Utils {
 			}
 		}
     	inDungeons = false;
+	}
+
+	public static void checkForCrystalHollows() {
+		if (inSkyblock) {
+			Collection<NetworkPlayerInfo> players = Minecraft.getMinecraft().getNetHandler().getPlayerInfoMap();
+			for (NetworkPlayerInfo player : players) {
+				if (player == null || player.getDisplayName() == null) continue;
+				if (player.getDisplayName().getUnformattedText().contains("Crystal Hollows")) {
+					inCrystalHollows = true;
+					return;
+				}
+			}
+		}
+		inCrystalHollows = false;
 	}
 
 	public static boolean isInScoreboard(String text) {
@@ -394,6 +411,136 @@ public class Utils {
 		GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
 		mc.fontRendererObj.drawString(text, -width, 0, colour);
 		GlStateManager.disableBlend();
+		GlStateManager.popMatrix();
+	}
+
+	// I couldnt get waypoint strings to work so in the end I just copied from NEU
+	// If anyone sees this please help
+	/*public static void draw3DWaypointString(CrystalHollowWaypoints.Waypoint waypoint, float partialTicks) {
+		Minecraft mc = Minecraft.getMinecraft();
+		EntityPlayer player = mc.thePlayer;
+		BlockPos pos = waypoint.pos;
+		double x = (pos.getX() - player.lastTickPosX) + ((pos.getX() - player.posX) - (pos.getX() - player.lastTickPosX)) * partialTicks;
+		double y = (pos.getY() - player.lastTickPosY) + ((pos.getY() - player.posY) - (pos.getY() - player.lastTickPosY)) * partialTicks;
+		double z = (pos.getZ() - player.lastTickPosZ) + ((pos.getZ() - player.posZ) - (pos.getZ() - player.lastTickPosZ)) * partialTicks;
+
+		double distance = player.getDistance(x, y, z);
+		if (distance > 12) {
+			x *= 12 / distance;
+			y *= 12 / distance;
+			z *= 12 / distance;
+		}
+
+		RenderManager renderManager = mc.getRenderManager();
+		Entity viewer = Minecraft.getMinecraft().getRenderViewEntity();
+
+		float f = 1.6F;
+		float f1 = 0.016666668F * f;
+		int width = mc.fontRendererObj.getStringWidth(waypoint.location) / 2;
+		int width2 = mc.fontRendererObj.getStringWidth(waypoint.getDistance(player)) / 2;
+		GlStateManager.pushMatrix();
+		GlStateManager.translate(x, y, z);
+		GL11.glNormal3f(0f, 1f, 0f);
+		GlStateManager.rotate(-renderManager.playerViewY, 0f, 1f, 0f);
+		GlStateManager.rotate(renderManager.playerViewX, 1f, 0f, 0f);
+		GlStateManager.scale(-f1, -f1, -f1);
+		GlStateManager.enableBlend();
+		GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
+		GL11.glDisable(GL11.GL_DEPTH_TEST);
+		GlStateManager.depthMask(false);
+
+		mc.fontRendererObj.drawString(waypoint.location, -width, 0, 0x55FFFF);
+
+		GlStateManager.rotate(-renderManager.playerViewY, 0.0F, 1.0F, 0.0F);
+		GlStateManager.rotate(renderManager.playerViewX, 1.0F, 0.0F, 0.0F);
+		GlStateManager.translate(0, -1, 0);
+		GlStateManager.rotate(-renderManager.playerViewX, 1.0F, 0.0F, 0.0F);
+		GlStateManager.rotate(renderManager.playerViewY, 0.0F, 1.0F, 0.0F);
+
+		mc.fontRendererObj.drawString(waypoint.getDistance(player), -width2, 0, 0xFFFF55);
+
+		GL11.glEnable(GL11.GL_DEPTH_TEST);
+		GlStateManager.depthMask(true);
+		GlStateManager.disableBlend();
+		GlStateManager.popMatrix();
+	}*/
+
+	// https://github.com/Moulberry/NotEnoughUpdates/blob/master/src/main/java/io/github/moulberry/notenoughupdates/miscfeatures/DwarvenMinesWaypoints.java#L261
+	public static void draw3DWaypointString(CrystalHollowWaypoints.Waypoint waypoint, float partialTicks) {
+		GlStateManager.alphaFunc(516, 0.1F);
+
+		GlStateManager.pushMatrix();
+
+		Entity viewer = Minecraft.getMinecraft().getRenderViewEntity();
+		double viewerX = viewer.lastTickPosX + (viewer.posX - viewer.lastTickPosX) * partialTicks;
+		double viewerY = viewer.lastTickPosY + (viewer.posY - viewer.lastTickPosY) * partialTicks;
+		double viewerZ = viewer.lastTickPosZ + (viewer.posZ - viewer.lastTickPosZ) * partialTicks;
+
+		double x = waypoint.pos.getX()-viewerX+0.5f;
+		double y = waypoint.pos.getY()-viewerY-viewer.getEyeHeight();
+		double z = waypoint.pos.getZ()-viewerZ+0.5f;
+
+		double distSq = x*x + y*y + z*z;
+		double dist = Math.sqrt(distSq);
+		if(distSq > 144) {
+			x *= 12/dist;
+			y *= 12/dist;
+			z *= 12/dist;
+		}
+		GlStateManager.translate(x, y, z);
+		GlStateManager.translate(0, viewer.getEyeHeight(), 0);
+
+		renderNametag(EnumChatFormatting.AQUA + waypoint.location);
+
+		GlStateManager.rotate(-Minecraft.getMinecraft().getRenderManager().playerViewY, 0.0F, 1.0F, 0.0F);
+		GlStateManager.rotate(Minecraft.getMinecraft().getRenderManager().playerViewX, 1.0F, 0.0F, 0.0F);
+		GlStateManager.translate(0, -0.25f, 0);
+		GlStateManager.rotate(-Minecraft.getMinecraft().getRenderManager().playerViewX, 1.0F, 0.0F, 0.0F);
+		GlStateManager.rotate(Minecraft.getMinecraft().getRenderManager().playerViewY, 0.0F, 1.0F, 0.0F);
+
+		renderNametag(EnumChatFormatting.YELLOW + waypoint.getDistance(Minecraft.getMinecraft().thePlayer));
+
+		GlStateManager.popMatrix();
+
+		GlStateManager.disableLighting();
+	}
+
+	// https://github.com/Moulberry/NotEnoughUpdates/blob/master/src/main/java/io/github/moulberry/notenoughupdates/miscfeatures/DwarvenMinesWaypoints.java#L300
+	public static void renderNametag(String str) {
+		FontRenderer fontrenderer = Minecraft.getMinecraft().fontRendererObj;
+		float f = 1.6F;
+		float f1 = 0.016666668F * f;
+		GlStateManager.pushMatrix();
+		GL11.glNormal3f(0.0F, 1.0F, 0.0F);
+		GlStateManager.rotate(-Minecraft.getMinecraft().getRenderManager().playerViewY, 0.0F, 1.0F, 0.0F);
+		GlStateManager.rotate(Minecraft.getMinecraft().getRenderManager().playerViewX, 1.0F, 0.0F, 0.0F);
+		GlStateManager.scale(-f1, -f1, f1);
+		GlStateManager.disableLighting();
+		GlStateManager.depthMask(false);
+		GlStateManager.disableDepth();
+		GlStateManager.enableBlend();
+		GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
+		Tessellator tessellator = Tessellator.getInstance();
+		WorldRenderer worldrenderer = tessellator.getWorldRenderer();
+		int i = 0;
+
+		int j = fontrenderer.getStringWidth(str) / 2;
+		GlStateManager.disableTexture2D();
+		worldrenderer.begin(7, DefaultVertexFormats.POSITION_COLOR);
+		worldrenderer.pos(-j - 1, -1 + i, 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();
+		worldrenderer.pos(-j - 1, 8 + i, 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();
+		worldrenderer.pos(j + 1, 8 + i, 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();
+		worldrenderer.pos(j + 1, -1 + i, 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();
+		tessellator.draw();
+		GlStateManager.enableTexture2D();
+		fontrenderer.drawString(str, -fontrenderer.getStringWidth(str) / 2, i, 553648127);
+		GlStateManager.depthMask(true);
+
+		fontrenderer.drawString(str, -fontrenderer.getStringWidth(str) / 2, i, -1);
+
+		GlStateManager.enableDepth();
+		GlStateManager.enableBlend();
+		GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 		GlStateManager.popMatrix();
 	}
 

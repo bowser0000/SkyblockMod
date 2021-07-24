@@ -41,6 +41,8 @@ public class ToggleCommand extends CommandBase implements ICommand {
 	public static boolean customColouredNames;
 	public static boolean endOfFarmAlert;
 	public static boolean gemstoneLore;
+	public static boolean crystalHollowWaypoints;
+	public static boolean crystalAutoWaypoints;
 	// Chat Messages
 	public static boolean sceptreMessages;
 	public static boolean midasStaffMessages;
@@ -92,7 +94,6 @@ public class ToggleCommand extends CommandBase implements ICommand {
 
 	@Override
 	public String getCommandUsage(ICommandSender arg0) {
-
 		return "/" + getCommandName() + " <gparty/coords/golden/slayercount/rngesusalerts/splitfishing/ghostdisplay/chatmaddox/spiritbearalert/" +
 										  "sceptremessages/petcolors/dungeontimer/golemalerts/expertiselore/" + //ghosttimer
 										  "skill50display/outlinetext/midasstaffmessages/implosionmessages/healmessages/cooldownmessages/" +
@@ -102,11 +103,12 @@ public class ToggleCommand extends CommandBase implements ICommand {
 										  "startswithterminal/selectallterminal/clickinorderterminal/" +
 										  "ultrasequencer/chronomatron/superpairs/hidetooltipsinaddons/pickblock/" +
 										  "melodytooltips/highlightslayers/highlightarachne/highlightskeletonmasters/teammatesinradius/" +
-										  "gianthp/hidepetcandy/customcolorednames/endoffarmalert/gemstonelore/dungeonbossmusic/bloodroommusic/dungeonmusic/list>";
+										  "gianthp/hidepetcandy/customcolorednames/endoffarmalert/gemstonelore/crystalhollowwaypoints/crystalautowaypoints/" +
+										  "dungeonbossmusic/bloodroommusic/dungeonmusic/list>";
 	}
 
 	public static String usage(ICommandSender arg0) {
-		return new ToggleCommand().getCommandUsage(arg0);
+		return "/toggle <too many to list>";
 	}
 
 	@Override
@@ -132,7 +134,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 														  "hidetooltipsinaddons", "pickblock", "melodytooltips", "highlightslayers",
 														  "highlightskeletonmasters", "dungeonbossmusic", "bloodroommusic", "dungeonmusic",
 														  "teammatesinradius", "gianthp", "hidepetcandy", "customcolorednames", "endoffarmalert",
-														  "gemstonelore", "list");
+														  "gemstonelore", "crystalhollowwaypoints", "crystalautowaypoints", "list");
 		}
 		return null;
 	}
@@ -449,6 +451,16 @@ public class ToggleCommand extends CommandBase implements ICommand {
 				ConfigHandler.writeBooleanConfig("toggles", "GemstoneLore", gemstoneLore);
 				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Gemstone in lore has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + gemstoneLore + DankersSkyblockMod.MAIN_COLOUR + "."));
 				break;
+			case "crystalhollowwaypoints":
+				crystalHollowWaypoints = !crystalHollowWaypoints;
+				ConfigHandler.writeBooleanConfig("toggles", "CrystalHollowWaypoints", crystalHollowWaypoints);
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Crystal Hollows waypoints has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + crystalHollowWaypoints + DankersSkyblockMod.MAIN_COLOUR + "."));
+				break;
+			case "crystalautowaypoints":
+				crystalAutoWaypoints = !crystalAutoWaypoints;
+				ConfigHandler.writeBooleanConfig("toggles", "CrystalAutoWaypoints", crystalAutoWaypoints);
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Auto Crystal Hollows waypoints has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + crystalAutoWaypoints + DankersSkyblockMod.MAIN_COLOUR + "."));
+				break;
 			case "dungeonbossmusic":
 				dungeonBossMusic = !dungeonBossMusic;
 				CustomMusic.dungeonboss.stop();
@@ -520,6 +532,8 @@ public class ToggleCommand extends CommandBase implements ICommand {
 															DankersSkyblockMod.TYPE_COLOUR + " Custom name colors: " + DankersSkyblockMod.VALUE_COLOUR + customColouredNames + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " End of farm alert: " + DankersSkyblockMod.VALUE_COLOUR + endOfFarmAlert + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Gemstone in lore: " + DankersSkyblockMod.VALUE_COLOUR + gemstoneLore + "\n" +
+															DankersSkyblockMod.TYPE_COLOUR + " Crystal Hollows waypoints: " + DankersSkyblockMod.VALUE_COLOUR + crystalHollowWaypoints + "\n" +
+															DankersSkyblockMod.TYPE_COLOUR + " Auto Crystal Hollows waypoints: " + DankersSkyblockMod.VALUE_COLOUR + crystalAutoWaypoints + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Custom dungeon boss music: " + DankersSkyblockMod.VALUE_COLOUR + dungeonBossMusic + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Custom blood room music: " + DankersSkyblockMod.VALUE_COLOUR + bloodRoomMusic + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Custom dungeon music: " + DankersSkyblockMod.VALUE_COLOUR + dungeonMusic

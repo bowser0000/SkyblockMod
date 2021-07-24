@@ -100,6 +100,8 @@ public class DankerGuiCommand extends CommandBase {
 			debug.append("[customcolourednames][").append(ToggleCommand.customColouredNames).append("]\n");
 			debug.append("[endoffarmalert][").append(ToggleCommand.endOfFarmAlert).append("]\n");
 			debug.append("[gemstonelore][").append(ToggleCommand.gemstoneLore).append("]\n");
+			debug.append("[crystalhollowwaypoints][").append(ToggleCommand.crystalHollowWaypoints).append("]\n");
+			debug.append("[crystalautowaypoints][").append(ToggleCommand.crystalAutoWaypoints).append("]\n");
 			debug.append("[dungeonbossmusic][").append(ToggleCommand.dungeonBossMusic).append("]\n");
 			debug.append("[bloodroommusic][").append(ToggleCommand.bloodRoomMusic).append("]\n");
 			debug.append("[dungeonmusic][").append(ToggleCommand.dungeonMusic).append("]\n");

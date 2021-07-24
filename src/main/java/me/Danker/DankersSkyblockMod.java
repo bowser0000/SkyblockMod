@@ -111,6 +111,7 @@ public class DankersSkyblockMod {
         MinecraftForge.EVENT_BUS.register(new ClickInOrderSolver());
         MinecraftForge.EVENT_BUS.register(new ColouredNames());
         MinecraftForge.EVENT_BUS.register(new CreeperSolver());
+        MinecraftForge.EVENT_BUS.register(new CrystalHollowWaypoints());
         MinecraftForge.EVENT_BUS.register(new CustomMusic());
         MinecraftForge.EVENT_BUS.register(new DungeonTimer());
         MinecraftForge.EVENT_BUS.register(new EndOfFarmAlert());
@@ -175,6 +176,7 @@ public class DankersSkyblockMod {
         ClientCommandHandler.instance.registerCommand(new ArmourCommand());
         ClientCommandHandler.instance.registerCommand(new BankCommand());
         ClientCommandHandler.instance.registerCommand(new CustomMusicCommand());
+        ClientCommandHandler.instance.registerCommand(new CrystalHollowWaypointCommand());
         ClientCommandHandler.instance.registerCommand(new DHelpCommand());
         ClientCommandHandler.instance.registerCommand(new DankerGuiCommand());
         ClientCommandHandler.instance.registerCommand(new DisplayCommand());
@@ -357,6 +359,7 @@ public class DankersSkyblockMod {
             if (player != null) {
                 Utils.checkForSkyblock();
                 Utils.checkForDungeons();
+                Utils.checkForCrystalHollows();
             }
 
             tickAmount = 0;
@@ -424,6 +427,9 @@ public class DankersSkyblockMod {
                         break;
                     case "custommusic":
                         mc.displayGuiScreen(new CustomMusicGui());
+                        break;
+                    case "crystalwaypoints":
+                        mc.displayGuiScreen(new CrystalHollowWaypointsGui(1));
                         break;
                 }
             }
