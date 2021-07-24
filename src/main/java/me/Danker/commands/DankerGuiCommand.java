@@ -14,12 +14,19 @@ import net.minecraft.util.StringUtils;
 
 import java.awt.*;
 import java.awt.datatransfer.StringSelection;
+import java.util.Collections;
+import java.util.List;
 
 public class DankerGuiCommand extends CommandBase {
 
 	@Override
 	public String getCommandName() {
 		return "dsm";
+	}
+
+	@Override
+	public List<String> getCommandAliases() {
+		return Collections.singletonList("dankersskyblockmod");
 	}
 
 	@Override
