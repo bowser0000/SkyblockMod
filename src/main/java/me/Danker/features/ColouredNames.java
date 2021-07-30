@@ -22,6 +22,7 @@ import java.util.regex.Pattern;
 public class ColouredNames {
 
     public static List<String> users = new ArrayList<>();
+    public static final EnumChatFormatting[] RAINBOW_COLOURS = new EnumChatFormatting[]{EnumChatFormatting.RED, EnumChatFormatting.GOLD, EnumChatFormatting.YELLOW, EnumChatFormatting.GREEN, EnumChatFormatting.AQUA, EnumChatFormatting.BLUE, EnumChatFormatting.DARK_PURPLE};
 
     @SubscribeEvent
     public void onChat(ClientChatReceivedEvent event) {
@@ -76,7 +77,22 @@ public class ColouredNames {
         Matcher prevColourMat = Pattern.compile("(?:.*(?:(?<colour>\\u00a7[0-9a-fbr])" + name + ")\\b.*)").matcher(text);
 
         if (prevColourMat.matches()) {
+            if (colour.equals("§z")) {
+                StringBuilder rainbowName = new StringBuilder();
+                for (int i = 0; i < name.length(); i++) {
+                    rainbowName.append(RAINBOW_COLOURS[i % 7]).append(name.charAt(i));
+                }
+                return text.replaceAll(namePattern, rainbowName + prevColourMat.group("colour"));
+            }
             return text.replaceAll(namePattern, colour + name + prevColourMat.group("colour"));
+        }
+
+        if (colour.equals("§z")) {
+            StringBuilder rainbowName = new StringBuilder();
+            for (int i = 0; i < name.length(); i++) {
+                rainbowName.append(RAINBOW_COLOURS[i % 7]).append(name.charAt(i));
+            }
+            return text.replaceAll(namePattern, rainbowName.toString() + EnumChatFormatting.WHITE);
         }
         return text.replaceAll(namePattern, colour + name + EnumChatFormatting.WHITE);
     }
