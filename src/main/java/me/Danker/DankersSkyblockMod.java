@@ -101,6 +101,7 @@ public class DankersSkyblockMod {
     public void init(FMLInitializationEvent event) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
         MinecraftForge.EVENT_BUS.register(this);
         MinecraftForge.EVENT_BUS.register(new ArachneESP());
+        MinecraftForge.EVENT_BUS.register(new AutoAcceptReparty());
         MinecraftForge.EVENT_BUS.register(new AutoDisplay());
         MinecraftForge.EVENT_BUS.register(new AutoSwapToPickBlock());
         MinecraftForge.EVENT_BUS.register(new BlazeSolver());

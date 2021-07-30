@@ -219,6 +219,7 @@ public class ConfigHandler {
 		ToggleCommand.gemstoneLore = initBoolean("toggles", "GemstoneLore", false);
 		ToggleCommand.crystalHollowWaypoints = initBoolean("toggles", "CrystalHollowWaypoints", false);
 		ToggleCommand.crystalAutoWaypoints = initBoolean("toggles", "CrystalAutoWaypoints", true);
+		ToggleCommand.autoAcceptReparty = initBoolean("toggles", "AutoAcceptReparty", false);
 		// Chat Messages
 		ToggleCommand.sceptreMessages = initBoolean("toggles", "SceptreMessages", true);
 		ToggleCommand.midasStaffMessages = initBoolean("toggles", "MidasStaffMessages", true);

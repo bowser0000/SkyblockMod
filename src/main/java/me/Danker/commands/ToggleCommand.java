@@ -43,6 +43,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 	public static boolean gemstoneLore;
 	public static boolean crystalHollowWaypoints;
 	public static boolean crystalAutoWaypoints;
+	public static boolean autoAcceptReparty;
 	// Chat Messages
 	public static boolean sceptreMessages;
 	public static boolean midasStaffMessages;
@@ -104,7 +105,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 										  "ultrasequencer/chronomatron/superpairs/hidetooltipsinaddons/pickblock/" +
 										  "melodytooltips/highlightslayers/highlightarachne/highlightskeletonmasters/teammatesinradius/" +
 										  "gianthp/hidepetcandy/customcolorednames/endoffarmalert/gemstonelore/crystalhollowwaypoints/crystalautowaypoints/" +
-										  "dungeonbossmusic/bloodroommusic/dungeonmusic/list>";
+										  "autoacceptreparty/dungeonbossmusic/bloodroommusic/dungeonmusic/list>";
 	}
 
 	public static String usage(ICommandSender arg0) {
@@ -134,7 +135,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 														  "hidetooltipsinaddons", "pickblock", "melodytooltips", "highlightslayers",
 														  "highlightskeletonmasters", "dungeonbossmusic", "bloodroommusic", "dungeonmusic",
 														  "teammatesinradius", "gianthp", "hidepetcandy", "customcolorednames", "endoffarmalert",
-														  "gemstonelore", "crystalhollowwaypoints", "crystalautowaypoints", "list");
+														  "gemstonelore", "crystalhollowwaypoints", "crystalautowaypoints", "autoacceptreparty", "list");
 		}
 		return null;
 	}
@@ -461,6 +462,11 @@ public class ToggleCommand extends CommandBase implements ICommand {
 				ConfigHandler.writeBooleanConfig("toggles", "CrystalAutoWaypoints", crystalAutoWaypoints);
 				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Auto Crystal Hollows waypoints has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + crystalAutoWaypoints + DankersSkyblockMod.MAIN_COLOUR + "."));
 				break;
+			case "autoacceptreparty":
+				autoAcceptReparty = !autoAcceptReparty;
+				ConfigHandler.writeBooleanConfig("toggles", "AutoAcceptReparty", autoAcceptReparty);
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Auto accept reparty has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + autoAcceptReparty + DankersSkyblockMod.MAIN_COLOUR + "."));
+				break;
 			case "dungeonbossmusic":
 				dungeonBossMusic = !dungeonBossMusic;
 				CustomMusic.dungeonboss.stop();
@@ -534,6 +540,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 															DankersSkyblockMod.TYPE_COLOUR + " Gemstone in lore: " + DankersSkyblockMod.VALUE_COLOUR + gemstoneLore + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Crystal Hollows waypoints: " + DankersSkyblockMod.VALUE_COLOUR + crystalHollowWaypoints + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Auto Crystal Hollows waypoints: " + DankersSkyblockMod.VALUE_COLOUR + crystalAutoWaypoints + "\n" +
+															DankersSkyblockMod.TYPE_COLOUR + " Auto accept reparty: " + DankersSkyblockMod.VALUE_COLOUR + autoAcceptReparty + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Custom dungeon boss music: " + DankersSkyblockMod.VALUE_COLOUR + dungeonBossMusic + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Custom blood room music: " + DankersSkyblockMod.VALUE_COLOUR + bloodRoomMusic + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Custom dungeon music: " + DankersSkyblockMod.VALUE_COLOUR + dungeonMusic

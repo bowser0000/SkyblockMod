@@ -70,6 +70,7 @@ public class DankerGui extends GuiScreen {
 	private GuiButton customColouredNames;
 	private GuiButton endOfFarmAlert;
 	private GuiButton gemstoneLore;
+	private GuiButton autoAcceptReparty;
 	// Chat Messages
 	private GuiButton sceptreMessages;
 	private GuiButton midasStaffMessages;
@@ -161,6 +162,7 @@ public class DankerGui extends GuiScreen {
 		customColouredNames = new FeatureButton("Custom Name Colors: " + Utils.getColouredBoolean(ToggleCommand.customColouredNames), "Replaces some player's usernames with a custom color.");
 		endOfFarmAlert = new FeatureButton("Alert When Reaching End of Farm: " + Utils.getColouredBoolean(ToggleCommand.endOfFarmAlert), "Alerts when you go past coords set with /dsmfarmlength.");
 		gemstoneLore = new FeatureButton("Applied Gemstones in Lore: " + Utils.getColouredBoolean(ToggleCommand.gemstoneLore), "Adds applied gemstones to item tooltip.");
+		autoAcceptReparty = new FeatureButton("Auto Accept Reparty: " + Utils.getColouredBoolean(ToggleCommand.autoAcceptReparty), "Automatically rejoins parties when disbanded and invited.");
 
 		allButtons.clear();
 		allButtons.add(changeDisplay);
@@ -210,6 +212,7 @@ public class DankerGui extends GuiScreen {
 		allButtons.add(customColouredNames);
 		allButtons.add(endOfFarmAlert);
 		allButtons.add(gemstoneLore);
+		allButtons.add(autoAcceptReparty);
 
 		search.setText(initSearchText);
 		search.setVisible(true);
@@ -466,6 +469,10 @@ public class DankerGui extends GuiScreen {
 			ToggleCommand.gemstoneLore = !ToggleCommand.gemstoneLore;
 			ConfigHandler.writeBooleanConfig("toggles", "GemstoneLore", ToggleCommand.gemstoneLore);
 			gemstoneLore.displayString = "Applied Gemstones in Lore: " + Utils.getColouredBoolean(ToggleCommand.gemstoneLore);
+		} else if (button == autoAcceptReparty) {
+			ToggleCommand.autoAcceptReparty = !ToggleCommand.autoAcceptReparty;
+			ConfigHandler.writeBooleanConfig("toggles", "AutoAcceptReparty", ToggleCommand.autoAcceptReparty);
+			autoAcceptReparty.displayString = "Auto Accept Reparty: " + Utils.getColouredBoolean(ToggleCommand.autoAcceptReparty);
 		}
 	}
 
