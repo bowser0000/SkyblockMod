@@ -40,7 +40,7 @@ public class Utils {
 	
 	public static boolean inSkyblock = false;
 	public static boolean inDungeons = false;
-	public static boolean inCrystalHollows = false;
+	public static String tabLocation = "";
 	public static int[] skillXPPerLevel = {0, 50, 125, 200, 300, 500, 750, 1000, 1500, 2000, 3500, 5000, 7500, 10000, 15000, 20000, 30000, 50000,
 										   75000, 100000, 200000, 300000, 400000, 500000, 600000, 700000, 800000, 900000, 1000000, 1100000,
 										   1200000, 1300000, 1400000, 1500000, 1600000, 1700000, 1800000, 1900000, 2000000, 2100000, 2200000,
@@ -170,18 +170,19 @@ public class Utils {
     	inDungeons = false;
 	}
 
-	public static void checkForCrystalHollows() {
-		if (inSkyblock) {
+	public static void checkTabLocation() {
+    	if (inSkyblock) {
 			Collection<NetworkPlayerInfo> players = Minecraft.getMinecraft().getNetHandler().getPlayerInfoMap();
 			for (NetworkPlayerInfo player : players) {
 				if (player == null || player.getDisplayName() == null) continue;
-				if (player.getDisplayName().getUnformattedText().contains("Crystal Hollows")) {
-					inCrystalHollows = true;
+				String text = player.getDisplayName().getUnformattedText();
+				if (text.startsWith("Area: ")) {
+					tabLocation = text.substring(text.indexOf(":") + 2);
 					return;
 				}
 			}
 		}
-		inCrystalHollows = false;
+    	tabLocation = "";
 	}
 
 	public static boolean isInScoreboard(String text) {

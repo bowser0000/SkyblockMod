@@ -360,7 +360,7 @@ public class DankersSkyblockMod {
             if (player != null) {
                 Utils.checkForSkyblock();
                 Utils.checkForDungeons();
-                Utils.checkForCrystalHollows();
+                Utils.checkTabLocation();
             }
 
             tickAmount = 0;
@@ -427,7 +427,7 @@ public class DankersSkyblockMod {
                         mc.displayGuiScreen(new SkillTrackerGui());
                         break;
                     case "custommusic":
-                        mc.displayGuiScreen(new CustomMusicGui());
+                        mc.displayGuiScreen(new CustomMusicGui(1));
                         break;
                     case "crystalwaypoints":
                         mc.displayGuiScreen(new CrystalHollowWaypointsGui(1));

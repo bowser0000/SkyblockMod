@@ -14,6 +14,7 @@ import net.minecraft.util.ChatComponentText;
 import java.util.List;
 
 public class ToggleCommand extends CommandBase implements ICommand {
+	// i hate this file so much
 	// Some of these end with toggled and some don't, I don't want to go back and fix them all for consistency
 	public static boolean gpartyToggled;
 	public static boolean coordsToggled;
@@ -87,6 +88,17 @@ public class ToggleCommand extends CommandBase implements ICommand {
 	public static boolean dungeonBossMusic;
 	public static boolean bloodRoomMusic;
 	public static boolean dungeonMusic;
+	public static boolean hubMusic;
+	public static boolean islandMusic;
+	public static boolean dungeonHubMusic;
+	public static boolean farmingIslandsMusic;
+	public static boolean goldMineMusic;
+	public static boolean deepCavernsMusic;
+	public static boolean dwarvenMinesMusic;
+	public static boolean crystalHollowsMusic;
+	public static boolean blazingFortressMusic;
+	public static boolean endMusic;
+	public static boolean parkMusic;
 
 	@Override
 	public String getCommandName() {
@@ -105,7 +117,9 @@ public class ToggleCommand extends CommandBase implements ICommand {
 										  "ultrasequencer/chronomatron/superpairs/hidetooltipsinaddons/pickblock/" +
 										  "melodytooltips/highlightslayers/highlightarachne/highlightskeletonmasters/teammatesinradius/" +
 										  "gianthp/hidepetcandy/customcolorednames/endoffarmalert/gemstonelore/crystalhollowwaypoints/crystalautowaypoints/" +
-										  "autoacceptreparty/dungeonbossmusic/bloodroommusic/dungeonmusic/list>";
+										  "autoacceptreparty/dungeonbossmusic/bloodroommusic/dungeonmusic/hubmusic/islandmusic/dungeonhubmusic/" +
+										  "farmingislandsmusic/goldminemusic/deepcavernsmusic/crystalhollowsmusic/blazingfortressmusic/endmusic/" +
+										  "parkmusic/list>";
 	}
 
 	public static String usage(ICommandSender arg0) {
@@ -135,7 +149,10 @@ public class ToggleCommand extends CommandBase implements ICommand {
 														  "hidetooltipsinaddons", "pickblock", "melodytooltips", "highlightslayers",
 														  "highlightskeletonmasters", "dungeonbossmusic", "bloodroommusic", "dungeonmusic",
 														  "teammatesinradius", "gianthp", "hidepetcandy", "customcolorednames", "endoffarmalert",
-														  "gemstonelore", "crystalhollowwaypoints", "crystalautowaypoints", "autoacceptreparty", "list");
+														  "gemstonelore", "crystalhollowwaypoints", "crystalautowaypoints", "autoacceptreparty",
+														  "hubmusic", "islandmusic", "dungeonhubmusic", "farmingislandsmusic", "goldminemusic",
+														  "deepcavernsmusic", "dwarvenminesmusic", "crystalhollowsmusic", "blazingfortressmusic",
+														  "endmusic", "parkmusic", "list");
 		}
 		return null;
 	}
@@ -485,6 +502,72 @@ public class ToggleCommand extends CommandBase implements ICommand {
 				ConfigHandler.writeBooleanConfig("toggles", "DungeonMusic", dungeonMusic);
 				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Custom dungeon music has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + dungeonMusic + DankersSkyblockMod.MAIN_COLOUR + "."));
 				break;
+			case "hubmusic":
+				hubMusic = !hubMusic;
+				CustomMusic.hub.stop();
+				ConfigHandler.writeBooleanConfig("toggles", "HubMusic", hubMusic);
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Custom hub music has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + hubMusic + DankersSkyblockMod.MAIN_COLOUR + "."));
+				break;
+			case "islandmusic":
+				islandMusic = !islandMusic;
+				CustomMusic.island.stop();
+				ConfigHandler.writeBooleanConfig("toggles", "IslandMusic", islandMusic);
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Custom island music has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + islandMusic + DankersSkyblockMod.MAIN_COLOUR + "."));
+				break;
+			case "dungeonhubmusic":
+				dungeonHubMusic = !dungeonHubMusic;
+				CustomMusic.dungeonHub.stop();
+				ConfigHandler.writeBooleanConfig("toggles", "DungeonHubMusic", dungeonHubMusic);
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Custom dungeon hub music has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + dungeonHubMusic + DankersSkyblockMod.MAIN_COLOUR + "."));
+				break;
+			case "farmingislandsmusic":
+				farmingIslandsMusic = !farmingIslandsMusic;
+				CustomMusic.farmingIslands.stop();
+				ConfigHandler.writeBooleanConfig("toggles", "FarmingIslandsMusic", farmingIslandsMusic);
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Custom farming islands music has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + farmingIslandsMusic + DankersSkyblockMod.MAIN_COLOUR + "."));
+				break;
+			case "goldminemusic":
+				goldMineMusic = !goldMineMusic;
+				CustomMusic.goldMine.stop();
+				ConfigHandler.writeBooleanConfig("toggles", "GoldMineMusic", goldMineMusic);
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Custom gold mine music has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + goldMineMusic + DankersSkyblockMod.MAIN_COLOUR + "."));
+				break;
+			case "deepcavernsmusic":
+				deepCavernsMusic = !deepCavernsMusic;
+				CustomMusic.deepCaverns.stop();
+				ConfigHandler.writeBooleanConfig("toggles", "DeepCavernsMusic", deepCavernsMusic);
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Custom deep caverns music has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + deepCavernsMusic + DankersSkyblockMod.MAIN_COLOUR + "."));
+				break;
+			case "dwarvenminesmusic":
+				dwarvenMinesMusic = !dwarvenMinesMusic;
+				CustomMusic.dwarvenMines.stop();
+				ConfigHandler.writeBooleanConfig("toggles", "DwarvenMinesMusic", dwarvenMinesMusic);
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Custom dwarven mines music has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + dwarvenMinesMusic + DankersSkyblockMod.MAIN_COLOUR + "."));
+				break;
+			case "crystalhollowsmusic":
+				crystalHollowsMusic = !crystalHollowsMusic;
+				CustomMusic.crystalHollows.stop();
+				ConfigHandler.writeBooleanConfig("toggles", "CrystalHollowsMusic", crystalHollowsMusic);
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Custom crystal hollows music has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + crystalHollowsMusic + DankersSkyblockMod.MAIN_COLOUR + "."));
+				break;
+			case "blazingfortressmusic":
+				blazingFortressMusic = !blazingFortressMusic;
+				CustomMusic.blazingFortress.stop();
+				ConfigHandler.writeBooleanConfig("toggles", "BlazingFortressMusic", blazingFortressMusic);
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Custom blazing fortress music has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + blazingFortressMusic + DankersSkyblockMod.MAIN_COLOUR + "."));
+				break;
+			case "endmusic":
+				endMusic = !endMusic;
+				CustomMusic.end.stop();
+				ConfigHandler.writeBooleanConfig("toggles", "EndMusic", endMusic);
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Custom end music has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + endMusic + DankersSkyblockMod.MAIN_COLOUR + "."));
+				break;
+			case "parkmusic":
+				parkMusic = !parkMusic;
+				CustomMusic.park.stop();
+				ConfigHandler.writeBooleanConfig("toggles", "DungeonMusic", parkMusic);
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Custom park music has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + parkMusic + DankersSkyblockMod.MAIN_COLOUR + "."));
+				break;
 			case "list":
 				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.TYPE_COLOUR + "Guild party notifications: " + DankersSkyblockMod.VALUE_COLOUR + gpartyToggled + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Coord/Angle display: " + DankersSkyblockMod.VALUE_COLOUR + coordsToggled + "\n" +
@@ -543,7 +626,18 @@ public class ToggleCommand extends CommandBase implements ICommand {
 															DankersSkyblockMod.TYPE_COLOUR + " Auto accept reparty: " + DankersSkyblockMod.VALUE_COLOUR + autoAcceptReparty + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Custom dungeon boss music: " + DankersSkyblockMod.VALUE_COLOUR + dungeonBossMusic + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Custom blood room music: " + DankersSkyblockMod.VALUE_COLOUR + bloodRoomMusic + "\n" +
-															DankersSkyblockMod.TYPE_COLOUR + " Custom dungeon music: " + DankersSkyblockMod.VALUE_COLOUR + dungeonMusic
+															DankersSkyblockMod.TYPE_COLOUR + " Custom dungeon music: " + DankersSkyblockMod.VALUE_COLOUR + dungeonMusic + "\n" +
+															DankersSkyblockMod.TYPE_COLOUR + " Custom hub music: " + DankersSkyblockMod.VALUE_COLOUR + hubMusic + "\n" +
+															DankersSkyblockMod.TYPE_COLOUR + " Custom island music: " + DankersSkyblockMod.VALUE_COLOUR + islandMusic + "\n" +
+															DankersSkyblockMod.TYPE_COLOUR + " Custom dungeon hub music: " + DankersSkyblockMod.VALUE_COLOUR + dungeonHubMusic + "\n" +
+															DankersSkyblockMod.TYPE_COLOUR + " Custom farming islands music: " + DankersSkyblockMod.VALUE_COLOUR + farmingIslandsMusic + "\n" +
+															DankersSkyblockMod.TYPE_COLOUR + " Custom gold mine music: " + DankersSkyblockMod.VALUE_COLOUR + goldMineMusic + "\n" +
+															DankersSkyblockMod.TYPE_COLOUR + " Custom deep caverns music: " + DankersSkyblockMod.VALUE_COLOUR + deepCavernsMusic + "\n" +
+															DankersSkyblockMod.TYPE_COLOUR + " Custom dwarven mines music: " + DankersSkyblockMod.VALUE_COLOUR + dwarvenMinesMusic + "\n" +
+															DankersSkyblockMod.TYPE_COLOUR + " Custom crystal hollows music: " + DankersSkyblockMod.VALUE_COLOUR + crystalHollowsMusic + "\n" +
+															DankersSkyblockMod.TYPE_COLOUR + " Custom blazing fortress music: " + DankersSkyblockMod.VALUE_COLOUR + blazingFortressMusic + "\n" +
+															DankersSkyblockMod.TYPE_COLOUR + " Custom end music: " + DankersSkyblockMod.VALUE_COLOUR + endMusic + "\n" +
+															DankersSkyblockMod.TYPE_COLOUR + " Custom park music: " + DankersSkyblockMod.VALUE_COLOUR + parkMusic
 				));
 				break;
 			default:

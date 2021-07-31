@@ -35,6 +35,29 @@ public class CustomMusic {
     public static int bloodroomVolume;
     public static Song dungeon;
     public static int dungeonVolume;
+    public static Song hub;
+    public static int hubVolume;
+    public static Song island;
+    public static int islandVolume;
+    public static Song dungeonHub;
+    public static int dungeonHubVolume;
+    public static Song farmingIslands;
+    public static int farmingIslandsVolume;
+    public static Song goldMine;
+    public static int goldMineVolume;
+    public static Song deepCaverns;
+    public static int deepCavernsVolume;
+    public static Song dwarvenMines;
+    public static int dwarvenMinesVolume;
+    public static Song crystalHollows;
+    public static int crystalHollowsVolume;
+    public static Song blazingFortress;
+    public static int blazingFortressVolume;
+    public static Song end;
+    public static int endVolume;
+    public static Song park;
+    public static int parkVolume;
+
 
     @SubscribeEvent
     public void onWorldChange(WorldEvent.Load event) {
@@ -49,28 +72,66 @@ public class CustomMusic {
         EntityPlayerSP player = mc.thePlayer;
         World world = mc.theWorld;
         if (DankersSkyblockMod.tickAmount % 10 == 0) {
-            if (Utils.inDungeons && world != null && player != null) {
-                prevInDungeonBossRoom = inDungeonBossRoom;
-                List<String> scoreboard = ScoreboardHandler.getSidebarLines();
-                if (scoreboard.size() > 2) {
-                    String firstLine = ScoreboardHandler.cleanSB(scoreboard.get(scoreboard.size() - 1));
-                    String secondLine = ScoreboardHandler.cleanSB(scoreboard.get(scoreboard.size() - 2));
-                    if (firstLine.contains("30,30") || // F1
-                        firstLine.contains("30,125") || // F2
-                        firstLine.contains("30,225") || // F3
-                        secondLine.contains("- Healthy") || // F3
-                        firstLine.contains("30,344") || // F4
-                        firstLine.contains("livid") || // F5
-                        firstLine.contains("sadan") || // F6
-                        firstLine.contains("necron")) { // F7
+            if (world != null && player != null) {
+                if (Utils.inDungeons) {
+                    prevInDungeonBossRoom = inDungeonBossRoom;
+                    List<String> scoreboard = ScoreboardHandler.getSidebarLines();
+                    if (scoreboard.size() > 2) {
+                        String firstLine = ScoreboardHandler.cleanSB(scoreboard.get(scoreboard.size() - 1));
+                        String secondLine = ScoreboardHandler.cleanSB(scoreboard.get(scoreboard.size() - 2));
+                        if (firstLine.contains("30,30") || // F1
+                                firstLine.contains("30,125") || // F2
+                                firstLine.contains("30,225") || // F3
+                                secondLine.contains("- Healthy") || // F3
+                                firstLine.contains("30,344") || // F4
+                                firstLine.contains("livid") || // F5
+                                firstLine.contains("sadan") || // F6
+                                firstLine.contains("necron")) { // F7
 
-                        inDungeonBossRoom = true;
-                        if (!prevInDungeonBossRoom) {
-                            bloodroom.stop();
-                            if (ToggleCommand.dungeonBossMusic) dungeonboss.start();
+                            inDungeonBossRoom = true;
+                            if (!prevInDungeonBossRoom) {
+                                bloodroom.stop();
+                                if (ToggleCommand.dungeonBossMusic) dungeonboss.start();
+                            }
+                        } else {
+                            inDungeonBossRoom = false;
                         }
-                    } else {
-                        inDungeonBossRoom = false;
+                    }
+                } else {
+                    switch (Utils.tabLocation) {
+                        case "Hub":
+                            if (ToggleCommand.hubMusic) hub.start();
+                            break;
+                        case "Private World":
+                            if (ToggleCommand.islandMusic) island.start();
+                            break;
+                        case "Dungeon Hub":
+                            if (ToggleCommand.dungeonHubMusic) dungeonHub.start();
+                            break;
+                        case "The Farming Islands":
+                            if (ToggleCommand.farmingIslandsMusic) farmingIslands.start();
+                            break;
+                        case "Gold Mine":
+                            if (ToggleCommand.goldMineMusic) goldMine.start();
+                            break;
+                        case "Deep Caverns":
+                            if (ToggleCommand.deepCavernsMusic) deepCaverns.start();
+                            break;
+                        case "Dwarven Mines":
+                            if (ToggleCommand.dwarvenMinesMusic) dwarvenMines.start();
+                            break;
+                        case "Crystal Hollows":
+                            if (ToggleCommand.crystalHollowsMusic) crystalHollows.start();
+                            break;
+                        case "Blazing Fortress":
+                            if (ToggleCommand.blazingFortressMusic) blazingFortress.start();
+                            break;
+                        case "The End":
+                            if (ToggleCommand.endMusic) end.start();
+                            break;
+                        case "The Park":
+                            if (ToggleCommand.parkMusic) park.start();
+                            break;
                     }
                 }
             }
@@ -118,12 +179,34 @@ public class CustomMusic {
         dungeonboss = new Song(directory, "dungeonboss", dungeonbossVolume);
         bloodroom = new Song(directory, "bloodroom", bloodroomVolume);
         dungeon = new Song(directory, "dungeon", dungeonVolume);
+        hub = new Song(directory, "hub", hubVolume);
+        island = new Song(directory, "island", hubVolume);
+        dungeonHub = new Song(directory, "dungeonhub", dungeonHubVolume);
+        farmingIslands = new Song(directory, "farmingislands", farmingIslandsVolume);
+        goldMine = new Song(directory, "goldmine", goldMineVolume);
+        deepCaverns = new Song(directory, "deepcaverns", deepCavernsVolume);
+        dwarvenMines = new Song(directory, "dwarvenmines", dwarvenMinesVolume);
+        crystalHollows = new Song(directory, "crystalhollows", crystalHollowsVolume);
+        blazingFortress = new Song(directory, "blazingfortress", blazingFortressVolume);
+        end = new Song(directory, "end", endVolume);
+        park = new Song(directory, "park", parkVolume);
     }
 
     public static void reset() {
         if (dungeonboss != null) dungeonboss.stop();
         if (bloodroom != null) bloodroom.stop();
         if (dungeon != null) dungeon.stop();
+        if (hub != null) hub.stop();
+        if (island != null) island.stop();
+        if (dungeonHub != null) dungeonHub.stop();
+        if (farmingIslands != null) farmingIslands.stop();
+        if (goldMine != null) goldMine.stop();
+        if (deepCaverns != null) deepCaverns.stop();
+        if (dwarvenMines != null) dwarvenMines.stop();
+        if (crystalHollows != null) crystalHollows.stop();
+        if (blazingFortress != null) blazingFortress.stop();
+        if (end != null) end.stop();
+        if (park != null) park.stop();
     }
 
     public static class Song {
@@ -153,8 +236,8 @@ public class CustomMusic {
         }
 
         public void start() {
-            reset();
-            if (music != null) {
+            if (music != null && !music.isRunning()) {
+                reset();
                 shuffle();
                 cancelNotes = true;
                 music.setMicrosecondPosition(0);
@@ -183,9 +266,7 @@ public class CustomMusic {
             float decibels = (float) (20 * Math.log(volume / 100.0));
             for (Clip music : playlist) {
                 FloatControl control = (FloatControl) music.getControl(FloatControl.Type.MASTER_GAIN);
-                if (decibels <= control.getMinimum() || decibels >= control.getMaximum()) {
-                    return false;
-                }
+                if (decibels <= control.getMinimum() || decibels >= control.getMaximum()) return false;
                 control.setValue(decibels);
             }
 

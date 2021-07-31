@@ -44,7 +44,7 @@ public class CrystalHollowWaypoints {
         World world = mc.theWorld;
 
         if (DankersSkyblockMod.tickAmount % 20 == 0) {
-            if (ToggleCommand.crystalAutoWaypoints && Utils.inCrystalHollows && world != null) {
+            if (ToggleCommand.crystalAutoWaypoints && Utils.tabLocation.equals("Crystal Hollows") && world != null) {
                 boolean found = false;
                 List<String> scoreboard = ScoreboardHandler.getSidebarLines();
 
@@ -118,7 +118,7 @@ public class CrystalHollowWaypoints {
         $SBECHWP:Mines of Divan@-673,117,426
         $SBECHWP:Khazad-dûm@-292,63,281\nFairy Grotto@-216,110,400\njungle temple@-525,110,395\nJungle Temple@-493,101,425\nMines of Divan@-673,117,426
         */
-        if (ToggleCommand.crystalHollowWaypoints && Utils.inCrystalHollows) {
+        if (ToggleCommand.crystalHollowWaypoints && Utils.tabLocation.equals("Crystal Hollows")) {
             if (!message.contains(player.getName()) && (message.contains(": $DSMCHWP:") || message.contains(": $SBECHWP:"))) {
                 ChatComponentText add = new ChatComponentText(EnumChatFormatting.GREEN + "" + EnumChatFormatting.BOLD + "  [ADD]\n");
                 add.setChatStyle(add.getChatStyle().setChatClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/dsmaddcrystalhollowwaypoints " + message.substring(message.lastIndexOf(":") + 1))));
@@ -137,7 +137,7 @@ public class CrystalHollowWaypoints {
 
     @SubscribeEvent
     public void onWorldRender(RenderWorldLastEvent event) {
-        if (ToggleCommand.crystalHollowWaypoints && Utils.inCrystalHollows) {
+        if (ToggleCommand.crystalHollowWaypoints && Utils.tabLocation.equals("Crystal Hollows")) {
             for (Waypoint waypoint : waypoints) {
                 if (waypoint.toggled) Utils.draw3DWaypointString(waypoint, event.partialTicks);
             }

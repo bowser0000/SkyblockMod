@@ -63,7 +63,7 @@ Discord Server: https://discord.gg/QsEkNQS
 ## Commands
 - /dhelp - Returns this message in-game.
 - /dsm - Opens the GUI for Danker's Skyblock Mod.
-- /toggle <too long to list> - Toggles features. /toggle list returns values of every toggle.
+- /toggle <too many to list> - Toggles features. /toggle list returns values of every toggle.
 - /setkey <key> - Sets API key.
 - /getkey - Returns key set with /setkey and copies it to your clipboard.
 - /loot <zombie/spider/wolf/enderman/fishing/catacombs/mythological/> [winter/festival/spooky/f(1-7)/session] - Returns loot received from slayer quests or fishing stats. /loot fishing winter returns winter sea creatures instead.
@@ -85,7 +85,7 @@ Discord Server: https://discord.gg/QsEkNQS
 - /reparty - Disbands and reparties all members in the party
 - /fairysouls - Check the fairysouls of a player
 - /lobbybank - Uses API to find the average bank total of the lobby, as well the three players with the highest total money in the bank (and purse).
-- /dsmmusic <stop/reload/volume> [dungeonboss/bloodroom/dungeon] [1-100] - Stops, reloads or changes the volume of custom music.
+- /dsmmusic <stop/reload/volume> [dungeonboss/bloodroom/dungeon/hub/island/dungeonhub/farmingislands/goldmine/deepcaverns/dwarvenmines/crystalhollows/blazingfortress/end/park] [1-100] - Stops, reloads or changes the volume of custom music.
 - /player [player] - Uses API to find skills, slayers, coins and weight of a player.
 - /reloadconfig - Reloads Danker's Skyblock Mod config.
 - /reloaddsmrepo - Reloads Danker's Skyblock Mod repository.
@@ -98,9 +98,20 @@ Discord Server: https://discord.gg/QsEkNQS
 
 ## Custom Music
 1. Place a music file with the given name in the `.minecraft/config/dsmmusic` folder:
-  - Dungeon music: `dungeon.wav`
-  - Blood room music: `bloodroom.wav`
-  - Dungeon boss music: `dungeonboss.wav`
+  - Dungeon: `dungeon.wav`
+  - Blood room: `bloodroom.wav`
+  - Dungeon boss: `dungeonboss.wav`
+  - Dungeon hub: `dungeonhub.wav`
+  - Hub: `hub.wav`
+  - Private Island: `island.wav`
+  - Farming Islands: `farmingislands.wav`
+  - Gold Mine: `goldmine.wav`
+  - Deep Caverns: `deepcaverns.wav`
+  - Dwarven Mines: `dwarvenmines.wav`
+  - Crystal Hollows: `crystalhollows.wav`
+  - Blazing Fortress: `blazingfortress.wav`
+  - The End: `end.wav`
+  - The Park: `park.wav`
 2. Either run `/dsmmusic reload` or restart your game.
 3. Enable the custom music in `/dsm`.
 4. (Optional) Change the volume of the music with `/dsmmusic volume`.

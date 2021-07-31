@@ -262,10 +262,32 @@ public class ConfigHandler {
 		ToggleCommand.dungeonBossMusic = initBoolean("toggles", "DungeonBossMusic", false);
 		ToggleCommand.bloodRoomMusic = initBoolean("toggles", "BloodRoomMusic", false);
 		ToggleCommand.dungeonMusic = initBoolean("toggles", "DungeonMusic", false);
+		ToggleCommand.hubMusic = initBoolean("toggles", "HubMusic", false);
+		ToggleCommand.islandMusic = initBoolean("toggles", "IslandMusic", false);
+		ToggleCommand.dungeonHubMusic = initBoolean("toggles", "DungeonHubMusic", false);
+		ToggleCommand.farmingIslandsMusic = initBoolean("toggles", "FarmingIslandsMusic", false);
+		ToggleCommand.goldMineMusic = initBoolean("toggles", "GoldMineMusic", false);
+		ToggleCommand.deepCavernsMusic = initBoolean("toggles", "DeepCavernsMusic", false);
+		ToggleCommand.dwarvenMinesMusic = initBoolean("toggles", "DwarvenMinesMusic", false);
+		ToggleCommand.crystalHollowsMusic = initBoolean("toggles", "CrystalHollowsMusic", false);
+		ToggleCommand.blazingFortressMusic = initBoolean("toggles", "BlazingFortressMusic", false);
+		ToggleCommand.endMusic = initBoolean("toggles", "Music", false);
+		ToggleCommand.parkMusic = initBoolean("toggles", "Music", false);
 		// Music Volume
 		CustomMusic.dungeonbossVolume = initInt("music", "DungeonBossVolume", 50);
 		CustomMusic.bloodroomVolume = initInt("music", "BloodRoomVolume", 50);
 		CustomMusic.dungeonVolume = initInt("music", "DungeonVolume", 50);
+		CustomMusic.hubVolume = initInt("music", "HubVolume", 50);
+		CustomMusic.islandVolume = initInt("music", "IslandVolume", 50);
+		CustomMusic.dungeonHubVolume = initInt("music", "DungeonHubVolume", 50);
+		CustomMusic.farmingIslandsVolume = initInt("music", "FarmingIslandsVolume", 50);
+		CustomMusic.goldMineVolume = initInt("music", "GoldMineVolume", 50);
+		CustomMusic.deepCavernsVolume = initInt("music", "DeepCavernsVolume", 50);
+		CustomMusic.dwarvenMinesVolume = initInt("music", "DwarvenMinesVolume", 50);
+		CustomMusic.crystalHollowsVolume = initInt("music", "CrystalHollowsVolume", 50);
+		CustomMusic.blazingFortressVolume = initInt("music", "BlazingFortressVolume", 50);
+		CustomMusic.endVolume = initInt("music", "EndVolume", 50);
+		CustomMusic.parkVolume = initInt("music", "ParkVolume", 50);
 
 		// API
 		if (!hasKey("api", "APIKey")) writeStringConfig("api", "APIKey", "");
