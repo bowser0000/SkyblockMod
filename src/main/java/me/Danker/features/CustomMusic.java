@@ -27,8 +27,6 @@ import java.util.Random;
 public class CustomMusic {
 
     static boolean cancelNotes;
-    static boolean prevInDungeonBossRoom = false;
-    public static boolean inDungeonBossRoom = false;
     public static Song dungeonboss;
     public static int dungeonbossVolume;
     public static Song bloodroom;
@@ -74,7 +72,6 @@ public class CustomMusic {
         if (DankersSkyblockMod.tickAmount % 10 == 0) {
             if (world != null && player != null) {
                 if (Utils.inDungeons) {
-                    prevInDungeonBossRoom = inDungeonBossRoom;
                     List<String> scoreboard = ScoreboardHandler.getSidebarLines();
                     if (scoreboard.size() > 2) {
                         String firstLine = ScoreboardHandler.cleanSB(scoreboard.get(scoreboard.size() - 1));
@@ -88,51 +85,45 @@ public class CustomMusic {
                                 firstLine.contains("sadan") || // F6
                                 firstLine.contains("necron")) { // F7
 
-                            inDungeonBossRoom = true;
-                            if (!prevInDungeonBossRoom) {
-                                bloodroom.stop();
                                 if (ToggleCommand.dungeonBossMusic) dungeonboss.start();
                             }
-                        } else {
-                            inDungeonBossRoom = false;
                         }
-                    }
-                } else {
-                    switch (Utils.tabLocation) {
-                        case "Hub":
-                            if (ToggleCommand.hubMusic) hub.start();
-                            break;
-                        case "Private World":
-                            if (ToggleCommand.islandMusic) island.start();
-                            break;
-                        case "Dungeon Hub":
-                            if (ToggleCommand.dungeonHubMusic) dungeonHub.start();
-                            break;
-                        case "The Farming Islands":
-                            if (ToggleCommand.farmingIslandsMusic) farmingIslands.start();
-                            break;
-                        case "Gold Mine":
-                            if (ToggleCommand.goldMineMusic) goldMine.start();
-                            break;
-                        case "Deep Caverns":
-                            if (ToggleCommand.deepCavernsMusic) deepCaverns.start();
-                            break;
-                        case "Dwarven Mines":
-                            if (ToggleCommand.dwarvenMinesMusic) dwarvenMines.start();
-                            break;
-                        case "Crystal Hollows":
-                            if (ToggleCommand.crystalHollowsMusic) crystalHollows.start();
-                            break;
-                        case "Blazing Fortress":
-                            if (ToggleCommand.blazingFortressMusic) blazingFortress.start();
-                            break;
-                        case "The End":
-                            if (ToggleCommand.endMusic) end.start();
-                            break;
-                        case "The Park":
-                            if (ToggleCommand.parkMusic) park.start();
-                            break;
-                    }
+                    } else {
+                        switch (Utils.tabLocation) {
+                            case "Hub":
+                                if (ToggleCommand.hubMusic) hub.start();
+                                break;
+                            case "Private World":
+                                if (ToggleCommand.islandMusic) island.start();
+                                break;
+                            case "Dungeon Hub":
+                                if (ToggleCommand.dungeonHubMusic) dungeonHub.start();
+                                break;
+                            case "The Farming Islands":
+                                if (ToggleCommand.farmingIslandsMusic) farmingIslands.start();
+                                break;
+                            case "Gold Mine":
+                                if (ToggleCommand.goldMineMusic) goldMine.start();
+                                break;
+                            case "Deep Caverns":
+                                if (ToggleCommand.deepCavernsMusic) deepCaverns.start();
+                                break;
+                            case "Dwarven Mines":
+                                if (ToggleCommand.dwarvenMinesMusic) dwarvenMines.start();
+                                break;
+                            case "Crystal Hollows":
+                                if (ToggleCommand.crystalHollowsMusic) crystalHollows.start();
+                                break;
+                            case "Blazing Fortress":
+                                if (ToggleCommand.blazingFortressMusic) blazingFortress.start();
+                                break;
+                            case "The End":
+                                if (ToggleCommand.endMusic) end.start();
+                                break;
+                            case "The Park":
+                                if (ToggleCommand.parkMusic) park.start();
+                                break;
+                        }
                 }
             }
         }
@@ -242,7 +233,6 @@ public class CustomMusic {
                 cancelNotes = true;
                 music.setMicrosecondPosition(0);
                 music.start();
-                music.loop(Clip.LOOP_CONTINUOUSLY);
             }
         }
 
