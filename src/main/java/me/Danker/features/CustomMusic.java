@@ -49,6 +49,8 @@ public class CustomMusic {
     public static int dwarvenMinesVolume;
     public static Song crystalHollows;
     public static int crystalHollowsVolume;
+    public static Song spidersDen;
+    public static int spidersDenVolume;
     public static Song blazingFortress;
     public static int blazingFortressVolume;
     public static Song end;
@@ -114,6 +116,9 @@ public class CustomMusic {
                             case "Crystal Hollows":
                                 if (ToggleCommand.crystalHollowsMusic) crystalHollows.start();
                                 break;
+                            case "Spider's Den":
+                                if (ToggleCommand.spidersDenMusic) spidersDen.start();
+                                break;
                             case "Blazing Fortress":
                                 if (ToggleCommand.blazingFortressMusic) blazingFortress.start();
                                 break;
@@ -178,6 +183,7 @@ public class CustomMusic {
         deepCaverns = new Song(directory, "deepcaverns", deepCavernsVolume);
         dwarvenMines = new Song(directory, "dwarvenmines", dwarvenMinesVolume);
         crystalHollows = new Song(directory, "crystalhollows", crystalHollowsVolume);
+        spidersDen = new Song(directory, "spidersden", spidersDenVolume);
         blazingFortress = new Song(directory, "blazingfortress", blazingFortressVolume);
         end = new Song(directory, "end", endVolume);
         park = new Song(directory, "park", parkVolume);
@@ -195,6 +201,7 @@ public class CustomMusic {
         if (deepCaverns != null) deepCaverns.stop();
         if (dwarvenMines != null) dwarvenMines.stop();
         if (crystalHollows != null) crystalHollows.stop();
+        if (spidersDen != null) spidersDen.stop();
         if (blazingFortress != null) blazingFortress.stop();
         if (end != null) end.stop();
         if (park != null) park.stop();

@@ -30,19 +30,10 @@ public class ArachneESP {
         arachne = null;
     }
 
-    public boolean inSpidersDen(List<String> scoreboard) {
-        for (String s : scoreboard) {
-            if (ScoreboardHandler.cleanSB(s).contains("Spider's Den")) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     @SubscribeEvent
     public void onChat(ClientChatReceivedEvent event) {
         if (!Utils.inSkyblock) return;
-        if (!inSpidersDen(ScoreboardHandler.getSidebarLines())) return;
+        if (!Utils.tabLocation.equals("Spider's Den")) return;
         String message = StringUtils.stripControlCodes(event.message.getUnformattedText());
         if (message.contains("Something is awakening")){
             arachneActive = true;

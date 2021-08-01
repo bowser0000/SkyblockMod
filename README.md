@@ -85,7 +85,7 @@ Discord Server: https://discord.gg/QsEkNQS
 - /reparty - Disbands and reparties all members in the party
 - /fairysouls - Check the fairysouls of a player
 - /lobbybank - Uses API to find the average bank total of the lobby, as well the three players with the highest total money in the bank (and purse).
-- /dsmmusic <stop/reload/volume> [dungeonboss/bloodroom/dungeon/hub/island/dungeonhub/farmingislands/goldmine/deepcaverns/dwarvenmines/crystalhollows/blazingfortress/end/park] [1-100] - Stops, reloads or changes the volume of custom music.
+- /dsmmusic <stop/reload/volume> [dungeonboss/bloodroom/dungeon/hub/island/dungeonhub/farmingislands/goldmine/deepcaverns/dwarvenmines/crystalhollows/spidersden/blazingfortress/end/park] [1-100] - Stops, reloads or changes the volume of custom music.
 - /player [player] - Uses API to find skills, slayers, coins and weight of a player.
 - /reloadconfig - Reloads Danker's Skyblock Mod config.
 - /reloaddsmrepo - Reloads Danker's Skyblock Mod repository.
@@ -109,6 +109,7 @@ Discord Server: https://discord.gg/QsEkNQS
   - Deep Caverns: `deepcaverns.wav`
   - Dwarven Mines: `dwarvenmines.wav`
   - Crystal Hollows: `crystalhollows.wav`
+  - Spider's Den: `spidersden.wav`
   - Blazing Fortress: `blazingfortress.wav`
   - The End: `end.wav`
   - The Park: `park.wav`

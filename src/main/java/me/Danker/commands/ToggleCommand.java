@@ -96,6 +96,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 	public static boolean deepCavernsMusic;
 	public static boolean dwarvenMinesMusic;
 	public static boolean crystalHollowsMusic;
+	public static boolean spidersDenMusic;
 	public static boolean blazingFortressMusic;
 	public static boolean endMusic;
 	public static boolean parkMusic;
@@ -118,7 +119,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 										  "melodytooltips/highlightslayers/highlightarachne/highlightskeletonmasters/teammatesinradius/" +
 										  "gianthp/hidepetcandy/customcolorednames/endoffarmalert/gemstonelore/crystalhollowwaypoints/crystalautowaypoints/" +
 										  "autoacceptreparty/dungeonbossmusic/bloodroommusic/dungeonmusic/hubmusic/islandmusic/dungeonhubmusic/" +
-										  "farmingislandsmusic/goldminemusic/deepcavernsmusic/crystalhollowsmusic/blazingfortressmusic/endmusic/" +
+										  "farmingislandsmusic/goldminemusic/deepcavernsmusic/crystalhollowsmusic/spidersdenmusic/blazingfortressmusic/endmusic/" +
 										  "parkmusic/list>";
 	}
 
@@ -151,7 +152,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 														  "teammatesinradius", "gianthp", "hidepetcandy", "customcolorednames", "endoffarmalert",
 														  "gemstonelore", "crystalhollowwaypoints", "crystalautowaypoints", "autoacceptreparty",
 														  "hubmusic", "islandmusic", "dungeonhubmusic", "farmingislandsmusic", "goldminemusic",
-														  "deepcavernsmusic", "dwarvenminesmusic", "crystalhollowsmusic", "blazingfortressmusic",
+														  "deepcavernsmusic", "dwarvenminesmusic", "crystalhollowsmusic", "spidersdenmusic", "blazingfortressmusic",
 														  "endmusic", "parkmusic", "list");
 		}
 		return null;
@@ -550,6 +551,12 @@ public class ToggleCommand extends CommandBase implements ICommand {
 				ConfigHandler.writeBooleanConfig("toggles", "CrystalHollowsMusic", crystalHollowsMusic);
 				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Custom crystal hollows music has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + crystalHollowsMusic + DankersSkyblockMod.MAIN_COLOUR + "."));
 				break;
+			case "spidersdenmusic":
+				spidersDenMusic = !spidersDenMusic;
+				CustomMusic.spidersDen.stop();
+				ConfigHandler.writeBooleanConfig("toggles", "SpidersDenMusic", spidersDenMusic);
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Custom spider's den music has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + spidersDenMusic + DankersSkyblockMod.MAIN_COLOUR + "."));
+				break;
 			case "blazingfortressmusic":
 				blazingFortressMusic = !blazingFortressMusic;
 				CustomMusic.blazingFortress.stop();
@@ -635,6 +642,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 															DankersSkyblockMod.TYPE_COLOUR + " Custom deep caverns music: " + DankersSkyblockMod.VALUE_COLOUR + deepCavernsMusic + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Custom dwarven mines music: " + DankersSkyblockMod.VALUE_COLOUR + dwarvenMinesMusic + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Custom crystal hollows music: " + DankersSkyblockMod.VALUE_COLOUR + crystalHollowsMusic + "\n" +
+															DankersSkyblockMod.TYPE_COLOUR + " Custom spider's den music: " + DankersSkyblockMod.VALUE_COLOUR + spidersDenMusic + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Custom blazing fortress music: " + DankersSkyblockMod.VALUE_COLOUR + blazingFortressMusic + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Custom end music: " + DankersSkyblockMod.VALUE_COLOUR + endMusic + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Custom park music: " + DankersSkyblockMod.VALUE_COLOUR + parkMusic

@@ -29,6 +29,7 @@ public class CustomMusicGui extends GuiScreen {
     private GuiButton deepCavernsMusic;
     private GuiButton dwarvenMinesMusic;
     private GuiButton crystalHollowsMusic;
+    private GuiButton spidersDenMusic;
     private GuiButton blazingFortressMusic;
     private GuiButton endMusic;
     private GuiButton parkMusic;
@@ -65,9 +66,10 @@ public class CustomMusicGui extends GuiScreen {
         deepCavernsMusic = new GuiButton(0, width / 2 - 100, (int) (height * 0.2), "Custom Deep Caverns Music: " + Utils.getColouredBoolean(ToggleCommand.deepCavernsMusic));
         dwarvenMinesMusic = new GuiButton(0, width / 2 - 100, (int) (height * 0.3), "Custom Dwarven Mines Music: " + Utils.getColouredBoolean(ToggleCommand.dwarvenMinesMusic));
         crystalHollowsMusic = new GuiButton(0, width / 2 - 100, (int) (height * 0.4), "Custom Crystal Hollows Music: " + Utils.getColouredBoolean(ToggleCommand.crystalHollowsMusic));
-        blazingFortressMusic = new GuiButton(0, width / 2 - 100, (int) (height * 0.5), "Custom Blazing Fortress Music: " + Utils.getColouredBoolean(ToggleCommand.blazingFortressMusic));
-        endMusic = new GuiButton(0, width / 2 - 100, (int) (height * 0.6), "Custom End Music: " + Utils.getColouredBoolean(ToggleCommand.endMusic));
-        parkMusic = new GuiButton(0, width / 2 - 100, (int) (height * 0.7), "Custom Park Music: " + Utils.getColouredBoolean(ToggleCommand.parkMusic));
+        spidersDenMusic = new GuiButton(0, width / 2 - 100, (int) (height * 0.5), "Custom Spider's Den Music: " + Utils.getColouredBoolean(ToggleCommand.spidersDenMusic));
+        blazingFortressMusic = new GuiButton(0, width / 2 - 100, (int) (height * 0.6), "Custom Blazing Fortress Music: " + Utils.getColouredBoolean(ToggleCommand.blazingFortressMusic));
+        endMusic = new GuiButton(0, width / 2 - 100, (int) (height * 0.7), "Custom End Music: " + Utils.getColouredBoolean(ToggleCommand.endMusic));
+        parkMusic = new GuiButton(0, width / 2 - 100, (int) (height * 0.1), "Custom Park Music: " + Utils.getColouredBoolean(ToggleCommand.parkMusic));
 
         switch (page) {
             case 1:
@@ -85,8 +87,13 @@ public class CustomMusicGui extends GuiScreen {
                 this.buttonList.add(deepCavernsMusic);
                 this.buttonList.add(dwarvenMinesMusic);
                 this.buttonList.add(crystalHollowsMusic);
+                this.buttonList.add(spidersDenMusic);
                 this.buttonList.add(blazingFortressMusic);
                 this.buttonList.add(endMusic);
+                this.buttonList.add(nextPage);
+                this.buttonList.add(backPage);
+                break;
+            case 3:
                 this.buttonList.add(parkMusic);
                 this.buttonList.add(backPage);
                 break;
@@ -164,6 +171,11 @@ public class CustomMusicGui extends GuiScreen {
             CustomMusic.crystalHollows.stop();
             ConfigHandler.writeBooleanConfig("toggles", "CrystalHollowsMusic", ToggleCommand.crystalHollowsMusic);
             crystalHollowsMusic.displayString = "Custom Crystal Hollows Music: " + Utils.getColouredBoolean(ToggleCommand.crystalHollowsMusic);
+        } else if (button == spidersDenMusic) {
+            ToggleCommand.spidersDenMusic = !ToggleCommand.spidersDenMusic;
+            CustomMusic.spidersDen.stop();
+            ConfigHandler.writeBooleanConfig("toggles", "SpidersDenMusic", ToggleCommand.spidersDenMusic);
+            spidersDenMusic.displayString = "Custom Spider's Den Music: " + Utils.getColouredBoolean(ToggleCommand.spidersDenMusic);
         } else if (button == blazingFortressMusic) {
             ToggleCommand.blazingFortressMusic = !ToggleCommand.blazingFortressMusic;
             CustomMusic.blazingFortress.stop();

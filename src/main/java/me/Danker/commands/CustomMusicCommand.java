@@ -25,7 +25,7 @@ public class CustomMusicCommand extends CommandBase {
     @Override
     public String getCommandUsage(ICommandSender arg0) {
         return "/" + getCommandName() + " <stop/reload/volume> [dungeonboss/bloodroom/dungeon/hub/island/dungeonhub/farmingislands/" +
-                                                                "goldmine/deepcaverns/dwarvenmines/crystalhollows/blazingfortress/end/park] [1-100]";
+                                                                "goldmine/deepcaverns/dwarvenmines/crystalhollows/spidersden/blazingfortress/end/park] [1-100]";
     }
 
     public static String usage(ICommandSender arg0) {
@@ -43,7 +43,7 @@ public class CustomMusicCommand extends CommandBase {
             return getListOfStringsMatchingLastWord(args, "stop", "reload", "volume");
         } else if (args.length == 2) {
             return getListOfStringsMatchingLastWord(args, "dungeonboss", "bloodroom", "dungeon", "hub", "island", "dungeonhub", "farmingislands", "goldmine",
-                                                          "deepcaverns", "dwarvenmines", "crystalhollows", "blazingfortress", "end", "park");
+                                                          "deepcaverns", "dwarvenmines", "crystalhollows", "spidersden", "blazingfortress", "end", "park");
         }
         return null;
     }
@@ -145,6 +145,12 @@ public class CustomMusicCommand extends CommandBase {
 
                         CustomMusic.crystalHollowsVolume = volume;
                         ConfigHandler.writeIntConfig("music", "CrystalHollowsVolume", volume);
+                        break;
+                    case "spidersden":
+                        if (!CustomMusic.spidersDen.setVolume(volume)) return;
+
+                        CustomMusic.spidersDenVolume = volume;
+                        ConfigHandler.writeIntConfig("music", "SpidersDenVolume", volume);
                         break;
                     case "blazingfortress":
                         if (!CustomMusic.blazingFortress.setVolume(volume)) return;
