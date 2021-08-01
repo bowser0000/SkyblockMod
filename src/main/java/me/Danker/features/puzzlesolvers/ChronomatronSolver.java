@@ -67,19 +67,13 @@ public class ChronomatronSolver {
 
                             Slot glassSlot = invSlots.get(i);
 
-                            if (chronomatronMouseClicks + 1 < chronomatronPattern.size()) {
-                                if (chronomatronPattern.get(chronomatronMouseClicks).equals(chronomatronPattern.get(chronomatronMouseClicks + 1))) {
-                                    if (glass.getDisplayName().equals(chronomatronPattern.get(chronomatronMouseClicks))) {
-                                        Utils.drawOnSlot(chestSize, glassSlot.xDisplayPosition, glassSlot.yDisplayPosition, CHRONOMATRON_NEXT + 0xE5000000);
-                                    }
-                                } else if (glass.getDisplayName().equals(chronomatronPattern.get(chronomatronMouseClicks))) {
-                                    Utils.drawOnSlot(chestSize, glassSlot.xDisplayPosition, glassSlot.yDisplayPosition, CHRONOMATRON_NEXT + 0xE5000000);
-                                } else if (glass.getDisplayName().equals(chronomatronPattern.get(chronomatronMouseClicks + 1))) {
-                                    Utils.drawOnSlot(chestSize, glassSlot.xDisplayPosition, glassSlot.yDisplayPosition, CHRONOMATRON_NEXT_TO_NEXT + 0XBE000000);
-                                }
-                            } else if (glass.getDisplayName().equals(chronomatronPattern.get(chronomatronMouseClicks))) {
+                                
+                            if (glass.getDisplayName().equals(chronomatronPattern.get(chronomatronMouseClicks))) {
                                 Utils.drawOnSlot(chestSize, glassSlot.xDisplayPosition, glassSlot.yDisplayPosition, CHRONOMATRON_NEXT + 0xE5000000);
+                            } else if (chronomatronMouseClicks + 1 < chronomatronPattern.size() && glass.getDisplayName().equals(chronomatronPattern.get(chronomatronMouseClicks + 1))) {
+                                Utils.drawOnSlot(chestSize, glassSlot.xDisplayPosition, glassSlot.yDisplayPosition, CHRONOMATRON_NEXT_TO_NEXT + 0XBE000000);
                             }
+                            
                         }
                     }
                 } else if (invSlots.get(49).getStack().getDisplayName().equals("§aRemember the pattern!")) {
