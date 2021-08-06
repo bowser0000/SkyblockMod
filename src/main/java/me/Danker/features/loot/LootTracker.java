@@ -1318,7 +1318,7 @@ public class LootTracker {
     }
 
     public int getAmountfromMessage(String message) {
-        if (message.charAt(message.indexOf("(") + 1) == 'x') {
+        if (message.charAt(message.indexOf("(") + 2) == 'x') {
             return Integer.parseInt(message.substring(message.indexOf("(") + 1, message.indexOf("x")));
         } else {
             return 1;
