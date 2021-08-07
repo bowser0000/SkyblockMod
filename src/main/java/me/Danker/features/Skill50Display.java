@@ -115,7 +115,7 @@ public class Skill50Display {
     @SubscribeEvent
     public void renderPlayerInfo(RenderOverlay event) {
         if (!Utils.skillsInitialized() && Utils.inSkyblock) {
-            new TextRenderer(Minecraft.getMinecraft(), EnumChatFormatting.RED + "Please open the skill menu to use skill features.", MoveCommand.skill50XY[0], MoveCommand.skill50XY[0], ScaleCommand.skill50Scale);
+            new TextRenderer(Minecraft.getMinecraft(), EnumChatFormatting.RED + "Please open the skill menu to use skill features. (/skills)", MoveCommand.skill50XY[0], MoveCommand.skill50XY[0], ScaleCommand.skill50Scale);
             return;
         }
 

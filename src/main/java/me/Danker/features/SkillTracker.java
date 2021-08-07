@@ -169,7 +169,7 @@ public class SkillTracker {
     public void renderPlayerInfo(RenderOverlay event) {
         if (showSkillTracker && Utils.inSkyblock) {
             if (!Utils.skillsInitialized()) {
-                new TextRenderer(Minecraft.getMinecraft(), EnumChatFormatting.RED + "Please open the skill menu to use skill features.", MoveCommand.skillTrackerXY[0], MoveCommand.skillTrackerXY[0], ScaleCommand.skillTrackerScale);
+                new TextRenderer(Minecraft.getMinecraft(), EnumChatFormatting.RED + "Please open the skill menu to use skill features. (/skills)", MoveCommand.skillTrackerXY[0], MoveCommand.skillTrackerXY[0], ScaleCommand.skillTrackerScale);
                 return;
             }
 

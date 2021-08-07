@@ -5,6 +5,7 @@ import me.Danker.commands.ToggleCommand;
 import me.Danker.utils.Utils;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.item.EntityArmorStand;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IChatComponent;
@@ -62,7 +63,7 @@ public class ColouredNames {
         if (!ToggleCommand.customColouredNames || !Utils.inSkyblock) return;
 
         Entity entity = event.entity;
-        if (entity.hasCustomName()) {
+        if (entity instanceof EntityArmorStand && entity.hasCustomName()) {
             for (String user : users) {
                 if (entity.getCustomNameTag().contains(user)) {
                     entity.setCustomNameTag(replaceName(entity.getCustomNameTag(), user, getColourFromName(user)));
