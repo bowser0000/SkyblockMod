@@ -57,7 +57,7 @@ public class SkyblockPlayersCommand extends CommandBase {
 			
 			String playersURL = "https://api.hypixel.net/gameCounts?key=" + key;
 			System.out.println("Fetching player count...");
-			JsonObject playersResponse = APIHandler.getResponse(playersURL);
+			JsonObject playersResponse = APIHandler.getResponse(playersURL, true);
 			if (!playersResponse.get("success").getAsBoolean()) {
 				String reason = playersResponse.get("cause").getAsString();
 				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Failed with reason: " + reason));

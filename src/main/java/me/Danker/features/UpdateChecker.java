@@ -26,7 +26,7 @@ public class UpdateChecker {
                 EntityPlayer player = Minecraft.getMinecraft().thePlayer;
 
                 System.out.println("Checking for updates...");
-                JsonObject latestRelease = APIHandler.getResponse("https://api.github.com/repos/bowser0000/SkyblockMod/releases/latest");
+                JsonObject latestRelease = APIHandler.getResponse("https://api.github.com/repos/bowser0000/SkyblockMod/releases/latest", false);
 
                 String latestTag = latestRelease.get("tag_name").getAsString();
                 DefaultArtifactVersion currentVersion = new DefaultArtifactVersion(DankersSkyblockMod.VERSION);

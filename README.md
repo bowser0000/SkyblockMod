@@ -79,6 +79,7 @@ Discord Server: https://discord.gg/QsEkNQS
 - /bank [player] - Uses API to get bank and purse coins of a person. If no name is provided, it checks yours.
 - /armor [player] - Uses API to get armour of a person. If no name is provided, it checks yours.
 - /dungeons [player] - Uses API to get dungeon levels of a person. If no name is provided, it checks yours.
+- /weight [player] [lily] - Uses API to get weight of a person. If no name is provided, it checks yours. Adding lily uses lily's weight instead of Senither's.
 - /importfishing - Imports your fishing stats from your latest profile to your fishing tracker using the API.
 - /sbplayers - Uses API to find how many players are on each Skyblock island.
 - /skilltracker <start/stop/reset> - Text display for skill xp/hour.

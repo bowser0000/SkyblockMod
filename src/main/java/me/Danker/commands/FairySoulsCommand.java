@@ -74,7 +74,7 @@ public class FairySoulsCommand extends CommandBase {
             String profileURL = "https://api.hypixel.net/skyblock/profile?profile=" + latestProfile + "&key=" + key;
             System.out.println("Fetching profile...");
 
-            JsonObject profileResponse = APIHandler.getResponse(profileURL);
+            JsonObject profileResponse = APIHandler.getResponse(profileURL, true);
             if (!profileResponse.get("success").getAsBoolean()) {
                 String reason = profileResponse.get("cause").getAsString();
                 player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Failed with reason: " + reason));
@@ -88,7 +88,7 @@ public class FairySoulsCommand extends CommandBase {
             int fairy_souls = userObject.get("fairy_souls_collected").getAsInt();
             System.out.println(fairy_souls);
 
-            player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "The player " + username + " has " + DankersSkyblockMod.VALUE_COLOUR + fairy_souls + DankersSkyblockMod.MAIN_COLOUR + "/222" + " collected"));
+            player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "The player " + username + " has " + DankersSkyblockMod.VALUE_COLOUR + fairy_souls + DankersSkyblockMod.MAIN_COLOUR + "/227" + " collected"));
 
         }).start();
 

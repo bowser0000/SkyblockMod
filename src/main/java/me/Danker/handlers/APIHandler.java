@@ -18,7 +18,7 @@ import java.net.URL;
 import java.util.Scanner;
 
 public class APIHandler {
-	public static JsonObject getResponse(String urlString) {
+	public static JsonObject getResponse(String urlString, boolean hasError) {
 		EntityPlayer player = Minecraft.getMinecraft().thePlayer;
 		
 		try {
@@ -41,7 +41,7 @@ public class APIHandler {
 
 				return gson.fromJson(response.toString(), JsonObject.class);
 			} else {
-				if (urlString.startsWith("https://api.hypixel.net/") || urlString.startsWith("https://hypixel-api.senither.com")) {
+				if (hasError) {
 					InputStream errorStream = conn.getErrorStream();
 					try (Scanner scanner = new Scanner(errorStream)) {
 						scanner.useDelimiter("\\Z");
@@ -98,7 +98,7 @@ public class APIHandler {
 	}
 	
 	public static String getUUID(String username) {
-		JsonObject uuidResponse = getResponse("https://api.mojang.com/users/profiles/minecraft/" + username);
+		JsonObject uuidResponse = getResponse("https://api.mojang.com/users/profiles/minecraft/" + username, false);
 		return uuidResponse.get("id").getAsString();
 	}
 	
@@ -108,7 +108,7 @@ public class APIHandler {
 		// Get profiles
 		System.out.println("Fetching profiles...");
 		
-		JsonObject profilesResponse = getResponse("https://api.hypixel.net/skyblock/profiles?uuid=" + UUID + "&key=" + key);
+		JsonObject profilesResponse = getResponse("https://api.hypixel.net/skyblock/profiles?uuid=" + UUID + "&key=" + key, true);
 		if (!profilesResponse.get("success").getAsBoolean()) {
 			String reason = profilesResponse.get("cause").getAsString();
 			player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Failed with reason: " + reason));

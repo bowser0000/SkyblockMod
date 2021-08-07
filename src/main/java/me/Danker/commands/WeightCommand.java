@@ -26,7 +26,7 @@ public class WeightCommand extends CommandBase {
 
     @Override
     public String getCommandUsage(ICommandSender arg0) {
-        return "/" + getCommandName() + " [name]";
+        return "/" + getCommandName() + " [name] [lily]";
     }
 
     public static String usage(ICommandSender arg0) {
@@ -72,33 +72,66 @@ public class WeightCommand extends CommandBase {
                 uuid = APIHandler.getUUID(username);
             }
 
-            System.out.println("Fetching weight from Senither API...");
-            String weightURL = "https://hypixel-api.senither.com/v1/profiles/" + uuid + "/weight?key=" + key;
-            JsonObject weightResponse = APIHandler.getResponse(weightURL);
-            if (weightResponse.get("status").getAsInt() != 200) {
-                String reason = weightResponse.get("reason").getAsString();
-                player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Failed with reason: " + reason));
-                return;
+            if (arg1.length < 2) {
+                System.out.println("Fetching weight from Senither API...");
+                String weightURL = "https://hypixel-api.senither.com/v1/profiles/" + uuid + "/weight?key=" + key;
+                JsonObject weightResponse = APIHandler.getResponse(weightURL, true);
+                if (weightResponse.get("status").getAsInt() != 200) {
+                    String reason = weightResponse.get("reason").getAsString();
+                    player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Failed with reason: " + reason));
+                    return;
+                }
+
+                JsonObject data = weightResponse.get("data").getAsJsonObject();
+                double weight = data.get("weight").getAsDouble();
+                double overflow = data.get("weight_overflow").getAsDouble();
+                double skillWeight = data.get("skills").getAsJsonObject().get("weight").getAsDouble();
+                double skillOverflow = data.get("skills").getAsJsonObject().get("weight_overflow").getAsDouble();
+                double slayerWeight = data.get("slayers").getAsJsonObject().get("weight").getAsDouble();
+                double slayerOverflow = data.get("slayers").getAsJsonObject().get("weight_overflow").getAsDouble();
+                double dungeonWeight = data.get("dungeons").getAsJsonObject().get("weight").getAsDouble();
+                double dungeonOverflow = data.get("dungeons").getAsJsonObject().get("weight_overflow").getAsDouble();
+
+                NumberFormat nf = NumberFormat.getNumberInstance(Locale.US);
+                player.addChatMessage(new ChatComponentText(DankersSkyblockMod.DELIMITER_COLOUR + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+                        EnumChatFormatting.AQUA + " " + username + "'s Weight:\n" +
+                        DankersSkyblockMod.TYPE_COLOUR + " Total Weight: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(weight + overflow) + " (" + nf.format(weight) + " + " + nf.format(overflow) + ")\n" +
+                        DankersSkyblockMod.TYPE_COLOUR + " Skill Weight: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(skillWeight + skillOverflow) + " (" + nf.format(skillWeight) + " + " + nf.format(skillOverflow) + ")\n" +
+                        DankersSkyblockMod.TYPE_COLOUR + " Slayers Weight: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(slayerWeight + slayerOverflow) + " (" + nf.format(slayerWeight) + " + " + nf.format(slayerOverflow) + ")\n" +
+                        DankersSkyblockMod.TYPE_COLOUR + " Dungeons Weight: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(dungeonWeight + dungeonOverflow) + " (" + nf.format(dungeonWeight) + " + " + nf.format(dungeonOverflow) + ")\n" +
+                        DankersSkyblockMod.DELIMITER_COLOUR + " " + EnumChatFormatting.BOLD + "-------------------"));
+            } else if (arg1[1].equalsIgnoreCase("lily")) {
+                System.out.println("Fetching weight from Lily API...");
+                String weightURL = "https://lily.antonio32a.com/" + uuid + "?key=" + key;
+                JsonObject weightResponse = APIHandler.getResponse(weightURL, true);
+                if (!weightResponse.get("success").getAsBoolean()) {
+                    String reason = weightResponse.get("error").getAsString();
+                    player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Failed with reason: " + reason));
+                    return;
+                }
+
+                JsonObject data = weightResponse.get("data").getAsJsonObject();
+                double weight = data.get("total").getAsDouble();
+                double skillWeight = data.get("skill").getAsJsonObject().get("base").getAsDouble();
+                double skillOverflow = data.get("skill").getAsJsonObject().get("overflow").getAsDouble();
+                double slayerWeight = data.get("slayer").getAsDouble();
+                double catacombsXPWeight = data.get("catacombs").getAsJsonObject().get("experience").getAsDouble();
+                double catacombsBaseWeight = data.get("catacombs").getAsJsonObject().get("completion").getAsJsonObject().get("base").getAsDouble();
+                double catacombsMasterWeight = data.get("catacombs").getAsJsonObject().get("completion").getAsJsonObject().get("master").getAsDouble();
+
+                NumberFormat nf = NumberFormat.getNumberInstance(Locale.US);
+                player.addChatMessage(new ChatComponentText(DankersSkyblockMod.DELIMITER_COLOUR + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+                        EnumChatFormatting.AQUA + " " + username + "'s Weight (Lily):\n" +
+                        DankersSkyblockMod.TYPE_COLOUR + " Total Weight: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(weight) + "\n" +
+                        DankersSkyblockMod.TYPE_COLOUR + " Skill Weight: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(skillWeight + skillOverflow) + " (" + nf.format(skillWeight) + " + " + nf.format(skillOverflow) + ")\n" +
+                        DankersSkyblockMod.TYPE_COLOUR + " Slayers Weight: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(slayerWeight) + "\n" +
+                        DankersSkyblockMod.TYPE_COLOUR + " Catacombs XP Weight: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(catacombsXPWeight) + "\n" +
+                        DankersSkyblockMod.TYPE_COLOUR + " Catacombs Completion Weight: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(catacombsBaseWeight) + "\n" +
+                        DankersSkyblockMod.TYPE_COLOUR + " Catacombs Master Completion Weight: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(catacombsMasterWeight) + "\n" +
+                        DankersSkyblockMod.DELIMITER_COLOUR + " " + EnumChatFormatting.BOLD + "-------------------"));
+            } else {
+                player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Usage: " + getCommandUsage(arg0)));
             }
-
-            JsonObject data = weightResponse.get("data").getAsJsonObject();
-            double weight = data.get("weight").getAsDouble();
-            double overflow = data.get("weight_overflow").getAsDouble();
-            double skillWeight = data.get("skills").getAsJsonObject().get("weight").getAsDouble();
-            double skillOverflow = data.get("skills").getAsJsonObject().get("weight_overflow").getAsDouble();
-            double slayerWeight = data.get("slayers").getAsJsonObject().get("weight").getAsDouble();
-            double slayerOverflow = data.get("slayers").getAsJsonObject().get("weight_overflow").getAsDouble();
-            double dungeonWeight = data.get("dungeons").getAsJsonObject().get("weight").getAsDouble();
-            double dungeonOverflow = data.get("dungeons").getAsJsonObject().get("weight_overflow").getAsDouble();
-
-            NumberFormat nf = NumberFormat.getNumberInstance(Locale.US);
-            player.addChatMessage(new ChatComponentText(DankersSkyblockMod.DELIMITER_COLOUR + "" + EnumChatFormatting.BOLD + "-------------------\n" +
-                                                        EnumChatFormatting.AQUA + " " + username + "'s Weight:\n" +
-                                                        DankersSkyblockMod.TYPE_COLOUR + " Total Weight: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(weight + overflow) + " (" + nf.format(weight) + " + " + nf.format(overflow) + ")\n" +
-                                                        DankersSkyblockMod.TYPE_COLOUR + " Skill Weight: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(skillWeight + skillOverflow) + " (" + nf.format(skillWeight) + " + " + nf.format(skillOverflow) + ")\n" +
-                                                        DankersSkyblockMod.TYPE_COLOUR + " Slayers Weight: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(slayerWeight + slayerOverflow) + " (" + nf.format(slayerWeight) + " + " + nf.format(slayerOverflow) + ")\n" +
-                                                        DankersSkyblockMod.TYPE_COLOUR + " Dungeons Weight: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(dungeonWeight + dungeonOverflow) + " (" + nf.format(dungeonWeight) + " + " + nf.format(dungeonOverflow) + ")\n" +
-                                                        DankersSkyblockMod.DELIMITER_COLOUR + " " + EnumChatFormatting.BOLD + "-------------------"));
         }).start();
     }
 

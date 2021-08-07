@@ -76,7 +76,7 @@ public class DungeonsCommand extends CommandBase {
 			
 			String profileURL = "https://api.hypixel.net/skyblock/profile?profile=" + latestProfile + "&key=" + key;
 			System.out.println("Fetching profile...");
-			JsonObject profileResponse = APIHandler.getResponse(profileURL);
+			JsonObject profileResponse = APIHandler.getResponse(profileURL, true);
 			if (!profileResponse.get("success").getAsBoolean()) {
 				String reason = profileResponse.get("cause").getAsString();
 				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Failed with reason: " + reason));
@@ -85,7 +85,7 @@ public class DungeonsCommand extends CommandBase {
 
 			String playerURL = "https://api.hypixel.net/player?uuid=" + uuid + "&key=" + key;
 			System.out.println("Fetching player data...");
-			JsonObject playerResponse = APIHandler.getResponse(playerURL);
+			JsonObject playerResponse = APIHandler.getResponse(playerURL, true);
 			if (!playerResponse.get("success").getAsBoolean()) {
 				String reason = playerResponse.get("cause").getAsString();
 				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Failed with reason: " + reason));

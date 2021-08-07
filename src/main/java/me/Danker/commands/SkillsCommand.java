@@ -75,7 +75,7 @@ public class SkillsCommand extends CommandBase {
 			
 			String profileURL = "https://api.hypixel.net/skyblock/profile?profile=" + latestProfile + "&key=" + key;
 			System.out.println("Fetching profile...");
-			JsonObject profileResponse = APIHandler.getResponse(profileURL);
+			JsonObject profileResponse = APIHandler.getResponse(profileURL, true);
 			if (!profileResponse.get("success").getAsBoolean()) {
 				String reason = profileResponse.get("cause").getAsString();
 				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Failed with reason: " + reason));
@@ -132,7 +132,7 @@ public class SkillsCommand extends CommandBase {
 				
 				String playerURL = "https://api.hypixel.net/player?uuid=" + uuid + "&key=" + key;
 				System.out.println("Fetching skills from achievement API");
-				JsonObject playerObject = APIHandler.getResponse(playerURL);
+				JsonObject playerObject = APIHandler.getResponse(playerURL, true);
 				
 				if (!playerObject.get("success").getAsBoolean()) {
 					String reason = profileResponse.get("cause").getAsString();

@@ -65,7 +65,7 @@ public class LobbyBankCommand extends CommandBase {
                     long biggestLastSave = 0;
                     int profileIndex = -1;
                     Thread.sleep(600);
-                    JsonObject profileResponse = APIHandler.getResponse("https://api.hypixel.net/skyblock/profiles?uuid=" + UUID + "&key=" + key);
+                    JsonObject profileResponse = APIHandler.getResponse("https://api.hypixel.net/skyblock/profiles?uuid=" + UUID + "&key=" + key, true);
                     if (!profileResponse.get("success").getAsBoolean()) {
                         String reason = profileResponse.get("cause").getAsString();
                         System.out.println("User " + player.getGameProfile().getName() + " failed with reason: " + reason);
