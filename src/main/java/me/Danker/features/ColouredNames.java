@@ -73,8 +73,8 @@ public class ColouredNames {
 
     // https://github.com/SteveKunG/SkyBlockcatia/blob/1.8.9/src/main/java/com/stevekung/skyblockcatia/utils/SupporterUtils.java#L53
     public static String replaceName(String text, String name, String colour) {
-        String namePattern = "(?:(?:\\u00a7[0-9a-fbr])\\B(?:" + name + ")\\b)|(?:\\u00a7[rb]" + name + "\\u00a7r)|\\b" + name + "\\b";
-        Matcher prevColourMat = Pattern.compile("(?:.*(?:(?<colour>\\u00a7[0-9a-fbr])" + name + ")\\b.*)").matcher(text);
+        String namePattern = "(?:(?:\\u00a7[0-9a-fk-obr])\\B(?:" + name + ")\\b)|(?:\\u00a7[rb]" + name + "\\u00a7r)|\\b" + name + "\\b";
+        Matcher prevColourMat = Pattern.compile("(?:.*(?:(?<colour>\\u00a7[0-9a-fk-obr])" + name + ")\\b.*)").matcher(text);
 
         if (prevColourMat.matches()) {
             if (colour.equals("§z")) {
