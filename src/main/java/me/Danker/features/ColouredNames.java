@@ -13,16 +13,21 @@ import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.client.event.RenderLivingEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.event.world.WorldEvent;
+import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ColouredNames {
 
     public static List<String> users = new ArrayList<>();
+    public static Map<String, String> nametags = new HashMap<>();
     public static final EnumChatFormatting[] RAINBOW_COLOURS = new EnumChatFormatting[]{EnumChatFormatting.RED, EnumChatFormatting.GOLD, EnumChatFormatting.YELLOW, EnumChatFormatting.GREEN, EnumChatFormatting.AQUA, EnumChatFormatting.BLUE, EnumChatFormatting.DARK_PURPLE};
 
     @SubscribeEvent
@@ -58,18 +63,36 @@ public class ColouredNames {
         }
     }
 
-    @SubscribeEvent
+    @SubscribeEvent(priority = EventPriority.LOW)
     public void onRenderLiving(RenderLivingEvent.Specials.Pre<EntityLivingBase> event) {
         if (!ToggleCommand.customColouredNames || !Utils.inSkyblock) return;
 
         Entity entity = event.entity;
-        if (entity instanceof EntityArmorStand && entity.hasCustomName()) {
-            for (String user : users) {
-                if (entity.getCustomNameTag().contains(user)) {
-                    entity.setCustomNameTag(replaceName(entity.getCustomNameTag(), user, getColourFromName(user)));
+        if (entity instanceof EntityArmorStand && !entity.isDead && entity.hasCustomName()) {
+            String name = entity.getCustomNameTag();
+            if (name.charAt(name.length() - 1) == '❤') return;
+
+            String id = entity.getUniqueID().toString();
+            String nametag = nametags.get(id);
+
+            if (name.equals(nametag)) {
+                entity.setCustomNameTag(nametag);
+            } else {
+                for (String user : users) {
+                    if (name.contains(user)) {
+                        name = replaceName(name, user, getColourFromName(user));
+                    }
                 }
+
+                nametags.put(id, name);
+                entity.setCustomNameTag(name);
             }
         }
+    }
+
+    @SubscribeEvent
+    public void onWorldChange(WorldEvent.Load event) {
+        nametags.clear();
     }
 
     // https://github.com/SteveKunG/SkyBlockcatia/blob/1.8.9/src/main/java/com/stevekung/skyblockcatia/utils/SupporterUtils.java#L53
