@@ -95,7 +95,7 @@ public class CustomMusic {
                             case "Hub":
                                 if (ToggleCommand.hubMusic) hub.start();
                                 break;
-                            case "Private World":
+                            case "Private Island":
                                 if (ToggleCommand.islandMusic) island.start();
                                 break;
                             case "Dungeon Hub":
