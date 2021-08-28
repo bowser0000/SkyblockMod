@@ -2,6 +2,7 @@ package me.Danker.features.puzzlesolvers;
 
 import me.Danker.commands.ToggleCommand;
 import me.Danker.events.GuiChestBackgroundDrawnEvent;
+import me.Danker.utils.RenderUtils;
 import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.inventory.Slot;
@@ -22,7 +23,7 @@ public class StartsWithSolver {
                 if (item == null) continue;
                 if (item.isItemEnchanted()) continue;
                 if (StringUtils.stripControlCodes(item.getDisplayName()).charAt(0) == letter) {
-                    Utils.drawOnSlot(event.chestSize, slot.xDisplayPosition, slot.yDisplayPosition, 0xBF40FF40);
+                    RenderUtils.drawOnSlot(event.chestSize, slot.xDisplayPosition, slot.yDisplayPosition, 0xBF40FF40);
                 }
             }
         }

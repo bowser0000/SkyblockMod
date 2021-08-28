@@ -3,6 +3,7 @@ package me.Danker.features;
 import me.Danker.DankersSkyblockMod;
 import me.Danker.commands.ToggleCommand;
 import me.Danker.handlers.ScoreboardHandler;
+import me.Danker.utils.RenderUtils;
 import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.item.EntityArmorStand;
@@ -139,7 +140,7 @@ public class CrystalHollowWaypoints {
     public void onWorldRender(RenderWorldLastEvent event) {
         if (ToggleCommand.crystalHollowWaypoints && Utils.tabLocation.equals("Crystal Hollows")) {
             for (Waypoint waypoint : waypoints) {
-                if (waypoint.toggled) Utils.draw3DWaypointString(waypoint, event.partialTicks);
+                if (waypoint.toggled) RenderUtils.draw3DWaypointString(waypoint, event.partialTicks);
             }
         }
     }

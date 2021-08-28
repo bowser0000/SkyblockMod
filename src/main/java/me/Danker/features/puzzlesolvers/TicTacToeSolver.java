@@ -2,6 +2,7 @@ package me.Danker.features.puzzlesolvers;
 
 import me.Danker.DankersSkyblockMod;
 import me.Danker.commands.ToggleCommand;
+import me.Danker.utils.RenderUtils;
 import me.Danker.utils.TicTacToeUtils;
 import me.Danker.utils.Utils;
 import net.minecraft.block.Block;
@@ -128,7 +129,7 @@ public class TicTacToeSolver {
     @SubscribeEvent
     public void onWorldRender(RenderWorldLastEvent event) {
         if (ToggleCommand.ticTacToeToggled && correctTicTacToeButton != null) {
-            Utils.draw3DBox(correctTicTacToeButton, 0x40FF40, event.partialTicks);
+            RenderUtils.draw3DBox(correctTicTacToeButton, 0x40FF40, event.partialTicks);
         }
     }
 

@@ -1,7 +1,7 @@
 package me.Danker.features;
 
 import me.Danker.commands.ToggleCommand;
-import me.Danker.handlers.ScoreboardHandler;
+import me.Danker.utils.RenderUtils;
 import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
@@ -57,7 +57,7 @@ public class ArachneESP {
         if (arachne != null) {
             if (arachneActive && ToggleCommand.highlightArachne) {
                 AxisAlignedBB aabb = new AxisAlignedBB(arachne.posX - 0.75, arachne.posY - 1, arachne.posZ - 0.75, arachne.posX + 0.75, arachne.posY, arachne.posZ + 0.75);
-                Utils.draw3DBox(aabb, ARACHANE_COLOUR, event.partialTicks);
+                RenderUtils.draw3DBox(aabb, ARACHANE_COLOUR, event.partialTicks);
             }
         }
     }

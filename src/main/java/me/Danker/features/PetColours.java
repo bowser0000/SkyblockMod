@@ -2,6 +2,7 @@ package me.Danker.features;
 
 import me.Danker.commands.ToggleCommand;
 import me.Danker.events.GuiChestBackgroundDrawnEvent;
+import me.Danker.utils.RenderUtils;
 import me.Danker.utils.Utils;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
@@ -60,7 +61,7 @@ public class PetColours {
                     } else {
                         colour = PET_1_TO_9;
                     }
-                    Utils.drawOnSlot(event.chestSize, slot.xDisplayPosition, slot.yDisplayPosition, colour + 0xBF000000);
+                    RenderUtils.drawOnSlot(event.chestSize, slot.xDisplayPosition, slot.yDisplayPosition, colour + 0xBF000000);
                 }
             }
         }

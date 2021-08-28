@@ -2,6 +2,7 @@ package me.Danker.features.puzzlesolvers;
 
 import me.Danker.DankersSkyblockMod;
 import me.Danker.commands.ToggleCommand;
+import me.Danker.utils.RenderUtils;
 import me.Danker.utils.SilverfishUtils;
 import me.Danker.utils.Utils;
 import net.minecraft.block.BlockHopper;
@@ -171,7 +172,7 @@ public class SilverfishSolver {
                     default:
                         return;
                 }
-                Utils.draw3DLine(pos1, pos2, SILVERFISH_LINE_COLOUR, 5, true, event.partialTicks);
+                RenderUtils.draw3DLine(pos1, pos2, SILVERFISH_LINE_COLOUR, 5, true, event.partialTicks);
             }
         }
     }

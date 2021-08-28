@@ -4,7 +4,7 @@ import me.Danker.DankersSkyblockMod;
 import me.Danker.commands.MoveCommand;
 import me.Danker.commands.ScaleCommand;
 import me.Danker.commands.ToggleCommand;
-import me.Danker.events.RenderOverlay;
+import me.Danker.events.RenderOverlayEvent;
 import me.Danker.handlers.TextRenderer;
 import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;
@@ -113,7 +113,7 @@ public class Skill50Display {
     }
 
     @SubscribeEvent
-    public void renderPlayerInfo(RenderOverlay event) {
+    public void renderPlayerInfo(RenderOverlayEvent event) {
         if (!Utils.skillsInitialized() && Utils.inSkyblock) {
             new TextRenderer(Minecraft.getMinecraft(), EnumChatFormatting.RED + "Please open the skill menu to use skill features. (/skills)", MoveCommand.skill50XY[0], MoveCommand.skill50XY[0], ScaleCommand.skill50Scale);
             return;

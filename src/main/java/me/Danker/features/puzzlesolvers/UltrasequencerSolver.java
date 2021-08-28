@@ -2,6 +2,7 @@ package me.Danker.features.puzzlesolvers;
 
 import me.Danker.commands.ToggleCommand;
 import me.Danker.events.GuiChestBackgroundDrawnEvent;
+import me.Danker.utils.RenderUtils;
 import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -66,12 +67,12 @@ public class UltrasequencerSolver {
                     }
                     if (clickInOrderSlots[lastUltraSequencerClicked] != null) {
                         Slot nextSlot = clickInOrderSlots[lastUltraSequencerClicked];
-                        Utils.drawOnSlot(event.chestSize, nextSlot.xDisplayPosition, nextSlot.yDisplayPosition, ULTRASEQUENCER_NEXT + 0xE5000000);
+                        RenderUtils.drawOnSlot(event.chestSize, nextSlot.xDisplayPosition, nextSlot.yDisplayPosition, ULTRASEQUENCER_NEXT + 0xE5000000);
                     }
                     if (lastUltraSequencerClicked + 1 < clickInOrderSlots.length) {
                         if (clickInOrderSlots[lastUltraSequencerClicked + 1] != null) {
                             Slot nextSlot = clickInOrderSlots[lastUltraSequencerClicked + 1];
-                            Utils.drawOnSlot(event.chestSize, nextSlot.xDisplayPosition, nextSlot.yDisplayPosition, ULTRASEQUENCER_NEXT_TO_NEXT + 0xD7000000);
+                            RenderUtils.drawOnSlot(event.chestSize, nextSlot.xDisplayPosition, nextSlot.yDisplayPosition, ULTRASEQUENCER_NEXT_TO_NEXT + 0xD7000000);
                         }
                     }
                 }

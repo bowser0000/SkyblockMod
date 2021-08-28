@@ -1,0 +1,285 @@
+package me.Danker.features.loot;
+
+import me.Danker.handlers.ConfigHandler;
+import me.Danker.utils.Utils;
+import net.minecraft.util.StringUtils;
+import net.minecraftforge.client.event.ClientChatReceivedEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+
+public class FishingTracker {
+
+    // Fishing
+    public static int seaCreatures;
+    public static int goodCatches;
+    public static int greatCatches;
+    public static int squids;
+    public static int seaWalkers;
+    public static int nightSquids;
+    public static int seaGuardians;
+    public static int seaWitches;
+    public static int seaArchers;
+    public static int monsterOfTheDeeps;
+    public static int catfishes;
+    public static int carrotKings;
+    public static int seaLeeches;
+    public static int guardianDefenders;
+    public static int deepSeaProtectors;
+    public static int hydras;
+    public static int seaEmperors;
+    public static double empTime;
+    public static int empSCs;
+    public static int fishingMilestone;
+    // Fishing Winter
+    public static int frozenSteves;
+    public static int frostyTheSnowmans;
+    public static int grinches;
+    public static int yetis;
+    public static double yetiTime;
+    public static int yetiSCs;
+    // Fishing Festival
+    public static int nurseSharks;
+    public static int blueSharks;
+    public static int tigerSharks;
+    public static int greatWhiteSharks;
+    // Spooky Fishing
+    public static int scarecrows;
+    public static int nightmares;
+    public static int werewolfs;
+    public static int phantomFishers;
+    public static int grimReapers;
+
+    // Fishing
+    public static int seaCreaturesSession = 0;
+    public static int goodCatchesSession = 0;
+    public static int greatCatchesSession = 0;
+    public static int squidsSession = 0;
+    public static int seaWalkersSession = 0;
+    public static int nightSquidsSession = 0;
+    public static int seaGuardiansSession = 0;
+    public static int seaWitchesSession = 0;
+    public static int seaArchersSession = 0;
+    public static int monsterOfTheDeepsSession = 0;
+    public static int catfishesSession = 0;
+    public static int carrotKingsSession = 0;
+    public static int seaLeechesSession = 0;
+    public static int guardianDefendersSession = 0;
+    public static int deepSeaProtectorsSession = 0;
+    public static int hydrasSession = 0;
+    public static int seaEmperorsSession = 0;
+    public static double empTimeSession = -1;
+    public static int empSCsSession = -1;
+    public static int fishingMilestoneSession = 0;
+    // Fishing Winter
+    public static int frozenStevesSession = 0;
+    public static int frostyTheSnowmansSession = 0;
+    public static int grinchesSession = 0;
+    public static int yetisSession = 0;
+    public static double yetiTimeSession = -1;
+    public static int yetiSCsSession = -1;
+    // Fishing Festival
+    public static int nurseSharksSession = 0;
+    public static int blueSharksSession = 0;
+    public static int tigerSharksSession = 0;
+    public static int greatWhiteSharksSession = 0;
+    // Spooky Fishing
+    public static int scarecrowsSession = 0;
+    public static int nightmaresSession = 0;
+    public static int werewolfsSession = 0;
+    public static int phantomFishersSession = 0;
+    public static int grimReapersSession = 0;
+
+    @SubscribeEvent
+    public void onChat(ClientChatReceivedEvent event) {
+        String message = StringUtils.stripControlCodes(event.message.getUnformattedText());
+
+        if (!Utils.inSkyblock) return;
+        if (event.type == 2) return;
+        if (message.contains(":")) return;
+
+        if (message.contains("GOOD CATCH!")) {
+            goodCatches++;
+            goodCatchesSession++;
+            ConfigHandler.writeIntConfig("fishing", "goodCatch", goodCatches);
+        } else if (message.contains("GREAT CATCH!")) {
+            greatCatches++;
+            greatCatchesSession++;
+            ConfigHandler.writeIntConfig("fishing", "greatCatch", greatCatches);
+        } else if (message.contains("A Squid appeared")) {
+            squids++;
+            squidsSession++;
+            ConfigHandler.writeIntConfig("fishing", "squid", squids);
+            increaseSeaCreatures();
+        } else if (message.contains("You caught a Sea Walker")) {
+            seaWalkers++;
+            seaWalkersSession++;
+            ConfigHandler.writeIntConfig("fishing", "seaWalker", seaWalkers);
+            increaseSeaCreatures();
+        } else if (message.contains("Pitch darkness reveals a Night Squid")) {
+            nightSquids++;
+            nightSquidsSession++;
+            ConfigHandler.writeIntConfig("fishing", "nightSquid", nightSquids);
+            increaseSeaCreatures();
+        } else if (message.contains("You stumbled upon a Sea Guardian")) {
+            seaGuardians++;
+            seaGuardiansSession++;
+            ConfigHandler.writeIntConfig("fishing", "seaGuardian", seaGuardians);
+            increaseSeaCreatures();
+        } else if (message.contains("It looks like you've disrupted the Sea Witch's brewing session. Watch out, she's furious")) {
+            seaWitches++;
+            seaWitchesSession++;
+            ConfigHandler.writeIntConfig("fishing", "seaWitch", seaWitches);
+            increaseSeaCreatures();
+        } else if (message.contains("You reeled in a Sea Archer")) {
+            seaArchers++;
+            seaArchersSession++;
+            ConfigHandler.writeIntConfig("fishing", "seaArcher", seaArchers);
+            increaseSeaCreatures();
+        } else if (message.contains("The Monster of the Deep has emerged")) {
+            monsterOfTheDeeps++;
+            monsterOfTheDeepsSession++;
+            ConfigHandler.writeIntConfig("fishing", "monsterOfDeep", monsterOfTheDeeps);
+            increaseSeaCreatures();
+        } else if (message.contains("Huh? A Catfish")) {
+            catfishes++;
+            catfishesSession++;
+            ConfigHandler.writeIntConfig("fishing", "catfish", catfishes);
+            increaseSeaCreatures();
+        } else if (message.contains("Is this even a fish? It's the Carrot King")) {
+            carrotKings++;
+            carrotKingsSession++;
+            ConfigHandler.writeIntConfig("fishing", "carrotKing", carrotKings);
+            increaseSeaCreatures();
+        } else if (message.contains("Gross! A Sea Leech")) {
+            seaLeeches++;
+            seaLeechesSession++;
+            ConfigHandler.writeIntConfig("fishing", "seaLeech", seaLeeches);
+            increaseSeaCreatures();
+        } else if (message.contains("You've discovered a Guardian Defender of the sea")) {
+            guardianDefenders++;
+            guardianDefendersSession++;
+            ConfigHandler.writeIntConfig("fishing", "guardianDefender", guardianDefenders);
+            increaseSeaCreatures();
+        } else if (message.contains("You have awoken the Deep Sea Protector, prepare for a battle")) {
+            deepSeaProtectors++;
+            deepSeaProtectorsSession++;
+            ConfigHandler.writeIntConfig("fishing", "deepSeaProtector", deepSeaProtectors);
+            increaseSeaCreatures();
+        } else if (message.contains("The Water Hydra has come to test your strength")) {
+            hydras++;
+            hydrasSession++;
+            ConfigHandler.writeIntConfig("fishing", "hydra", hydras);
+            increaseSeaCreatures();
+        } else if (message.contains("The Sea Emperor arises from the depths")) {
+            increaseSeaCreatures();
+
+            seaEmperors++;
+            empTime = System.currentTimeMillis() / 1000;
+            empSCs = 0;
+            seaEmperorsSession++;
+            empTimeSession = System.currentTimeMillis() / 1000;
+            empSCsSession = 0;
+            ConfigHandler.writeIntConfig("fishing", "seaEmperor", seaEmperors);
+            ConfigHandler.writeDoubleConfig("fishing", "empTime", empTime);
+            ConfigHandler.writeIntConfig("fishing", "empSC", empSCs);
+        } else if (message.contains("Frozen Steve fell into the pond long ago")) { // Fishing Winter
+            frozenSteves++;
+            frozenStevesSession++;
+            ConfigHandler.writeIntConfig("fishing", "frozenSteve", frozenSteves);
+            increaseSeaCreatures();
+        } else if (message.contains("It's a snowman! He looks harmless")) {
+            frostyTheSnowmans++;
+            frostyTheSnowmansSession++;
+            ConfigHandler.writeIntConfig("fishing", "snowman", frostyTheSnowmans);
+            increaseSeaCreatures();
+        } else if (message.contains("stole Jerry's Gifts...get them back")) {
+            grinches++;
+            grinchesSession++;
+            ConfigHandler.writeIntConfig("fishing", "grinch", grinches);
+            increaseSeaCreatures();
+        } else if (message.contains("What is this creature")) {
+            yetis++;
+            yetiTime = System.currentTimeMillis() / 1000;
+            yetiSCs = 0;
+            yetisSession++;
+            yetiTimeSession = System.currentTimeMillis() / 1000;
+            yetiSCsSession = 0;
+            ConfigHandler.writeIntConfig("fishing", "yeti", yetis);
+            ConfigHandler.writeDoubleConfig("fishing", "yetiTime", yetiTime);
+            ConfigHandler.writeIntConfig("fishing", "yetiSC", yetiSCs);
+            increaseSeaCreatures();
+        } else if (message.contains("A tiny fin emerges from the water, you've caught a Nurse Shark")) { // Fishing Festival
+            nurseSharks++;
+            nurseSharksSession++;
+            ConfigHandler.writeIntConfig("fishing", "nurseShark", nurseSharks);
+            increaseSeaCreatures();
+        } else if (message.contains("You spot a fin as blue as the water it came from, it's a Blue Shark")) {
+            blueSharks++;
+            blueSharksSession++;
+            ConfigHandler.writeIntConfig("fishing", "blueShark", blueSharks);
+            increaseSeaCreatures();
+        } else if (message.contains("A striped beast bounds from the depths, the wild Tiger Shark")) {
+            tigerSharks++;
+            tigerSharksSession++;
+            ConfigHandler.writeIntConfig("fishing", "tigerShark", tigerSharks);
+            increaseSeaCreatures();
+        } else if (message.contains("Hide no longer, a Great White Shark has tracked your scent and thirsts for your blood")) {
+            greatWhiteSharks++;
+            greatWhiteSharksSession++;
+            ConfigHandler.writeIntConfig("fishing", "greatWhiteShark", greatWhiteSharks);
+            increaseSeaCreatures();
+        } else if (message.contains("Phew! It's only a Scarecrow")) {
+            scarecrows++;
+            scarecrowsSession++;
+            ConfigHandler.writeIntConfig("fishing", "scarecrow", scarecrows);
+            increaseSeaCreatures();
+        } else if (message.contains("You hear trotting from beneath the waves, you caught a Nightmare")) {
+            nightmares++;
+            nightmaresSession++;
+            ConfigHandler.writeIntConfig("fishing", "nightmare", nightmares);
+            increaseSeaCreatures();
+        } else if (message.contains("It must be a full moon, a Werewolf appears")) {
+            werewolfs++;
+            werewolfsSession++;
+            ConfigHandler.writeIntConfig("fishing", "werewolf", werewolfs);
+            increaseSeaCreatures();
+        } else if (message.contains("The spirit of a long lost Phantom Fisher has come to haunt you")) {
+            phantomFishers++;
+            phantomFishersSession++;
+            ConfigHandler.writeIntConfig("fishing", "phantomFisher", phantomFishers);
+            increaseSeaCreatures();
+        } else if (message.contains("This can't be! The manifestation of death himself")) {
+            grimReapers++;
+            grimReapersSession++;
+            ConfigHandler.writeIntConfig("fishing", "grimReaper", grimReapers);
+            increaseSeaCreatures();
+        }
+    }
+
+    public void increaseSeaCreatures() {
+        if (empSCs != -1) {
+            empSCs++;
+        }
+        if (empSCsSession != -1) {
+            empSCsSession++;
+        }
+        // Only increment Yetis when in Jerry's Workshop
+        if (Utils.isInScoreboard("Jerry's Workshop") || Utils.isInScoreboard("Jerry Pond")) {
+            if (yetiSCs != -1) {
+                yetiSCs++;
+            }
+            if (yetiSCsSession != -1) {
+                yetiSCsSession++;
+            }
+        }
+
+        seaCreatures++;
+        fishingMilestone++;
+        seaCreaturesSession++;
+        fishingMilestoneSession++;
+        ConfigHandler.writeIntConfig("fishing", "seaCreature", seaCreatures);
+        ConfigHandler.writeIntConfig("fishing", "milestone", fishingMilestone);
+        ConfigHandler.writeIntConfig("fishing", "empSC", empSCs);
+        ConfigHandler.writeIntConfig("fishing", "yetiSC", yetiSCs);
+    }
+
+}

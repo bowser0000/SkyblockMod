@@ -2,6 +2,7 @@ package me.Danker.features.puzzlesolvers;
 
 import me.Danker.DankersSkyblockMod;
 import me.Danker.commands.ToggleCommand;
+import me.Danker.utils.RenderUtils;
 import me.Danker.utils.Utils;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
@@ -102,28 +103,28 @@ public class BlazeSolver {
             if (foundChest) {
                 if (lowestBlaze != null && !higherToLower) {
                     BlockPos stringPos = new BlockPos(lowestBlaze.posX, lowestBlaze.posY + 1, lowestBlaze.posZ);
-                    Utils.draw3DString(stringPos, EnumChatFormatting.BOLD + "Shoot me!", LOWEST_BLAZE_COLOUR, event.partialTicks);
+                    RenderUtils.draw3DString(stringPos, EnumChatFormatting.BOLD + "Shoot me!", LOWEST_BLAZE_COLOUR, event.partialTicks);
                     AxisAlignedBB aabb = new AxisAlignedBB(lowestBlaze.posX - 0.5, lowestBlaze.posY - 2, lowestBlaze.posZ - 0.5, lowestBlaze.posX + 0.5, lowestBlaze.posY, lowestBlaze.posZ + 0.5);
-                    Utils.draw3DBox(aabb, LOWEST_BLAZE_COLOUR, event.partialTicks);
+                    RenderUtils.draw3DBox(aabb, LOWEST_BLAZE_COLOUR, event.partialTicks);
                 }
                 if (highestBlaze != null && higherToLower) {
                     BlockPos stringPos = new BlockPos(highestBlaze.posX, highestBlaze.posY + 1, highestBlaze.posZ);
-                    Utils.draw3DString(stringPos, EnumChatFormatting.BOLD + "Shoot me!", LOWEST_BLAZE_COLOUR, event.partialTicks);
+                    RenderUtils.draw3DString(stringPos, EnumChatFormatting.BOLD + "Shoot me!", LOWEST_BLAZE_COLOUR, event.partialTicks);
                     AxisAlignedBB aabb = new AxisAlignedBB(highestBlaze.posX - 0.5, highestBlaze.posY - 2, highestBlaze.posZ - 0.5, highestBlaze.posX + 0.5, highestBlaze.posY, highestBlaze.posZ + 0.5);
-                    Utils.draw3DBox(aabb, LOWEST_BLAZE_COLOUR, event.partialTicks);
+                    RenderUtils.draw3DBox(aabb, LOWEST_BLAZE_COLOUR, event.partialTicks);
                 }
             } else {
                 if (lowestBlaze != null) {
                     BlockPos stringPos = new BlockPos(lowestBlaze.posX, lowestBlaze.posY + 1, lowestBlaze.posZ);
-                    Utils.draw3DString(stringPos, EnumChatFormatting.BOLD + "Smallest", LOWEST_BLAZE_COLOUR, event.partialTicks);
+                    RenderUtils.draw3DString(stringPos, EnumChatFormatting.BOLD + "Smallest", LOWEST_BLAZE_COLOUR, event.partialTicks);
                     AxisAlignedBB aabb = new AxisAlignedBB(lowestBlaze.posX - 0.5, lowestBlaze.posY - 2, lowestBlaze.posZ - 0.5, lowestBlaze.posX + 0.5, lowestBlaze.posY, lowestBlaze.posZ + 0.5);
-                    Utils.draw3DBox(aabb, LOWEST_BLAZE_COLOUR, event.partialTicks);
+                    RenderUtils.draw3DBox(aabb, LOWEST_BLAZE_COLOUR, event.partialTicks);
                 }
                 if (highestBlaze != null) {
                     BlockPos stringPos = new BlockPos(highestBlaze.posX, highestBlaze.posY + 1, highestBlaze.posZ);
-                    Utils.draw3DString(stringPos, EnumChatFormatting.BOLD + "Biggest", HIGHEST_BLAZE_COLOUR, event.partialTicks);
+                    RenderUtils.draw3DString(stringPos, EnumChatFormatting.BOLD + "Biggest", HIGHEST_BLAZE_COLOUR, event.partialTicks);
                     AxisAlignedBB aabb = new AxisAlignedBB(highestBlaze.posX - 0.5, highestBlaze.posY - 2, highestBlaze.posZ - 0.5, highestBlaze.posX + 0.5, highestBlaze.posY, highestBlaze.posZ + 0.5);
-                    Utils.draw3DBox(aabb, HIGHEST_BLAZE_COLOUR, event.partialTicks);
+                    RenderUtils.draw3DBox(aabb, HIGHEST_BLAZE_COLOUR, event.partialTicks);
                 }
             }
         }

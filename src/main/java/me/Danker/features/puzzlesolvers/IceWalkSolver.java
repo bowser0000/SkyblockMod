@@ -3,6 +3,7 @@ package me.Danker.features.puzzlesolvers;
 import me.Danker.DankersSkyblockMod;
 import me.Danker.commands.ToggleCommand;
 import me.Danker.utils.IceWalkUtils;
+import me.Danker.utils.RenderUtils;
 import me.Danker.utils.Utils;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
@@ -214,7 +215,7 @@ public class IceWalkSolver {
                         default:
                             return;
                     }
-                    Utils.draw3DLine(pos1, pos2, ICE_WALK_LINE_COLOUR, 5, true, event.partialTicks);
+                    RenderUtils.draw3DLine(pos1, pos2, ICE_WALK_LINE_COLOUR, 5, true, event.partialTicks);
                 }
             }
 
@@ -242,7 +243,7 @@ public class IceWalkSolver {
                         default:
                             return;
                     }
-                    Utils.draw3DLine(pos1, pos2, ICE_WALK_LINE_COLOUR, 5, true, event.partialTicks);
+                    RenderUtils.draw3DLine(pos1, pos2, ICE_WALK_LINE_COLOUR, 5, true, event.partialTicks);
                 }
             }
 
@@ -270,7 +271,7 @@ public class IceWalkSolver {
                         default:
                             return;
                     }
-                    Utils.draw3DLine(pos1, pos2, ICE_WALK_LINE_COLOUR, 5, true, event.partialTicks);
+                    RenderUtils.draw3DLine(pos1, pos2, ICE_WALK_LINE_COLOUR, 5, true, event.partialTicks);
                 }
             }
         }

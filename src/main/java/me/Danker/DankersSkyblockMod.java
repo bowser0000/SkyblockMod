@@ -4,14 +4,14 @@ import com.google.gson.JsonObject;
 import me.Danker.commands.*;
 import me.Danker.events.ChestSlotClickedEvent;
 import me.Danker.events.GuiChestBackgroundDrawnEvent;
-import me.Danker.events.RenderOverlay;
+import me.Danker.events.RenderOverlayEvent;
 import me.Danker.features.*;
-import me.Danker.features.loot.LootDisplay;
-import me.Danker.features.loot.LootTracker;
+import me.Danker.features.loot.*;
 import me.Danker.features.puzzlesolvers.*;
 import me.Danker.gui.*;
 import me.Danker.handlers.ConfigHandler;
 import me.Danker.handlers.PacketHandler;
+import me.Danker.utils.RenderUtils;
 import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -64,7 +64,7 @@ import java.util.Map;
 @Mod(modid = DankersSkyblockMod.MODID, version = DankersSkyblockMod.VERSION, clientSideOnly = true)
 public class DankersSkyblockMod {
     public static final String MODID = "Danker's Skyblock Mod";
-    public static final String VERSION = "1.8.7-beta4";
+    public static final String VERSION = "1.8.7-beta5";
     public static int titleTimer = -1;
     public static boolean showTitle = false;
     public static String titleText = "";
@@ -128,8 +128,6 @@ public class DankersSkyblockMod {
         MinecraftForge.EVENT_BUS.register(new HighlightSkeletonMasters());
         MinecraftForge.EVENT_BUS.register(new IceWalkSolver());
         MinecraftForge.EVENT_BUS.register(new LividSolver());
-        MinecraftForge.EVENT_BUS.register(new LootDisplay());
-        MinecraftForge.EVENT_BUS.register(new LootTracker());
         MinecraftForge.EVENT_BUS.register(new LowHealthNotifications());
         MinecraftForge.EVENT_BUS.register(new NecronNotifications());
         MinecraftForge.EVENT_BUS.register(new NoF3Coords());
@@ -143,6 +141,7 @@ public class DankersSkyblockMod {
         MinecraftForge.EVENT_BUS.register(new SlayerESP());
         MinecraftForge.EVENT_BUS.register(new SpamHider());
         MinecraftForge.EVENT_BUS.register(new SpiritBearAlert());
+        MinecraftForge.EVENT_BUS.register(new SpiritBootsFix());
         MinecraftForge.EVENT_BUS.register(new StartsWithSolver());
         MinecraftForge.EVENT_BUS.register(new StopSalvagingStarredItems());
         MinecraftForge.EVENT_BUS.register(new SuperpairsSolver());
@@ -154,6 +153,17 @@ public class DankersSkyblockMod {
         MinecraftForge.EVENT_BUS.register(new UpdateChecker());
         MinecraftForge.EVENT_BUS.register(new WatcherReadyAlert());
         MinecraftForge.EVENT_BUS.register(new WaterSolver());
+
+        MinecraftForge.EVENT_BUS.register(new LootDisplay());
+        MinecraftForge.EVENT_BUS.register(new LootTracker());
+        MinecraftForge.EVENT_BUS.register(new CatacombsTracker());
+        MinecraftForge.EVENT_BUS.register(new EndermanTracker());
+        MinecraftForge.EVENT_BUS.register(new FishingTracker());
+        MinecraftForge.EVENT_BUS.register(new GhostTracker());
+        MinecraftForge.EVENT_BUS.register(new MythologicalTracker());
+        MinecraftForge.EVENT_BUS.register(new SpiderTracker());
+        MinecraftForge.EVENT_BUS.register(new WolfTracker());
+        MinecraftForge.EVENT_BUS.register(new ZombieTracker());
 
         ConfigHandler.reloadConfig();
         GoldenEnchants.init();
@@ -328,7 +338,7 @@ public class DankersSkyblockMod {
         if (event.type != RenderGameOverlayEvent.ElementType.EXPERIENCE && event.type != RenderGameOverlayEvent.ElementType.JUMPBAR)
             return;
         if (Minecraft.getMinecraft().currentScreen instanceof EditLocationsGui) return;
-        MinecraftForge.EVENT_BUS.post(new RenderOverlay());
+        MinecraftForge.EVENT_BUS.post(new RenderOverlayEvent());
     }
 
     // LabyMod Support
@@ -337,13 +347,13 @@ public class DankersSkyblockMod {
         if (!usingLabymod) return;
         if (event.type != null) return;
         if (Minecraft.getMinecraft().currentScreen instanceof EditLocationsGui) return;
-        MinecraftForge.EVENT_BUS.post(new RenderOverlay());
+        MinecraftForge.EVENT_BUS.post(new RenderOverlayEvent());
     }
 
     @SubscribeEvent
-    public void renderPlayerInfo(RenderOverlay event) {
+    public void renderPlayerInfo(RenderOverlayEvent event) {
         if (showTitle) {
-            Utils.drawTitle(titleText);
+            RenderUtils.drawTitle(titleText);
         }
     }
 

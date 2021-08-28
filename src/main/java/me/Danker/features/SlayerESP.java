@@ -3,6 +3,7 @@ package me.Danker.features;
 import me.Danker.DankersSkyblockMod;
 import me.Danker.commands.ToggleCommand;
 import me.Danker.handlers.ScoreboardHandler;
+import me.Danker.utils.RenderUtils;
 import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
@@ -105,22 +106,22 @@ public class SlayerESP {
         if (slayerActive && ToggleCommand.highlightSlayers) {
             if (zombie != null) {
                 AxisAlignedBB aabb = new AxisAlignedBB(zombie.posX - 0.5, zombie.posY - 2, zombie.posZ - 0.5, zombie.posX + 0.5, zombie.posY, zombie.posZ + 0.5);
-                Utils.draw3DBox(aabb, SLAYER_COLOUR, event.partialTicks);
+                RenderUtils.draw3DBox(aabb, SLAYER_COLOUR, event.partialTicks);
                 return;
             }
             if (spider != null) {
                 AxisAlignedBB aabb = new AxisAlignedBB(spider.posX - 0.75, spider.posY - 1, spider.posZ - 0.75, spider.posX + 0.75, spider.posY, spider.posZ + 0.75);
-                Utils.draw3DBox(aabb, SLAYER_COLOUR, event.partialTicks);
+                RenderUtils.draw3DBox(aabb, SLAYER_COLOUR, event.partialTicks);
                 return;
             }
             if (wolf != null) {
                 AxisAlignedBB aabb = new AxisAlignedBB(wolf.posX - 0.5, wolf.posY - 1, wolf.posZ - 0.5, wolf.posX + 0.5, wolf.posY, wolf.posZ + 0.5);
-                Utils.draw3DBox(aabb, SLAYER_COLOUR, event.partialTicks);
+                RenderUtils.draw3DBox(aabb, SLAYER_COLOUR, event.partialTicks);
                 return;
             }
             if (enderman != null) {
                 AxisAlignedBB aabb = new AxisAlignedBB(enderman.posX - 0.5, enderman.posY - 3, enderman.posZ - 0.5, enderman.posX + 0.5, enderman.posY, enderman.posZ + 0.5);
-                Utils.draw3DBox(aabb, SLAYER_COLOUR, event.partialTicks);
+                RenderUtils.draw3DBox(aabb, SLAYER_COLOUR, event.partialTicks);
                 return;
             }
         }
