@@ -18,6 +18,7 @@ public class ZombieTracker {
     public static int zombiePestilences;
     public static int zombieUndeadCatas;
     public static int zombieBooks;
+    public static int zombieBooksT7;
     public static int zombieBeheadeds;
     public static int zombieRevCatas;
     public static int zombieSnakes;
@@ -35,6 +36,7 @@ public class ZombieTracker {
     public static int zombiePestilencesSession = 0;
     public static int zombieUndeadCatasSession = 0;
     public static int zombieBooksSession = 0;
+    public static int zombieBooksT7Session = 0;
     public static int zombieBeheadedsSession = 0;
     public static int zombieRevCatasSession = 0;
     public static int zombieSnakesSession = 0;
@@ -53,14 +55,6 @@ public class ZombieTracker {
         if (message.contains(":")) return;
 
         boolean rng = false;
-
-        if (message.contains("VERY RARE DROP!  (Enchanted Book)") || message.contains("CRAZY RARE DROP!  (Enchanted Book)")) {
-            if (Utils.isInScoreboard("Revenant Horror")) {
-                zombieBooks++;
-                zombieBooksSession++;
-                ConfigHandler.writeIntConfig("zombie", "book", zombieBooks);
-            }
-        }
 
         if (message.contains("   Zombie Slayer LVL ")) { // Zombie
             zombieRevs++;
@@ -94,6 +88,14 @@ public class ZombieTracker {
             zombiePestilences++;
             zombiePestilencesSession++;
             ConfigHandler.writeIntConfig("zombie", "pestilence", zombiePestilences);
+        } else if (message.contains("VERY RARE DROP!  (Smite VI)")) {
+            zombieBooks++;
+            zombieBooksSession++;
+            ConfigHandler.writeIntConfig("zombie", "book", zombieBooks);
+        } else if (message.contains("VERY RARE DROP!  (Smite VII)")) {
+            zombieBooksT7++;
+            zombieBooksT7Session++;
+            ConfigHandler.writeIntConfig("zombie", "bookT7", zombieBooksT7);
         } else if (message.contains("VERY RARE DROP!  (Undead Catalyst)")) {
             zombieUndeadCatas++;
             zombieUndeadCatasSession++;

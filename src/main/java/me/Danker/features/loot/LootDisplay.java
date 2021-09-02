@@ -217,6 +217,7 @@ public class LootDisplay {
                             EnumChatFormatting.BLUE + "Foul Flesh:\n" +
                             EnumChatFormatting.DARK_GREEN + "Pestilence Runes:\n" +
                             EnumChatFormatting.WHITE + "Smite VI Books:\n" +
+                            EnumChatFormatting.WHITE + "Smite VII Books:\n" +
                             EnumChatFormatting.AQUA + "Undead Catalysts:\n" +
                             EnumChatFormatting.DARK_PURPLE + "Beheaded Horrors:\n" +
                             EnumChatFormatting.RED + "Revenant Catalysts:\n" +
@@ -232,6 +233,7 @@ public class LootDisplay {
                             EnumChatFormatting.BLUE + drop20 + "\n" +
                             EnumChatFormatting.DARK_GREEN + ZombieTracker.zombiePestilences + "\n" +
                             EnumChatFormatting.WHITE + ZombieTracker.zombieBooks + "\n" +
+                            EnumChatFormatting.WHITE + ZombieTracker.zombieBooksT7 + "\n" +
                             EnumChatFormatting.AQUA + ZombieTracker.zombieUndeadCatas + "\n" +
                             EnumChatFormatting.DARK_PURPLE + ZombieTracker.zombieBeheadeds + "\n" +
                             EnumChatFormatting.RED + ZombieTracker.zombieRevCatas + "\n" +
@@ -265,6 +267,7 @@ public class LootDisplay {
                             EnumChatFormatting.BLUE + "Foul Flesh:\n" +
                             EnumChatFormatting.DARK_GREEN + "Pestilence Runes:\n" +
                             EnumChatFormatting.WHITE + "Smite VI Books:\n" +
+                            EnumChatFormatting.WHITE + "Smite VII Books:\n" +
                             EnumChatFormatting.AQUA + "Undead Catalysts:\n" +
                             EnumChatFormatting.DARK_PURPLE + "Beheaded Horrors:\n" +
                             EnumChatFormatting.RED + "Revenant Catalysts:\n" +
@@ -280,6 +283,7 @@ public class LootDisplay {
                             EnumChatFormatting.BLUE + drop20 + "\n" +
                             EnumChatFormatting.DARK_GREEN + ZombieTracker.zombiePestilencesSession + "\n" +
                             EnumChatFormatting.WHITE + ZombieTracker.zombieBooksSession + "\n" +
+                            EnumChatFormatting.WHITE + ZombieTracker.zombieBooksT7Session + "\n" +
                             EnumChatFormatting.AQUA + ZombieTracker.zombieUndeadCatasSession + "\n" +
                             EnumChatFormatting.DARK_PURPLE + ZombieTracker.zombieBeheadedsSession + "\n" +
                             EnumChatFormatting.RED + ZombieTracker.zombieRevCatasSession + "\n" +

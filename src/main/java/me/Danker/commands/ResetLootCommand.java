@@ -130,6 +130,7 @@ public class ResetLootCommand extends CommandBase {
 		ZombieTracker.zombiePestilencesSession = 0;
 		ZombieTracker.zombieUndeadCatasSession = 0;
 		ZombieTracker.zombieBooksSession = 0;
+		ZombieTracker.zombieBooksT7Session = 0;
 		ZombieTracker.zombieBeheadedsSession = 0;
 		ZombieTracker.zombieRevCatasSession = 0;
 		ZombieTracker.zombieSnakesSession = 0;

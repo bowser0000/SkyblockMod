@@ -46,14 +46,6 @@ public class SpiderTracker {
 
         boolean rng = false;
 
-        if (message.contains("VERY RARE DROP!  (Enchanted Book)") || message.contains("CRAZY RARE DROP!  (Enchanted Book)")) {
-            if (Utils.isInScoreboard("Tarantula Broodfather")) {
-                spiderBooks++;
-                spiderBooksSession++;
-                ConfigHandler.writeIntConfig("spider", "book", spiderBooks);
-            }
-        }
-
         if (message.contains("   Spider Slayer LVL ")) { // Spider
             spiderTarantulas++;
             spiderTarantulasSession++;
@@ -77,6 +69,10 @@ public class SpiderTracker {
             spiderBites++;
             spiderBitesSession++;
             ConfigHandler.writeIntConfig("spider", "bite", spiderBites);
+        } else if (message.contains("VERY RARE DROP!  (Bane of Arthropods VI)")) {
+            spiderBooks++;
+            spiderBooksSession++;
+            ConfigHandler.writeIntConfig("spider", "book", spiderBooks);
         } else if (message.contains("VERY RARE DROP!  (Spider Catalyst)")) {
             spiderCatalysts++;
             spiderCatalystsSession++;

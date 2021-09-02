@@ -11,7 +11,7 @@ import java.lang.reflect.Field;
 
 public class SpiritBootsFix {
 
-    static Field slot = ReflectionHelper.findField(S04PacketEntityEquipment.class, "equipmentSlot", "field_149392_b");
+    static Field slot = ReflectionHelper.findField(S04PacketEntityEquipment.class, "equipmentSlot", "field_149392_b", "b");
 
     @SubscribeEvent
     public void onPacketRead(PacketReadEvent event) throws IllegalAccessException {

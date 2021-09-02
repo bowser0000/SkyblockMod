@@ -46,14 +46,6 @@ public class WolfTracker {
 
         boolean rng = false;
 
-        if (message.contains("VERY RARE DROP!  (Enchanted Book)") || message.contains("CRAZY RARE DROP!  (Enchanted Book)")) {
-            if (Utils.isInScoreboard("Sven Packmaster")) {
-                wolfBooks++;
-                wolfBooksSession++;
-                ConfigHandler.writeIntConfig("wolf", "book", wolfBooks);
-            }
-        }
-
         if (message.contains("   Wolf Slayer LVL ")) {
             wolfSvens++;
             wolfSvensSession++;
@@ -77,6 +69,10 @@ public class WolfTracker {
             wolfSpirits++;
             wolfSpiritsSession++;
             ConfigHandler.writeIntConfig("wolf", "spirit", wolfSpirits);
+        } else if (message.contains("VERY RARE DROP!  (Critical VI)")) {
+            wolfBooks++;
+            wolfBooksSession++;
+            ConfigHandler.writeIntConfig("wolf", "book", wolfBooks);
         } else if (message.contains("CRAZY RARE DROP!  (Red Claw Egg)")) {
             rng = true;
             wolfEggs++;

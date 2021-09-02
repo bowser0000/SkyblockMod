@@ -227,6 +227,7 @@ public class LootCommand extends CommandBase {
 																EnumChatFormatting.BLUE + "    Foul Flesh: " + drop20 + "\n" +
 																EnumChatFormatting.DARK_GREEN + "    Pestilence Runes: " +ZombieTracker.zombiePestilencesSession + "\n" +
 																EnumChatFormatting.WHITE + "    Smite VI Books: " + ZombieTracker.zombieBooksSession + "\n" +
+																EnumChatFormatting.WHITE + "    Smite VII Books: " + ZombieTracker.zombieBooksT7Session + "\n" +
 																EnumChatFormatting.AQUA + "    Undead Catalysts: " + ZombieTracker.zombieUndeadCatasSession + "\n" +
 																EnumChatFormatting.DARK_PURPLE + "    Beheaded Horrors: " + ZombieTracker.zombieBeheadedsSession + "\n" +
 																EnumChatFormatting.RED + "    Revenant Catalysts: " + ZombieTracker.zombieRevCatasSession + "\n" +
@@ -264,6 +265,7 @@ public class LootCommand extends CommandBase {
 															EnumChatFormatting.BLUE + "    Foul Flesh: " + drop20 + "\n" +
 															EnumChatFormatting.DARK_GREEN + "    Pestilence Runes: " + ZombieTracker.zombiePestilences + "\n" +
 															EnumChatFormatting.WHITE + "    Smite VI Books: " + ZombieTracker.zombieBooks + "\n" +
+															EnumChatFormatting.WHITE + "    Smite VII Books: " + ZombieTracker.zombieBooksT7 + "\n" +
 															EnumChatFormatting.AQUA + "    Undead Catalysts: " + ZombieTracker.zombieUndeadCatas + "\n" +
 															EnumChatFormatting.DARK_PURPLE + "    Beheaded Horrors: " + ZombieTracker.zombieBeheadeds + "\n" +
 															EnumChatFormatting.RED + "    Revenant Catalysts: " + ZombieTracker.zombieRevCatas + "\n" +
