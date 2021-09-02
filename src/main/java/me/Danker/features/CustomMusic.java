@@ -65,7 +65,7 @@ public class CustomMusic {
     }
 
     @SubscribeEvent(priority = EventPriority.LOW)
-    public void onTick(TickEvent.ClientTickEvent event) {
+    public void onTick(TickEvent.ClientTickEvent event) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
         if (event.phase != TickEvent.Phase.START) return;
 
         Minecraft mc = Minecraft.getMinecraft();
@@ -135,7 +135,7 @@ public class CustomMusic {
     }
 
     @SubscribeEvent(receiveCanceled = true)
-    public void onChat(ClientChatReceivedEvent event) {
+    public void onChat(ClientChatReceivedEvent event) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
         String message = StringUtils.stripControlCodes(event.message.getUnformattedText());
 
         if (ToggleCommand.dungeonMusic && Utils.inDungeons) {
@@ -165,7 +165,7 @@ public class CustomMusic {
         }
     }
 
-    public static void init(String configDirectory) throws IOException, LineUnavailableException, UnsupportedAudioFileException {
+    public static void init(String configDirectory) {
         if (configDirectory == null) return;
         File directory = new File(configDirectory + "/dsmmusic");
         if (!directory.exists()) directory.mkdir();
@@ -210,33 +210,30 @@ public class CustomMusic {
     public static class Song {
 
         public Clip music;
-        private final List<Clip> playlist = new ArrayList<>();
+        private final List<File> playlist = new ArrayList<>();
+        private int volume;
 
-        public Song(File directory, String songName, int volume) throws IOException, UnsupportedAudioFileException, LineUnavailableException {
+        public Song(File directory, String songName, int volume) {
             File[] files = directory.listFiles();
             if (files != null) {
                 for (File file : files) {
                     if (!file.isDirectory() && file.getName().matches(songName + "\\d*(?:\\.wav)?\\.wav")) { // .wav.wav moment
-                        Clip music = AudioSystem.getClip();
-                        AudioInputStream ais = AudioSystem.getAudioInputStream(file);
-                        music.open(ais);
-                        playlist.add(music);
+                        playlist.add(file);
                         System.out.println("Added " + file.getName() + " to " + songName + " playlist.");
                     }
                 }
             }
 
-            setVolume(volume);
-
-            if (playlist.size() > 0) {
-                music = playlist.get(0);
-            }
+            this.volume = volume;
         }
 
-        public void start() {
-            if (music != null && !music.isRunning()) {
+        public void start() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
+
+            if (music == null) music = AudioSystem.getClip();
+            if (!music.isRunning()) {
                 reset();
                 shuffle();
+                setVolume(volume);
                 cancelNotes = true;
                 music.setMicrosecondPosition(0);
                 music.start();
@@ -245,14 +242,23 @@ public class CustomMusic {
 
         public void stop() {
             cancelNotes = false;
-            if (music != null) music.stop();
+            if (music != null) {
+                music.stop();
+                if (music.isOpen()) music.close();
+            }
         }
 
-        public void shuffle() {
-            if (playlist.size() > 0) music = playlist.get(new Random().nextInt(playlist.size()));
+        public void shuffle() throws LineUnavailableException, UnsupportedAudioFileException, IOException {
+            if (playlist.size() > 0) {
+                File file = playlist.get(new Random().nextInt(playlist.size()));
+                music = AudioSystem.getClip();
+                AudioInputStream ais = AudioSystem.getAudioInputStream(file);
+                music.open(ais);
+            }
         }
 
         public boolean setVolume(int volume) {
+            this.volume = volume;
             if (playlist.size() < 1) return false;
             if (volume <= 0 || volume > 100) {
                 EntityPlayer player = Minecraft.getMinecraft().thePlayer;
@@ -261,11 +267,9 @@ public class CustomMusic {
             }
 
             float decibels = (float) (20 * Math.log(volume / 100.0));
-            for (Clip music : playlist) {
-                FloatControl control = (FloatControl) music.getControl(FloatControl.Type.MASTER_GAIN);
-                if (decibels <= control.getMinimum() || decibels >= control.getMaximum()) return false;
-                control.setValue(decibels);
-            }
+            FloatControl control = (FloatControl) music.getControl(FloatControl.Type.MASTER_GAIN);
+            if (decibels <= control.getMinimum() || decibels >= control.getMaximum()) return false;
+            control.setValue(decibels);
 
             return true;
         }

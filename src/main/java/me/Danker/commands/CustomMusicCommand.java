@@ -63,13 +63,8 @@ public class CustomMusicCommand extends CommandBase {
                 player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Stopped custom music."));
                 break;
             case "reload":
-                try {
-                    CustomMusic.init(DankersSkyblockMod.configDirectory);
-                    player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Reloaded custom music."));
-                } catch (IOException | LineUnavailableException | UnsupportedAudioFileException e) {
-                    player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "An error occurred while trying to reload music."));
-                    e.printStackTrace();
-                }
+                CustomMusic.init(DankersSkyblockMod.configDirectory);
+                player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Reloaded custom music."));
                 break;
             case "volume":
                 if (arg1.length < 3) {
