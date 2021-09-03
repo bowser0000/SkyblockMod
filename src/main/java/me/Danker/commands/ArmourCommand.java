@@ -67,6 +67,7 @@ public class ArmourCommand extends CommandBase {
 			String key = ConfigHandler.getString("api", "APIKey");
 			if (key.equals("")) {
 				player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "API key not set. Use /setkey."));
+				return;
 			}
 			
 			// Get UUID for Hypixel API requests

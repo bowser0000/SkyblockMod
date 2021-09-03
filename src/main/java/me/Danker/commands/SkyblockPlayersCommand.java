@@ -53,6 +53,7 @@ public class SkyblockPlayersCommand extends CommandBase {
 			String key = ConfigHandler.getString("api", "APIKey");
 			if (key.equals("")) {
 				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "API key not set. Use /setkey."));
+				return;
 			}
 			
 			String playersURL = "https://api.hypixel.net/gameCounts?key=" + key;

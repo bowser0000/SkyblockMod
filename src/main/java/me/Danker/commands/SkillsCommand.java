@@ -54,6 +54,7 @@ public class SkillsCommand extends CommandBase {
 			String key = ConfigHandler.getString("api", "APIKey");
 			if (key.equals("")) {
 				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "API key not set. Use /setkey."));
+				return;
 			}
 			
 			// Get UUID for Hypixel API requests

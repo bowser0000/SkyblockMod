@@ -197,6 +197,7 @@ public class DankersSkyblockMod {
         ClientCommandHandler.instance.registerCommand(new GetkeyCommand());
         ClientCommandHandler.instance.registerCommand(new GuildOfCommand());
         ClientCommandHandler.instance.registerCommand(new ImportFishingCommand());
+        ClientCommandHandler.instance.registerCommand(new InventoryCommand());
         ClientCommandHandler.instance.registerCommand(new LobbyBankCommand());
         ClientCommandHandler.instance.registerCommand(new LobbySkillsCommand());
         ClientCommandHandler.instance.registerCommand(new LootCommand());
@@ -442,6 +443,9 @@ public class DankersSkyblockMod {
                     case "crystalwaypoints":
                         mc.displayGuiScreen(new CrystalHollowWaypointsGui(1));
                         break;
+                    case "inventory":
+                        mc.displayGuiScreen(InventoryCommand.chest);
+                        break;
                 }
             }
             guiToOpen = null;
@@ -466,6 +470,11 @@ public class DankersSkyblockMod {
         if (Mouse.getEventButton() != 0 && Mouse.getEventButton() != 1 && Mouse.getEventButton() != 2)
             return; // Left click, middle click or right click
         if (!Mouse.getEventButtonState()) return;
+
+        if (event.gui == InventoryCommand.chest) {
+            event.setCanceled(true);
+            return;
+        }
 
         if (event.gui instanceof GuiChest) {
             Container containerChest = ((GuiChest) event.gui).inventorySlots;
