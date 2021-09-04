@@ -416,14 +416,17 @@ public class ConfigHandler {
 		CatacombsTracker.recombobulators =  initInt("catacombs", "recombobulator", 0);
 		CatacombsTracker.fumingPotatoBooks = initInt("catacombs", "fumingBooks", 0);
 		// F1
+		CatacombsTracker.f1SPlus = initInt("catacombs", "floorOneSPlus", 0);
 		CatacombsTracker.bonzoStaffs = initInt("catacombs", "bonzoStaff", 0);
 		CatacombsTracker.f1CoinsSpent = initDouble("catacombs", "floorOneCoins", 0);
 		CatacombsTracker.f1TimeSpent = initDouble("catacombs", "floorOneTime", 0);
 		// F2
+		CatacombsTracker.f2SPlus = initInt("catacombs", "floorTwoSPlus", 0);
 		CatacombsTracker.scarfStudies = initInt("catacombs", "scarfStudies", 0);
 		CatacombsTracker.f2CoinsSpent = initDouble("catacombs", "floorTwoCoins", 0);
 		CatacombsTracker.f2TimeSpent = initDouble("catacombs", "floorTwoTime", 0);
 		// F3
+		CatacombsTracker.f3SPlus = initInt("catacombs", "floorThreeSPlus", 0);
 		CatacombsTracker.adaptiveHelms = initInt("catacombs", "adaptiveHelm", 0);
 		CatacombsTracker.adaptiveChests = initInt("catacombs", "adaptiveChest", 0);
 		CatacombsTracker.adaptiveLegs = initInt("catacombs", "adaptiveLegging", 0);
@@ -432,6 +435,7 @@ public class ConfigHandler {
 		CatacombsTracker.f3CoinsSpent = initDouble("catacombs", "floorThreeCoins", 0);
 		CatacombsTracker.f3TimeSpent = initDouble("catacombs", "floorThreeTime", 0);
 		// F4
+		CatacombsTracker.f4SPlus = initInt("catacombs", "floorFourSPlus", 0);
 		CatacombsTracker.spiritWings = initInt("catacombs", "spiritWing", 0);
 		CatacombsTracker.spiritBones = initInt("catacombs", "spiritBone", 0);
 		CatacombsTracker.spiritBoots = initInt("catacombs", "spiritBoot", 0);
@@ -442,6 +446,7 @@ public class ConfigHandler {
 		CatacombsTracker.f4CoinsSpent = initDouble("catacombs", "floorFourCoins", 0);
 		CatacombsTracker.f4TimeSpent = initDouble("catacombs", "floorFourTime", 0);
 		// F5
+		CatacombsTracker.f5SPlus = initInt("catacombs", "floorFiveSPlus", 0);
 		CatacombsTracker.warpedStones = initInt("catacombs", "warpedStone", 0);
 		CatacombsTracker.shadowAssHelms = initInt("catacombs", "shadowAssassinHelm", 0);
 		CatacombsTracker.shadowAssChests = initInt("catacombs", "shadowAssassinChest", 0);
@@ -453,6 +458,7 @@ public class ConfigHandler {
 		CatacombsTracker.f5CoinsSpent = initDouble("catacombs", "floorFiveCoins", 0);
 		CatacombsTracker.f5TimeSpent = initDouble("catacombs", "floorFiveTime", 0);
 		// F6
+		CatacombsTracker.f6SPlus = initInt("catacombs", "floorSixSPlus", 0);
 		CatacombsTracker.ancientRoses = initInt("catacombs", "ancientRose", 0);
 		CatacombsTracker.precursorEyes = initInt("catacombs", "precursorEye", 0);
 		CatacombsTracker.giantsSwords = initInt("catacombs", "giantsSword", 0);
@@ -461,9 +467,11 @@ public class ConfigHandler {
 		CatacombsTracker.necroLordLegs = initInt("catacombs", "necroLordLegging", 0);
 		CatacombsTracker.necroLordBoots = initInt("catacombs", "necroLordBoot", 0);
 		CatacombsTracker.necroSwords = initInt("catacombs", "necroSword", 0);
+		CatacombsTracker.f6Rerolls = initInt("catacombs", "floorSixRerolls", 0);
 		CatacombsTracker.f6CoinsSpent = initDouble("catacombs", "floorSixCoins", 0);
 		CatacombsTracker.f6TimeSpent = initDouble("catacombs", "floorSixTime", 0);
 		// F7
+		CatacombsTracker.f7SPlus = initInt("catacombs", "floorSevenSPlus", 0);
 		CatacombsTracker.witherBloods = initInt("catacombs", "witherBlood", 0);
 		CatacombsTracker.witherCloaks = initInt("catacombs", "witherCloak", 0);
 		CatacombsTracker.implosions = initInt("catacombs", "implosion", 0);
@@ -475,6 +483,7 @@ public class ConfigHandler {
 		CatacombsTracker.witherChests = initInt("catacombs", "witherChest", 0);
 		CatacombsTracker.witherLegs = initInt("catacombs", "witherLegging", 0);
 		CatacombsTracker.witherBoots = initInt("catacombs", "witherBoot", 0);
+		CatacombsTracker.f7Rerolls = initInt("catacombs", "floorSevenRerolls", 0);
 		CatacombsTracker.f7CoinsSpent = initDouble("catacombs", "floorSevenCoins", 0);
 		CatacombsTracker.f7TimeSpent = initDouble("catacombs", "floorSevenTime", 0);
 

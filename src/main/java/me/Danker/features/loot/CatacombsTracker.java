@@ -18,15 +18,18 @@ public class CatacombsTracker {
     public static int recombobulators;
     public static int fumingPotatoBooks;
     // F1
+    public static int f1SPlus;
     public static int bonzoStaffs;
     public static double f1CoinsSpent;
     public static double f1TimeSpent;
     // F2
+    public static int f2SPlus;
     public static int scarfStudies;
     public static int adaptiveSwords;
     public static double f2CoinsSpent;
     public static double f2TimeSpent;
     // F3
+    public static int f3SPlus;
     public static int adaptiveHelms;
     public static int adaptiveChests;
     public static int adaptiveLegs;
@@ -34,6 +37,7 @@ public class CatacombsTracker {
     public static double f3CoinsSpent;
     public static double f3TimeSpent;
     // F4
+    public static int f4SPlus;
     public static int spiritWings;
     public static int spiritBones;
     public static int spiritBoots;
@@ -44,6 +48,7 @@ public class CatacombsTracker {
     public static double f4CoinsSpent;
     public static double f4TimeSpent;
     // F5
+    public static int f5SPlus;
     public static int warpedStones;
     public static int shadowAssHelms;
     public static int shadowAssChests;
@@ -55,6 +60,7 @@ public class CatacombsTracker {
     public static double f5CoinsSpent;
     public static double f5TimeSpent;
     // F6
+    public static int f6SPlus;
     public static int ancientRoses;
     public static int precursorEyes;
     public static int giantsSwords;
@@ -63,9 +69,11 @@ public class CatacombsTracker {
     public static int necroLordLegs;
     public static int necroLordBoots;
     public static int necroSwords;
+    public static int f6Rerolls;
     public static double f6CoinsSpent;
     public static double f6TimeSpent;
     // F7
+    public static int f7SPlus;
     public static int witherBloods;
     public static int witherCloaks;
     public static int implosions;
@@ -77,6 +85,7 @@ public class CatacombsTracker {
     public static int witherChests;
     public static int witherLegs;
     public static int witherBoots;
+    public static int f7Rerolls;
     public static double f7CoinsSpent;
     public static double f7TimeSpent;
 
@@ -84,15 +93,18 @@ public class CatacombsTracker {
     public static int recombobulatorsSession = 0;
     public static int fumingPotatoBooksSession = 0;
     // F1
+    public static int f1SPlusSession = 0;
     public static int bonzoStaffsSession = 0;
     public static double f1CoinsSpentSession = 0;
     public static double f1TimeSpentSession = 0;
     // F2
+    public static int f2SPlusSession = 0;
     public static int scarfStudiesSession = 0;
     public static int adaptiveSwordsSession = 0;
     public static double f2CoinsSpentSession = 0;
     public static double f2TimeSpentSession = 0;
     // F3
+    public static int f3SPlusSession = 0;
     public static int adaptiveHelmsSession = 0;
     public static int adaptiveChestsSession = 0;
     public static int adaptiveLegsSession = 0;
@@ -100,6 +112,7 @@ public class CatacombsTracker {
     public static double f3CoinsSpentSession = 0;
     public static double f3TimeSpentSession = 0;
     // F4
+    public static int f4SPlusSession = 0;
     public static int spiritWingsSession = 0;
     public static int spiritBonesSession = 0;
     public static int spiritBootsSession = 0;
@@ -110,6 +123,7 @@ public class CatacombsTracker {
     public static double f4CoinsSpentSession = 0;
     public static double f4TimeSpentSession = 0;
     // F5
+    public static int f5SPlusSession = 0;
     public static int warpedStonesSession = 0;
     public static int shadowAssHelmsSession = 0;
     public static int shadowAssChestsSession = 0;
@@ -121,6 +135,7 @@ public class CatacombsTracker {
     public static double f5CoinsSpentSession = 0;
     public static double f5TimeSpentSession = 0;
     // F6
+    public static int f6SPlusSession = 0;
     public static int ancientRosesSession = 0;
     public static int precursorEyesSession = 0;
     public static int giantsSwordsSession = 0;
@@ -129,9 +144,11 @@ public class CatacombsTracker {
     public static int necroLordLegsSession = 0;
     public static int necroLordBootsSession = 0;
     public static int necroSwordsSession = 0;
+    public static int f6RerollsSession = 0;
     public static double f6CoinsSpentSession = 0;
     public static double f6TimeSpentSession = 0;
     // F7
+    public static int f7SPlusSession = 0;
     public static int witherBloodsSession = 0;
     public static int witherCloaksSession = 0;
     public static int implosionsSession = 0;
@@ -143,6 +160,7 @@ public class CatacombsTracker {
     public static int witherChestsSession = 0;
     public static int witherLegsSession = 0;
     public static int witherBootsSession = 0;
+    public static int f7RerollsSession = 0;
     public static double f7CoinsSpentSession = 0;
     public static double f7TimeSpentSession = 0;
 
@@ -152,6 +170,45 @@ public class CatacombsTracker {
 
         if (!Utils.inSkyblock) return;
         if (event.type == 2) return;
+
+        if (message.contains("    Team Score: ") && message.contains("(S+)")) {
+            List<String> scoreboard = ScoreboardHandler.getSidebarLines();
+            for (String s : scoreboard) {
+                String sCleaned = ScoreboardHandler.cleanSB(s);
+                if (sCleaned.contains("The Catacombs (")) {
+                    if (sCleaned.contains("F1")) {
+                        f1SPlus++;
+                        f1SPlusSession++;
+                        ConfigHandler.writeDoubleConfig("catacombs", "floorOneSPlus", f1SPlus);
+                    } else if (sCleaned.contains("F2")) {
+                        f2SPlus++;
+                        f2SPlusSession++;
+                        ConfigHandler.writeDoubleConfig("catacombs", "floorTwoSPlus", f2SPlus);
+                    } else if (sCleaned.contains("F3")) {
+                        f3SPlus++;
+                        f3SPlusSession++;
+                        ConfigHandler.writeDoubleConfig("catacombs", "floorThreeSPlus", f3SPlus);
+                    } else if (sCleaned.contains("F4")) {
+                        f4SPlus++;
+                        f4SPlusSession++;
+                        ConfigHandler.writeDoubleConfig("catacombs", "floorFourSPlus", f4SPlus);
+                    } else if (sCleaned.contains("F5")) {
+                        f5SPlus++;
+                        f5SPlusSession++;
+                        ConfigHandler.writeDoubleConfig("catacombs", "floorFiveSPlus", f5SPlus);
+                    } else if (sCleaned.contains("F6")) {
+                        f6SPlus++;
+                        f6SPlusSession++;
+                        ConfigHandler.writeDoubleConfig("catacombs", "floorSixSPlus", f6SPlus);
+                    } else if (sCleaned.contains("F7")) {
+                        f7SPlus++;
+                        f7SPlusSession++;
+                        ConfigHandler.writeDoubleConfig("catacombs", "floorSevenSPlus", f7SPlus);
+                    }
+                }
+            }
+        }
+
         if (message.contains(":")) return;
 
         if (message.contains("    ")) {
@@ -382,47 +439,70 @@ public class CatacombsTracker {
     public void onSlotClick(ChestSlotClickedEvent event) {
         ItemStack item = event.item;
 
-        if (event.inventoryName.endsWith(" Chest") && item != null && item.getDisplayName().contains("Open Reward Chest")) {
-            List<String> tooltip = item.getTooltip(Minecraft.getMinecraft().thePlayer, Minecraft.getMinecraft().gameSettings.advancedItemTooltips);
-            for (String lineUnclean : tooltip) {
-                String line = StringUtils.stripControlCodes(lineUnclean);
-                if (line.contains("FREE")) {
-                    break;
-                } else if (line.contains(" Coins")) {
-                    int coinsSpent = Integer.parseInt(line.substring(0, line.indexOf(" ")).replaceAll(",", ""));
+        if (event.inventoryName.endsWith(" Chest") && item != null) {
+            if (item.getDisplayName().contains("Open Reward Chest")) {
+                List<String> tooltip = item.getTooltip(Minecraft.getMinecraft().thePlayer, Minecraft.getMinecraft().gameSettings.advancedItemTooltips);
+                for (String lineUnclean : tooltip) {
+                    String line = StringUtils.stripControlCodes(lineUnclean);
+                    if (line.contains("FREE")) {
+                        break;
+                    } else if (line.contains(" Coins") && !line.contains("NOTE:")) {
+                        int coinsSpent = Integer.parseInt(line.substring(0, line.indexOf(" ")).replaceAll(",", ""));
 
-                    if (Utils.isInScoreboard("The Catacombs (")) {
-                        if (Utils.isInScoreboard("F1")) {
-                            f1CoinsSpent += coinsSpent;
-                            f1CoinsSpentSession += coinsSpent;
-                            ConfigHandler.writeDoubleConfig("catacombs", "floorOneCoins", f1CoinsSpent);
-                        } else if (Utils.isInScoreboard("F2")) {
-                            f2CoinsSpent += coinsSpent;
-                            f2CoinsSpentSession += coinsSpent;
-                            ConfigHandler.writeDoubleConfig("catacombs", "floorTwoCoins", f2CoinsSpent);
-                        } else if (Utils.isInScoreboard("F3")) {
-                            f3CoinsSpent += coinsSpent;
-                            f3CoinsSpentSession += coinsSpent;
-                            ConfigHandler.writeDoubleConfig("catacombs", "floorThreeCoins", f3CoinsSpent);
-                        } else if (Utils.isInScoreboard("F4")) {
-                            f4CoinsSpent += coinsSpent;
-                            f4CoinsSpentSession += coinsSpent;
-                            ConfigHandler.writeDoubleConfig("catacombs", "floorFourCoins", f4CoinsSpent);
-                        } else if (Utils.isInScoreboard("F5")) {
-                            f5CoinsSpent += coinsSpent;
-                            f5CoinsSpentSession += coinsSpent;
-                            ConfigHandler.writeDoubleConfig("catacombs", "floorFiveCoins", f5CoinsSpent);
-                        } else if (Utils.isInScoreboard("F6")) {
-                            f6CoinsSpent += coinsSpent;
-                            f6CoinsSpentSession += coinsSpent;
-                            ConfigHandler.writeDoubleConfig("catacombs", "floorSixCoins", f6CoinsSpent);
-                        } else if (Utils.isInScoreboard("F7")) {
-                            f7CoinsSpent += coinsSpent;
-                            f7CoinsSpentSession += coinsSpent;
-                            ConfigHandler.writeDoubleConfig("catacombs", "floorSevenCoins", f7CoinsSpent);
+                        List<String> scoreboard = ScoreboardHandler.getSidebarLines();
+                        for (String s : scoreboard) {
+                            String sCleaned = ScoreboardHandler.cleanSB(s);
+                            if (sCleaned.contains("The Catacombs (")) {
+                                if (sCleaned.contains("F1")) {
+                                    f1CoinsSpent += coinsSpent;
+                                    f1CoinsSpentSession += coinsSpent;
+                                    ConfigHandler.writeDoubleConfig("catacombs", "floorOneCoins", f1CoinsSpent);
+                                } else if (sCleaned.contains("F2")) {
+                                    f2CoinsSpent += coinsSpent;
+                                    f2CoinsSpentSession += coinsSpent;
+                                    ConfigHandler.writeDoubleConfig("catacombs", "floorTwoCoins", f2CoinsSpent);
+                                } else if (sCleaned.contains("F3")) {
+                                    f3CoinsSpent += coinsSpent;
+                                    f3CoinsSpentSession += coinsSpent;
+                                    ConfigHandler.writeDoubleConfig("catacombs", "floorThreeCoins", f3CoinsSpent);
+                                } else if (sCleaned.contains("F4")) {
+                                    f4CoinsSpent += coinsSpent;
+                                    f4CoinsSpentSession += coinsSpent;
+                                    ConfigHandler.writeDoubleConfig("catacombs", "floorFourCoins", f4CoinsSpent);
+                                } else if (sCleaned.contains("F5")) {
+                                    f5CoinsSpent += coinsSpent;
+                                    f5CoinsSpentSession += coinsSpent;
+                                    ConfigHandler.writeDoubleConfig("catacombs", "floorFiveCoins", f5CoinsSpent);
+                                } else if (sCleaned.contains("F6")) {
+                                    f6CoinsSpent += coinsSpent;
+                                    f6CoinsSpentSession += coinsSpent;
+                                    ConfigHandler.writeDoubleConfig("catacombs", "floorSixCoins", f6CoinsSpent);
+                                } else if (sCleaned.contains("F7")) {
+                                    f7CoinsSpent += coinsSpent;
+                                    f7CoinsSpentSession += coinsSpent;
+                                    ConfigHandler.writeDoubleConfig("catacombs", "floorSevenCoins", f7CoinsSpent);
+                                }
+                            }
+                            break;
                         }
                     }
-                    break;
+                }
+            } else if (item.getDisplayName().contains("Reroll Chest")) {
+                List<String> scoreboard = ScoreboardHandler.getSidebarLines();
+                for (String s : scoreboard) {
+                    String sCleaned = ScoreboardHandler.cleanSB(s);
+                    if (sCleaned.contains("The Catacombs (")) {
+                        if (sCleaned.contains("F6")) {
+                            f6Rerolls++;
+                            f6RerollsSession++;
+                            ConfigHandler.writeDoubleConfig("catacombs", "floorSixRerolls", f6Rerolls);
+                        } else if (sCleaned.contains("F7")) {
+                            f7Rerolls++;
+                            f7RerollsSession++;
+                            ConfigHandler.writeDoubleConfig("catacombs", "floorSevenRerolls", f7Rerolls);
+                        }
+                        break;
+                    }
                 }
             }
         }
