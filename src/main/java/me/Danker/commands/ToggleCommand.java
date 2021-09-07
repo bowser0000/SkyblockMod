@@ -45,6 +45,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 	public static boolean crystalHollowWaypoints;
 	public static boolean crystalAutoWaypoints;
 	public static boolean autoAcceptReparty;
+	public static boolean abilityCooldowns;
 	// Chat Messages
 	public static boolean sceptreMessages;
 	public static boolean midasStaffMessages;
@@ -118,7 +119,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 										  "ultrasequencer/chronomatron/superpairs/hidetooltipsinaddons/pickblock/" +
 										  "melodytooltips/highlightslayers/highlightarachne/highlightskeletonmasters/teammatesinradius/" +
 										  "gianthp/hidepetcandy/customcolorednames/endoffarmalert/gemstonelore/crystalhollowwaypoints/crystalautowaypoints/" +
-										  "autoacceptreparty/dungeonbossmusic/bloodroommusic/dungeonmusic/hubmusic/islandmusic/dungeonhubmusic/" +
+										  "autoacceptreparty/abilitycooldowns/dungeonbossmusic/bloodroommusic/dungeonmusic/hubmusic/islandmusic/dungeonhubmusic/" +
 										  "farmingislandsmusic/goldminemusic/deepcavernsmusic/crystalhollowsmusic/spidersdenmusic/blazingfortressmusic/endmusic/" +
 										  "parkmusic/list>";
 	}
@@ -151,7 +152,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 														  "highlightskeletonmasters", "dungeonbossmusic", "bloodroommusic", "dungeonmusic",
 														  "teammatesinradius", "gianthp", "hidepetcandy", "customcolorednames", "endoffarmalert",
 														  "gemstonelore", "crystalhollowwaypoints", "crystalautowaypoints", "autoacceptreparty",
-														  "hubmusic", "islandmusic", "dungeonhubmusic", "farmingislandsmusic", "goldminemusic",
+														  "itemcooldowns", "hubmusic", "islandmusic", "dungeonhubmusic", "farmingislandsmusic", "goldminemusic",
 														  "deepcavernsmusic", "dwarvenminesmusic", "crystalhollowsmusic", "spidersdenmusic", "blazingfortressmusic",
 														  "endmusic", "parkmusic", "list");
 		}
@@ -485,6 +486,11 @@ public class ToggleCommand extends CommandBase implements ICommand {
 				ConfigHandler.writeBooleanConfig("toggles", "AutoAcceptReparty", autoAcceptReparty);
 				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Auto accept reparty has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + autoAcceptReparty + DankersSkyblockMod.MAIN_COLOUR + "."));
 				break;
+			case "abilitycooldowns":
+				abilityCooldowns = !abilityCooldowns;
+				ConfigHandler.writeBooleanConfig("toggles", "AbilityCooldowns", abilityCooldowns);
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Ability cooldowns display as been set to " + DankersSkyblockMod.SECONDARY_COLOUR + abilityCooldowns + DankersSkyblockMod.MAIN_COLOUR + "."));
+				break;
 			case "dungeonbossmusic":
 				dungeonBossMusic = !dungeonBossMusic;
 				CustomMusic.dungeonboss.stop();
@@ -631,6 +637,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 															DankersSkyblockMod.TYPE_COLOUR + " Crystal Hollows waypoints: " + DankersSkyblockMod.VALUE_COLOUR + crystalHollowWaypoints + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Auto Crystal Hollows waypoints: " + DankersSkyblockMod.VALUE_COLOUR + crystalAutoWaypoints + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Auto accept reparty: " + DankersSkyblockMod.VALUE_COLOUR + autoAcceptReparty + "\n" +
+															DankersSkyblockMod.TYPE_COLOUR + " Ability cooldown display: " + DankersSkyblockMod.VALUE_COLOUR + abilityCooldowns + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Custom dungeon boss music: " + DankersSkyblockMod.VALUE_COLOUR + dungeonBossMusic + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Custom blood room music: " + DankersSkyblockMod.VALUE_COLOUR + bloodRoomMusic + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Custom dungeon music: " + DankersSkyblockMod.VALUE_COLOUR + dungeonMusic + "\n" +

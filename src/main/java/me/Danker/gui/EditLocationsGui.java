@@ -31,6 +31,7 @@ public class EditLocationsGui extends GuiScreen {
 	private LocationButton golemTimer;
 	private LocationButton teammatesInRadius;
 	private LocationButton giantHP;
+	private LocationButton abilityCooldown;
 	
 	@Override
 	public boolean doesGuiPauseGame() {
@@ -99,6 +100,9 @@ public class EditLocationsGui extends GuiScreen {
 							 EnumChatFormatting.LIGHT_PURPLE + "Jolly Pink Giant " + EnumChatFormatting.GREEN + "25M" + EnumChatFormatting.RED + "❤\n" +
 							 EnumChatFormatting.DARK_AQUA + "The Diamond Giant " + EnumChatFormatting.GREEN + "25M" + EnumChatFormatting.RED + "❤";
 
+		String abilityCooldownText = EnumChatFormatting.GREEN + "Spirit Glide: " + EnumChatFormatting.YELLOW + "32.734s\n" +
+									 EnumChatFormatting.GREEN + "Parley: " + EnumChatFormatting.YELLOW + "2.652s\n" +
+									 EnumChatFormatting.GREEN + "Ice Spray: " + EnumChatFormatting.YELLOW + "1.429s";
 
 		display = new LocationButton(MoveCommand.displayXY[0], MoveCommand.displayXY[1], ScaleCommand.displayScale, displayText, displayNums, 110);
 		dungeonTimer = new LocationButton(MoveCommand.dungeonTimerXY[0], MoveCommand.dungeonTimerXY[1], ScaleCommand.dungeonTimerScale, dungeonTimerText, dungeonTimerNums, 80);
@@ -112,6 +116,7 @@ public class EditLocationsGui extends GuiScreen {
 		golemTimer = new LocationButton(MoveCommand.golemTimerXY[0], MoveCommand.golemTimerXY[1] + 5, ScaleCommand.golemTimerScale, GolemSpawningAlert.GOLEM_COLOUR + "     20s", null, null);
 		teammatesInRadius = new LocationButton(MoveCommand.teammatesInRadiusXY[0], MoveCommand.teammatesInRadiusXY[1], ScaleCommand.teammatesInRadiusScale, teammatesInRadiusText, null, null);
 		giantHP = new LocationButton(MoveCommand.giantHPXY[0], MoveCommand.giantHPXY[1], ScaleCommand.giantHPScale, giantHPText, null, null);
+		abilityCooldown = new LocationButton(MoveCommand.abilityCooldownsXY[0], MoveCommand.abilityCooldownsXY[1], ScaleCommand.abilityCooldownsScale, abilityCooldownText, null, null);
 
 		this.buttonList.add(coords);
 		this.buttonList.add(dungeonTimer);
@@ -125,6 +130,7 @@ public class EditLocationsGui extends GuiScreen {
 		this.buttonList.add(golemTimer);
 		this.buttonList.add(teammatesInRadius);
 		this.buttonList.add(giantHP);
+		this.buttonList.add(abilityCooldown);
 	}
 	
 	@Override
@@ -234,6 +240,12 @@ public class EditLocationsGui extends GuiScreen {
 					giantHP.xPosition = MoveCommand.giantHPXY[0];
 					giantHP.yPosition = MoveCommand.giantHPXY[1];
 					break;
+				case "abilityCooldown":
+					MoveCommand.abilityCooldownsXY[0] += xMoved;
+					MoveCommand.abilityCooldownsXY[1] += yMoved;
+					abilityCooldown.xPosition = MoveCommand.abilityCooldownsXY[0];
+					abilityCooldown.yPosition = MoveCommand.abilityCooldownsXY[1];
+					break;
 			}
 			this.buttonList.clear();
 			initGui();
@@ -270,6 +282,8 @@ public class EditLocationsGui extends GuiScreen {
 				moving = "teammatesInRadius";
 			} else if (button == giantHP) {
 				moving = "giantHP";
+			} else if (button == abilityCooldown) {
+				moving = "abilityCooldown";
 			}
 		}
 	}
@@ -302,6 +316,8 @@ public class EditLocationsGui extends GuiScreen {
 		ConfigHandler.writeIntConfig("locations", "teammatesInRadiusY", MoveCommand.teammatesInRadiusXY[1]);
 		ConfigHandler.writeIntConfig("locations", "giantHPX", MoveCommand.giantHPXY[0]);
 		ConfigHandler.writeIntConfig("locations", "giantHPY", MoveCommand.giantHPXY[1]);
+		ConfigHandler.writeIntConfig("locations", "abilityCooldownsX", MoveCommand.abilityCooldownsXY[0]);
+		ConfigHandler.writeIntConfig("locations", "abilityCooldownsY", MoveCommand.abilityCooldownsXY[1]);
 	}
 	
 }

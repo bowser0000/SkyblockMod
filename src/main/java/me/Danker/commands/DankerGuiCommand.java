@@ -110,6 +110,7 @@ public class DankerGuiCommand extends CommandBase {
 			debug.append("[crystalhollowwaypoints][").append(ToggleCommand.crystalHollowWaypoints).append("]\n");
 			debug.append("[crystalautowaypoints][").append(ToggleCommand.crystalAutoWaypoints).append("]\n");
 			debug.append("[autoacceptreparty][").append(ToggleCommand.autoAcceptReparty).append("]\n");
+			debug.append("[abilitycooldowns][").append(ToggleCommand.abilityCooldowns).append("]\n");
 			debug.append("[dungeonbossmusic][").append(ToggleCommand.dungeonBossMusic).append("]\n");
 			debug.append("[bloodroommusic][").append(ToggleCommand.bloodRoomMusic).append("]\n");
 			debug.append("[dungeonmusic][").append(ToggleCommand.dungeonMusic).append("]\n");
@@ -122,6 +123,11 @@ public class DankerGuiCommand extends CommandBase {
 			debug.append("[caketimer][").append(MoveCommand.cakeTimerXY[0]).append(", ").append(MoveCommand.cakeTimerXY[1]).append("]\n");
 			debug.append("[skilltracker][").append(MoveCommand.skillTrackerXY[0]).append(", ").append(MoveCommand.skillTrackerXY[1]).append("]\n");
 			debug.append("[wateranswer][").append(MoveCommand.waterAnswerXY[0]).append(", ").append(MoveCommand.waterAnswerXY[1]).append("]\n");
+			debug.append("[bonzotimer][").append(MoveCommand.bonzoTimerXY[0]).append(", ").append(MoveCommand.bonzoTimerXY[1]).append("]\n");
+			debug.append("[golemtimer][").append(MoveCommand.golemTimerXY[0]).append(", ").append(MoveCommand.golemTimerXY[1]).append("]\n");
+			debug.append("[teammatesinradius][").append(MoveCommand.teammatesInRadiusXY[0]).append(", ").append(MoveCommand.teammatesInRadiusXY[1]).append("]\n");
+			debug.append("[gianthp][").append(MoveCommand.giantHPXY[0]).append(", ").append(MoveCommand.giantHPXY[1]).append("]\n");
+			debug.append("[abilitycooldowns][").append(MoveCommand.abilityCooldownsXY[0]).append(", ").append(MoveCommand.abilityCooldownsXY[1]).append("]\n");
 			debug.append("# Other Settings\n");
 			debug.append("[Current Display][").append(LootDisplay.display).append("]\n");
 			debug.append("[Auto Display][").append(LootDisplay.auto).append("]\n");

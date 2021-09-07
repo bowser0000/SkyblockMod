@@ -23,9 +23,9 @@ import java.util.List;
 
 public class DankerGui extends GuiScreen {
 
-	private int page;
-	private List<GuiButton> allButtons = new ArrayList<>();
-	private List<GuiButton> foundButtons = new ArrayList<>();
+	private final int page;
+	private final List<GuiButton> allButtons = new ArrayList<>();
+	private final List<GuiButton> foundButtons = new ArrayList<>();
 	String initSearchText;
 	
 	private GuiButton closeGUI;
@@ -71,6 +71,7 @@ public class DankerGui extends GuiScreen {
 	private GuiButton endOfFarmAlert;
 	private GuiButton gemstoneLore;
 	private GuiButton autoAcceptReparty;
+	private GuiButton abilityCooldown;
 	// Chat Messages
 	private GuiButton sceptreMessages;
 	private GuiButton midasStaffMessages;
@@ -163,6 +164,7 @@ public class DankerGui extends GuiScreen {
 		endOfFarmAlert = new FeatureButton("Alert When Reaching End of Farm: " + Utils.getColouredBoolean(ToggleCommand.endOfFarmAlert), "Alerts when you go past coords set with /dsmfarmlength.");
 		gemstoneLore = new FeatureButton("Applied Gemstones in Lore: " + Utils.getColouredBoolean(ToggleCommand.gemstoneLore), "Adds applied gemstones to item tooltip.");
 		autoAcceptReparty = new FeatureButton("Auto Accept Reparty: " + Utils.getColouredBoolean(ToggleCommand.autoAcceptReparty), "Automatically rejoins parties when disbanded and invited.");
+		abilityCooldown = new FeatureButton("Ability Cooldowns: " + Utils.getColouredBoolean(ToggleCommand.abilityCooldowns), "Displays ability cooldowns.");
 
 		allButtons.clear();
 		allButtons.add(changeDisplay);
@@ -213,6 +215,7 @@ public class DankerGui extends GuiScreen {
 		allButtons.add(endOfFarmAlert);
 		allButtons.add(gemstoneLore);
 		allButtons.add(autoAcceptReparty);
+		allButtons.add(abilityCooldown);
 
 		search.setText(initSearchText);
 		search.setVisible(true);
@@ -473,6 +476,10 @@ public class DankerGui extends GuiScreen {
 			ToggleCommand.autoAcceptReparty = !ToggleCommand.autoAcceptReparty;
 			ConfigHandler.writeBooleanConfig("toggles", "AutoAcceptReparty", ToggleCommand.autoAcceptReparty);
 			autoAcceptReparty.displayString = "Auto Accept Reparty: " + Utils.getColouredBoolean(ToggleCommand.autoAcceptReparty);
+		} else if (button == abilityCooldown) {
+			ToggleCommand.abilityCooldowns = !ToggleCommand.abilityCooldowns;
+			ConfigHandler.writeBooleanConfig("toggles", "AbilityCooldowns", ToggleCommand.abilityCooldowns);
+			abilityCooldown.displayString = "Ability Cooldowns: " + Utils.getColouredBoolean(ToggleCommand.abilityCooldowns);
 		}
 	}
 

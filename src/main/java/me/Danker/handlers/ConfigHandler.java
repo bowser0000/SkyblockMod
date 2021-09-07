@@ -217,8 +217,9 @@ public class ConfigHandler {
 		ToggleCommand.endOfFarmAlert = initBoolean("toggles", "EndOfFarmAlert", false);
 		ToggleCommand.gemstoneLore = initBoolean("toggles", "GemstoneLore", false);
 		ToggleCommand.crystalHollowWaypoints = initBoolean("toggles", "CrystalHollowWaypoints", false);
-		ToggleCommand.crystalAutoWaypoints = initBoolean("toggles", "CrystalAutoWaypoints", true);
+		ToggleCommand.crystalAutoWaypoints = initBoolean("toggles", "CrystalAutoWaypoints", true); // enabled by default
 		ToggleCommand.autoAcceptReparty = initBoolean("toggles", "AutoAcceptReparty", false);
+		ToggleCommand.abilityCooldowns = initBoolean("toggles", "AbilityCooldowns", false);
 		// Chat Messages
 		ToggleCommand.sceptreMessages = initBoolean("toggles", "SceptreMessages", true);
 		ToggleCommand.midasStaffMessages = initBoolean("toggles", "MidasStaffMessages", true);
@@ -531,6 +532,8 @@ public class ConfigHandler {
 		MoveCommand.teammatesInRadiusXY[1] = initInt("locations", "teammatesInRadiusY", 100);
 		MoveCommand.giantHPXY[0] = initInt("locations", "giantHPX", 80);
 		MoveCommand.giantHPXY[1] = initInt("locations", "giantHPY", 150);
+		MoveCommand.abilityCooldownsXY[0] = initInt("locations", "abilityCooldownsX", 120);
+		MoveCommand.abilityCooldownsXY[1] = initInt("locations", "abilityCooldownsY", 150);
 
 		// Scales
 		ScaleCommand.coordsScale = initDouble("scales", "coordsScale", 1);
@@ -545,6 +548,7 @@ public class ConfigHandler {
 		ScaleCommand.golemTimerScale = initDouble("scales", "golemTimerScale", 1);
 		ScaleCommand.teammatesInRadiusScale = initDouble("scales", "teammatesInRadiusScale", 1);
 		ScaleCommand.giantHPScale = initDouble("scales", "giantHPScale", 1);
+		ScaleCommand.abilityCooldownsScale = initDouble("scales", "abilityCooldownsScale", 1);
 
 		// Skills
 		DankersSkyblockMod.farmingLevel = initInt("skills", "farming", -1);
@@ -559,7 +563,7 @@ public class ConfigHandler {
 		// Colours
 		DankersSkyblockMod.MAIN_COLOUR = initString("colors", "main", EnumChatFormatting.GREEN.toString());
 		DankersSkyblockMod.SECONDARY_COLOUR = initString("colors", "secondary", EnumChatFormatting.DARK_GREEN.toString());
-		DankersSkyblockMod.DELIMITER_COLOUR = initString("colors", "delimiter", EnumChatFormatting.AQUA.toString() + EnumChatFormatting.STRIKETHROUGH.toString());
+		DankersSkyblockMod.DELIMITER_COLOUR = initString("colors", "delimiter", EnumChatFormatting.AQUA.toString() + EnumChatFormatting.STRIKETHROUGH);
 		DankersSkyblockMod.ERROR_COLOUR = initString("colors", "error", EnumChatFormatting.RED.toString());
 		DankersSkyblockMod.TYPE_COLOUR = initString("colors", "type", EnumChatFormatting.GREEN.toString());
 		DankersSkyblockMod.VALUE_COLOUR = initString("colors", "value", EnumChatFormatting.DARK_GREEN.toString());

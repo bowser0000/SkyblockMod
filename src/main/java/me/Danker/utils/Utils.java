@@ -9,6 +9,7 @@ import me.Danker.handlers.ScoreboardHandler;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.network.NetworkPlayerInfo;
+import net.minecraft.client.settings.GameSettings;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.item.EntityItemFrame;
 import net.minecraft.entity.player.EntityPlayer;
@@ -419,6 +420,47 @@ public class Utils {
 				.map(Map.Entry::getKey)
 				.collect(Collectors.toCollection(ArrayList::new));
 		System.out.println("Refreshed DSM repo at " + System.currentTimeMillis());
+	}
+
+	public static int getCooldownFromAbility(String ability) {
+    	EntityPlayer player = Minecraft.getMinecraft().thePlayer;
+		boolean foundAbility = false;
+
+		List<ItemStack> itemsToSearch = new ArrayList<>();
+
+		for (int i = 0; i < 8; i++) {
+			ItemStack hotbarItem = player.inventory.getStackInSlot(i);
+			if (hotbarItem == null) continue;
+			itemsToSearch.add(hotbarItem);
+		}
+
+		for (int i = 0; i < 4; i++) {
+			ItemStack armorItem = player.inventory.armorItemInSlot(0);
+			if (armorItem == null) continue;
+			itemsToSearch.add(armorItem);
+		}
+
+		for (ItemStack item : itemsToSearch) {
+			List<String> tooltip = item.getTooltip(player, false);
+
+			for (String line : tooltip) {
+				System.out.println(line);
+				if (line.contains(EnumChatFormatting.GOLD + "Ability: ")) {
+					if (line.contains(EnumChatFormatting.GOLD + "Ability: " + ability)) {
+						foundAbility = true;
+						continue;
+					} else if (foundAbility) {
+						break;
+					}
+				}
+
+				if (foundAbility && line.contains(EnumChatFormatting.DARK_GRAY + "Cooldown: ")) {
+					return Integer.parseInt(StringUtils.stripControlCodes(line).replaceAll("[^\\d]", ""));
+				}
+			}
+		}
+
+    	return 0;
 	}
 
 }
