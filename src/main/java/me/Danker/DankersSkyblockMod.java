@@ -100,6 +100,7 @@ public class DankersSkyblockMod {
     @EventHandler
     public void init(FMLInitializationEvent event) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
         MinecraftForge.EVENT_BUS.register(this);
+        MinecraftForge.EVENT_BUS.register(new AbilityCooldowns());
         MinecraftForge.EVENT_BUS.register(new ArachneESP());
         MinecraftForge.EVENT_BUS.register(new AutoAcceptReparty());
         MinecraftForge.EVENT_BUS.register(new AutoDisplay());
@@ -127,7 +128,6 @@ public class DankersSkyblockMod {
         MinecraftForge.EVENT_BUS.register(new HideTooltipsInExperiments());
         MinecraftForge.EVENT_BUS.register(new HighlightSkeletonMasters());
         MinecraftForge.EVENT_BUS.register(new IceWalkSolver());
-        MinecraftForge.EVENT_BUS.register(new AbilityCooldowns());
         MinecraftForge.EVENT_BUS.register(new LividSolver());
         MinecraftForge.EVENT_BUS.register(new LowHealthNotifications());
         MinecraftForge.EVENT_BUS.register(new NecronNotifications());

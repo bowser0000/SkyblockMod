@@ -444,7 +444,6 @@ public class Utils {
 			List<String> tooltip = item.getTooltip(player, false);
 
 			for (String line : tooltip) {
-				System.out.println(line);
 				if (line.contains(EnumChatFormatting.GOLD + "Ability: ")) {
 					if (line.contains(EnumChatFormatting.GOLD + "Ability: " + ability)) {
 						foundAbility = true;
@@ -461,6 +460,10 @@ public class Utils {
 		}
 
     	return 0;
+	}
+
+	public static double getCooldownReductionFromLevel(int level) {
+    	return (Math.floor(level / 2D) + 25) / 100D;
 	}
 
 }
