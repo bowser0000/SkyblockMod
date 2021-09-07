@@ -179,31 +179,31 @@ public class CatacombsTracker {
                     if (sCleaned.contains("F1")) {
                         f1SPlus++;
                         f1SPlusSession++;
-                        ConfigHandler.writeDoubleConfig("catacombs", "floorOneSPlus", f1SPlus);
+                        ConfigHandler.writeIntConfig("catacombs", "floorOneSPlus", f1SPlus);
                     } else if (sCleaned.contains("F2")) {
                         f2SPlus++;
                         f2SPlusSession++;
-                        ConfigHandler.writeDoubleConfig("catacombs", "floorTwoSPlus", f2SPlus);
+                        ConfigHandler.writeIntConfig("catacombs", "floorTwoSPlus", f2SPlus);
                     } else if (sCleaned.contains("F3")) {
                         f3SPlus++;
                         f3SPlusSession++;
-                        ConfigHandler.writeDoubleConfig("catacombs", "floorThreeSPlus", f3SPlus);
+                        ConfigHandler.writeIntConfig("catacombs", "floorThreeSPlus", f3SPlus);
                     } else if (sCleaned.contains("F4")) {
                         f4SPlus++;
                         f4SPlusSession++;
-                        ConfigHandler.writeDoubleConfig("catacombs", "floorFourSPlus", f4SPlus);
+                        ConfigHandler.writeIntConfig("catacombs", "floorFourSPlus", f4SPlus);
                     } else if (sCleaned.contains("F5")) {
                         f5SPlus++;
                         f5SPlusSession++;
-                        ConfigHandler.writeDoubleConfig("catacombs", "floorFiveSPlus", f5SPlus);
+                        ConfigHandler.writeIntConfig("catacombs", "floorFiveSPlus", f5SPlus);
                     } else if (sCleaned.contains("F6")) {
                         f6SPlus++;
                         f6SPlusSession++;
-                        ConfigHandler.writeDoubleConfig("catacombs", "floorSixSPlus", f6SPlus);
+                        ConfigHandler.writeIntConfig("catacombs", "floorSixSPlus", f6SPlus);
                     } else if (sCleaned.contains("F7")) {
                         f7SPlus++;
                         f7SPlusSession++;
-                        ConfigHandler.writeDoubleConfig("catacombs", "floorSevenSPlus", f7SPlus);
+                        ConfigHandler.writeIntConfig("catacombs", "floorSevenSPlus", f7SPlus);
                     }
                 }
             }
