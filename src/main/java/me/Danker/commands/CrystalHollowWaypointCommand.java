@@ -35,7 +35,7 @@ public class CrystalHollowWaypointCommand extends CommandBase {
         String[] waypoints = String.join(" ", arg1).split("\\\\n");
 
         for (String waypoint : waypoints) {
-            String[] parts = waypoint.split("@");
+            String[] parts = waypoint.split("@-");
             String[] coords = parts[1].split(",");
 
             String location = parts[0];

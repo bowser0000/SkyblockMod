@@ -174,7 +174,7 @@ public class CrystalHollowWaypoints {
         }
 
         public String getFormattedWaypoint() {
-            return location + "@" + pos.getX() + "," + pos.getY() + "," + pos.getZ();
+            return location + "@-" + pos.getX() + "," + pos.getY() + "," + pos.getZ();
         }
 
         public String getDistance(EntityPlayer player) {
