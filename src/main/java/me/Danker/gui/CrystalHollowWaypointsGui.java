@@ -18,14 +18,15 @@ import java.util.List;
 
 public class CrystalHollowWaypointsGui extends GuiScreen {
 
-    private int page;
-    private List<GuiButton> allButtons = new ArrayList<>();
+    private final int page;
+    private final List<GuiButton> allButtons = new ArrayList<>();
 
     private GuiButton goBack;
     private GuiButton backPage;
     private GuiButton nextPage;
     private GuiButton sendDSM;
     private GuiButton sendSBE;
+    private GuiButton add;
     private FeatureButton crystalHollowWaypoints;
     private FeatureButton crystalAutoWaypoints;
 
@@ -51,10 +52,12 @@ public class CrystalHollowWaypointsGui extends GuiScreen {
         nextPage = new GuiButton(0, width / 2 + 20, (int) (height * 0.8), 80, 20, "Next >");
         sendDSM = new GuiButton(0, 2, 10, 175, 20, "Send DSM Formatted Waypoints");
         sendSBE = new GuiButton(0, 2, 40, 175, 20, "Send SBE Formatted Waypoints");
+        add = new GuiButton(0, 0, 0, "Add Waypoint");
         crystalHollowWaypoints = new FeatureButton("Crystal Hollows Waypoints: " + Utils.getColouredBoolean(ToggleCommand.crystalHollowWaypoints), "Shows waypoints to various places in the Crystal Hollows.");
         crystalAutoWaypoints = new FeatureButton("Auto Waypoints: " + Utils.getColouredBoolean(ToggleCommand.crystalAutoWaypoints), "Automatically creates waypoints when you visit a special place in the Crystal Hollows.");
 
         allButtons.clear();
+        allButtons.add(add);
         allButtons.add(crystalHollowWaypoints);
         allButtons.add(crystalAutoWaypoints);
         for (int i = 0; i < CrystalHollowWaypoints.waypoints.size(); i++) {
@@ -123,6 +126,8 @@ public class CrystalHollowWaypointsGui extends GuiScreen {
                 message.insert(0, "$SBECHWP:");
                 player.sendChatMessage(message.toString());
             }
+        } else if (button == add) {
+            mc.displayGuiScreen(new CrystalHollowAddWaypointGui());
         } else if (button == crystalHollowWaypoints) {
             ToggleCommand.crystalHollowWaypoints = !ToggleCommand.crystalHollowWaypoints;
             ConfigHandler.writeBooleanConfig("toggles", "CrystalHollowWaypoints", ToggleCommand.crystalHollowWaypoints);
