@@ -445,7 +445,7 @@ public class CatacombsTracker {
                 for (String lineUnclean : tooltip) {
                     String line = StringUtils.stripControlCodes(lineUnclean);
                     if (line.contains("FREE")) {
-                        break;
+                        continue;
                     } else if (line.contains(" Coins") && !line.contains("NOTE:")) {
                         int coinsSpent = Integer.parseInt(line.substring(0, line.indexOf(" ")).replaceAll(",", ""));
 
