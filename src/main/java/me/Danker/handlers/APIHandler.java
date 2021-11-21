@@ -8,6 +8,12 @@ import me.Danker.DankersSkyblockMod;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ChatComponentText;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.util.EntityUtils;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -60,6 +66,29 @@ public class APIHandler {
 		} catch (IOException ex) {
 			player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "An error has occured. See logs for more details."));
 			ex.printStackTrace();
+		}
+
+		return new JsonObject();
+	}
+
+	public static JsonObject getResponsePOST(String urlString, JsonObject body, boolean hasError) throws IOException {
+		EntityPlayer player = Minecraft.getMinecraft().thePlayer;
+
+		CloseableHttpClient httpClient = HttpClientBuilder.create().build();
+
+		try {
+			HttpPost req = new HttpPost(urlString);
+			StringEntity params = new StringEntity(body.toString());
+			req.addHeader("content-type", "application/json");
+			req.setEntity(params);
+			HttpResponse response = httpClient.execute(req);
+
+			return new Gson().fromJson(EntityUtils.toString(response.getEntity(), "UTF-8"), JsonObject.class);
+		} catch (Exception ex) {
+			player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "An error has occured. See logs for more details."));
+			ex.printStackTrace();
+		} finally {
+			httpClient.close();
 		}
 
 		return new JsonObject();
