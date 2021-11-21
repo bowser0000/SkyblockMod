@@ -15,6 +15,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 
 public class APIHandler {
@@ -28,7 +29,7 @@ public class APIHandler {
 			conn.setRequestProperty("User-Agent", "Dsm/1.0");
 			
 			if (conn.getResponseCode() == HttpURLConnection.HTTP_OK) {
-				BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+				BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream(), StandardCharsets.UTF_8));
 				String input;
 				StringBuilder response = new StringBuilder();
 				

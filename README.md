@@ -92,6 +92,7 @@ Discord Server: https://discord.gg/QsEkNQS
 - /reloadconfig - Reloads Danker's Skyblock Mod config.
 - /reloaddsmrepo - Reloads Danker's Skyblock Mod repository.
 - /dsmfarmlength <min coords> <max coords> - Sets coords to be used for end of farm alert.
+- /hotmof [player] - Uses API to find total powder and HotM tree of a person. If no name is provided, it checks yours.
 
 ## Keybinds
 - Open Maddox menu - M by default.
@@ -142,3 +143,4 @@ Software | License
 [NotEnoughUpdates](https://github.com/Moulberry/NotEnoughUpdates/) | [Creative Commons Public License](https://github.com/Moulberry/NotEnoughUpdates/blob/master/LICENSE)
 [HyChat](https://github.com/Moulberry/Hychat) | [Creative Commons Public License](https://github.com/Moulberry/Hychat/blob/master/LICENSE)
 [SkyblockCatia](https://github.com/SteveKunG/SkyBlockcatia) | [MIT License](https://github.com/SteveKunG/SkyBlockcatia/blob/1.8.9/LICENSE.md)
+[MatterOverdrive (Legacy Edition)](https://bitbucket.org/hrznstudio/mo-legacy-edition/) | [GNU General Public License](https://bitbucket.org/hrznstudio/mo-legacy-edition/src/1.12.2/LICENSE.md)

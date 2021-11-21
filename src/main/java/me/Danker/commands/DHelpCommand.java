@@ -61,6 +61,7 @@ public class DHelpCommand extends CommandBase {
 													EnumChatFormatting.GOLD + ReloadConfigCommand.usage(arg0) + EnumChatFormatting.AQUA + " - Reloads Danker's Skyblock Mod config.\n" +
 													EnumChatFormatting.GOLD + ReloadRepoCommand.usage(arg0) + EnumChatFormatting.AQUA + " - Reloads Danker's Skyblock Mod repository.\n" +
 													EnumChatFormatting.GOLD + FarmLengthCommand.usage(arg0) + EnumChatFormatting.AQUA + " - Sets coords to be used for end of farm alert.\n" +
+													EnumChatFormatting.GOLD + HOTMCommand.usage(arg0) + EnumChatFormatting.AQUA + " - Uses API to find total powder and HotM tree of a person. If no name is provided, it checks yours.\n" +
 													EnumChatFormatting.GREEN + " Open Maddox Menu" + EnumChatFormatting.AQUA + " - M by default.\n" +
 													EnumChatFormatting.GREEN + " Start/Stop Skill Tracker" + EnumChatFormatting.AQUA + " - Numpad 5 by default.\n"));
 	}

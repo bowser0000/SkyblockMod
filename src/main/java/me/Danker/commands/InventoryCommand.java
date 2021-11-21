@@ -153,8 +153,6 @@ public class InventoryCommand extends CommandBase {
 
             chest = new GuiChest(player.inventory, inventory);
             DankersSkyblockMod.guiToOpen = "inventory";
-
-           // mc.displayGuiScreen(new GuiChest(player.inventory, inventory));
         }).start();
     }
 
