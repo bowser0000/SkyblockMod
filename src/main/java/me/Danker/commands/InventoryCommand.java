@@ -27,6 +27,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Base64;
+import java.util.Collections;
 import java.util.List;
 
 public class InventoryCommand extends CommandBase {
@@ -36,6 +37,11 @@ public class InventoryCommand extends CommandBase {
     @Override
     public String getCommandName() {
         return "inventory";
+    }
+
+    @Override
+    public List<String> getCommandAliases() {
+        return Collections.singletonList("inv");
     }
 
     @Override
