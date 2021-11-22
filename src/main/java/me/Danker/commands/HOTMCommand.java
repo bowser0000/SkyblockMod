@@ -88,9 +88,23 @@ public class HOTMCommand extends CommandBase {
 
             System.out.println("Fetching mining stats...");
             JsonObject miningCore = profileResponse.get("profile").getAsJsonObject().get("members").getAsJsonObject().get(uuid).getAsJsonObject().get("mining_core").getAsJsonObject();
-            int mithril = miningCore.get("powder_mithril").getAsInt() + miningCore.get("powder_spent_mithril").getAsInt();
-            int gemstone = miningCore.get("powder_gemstone").getAsInt() + miningCore.get("powder_spent_gemstone").getAsInt();
-            String ability = Node.valueOf(miningCore.get("selected_pickaxe_ability").getAsString()).name;
+
+            int mithril = 0;
+            if (miningCore.has("powder_mithril")) {
+                mithril = miningCore.get("powder_mithril").getAsInt();
+                if (miningCore.has("powder_spent_mithril")) mithril += miningCore.get("powder_spent_mithril").getAsInt();
+            }
+
+            int gemstone = 0;
+            if (miningCore.has("powder_gemstone")) {
+                gemstone = miningCore.get("powder_gemstone").getAsInt();
+                if (miningCore.has("powder_spent_gemstone")) gemstone += miningCore.get("powder_spent_gemstone").getAsInt();
+            }
+
+            String ability = EnumChatFormatting.RED + "None";
+            if (miningCore.has("selected_pickaxe_ability")) {
+                ability = Node.valueOf(miningCore.get("selected_pickaxe_ability").getAsString()).name;
+            }
 
             ChatComponentText tree = new ChatComponentText(EnumChatFormatting.GREEN + "" + EnumChatFormatting.BOLD + "[CLICK]");
             tree.setChatStyle(tree.getChatStyle().setChatClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/hotmtree " + username + " " + latestProfile)));
