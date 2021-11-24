@@ -54,7 +54,7 @@ public class GemstonesLore {
                             if (!Character.isDigit(last)) continue;
 
                             String gemstone = "  " + Utils.capitalizeString(gems.getString(gem)) + " ";
-                            if (gem.startsWith("UNIVERSAL_")) {
+                            if (gem.startsWith("UNIVERSAL_") || gem.startsWith("MINING_") || gem.startsWith("COMBAT_") || gem.startsWith("DEFENSIVE_")) {
                                 gemstone += Utils.capitalizeString(gems.getString(gem + "_gem"));
                             } else {
                                 gemstone += Utils.capitalizeString(gem.substring(0, gem.indexOf("_")));
