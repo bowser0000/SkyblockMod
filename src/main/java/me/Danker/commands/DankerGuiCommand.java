@@ -57,6 +57,7 @@ public class DankerGuiCommand extends CommandBase {
 			debug.append("[splitfishing][").append(ToggleCommand.splitFishing).append("]\n");
 			debug.append("[chatmaddox][").append(ToggleCommand.chatMaddoxToggled).append("]\n");
 			debug.append("[spiritbearalerts][").append(ToggleCommand.spiritBearAlerts).append("]\n");
+			debug.append("[flowerweapons][").append(ToggleCommand.flowerWeaponsToggled).append("]\n");
 			debug.append("[sceptremessages][").append(ToggleCommand.sceptreMessages).append("]\n");
 			debug.append("[petcolors][").append(ToggleCommand.petColoursToggled).append("]\n");
 			debug.append("[dungeontimer][").append(ToggleCommand.dungeonTimerToggled).append("]\n");
@@ -92,6 +93,8 @@ public class DankerGuiCommand extends CommandBase {
 			debug.append("[startswithterminal][").append(ToggleCommand.startsWithToggled).append("]\n");
 			debug.append("[selectallterminal][").append(ToggleCommand.selectAllToggled).append("]\n");
 			debug.append("[clickinorderterminal][").append(ToggleCommand.clickInOrderToggled).append("]\n");
+			debug.append("[blockwrongterminalclicks][").append(ToggleCommand.blockWrongTerminalClicksToggled).append("]\n");
+			debug.append("[itemframeonsealanterns][").append(ToggleCommand.itemFrameOnSeaLanternsToggled).append("]\n");
 			debug.append("[ultrasequencer][").append(ToggleCommand.ultrasequencerToggled).append("]\n");
 			debug.append("[chronomatron][").append(ToggleCommand.chronomatronToggled).append("]\n");
 			debug.append("[superpairs][").append(ToggleCommand.superpairsToggled).append("]\n");

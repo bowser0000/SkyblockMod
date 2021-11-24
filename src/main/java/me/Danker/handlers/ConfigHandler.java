@@ -238,6 +238,7 @@ public class ConfigHandler {
 		ToggleCommand.necronNotificationsToggled = initBoolean("toggles", "NecronNotifications", false);
 		ToggleCommand.bonzoTimerToggled = initBoolean("toggles", "BonzoTimer", false);
 		ToggleCommand.swapToPickBlockToggled = initBoolean("toggles", "PickBlock", false);
+		ToggleCommand.flowerWeaponsToggled = initBoolean("toggles", "FlowerWeapons", false);
 		ToggleCommand.autoSkillTrackerToggled =  initBoolean("toggles", "AutoSkillTracker", false);
 		// Puzzle Solvers
 		ToggleCommand.threeManToggled = initBoolean("toggles", "ThreeManPuzzle", false);
@@ -253,6 +254,8 @@ public class ConfigHandler {
 		ToggleCommand.startsWithToggled = initBoolean("toggles", "StartsWithTerminal", false);
 		ToggleCommand.selectAllToggled = initBoolean("toggles", "SelectAllTerminal", false);
 		ToggleCommand.clickInOrderToggled = initBoolean("toggles", "ClickInOrderTerminal", false);
+		ToggleCommand.blockWrongTerminalClicksToggled = initBoolean("toggles", "BlockWrongTerminalClicks", false);
+		ToggleCommand.itemFrameOnSeaLanternsToggled = initBoolean("toggles", "IgnoreItemFrameOnSeaLanterns", false);
 		// Experiment Solvers
 		ToggleCommand.ultrasequencerToggled = initBoolean("toggles", "UltraSequencer", false);
 		ToggleCommand.chronomatronToggled = initBoolean("toggles", "Chronomatron", false);
@@ -293,6 +296,14 @@ public class ConfigHandler {
 
 		// API
 		if (!hasKey("api", "APIKey")) writeStringConfig("api", "APIKey", "");
+
+		// Block Wrong Slayer
+		if (!hasKey("toggles", "BlockSlayer")) writeStringConfig("toggles", "BlockSlayer", "");
+		String onlySlayer = getString("toggles", "BlockSlayer");
+		if (!onlySlayer.equals("")) {
+			BlockWrongSlayer.onlySlayerName = onlySlayer.substring(0, onlySlayer.lastIndexOf(" "));
+			BlockWrongSlayer.onlySlayerNumber = onlySlayer.substring(onlySlayer.lastIndexOf(" ") + 1);
+		}
 		
 		// Wolf
 		WolfTracker.wolfSvens = initInt("wolf", "svens", 0);

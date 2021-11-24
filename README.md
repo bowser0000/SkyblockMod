@@ -26,6 +26,7 @@ Discord Server: https://discord.gg/QsEkNQS
 - RNGesus drop alerts
 - Click anywhere on-screen to open Maddox
 - Maddox menu keybind
+- Block starting other slayer quests
 - Slayer slain alert
 - Fishing, jerry fishing, fishing festival, spooky fishing trackers
 - Expertise kills in fishing rod lore
@@ -34,7 +35,7 @@ Discord Server: https://discord.gg/QsEkNQS
 - Dungeons puzzle solver (Riddle, trivia, blaze, creeper, water, tic tac toe, boulder, silverfish, ice walk)
 - Dungeons timer (watcher, boss, deaths, and puzzle fails)
 - Watcher ready message
-- Catacombs F7 Stage 3 solvers (Starts with letter, select all colour)
+- Catacombs F7 Stage 3 solvers (Starts with letter, select all colour, ignore arrows on sea lanterns)
 - Find correct Livid (with graphic display of HP)
 - Catacombs F6 and F7 Giant HP display
 - Use custom music in supported locations
@@ -83,6 +84,7 @@ Discord Server: https://discord.gg/QsEkNQS
 - /weight [player] [lily] - Uses API to get weight of a person. If no name is provided, it checks yours. Adding lily uses lily's weight instead of Senither's.
 - /importfishing - Imports your fishing stats from your latest profile to your fishing tracker using the API.
 - /sbplayers - Uses API to find how many players are on each Skyblock island.
+- /onlyslayer <zombie/spider/wolf/enderman> <1/2/3/4/5>
 - /skilltracker <start/stop/reset> - Text display for skill xp/hour.
 - /reparty - Disbands and reparties all members in the party
 - /fairysouls - Check the fairysouls of a player

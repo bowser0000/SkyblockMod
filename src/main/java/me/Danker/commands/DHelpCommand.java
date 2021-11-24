@@ -53,6 +53,7 @@ public class DHelpCommand extends CommandBase {
 													EnumChatFormatting.GOLD + WeightCommand.usage(arg0) + EnumChatFormatting.AQUA + " - Uses API to get weight of a person. If no name is provided, it checks yours. Adding lily uses lily's weight instead of Senither's.\n" +
 													EnumChatFormatting.GOLD + ImportFishingCommand.usage(arg0) + EnumChatFormatting.AQUA + " - Imports your fishing stats from your latest profile to your fishing tracker using the API.\n" +
 													EnumChatFormatting.GOLD + SkyblockPlayersCommand.usage(arg0) + EnumChatFormatting.AQUA + " - Uses API to find how many players are on each Skyblock island.\n" +
+													EnumChatFormatting.GOLD + BlockSlayerCommand.usage(arg0) + EnumChatFormatting.AQUA + " - Stops you from starting a slayer quest other than the one specified.\n" +
 													EnumChatFormatting.GOLD + SkillTrackerCommand.usage(arg0) + EnumChatFormatting.AQUA + " - Text display for skill xp/hour.\n" +
                           							EnumChatFormatting.GOLD + LobbyBankCommand.usage(arg0) + EnumChatFormatting.AQUA + " - Uses API to find the average bank total of the lobby, as well the three players with the highest total money in the bank(and purse).\n" +
 													EnumChatFormatting.GOLD + RepartyCommand.usage(arg0) + EnumChatFormatting.AQUA + " - Disbands and reparties all members in the party.\n" +

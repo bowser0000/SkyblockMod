@@ -37,6 +37,7 @@ public class DankerGui extends GuiScreen {
 	private GuiTextField search;
 
 	private GuiButton changeDisplay;
+	private GuiButton onlySlayer;
 	private GuiButton puzzleSolvers;
 	private GuiButton experimentationTableSolvers;
 	private GuiButton skillTracker;
@@ -72,6 +73,14 @@ public class DankerGui extends GuiScreen {
 	private GuiButton gemstoneLore;
 	private GuiButton autoAcceptReparty;
 	private GuiButton abilityCooldown;
+	private GuiButton dungeonTimer;
+	private GuiButton lowHealthNotify;
+	private GuiButton lividSolver;
+	private GuiButton stopSalvageStarred;
+	private GuiButton watcherReadyMessage;
+	private GuiButton flowerWeapons;
+	private GuiButton necronNotifications;
+	private GuiButton bonzoTimer;
 	// Chat Messages
 	private GuiButton sceptreMessages;
 	private GuiButton midasStaffMessages;
@@ -80,14 +89,6 @@ public class DankerGui extends GuiScreen {
 	private GuiButton cooldownMessages;
 	private GuiButton manaMessages;
 	private GuiButton killComboMessages;
-	// Dungeons
-	private GuiButton dungeonTimer;
-	private GuiButton lowHealthNotify;
-	private GuiButton lividSolver;
-	private GuiButton stopSalvageStarred;
-	private GuiButton watcherReadyMessage;
-	private GuiButton necronNotifications;
-	private GuiButton bonzoTimer;
 
 	public DankerGui(int page, String searchText) {
 		this.page = page;
@@ -117,6 +118,7 @@ public class DankerGui extends GuiScreen {
 		search = new GuiTextField(0, this.fontRendererObj, width - 202, 5, 200, 20);
 
 		changeDisplay = new GuiButton(0, 0, 0, "Change Display Settings");
+		onlySlayer = new GuiButton(0, 0, 0, "Set Slayer Quest");
 		puzzleSolvers = new GuiButton(0, 0, 0, "Toggle Dungeons Puzzle Solvers");
 		experimentationTableSolvers = new GuiButton(0, 0, 0, "Toggle Experimentation Table Solvers");
 		skillTracker = new GuiButton(0, 0, 0, "Toggle Skill XP/Hour Tracking");
@@ -149,6 +151,7 @@ public class DankerGui extends GuiScreen {
 		dungeonTimer = new FeatureButton("Display Dungeon Timers: " + Utils.getColouredBoolean(ToggleCommand.dungeonTimerToggled), "Displays timing of certain dungeon objectives and other information.");
 		stopSalvageStarred = new FeatureButton("Stop Salvaging Starred Items: " + Utils.getColouredBoolean(ToggleCommand.stopSalvageStarredToggled), "Blocks salvaging starred items.");
 		watcherReadyMessage = new FeatureButton("Display Watcher Ready Message: " + Utils.getColouredBoolean(ToggleCommand.watcherReadyToggled), "Alerts when Watcher finishes spawning mobs.");
+		flowerWeapons = new FeatureButton("Prevent Placing FoT/Spirit Sceptre: " + Utils.getColouredBoolean(ToggleCommand.flowerWeaponsToggled), "Blocks placing Flower of Truth or Spirit Sceptre.");
 		notifySlayerSlain = new FeatureButton("Notify when Slayer Slain: " + Utils.getColouredBoolean(ToggleCommand.notifySlayerSlainToggled), "Alerts when slayer boss has been slain.");
 		necronNotifications = new FeatureButton("Necron Phase Notifications: " + Utils.getColouredBoolean(ToggleCommand.necronNotificationsToggled), "Creates alert on different phases of the Necron fight.");
 		bonzoTimer = new FeatureButton("Bonzo's Mask Timer: " + Utils.getColouredBoolean(ToggleCommand.bonzoTimerToggled), "Displays cooldown of Bonzo Mask ability.");
@@ -168,6 +171,7 @@ public class DankerGui extends GuiScreen {
 
 		allButtons.clear();
 		allButtons.add(changeDisplay);
+		allButtons.add(onlySlayer);
 		allButtons.add(puzzleSolvers);
 		allButtons.add(experimentationTableSolvers);
 		allButtons.add(skillTracker);
@@ -200,6 +204,7 @@ public class DankerGui extends GuiScreen {
 		allButtons.add(dungeonTimer);
 		allButtons.add(stopSalvageStarred);
 		allButtons.add(watcherReadyMessage);
+		allButtons.add(flowerWeapons);
 		allButtons.add(notifySlayerSlain);
 		allButtons.add(necronNotifications);
 		allButtons.add(bonzoTimer);
@@ -298,6 +303,8 @@ public class DankerGui extends GuiScreen {
 			}
 		} else if (button == changeDisplay) {
 			DankersSkyblockMod.guiToOpen = "displaygui";
+		} else if (button == onlySlayer) {
+			DankersSkyblockMod.guiToOpen = "onlyslayergui";
 		} else if (button == puzzleSolvers) {
 			DankersSkyblockMod.guiToOpen = "puzzlesolvers";
 		} else if (button == experimentationTableSolvers) {
@@ -424,6 +431,10 @@ public class DankerGui extends GuiScreen {
 			ToggleCommand.swapToPickBlockToggled = !ToggleCommand.swapToPickBlockToggled;
 			ConfigHandler.writeBooleanConfig("toggles", "PickBlock", ToggleCommand.swapToPickBlockToggled);
 			pickBlock.displayString = "Auto-Swap to Pick Block: " + Utils.getColouredBoolean(ToggleCommand.swapToPickBlockToggled);
+		} else if (button == flowerWeapons) {
+			ToggleCommand.flowerWeaponsToggled = !ToggleCommand.flowerWeaponsToggled;
+			ConfigHandler.writeBooleanConfig("toggles", "FlowerWeapons", ToggleCommand.flowerWeaponsToggled);
+			flowerWeapons.displayString = "Prevent Placing FoT/Spirit Sceptre: " + Utils.getColouredBoolean(ToggleCommand.flowerWeaponsToggled);
 		} else if (button == autoSkillTracker) {
 			ToggleCommand.autoSkillTrackerToggled = !ToggleCommand.autoSkillTrackerToggled;
 			ConfigHandler.writeBooleanConfig("toggles", "AutoSkillTracker", ToggleCommand.autoSkillTrackerToggled);
