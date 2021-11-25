@@ -1,4 +1,4 @@
-package me.Danker.gui;
+package me.Danker.gui.crystalhollowwaypoints;
 
 import me.Danker.features.CrystalHollowWaypoints;
 import me.Danker.handlers.TextRenderer;

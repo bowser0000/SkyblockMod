@@ -1,4 +1,4 @@
-package me.Danker.gui;
+package me.Danker.gui.crystalhollowwaypoints;
 
 import me.Danker.DankersSkyblockMod;
 import me.Danker.features.CrystalHollowWaypoints;
@@ -73,6 +73,7 @@ public class CrystalHollowWaypointActionGui extends GuiScreen {
         CrystalHollowWaypoints.Waypoint waypoint = CrystalHollowWaypoints.waypoints.get(id);
         EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
         if (button == goBack) {
+            mc.displayGuiScreen(new CrystalHollowWaypointsGui(1));
             DankersSkyblockMod.guiToOpen = "crystalwaypoints";
         } else if (button == toggle) {
             waypoint.toggle();

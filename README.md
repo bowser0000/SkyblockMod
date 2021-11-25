@@ -61,6 +61,7 @@ Discord Server: https://discord.gg/QsEkNQS
 - Custom name colors
 - Crystal Hollows waypoints (with SkyblockExtras support)
 - Ability cooldowns display
+- Custom alerts based on chat
 
 ## Commands
 - /dhelp - Returns this message in-game.

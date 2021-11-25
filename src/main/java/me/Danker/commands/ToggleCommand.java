@@ -46,6 +46,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 	public static boolean crystalAutoWaypoints;
 	public static boolean autoAcceptReparty;
 	public static boolean abilityCooldowns;
+	public static boolean alerts;
 	// Chat Messages
 	public static boolean sceptreMessages;
 	public static boolean midasStaffMessages;
@@ -144,7 +145,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 														  "gemstonelore", "crystalhollowwaypoints", "crystalautowaypoints", "autoacceptreparty",
 														  "itemcooldowns", "hubmusic", "islandmusic", "dungeonhubmusic", "farmingislandsmusic", "goldminemusic",
 														  "deepcavernsmusic", "dwarvenminesmusic", "crystalhollowsmusic", "spidersdenmusic", "blazingfortressmusic",
-														  "endmusic", "parkmusic", "list");
+														  "endmusic", "parkmusic", "alerts", "list");
 		}
 		return null;
 	}
@@ -586,6 +587,11 @@ public class ToggleCommand extends CommandBase implements ICommand {
 				ConfigHandler.writeBooleanConfig("toggles", "DungeonMusic", parkMusic);
 				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Custom park music has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + parkMusic + DankersSkyblockMod.MAIN_COLOUR + "."));
 				break;
+			case "alert":
+				alerts = !alerts;
+				ConfigHandler.writeBooleanConfig("toggles", "Alerts", alerts);
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Alerts has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + alerts + DankersSkyblockMod.MAIN_COLOUR + "."));
+				break;
 			case "list":
 				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.TYPE_COLOUR + "Guild party notifications: " + DankersSkyblockMod.VALUE_COLOUR + gpartyToggled + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Coord/Angle display: " + DankersSkyblockMod.VALUE_COLOUR + coordsToggled + "\n" +
@@ -659,7 +665,8 @@ public class ToggleCommand extends CommandBase implements ICommand {
 															DankersSkyblockMod.TYPE_COLOUR + " Custom spider's den music: " + DankersSkyblockMod.VALUE_COLOUR + spidersDenMusic + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Custom blazing fortress music: " + DankersSkyblockMod.VALUE_COLOUR + blazingFortressMusic + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Custom end music: " + DankersSkyblockMod.VALUE_COLOUR + endMusic + "\n" +
-															DankersSkyblockMod.TYPE_COLOUR + " Custom park music: " + DankersSkyblockMod.VALUE_COLOUR + parkMusic
+															DankersSkyblockMod.TYPE_COLOUR + " Custom park music: " + DankersSkyblockMod.VALUE_COLOUR + parkMusic + "\n" +
+															DankersSkyblockMod.TYPE_COLOUR + " Alerts: " + DankersSkyblockMod.VALUE_COLOUR + alerts
 				));
 				break;
 			default:

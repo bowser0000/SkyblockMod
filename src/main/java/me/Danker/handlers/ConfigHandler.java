@@ -1,5 +1,8 @@
 package me.Danker.handlers;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import me.Danker.DankersSkyblockMod;
 import me.Danker.commands.MoveCommand;
 import me.Danker.commands.ScaleCommand;
@@ -13,7 +16,9 @@ import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.common.config.ConfigCategory;
 import net.minecraftforge.common.config.Configuration;
 
-import java.io.File;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class ConfigHandler {
 	public static Configuration config;
@@ -220,15 +225,6 @@ public class ConfigHandler {
 		ToggleCommand.crystalAutoWaypoints = initBoolean("toggles", "CrystalAutoWaypoints", true); // enabled by default
 		ToggleCommand.autoAcceptReparty = initBoolean("toggles", "AutoAcceptReparty", false);
 		ToggleCommand.abilityCooldowns = initBoolean("toggles", "AbilityCooldowns", false);
-		// Chat Messages
-		ToggleCommand.sceptreMessages = initBoolean("toggles", "SceptreMessages", true);
-		ToggleCommand.midasStaffMessages = initBoolean("toggles", "MidasStaffMessages", true);
-		ToggleCommand.implosionMessages = initBoolean("toggles", "ImplosionMessages", true);
-		ToggleCommand.healMessages = initBoolean("toggles", "HealMessages", true);
-		ToggleCommand.cooldownMessages = initBoolean("toggles", "CooldownMessages", true);
-		ToggleCommand.manaMessages = initBoolean("toggles", "ManaMessages", true);
-		ToggleCommand.killComboMessages = initBoolean("toggles", "KillComboMessages", true);
-		// Dungeons
 		ToggleCommand.dungeonTimerToggled = initBoolean("toggles", "DungeonTimer", false);
 		ToggleCommand.lowHealthNotifyToggled = initBoolean("toggles", "LowHealthNotify", false);
 		ToggleCommand.lividSolverToggled = initBoolean("toggles", "LividSolver", false);
@@ -239,7 +235,16 @@ public class ConfigHandler {
 		ToggleCommand.bonzoTimerToggled = initBoolean("toggles", "BonzoTimer", false);
 		ToggleCommand.swapToPickBlockToggled = initBoolean("toggles", "PickBlock", false);
 		ToggleCommand.flowerWeaponsToggled = initBoolean("toggles", "FlowerWeapons", false);
-		ToggleCommand.autoSkillTrackerToggled =  initBoolean("toggles", "AutoSkillTracker", false);
+		ToggleCommand.autoSkillTrackerToggled = initBoolean("toggles", "AutoSkillTracker", false);
+		ToggleCommand.alerts = initBoolean("toggles", "Alerts", false);
+		// Chat Messages
+		ToggleCommand.sceptreMessages = initBoolean("toggles", "SceptreMessages", true);
+		ToggleCommand.midasStaffMessages = initBoolean("toggles", "MidasStaffMessages", true);
+		ToggleCommand.implosionMessages = initBoolean("toggles", "ImplosionMessages", true);
+		ToggleCommand.healMessages = initBoolean("toggles", "HealMessages", true);
+		ToggleCommand.cooldownMessages = initBoolean("toggles", "CooldownMessages", true);
+		ToggleCommand.manaMessages = initBoolean("toggles", "ManaMessages", true);
+		ToggleCommand.killComboMessages = initBoolean("toggles", "KillComboMessages", true);
 		// Puzzle Solvers
 		ToggleCommand.threeManToggled = initBoolean("toggles", "ThreeManPuzzle", false);
 		ToggleCommand.oruoToggled = initBoolean("toggles", "OruoPuzzle", false);
@@ -616,6 +621,21 @@ public class ConfigHandler {
 
 		// Commands
 		if (!hasKey("commands", "reparty")) writeBooleanConfig("commands", "reparty", false);
+
+		// JSON
+		Gson gson = new Gson();
+
+		try {
+			if (!(new File(Alerts.configFile).exists())) {
+				FileWriter file = new FileWriter(Alerts.configFile);
+				file.write(new JsonArray().toString());
+				file.close();
+			}
+			Alerts.Alert[] alerts = gson.fromJson(new FileReader(Alerts.configFile), Alerts.Alert[].class);
+			if (alerts != null) Alerts.alerts = new ArrayList<>(Arrays.asList(alerts));
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}
 	}
 	
 }

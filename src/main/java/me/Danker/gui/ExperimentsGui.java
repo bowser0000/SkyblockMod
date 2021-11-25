@@ -52,7 +52,7 @@ public class ExperimentsGui extends GuiScreen {
     @Override
     public void actionPerformed(GuiButton button) {
         if (button == goBack) {
-            DankersSkyblockMod.guiToOpen = "dankergui1";
+            mc.displayGuiScreen(new DankerGui(1, ""));
         } else if (button == ultrasequencer) {
             ToggleCommand.ultrasequencerToggled = !ToggleCommand.ultrasequencerToggled;
             ConfigHandler.writeBooleanConfig("toggles", "UltraSequencer", ToggleCommand.ultrasequencerToggled);

@@ -67,7 +67,7 @@ public class SkillTrackerGui extends GuiScreen {
 	@Override
 	public void actionPerformed(GuiButton button) {
 		if (button == goBack) {
-			DankersSkyblockMod.guiToOpen = "dankergui1";
+			mc.displayGuiScreen(new DankerGui(1, ""));
 		} else if (button == start) {
 			if (SkillTracker.skillStopwatch.isStarted() && SkillTracker.skillStopwatch.isSuspended()) {
 				SkillTracker.skillStopwatch.resume();

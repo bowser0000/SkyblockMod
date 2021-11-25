@@ -110,7 +110,7 @@ public class PuzzleSolversGui extends GuiScreen {
 	@Override
 	public void actionPerformed(GuiButton button) {
 		if (button == goBack) {
-			DankersSkyblockMod.guiToOpen = "dankergui1";
+			mc.displayGuiScreen(new DankerGui(1, ""));
 		} else if (button == backPage) {
 			Minecraft.getMinecraft().displayGuiScreen(new PuzzleSolversGui(page - 1));
 		} else if (button == nextPage) {

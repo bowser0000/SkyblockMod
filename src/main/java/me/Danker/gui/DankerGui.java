@@ -2,7 +2,9 @@ package me.Danker.gui;
 
 import me.Danker.DankersSkyblockMod;
 import me.Danker.commands.ToggleCommand;
+import me.Danker.gui.alerts.AlertsGui;
 import me.Danker.gui.buttons.FeatureButton;
+import me.Danker.gui.crystalhollowwaypoints.CrystalHollowWaypointsGui;
 import me.Danker.handlers.ConfigHandler;
 import me.Danker.handlers.TextRenderer;
 import me.Danker.utils.Utils;
@@ -43,6 +45,7 @@ public class DankerGui extends GuiScreen {
 	private GuiButton skillTracker;
 	private GuiButton customMusic;
 	private GuiButton crystalHollowWaypoints;
+	private GuiButton alerts;
 	// Toggles
 	private GuiButton gparty;
 	private GuiButton coords;
@@ -124,6 +127,7 @@ public class DankerGui extends GuiScreen {
 		skillTracker = new GuiButton(0, 0, 0, "Toggle Skill XP/Hour Tracking");
 		customMusic = new GuiButton(0, 0, 0, "Custom Music");
 		crystalHollowWaypoints = new GuiButton(0, 0, 0, "Crystal Hollows Waypoints");
+		alerts = new GuiButton(0, 0, 0, "Alerts");
 		outlineText = new FeatureButton("Outline Displayed Text: " + Utils.getColouredBoolean(ToggleCommand.outlineTextToggled), "Adds bold outline to on-screen text.");
 		pickBlock = new FeatureButton("Auto-Swap to Pick Block: " + Utils.getColouredBoolean(ToggleCommand.swapToPickBlockToggled), "Automatically changes left clicks to middle clicks.\nHelpful when lagging.");
 		coords = new FeatureButton("Coordinate/Angle Display: " + Utils.getColouredBoolean(ToggleCommand.coordsToggled), "Displays coordinates and angle.");
@@ -177,6 +181,7 @@ public class DankerGui extends GuiScreen {
 		allButtons.add(skillTracker);
 		allButtons.add(customMusic);
 		allButtons.add(crystalHollowWaypoints);
+		allButtons.add(alerts);
 		allButtons.add(outlineText);
 		allButtons.add(pickBlock);
 		allButtons.add(coords);
@@ -288,7 +293,7 @@ public class DankerGui extends GuiScreen {
 		} else if (button == backPage) {
 			mc.displayGuiScreen(new DankerGui(page - 1, search.getText()));
 		} else if (button == editLocations) {
-			DankersSkyblockMod.guiToOpen = "editlocations";
+			mc.displayGuiScreen(new EditLocationsGui());
 		} else if (button == githubLink) {
 			try {
 				Desktop.getDesktop().browse(new URI("https://github.com/bowser0000/SkyblockMod"));
@@ -302,19 +307,21 @@ public class DankerGui extends GuiScreen {
 				ex.printStackTrace();
 			}
 		} else if (button == changeDisplay) {
-			DankersSkyblockMod.guiToOpen = "displaygui";
+			mc.displayGuiScreen(new DisplayGui());
 		} else if (button == onlySlayer) {
-			DankersSkyblockMod.guiToOpen = "onlyslayergui";
+			mc.displayGuiScreen(new OnlySlayerGui());
 		} else if (button == puzzleSolvers) {
-			DankersSkyblockMod.guiToOpen = "puzzlesolvers";
+			mc.displayGuiScreen(new PuzzleSolversGui(1));
 		} else if (button == experimentationTableSolvers) {
-			DankersSkyblockMod.guiToOpen = "experimentsolvers";
+			mc.displayGuiScreen(new ExperimentsGui());
 		} else if (button == skillTracker) {
-			DankersSkyblockMod.guiToOpen = "skilltracker";
+			mc.displayGuiScreen(new SkillTrackerGui());
 		} else if (button == customMusic) {
-			DankersSkyblockMod.guiToOpen = "custommusic";
+			mc.displayGuiScreen(new CustomMusicGui(1));
 		} else if (button == crystalHollowWaypoints) {
-			DankersSkyblockMod.guiToOpen = "crystalwaypoints";
+			mc.displayGuiScreen(new CrystalHollowWaypointsGui(1));
+		} else if (button == alerts) {
+			mc.displayGuiScreen(new AlertsGui(1));
 		} else if (button == outlineText) {
 			ToggleCommand.outlineTextToggled = !ToggleCommand.outlineTextToggled;
 			ConfigHandler.writeBooleanConfig("toggles", "OutlineText", ToggleCommand.outlineTextToggled);

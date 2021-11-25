@@ -9,6 +9,7 @@ import me.Danker.features.*;
 import me.Danker.features.loot.*;
 import me.Danker.features.puzzlesolvers.*;
 import me.Danker.gui.*;
+import me.Danker.gui.crystalhollowwaypoints.CrystalHollowWaypointsGui;
 import me.Danker.handlers.ConfigHandler;
 import me.Danker.handlers.PacketHandler;
 import me.Danker.utils.RenderUtils;
@@ -101,6 +102,7 @@ public class DankersSkyblockMod {
     public void init(FMLInitializationEvent event) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
         MinecraftForge.EVENT_BUS.register(this);
         MinecraftForge.EVENT_BUS.register(new AbilityCooldowns());
+        MinecraftForge.EVENT_BUS.register(new Alerts());
         MinecraftForge.EVENT_BUS.register(new ArachneESP());
         MinecraftForge.EVENT_BUS.register(new ArrowTerminalSolver());
         MinecraftForge.EVENT_BUS.register(new AutoAcceptReparty());
@@ -169,6 +171,8 @@ public class DankersSkyblockMod {
         MinecraftForge.EVENT_BUS.register(new SpiderTracker());
         MinecraftForge.EVENT_BUS.register(new WolfTracker());
         MinecraftForge.EVENT_BUS.register(new ZombieTracker());
+
+        Alerts.configFile = configDirectory + "/dsmalerts.json";
 
         ConfigHandler.reloadConfig();
         GoldenEnchants.init();
@@ -433,27 +437,6 @@ public class DankersSkyblockMod {
                 switch (guiToOpen) {
                     case "displaygui":
                         mc.displayGuiScreen(new DisplayGui());
-                        break;
-                    case "onlyslayergui":
-                        mc.displayGuiScreen(new OnlySlayerGui());
-                        break;
-                    case "editlocations":
-                        mc.displayGuiScreen(new EditLocationsGui());
-                        break;
-                    case "puzzlesolvers":
-                        mc.displayGuiScreen(new PuzzleSolversGui(1));
-                        break;
-                    case "experimentsolvers":
-                        mc.displayGuiScreen(new ExperimentsGui());
-                        break;
-                    case "skilltracker":
-                        mc.displayGuiScreen(new SkillTrackerGui());
-                        break;
-                    case "custommusic":
-                        mc.displayGuiScreen(new CustomMusicGui(1));
-                        break;
-                    case "crystalwaypoints":
-                        mc.displayGuiScreen(new CrystalHollowWaypointsGui(1));
                         break;
                     case "inventory":
                         mc.displayGuiScreen(InventoryCommand.chest);
