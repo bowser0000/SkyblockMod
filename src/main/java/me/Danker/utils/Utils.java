@@ -444,7 +444,7 @@ public class Utils {
 			List<String> tooltip = item.getTooltip(player, false);
 
 			for (String line : tooltip) {
-				if (line.contains(EnumChatFormatting.GOLD + "Ability: ")) {
+				if (line.contains(EnumChatFormatting.GOLD + "Ability: ") || line.contains(EnumChatFormatting.GOLD + "Full Set Bonus: ")) {
 					if (line.contains(EnumChatFormatting.GOLD + "Ability: " + ability)) {
 						foundAbility = true;
 						continue;
