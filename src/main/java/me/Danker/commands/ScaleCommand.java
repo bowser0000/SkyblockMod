@@ -26,6 +26,7 @@ public class ScaleCommand extends CommandBase {
 	public static double teammatesInRadiusScale;
 	public static double giantHPScale;
 	public static double abilityCooldownsScale;
+	public static double dungeonScoreScale;
 	
 	@Override
 	public String getCommandName() {
@@ -35,7 +36,7 @@ public class ScaleCommand extends CommandBase {
 	@Override
 	public String getCommandUsage(ICommandSender arg0) {
 		return "/" + getCommandName() + " <coords/display/dungeontimer/skill50/lividhp/caketimer/skilltracker/wateranswer/" +
-										"bonzotimer/golemtimer/teammatesinradius/gianthp/abilitycooldown> <size (0.1 - 10)>";
+										"bonzotimer/golemtimer/teammatesinradius/gianthp/abilitycooldown/dungeonscore> <size (0.1 - 10)>";
 	}
 
 	public static String usage(ICommandSender arg0) {
@@ -52,7 +53,7 @@ public class ScaleCommand extends CommandBase {
 		if (args.length == 1) {
 			return getListOfStringsMatchingLastWord(args, "coords", "display", "dungeontimer", "skill50", "lividhp", "caketimer",
 														  "skilltracker", "wateranswer", "bonzotimer", "golemtimer", "teammatesinradius",
-														  "gianthp", "abilitycooldowns");
+														  "gianthp", "abilitycooldowns", "dungeonscore");
 		}
 		return null;
 	}
@@ -137,6 +138,11 @@ public class ScaleCommand extends CommandBase {
 				abilityCooldownsScale = scaleAmount;
 				ConfigHandler.writeDoubleConfig("scales", "abilityCooldownsScale", abilityCooldownsScale);
 				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Ability cooldowns has been scaled to " + DankersSkyblockMod.SECONDARY_COLOUR + abilityCooldownsScale + "x"));
+				break;
+			case "dungeonscore":
+				dungeonScoreScale = scaleAmount;
+				ConfigHandler.writeDoubleConfig("scales", "dungeonScoreScale", dungeonScoreScale);
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Dungeon score has been scaled to " + DankersSkyblockMod.SECONDARY_COLOUR + dungeonScoreScale + "x"));
 				break;
 			default:
 				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Usage: " + getCommandUsage(arg0)));

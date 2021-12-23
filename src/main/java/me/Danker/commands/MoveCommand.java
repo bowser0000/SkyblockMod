@@ -26,6 +26,7 @@ public class MoveCommand extends CommandBase {
 	public static int[] teammatesInRadiusXY = {0, 0};
 	public static int[] giantHPXY = {0, 0};
 	public static int[] abilityCooldownsXY = {0, 0};
+	public static int[] dungeonScoreXY = {0, 0};
 
 	@Override
 	public String getCommandName() {
@@ -35,7 +36,8 @@ public class MoveCommand extends CommandBase {
 	@Override
 	public String getCommandUsage(ICommandSender arg0) {
 		return "/" + getCommandName() + " <coords/display/dungeontimer/skill50/lividhp/caketimer/skilltracker/" +
-										"wateranswer/bonzotimer/golemtimer/teammatesinradius/gianthp/abilitycooldowns> <x> <y>";
+										"wateranswer/bonzotimer/golemtimer/teammatesinradius/gianthp/" +
+										"abilitycooldowns/dungeonscore> <x> <y>";
 	}
 
 	public static String usage(ICommandSender arg0) {
@@ -52,7 +54,7 @@ public class MoveCommand extends CommandBase {
 		if (args.length == 1) {
 			return getListOfStringsMatchingLastWord(args, "coords", "display", "dungeontimer", "skill50", "lividhp", "caketimer",
 														  "skilltracker", "wateranswer", "bonzotimer", "golemtimer", "teammatesinradius",
-														  "gianthp", "abilitycooldowns");
+														  "gianthp", "abilitycooldowns", "dungeonscore");
 		}
 		return null;
 	}
@@ -157,6 +159,13 @@ public class MoveCommand extends CommandBase {
 				ConfigHandler.writeIntConfig("locations", "abilityCooldownsX", abilityCooldownsXY[0]);
 				ConfigHandler.writeIntConfig("locations", "abilityCooldownsY", abilityCooldownsXY[1]);
 				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Ability cooldowns has been moved to " + DankersSkyblockMod.SECONDARY_COLOUR + arg1[1] + ", " + arg1[2]));
+				break;
+			case "dungeonscore":
+				dungeonScoreXY[0] = Integer.parseInt(arg1[1]);
+				dungeonScoreXY[1] = Integer.parseInt(arg1[2]);
+				ConfigHandler.writeIntConfig("locations", "dungeonScoreX", dungeonScoreXY[0]);
+				ConfigHandler.writeIntConfig("locations", "dungeonScoreY", dungeonScoreXY[1]);
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Dungeon score has been moved to " + DankersSkyblockMod.SECONDARY_COLOUR + arg1[1] + ", " + arg1[2]));
 				break;
 			default:
 				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Usage: " + getCommandUsage(arg0)));

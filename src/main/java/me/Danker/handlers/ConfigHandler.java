@@ -237,6 +237,7 @@ public class ConfigHandler {
 		ToggleCommand.flowerWeaponsToggled = initBoolean("toggles", "FlowerWeapons", false);
 		ToggleCommand.autoSkillTrackerToggled = initBoolean("toggles", "AutoSkillTracker", false);
 		ToggleCommand.alerts = initBoolean("toggles", "Alerts", false);
+		ToggleCommand.dungeonScore = initBoolean("toggles", "DungeonScore", false);
 		// Chat Messages
 		ToggleCommand.sceptreMessages = initBoolean("toggles", "SceptreMessages", true);
 		ToggleCommand.midasStaffMessages = initBoolean("toggles", "MidasStaffMessages", true);
@@ -550,6 +551,8 @@ public class ConfigHandler {
 		MoveCommand.giantHPXY[1] = initInt("locations", "giantHPY", 150);
 		MoveCommand.abilityCooldownsXY[0] = initInt("locations", "abilityCooldownsX", 120);
 		MoveCommand.abilityCooldownsXY[1] = initInt("locations", "abilityCooldownsY", 150);
+		MoveCommand.dungeonScoreXY[0] = initInt("locations", "dungeonScoreX", 150);
+		MoveCommand.dungeonScoreXY[1] = initInt("locations", "dungeonScoreY", 150);
 
 		// Scales
 		ScaleCommand.coordsScale = initDouble("scales", "coordsScale", 1);
@@ -565,6 +568,7 @@ public class ConfigHandler {
 		ScaleCommand.teammatesInRadiusScale = initDouble("scales", "teammatesInRadiusScale", 1);
 		ScaleCommand.giantHPScale = initDouble("scales", "giantHPScale", 1);
 		ScaleCommand.abilityCooldownsScale = initDouble("scales", "abilityCooldownsScale", 1);
+		ScaleCommand.dungeonScoreScale = initDouble("scales", "dungeonScoreScale", 1);
 
 		// Skills
 		DankersSkyblockMod.farmingLevel = initInt("skills", "farming", -1);

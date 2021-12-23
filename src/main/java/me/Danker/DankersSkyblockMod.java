@@ -121,6 +121,7 @@ public class DankersSkyblockMod {
         MinecraftForge.EVENT_BUS.register(new CreeperSolver());
         MinecraftForge.EVENT_BUS.register(new CrystalHollowWaypoints());
         MinecraftForge.EVENT_BUS.register(new CustomMusic());
+        MinecraftForge.EVENT_BUS.register(new DungeonScore());
         MinecraftForge.EVENT_BUS.register(new DungeonTimer());
         MinecraftForge.EVENT_BUS.register(new EndOfFarmAlert());
         MinecraftForge.EVENT_BUS.register(new ExpertiseLore());

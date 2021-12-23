@@ -47,6 +47,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 	public static boolean autoAcceptReparty;
 	public static boolean abilityCooldowns;
 	public static boolean alerts;
+	public static boolean dungeonScore;
 	// Chat Messages
 	public static boolean sceptreMessages;
 	public static boolean midasStaffMessages;
@@ -145,7 +146,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 														  "gemstonelore", "crystalhollowwaypoints", "crystalautowaypoints", "autoacceptreparty",
 														  "itemcooldowns", "hubmusic", "islandmusic", "dungeonhubmusic", "farmingislandsmusic", "goldminemusic",
 														  "deepcavernsmusic", "dwarvenminesmusic", "crystalhollowsmusic", "spidersdenmusic", "blazingfortressmusic",
-														  "endmusic", "parkmusic", "alerts", "list");
+														  "endmusic", "parkmusic", "alerts", "dungeonscore", "list");
 		}
 		return null;
 	}
@@ -592,6 +593,11 @@ public class ToggleCommand extends CommandBase implements ICommand {
 				ConfigHandler.writeBooleanConfig("toggles", "Alerts", alerts);
 				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Alerts has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + alerts + DankersSkyblockMod.MAIN_COLOUR + "."));
 				break;
+			case "dungeonscore":
+				dungeonScore = !dungeonScore;
+				ConfigHandler.writeBooleanConfig("toggles", "DungeonScore", dungeonScore);
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Dungeon score has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + dungeonScore + DankersSkyblockMod.MAIN_COLOUR + "."));
+				break;
 			case "list":
 				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.TYPE_COLOUR + "Guild party notifications: " + DankersSkyblockMod.VALUE_COLOUR + gpartyToggled + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Coord/Angle display: " + DankersSkyblockMod.VALUE_COLOUR + coordsToggled + "\n" +
@@ -666,7 +672,8 @@ public class ToggleCommand extends CommandBase implements ICommand {
 															DankersSkyblockMod.TYPE_COLOUR + " Custom blazing fortress music: " + DankersSkyblockMod.VALUE_COLOUR + blazingFortressMusic + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Custom end music: " + DankersSkyblockMod.VALUE_COLOUR + endMusic + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Custom park music: " + DankersSkyblockMod.VALUE_COLOUR + parkMusic + "\n" +
-															DankersSkyblockMod.TYPE_COLOUR + " Alerts: " + DankersSkyblockMod.VALUE_COLOUR + alerts
+															DankersSkyblockMod.TYPE_COLOUR + " Alerts: " + DankersSkyblockMod.VALUE_COLOUR + alerts + "\n" +
+															DankersSkyblockMod.TYPE_COLOUR + " Dungeon score: " + DankersSkyblockMod.VALUE_COLOUR + dungeonScore
 				));
 				break;
 			default:

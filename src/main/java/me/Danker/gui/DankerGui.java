@@ -84,6 +84,7 @@ public class DankerGui extends GuiScreen {
 	private GuiButton flowerWeapons;
 	private GuiButton necronNotifications;
 	private GuiButton bonzoTimer;
+	private GuiButton dungeonScore;
 	// Chat Messages
 	private GuiButton sceptreMessages;
 	private GuiButton midasStaffMessages;
@@ -172,6 +173,7 @@ public class DankerGui extends GuiScreen {
 		gemstoneLore = new FeatureButton("Applied Gemstones in Lore: " + Utils.getColouredBoolean(ToggleCommand.gemstoneLore), "Adds applied gemstones to item tooltip.");
 		autoAcceptReparty = new FeatureButton("Auto Accept Reparty: " + Utils.getColouredBoolean(ToggleCommand.autoAcceptReparty), "Automatically rejoins parties when disbanded and invited.");
 		abilityCooldown = new FeatureButton("Ability Cooldowns: " + Utils.getColouredBoolean(ToggleCommand.abilityCooldowns), "Displays ability cooldowns.");
+		dungeonScore = new FeatureButton("Dungeon Score Display: " + Utils.getColouredBoolean(ToggleCommand.dungeonScore), "Displays an estimated dungeon score with secrets.");
 
 		allButtons.clear();
 		allButtons.add(changeDisplay);
@@ -226,6 +228,7 @@ public class DankerGui extends GuiScreen {
 		allButtons.add(gemstoneLore);
 		allButtons.add(autoAcceptReparty);
 		allButtons.add(abilityCooldown);
+		allButtons.add(dungeonScore);
 
 		search.setText(initSearchText);
 		search.setVisible(true);
@@ -498,6 +501,10 @@ public class DankerGui extends GuiScreen {
 			ToggleCommand.abilityCooldowns = !ToggleCommand.abilityCooldowns;
 			ConfigHandler.writeBooleanConfig("toggles", "AbilityCooldowns", ToggleCommand.abilityCooldowns);
 			abilityCooldown.displayString = "Ability Cooldowns: " + Utils.getColouredBoolean(ToggleCommand.abilityCooldowns);
+		} else if (button == dungeonScore) {
+			ToggleCommand.dungeonScore = !ToggleCommand.dungeonScore;
+			ConfigHandler.writeBooleanConfig("toggles", "DungeonScore", ToggleCommand.dungeonScore);
+			dungeonScore.displayString = "Dungeon Score Display: " + Utils.getColouredBoolean(ToggleCommand.dungeonScore);
 		}
 	}
 
