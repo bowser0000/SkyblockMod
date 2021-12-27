@@ -34,6 +34,7 @@ public class DisplayGui extends GuiScreen {
 	private GuiButton catacombsF5;
 	private GuiButton catacombsF6;
 	private GuiButton catacombsF7;
+	private GuiButton catacombsMM;
 	private GuiButton ghost;
 	
 	@Override
@@ -63,13 +64,14 @@ public class DisplayGui extends GuiScreen {
 		fishingSpooky = new GuiButton(0, width / 2 + 130, (int) (height * 0.4), 100, 20, "Fishing Spooky");
 		mythological = new GuiButton(0, width / 2 - 100, (int) (height * 0.5), 95, 20, "Mythological");
 		ghost = new GuiButton(0, width / 2 + 5, (int) (height * 0.5), 95, 20, "Ghost");
-		catacombsF1 = new GuiButton(0, width / 2 - 205, (int) (height * 0.65), 50, 20, "F1");
-		catacombsF2 = new GuiButton(0, width / 2 - 145, (int) (height * 0.65), 50, 20, "F2");
-		catacombsF3 = new GuiButton(0, width / 2 - 85, (int) (height * 0.65), 50, 20, "F3");
-		catacombsF4 = new GuiButton(0, width / 2 - 25, (int) (height * 0.65), 50, 20, "F4");
-		catacombsF5 = new GuiButton(0, width / 2 + 35, (int) (height * 0.65), 50, 20, "F5");
-		catacombsF6 = new GuiButton(0, width / 2 + 95, (int) (height * 0.65), 50, 20, "F6");
-		catacombsF7 = new GuiButton(0, width / 2 + 155, (int) (height * 0.65), 50, 20, "F7");
+		catacombsF1 = new GuiButton(0, width / 2 - 235, (int) (height * 0.65), 50, 20, "F1");
+		catacombsF2 = new GuiButton(0, width / 2 - 175, (int) (height * 0.65), 50, 20, "F2");
+		catacombsF3 = new GuiButton(0, width / 2 - 115, (int) (height * 0.65), 50, 20, "F3");
+		catacombsF4 = new GuiButton(0, width / 2 - 55, (int) (height * 0.65), 50, 20, "F4");
+		catacombsF5 = new GuiButton(0, width / 2 + 5, (int) (height * 0.65), 50, 20, "F5");
+		catacombsF6 = new GuiButton(0, width / 2 + 65, (int) (height * 0.65), 50, 20, "F6");
+		catacombsF7 = new GuiButton(0, width / 2 + 125, (int) (height * 0.65), 50, 20, "F7");
+		catacombsMM = new GuiButton(0, width / 2 + 185, (int) (height * 0.65), 50, 20, "MM");
 
 		this.buttonList.add(showSession);
 		this.buttonList.add(off);
@@ -90,6 +92,7 @@ public class DisplayGui extends GuiScreen {
 		this.buttonList.add(catacombsF5);
 		this.buttonList.add(catacombsF6);
 		this.buttonList.add(catacombsF7);
+		this.buttonList.add(catacombsMM);
 		this.buttonList.add(ghost);
 		this.buttonList.add(goBack);
 	}
@@ -125,50 +128,57 @@ public class DisplayGui extends GuiScreen {
 		} else if (button == off) {
 			setDisplay("off", true);
 		} else if (button == zombie) {
-			setDisplay("zombie", false);
+			setDisplay("zombie");
 		} else if (button == spider) {
-			setDisplay("spider", false);
+			setDisplay("spider");
 		} else if (button == wolf) {
-			setDisplay("wolf", false);
+			setDisplay("wolf");
 		} else if (button == enderman) {
-			setDisplay("enderman", false);
+			setDisplay("enderman");
 		} else if (button == auto) {
 			LootDisplay.auto = true;
 			ConfigHandler.writeBooleanConfig("misc", "autoDisplay", true);
 		} else if (button == fishing) {
-			setDisplay("fishing", false);
+			setDisplay("fishing");
 		} else if (button == fishingWinter) {
-			setDisplay("fishing_winter", false);
+			setDisplay("fishing_winter");
 		} else if (button == fishingFestival) {
-			setDisplay("fishing_festival", false);
+			setDisplay("fishing_festival");
 		} else if (button == fishingSpooky) {
-			setDisplay("fishing_spooky", false);
+			setDisplay("fishing_spooky");
 		} else if (button == mythological) {
-			setDisplay("mythological", false);
+			setDisplay("mythological");
 		} else if (button == catacombsF1) {
-			setDisplay("catacombs_floor_one", false);
+			setDisplay("catacombs_floor_one");
 		} else if (button == catacombsF2) {
-			setDisplay("catacombs_floor_two", false);
+			setDisplay("catacombs_floor_two");
 		} else if (button == catacombsF3) {
-			setDisplay("catacombs_floor_three", false);
+			setDisplay("catacombs_floor_three");
 		} else if (button == catacombsF4) {
-			setDisplay("catacombs_floor_four", false);
+			setDisplay("catacombs_floor_four");
 		} else if (button == catacombsF5) {
-			setDisplay("catacombs_floor_five", false);
+			setDisplay("catacombs_floor_five");
 		} else if (button == catacombsF6) {
-			setDisplay("catacombs_floor_six", false);
+			setDisplay("catacombs_floor_six");
 		} else if (button == catacombsF7) {
-			setDisplay("catacombs_floor_seven", false);
-		} else if (button == ghost)
-			setDisplay("ghost",false);
+			setDisplay("catacombs_floor_seven");
+		} else if (button == catacombsMM) {
+			setDisplay("catacombs_master");
+		} else if (button == ghost) {
+			setDisplay("ghost");
+		}
 	}
-	
+
 	public void setDisplay(String display, boolean forceNoSession) {
 		if (!forceNoSession && addSession) display += "_session";
 		LootDisplay.auto = false;
 		LootDisplay.display = display;
 		ConfigHandler.writeBooleanConfig("misc", "autoDisplay", false);
 		ConfigHandler.writeStringConfig("misc", "display", display);
+	}
+
+	public void setDisplay(String display) {
+		setDisplay(display, false);
 	}
 	
 }

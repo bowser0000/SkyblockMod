@@ -59,6 +59,8 @@ public class AutoDisplay {
                             LootDisplay.display = "catacombs_floor_six";
                         } else if (sCleaned.contains("F7")) {
                             LootDisplay.display = "catacombs_floor_seven";
+                        } else if (sCleaned.contains("(M")) {
+                            LootDisplay.display = "catacombs_master";
                         }
                         found = true;
                     }

@@ -504,6 +504,16 @@ public class ConfigHandler {
 		CatacombsTracker.f7Rerolls = initInt("catacombs", "floorSevenRerolls", 0);
 		CatacombsTracker.f7CoinsSpent = initDouble("catacombs", "floorSevenCoins", 0);
 		CatacombsTracker.f7TimeSpent = initDouble("catacombs", "floorSevenTime", 0);
+		// MM
+		CatacombsTracker.masterS = initInt("catacombs", "masterS", 0);
+		CatacombsTracker.firstStars = initInt("catacombs", "firstStar", 0);
+		CatacombsTracker.secondStars = initInt("catacombs", "secondStar", 0);
+		CatacombsTracker.thirdStars = initInt("catacombs", "thirdStar", 0);
+		CatacombsTracker.fourthStars = initInt("catacombs", "fourthStar", 0);
+		CatacombsTracker.fifthStars = initInt("catacombs", "fifthStar", 0);
+		CatacombsTracker.masterRerolls = initInt("catacombs", "masterRerolls", 0);
+		CatacombsTracker.masterCoinsSpent = initDouble("catacombs", "masterCoins", 0);
+		CatacombsTracker.masterTimeSpent = initDouble("catacombs", "masterTime", 0);
 
 		// Ghost
 		GhostTracker.sorrows = initInt("ghosts", "sorrow", 0);

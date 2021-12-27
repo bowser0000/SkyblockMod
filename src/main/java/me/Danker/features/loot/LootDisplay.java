@@ -1064,6 +1064,54 @@ public class LootDisplay {
                             EnumChatFormatting.AQUA + Utils.getMoneySpent(CatacombsTracker.f7CoinsSpentSession) + "\n" +
                             EnumChatFormatting.AQUA + Utils.getTimeBetween(0, CatacombsTracker.f7TimeSpentSession);
                     break;
+                case "catacombs_master":
+                    dropsText = EnumChatFormatting.GOLD + "S Runs:\n" +
+                            EnumChatFormatting.GOLD + "Recombobulators:\n" +
+                            EnumChatFormatting.DARK_PURPLE + "Fuming Potato Books:\n" +
+                            EnumChatFormatting.DARK_PURPLE + "1st Master Stars:\n" +
+                            EnumChatFormatting.DARK_PURPLE + "2nd Master Stars:\n" +
+                            EnumChatFormatting.DARK_PURPLE + "3rd Master Stars:\n" +
+                            EnumChatFormatting.DARK_PURPLE + "4th Master Stars:\n" +
+                            EnumChatFormatting.DARK_PURPLE + "5th Master Stars:\n" +
+                            EnumChatFormatting.WHITE + "Rerolls:\n" +
+                            EnumChatFormatting.AQUA + "Coins Spent:\n" +
+                            EnumChatFormatting.AQUA + "Time Spent:";
+                    countText = EnumChatFormatting.GOLD + nf.format(CatacombsTracker.masterS) + "\n" +
+                            EnumChatFormatting.GOLD + nf.format(CatacombsTracker.recombobulators) + "\n" +
+                            EnumChatFormatting.DARK_PURPLE + nf.format(CatacombsTracker.fumingPotatoBooks) + "\n" +
+                            EnumChatFormatting.DARK_PURPLE + nf.format(CatacombsTracker.firstStars) + "\n" +
+                            EnumChatFormatting.DARK_PURPLE + nf.format(CatacombsTracker.secondStars) + "\n" +
+                            EnumChatFormatting.DARK_PURPLE + nf.format(CatacombsTracker.thirdStars) + "\n" +
+                            EnumChatFormatting.DARK_PURPLE + nf.format(CatacombsTracker.fourthStars) + "\n" +
+                            EnumChatFormatting.DARK_PURPLE + nf.format(CatacombsTracker.fifthStars) + "\n" +
+                            EnumChatFormatting.WHITE + nf.format(CatacombsTracker.masterRerolls) + "\n" +
+                            EnumChatFormatting.AQUA + Utils.getMoneySpent(CatacombsTracker.masterCoinsSpent) + "\n" +
+                            EnumChatFormatting.AQUA + Utils.getTimeBetween(0, CatacombsTracker.masterTimeSpent);
+                    break;
+                case "catacombs_master_session":
+                    dropsText = EnumChatFormatting.GOLD + "S Runs:\n" +
+                            EnumChatFormatting.GOLD + "Recombobulators:\n" +
+                            EnumChatFormatting.DARK_PURPLE + "Fuming Potato Books:\n" +
+                            EnumChatFormatting.DARK_PURPLE + "1st Master Stars:\n" +
+                            EnumChatFormatting.DARK_PURPLE + "2nd Master Stars:\n" +
+                            EnumChatFormatting.DARK_PURPLE + "3rd Master Stars:\n" +
+                            EnumChatFormatting.DARK_PURPLE + "4th Master Stars:\n" +
+                            EnumChatFormatting.DARK_PURPLE + "5th Master Stars:\n" +
+                            EnumChatFormatting.WHITE + "Rerolls:\n" +
+                            EnumChatFormatting.AQUA + "Coins Spent:\n" +
+                            EnumChatFormatting.AQUA + "Time Spent:";
+                    countText = EnumChatFormatting.GOLD + nf.format(CatacombsTracker.masterSSession) + "\n" +
+                            EnumChatFormatting.GOLD + nf.format(CatacombsTracker.recombobulatorsSession) + "\n" +
+                            EnumChatFormatting.DARK_PURPLE + nf.format(CatacombsTracker.fumingPotatoBooksSession) + "\n" +
+                            EnumChatFormatting.DARK_PURPLE + nf.format(CatacombsTracker.firstStarsSession) + "\n" +
+                            EnumChatFormatting.DARK_PURPLE + nf.format(CatacombsTracker.secondStarsSession) + "\n" +
+                            EnumChatFormatting.DARK_PURPLE + nf.format(CatacombsTracker.thirdStarsSession) + "\n" +
+                            EnumChatFormatting.DARK_PURPLE + nf.format(CatacombsTracker.fourthStarsSession) + "\n" +
+                            EnumChatFormatting.DARK_PURPLE + nf.format(CatacombsTracker.fifthStarsSession) + "\n" +
+                            EnumChatFormatting.WHITE + nf.format(CatacombsTracker.masterRerollsSession) + "\n" +
+                            EnumChatFormatting.AQUA + Utils.getMoneySpent(CatacombsTracker.masterCoinsSpentSession) + "\n" +
+                            EnumChatFormatting.AQUA + Utils.getTimeBetween(0, CatacombsTracker.masterTimeSpentSession);
+                    break;
                 case "ghost_session":
                     dropsText = EnumChatFormatting.GOLD + "Bags of Cash:\n" +
                             EnumChatFormatting.BLUE + "Sorrows:\n" +

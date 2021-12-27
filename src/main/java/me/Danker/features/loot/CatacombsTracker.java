@@ -88,6 +88,16 @@ public class CatacombsTracker {
     public static int f7Rerolls;
     public static double f7CoinsSpent;
     public static double f7TimeSpent;
+    // MM
+    public static int masterS;
+    public static int firstStars;
+    public static int secondStars;
+    public static int thirdStars;
+    public static int fourthStars;
+    public static int fifthStars;
+    public static int masterRerolls;
+    public static double masterCoinsSpent;
+    public static double masterTimeSpent;
 
     // Catacombs Dungeons
     public static int recombobulatorsSession = 0;
@@ -163,6 +173,16 @@ public class CatacombsTracker {
     public static int f7RerollsSession = 0;
     public static double f7CoinsSpentSession = 0;
     public static double f7TimeSpentSession = 0;
+    // MM
+    public static int masterSSession = 0;
+    public static int firstStarsSession = 0;
+    public static int secondStarsSession = 0;
+    public static int thirdStarsSession = 0;
+    public static int fourthStarsSession = 0;
+    public static int fifthStarsSession = 0;
+    public static int masterRerollsSession = 0;
+    public static double masterCoinsSpentSession = 0;
+    public static double masterTimeSpentSession = 0;
 
     @SubscribeEvent
     public void onChat(ClientChatReceivedEvent event) {
@@ -173,37 +193,48 @@ public class CatacombsTracker {
 
         if (message.contains("    Team Score: ") && message.contains("(S+)")) {
             List<String> scoreboard = ScoreboardHandler.getSidebarLines();
-            for (String s : scoreboard) {
-                String sCleaned = ScoreboardHandler.cleanSB(s);
-                if (sCleaned.contains("The Catacombs (")) {
-                    if (sCleaned.contains("F1")) {
-                        f1SPlus++;
-                        f1SPlusSession++;
-                        ConfigHandler.writeIntConfig("catacombs", "floorOneSPlus", f1SPlus);
-                    } else if (sCleaned.contains("F2")) {
-                        f2SPlus++;
-                        f2SPlusSession++;
-                        ConfigHandler.writeIntConfig("catacombs", "floorTwoSPlus", f2SPlus);
-                    } else if (sCleaned.contains("F3")) {
-                        f3SPlus++;
-                        f3SPlusSession++;
-                        ConfigHandler.writeIntConfig("catacombs", "floorThreeSPlus", f3SPlus);
-                    } else if (sCleaned.contains("F4")) {
-                        f4SPlus++;
-                        f4SPlusSession++;
-                        ConfigHandler.writeIntConfig("catacombs", "floorFourSPlus", f4SPlus);
-                    } else if (sCleaned.contains("F5")) {
-                        f5SPlus++;
-                        f5SPlusSession++;
-                        ConfigHandler.writeIntConfig("catacombs", "floorFiveSPlus", f5SPlus);
-                    } else if (sCleaned.contains("F6")) {
-                        f6SPlus++;
-                        f6SPlusSession++;
-                        ConfigHandler.writeIntConfig("catacombs", "floorSixSPlus", f6SPlus);
-                    } else if (sCleaned.contains("F7")) {
-                        f7SPlus++;
-                        f7SPlusSession++;
-                        ConfigHandler.writeIntConfig("catacombs", "floorSevenSPlus", f7SPlus);
+            if (message.contains("(S+)")) {
+                for (String s : scoreboard) {
+                    String sCleaned = ScoreboardHandler.cleanSB(s);
+                    if (sCleaned.contains("The Catacombs (")) {
+                        if (sCleaned.contains("F1")) {
+                            f1SPlus++;
+                            f1SPlusSession++;
+                            ConfigHandler.writeIntConfig("catacombs", "floorOneSPlus", f1SPlus);
+                        } else if (sCleaned.contains("F2")) {
+                            f2SPlus++;
+                            f2SPlusSession++;
+                            ConfigHandler.writeIntConfig("catacombs", "floorTwoSPlus", f2SPlus);
+                        } else if (sCleaned.contains("F3")) {
+                            f3SPlus++;
+                            f3SPlusSession++;
+                            ConfigHandler.writeIntConfig("catacombs", "floorThreeSPlus", f3SPlus);
+                        } else if (sCleaned.contains("F4")) {
+                            f4SPlus++;
+                            f4SPlusSession++;
+                            ConfigHandler.writeIntConfig("catacombs", "floorFourSPlus", f4SPlus);
+                        } else if (sCleaned.contains("F5")) {
+                            f5SPlus++;
+                            f5SPlusSession++;
+                            ConfigHandler.writeIntConfig("catacombs", "floorFiveSPlus", f5SPlus);
+                        } else if (sCleaned.contains("F6")) {
+                            f6SPlus++;
+                            f6SPlusSession++;
+                            ConfigHandler.writeIntConfig("catacombs", "floorSixSPlus", f6SPlus);
+                        } else if (sCleaned.contains("F7")) {
+                            f7SPlus++;
+                            f7SPlusSession++;
+                            ConfigHandler.writeIntConfig("catacombs", "floorSevenSPlus", f7SPlus);
+                        }
+                    }
+                }
+            } else if (message.contains("(S)")) {
+                for (String s : scoreboard) {
+                    String sCleaned = ScoreboardHandler.cleanSB(s);
+                    if (sCleaned.contains("The Catacombs (M")) {
+                        masterS++;
+                        masterSSession++;
+                        ConfigHandler.writeIntConfig("catacombs", "masterS", masterS);
                     }
                 }
             }
@@ -384,6 +415,26 @@ public class CatacombsTracker {
                 witherBoots++;
                 witherBootsSession++;
                 ConfigHandler.writeIntConfig("catacombs", "witherBoot", witherBoots);
+            } else if (message.contains("First Master Star")) {
+                firstStars++;
+                firstStarsSession++;
+                ConfigHandler.writeIntConfig("catacombs", "firstStar", firstStars);
+            } else if (message.contains("Second Master Star")) {
+                secondStars++;
+                secondStarsSession++;
+                ConfigHandler.writeIntConfig("catacombs", "secondStar", secondStars);
+            } else if (message.contains("Third Master Star")) {
+                thirdStars++;
+                thirdStarsSession++;
+                ConfigHandler.writeIntConfig("catacombs", "thirdStar", thirdStars);
+            } else if (message.contains("Fourth Master Star")) {
+                fourthStars++;
+                fourthStarsSession++;
+                ConfigHandler.writeIntConfig("catacombs", "fourthStar", fourthStars);
+            } else if (message.contains("Fifth Master Star")) {
+                fifthStars++;
+                fifthStarsSession++;
+                ConfigHandler.writeIntConfig("catacombs", "fifthStar", fifthStars);
             }
         }
 
@@ -422,6 +473,10 @@ public class CatacombsTracker {
                         f7TimeSpent = Math.floor(f7TimeSpent + timeToAdd);
                         f7TimeSpentSession = Math.floor(f7TimeSpentSession + timeToAdd);
                         ConfigHandler.writeDoubleConfig("catacombs", "floorSevenTime", f7TimeSpent);
+                    } else if (sCleaned.contains("(M")) {
+                        masterTimeSpent = Math.floor(masterTimeSpent + timeToAdd);
+                        masterTimeSpentSession = Math.floor(masterTimeSpentSession + timeToAdd);
+                        ConfigHandler.writeDoubleConfig("catacombs", "masterTime", masterTimeSpent);
                     }
                 } else if (sCleaned.contains("Time Elapsed:")) {
                     // Get floor time
@@ -481,6 +536,10 @@ public class CatacombsTracker {
                                     f7CoinsSpent += coinsSpent;
                                     f7CoinsSpentSession += coinsSpent;
                                     ConfigHandler.writeDoubleConfig("catacombs", "floorSevenCoins", f7CoinsSpent);
+                                } else if (sCleaned.contains("(M")) {
+                                    masterCoinsSpent += coinsSpent;
+                                    masterCoinsSpentSession += coinsSpent;
+                                    ConfigHandler.writeDoubleConfig("catacombs", "masterCoins", masterCoinsSpent);
                                 }
                             }
                             break;
@@ -500,6 +559,10 @@ public class CatacombsTracker {
                             f7Rerolls++;
                             f7RerollsSession++;
                             ConfigHandler.writeDoubleConfig("catacombs", "floorSevenRerolls", f7Rerolls);
+                        } else if (sCleaned.contains("(M")) {
+                            masterRerolls++;
+                            masterRerollsSession++;
+                            ConfigHandler.writeDoubleConfig("catacombs", "masterRerolls", masterRerolls);
                         }
                         break;
                     }

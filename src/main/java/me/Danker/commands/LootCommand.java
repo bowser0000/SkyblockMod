@@ -24,7 +24,7 @@ public class LootCommand extends CommandBase {
 
 	@Override
 	public String getCommandUsage(ICommandSender arg0) {
-		return "/" + getCommandName() + " <zombie/spider/wolf/enderman/fishing/catacombs/mythological> [winter/festival/spooky/f(1-7)/session]";
+		return "/" + getCommandName() + " <zombie/spider/wolf/enderman/fishing/catacombs/mythological> [winter/festival/spooky/f(1-7)/mm/session]";
 	}
 
 	public static String usage(ICommandSender arg0) {
@@ -43,7 +43,7 @@ public class LootCommand extends CommandBase {
 		} else if (args.length == 2 && args[0].equalsIgnoreCase("fishing")) {
 			return getListOfStringsMatchingLastWord(args, "winter", "festival", "spooky", "session");
 		} else if (args.length == 2 && args[0].equalsIgnoreCase("catacombs")) {
-			return getListOfStringsMatchingLastWord(args, "f1", "floor1", "f2", "floor2", "f3", "floor3", "f4", "floor4", "f5", "floor5", "f6", "floor6", "f7", "floor7");
+			return getListOfStringsMatchingLastWord(args, "f1", "floor1", "f2", "floor2", "f3", "floor3", "f4", "floor4", "f5", "floor5", "f6", "floor6", "f7", "floor7", "mm", "master");
 		} else if (args.length > 1) {
 			return getListOfStringsMatchingLastWord(args, "session");
 		}
@@ -803,6 +803,39 @@ public class LootCommand extends CommandBase {
 																	EnumChatFormatting.AQUA + "    Time Spent: " + Utils.getTimeBetween(0, CatacombsTracker.f7TimeSpent) + "\n" +
 																	EnumChatFormatting.DARK_RED + EnumChatFormatting.BOLD + " -------------------"));
 						break;
+					case "mm":
+					case "master":
+						if (showSession) {
+							player.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_RED + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+																		EnumChatFormatting.RED + EnumChatFormatting.BOLD + "  Catacombs MM Summary (Current Session):\n" +
+																		EnumChatFormatting.GOLD + "    S Runs:" + nf.format(CatacombsTracker.masterSSession) + "\n" +
+																		EnumChatFormatting.GOLD + "    Recombobulators:" + nf.format(CatacombsTracker.recombobulatorsSession) + "\n" +
+																		EnumChatFormatting.DARK_PURPLE + "    Fuming Potato Books:" + nf.format(CatacombsTracker.fumingPotatoBooksSession) + "\n" +
+																		EnumChatFormatting.DARK_PURPLE + "    1st Master Stars:" + nf.format(CatacombsTracker.firstStarsSession) + "\n" +
+																		EnumChatFormatting.DARK_PURPLE + "    2nd Master Stars:" + nf.format(CatacombsTracker.secondStarsSession) + "\n" +
+																		EnumChatFormatting.DARK_PURPLE + "    3rd Master Stars:" + nf.format(CatacombsTracker.thirdStarsSession) + "\n" +
+																		EnumChatFormatting.DARK_PURPLE + "    4th Master Stars:" + nf.format(CatacombsTracker.fourthStarsSession) + "\n" +
+																		EnumChatFormatting.DARK_PURPLE + "    5th Master Stars:" + nf.format(CatacombsTracker.fifthStarsSession) + "\n" +
+																		EnumChatFormatting.WHITE + "    Rerolls:" + nf.format(CatacombsTracker.masterRerollsSession) + "\n" +
+																		EnumChatFormatting.AQUA + "    Coins Spent:" + nf.format(CatacombsTracker.masterCoinsSpentSession) + "\n" +
+																		EnumChatFormatting.AQUA + "    Time Spent:" + nf.format(CatacombsTracker.masterTimeSpentSession) + "\n" +
+																		EnumChatFormatting.DARK_RED + EnumChatFormatting.BOLD + " -------------------"));
+							return;
+						}
+						player.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_RED + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+																	EnumChatFormatting.RED + EnumChatFormatting.BOLD + "  Catacombs MM Summary:\n" +
+																	EnumChatFormatting.GOLD + "    S Runs:" + nf.format(CatacombsTracker.masterS) + "\n" +
+																	EnumChatFormatting.GOLD + "    Recombobulators:" + nf.format(CatacombsTracker.recombobulators) + "\n" +
+																	EnumChatFormatting.DARK_PURPLE + "    Fuming Potato Books:" + nf.format(CatacombsTracker.fumingPotatoBooks) + "\n" +
+																	EnumChatFormatting.DARK_PURPLE + "    1st Master Stars:" + nf.format(CatacombsTracker.firstStars) + "\n" +
+																	EnumChatFormatting.DARK_PURPLE + "    2nd Master Stars:" + nf.format(CatacombsTracker.secondStars) + "\n" +
+																	EnumChatFormatting.DARK_PURPLE + "    3rd Master Stars:" + nf.format(CatacombsTracker.thirdStars) + "\n" +
+																	EnumChatFormatting.DARK_PURPLE + "    4th Master Stars:" + nf.format(CatacombsTracker.fourthStars) + "\n" +
+																	EnumChatFormatting.DARK_PURPLE + "    5th Master Stars:" + nf.format(CatacombsTracker.fifthStars) + "\n" +
+																	EnumChatFormatting.WHITE + "    Rerolls:" + nf.format(CatacombsTracker.masterRerolls) + "\n" +
+																	EnumChatFormatting.AQUA + "    Coins Spent:" + nf.format(CatacombsTracker.masterCoinsSpent) + "\n" +
+																	EnumChatFormatting.AQUA + "    Time Spent:" + nf.format(CatacombsTracker.masterTimeSpent) + "\n" +
+																	EnumChatFormatting.DARK_RED + EnumChatFormatting.BOLD + " -------------------"));
 					default:
 						player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Usage: /loot catacombs <f1/f2/f3/f4/f5/f6/f7>"));
 				}
