@@ -26,6 +26,7 @@ import java.util.List;
 public class DungeonScore {
 
     int failedPuzzles;
+    int deaths;
     int skillScore;
     String secrets;
     int exploreScore;
@@ -45,7 +46,7 @@ public class DungeonScore {
         if (message.contains(":")) return;
 
         if (message.contains(" and became a ghost.")) {
-            skillScore = MathHelper.clamp_int(skillScore - 2, 0, 100);
+            deaths++;
         }
     }
 
@@ -85,6 +86,7 @@ public class DungeonScore {
             double roomScore = 0;
             double secretScore = 0;
 
+            if (Minecraft.getMinecraft().getNetHandler() == null) return;
             Collection<NetworkPlayerInfo> players = Minecraft.getMinecraft().getNetHandler().getPlayerInfoMap();
             for (NetworkPlayerInfo player : players) {
                 if (player == null || player.getDisplayName() == null) continue;
@@ -168,7 +170,7 @@ public class DungeonScore {
                 roomScore = completedRooms / openedRooms;
             }
 
-            skillScore = 100 - 14 * (failedPuzzles + missingPuzzles);
+            skillScore = MathHelper.clamp_int(100 - 14 * (failedPuzzles + missingPuzzles) - 2 * deaths, 0, 100);
             exploreScore = (int) (60 * roomScore + 40 * MathHelper.clamp_double(secretScore, 0, 1));
         }
     }
@@ -214,6 +216,7 @@ public class DungeonScore {
     @SubscribeEvent
     public void onWorldChange(WorldEvent.Load event) {
         failedPuzzles = 0;
+        deaths = 0;
         skillScore = 100;
         secrets = "";
         exploreScore = 0;
