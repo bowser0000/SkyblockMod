@@ -486,11 +486,8 @@ public class DankersSkyblockMod {
                 if (slot == null) return;
                 ItemStack item = slot.getStack();
                 String inventoryName = inventory.getDisplayName().getUnformattedText();
-                if (item == null) {
-                    if (MinecraftForge.EVENT_BUS.post(new ChestSlotClickedEvent(chest, inventory, inventoryName, slot))) event.setCanceled(true);
-                } else {
-                    if (MinecraftForge.EVENT_BUS.post(new ChestSlotClickedEvent(chest, inventory, inventoryName, slot, item))) event.setCanceled(true);
-                }
+
+                if (MinecraftForge.EVENT_BUS.post(new ChestSlotClickedEvent(chest, inventory, inventoryName, slot, item))) event.setCanceled(true);
             }
         }
     }

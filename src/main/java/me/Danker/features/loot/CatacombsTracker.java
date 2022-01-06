@@ -188,7 +188,7 @@ public class CatacombsTracker {
     public void onChat(ClientChatReceivedEvent event) {
         String message = StringUtils.stripControlCodes(event.message.getUnformattedText());
 
-        if (!Utils.inSkyblock) return;
+        if (!Utils.inDungeons) return;
         if (event.type == 2) return;
 
         if (message.contains("    Team Score: ") && message.contains("(S+)")) {
@@ -492,17 +492,17 @@ public class CatacombsTracker {
 
     @SubscribeEvent
     public void onSlotClick(ChestSlotClickedEvent event) {
+        if (!Utils.inDungeons) return;
+
         ItemStack item = event.item;
 
         if (event.inventoryName.endsWith(" Chest") && item != null) {
             if (item.getDisplayName().contains("Open Reward Chest")) {
-                List<String> tooltip = item.getTooltip(Minecraft.getMinecraft().thePlayer, Minecraft.getMinecraft().gameSettings.advancedItemTooltips);
+                List<String> tooltip = item.getTooltip(Minecraft.getMinecraft().thePlayer, false);
                 for (String lineUnclean : tooltip) {
                     String line = StringUtils.stripControlCodes(lineUnclean);
-                    if (line.contains("FREE")) {
-                        continue;
-                    } else if (line.contains(" Coins") && !line.contains("NOTE:")) {
-                        int coinsSpent = Integer.parseInt(line.substring(0, line.indexOf(" ")).replaceAll(",", ""));
+                    if (line.contains(" Coins") && !line.contains("NOTE:")) {
+                        int coinsSpent = Integer.parseInt(line.replaceAll("[^\\d]", ""));
 
                         List<String> scoreboard = ScoreboardHandler.getSidebarLines();
                         for (String s : scoreboard) {
@@ -541,9 +541,10 @@ public class CatacombsTracker {
                                     masterCoinsSpentSession += coinsSpent;
                                     ConfigHandler.writeDoubleConfig("catacombs", "masterCoins", masterCoinsSpent);
                                 }
+                                break;
                             }
-                            break;
                         }
+                        break;
                     }
                 }
             } else if (item.getDisplayName().contains("Reroll Chest")) {
