@@ -137,7 +137,11 @@ public class ColouredNames {
     }
 
     public static String getColourFromName(String name) {
-        return "§" + DankersSkyblockMod.data.get("colourednames").getAsJsonObject().get(name).getAsString();
+        try {
+            return "§" + DankersSkyblockMod.data.get("colourednames").getAsJsonObject().get(name).getAsString();
+        } catch (NullPointerException ex) {
+            return EnumChatFormatting.WHITE.toString();
+        }
     }
 
 }
