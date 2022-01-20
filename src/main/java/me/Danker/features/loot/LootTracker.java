@@ -1150,13 +1150,19 @@ public class LootTracker {
                 gaiaConstructsSession++;
                 ConfigHandler.writeIntConfig("mythological", "gaiaConstruct", gaiaConstructs);
             } else if (message.contains("a Minos Champion!")) {
-                minosChampions++;
-                minosChampionsSession++;
-                ConfigHandler.writeIntConfig("mythological", "minosChampion", minosChampions);
-            } else if (message.contains("a Minos Inquisitor!")) {
-                minosInquisitors++;
-                minosInquisitorsSession++;
-                ConfigHandler.writeIntConfig("mythological", "minosInquisitor", minosInquisitors);
+            	Minecraft mc = Minecraft.getMinecraft();
+                List<Entity> listWorldEntity = mc.theWorld.getLoadedEntityList();
+                for(int i = 0; i < listWorldEntity.size(); i++) {
+                	if(listWorldEntity.get(i).getName().contains("Minos Champion")){
+                		minosChampions++;
+                        minosChampionsSession++;
+                        ConfigHandler.writeIntConfig("mythological", "minosChampion", minosChampions);
+                	}else if(listWorldEntity.get(i).getName().contains("Minos Inquisitor")){
+                		minosInquisitors++;
+                        minosInquisitorsSession++;
+                        ConfigHandler.writeIntConfig("mythological", "minosInquisitor", minosInquisitors);
+                	}
+                }
             }
         }
 
