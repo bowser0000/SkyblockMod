@@ -45,8 +45,10 @@ public class ChronomatronSolver {
                 if (chronomatronPattern.size() > chronomatronMouseClicks && !item.getDisplayName().equals(chronomatronPattern.get(chronomatronMouseClicks))) {
                     if (event.isCancelable() && !Keyboard.isKeyDown(Keyboard.KEY_LCONTROL) && !Keyboard.isKeyDown(Keyboard.KEY_RCONTROL)) {
                         event.setCanceled(true);
+                        return;
                     }
                 }
+                chronomatronMouseClicks++;
             } else if (inventory.getStackInSlot(49).getDisplayName().startsWith("§aRemember the pattern!")) {
                 if (event.isCancelable()) event.setCanceled(true);
             }
