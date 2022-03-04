@@ -35,6 +35,7 @@ public class BonzoMaskTimer {
         String message = StringUtils.stripControlCodes(event.message.getUnformattedText());
 
         if (!Utils.inDungeons) return;
+        if (message.contains(":")) return;
 
         if (ToggleCommand.bonzoTimerToggled && message.contains("Bonzo's Mask") && message.contains("saved your life!")) {
             double usedTime = System.currentTimeMillis() / 1000;

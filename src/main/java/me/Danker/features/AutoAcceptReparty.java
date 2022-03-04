@@ -13,9 +13,12 @@ public class AutoAcceptReparty {
 
     @SubscribeEvent(receiveCanceled = true)
     public void onChat(ClientChatReceivedEvent event) {
-        String message = StringUtils.stripControlCodes(event.message.getUnformattedText());
 
         if (ToggleCommand.autoAcceptReparty) {
+            String message = StringUtils.stripControlCodes(event.message.getUnformattedText());
+
+            if (message.contains(":")) return;
+
             String[] split = message.split("\\s");
 
             if (message.contains("has disbanded the party!")) {

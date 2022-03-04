@@ -35,7 +35,7 @@ public class ThreeManSolver {
 
         if (!Utils.inDungeons) return;
 
-        if (ToggleCommand.threeManToggled && message.contains("[NPC]")) {
+        if (ToggleCommand.threeManToggled && message.startsWith("[NPC]")) {
             if (DankersSkyblockMod.data != null && DankersSkyblockMod.data.has("threeman")) {
                 JsonArray riddleSolutions = DankersSkyblockMod.data.get("threeman").getAsJsonArray();
 
