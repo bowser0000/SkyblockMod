@@ -97,7 +97,6 @@ Discord Server: https://discord.gg/QsEkNQS
 - /reloaddsmrepo - Reloads Danker's Skyblock Mod repository.
 - /dsmfarmlength <min coords> <max coords> - Sets coords to be used for end of farm alert.
 - /hotmof [player] - Uses API to find total powder and HotM tree of a person. If no name is provided, it checks yours.
-- /networth [player] - Uses API to find networth of a person. If no name is provided, it checks yours.
 
 ## Keybinds
 - Open Maddox menu - M by default.
