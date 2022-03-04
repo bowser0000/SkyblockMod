@@ -238,6 +238,12 @@ public class ResetLootCommand extends CommandBase {
 		FishingTracker.werewolfsSession = 0;
 		FishingTracker.phantomFishersSession = 0;
 		FishingTracker.grimReapersSession = 0;
+		FishingTracker.waterWorms = 0;
+		FishingTracker.poisonedWaterWorms = 0;
+		FishingTracker.flamingWorms = 0;
+		FishingTracker.lavaBlazes = 0;
+		FishingTracker.lavaPigmen = 0;
+		FishingTracker.zombieMiners = 0;
 		ConfigHandler.deleteCategory("fishing");
 		ConfigHandler.reloadConfig();
 	}

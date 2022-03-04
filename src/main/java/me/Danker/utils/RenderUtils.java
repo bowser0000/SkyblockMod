@@ -363,4 +363,10 @@ public class RenderUtils {
         GlStateManager.disableRescaleNormal();
     }
 
+    public static void drawCenteredText(String text, int screenWidth, int height, double scale) {
+        Minecraft mc = Minecraft.getMinecraft();
+        int textWidth = mc.fontRendererObj.getStringWidth(text);
+        new TextRenderer(mc, text, screenWidth / 2 - textWidth / 2, height, scale);
+    }
+
 }

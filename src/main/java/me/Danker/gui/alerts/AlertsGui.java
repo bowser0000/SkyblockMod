@@ -6,6 +6,7 @@ import me.Danker.gui.DankerGui;
 import me.Danker.gui.buttons.FeatureButton;
 import me.Danker.handlers.ConfigHandler;
 import me.Danker.handlers.TextRenderer;
+import me.Danker.utils.RenderUtils;
 import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
@@ -78,8 +79,7 @@ public class AlertsGui extends GuiScreen {
         super.drawScreen(mouseX, mouseY, partialTicks);
 
         String pageText = "Page: " + page + "/" + (int) Math.ceil(allButtons.size() / 7D);
-        int pageWidth = mc.fontRendererObj.getStringWidth(pageText);
-        new TextRenderer(mc, pageText, width / 2 - pageWidth / 2, 10, 1D);
+        RenderUtils.drawCenteredText(pageText, width, 10, 1D);
     }
 
     @Override

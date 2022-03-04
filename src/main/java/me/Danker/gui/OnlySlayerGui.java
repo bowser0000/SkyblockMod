@@ -5,6 +5,7 @@ import me.Danker.commands.ToggleCommand;
 import me.Danker.features.BlockWrongSlayer;
 import me.Danker.handlers.ConfigHandler;
 import me.Danker.handlers.TextRenderer;
+import me.Danker.utils.RenderUtils;
 import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
@@ -97,8 +98,7 @@ public class OnlySlayerGui extends GuiScreen {
         } else {
             displayText = "Only Allow Slayer: " + BlockWrongSlayer.onlySlayerName + " " + BlockWrongSlayer.onlySlayerNumber;
         }
-        int displayWidth = mc.fontRendererObj.getStringWidth(displayText);
-        new TextRenderer(mc, displayText, width / 2 - displayWidth / 2, 10, 1D);
+        RenderUtils.drawCenteredText(displayText, width, 10, 1D);
 
         super.drawScreen(mouseX, mouseY, partialTicks);
     }

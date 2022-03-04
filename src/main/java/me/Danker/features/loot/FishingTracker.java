@@ -47,6 +47,13 @@ public class FishingTracker {
     public static int werewolfs;
     public static int phantomFishers;
     public static int grimReapers;
+    // CH Fishing
+    public static int waterWorms;
+    public static int poisonedWaterWorms;
+    public static int flamingWorms;
+    public static int lavaBlazes;
+    public static int lavaPigmen;
+    public static int zombieMiners;
 
     // Fishing
     public static int seaCreaturesSession = 0;
@@ -87,6 +94,13 @@ public class FishingTracker {
     public static int werewolfsSession = 0;
     public static int phantomFishersSession = 0;
     public static int grimReapersSession = 0;
+    // CH Fishing
+    public static int waterWormsSession = 0;
+    public static int poisonedWaterWormsSession = 0;
+    public static int flamingWormsSession = 0;
+    public static int lavaBlazesSession = 0;
+    public static int lavaPigmenSession = 0;
+    public static int zombieMinersSession = 0;
 
     @SubscribeEvent
     public void onChat(ClientChatReceivedEvent event) {
@@ -251,6 +265,36 @@ public class FishingTracker {
             grimReapers++;
             grimReapersSession++;
             ConfigHandler.writeIntConfig("fishing", "grimReaper", grimReapers);
+            increaseSeaCreatures();
+        } else if (message.contains("A Water Worm surfaces")) {
+            waterWorms++;
+            waterWormsSession++;
+            ConfigHandler.writeIntConfig("fishing", "waterWorm", waterWorms);
+            increaseSeaCreatures();
+        } else if (message.contains("A Poisoned Water Worm surfaces")) {
+            poisonedWaterWorms++;
+            poisonedWaterWormsSession++;
+            ConfigHandler.writeIntConfig("fishing", "poisonedWaterWorm", poisonedWaterWorms);
+            increaseSeaCreatures();
+        } else if (message.contains("A flaming worm surfaces from the depths")) {
+            flamingWorms++;
+            flamingWormsSession++;
+            ConfigHandler.writeIntConfig("fishing", "flamingWorm", flamingWorms);
+            increaseSeaCreatures();
+        } else if (message.contains("A Lava Blaze has surfaced from the depths")) {
+            lavaBlazes++;
+            lavaBlazesSession++;
+            ConfigHandler.writeIntConfig("fishing", "lavaBlaze", lavaBlazes);
+            increaseSeaCreatures();
+        } else if (message.contains("A Lava Pigman arose from the depths")) {
+            lavaPigmen++;
+            lavaPigmenSession++;
+            ConfigHandler.writeIntConfig("fishing", "lavaPigman", lavaPigmen);
+            increaseSeaCreatures();
+        } else if (message.contains("A Zombie Miner surfaces")) {
+            zombieMiners++;
+            zombieMinersSession++;
+            ConfigHandler.writeIntConfig("fishing", "zombieMiner", zombieMiners);
             increaseSeaCreatures();
         }
     }

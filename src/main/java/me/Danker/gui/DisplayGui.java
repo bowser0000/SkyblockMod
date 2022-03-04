@@ -4,6 +4,7 @@ import me.Danker.DankersSkyblockMod;
 import me.Danker.features.loot.LootDisplay;
 import me.Danker.handlers.ConfigHandler;
 import me.Danker.handlers.TextRenderer;
+import me.Danker.utils.RenderUtils;
 import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
@@ -26,7 +27,7 @@ public class DisplayGui extends GuiScreen {
 	private GuiButton fishingWinter;
 	private GuiButton fishingFestival;
 	private GuiButton fishingSpooky;
-	private GuiButton mythological;
+	private GuiButton fishingCH;
 	private GuiButton catacombsF1;
 	private GuiButton catacombsF2;
 	private GuiButton catacombsF3;
@@ -35,6 +36,7 @@ public class DisplayGui extends GuiScreen {
 	private GuiButton catacombsF6;
 	private GuiButton catacombsF7;
 	private GuiButton catacombsMM;
+	private GuiButton mythological;
 	private GuiButton ghost;
 	
 	@Override
@@ -54,16 +56,15 @@ public class DisplayGui extends GuiScreen {
 		showSession = new GuiButton(0, width / 2 - 100, (int) (height * 0.1), "Current Session Only: " + Utils.getColouredBoolean(addSession));
 		off = new GuiButton(0, width / 2 - 210, (int) (height * 0.2), "Off");
 		auto = new GuiButton(0, width / 2 + 10, (int) (height * 0.2), "Auto");
-		zombie = new GuiButton(0, width / 2 - 230, (int) (height * 0.3), 100, 20, "Zombie");
-		spider = new GuiButton(0, width / 2 - 110, (int) (height * 0.3), 100, 20, "Spider");
-		wolf = new GuiButton(0, width / 2 + 10, (int) (height * 0.3), 100, 20, "Wolf");
-		enderman = new GuiButton(0, width / 2 + 130, (int) (height * 0.3), 100, 20, "Enderman");
-		fishing = new GuiButton(0, width / 2 - 230, (int) (height * 0.4), 100, 20, "Fishing");
-		fishingWinter = new GuiButton(0, width / 2 - 110, (int) (height * 0.4), 100, 20, "Fishing Winter");
-		fishingFestival = new GuiButton(0, width / 2 + 10, (int) (height * 0.4), 100, 20, "Fishing Festival");
-		fishingSpooky = new GuiButton(0, width / 2 + 130, (int) (height * 0.4), 100, 20, "Fishing Spooky");
-		mythological = new GuiButton(0, width / 2 - 100, (int) (height * 0.5), 95, 20, "Mythological");
-		ghost = new GuiButton(0, width / 2 + 5, (int) (height * 0.5), 95, 20, "Ghost");
+		zombie = new GuiButton(0, width / 2 - 230, (int) (height * 0.35), 100, 20, "Zombie");
+		spider = new GuiButton(0, width / 2 - 110, (int) (height * 0.35), 100, 20, "Spider");
+		wolf = new GuiButton(0, width / 2 + 10, (int) (height * 0.35), 100, 20, "Wolf");
+		enderman = new GuiButton(0, width / 2 + 130, (int) (height * 0.35), 100, 20, "Enderman");
+		fishing = new GuiButton(0, width / 2 - 270, (int) (height * 0.5), 100, 20, "Fishing");
+		fishingWinter = new GuiButton(0, width / 2 - 160, (int) (height * 0.5), 100, 20, "Fishing Winter");
+		fishingFestival = new GuiButton(0, width / 2 - 50, (int) (height * 0.5), 100, 20, "Fishing Festival");
+		fishingSpooky = new GuiButton(0, width / 2 + 60, (int) (height * 0.5), 100, 20, "Fishing Spooky");
+		fishingCH = new GuiButton(0, width / 2 + 170, (int) (height * 0.5), 100, 20, "CH Fishing");
 		catacombsF1 = new GuiButton(0, width / 2 - 235, (int) (height * 0.65), 50, 20, "F1");
 		catacombsF2 = new GuiButton(0, width / 2 - 175, (int) (height * 0.65), 50, 20, "F2");
 		catacombsF3 = new GuiButton(0, width / 2 - 115, (int) (height * 0.65), 50, 20, "F3");
@@ -72,6 +73,8 @@ public class DisplayGui extends GuiScreen {
 		catacombsF6 = new GuiButton(0, width / 2 + 65, (int) (height * 0.65), 50, 20, "F6");
 		catacombsF7 = new GuiButton(0, width / 2 + 125, (int) (height * 0.65), 50, 20, "F7");
 		catacombsMM = new GuiButton(0, width / 2 + 185, (int) (height * 0.65), 50, 20, "MM");
+		mythological = new GuiButton(0, width / 2 - 100, (int) (height * 0.8), 95, 20, "Mythological");
+		ghost = new GuiButton(0, width / 2 + 5, (int) (height * 0.8), 95, 20, "Ghost");
 
 		this.buttonList.add(showSession);
 		this.buttonList.add(off);
@@ -84,7 +87,7 @@ public class DisplayGui extends GuiScreen {
 		this.buttonList.add(fishingWinter);
 		this.buttonList.add(fishingFestival);
 		this.buttonList.add(fishingSpooky);
-		this.buttonList.add(mythological);
+		this.buttonList.add(fishingCH);
 		this.buttonList.add(catacombsF1);
 		this.buttonList.add(catacombsF2);
 		this.buttonList.add(catacombsF3);
@@ -93,6 +96,7 @@ public class DisplayGui extends GuiScreen {
 		this.buttonList.add(catacombsF6);
 		this.buttonList.add(catacombsF7);
 		this.buttonList.add(catacombsMM);
+		this.buttonList.add(mythological);
 		this.buttonList.add(ghost);
 		this.buttonList.add(goBack);
 	}
@@ -100,20 +104,13 @@ public class DisplayGui extends GuiScreen {
 	@Override
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
 		this.drawDefaultBackground();
-		Minecraft mc = Minecraft.getMinecraft();
-		
-		String displayText;
-		if (LootDisplay.auto) {
-			displayText = "Current Display: auto";
-		} else {
-			displayText = "Current Display: " + LootDisplay.display;
-		}
-		int displayWidth = mc.fontRendererObj.getStringWidth(displayText);
-		new TextRenderer(mc, displayText, width / 2 - displayWidth / 2, 10, 1D);
-		
-		String catacombsTitleText = "Catacombs Dungeon";
-		int catacombsTitleWidth = mc.fontRendererObj.getStringWidth(catacombsTitleText);
-		new TextRenderer(mc, catacombsTitleText, width / 2 - catacombsTitleWidth / 2, (int) (height * 0.6), 1D);
+
+		String displayText = LootDisplay.auto ? "Current Display: auto" : "Current Display: " + LootDisplay.display;
+		RenderUtils.drawCenteredText(displayText, width, 10, 1D);
+		RenderUtils.drawCenteredText("Slayer", width, (int) (height * 0.3), 1D);
+		RenderUtils.drawCenteredText("Fishing", width, (int) (height * 0.45), 1D);
+		RenderUtils.drawCenteredText("Catacombs Dungeon", width, (int) (height * 0.6), 1D);
+		RenderUtils.drawCenteredText("Misc", width, (int) (height * 0.75), 1D);
 		
 		super.drawScreen(mouseX, mouseY, partialTicks);
 	}
@@ -146,6 +143,8 @@ public class DisplayGui extends GuiScreen {
 			setDisplay("fishing_festival");
 		} else if (button == fishingSpooky) {
 			setDisplay("fishing_spooky");
+		} else if (button == fishingCH) {
+			setDisplay("fishing_ch");
 		} else if (button == mythological) {
 			setDisplay("mythological");
 		} else if (button == catacombsF1) {

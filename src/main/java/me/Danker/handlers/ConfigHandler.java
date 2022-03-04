@@ -417,6 +417,13 @@ public class ConfigHandler {
 		FishingTracker.werewolfs = initInt("fishing", "werewolf", 0);
 		FishingTracker.phantomFishers = initInt("fishing", "phantomFisher", 0);
 		FishingTracker.grimReapers = initInt("fishing", "grimReaper", 0);
+		// CH Fishing
+		FishingTracker.waterWorms = initInt("fishing", "waterWorm", 0);
+		FishingTracker.poisonedWaterWorms = initInt("fishing", "poisonedWaterWorm", 0);
+		FishingTracker.flamingWorms = initInt("fishing", "flamingWorm", 0);
+		FishingTracker.lavaBlazes = initInt("fishing", "lavaBlaze", 0);
+		FishingTracker.lavaPigmen = initInt("fishing", "lavaPigman", 0);
+		FishingTracker.zombieMiners = initInt("fishing", "zombieMiner", 0);
 		
 		// Mythological
 		MythologicalTracker.mythCoins = initDouble("mythological", "coins", 0);

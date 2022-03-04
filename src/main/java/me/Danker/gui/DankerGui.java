@@ -7,6 +7,7 @@ import me.Danker.gui.buttons.FeatureButton;
 import me.Danker.gui.crystalhollowwaypoints.CrystalHollowWaypointsGui;
 import me.Danker.handlers.ConfigHandler;
 import me.Danker.handlers.TextRenderer;
+import me.Danker.utils.RenderUtils;
 import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
@@ -274,8 +275,7 @@ public class DankerGui extends GuiScreen {
 		super.drawScreen(mouseX, mouseY, partialTicks);
 
 		String pageText = "Page: " + page + "/" + (int) Math.ceil(foundButtons.size() / 7D);
-		int pageWidth = mc.fontRendererObj.getStringWidth(pageText);
-		new TextRenderer(mc, pageText, width / 2 - pageWidth / 2, 10, 1D);
+		RenderUtils.drawCenteredText(pageText, width, 10, 1D);
 
 		for (GuiButton button : this.buttonList) {
 			if (button instanceof FeatureButton && button.isMouseOver()) {

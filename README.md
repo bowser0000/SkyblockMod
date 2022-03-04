@@ -28,7 +28,7 @@ Discord Server: https://discord.gg/QsEkNQS
 - Maddox menu keybind
 - Block starting other slayer quests
 - Slayer slain alert
-- Fishing, jerry fishing, fishing festival, spooky fishing trackers
+- Fishing, jerry fishing, fishing festival, spooky fishing, crystal hollows fishing trackers
 - Expertise kills in fishing rod lore
 - Gemstones applied in item lore
 - Catacombs trackers
@@ -70,8 +70,8 @@ Discord Server: https://discord.gg/QsEkNQS
 - /toggle <too many to list> - Toggles features. /toggle list returns values of every toggle.
 - /setkey <key> - Sets API key.
 - /getkey - Returns key set with /setkey and copies it to your clipboard.
-- /loot <zombie/spider/wolf/enderman/fishing/catacombs/mythological/> [winter/festival/spooky/f(1-7)/mm/session] - Returns loot received from slayer quests or fishing stats. /loot fishing winter returns winter sea creatures instead.
-- /display <zombie/spider/wolf/enderman/fishing/catacombs/mythological/ghosts/auto/off> [winter/festival/spooky/f(1-7)/mm/session] - Text display for trackers. /display fishing winter displays winter sea creatures instead. /display auto automatically displays the loot for the slayer quest you have active.
+- /loot <zombie/spider/wolf/enderman/fishing/catacombs/mythological/> [winter/festival/spooky/ch/f(1-7)/mm/session] - Returns loot received from slayer quests or fishing stats. /loot fishing winter returns winter sea creatures instead.
+- /display <zombie/spider/wolf/enderman/fishing/catacombs/mythological/ghosts/auto/off> [winter/festival/spooky/ch/f(1-7)/mm/session] - Text display for trackers. /display fishing winter displays winter sea creatures instead. /display auto automatically displays the loot for the slayer quest you have active.
 - /resetloot <zombie/spider/wolf/enderman/fishing/catacombs/mythological/confirm/cancel> -  - Resets loot for trackers. /resetloot confirm confirms the reset.
 - /move <coords/display/dungeontimer/skill50/lividhp/caketimer/skilltracker/wateranswer/bonzotimer/golemtimer/teammatesinradius/gianthp/abilitycooldowns/dungeonscore> <x> <y> - Moves text display to specified X and Y coordinates.
 - /scale <coords/display/dungeontimer/skill50/lividhp/caketimer/skilltracker/wateranswer/bonzotimer/golemtimer/teammatesinradius/gianthp/abilitycooldowns/dungeonscore> <scale (0.1 - 10)> - Scales text display to a specified multipler between 0.1x and 10x.

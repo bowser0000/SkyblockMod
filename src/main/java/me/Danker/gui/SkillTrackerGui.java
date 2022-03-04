@@ -4,6 +4,7 @@ import me.Danker.DankersSkyblockMod;
 import me.Danker.features.SkillTracker;
 import me.Danker.handlers.ConfigHandler;
 import me.Danker.handlers.TextRenderer;
+import me.Danker.utils.RenderUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
@@ -50,6 +51,7 @@ public class SkillTrackerGui extends GuiScreen {
 	@Override
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
 		this.drawDefaultBackground();
+
 		String stateText = "";
 		if (SkillTracker.skillStopwatch.isStarted() && !SkillTracker.skillStopwatch.isSuspended()) {
 			stateText = "Timer: Running";
@@ -59,8 +61,8 @@ public class SkillTrackerGui extends GuiScreen {
 		if (!SkillTracker.showSkillTracker) {
 			stateText += " (Hidden)";
 		}
-		int stateTextWidth = mc.fontRendererObj.getStringWidth(stateText);
-		new TextRenderer(mc, stateText, width / 2 - stateTextWidth / 2, 10, 1D);
+		RenderUtils.drawCenteredText(stateText, width, 10, 1D);
+
 		super.drawScreen(mouseX, mouseY, partialTicks);
 	}
 	

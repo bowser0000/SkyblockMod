@@ -21,7 +21,7 @@ public class DisplayCommand extends CommandBase {
 
 	@Override
 	public String getCommandUsage(ICommandSender arg0) {
-		return "/" + getCommandName() + " <zombie/spider/wolf/enderman/fishing/catacombs/mythological/ghost/auto/off> [winter/festival/spooky/session/f(1-7)/mm]";
+		return "/" + getCommandName() + " <zombie/spider/wolf/enderman/fishing/catacombs/mythological/ghost/auto/off> [winter/festival/spooky/ch/session/f(1-7)/mm]";
 	}
 
 	public static String usage(ICommandSender arg0) {
@@ -38,7 +38,7 @@ public class DisplayCommand extends CommandBase {
 		if (args.length == 1) {
 			return getListOfStringsMatchingLastWord(args, "wolf", "spider", "zombie", "enderman", "fishing", "catacombs", "mythological", "ghost", "auto", "off");
 		} else if (args.length == 2 && args[0].equalsIgnoreCase("fishing")) {
-			return getListOfStringsMatchingLastWord(args, "winter", "festival", "spooky", "session");
+			return getListOfStringsMatchingLastWord(args, "winter", "festival", "spooky", "ch", "session");
 		} else if (args.length == 2 && args[0].equalsIgnoreCase("catacombs")) {
 			return getListOfStringsMatchingLastWord(args, "f1", "floor1", "f2", "floor2", "f3", "floor3", "f4", "floor4", "f5", "floor5", "f6", "floor6", "f7", "floor7", "mm", "master");
 		} else if (args.length > 1) {
@@ -111,6 +111,13 @@ public class DisplayCommand extends CommandBase {
 							LootDisplay.display = "fishing_spooky_session";
 						} else {
 							LootDisplay.display = "fishing_spooky";
+						}
+						break;
+					case "ch":
+						if (showSession) {
+							LootDisplay.display = "fishing_ch";
+						} else {
+							LootDisplay.display = "fishing_ch_session";
 						}
 						break;
 					default:

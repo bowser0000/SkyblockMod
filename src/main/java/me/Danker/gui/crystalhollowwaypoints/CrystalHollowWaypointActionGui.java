@@ -3,6 +3,7 @@ package me.Danker.gui.crystalhollowwaypoints;
 import me.Danker.DankersSkyblockMod;
 import me.Danker.features.CrystalHollowWaypoints;
 import me.Danker.handlers.TextRenderer;
+import me.Danker.utils.RenderUtils;
 import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -63,9 +64,7 @@ public class CrystalHollowWaypointActionGui extends GuiScreen {
 
         CrystalHollowWaypoints.Waypoint waypoint = CrystalHollowWaypoints.waypoints.get(id);
 
-        String waypointText = waypoint.location + " @ " + waypoint.getPos();
-        int pageWidth = mc.fontRendererObj.getStringWidth(waypointText);
-        new TextRenderer(mc, waypointText, width / 2 - pageWidth / 2, 10, 1D);
+        RenderUtils.drawCenteredText(waypoint.location + " @ " + waypoint.getPos(), width, 10, 1D);
     }
 
     @Override
