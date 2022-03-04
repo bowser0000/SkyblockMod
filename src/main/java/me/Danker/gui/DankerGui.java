@@ -158,7 +158,7 @@ public class DankerGui extends GuiScreen {
 		watcherReadyMessage = new FeatureButton("Display Watcher Ready Message: " + Utils.getColouredBoolean(ToggleCommand.watcherReadyToggled), "Alerts when Watcher finishes spawning mobs.");
 		flowerWeapons = new FeatureButton("Prevent Placing FoT/Spirit Sceptre: " + Utils.getColouredBoolean(ToggleCommand.flowerWeaponsToggled), "Blocks placing Flower of Truth or Spirit Sceptre.");
 		notifySlayerSlain = new FeatureButton("Notify when Slayer Slain: " + Utils.getColouredBoolean(ToggleCommand.notifySlayerSlainToggled), "Alerts when slayer boss has been slain.");
-		necronNotifications = new FeatureButton("Necron Phase Notifications: " + Utils.getColouredBoolean(ToggleCommand.necronNotificationsToggled), "Creates alert on different phases of the Necron fight.");
+		necronNotifications = new FeatureButton("Floor 7 Phase Notifications: " + Utils.getColouredBoolean(ToggleCommand.necronNotificationsToggled), "Creates alert on different phases of the floor 7 fight.");
 		bonzoTimer = new FeatureButton("Bonzo's Mask Timer: " + Utils.getColouredBoolean(ToggleCommand.bonzoTimerToggled), "Displays cooldown of Bonzo Mask ability.");
 		autoSkillTracker = new FeatureButton("Auto Start/Stop Skill Tracker: " + Utils.getColouredBoolean(ToggleCommand.autoSkillTrackerToggled), "Automatically pauses skill tracker when opening a gui.");
 		melodyTooltips = new FeatureButton("Hide tooltips in Melody's Harp: " + Utils.getColouredBoolean(ToggleCommand.melodyTooltips), "Hides tooltips in Melody's Harp.");
@@ -432,7 +432,7 @@ public class DankerGui extends GuiScreen {
 		} else if (button == necronNotifications) {
 			ToggleCommand.necronNotificationsToggled = !ToggleCommand.necronNotificationsToggled;
 			ConfigHandler.writeBooleanConfig("toggles", "NecronNotifications", ToggleCommand.necronNotificationsToggled);
-			necronNotifications.displayString = "Necron Phase Notifications: " + Utils.getColouredBoolean(ToggleCommand.necronNotificationsToggled);
+			necronNotifications.displayString = "Floor 7 Phase Notifications: " + Utils.getColouredBoolean(ToggleCommand.necronNotificationsToggled);
 		} else if (button == bonzoTimer) {
 			ToggleCommand.bonzoTimerToggled = !ToggleCommand.bonzoTimerToggled;
 			ConfigHandler.writeBooleanConfig("toggles", "BonzoTimer", ToggleCommand.bonzoTimerToggled);
