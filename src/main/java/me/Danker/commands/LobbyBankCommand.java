@@ -55,7 +55,7 @@ public class LobbyBankCommand extends CommandBase {
             try {
                 // Create deep copy of players to prevent passing reference and ConcurrentModificationException
                 Collection<NetworkPlayerInfo> players = new ArrayList<>(Minecraft.getMinecraft().getNetHandler().getPlayerInfoMap());
-                playerSP.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Checking skill average of lobby. Estimated time: " + (int) (players.size() * 1.2 + 1) + " seconds."));
+                playerSP.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Checking bank of lobby. Estimated time: " + (int) (players.size() * 1.2 + 1) + " seconds."));
                 // Send request every .6 seconds, leaving room for another 20 requests per minute
 
                 for (final NetworkPlayerInfo player : players) {
