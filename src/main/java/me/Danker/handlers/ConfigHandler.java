@@ -2,7 +2,6 @@ package me.Danker.handlers;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 import me.Danker.DankersSkyblockMod;
 import me.Danker.commands.MoveCommand;
 import me.Danker.commands.ScaleCommand;
@@ -16,7 +15,10 @@ import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.common.config.ConfigCategory;
 import net.minecraftforge.common.config.Configuration;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 

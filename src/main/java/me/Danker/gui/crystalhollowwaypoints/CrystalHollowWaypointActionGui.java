@@ -2,7 +2,6 @@ package me.Danker.gui.crystalhollowwaypoints;
 
 import me.Danker.DankersSkyblockMod;
 import me.Danker.features.CrystalHollowWaypoints;
-import me.Danker.handlers.TextRenderer;
 import me.Danker.utils.RenderUtils;
 import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;

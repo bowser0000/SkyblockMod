@@ -9,7 +9,6 @@ import me.Danker.features.*;
 import me.Danker.features.loot.*;
 import me.Danker.features.puzzlesolvers.*;
 import me.Danker.gui.*;
-import me.Danker.gui.crystalhollowwaypoints.CrystalHollowWaypointsGui;
 import me.Danker.handlers.ConfigHandler;
 import me.Danker.handlers.PacketHandler;
 import me.Danker.utils.RenderUtils;

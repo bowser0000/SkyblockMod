@@ -1,12 +1,10 @@
 package me.Danker.gui.crystalhollowwaypoints;
 
-import me.Danker.DankersSkyblockMod;
 import me.Danker.commands.ToggleCommand;
 import me.Danker.features.CrystalHollowWaypoints;
 import me.Danker.gui.DankerGui;
 import me.Danker.gui.buttons.FeatureButton;
 import me.Danker.handlers.ConfigHandler;
-import me.Danker.handlers.TextRenderer;
 import me.Danker.utils.RenderUtils;
 import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;

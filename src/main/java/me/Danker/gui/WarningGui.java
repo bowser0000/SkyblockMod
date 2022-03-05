@@ -1,6 +1,5 @@
 package me.Danker.gui;
 
-import me.Danker.handlers.TextRenderer;
 import me.Danker.utils.RenderUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;

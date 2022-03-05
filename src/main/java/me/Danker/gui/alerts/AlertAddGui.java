@@ -1,7 +1,5 @@
 package me.Danker.gui.alerts;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import me.Danker.features.Alerts;
 import me.Danker.handlers.TextRenderer;
 import net.minecraft.client.Minecraft;
@@ -11,7 +9,6 @@ import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraftforge.fml.client.config.GuiCheckBox;
 
-import java.io.FileWriter;
 import java.io.IOException;
 
 public class AlertAddGui extends GuiScreen {

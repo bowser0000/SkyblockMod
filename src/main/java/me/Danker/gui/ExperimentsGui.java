@@ -1,6 +1,5 @@
 package me.Danker.gui;
 
-import me.Danker.DankersSkyblockMod;
 import me.Danker.commands.ToggleCommand;
 import me.Danker.handlers.ConfigHandler;
 import me.Danker.utils.Utils;

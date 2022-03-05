@@ -2,10 +2,12 @@ package me.Danker.features;
 
 import me.Danker.DankersSkyblockMod;
 import me.Danker.commands.ToggleCommand;
+import me.Danker.events.PacketReadEvent;
 import me.Danker.utils.Utils;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityArmorStand;
+import net.minecraft.network.play.server.S45PacketTitle;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IChatComponent;
@@ -16,7 +18,9 @@ import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -29,6 +33,8 @@ public class ColouredNames {
     public static List<String> users = new ArrayList<>();
     public static Map<String, String> nametags = new HashMap<>();
     public static final EnumChatFormatting[] RAINBOW_COLOURS = new EnumChatFormatting[]{EnumChatFormatting.RED, EnumChatFormatting.GOLD, EnumChatFormatting.YELLOW, EnumChatFormatting.GREEN, EnumChatFormatting.AQUA, EnumChatFormatting.BLUE, EnumChatFormatting.DARK_PURPLE};
+
+    static Field messageField = ReflectionHelper.findField(S45PacketTitle.class, "message", "field_179810_b", "b");
 
     @SubscribeEvent
     public void onChat(ClientChatReceivedEvent event) {
@@ -86,6 +92,31 @@ public class ColouredNames {
 
                 nametags.put(id, name);
                 entity.setCustomNameTag(name);
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public void onPacketRead(PacketReadEvent event) {
+        if (!ToggleCommand.customColouredNames || !Utils.inSkyblock) return;
+
+        if (event.packet instanceof S45PacketTitle) {
+            S45PacketTitle packet = (S45PacketTitle) event.packet;
+
+            if (packet.getMessage() == null) return;
+
+            String message = packet.getMessage().getUnformattedText();
+            for (String user : users) {
+                if (message.contains(user)) {
+                    try {
+                        messageField.setAccessible(true);
+                        messageField.set(packet, replaceChat(packet.getMessage(), user));
+                        event.packet = packet;
+                    } catch (IllegalAccessException ex) {
+                        ex.printStackTrace();
+                    }
+                    break;
+                }
             }
         }
     }
