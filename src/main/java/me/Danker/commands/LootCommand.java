@@ -476,6 +476,8 @@ public class LootCommand extends CommandBase {
 																	EnumChatFormatting.GOLD + "    Zombie Miners: " + nf.format(FishingTracker.zombieMiners) + "\n" +
 																	EnumChatFormatting.AQUA + "" + EnumChatFormatting.BOLD + "-------------------"));
 					}
+
+					return;
 				}
 
 				if (showSession) {
