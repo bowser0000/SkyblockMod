@@ -383,6 +383,7 @@ public class DankersSkyblockMod {
             if (player != null) {
                 Utils.checkForSkyblock();
                 Utils.checkForDungeons();
+                Utils.checkForDungeonFloor();
                 Utils.checkTabLocation();
             }
 

@@ -50,6 +50,7 @@ public class DankerGui extends GuiScreen {
 	private GuiButton coords;
 	private GuiButton goldenEnch;
 	private GuiButton slayerCount;
+	private GuiButton masterSPlusDisplay;
 	private GuiButton rngesusAlert;
 	private GuiButton splitFishing;
 	private GuiButton chatMaddox;
@@ -135,6 +136,7 @@ public class DankerGui extends GuiScreen {
 		cakeTimer = new FeatureButton("Cake Timer: " + Utils.getColouredBoolean(ToggleCommand.cakeTimerToggled), "Displays time until century cake buffs run out.");
 		skill50Display = new FeatureButton("Display Progress To Skill Level 50: " + Utils.getColouredBoolean(ToggleCommand.skill50DisplayToggled), "Display total progress to max skill level.");
 		slayerCount = new FeatureButton("Count Total 20% Drops: " + Utils.getColouredBoolean(ToggleCommand.slayerCountTotal), "Counts times dropped instead of amount dropped.\nE.x. Hamster Wheels: 40 -> Hamster Wheels: 10 times.");
+		masterSPlusDisplay = new FeatureButton("Display MM S+ Runs: " + Utils.getColouredBoolean(ToggleCommand.masterSPlusDisplay), "Dispay Master Mode S+ runs instead of S runs.");
 		spiritBearAlert = new FeatureButton("Spirit Bear Spawn Alerts: " + Utils.getColouredBoolean(ToggleCommand.spiritBearAlerts), "Alert when Spirit Bear spawns.");
 		sceptreMessages = new FeatureButton("Spirit Sceptre Messages: " + Utils.getColouredBoolean(ToggleCommand.sceptreMessages), "Turn " + EnumChatFormatting.RED + "off" + EnumChatFormatting.RESET + " to hide Spirit Sceptre messages.");
 		midasStaffMessages = new FeatureButton("Midas Staff Messages: " + Utils.getColouredBoolean(ToggleCommand.midasStaffMessages), "Turn " + EnumChatFormatting.RED + "off" + EnumChatFormatting.RESET + " to hide Midas Staff messages.");
@@ -190,6 +192,7 @@ public class DankerGui extends GuiScreen {
 		allButtons.add(cakeTimer);
 		allButtons.add(skill50Display);
 		allButtons.add(slayerCount);
+		allButtons.add(masterSPlusDisplay);
 		allButtons.add(spiritBearAlert);
 		allButtons.add(sceptreMessages);
 		allButtons.add(midasStaffMessages);
@@ -503,6 +506,10 @@ public class DankerGui extends GuiScreen {
 			ToggleCommand.dungeonScore = !ToggleCommand.dungeonScore;
 			ConfigHandler.writeBooleanConfig("toggles", "DungeonScore", ToggleCommand.dungeonScore);
 			dungeonScore.displayString = "Dungeon Score Display: " + Utils.getColouredBoolean(ToggleCommand.dungeonScore);
+		} else if (button == masterSPlusDisplay) {
+			ToggleCommand.masterSPlusDisplay = !ToggleCommand.masterSPlusDisplay;
+			ConfigHandler.writeBooleanConfig("toggles", "MasterSPlusDisplay", ToggleCommand.masterSPlusDisplay);
+			masterSPlusDisplay.displayString = "Display MM S+ Runs: " + Utils.getColouredBoolean(ToggleCommand.masterSPlusDisplay);
 		}
 	}
 

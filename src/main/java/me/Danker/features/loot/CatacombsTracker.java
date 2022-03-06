@@ -89,12 +89,26 @@ public class CatacombsTracker {
     public static double f7CoinsSpent;
     public static double f7TimeSpent;
     // MM
-    public static int masterS;
+    public static int m1S;
+    public static int m1SPlus;
+    public static int m2S;
+    public static int m2SPlus;
+    public static int m3S;
+    public static int m3SPlus;
+    public static int m4S;
+    public static int m4SPlus;
+    public static int m5S;
+    public static int m5SPlus;
+    public static int m6S;
+    public static int m6SPlus;
+    public static int m7S;
+    public static int m7SPlus;
     public static int firstStars;
     public static int secondStars;
     public static int thirdStars;
     public static int fourthStars;
     public static int fifthStars;
+    public static int darkClaymores;
     public static int masterRerolls;
     public static double masterCoinsSpent;
     public static double masterTimeSpent;
@@ -174,12 +188,26 @@ public class CatacombsTracker {
     public static double f7CoinsSpentSession = 0;
     public static double f7TimeSpentSession = 0;
     // MM
-    public static int masterSSession = 0;
+    public static int m1SSession = 0;
+    public static int m1SPlusSession = 0;
+    public static int m2SSession = 0;
+    public static int m2SPlusSession = 0;
+    public static int m3SSession = 0;
+    public static int m3SPlusSession = 0;
+    public static int m4SSession = 0;
+    public static int m4SPlusSession = 0;
+    public static int m5SSession = 0;
+    public static int m5SPlusSession = 0;
+    public static int m6SSession = 0;
+    public static int m6SPlusSession = 0;
+    public static int m7SSession = 0;
+    public static int m7SPlusSession = 0;
     public static int firstStarsSession = 0;
     public static int secondStarsSession = 0;
     public static int thirdStarsSession = 0;
     public static int fourthStarsSession = 0;
     public static int fifthStarsSession = 0;
+    public static int darkClaymoresSession = 0;
     public static int masterRerollsSession = 0;
     public static double masterCoinsSpentSession = 0;
     public static double masterTimeSpentSession = 0;
@@ -191,51 +219,138 @@ public class CatacombsTracker {
         if (!Utils.inDungeons) return;
         if (event.type == 2) return;
 
-        if (message.contains("    Team Score: ") && message.contains("(S+)")) {
-            List<String> scoreboard = ScoreboardHandler.getSidebarLines();
+        if (message.contains("    Team Score: ")) {
             if (message.contains("(S+)")) {
-                for (String s : scoreboard) {
-                    String sCleaned = ScoreboardHandler.cleanSB(s);
-                    if (sCleaned.contains("The Catacombs (")) {
-                        if (sCleaned.contains("F1")) {
-                            f1SPlus++;
-                            f1SPlusSession++;
-                            ConfigHandler.writeIntConfig("catacombs", "floorOneSPlus", f1SPlus);
-                        } else if (sCleaned.contains("F2")) {
-                            f2SPlus++;
-                            f2SPlusSession++;
-                            ConfigHandler.writeIntConfig("catacombs", "floorTwoSPlus", f2SPlus);
-                        } else if (sCleaned.contains("F3")) {
-                            f3SPlus++;
-                            f3SPlusSession++;
-                            ConfigHandler.writeIntConfig("catacombs", "floorThreeSPlus", f3SPlus);
-                        } else if (sCleaned.contains("F4")) {
-                            f4SPlus++;
-                            f4SPlusSession++;
-                            ConfigHandler.writeIntConfig("catacombs", "floorFourSPlus", f4SPlus);
-                        } else if (sCleaned.contains("F5")) {
-                            f5SPlus++;
-                            f5SPlusSession++;
-                            ConfigHandler.writeIntConfig("catacombs", "floorFiveSPlus", f5SPlus);
-                        } else if (sCleaned.contains("F6")) {
-                            f6SPlus++;
-                            f6SPlusSession++;
-                            ConfigHandler.writeIntConfig("catacombs", "floorSixSPlus", f6SPlus);
-                        } else if (sCleaned.contains("F7")) {
-                            f7SPlus++;
-                            f7SPlusSession++;
-                            ConfigHandler.writeIntConfig("catacombs", "floorSevenSPlus", f7SPlus);
-                        }
-                    }
+                switch (Utils.currentFloor) {
+                    case F1:
+                        f1SPlus++;
+                        f1SPlusSession++;
+                        ConfigHandler.writeIntConfig("catacombs", "floorOneSPlus", f1SPlus);
+                        break;
+                    case F2:
+                        f2SPlus++;
+                        f2SPlusSession++;
+                        ConfigHandler.writeIntConfig("catacombs", "floorTwoSPlus", f2SPlus);
+                        break;
+                    case F3:
+                        f3SPlus++;
+                        f3SPlusSession++;
+                        ConfigHandler.writeIntConfig("catacombs", "floorThreeSPlus", f3SPlus);
+                        break;
+                    case F4:
+                        f4SPlus++;
+                        f4SPlusSession++;
+                        ConfigHandler.writeIntConfig("catacombs", "floorFourSPlus", f4SPlus);
+                        break;
+                    case F5:
+                        f5SPlus++;
+                        f5SPlusSession++;
+                        ConfigHandler.writeIntConfig("catacombs", "floorFiveSPlus", f5SPlus);
+                        break;
+                    case F6:
+                        f6SPlus++;
+                        f6SPlusSession++;
+                        ConfigHandler.writeIntConfig("catacombs", "floorSixSPlus", f6SPlus);
+                        break;
+                    case F7:
+                        f7SPlus++;
+                        f7SPlusSession++;
+                        ConfigHandler.writeIntConfig("catacombs", "floorSevenSPlus", f7SPlus);
+                        break;
+                    case M1:
+                        m1S++;
+                        m1SPlus++;
+                        m1SSession++;
+                        m1SPlusSession++;
+                        ConfigHandler.writeIntConfig("catacombs", "masterOneS", m1S);
+                        ConfigHandler.writeIntConfig("catacombs", "masterOneSPlus", m1SPlus);
+                        break;
+                    case M2:
+                        m2S++;
+                        m2SPlus++;
+                        m2SSession++;
+                        m2SPlusSession++;
+                        ConfigHandler.writeIntConfig("catacombs", "masterTwoS", m2S);
+                        ConfigHandler.writeIntConfig("catacombs", "masterTwoSPlus", m2SPlus);
+                        break;
+                    case M3:
+                        m3S++;
+                        m3SPlus++;
+                        m3SSession++;
+                        m3SPlusSession++;
+                        ConfigHandler.writeIntConfig("catacombs", "masterThreeS", m3S);
+                        ConfigHandler.writeIntConfig("catacombs", "masterThreeSPlus", m3SPlus);
+                        break;
+                    case M4:
+                        m4S++;
+                        m4SPlus++;
+                        m4SSession++;
+                        m4SPlusSession++;
+                        ConfigHandler.writeIntConfig("catacombs", "masterFourS", m4S);
+                        ConfigHandler.writeIntConfig("catacombs", "masterFourSPlus", m4SPlus);
+                        break;
+                    case M5:
+                        m5S++;
+                        m5SPlus++;
+                        m5SSession++;
+                        m5SPlusSession++;
+                        ConfigHandler.writeIntConfig("catacombs", "masterFiveS", m5S);
+                        ConfigHandler.writeIntConfig("catacombs", "masterFiveSPlus", m5SPlus);
+                        break;
+                    case M6:
+                        m6S++;
+                        m6SPlus++;
+                        m6SSession++;
+                        m6SPlusSession++;
+                        ConfigHandler.writeIntConfig("catacombs", "masterSixS", m6S);
+                        ConfigHandler.writeIntConfig("catacombs", "masterSixSPlus", m6SPlus);
+                        break;
+                    case M7:
+                        m7S++;
+                        m7SPlus++;
+                        m7SSession++;
+                        m7SPlusSession++;
+                        ConfigHandler.writeIntConfig("catacombs", "masterSevenS", m7S);
+                        ConfigHandler.writeIntConfig("catacombs", "masterSevenSPlus", m7SPlus);
+                        break;
                 }
             } else if (message.contains("(S)")) {
-                for (String s : scoreboard) {
-                    String sCleaned = ScoreboardHandler.cleanSB(s);
-                    if (sCleaned.contains("The Catacombs (M")) {
-                        masterS++;
-                        masterSSession++;
-                        ConfigHandler.writeIntConfig("catacombs", "masterS", masterS);
-                    }
+                switch (Utils.currentFloor) {
+                    case M1:
+                        m1S++;
+                        m1SPlus++;
+                        ConfigHandler.writeIntConfig("catacombs", "masterOneS", m1S);
+                        break;
+                    case M2:
+                        m2S++;
+                        m2SPlus++;
+                        ConfigHandler.writeIntConfig("catacombs", "masterTwoS", m2S);
+                        break;
+                    case M3:
+                        m3S++;
+                        m3SPlus++;
+                        ConfigHandler.writeIntConfig("catacombs", "masterThreeS", m3S);
+                        break;
+                    case M4:
+                        m4S++;
+                        m4SPlus++;
+                        ConfigHandler.writeIntConfig("catacombs", "masterFourS", m4S);
+                        break;
+                    case M5:
+                        m5S++;
+                        m5SPlus++;
+                        ConfigHandler.writeIntConfig("catacombs", "masterFiveS", m5S);
+                        break;
+                    case M6:
+                        m6S++;
+                        m6SPlus++;
+                        ConfigHandler.writeIntConfig("catacombs", "masterSixS", m6S);
+                        break;
+                    case M7:
+                        m7S++;
+                        m7SPlus++;
+                        ConfigHandler.writeIntConfig("catacombs", "masterSevenS", m7S);
+                        break;
                 }
             }
         }
@@ -435,56 +550,74 @@ public class CatacombsTracker {
                 fifthStars++;
                 fifthStarsSession++;
                 ConfigHandler.writeIntConfig("catacombs", "fifthStar", fifthStars);
+            } else if (message.contains("Dark Claymore")) {
+                darkClaymores++;
+                darkClaymoresSession++;
+                ConfigHandler.writeIntConfig("catacombs", "darkClaymore", darkClaymores);
             }
         }
 
         if (message.contains("EXTRA STATS ")) {
             List<String> scoreboard = ScoreboardHandler.getSidebarLines();
-            int timeToAdd = 0;
             for (String s : scoreboard) {
                 String sCleaned = ScoreboardHandler.cleanSB(s);
-                if (sCleaned.contains("The Catacombs (")) {
-                    // Add time to floor
-                    if (sCleaned.contains("F1")) {
-                        f1TimeSpent = Math.floor(f1TimeSpent + timeToAdd);
-                        f1TimeSpentSession = Math.floor(f1TimeSpentSession + timeToAdd);
-                        ConfigHandler.writeDoubleConfig("catacombs", "floorOneTime", f1TimeSpent);
-                    } else if (sCleaned.contains("F2")) {
-                        f2TimeSpent = Math.floor(f2TimeSpent + timeToAdd);
-                        f2TimeSpentSession = Math.floor(f2TimeSpentSession + timeToAdd);
-                        ConfigHandler.writeDoubleConfig("catacombs", "floorTwoTime", f2TimeSpent);
-                    } else if (sCleaned.contains("F3")) {
-                        f3TimeSpent = Math.floor(f3TimeSpent + timeToAdd);
-                        f3TimeSpentSession = Math.floor(f3TimeSpentSession + timeToAdd);
-                        ConfigHandler.writeDoubleConfig("catacombs", "floorThreeTime", f3TimeSpent);
-                    } else if (sCleaned.contains("F4")) {
-                        f4TimeSpent = Math.floor(f4TimeSpent + timeToAdd);
-                        f4TimeSpentSession = Math.floor(f4TimeSpentSession + timeToAdd);
-                        ConfigHandler.writeDoubleConfig("catacombs", "floorFourTime", f4TimeSpent);
-                    } else if (sCleaned.contains("F5")) {
-                        f5TimeSpent = Math.floor(f5TimeSpent + timeToAdd);
-                        f5TimeSpentSession = Math.floor(f5TimeSpentSession + timeToAdd);
-                        ConfigHandler.writeDoubleConfig("catacombs", "floorFiveTime", f5TimeSpent);
-                    } else if (sCleaned.contains("F6")) {
-                        f6TimeSpent = Math.floor(f6TimeSpent + timeToAdd);
-                        f6TimeSpentSession = Math.floor(f6TimeSpentSession + timeToAdd);
-                        ConfigHandler.writeDoubleConfig("catacombs", "floorSixTime", f6TimeSpent);
-                    } else if (sCleaned.contains("F7")) {
-                        f7TimeSpent = Math.floor(f7TimeSpent + timeToAdd);
-                        f7TimeSpentSession = Math.floor(f7TimeSpentSession + timeToAdd);
-                        ConfigHandler.writeDoubleConfig("catacombs", "floorSevenTime", f7TimeSpent);
-                    } else if (sCleaned.contains("(M")) {
-                        masterTimeSpent = Math.floor(masterTimeSpent + timeToAdd);
-                        masterTimeSpentSession = Math.floor(masterTimeSpentSession + timeToAdd);
-                        ConfigHandler.writeDoubleConfig("catacombs", "masterTime", masterTimeSpent);
-                    }
-                } else if (sCleaned.contains("Time Elapsed:")) {
+                if (sCleaned.contains("Time Elapsed:")) {
                     // Get floor time
                     String time = sCleaned.substring(sCleaned.indexOf(":") + 2);
                     time = time.replaceAll("\\s", "");
                     int minutes = Integer.parseInt(time.substring(0, time.indexOf("m")));
                     int seconds = Integer.parseInt(time.substring(time.indexOf("m") + 1, time.indexOf("s")));
-                    timeToAdd = (minutes * 60) + seconds;
+                    int timeToAdd = (minutes * 60) + seconds;
+
+                    // Add time to floor
+                    switch (Utils.currentFloor) {
+                        case F1:
+                            f1TimeSpent = Math.floor(f1TimeSpent + timeToAdd);
+                            f1TimeSpentSession = Math.floor(f1TimeSpentSession + timeToAdd);
+                            ConfigHandler.writeDoubleConfig("catacombs", "floorOneTime", f1TimeSpent);
+                            break;
+                        case F2:
+                            f2TimeSpent = Math.floor(f2TimeSpent + timeToAdd);
+                            f2TimeSpentSession = Math.floor(f2TimeSpentSession + timeToAdd);
+                            ConfigHandler.writeDoubleConfig("catacombs", "floorTwoTime", f2TimeSpent);
+                            break;
+                        case F3:
+                            f3TimeSpent = Math.floor(f3TimeSpent + timeToAdd);
+                            f3TimeSpentSession = Math.floor(f3TimeSpentSession + timeToAdd);
+                            ConfigHandler.writeDoubleConfig("catacombs", "floorThreeTime", f3TimeSpent);
+                            break;
+                        case F4:
+                            f4TimeSpent = Math.floor(f4TimeSpent + timeToAdd);
+                            f4TimeSpentSession = Math.floor(f4TimeSpentSession + timeToAdd);
+                            ConfigHandler.writeDoubleConfig("catacombs", "floorFourTime", f4TimeSpent);
+                            break;
+                        case F5:
+                            f5TimeSpent = Math.floor(f5TimeSpent + timeToAdd);
+                            f5TimeSpentSession = Math.floor(f5TimeSpentSession + timeToAdd);
+                            ConfigHandler.writeDoubleConfig("catacombs", "floorFiveTime", f5TimeSpent);
+                            break;
+                        case F6:
+                            f6TimeSpent = Math.floor(f6TimeSpent + timeToAdd);
+                            f6TimeSpentSession = Math.floor(f6TimeSpentSession + timeToAdd);
+                            ConfigHandler.writeDoubleConfig("catacombs", "floorSixTime", f6TimeSpent);
+                            break;
+                        case F7:
+                            f7TimeSpent = Math.floor(f7TimeSpent + timeToAdd);
+                            f7TimeSpentSession = Math.floor(f7TimeSpentSession + timeToAdd);
+                            ConfigHandler.writeDoubleConfig("catacombs", "floorSevenTime", f7TimeSpent);
+                            break;
+                        case M1:
+                        case M2:
+                        case M3:
+                        case M4:
+                        case M5:
+                        case M6:
+                        case M7:
+                            masterTimeSpent = Math.floor(masterTimeSpent + timeToAdd);
+                            masterTimeSpentSession = Math.floor(masterTimeSpentSession + timeToAdd);
+                            ConfigHandler.writeDoubleConfig("catacombs", "masterTime", masterTimeSpent);
+                            break;
+                    }
                 }
             }
         }
@@ -504,69 +637,80 @@ public class CatacombsTracker {
                     if (line.contains(" Coins") && !line.contains("NOTE:")) {
                         int coinsSpent = Integer.parseInt(line.replaceAll("[^\\d]", ""));
 
-                        List<String> scoreboard = ScoreboardHandler.getSidebarLines();
-                        for (String s : scoreboard) {
-                            String sCleaned = ScoreboardHandler.cleanSB(s);
-                            if (sCleaned.contains("The Catacombs (")) {
-                                if (sCleaned.contains("F1")) {
-                                    f1CoinsSpent += coinsSpent;
-                                    f1CoinsSpentSession += coinsSpent;
-                                    ConfigHandler.writeDoubleConfig("catacombs", "floorOneCoins", f1CoinsSpent);
-                                } else if (sCleaned.contains("F2")) {
-                                    f2CoinsSpent += coinsSpent;
-                                    f2CoinsSpentSession += coinsSpent;
-                                    ConfigHandler.writeDoubleConfig("catacombs", "floorTwoCoins", f2CoinsSpent);
-                                } else if (sCleaned.contains("F3")) {
-                                    f3CoinsSpent += coinsSpent;
-                                    f3CoinsSpentSession += coinsSpent;
-                                    ConfigHandler.writeDoubleConfig("catacombs", "floorThreeCoins", f3CoinsSpent);
-                                } else if (sCleaned.contains("F4")) {
-                                    f4CoinsSpent += coinsSpent;
-                                    f4CoinsSpentSession += coinsSpent;
-                                    ConfigHandler.writeDoubleConfig("catacombs", "floorFourCoins", f4CoinsSpent);
-                                } else if (sCleaned.contains("F5")) {
-                                    f5CoinsSpent += coinsSpent;
-                                    f5CoinsSpentSession += coinsSpent;
-                                    ConfigHandler.writeDoubleConfig("catacombs", "floorFiveCoins", f5CoinsSpent);
-                                } else if (sCleaned.contains("F6")) {
-                                    f6CoinsSpent += coinsSpent;
-                                    f6CoinsSpentSession += coinsSpent;
-                                    ConfigHandler.writeDoubleConfig("catacombs", "floorSixCoins", f6CoinsSpent);
-                                } else if (sCleaned.contains("F7")) {
-                                    f7CoinsSpent += coinsSpent;
-                                    f7CoinsSpentSession += coinsSpent;
-                                    ConfigHandler.writeDoubleConfig("catacombs", "floorSevenCoins", f7CoinsSpent);
-                                } else if (sCleaned.contains("(M")) {
-                                    masterCoinsSpent += coinsSpent;
-                                    masterCoinsSpentSession += coinsSpent;
-                                    ConfigHandler.writeDoubleConfig("catacombs", "masterCoins", masterCoinsSpent);
-                                }
+                        switch (Utils.currentFloor) {
+                            case F1:
+                                f1CoinsSpent += coinsSpent;
+                                f1CoinsSpentSession += coinsSpent;
+                                ConfigHandler.writeDoubleConfig("catacombs", "floorOneCoins", f1CoinsSpent);
                                 break;
-                            }
+                            case F2:
+                                f2CoinsSpent += coinsSpent;
+                                f2CoinsSpentSession += coinsSpent;
+                                ConfigHandler.writeDoubleConfig("catacombs", "floorTwoCoins", f2CoinsSpent);
+                                break;
+                            case F3:
+                                f3CoinsSpent += coinsSpent;
+                                f3CoinsSpentSession += coinsSpent;
+                                ConfigHandler.writeDoubleConfig("catacombs", "floorThreeCoins", f3CoinsSpent);
+                                break;
+                            case F4:
+                                f4CoinsSpent += coinsSpent;
+                                f4CoinsSpentSession += coinsSpent;
+                                ConfigHandler.writeDoubleConfig("catacombs", "floorFourCoins", f4CoinsSpent);
+                                break;
+                            case F5:
+                                f5CoinsSpent += coinsSpent;
+                                f5CoinsSpentSession += coinsSpent;
+                                ConfigHandler.writeDoubleConfig("catacombs", "floorFiveCoins", f5CoinsSpent);
+                                break;
+                            case F6:
+                                f6CoinsSpent += coinsSpent;
+                                f6CoinsSpentSession += coinsSpent;
+                                ConfigHandler.writeDoubleConfig("catacombs", "floorSixCoins", f6CoinsSpent);
+                                break;
+                            case F7:
+                                f7CoinsSpent += coinsSpent;
+                                f7CoinsSpentSession += coinsSpent;
+                                ConfigHandler.writeDoubleConfig("catacombs", "floorSevenCoins", f7CoinsSpent);
+                                break;
+                            case M1:
+                            case M2:
+                            case M3:
+                            case M4:
+                            case M5:
+                            case M6:
+                            case M7:
+                                masterCoinsSpent += coinsSpent;
+                                masterCoinsSpentSession += coinsSpent;
+                                ConfigHandler.writeDoubleConfig("catacombs", "masterCoins", masterCoinsSpent);
+                                break;
                         }
                         break;
                     }
                 }
             } else if (item.getDisplayName().contains("Reroll Chest")) {
-                List<String> scoreboard = ScoreboardHandler.getSidebarLines();
-                for (String s : scoreboard) {
-                    String sCleaned = ScoreboardHandler.cleanSB(s);
-                    if (sCleaned.contains("The Catacombs (")) {
-                        if (sCleaned.contains("F6")) {
-                            f6Rerolls++;
-                            f6RerollsSession++;
-                            ConfigHandler.writeDoubleConfig("catacombs", "floorSixRerolls", f6Rerolls);
-                        } else if (sCleaned.contains("F7")) {
-                            f7Rerolls++;
-                            f7RerollsSession++;
-                            ConfigHandler.writeDoubleConfig("catacombs", "floorSevenRerolls", f7Rerolls);
-                        } else if (sCleaned.contains("(M")) {
-                            masterRerolls++;
-                            masterRerollsSession++;
-                            ConfigHandler.writeDoubleConfig("catacombs", "masterRerolls", masterRerolls);
-                        }
+                switch (Utils.currentFloor) {
+                    case F6:
+                        f6Rerolls++;
+                        f6RerollsSession++;
+                        ConfigHandler.writeDoubleConfig("catacombs", "floorSixRerolls", f6Rerolls);
                         break;
-                    }
+                    case F7:
+                        f7Rerolls++;
+                        f7RerollsSession++;
+                        ConfigHandler.writeDoubleConfig("catacombs", "floorSevenRerolls", f7Rerolls);
+                        break;
+                    case M1:
+                    case M2:
+                    case M3:
+                    case M4:
+                    case M5:
+                    case M6:
+                    case M7:
+                        masterRerolls++;
+                        masterRerollsSession++;
+                        ConfigHandler.writeDoubleConfig("catacombs", "masterRerolls", masterRerolls);
+                        break;
                 }
             }
         }

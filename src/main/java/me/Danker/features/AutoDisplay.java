@@ -4,6 +4,7 @@ import me.Danker.DankersSkyblockMod;
 import me.Danker.features.loot.LootDisplay;
 import me.Danker.handlers.ConfigHandler;
 import me.Danker.handlers.ScoreboardHandler;
+import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.init.Items;
@@ -44,23 +45,38 @@ public class AutoDisplay {
                     } else if (sCleaned.contains("The Mist")){
                         LootDisplay.display = "ghost";
                         found = true;
-                    } else if (sCleaned.contains("The Catacombs (")) {
-                        if (sCleaned.contains("F1")) {
-                            LootDisplay.display = "catacombs_floor_one";
-                        } else if (sCleaned.contains("F2")) {
-                            LootDisplay.display = "catacombs_floor_two";
-                        } else if (sCleaned.contains("F3")) {
-                            LootDisplay.display = "catacombs_floor_three";
-                        } else if (sCleaned.contains("F4")) {
-                            LootDisplay.display = "catacombs_floor_four";
-                        } else if (sCleaned.contains("F5")) {
-                            LootDisplay.display = "catacombs_floor_five";
-                        } else if (sCleaned.contains("F6")) {
-                            LootDisplay.display = "catacombs_floor_six";
-                        } else if (sCleaned.contains("F7")) {
-                            LootDisplay.display = "catacombs_floor_seven";
-                        } else if (sCleaned.contains("(M")) {
-                            LootDisplay.display = "catacombs_master";
+                    } else if (Utils.inDungeons) {
+                        switch (Utils.currentFloor) {
+                            case F1:
+                                LootDisplay.display = "catacombs_floor_one";
+                                break;
+                            case F2:
+                                LootDisplay.display = "catacombs_floor_two";
+                                break;
+                            case F3:
+                                LootDisplay.display = "catacombs_floor_three";
+                                break;
+                            case F4:
+                                LootDisplay.display = "catacombs_floor_four";
+                                break;
+                            case F5:
+                                LootDisplay.display = "catacombs_floor_five";
+                                break;
+                            case F6:
+                                LootDisplay.display = "catacombs_floor_six";
+                                break;
+                            case F7:
+                                LootDisplay.display = "catacombs_floor_seven";
+                                break;
+                            case M1:
+                            case M2:
+                            case M3:
+                            case M4:
+                            case M5:
+                            case M6:
+                            case M7:
+                                LootDisplay.display = "catacombs_master";
+                                break;
                         }
                         found = true;
                     }

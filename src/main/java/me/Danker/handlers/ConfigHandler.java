@@ -201,6 +201,7 @@ public class ConfigHandler {
 		ToggleCommand.coordsToggled = initBoolean("toggles", "Coords", false);
 		ToggleCommand.goldenToggled = initBoolean("toggles", "Golden", false);
 		ToggleCommand.slayerCountTotal = initBoolean("toggles", "SlayerCount", true);
+		ToggleCommand.masterSPlusDisplay = initBoolean("toggles", "MasterSPlusDisplay", true);
 		ToggleCommand.rngesusAlerts = initBoolean("toggles", "RNGesusAlerts", false);
 		ToggleCommand.ghostDisplay = initBoolean("toggles", "GhostDisplay", true);
 		ToggleCommand.dungeonTimerToggled = initBoolean("toggles", "GhostTimer", false);
@@ -514,12 +515,26 @@ public class ConfigHandler {
 		CatacombsTracker.f7CoinsSpent = initDouble("catacombs", "floorSevenCoins", 0);
 		CatacombsTracker.f7TimeSpent = initDouble("catacombs", "floorSevenTime", 0);
 		// MM
-		CatacombsTracker.masterS = initInt("catacombs", "masterS", 0);
+		CatacombsTracker.m1S = initInt("catacombs", "masterOneS", 0);
+		CatacombsTracker.m1SPlus = initInt("catacombs", "masterOneSPlus", 0);
+		CatacombsTracker.m2S = initInt("catacombs", "masterTwoS", 0);
+		CatacombsTracker.m2SPlus = initInt("catacombs", "masterTwoSPlus", 0);
+		CatacombsTracker.m3S = initInt("catacombs", "masterThreeS", 0);
+		CatacombsTracker.m3SPlus = initInt("catacombs", "masterThreeSPlus", 0);
+		CatacombsTracker.m4S = initInt("catacombs", "masterFourS", 0);
+		CatacombsTracker.m4SPlus = initInt("catacombs", "masterFourSPlus", 0);
+		CatacombsTracker.m5S = initInt("catacombs", "masterFiveS", 0);
+		CatacombsTracker.m5SPlus = initInt("catacombs", "masterFiveSPlus", 0);
+		CatacombsTracker.m6S = initInt("catacombs", "masterSixS", 0);
+		CatacombsTracker.m6SPlus = initInt("catacombs", "masterSixSPlus", 0);
+		CatacombsTracker.m7S = initInt("catacombs", "masterSevenS", 0);
+		CatacombsTracker.m7SPlus = initInt("catacombs", "masterSevenSPlus", 0);
 		CatacombsTracker.firstStars = initInt("catacombs", "firstStar", 0);
 		CatacombsTracker.secondStars = initInt("catacombs", "secondStar", 0);
 		CatacombsTracker.thirdStars = initInt("catacombs", "thirdStar", 0);
 		CatacombsTracker.fourthStars = initInt("catacombs", "fourthStar", 0);
 		CatacombsTracker.fifthStars = initInt("catacombs", "fifthStar", 0);
+		CatacombsTracker.darkClaymores = initInt("catacombs", "darkClaymore", 0);
 		CatacombsTracker.masterRerolls = initInt("catacombs", "masterRerolls", 0);
 		CatacombsTracker.masterCoinsSpent = initDouble("catacombs", "masterCoins", 0);
 		CatacombsTracker.masterTimeSpent = initDouble("catacombs", "masterTime", 0);

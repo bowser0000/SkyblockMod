@@ -38,7 +38,7 @@ public class LividSolver {
         World world = Minecraft.getMinecraft().theWorld;
         if (DankersSkyblockMod.tickAmount % 20 == 0) {
             if (ToggleCommand.lividSolverToggled && Utils.inDungeons && !foundLivid && world != null) {
-                if (Utils.isInScoreboard("The Catacombs (F5)")) {
+                if (Utils.currentFloor == Utils.DungeonFloor.F5 || Utils.currentFloor == Utils.DungeonFloor.M5) {
                     List<Entity> loadedLivids = new ArrayList<>();
                     List<Entity> entities = world.getLoadedEntityList();
                     for (Entity entity : entities) {

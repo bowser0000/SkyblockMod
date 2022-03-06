@@ -832,7 +832,20 @@ public class LootCommand extends CommandBase {
 						if (showSession) {
 							player.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_RED + "" + EnumChatFormatting.BOLD + "-------------------\n" +
 																		EnumChatFormatting.RED + EnumChatFormatting.BOLD + "  Catacombs MM Summary (Current Session):\n" +
-																		EnumChatFormatting.GOLD + "    S Runs:" + nf.format(CatacombsTracker.masterSSession) + "\n" +
+																		EnumChatFormatting.GOLD + "    Master One S Runs:" + nf.format(CatacombsTracker.m1SSession) + "\n" +
+																		EnumChatFormatting.GOLD + "    Master One S+ Runs:" + nf.format(CatacombsTracker.m1SPlusSession) + "\n" +
+																		EnumChatFormatting.GOLD + "    Master Two S Runs:" + nf.format(CatacombsTracker.m2SSession) + "\n" +
+																		EnumChatFormatting.GOLD + "    Master Two S+ Runs:" + nf.format(CatacombsTracker.m2SPlusSession) + "\n" +
+																		EnumChatFormatting.GOLD + "    Master Three S Runs:" + nf.format(CatacombsTracker.m3SSession) + "\n" +
+																		EnumChatFormatting.GOLD + "    Master Three S+ Runs:" + nf.format(CatacombsTracker.m3SPlusSession) + "\n" +
+																		EnumChatFormatting.GOLD + "    Master Four S Runs:" + nf.format(CatacombsTracker.m4SSession) + "\n" +
+																		EnumChatFormatting.GOLD + "    Master Four S+ Runs:" + nf.format(CatacombsTracker.m4SPlusSession) + "\n" +
+																		EnumChatFormatting.GOLD + "    Master Five S Runs:" + nf.format(CatacombsTracker.m5SSession) + "\n" +
+																		EnumChatFormatting.GOLD + "    Master Five S+ Runs:" + nf.format(CatacombsTracker.m5SPlusSession) + "\n" +
+																		EnumChatFormatting.GOLD + "    Master Six S Runs:" + nf.format(CatacombsTracker.m6SSession) + "\n" +
+																		EnumChatFormatting.GOLD + "    Master Six S+ Runs:" + nf.format(CatacombsTracker.m6SPlusSession) + "\n" +
+																		EnumChatFormatting.GOLD + "    Master Seven S Runs:" + nf.format(CatacombsTracker.m7SSession) + "\n" +
+																		EnumChatFormatting.GOLD + "    Master Seven S+ Runs:" + nf.format(CatacombsTracker.m7SPlusSession) + "\n" +
 																		EnumChatFormatting.GOLD + "    Recombobulators:" + nf.format(CatacombsTracker.recombobulatorsSession) + "\n" +
 																		EnumChatFormatting.DARK_PURPLE + "    Fuming Potato Books:" + nf.format(CatacombsTracker.fumingPotatoBooksSession) + "\n" +
 																		EnumChatFormatting.DARK_PURPLE + "    1st Master Stars:" + nf.format(CatacombsTracker.firstStarsSession) + "\n" +
@@ -840,6 +853,7 @@ public class LootCommand extends CommandBase {
 																		EnumChatFormatting.DARK_PURPLE + "    3rd Master Stars:" + nf.format(CatacombsTracker.thirdStarsSession) + "\n" +
 																		EnumChatFormatting.DARK_PURPLE + "    4th Master Stars:" + nf.format(CatacombsTracker.fourthStarsSession) + "\n" +
 																		EnumChatFormatting.DARK_PURPLE + "    5th Master Stars:" + nf.format(CatacombsTracker.fifthStarsSession) + "\n" +
+																		EnumChatFormatting.GOLD + "    Dark Claymores: " + nf.format(CatacombsTracker.darkClaymoresSession) + "\n" +
 																		EnumChatFormatting.WHITE + "    Rerolls:" + nf.format(CatacombsTracker.masterRerollsSession) + "\n" +
 																		EnumChatFormatting.AQUA + "    Coins Spent:" + nf.format(CatacombsTracker.masterCoinsSpentSession) + "\n" +
 																		EnumChatFormatting.AQUA + "    Time Spent:" + nf.format(CatacombsTracker.masterTimeSpentSession) + "\n" +
@@ -848,7 +862,20 @@ public class LootCommand extends CommandBase {
 						}
 						player.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_RED + "" + EnumChatFormatting.BOLD + "-------------------\n" +
 																	EnumChatFormatting.RED + EnumChatFormatting.BOLD + "  Catacombs MM Summary:\n" +
-																	EnumChatFormatting.GOLD + "    S Runs:" + nf.format(CatacombsTracker.masterS) + "\n" +
+																	EnumChatFormatting.GOLD + "    Master One S Runs:" + nf.format(CatacombsTracker.m1S) + "\n" +
+																	EnumChatFormatting.GOLD + "    Master One S+ Runs:" + nf.format(CatacombsTracker.m1SPlus) + "\n" +
+																	EnumChatFormatting.GOLD + "    Master Two S Runs:" + nf.format(CatacombsTracker.m2S) + "\n" +
+																	EnumChatFormatting.GOLD + "    Master Two S+ Runs:" + nf.format(CatacombsTracker.m2SPlus) + "\n" +
+																	EnumChatFormatting.GOLD + "    Master Three S Runs:" + nf.format(CatacombsTracker.m3S) + "\n" +
+																	EnumChatFormatting.GOLD + "    Master Three S+ Runs:" + nf.format(CatacombsTracker.m3SPlus) + "\n" +
+																	EnumChatFormatting.GOLD + "    Master Four S Runs:" + nf.format(CatacombsTracker.m4S) + "\n" +
+																	EnumChatFormatting.GOLD + "    Master Four S+ Runs:" + nf.format(CatacombsTracker.m4SPlus) + "\n" +
+																	EnumChatFormatting.GOLD + "    Master Five S Runs:" + nf.format(CatacombsTracker.m5S) + "\n" +
+																	EnumChatFormatting.GOLD + "    Master Five S+ Runs:" + nf.format(CatacombsTracker.m5SPlus) + "\n" +
+																	EnumChatFormatting.GOLD + "    Master Six S Runs:" + nf.format(CatacombsTracker.m6S) + "\n" +
+																	EnumChatFormatting.GOLD + "    Master Six S+ Runs:" + nf.format(CatacombsTracker.m6SPlus) + "\n" +
+																	EnumChatFormatting.GOLD + "    Master Seven S Runs:" + nf.format(CatacombsTracker.m7S) + "\n" +
+																	EnumChatFormatting.GOLD + "    Master Seven S+ Runs:" + nf.format(CatacombsTracker.m7SPlus) + "\n" +
 																	EnumChatFormatting.GOLD + "    Recombobulators:" + nf.format(CatacombsTracker.recombobulators) + "\n" +
 																	EnumChatFormatting.DARK_PURPLE + "    Fuming Potato Books:" + nf.format(CatacombsTracker.fumingPotatoBooks) + "\n" +
 																	EnumChatFormatting.DARK_PURPLE + "    1st Master Stars:" + nf.format(CatacombsTracker.firstStars) + "\n" +
@@ -856,6 +883,7 @@ public class LootCommand extends CommandBase {
 																	EnumChatFormatting.DARK_PURPLE + "    3rd Master Stars:" + nf.format(CatacombsTracker.thirdStars) + "\n" +
 																	EnumChatFormatting.DARK_PURPLE + "    4th Master Stars:" + nf.format(CatacombsTracker.fourthStars) + "\n" +
 																	EnumChatFormatting.DARK_PURPLE + "    5th Master Stars:" + nf.format(CatacombsTracker.fifthStars) + "\n" +
+																	EnumChatFormatting.GOLD + "    Dark Claymores: " + nf.format(CatacombsTracker.darkClaymores) + "\n" +
 																	EnumChatFormatting.WHITE + "    Rerolls:" + nf.format(CatacombsTracker.masterRerolls) + "\n" +
 																	EnumChatFormatting.AQUA + "    Coins Spent:" + nf.format(CatacombsTracker.masterCoinsSpent) + "\n" +
 																	EnumChatFormatting.AQUA + "    Time Spent:" + nf.format(CatacombsTracker.masterTimeSpent) + "\n" +

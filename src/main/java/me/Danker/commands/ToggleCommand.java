@@ -14,12 +14,12 @@ import net.minecraft.util.ChatComponentText;
 import java.util.List;
 
 public class ToggleCommand extends CommandBase implements ICommand {
-	// i hate this file so much
 	// Some of these end with toggled and some don't, I don't want to go back and fix them all for consistency
 	public static boolean gpartyToggled;
 	public static boolean coordsToggled;
 	public static boolean goldenToggled;
 	public static boolean slayerCountTotal;
+	public static boolean masterSPlusDisplay;
 	public static boolean rngesusAlerts;
 	public static boolean ghostDisplay;
 	public static boolean splitFishing;
@@ -106,6 +106,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 	public static boolean endMusic;
 	public static boolean parkMusic;
 
+	// NO LONGER UPDATED
 	@Override
 	public String getCommandName() {
 		return "toggle";
@@ -150,7 +151,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 		}
 		return null;
 	}
-	
+
 	@Override
 	public void processCommand(ICommandSender arg0, String[] arg1) throws CommandException {
 		final EntityPlayer player = (EntityPlayer)arg0;

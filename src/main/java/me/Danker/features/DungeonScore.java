@@ -5,7 +5,6 @@ import me.Danker.commands.MoveCommand;
 import me.Danker.commands.ScaleCommand;
 import me.Danker.commands.ToggleCommand;
 import me.Danker.events.RenderOverlayEvent;
-import me.Danker.handlers.ScoreboardHandler;
 import me.Danker.handlers.TextRenderer;
 import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;
@@ -19,7 +18,6 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 import java.util.Collection;
-import java.util.List;
 
 public class DungeonScore {
 
@@ -55,29 +53,6 @@ public class DungeonScore {
         if (!ToggleCommand.dungeonScore || !Utils.inDungeons) return;
 
         if (DankersSkyblockMod.tickAmount % 20 == 0) {
-            String floor = "";
-            List<String> scoreboard = ScoreboardHandler.getSidebarLines();
-            for (String s : scoreboard) {
-                String sCleaned = ScoreboardHandler.cleanSB(s);
-                if (sCleaned.contains("The Catacombs (")) {
-                    if (sCleaned.contains("F1")) {
-                        floor = "F1";
-                    } else if (sCleaned.contains("F2")) {
-                        floor = "F2";
-                    } else if (sCleaned.contains("F3")) {
-                        floor = "F3";
-                    } else if (sCleaned.contains("F4")) {
-                        floor = "F4";
-                    } else if (sCleaned.contains("F5")) {
-                        floor = "F5";
-                    } else if (sCleaned.contains("F6")) {
-                        floor = "F6";
-                    } else if (sCleaned.contains("F7")) {
-                        floor = "F7";
-                    }
-                }
-            }
-
             int missingPuzzles = 0;
             double openedRooms = 0;
             double completedRooms = 0;
@@ -99,23 +74,23 @@ public class DungeonScore {
 
                     double secretCount = Double.parseDouble(display.replaceAll("[^\\d.]", ""));
 
-                    switch (floor) {
-                        case "F1":
+                    switch (Utils.currentFloor) {
+                        case F1:
                             secretScore = secretCount / 30D;
                             break;
-                        case "F2":
+                        case F2:
                             secretScore = secretCount / 40D;
                             break;
-                        case "F3":
+                        case F3:
                             secretScore = secretCount / 50D;
                             break;
-                        case "F4":
+                        case F4:
                             secretScore = secretCount / 60D;
                             break;
-                        case "F5":
+                        case F5:
                             secretScore = secretCount / 70D;
                             break;
-                        case "F6":
+                        case F6:
                             secretScore = secretCount / 85D;
                             break;
                         default:
@@ -127,19 +102,19 @@ public class DungeonScore {
                     int seconds = Integer.parseInt(timeText.substring(timeText.indexOf("m") + 1, timeText.indexOf("s")));
                     int time = minutes * 60 + seconds;
 
-                    if (floor.equals("F2")) time -= 120;
+                    if (Utils.currentFloor == Utils.DungeonFloor.F2) time -= 120;
 
                     int base;
-                    switch (floor) {
-                        case "F1":
-                        case "F2":
-                        case "F3":
-                        case "F5":
+                    switch (Utils.currentFloor) {
+                        case F1:
+                        case F2:
+                        case F3:
+                        case F5:
                             base = 600;
                             break;
-                        case "F4":
-                        case "F6":
-                        case "F7":
+                        case F4:
+                        case F6:
+                        case F7:
                             base = 720;
                             break;
                         default:

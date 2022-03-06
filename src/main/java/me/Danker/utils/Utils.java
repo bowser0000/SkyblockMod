@@ -28,6 +28,7 @@ public class Utils {
 	
 	public static boolean inSkyblock = false;
 	public static boolean inDungeons = false;
+	public static DungeonFloor currentFloor = DungeonFloor.NONE;
 	public static String tabLocation = "";
 	public static int[] skillXPPerLevel = {0, 50, 125, 200, 300, 500, 750, 1000, 1500, 2000, 3500, 5000, 7500, 10000, 15000, 20000, 30000, 50000,
 										   75000, 100000, 200000, 300000, 400000, 500000, 600000, 700000, 800000, 900000, 1000000, 1100000,
@@ -133,6 +134,31 @@ public class Utils {
 			}
 		}
     	inDungeons = false;
+	}
+
+	public static void checkForDungeonFloor() {
+		if (inDungeons) {
+			List<String> scoreboard = ScoreboardHandler.getSidebarLines();
+
+			for (String s : scoreboard) {
+				String sCleaned = ScoreboardHandler.cleanSB(s);
+
+				if (sCleaned.contains("The Catacombs (")) {
+					String floor = sCleaned.substring(sCleaned.indexOf("(") + 1, sCleaned.indexOf(")"));
+
+					try {
+						currentFloor = DungeonFloor.valueOf(floor);
+					} catch (IllegalArgumentException ex) {
+						currentFloor = DungeonFloor.NONE;
+						ex.printStackTrace();
+					}
+
+					break;
+				}
+			}
+		} else {
+			currentFloor = DungeonFloor.NONE;
+		}
 	}
 
 	public static void checkTabLocation() {
@@ -463,6 +489,25 @@ public class Utils {
 
 	public static double getCooldownReductionFromLevel(int level) {
     	return (Math.floor(level / 2D) + 25) / 100D;
+	}
+
+	public enum DungeonFloor {
+		NONE,
+		E0,
+		F1,
+		F2,
+		F3,
+		F4,
+		F5,
+		F6,
+		F7,
+		M1,
+		M2,
+		M3,
+		M4,
+		M5,
+		M6,
+		M7
 	}
 
 }
