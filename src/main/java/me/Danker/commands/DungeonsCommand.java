@@ -13,8 +13,11 @@ import net.minecraft.event.HoverEvent;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.MathHelper;
 
+import java.text.NumberFormat;
 import java.util.List;
+import java.util.Locale;
 
 public class DungeonsCommand extends CommandBase {
 
@@ -101,12 +104,14 @@ public class DungeonsCommand extends CommandBase {
 			}
 
 			JsonObject catacombsObject = dungeonsObject.get("dungeon_types").getAsJsonObject().get("catacombs").getAsJsonObject();
+
 			double catacombs = Utils.xpToDungeonsLevel(catacombsObject.get("experience").getAsDouble());
-			double healer = Utils.xpToDungeonsLevel(dungeonsObject.get("player_classes").getAsJsonObject().get("healer").getAsJsonObject().get("experience").getAsDouble());
-			double mage = Utils.xpToDungeonsLevel(dungeonsObject.get("player_classes").getAsJsonObject().get("mage").getAsJsonObject().get("experience").getAsDouble());
-			double berserk = Utils.xpToDungeonsLevel(dungeonsObject.get("player_classes").getAsJsonObject().get("berserk").getAsJsonObject().get("experience").getAsDouble());
-			double archer = Utils.xpToDungeonsLevel(dungeonsObject.get("player_classes").getAsJsonObject().get("archer").getAsJsonObject().get("experience").getAsDouble());
-			double tank = Utils.xpToDungeonsLevel(dungeonsObject.get("player_classes").getAsJsonObject().get("tank").getAsJsonObject().get("experience").getAsDouble());
+			double healer = MathHelper.clamp_double(Utils.xpToDungeonsLevel(dungeonsObject.get("player_classes").getAsJsonObject().get("healer").getAsJsonObject().get("experience").getAsDouble()), 0D, 50D);
+			double mage = MathHelper.clamp_double(Utils.xpToDungeonsLevel(dungeonsObject.get("player_classes").getAsJsonObject().get("mage").getAsJsonObject().get("experience").getAsDouble()), 0D, 50D);
+			double berserk = MathHelper.clamp_double(Utils.xpToDungeonsLevel(dungeonsObject.get("player_classes").getAsJsonObject().get("berserk").getAsJsonObject().get("experience").getAsDouble()), 0D, 50D);
+			double archer = MathHelper.clamp_double(Utils.xpToDungeonsLevel(dungeonsObject.get("player_classes").getAsJsonObject().get("archer").getAsJsonObject().get("experience").getAsDouble()), 0D, 50D);
+			double tank = MathHelper.clamp_double(Utils.xpToDungeonsLevel(dungeonsObject.get("player_classes").getAsJsonObject().get("tank").getAsJsonObject().get("experience").getAsDouble()), 0D, 50D);
+			double classAverage = Math.round((healer + mage + berserk + archer + tank) / 5D * 100D) / 100D;
 			String selectedClass = Utils.capitalizeString(dungeonsObject.get("selected_dungeon_class").getAsString());
 			int secrets = playerResponse.get("player").getAsJsonObject().get("achievements").getAsJsonObject().get("skyblock_treasure_hunter").getAsInt();
 
@@ -127,12 +132,13 @@ public class DungeonsCommand extends CommandBase {
 
 			ChatComponentText classLevels = new ChatComponentText(EnumChatFormatting.GOLD + " Selected Class: " + selectedClass + "\n\n" +
 																  EnumChatFormatting.RED + " Catacombs Level: " + catacombs + "\n" +
+																  EnumChatFormatting.RED + " Class Average: " + classAverage + "\n\n" +
 																  EnumChatFormatting.YELLOW + " Healer Level: " + healer + "\n" +
 																  EnumChatFormatting.LIGHT_PURPLE + " Mage Level: " + mage + "\n" +
 																  EnumChatFormatting.RED + " Berserk Level: " + berserk + "\n" +
 																  EnumChatFormatting.GREEN + " Archer Level: " + archer + "\n" +
 																  EnumChatFormatting.BLUE + " Tank Level: " + tank + "\n\n" +
-																  EnumChatFormatting.WHITE + " Secrets Found: " + secrets + "\n\n");
+																  EnumChatFormatting.WHITE + " Secrets Found: " + NumberFormat.getIntegerInstance(Locale.US).format(secrets) + "\n\n");
 
 			StringBuilder completionsHoverString = new StringBuilder();
 			for (int i = 0; i <= highestFloor; i++) {

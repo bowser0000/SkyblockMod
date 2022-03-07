@@ -252,10 +252,10 @@ public class Utils {
 			xpAdded += dungeonsXPPerLevel[i];
 			if (xp < xpAdded) {
 				double level =  (i - 1) + (xp - (xpAdded - dungeonsXPPerLevel[i])) / dungeonsXPPerLevel[i];
-				return (double) Math.round(level * 100) / 100;
+				return (double) Math.round(level * 100D) / 100;
 			}
 		}
-		return 50D;
+		return 50D + MathHelper.clamp_double(Math.round((xp - 569809640D) / 200000000D * 100D) / 100D, 0D, 49D);
 	}
 	
 	public static int expertiseKillsLeft(int kills) {
