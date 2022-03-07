@@ -890,8 +890,9 @@ public class LootCommand extends CommandBase {
 																	EnumChatFormatting.AQUA + "    Coins Spent:" + nf.format(CatacombsTracker.masterCoinsSpent) + "\n" +
 																	EnumChatFormatting.AQUA + "    Time Spent:" + nf.format(CatacombsTracker.masterTimeSpent) + "\n" +
 																	EnumChatFormatting.DARK_RED + EnumChatFormatting.BOLD + " -------------------"));
+						break;
 					default:
-						player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Usage: /loot catacombs <f1/f2/f3/f4/f5/f6/f7>"));
+						player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Usage: /loot catacombs <f1/f2/f3/f4/f5/f6/f7/mm>"));
 				}
 				break;
 			default:
