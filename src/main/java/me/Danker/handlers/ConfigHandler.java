@@ -638,7 +638,7 @@ public class ConfigHandler {
 		PetColours.PET_1_TO_9 = initInt("colors", "pet1To9", 0x999999); // Grey
 		PetColours.PET_10_TO_19 = initInt("colors", "pet10To19", 0xD62440); // Red
 		PetColours.PET_20_TO_29 = initInt("colors", "pet20To29", 0xEF5230); // Orange
-		PetColours.PET_30_TO_39 = initInt("colors", "pet30To39", 0xFFC400); // Yellow
+		PetColours.PET_30_TO_39 = initInt("colors", "pet30To39", 0x113CF2); // Dark Blue
 		PetColours.PET_40_TO_49 = initInt("colors", "pet40To49", 0x0EAC35); // Green
 		PetColours.PET_50_TO_59 = initInt("colors", "pet50To59", 0x008AD8); // Light Blue
 		PetColours.PET_60_TO_69 = initInt("colors", "pet60To69", 0x7E4FC6); // Purple

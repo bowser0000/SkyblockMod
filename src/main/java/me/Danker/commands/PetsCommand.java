@@ -14,6 +14,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.MathHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -82,7 +83,7 @@ public class PetsCommand extends CommandBase {
 		}
 	}
 
-	class Pet {
+	static class Pet {
 
 		public Rarity rarity;
 		public double xp;
@@ -103,13 +104,16 @@ public class PetsCommand extends CommandBase {
 				}
 			}
 			this.active = pet.get("active").getAsBoolean();
-			this.name = Utils.capitalizeString(pet.get("type").getAsString());;
+			this.name = Utils.capitalizeString(pet.get("type").getAsString());
 			this.rarity = rarity;
 			this.xp = pet.get("exp").getAsDouble();
 		}
 
 		public String getStringToAdd() {
 			int level = petXpToLevel(this.xp, this.rarity.name());
+			if (this.name.equals("Golden Dragon") && this.xp > 25353230D) {
+				level = 100 + MathHelper.clamp_int((int) ((this.xp - 25353230) / 1886700) + 2, 0, 100);
+			}
 
 			String messageToAdd = rarity.getChatColor() + " " + (this.active ? EnumChatFormatting.BOLD + ">>> " : "") + Utils.capitalizeString(this.rarity.name()) + (this.rarityBoosted ? " ⇑" : "")  + " " + this.name + " (" + level + ")" + (this.active ? " <<<" : "");
 

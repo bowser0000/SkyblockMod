@@ -37,25 +37,25 @@ public class PetColours {
                         continue;
                     int colour;
                     int petLevel = Integer.parseInt(item.getDisplayName().substring(item.getDisplayName().indexOf(" ") + 1, item.getDisplayName().indexOf("]")));
-                    if (petLevel == 100) {
+                    if (petLevel == 100 || petLevel == 200) {
                         colour = PET_100;
-                    } else if (petLevel >= 90) {
+                    } else if ((petLevel < 100 && petLevel >= 90) || petLevel >= 190) {
                         colour = PET_90_TO_99;
-                    } else if (petLevel >= 80) {
+                    } else if ((petLevel < 100 && petLevel >= 80) || petLevel >= 180) {
                         colour = PET_80_TO_89;
-                    } else if (petLevel >= 70) {
+                    } else if ((petLevel < 100 && petLevel >= 70) || petLevel >= 170) {
                         colour = PET_70_TO_79;
-                    } else if (petLevel >= 60) {
+                    } else if ((petLevel < 100 && petLevel >= 60) || petLevel >= 160) {
                         colour = PET_60_TO_69;
-                    } else if (petLevel >= 50) {
+                    } else if ((petLevel < 100 && petLevel >= 50) || petLevel >= 150) {
                         colour = PET_50_TO_59;
-                    } else if (petLevel >= 40) {
+                    } else if ((petLevel < 100 && petLevel >= 40) || petLevel >= 140) {
                         colour = PET_40_TO_49;
-                    } else if (petLevel >= 30) {
+                    } else if ((petLevel < 100 && petLevel >= 30) || petLevel >= 130) {
                         colour = PET_30_TO_39;
-                    } else if (petLevel >= 20) {
+                    } else if ((petLevel < 100 && petLevel >= 20) || petLevel >= 120) {
                         colour = PET_20_TO_29;
-                    } else if (petLevel >= 10) {
+                    } else if ((petLevel < 100 && petLevel >= 10) || petLevel >= 110) {
                         colour = PET_10_TO_19;
                     } else {
                         colour = PET_1_TO_9;
