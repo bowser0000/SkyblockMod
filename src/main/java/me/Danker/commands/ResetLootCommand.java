@@ -238,12 +238,12 @@ public class ResetLootCommand extends CommandBase {
 		FishingTracker.werewolfsSession = 0;
 		FishingTracker.phantomFishersSession = 0;
 		FishingTracker.grimReapersSession = 0;
-		FishingTracker.waterWorms = 0;
-		FishingTracker.poisonedWaterWorms = 0;
-		FishingTracker.flamingWorms = 0;
-		FishingTracker.lavaBlazes = 0;
-		FishingTracker.lavaPigmen = 0;
-		FishingTracker.zombieMiners = 0;
+		FishingTracker.waterWormsSession = 0;
+		FishingTracker.poisonedWaterWormsSession = 0;
+		FishingTracker.flamingWormsSession = 0;
+		FishingTracker.lavaBlazesSession = 0;
+		FishingTracker.lavaPigmenSession = 0;
+		FishingTracker.zombieMinersSession = 0;
 		ConfigHandler.deleteCategory("fishing");
 		ConfigHandler.reloadConfig();
 	}
@@ -327,6 +327,29 @@ public class ResetLootCommand extends CommandBase {
 		CatacombsTracker.f7RerollsSession = 0;
 		CatacombsTracker.f7CoinsSpentSession = 0;
 		CatacombsTracker.f7TimeSpentSession = 0;
+		CatacombsTracker.m1SSession = 0;
+		CatacombsTracker.m1SPlusSession = 0;
+		CatacombsTracker.m2SSession = 0;
+		CatacombsTracker.m2SPlusSession = 0;
+		CatacombsTracker.m3SSession = 0;
+		CatacombsTracker.m3SPlusSession = 0;
+		CatacombsTracker.m4SSession = 0;
+		CatacombsTracker.m4SPlusSession = 0;
+		CatacombsTracker.m5SSession = 0;
+		CatacombsTracker.m5SPlusSession = 0;
+		CatacombsTracker.m6SSession = 0;
+		CatacombsTracker.m6SPlusSession = 0;
+		CatacombsTracker.m7SSession = 0;
+		CatacombsTracker.m7SPlusSession = 0;
+		CatacombsTracker.firstStarsSession = 0;
+		CatacombsTracker.secondStarsSession = 0;
+		CatacombsTracker.thirdStarsSession = 0;
+		CatacombsTracker.fourthStarsSession = 0;
+		CatacombsTracker.fifthStarsSession = 0;
+		CatacombsTracker.darkClaymoresSession = 0;
+		CatacombsTracker.masterRerollsSession = 0;
+		CatacombsTracker.masterCoinsSpentSession = 0;
+		CatacombsTracker.masterTimeSpentSession = 0;
 		ConfigHandler.deleteCategory("catacombs");
 		ConfigHandler.reloadConfig();
 	}
