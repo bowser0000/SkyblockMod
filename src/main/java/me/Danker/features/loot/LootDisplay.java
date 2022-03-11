@@ -1151,6 +1151,7 @@ public class LootDisplay {
                             EnumChatFormatting.DARK_PURPLE + "3rd Master Stars:\n" +
                             EnumChatFormatting.DARK_PURPLE + "4th Master Stars:\n" +
                             EnumChatFormatting.DARK_PURPLE + "5th Master Stars:\n" +
+                            EnumChatFormatting.GOLD + "Necron Dyes:\n" +
                             EnumChatFormatting.GOLD + "Dark Claymores:\n" +
                             EnumChatFormatting.WHITE + "Rerolls:\n" +
                             EnumChatFormatting.AQUA + "Coins Spent:\n" +
@@ -1163,6 +1164,7 @@ public class LootDisplay {
                             EnumChatFormatting.DARK_PURPLE + nf.format(CatacombsTracker.thirdStars) + "\n" +
                             EnumChatFormatting.DARK_PURPLE + nf.format(CatacombsTracker.fourthStars) + "\n" +
                             EnumChatFormatting.DARK_PURPLE + nf.format(CatacombsTracker.fifthStars) + "\n" +
+                            EnumChatFormatting.GOLD + nf.format(CatacombsTracker.necronDyes) + "\n" +
                             EnumChatFormatting.GOLD + nf.format(CatacombsTracker.darkClaymores) + "\n" +
                             EnumChatFormatting.WHITE + nf.format(CatacombsTracker.masterRerolls) + "\n" +
                             EnumChatFormatting.AQUA + Utils.getMoneySpent(CatacombsTracker.masterCoinsSpent) + "\n" +
@@ -1209,6 +1211,7 @@ public class LootDisplay {
                             EnumChatFormatting.DARK_PURPLE + "3rd Master Stars:\n" +
                             EnumChatFormatting.DARK_PURPLE + "4th Master Stars:\n" +
                             EnumChatFormatting.DARK_PURPLE + "5th Master Stars:\n" +
+                            EnumChatFormatting.GOLD + "Necron Dyes:\n" +
                             EnumChatFormatting.GOLD + "Dark Claymores:\n" +
                             EnumChatFormatting.WHITE + "Rerolls:\n" +
                             EnumChatFormatting.AQUA + "Coins Spent:\n" +
@@ -1221,6 +1224,7 @@ public class LootDisplay {
                             EnumChatFormatting.DARK_PURPLE + nf.format(CatacombsTracker.thirdStarsSession) + "\n" +
                             EnumChatFormatting.DARK_PURPLE + nf.format(CatacombsTracker.fourthStarsSession) + "\n" +
                             EnumChatFormatting.DARK_PURPLE + nf.format(CatacombsTracker.fifthStarsSession) + "\n" +
+                            EnumChatFormatting.GOLD + nf.format(CatacombsTracker.necronDyesSession) + "\n" +
                             EnumChatFormatting.GOLD + nf.format(CatacombsTracker.darkClaymoresSession) + "\n" +
                             EnumChatFormatting.WHITE + nf.format(CatacombsTracker.masterRerollsSession) + "\n" +
                             EnumChatFormatting.AQUA + Utils.getMoneySpent(CatacombsTracker.masterCoinsSpentSession) + "\n" +

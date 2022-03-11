@@ -534,6 +534,7 @@ public class ConfigHandler {
 		CatacombsTracker.thirdStars = initInt("catacombs", "thirdStar", 0);
 		CatacombsTracker.fourthStars = initInt("catacombs", "fourthStar", 0);
 		CatacombsTracker.fifthStars = initInt("catacombs", "fifthStar", 0);
+		CatacombsTracker.necronDyes = initInt("catacombs", "necronDye", 0);
 		CatacombsTracker.darkClaymores = initInt("catacombs", "darkClaymore", 0);
 		CatacombsTracker.masterRerolls = initInt("catacombs", "masterRerolls", 0);
 		CatacombsTracker.masterCoinsSpent = initDouble("catacombs", "masterCoins", 0);

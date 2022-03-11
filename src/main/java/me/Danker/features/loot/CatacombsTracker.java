@@ -108,6 +108,7 @@ public class CatacombsTracker {
     public static int thirdStars;
     public static int fourthStars;
     public static int fifthStars;
+    public static int necronDyes;
     public static int darkClaymores;
     public static int masterRerolls;
     public static double masterCoinsSpent;
@@ -207,6 +208,7 @@ public class CatacombsTracker {
     public static int thirdStarsSession = 0;
     public static int fourthStarsSession = 0;
     public static int fifthStarsSession = 0;
+    public static int necronDyesSession = 0;
     public static int darkClaymoresSession = 0;
     public static int masterRerollsSession = 0;
     public static double masterCoinsSpentSession = 0;
@@ -554,6 +556,10 @@ public class CatacombsTracker {
                 darkClaymores++;
                 darkClaymoresSession++;
                 ConfigHandler.writeIntConfig("catacombs", "darkClaymore", darkClaymores);
+            } else if (message.contains("Necron Dye")) {
+                necronDyes++;
+                necronDyesSession++;
+                ConfigHandler.writeIntConfig("catacombs", "necronDye", necronDyes);
             }
         }
 
