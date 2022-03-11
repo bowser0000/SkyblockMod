@@ -229,14 +229,23 @@ public class CustomMusic {
 
         public void start() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
 
-            if (music == null) music = AudioSystem.getClip();
-            if (!music.isRunning()) {
-                reset();
-                shuffle();
-                setVolume(volume);
-                cancelNotes = true;
-                music.setMicrosecondPosition(0);
-                music.start();
+            try {
+                if (music == null) music = AudioSystem.getClip();
+                if (!music.isRunning()) {
+                    reset();
+                    shuffle();
+                    setVolume(volume);
+                    cancelNotes = true;
+                    music.setMicrosecondPosition(0);
+                    music.start();
+                }
+            } catch (UnsupportedAudioFileException ex) {
+                ex.printStackTrace();
+
+                EntityPlayer player = Minecraft.getMinecraft().thePlayer;
+                if (player != null) {
+                    player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Attempted to play non .wav file. Please use a .wav converter instead of renaming the file."));
+                }
             }
         }
 
