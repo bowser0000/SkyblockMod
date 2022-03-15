@@ -79,6 +79,7 @@ public class AlertActionGui extends GuiScreen {
             return;
         }
         Alerts.alerts.set(id, alert);
+        Alerts.saveToFile();
     }
 
 }
