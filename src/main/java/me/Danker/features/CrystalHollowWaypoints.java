@@ -115,6 +115,8 @@ public class CrystalHollowWaypoints {
         String message = StringUtils.stripControlCodes(event.message.getUnformattedText());
         EntityPlayer player = Minecraft.getMinecraft().thePlayer;
 
+        if (player == null) return;
+
         /* examples
         $SBECHWP:Mines of Divan@-673,117,426
         $SBECHWP:Khazad-dûm@-292,63,281\nFairy Grotto@-216,110,400\njungle temple@-525,110,395\nJungle Temple@-493,101,425\nMines of Divan@-673,117,426
