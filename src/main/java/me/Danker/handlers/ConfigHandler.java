@@ -241,6 +241,7 @@ public class ConfigHandler {
 		ToggleCommand.autoSkillTrackerToggled = initBoolean("toggles", "AutoSkillTracker", false);
 		ToggleCommand.alerts = initBoolean("toggles", "Alerts", false);
 		ToggleCommand.dungeonScore = initBoolean("toggles", "DungeonScore", false);
+		ToggleCommand.hideArmour = initBoolean("toggles", "HideArmour", false);
 		// Chat Messages
 		ToggleCommand.sceptreMessages = initBoolean("toggles", "SceptreMessages", true);
 		ToggleCommand.midasStaffMessages = initBoolean("toggles", "MidasStaffMessages", true);

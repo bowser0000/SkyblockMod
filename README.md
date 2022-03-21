@@ -63,6 +63,7 @@ Discord Server: https://discord.gg/QsEkNQS
 - Ability cooldowns display
 - Custom alerts based on chat
 - Predicted dungeon score display
+- Hide player armour
 
 ## Commands
 - /dhelp - Returns this message in-game.
@@ -148,3 +149,4 @@ Software | License
 [HyChat](https://github.com/Moulberry/Hychat) | [Creative Commons Public License](https://github.com/Moulberry/Hychat/blob/master/LICENSE)
 [SkyblockCatia](https://github.com/SteveKunG/SkyBlockcatia) | [MIT License](https://github.com/SteveKunG/SkyBlockcatia/blob/1.8.9/LICENSE.md)
 [MatterOverdrive (Legacy Edition)](https://bitbucket.org/hrznstudio/mo-legacy-edition/) | [GNU General Public License](https://bitbucket.org/hrznstudio/mo-legacy-edition/src/1.12.2/LICENSE.md)
+[Hide Armour](https://github.com/Furgl/Hide-Armor/tree/1.15.2) | No License

@@ -1,5 +1,6 @@
 package me.Danker.gui;
 
+import jdk.nashorn.internal.runtime.regexp.joni.Config;
 import me.Danker.commands.ToggleCommand;
 import me.Danker.gui.alerts.AlertsGui;
 import me.Danker.gui.buttons.FeatureButton;
@@ -85,6 +86,7 @@ public class DankerGui extends GuiScreen {
 	private GuiButton necronNotifications;
 	private GuiButton bonzoTimer;
 	private GuiButton dungeonScore;
+	private GuiButton hideArmour;
 	// Chat Messages
 	private GuiButton sceptreMessages;
 	private GuiButton midasStaffMessages;
@@ -175,6 +177,7 @@ public class DankerGui extends GuiScreen {
 		autoAcceptReparty = new FeatureButton("Auto Accept Reparty: " + Utils.getColouredBoolean(ToggleCommand.autoAcceptReparty), "Automatically rejoins parties when disbanded and invited.");
 		abilityCooldown = new FeatureButton("Ability Cooldowns: " + Utils.getColouredBoolean(ToggleCommand.abilityCooldowns), "Displays ability cooldowns.");
 		dungeonScore = new FeatureButton("Dungeon Score Display: " + Utils.getColouredBoolean(ToggleCommand.dungeonScore), "Displays an estimated dungeon score with secrets.");
+		hideArmour = new FeatureButton("Hide Player Armour: " + Utils.getColouredBoolean(ToggleCommand.hideArmour), "Makes player armour invisible, showing their skin.");
 
 		allButtons.clear();
 		allButtons.add(changeDisplay);
@@ -231,6 +234,7 @@ public class DankerGui extends GuiScreen {
 		allButtons.add(autoAcceptReparty);
 		allButtons.add(abilityCooldown);
 		allButtons.add(dungeonScore);
+		allButtons.add(hideArmour);
 
 		search.setText(initSearchText);
 		search.setVisible(true);
@@ -510,6 +514,10 @@ public class DankerGui extends GuiScreen {
 			ToggleCommand.masterSPlusDisplay = !ToggleCommand.masterSPlusDisplay;
 			ConfigHandler.writeBooleanConfig("toggles", "MasterSPlusDisplay", ToggleCommand.masterSPlusDisplay);
 			masterSPlusDisplay.displayString = "Display MM S+ Runs: " + Utils.getColouredBoolean(ToggleCommand.masterSPlusDisplay);
+		} else if (button == hideArmour) {
+			ToggleCommand.hideArmour = !ToggleCommand.hideArmour;
+			ConfigHandler.writeBooleanConfig("toggles", "HideArmour", ToggleCommand.hideArmour);
+			hideArmour.displayString = "Hide Player Armour: " + Utils.getColouredBoolean(ToggleCommand.hideArmour);
 		}
 	}
 

@@ -48,6 +48,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 	public static boolean abilityCooldowns;
 	public static boolean alerts;
 	public static boolean dungeonScore;
+	public static boolean hideArmour;
 	// Chat Messages
 	public static boolean sceptreMessages;
 	public static boolean midasStaffMessages;
