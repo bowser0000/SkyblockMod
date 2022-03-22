@@ -59,6 +59,22 @@ public class RenderUtils {
         GL11.glTranslated(0, 0, -1);
     }
 
+    public static void drawTextOnSlot(int size, int xSlotPos, int ySlotPos, String text) {
+        Minecraft mc = Minecraft.getMinecraft();
+        ScaledResolution sr = new ScaledResolution(mc);
+        int guiLeft = (sr.getScaledWidth() - 176) / 2;
+        int guiTop = (sr.getScaledHeight() - 222) / 2;
+        int x = guiLeft + xSlotPos;
+        int y = guiTop + ySlotPos;
+        // Move down when chest isn't 6 rows
+        if (size != 90) y += (6 - (size - 36) / 9) * 9;
+
+        int width = mc.fontRendererObj.getStringWidth(text);
+        GL11.glTranslated(0, 0, 1);
+        mc.fontRendererObj.drawString(text, x + 8 - width / 2, y + 5, 0xFFFFFF, true);
+        GL11.glTranslated(0, 0, -1);
+    }
+
     public static void draw3DLine(Vec3 pos1, Vec3 pos2, int colourInt, int lineWidth, boolean depth, float partialTicks) {
         Entity render = Minecraft.getMinecraft().getRenderViewEntity();
         WorldRenderer worldRenderer = Tessellator.getInstance().getWorldRenderer();

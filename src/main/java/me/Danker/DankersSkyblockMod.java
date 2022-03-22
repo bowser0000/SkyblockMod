@@ -142,6 +142,7 @@ public class DankersSkyblockMod {
         MinecraftForge.EVENT_BUS.register(new NotifySlayerSlain());
         MinecraftForge.EVENT_BUS.register(new PetColours());
         MinecraftForge.EVENT_BUS.register(new Reparty());
+        MinecraftForge.EVENT_BUS.register(new SameColourSolver());
         MinecraftForge.EVENT_BUS.register(new SelectAllColourSolver());
         MinecraftForge.EVENT_BUS.register(new SilverfishSolver());
         MinecraftForge.EVENT_BUS.register(new Skill50Display());

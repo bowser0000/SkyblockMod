@@ -28,6 +28,7 @@ public class PuzzleSolversGui extends GuiScreen {
 	private GuiButton startsWith;
 	private GuiButton selectAll;
 	private GuiButton clickOrder;
+	private GuiButton sameColour;
 	private GuiButton blockClicks;
 	private GuiButton itemFrameOnSeaLanterns;
 	
@@ -67,9 +68,10 @@ public class PuzzleSolversGui extends GuiScreen {
 		startsWith = new GuiButton(0, width / 2 - 100, (int) (height * 0.4), "Starts With Letter Terminal Solver: " + Utils.getColouredBoolean(ToggleCommand.startsWithToggled));
 		selectAll = new GuiButton(0, width / 2 - 100, (int) (height * 0.5), "Select All Color Terminal Solver: " + Utils.getColouredBoolean(ToggleCommand.selectAllToggled));
 		clickOrder = new GuiButton(0, width / 2 - 100, (int) (height * 0.6), "Click in Order Terminal Helper: " + Utils.getColouredBoolean(ToggleCommand.clickInOrderToggled));
-		blockClicks = new GuiButton(0, width / 2 - 100, (int) (height * 0.7), "Block Wrong Clicks on Terminals: " + Utils.getColouredBoolean(ToggleCommand.blockWrongTerminalClicksToggled));
+		sameColour = new GuiButton(0, width / 2 - 100, (int) (height * 0.7), "Same Colour Terminal Solver: " + Utils.getColouredBoolean(ToggleCommand.sameColourToggled));
 		// Page 3
-		itemFrameOnSeaLanterns = new GuiButton(0, width / 2 - 100, (int) (height * 0.1), "Ignore Arrows On Sea Lanterns: " + Utils.getColouredBoolean(ToggleCommand.itemFrameOnSeaLanternsToggled));
+		blockClicks = new GuiButton(0, width / 2 - 100, (int) (height * 0.1), "Block Wrong Clicks on Terminals: " + Utils.getColouredBoolean(ToggleCommand.blockWrongTerminalClicksToggled));
+		itemFrameOnSeaLanterns = new GuiButton(0, width / 2 - 100, (int) (height * 0.2), "Ignore Arrows On Sea Lanterns: " + Utils.getColouredBoolean(ToggleCommand.itemFrameOnSeaLanternsToggled));
 
 		switch (page) {
 			case 1:
@@ -89,11 +91,12 @@ public class PuzzleSolversGui extends GuiScreen {
 				this.buttonList.add(startsWith);
 				this.buttonList.add(selectAll);
 				this.buttonList.add(clickOrder);
-				this.buttonList.add(blockClicks);
+				this.buttonList.add(sameColour);
 				this.buttonList.add(nextPage);
 				this.buttonList.add(backPage);
 				break;
 			case 3:
+				this.buttonList.add(blockClicks);
 				this.buttonList.add(itemFrameOnSeaLanterns);
 				this.buttonList.add(backPage);
 		}
@@ -174,6 +177,10 @@ public class PuzzleSolversGui extends GuiScreen {
 			ToggleCommand.itemFrameOnSeaLanternsToggled = !ToggleCommand.itemFrameOnSeaLanternsToggled;
 			ConfigHandler.writeBooleanConfig("toggles", "IgnoreItemFrameOnSeaLanterns", ToggleCommand.itemFrameOnSeaLanternsToggled);
 			itemFrameOnSeaLanterns.displayString = "Ignore Arrows On Sea Lanterns: " + Utils.getColouredBoolean(ToggleCommand.itemFrameOnSeaLanternsToggled);
+		} else if (button == sameColour) {
+			ToggleCommand.sameColourToggled = !ToggleCommand.sameColourToggled;
+			ConfigHandler.writeBooleanConfig("toggles", "SameColourTerminal", ToggleCommand.sameColourToggled);
+			sameColour.displayString = "Same Colour Terminal Solver: " + Utils.getColouredBoolean(ToggleCommand.sameColourToggled);
 		}
 	}
 	

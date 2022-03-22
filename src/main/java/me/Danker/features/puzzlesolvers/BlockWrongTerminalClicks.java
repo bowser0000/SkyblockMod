@@ -31,44 +31,6 @@ public class BlockWrongTerminalClicks {
                 case "Correct all the panes!":
                     shouldCancel = !StringUtils.stripControlCodes(item.getDisplayName()).startsWith("Off");
                     break;
-                case "Navigate the maze!":
-                    if (item.getItem() != Item.getItemFromBlock(Blocks.stained_glass_pane)) {
-                        shouldCancel = true;
-                        break;
-                    }
-
-                    if (item.getItemDamage() != 0) {
-                        shouldCancel = true;
-                        break;
-                    }
-
-                    boolean isValid = false;
-
-                    int slotIndex = slot.getSlotIndex();
-
-                    if (slotIndex % 9 != 8 && slotIndex != 53) {
-                        ItemStack itemStack = inventory.getStackInSlot(slotIndex + 1);
-                        if (itemStack != null && itemStack.getItemDamage() == 5) isValid = true;
-                    }
-
-                    if (!isValid && slotIndex % 9 != 0 && slotIndex != 0) {
-                        ItemStack itemStack = inventory.getStackInSlot(slotIndex - 1);
-                        if (itemStack != null && itemStack.getItemDamage() == 5) isValid = true;
-                    }
-
-                    if (!isValid && slotIndex <= 44) {
-                        ItemStack itemStack = inventory.getStackInSlot(slotIndex + 9);
-                        if (itemStack != null && itemStack.getItemDamage() == 5) isValid = true;
-                    }
-
-                    if (!isValid && slotIndex >= 9) {
-                        ItemStack itemStack = inventory.getStackInSlot(slotIndex - 9);
-                        if (itemStack != null && itemStack.getItemDamage() == 5) isValid = true;
-                    }
-
-                    shouldCancel = !isValid;
-
-                    break;
                 case "Click in order!":
 
                     if (slot.getSlotIndex() > 35) {
@@ -86,6 +48,25 @@ public class BlockWrongTerminalClicks {
                     int needed = ClickInOrderSolver.terminalNumberNeeded[0];
                     if (needed == 0) break;
                     shouldCancel = needed != -1 && item.stackSize != needed;
+                    break;
+                case "Change all to same color!":
+                    if (SameColourSolver.foundColour) {
+                        shouldCancel = SameColourSolver.getDistance(item.getItemDamage(), SameColourSolver.correctColour) == 0;
+                    }
+                    break;
+                case "Click the button on time!":
+                    int correctPos = -1;
+                    for (int i = 0; i <= 50; i++) {
+                        ItemStack stack = inventory.getStackInSlot(i);
+                        if (stack == null || stack.getItem() != Item.getItemFromBlock(Blocks.stained_glass_pane)) continue;
+
+                        if (stack.getItemDamage() == 10) {
+                            correctPos = i % 9;
+                        } else if (stack.getItemDamage() == 5 && correctPos != -1) {
+                            shouldCancel = i % 9 != correctPos;
+                            break;
+                        }
+                    }
                     break;
             }
 

@@ -264,6 +264,7 @@ public class ConfigHandler {
 		ToggleCommand.startsWithToggled = initBoolean("toggles", "StartsWithTerminal", false);
 		ToggleCommand.selectAllToggled = initBoolean("toggles", "SelectAllTerminal", false);
 		ToggleCommand.clickInOrderToggled = initBoolean("toggles", "ClickInOrderTerminal", false);
+		ToggleCommand.sameColourToggled = initBoolean("toggles", "SameColourTerminal", false);
 		ToggleCommand.blockWrongTerminalClicksToggled = initBoolean("toggles", "BlockWrongTerminalClicks", false);
 		ToggleCommand.itemFrameOnSeaLanternsToggled = initBoolean("toggles", "IgnoreItemFrameOnSeaLanterns", false);
 		// Experiment Solvers

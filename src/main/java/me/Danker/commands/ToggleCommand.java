@@ -82,6 +82,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 	public static boolean startsWithToggled;
 	public static boolean selectAllToggled;
 	public static boolean clickInOrderToggled;
+	public static boolean sameColourToggled;
 	public static boolean blockWrongTerminalClicksToggled;
 	public static boolean itemFrameOnSeaLanternsToggled;
 	// Experiments
