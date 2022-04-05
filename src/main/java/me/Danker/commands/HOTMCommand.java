@@ -122,9 +122,9 @@ public class HOTMCommand extends CommandBase {
 
     enum Node {
         mining_speed_boost("Mining Speed Boost"),
-        pickobulus("*Pickobulus"),
+        pickaxe_toss("Pickobulus"),
         vein_seeker("Vein Seeker"),
-        maniac_miner("*Maniac Miner");
+        maniac_miner("Maniac Miner");
 
         public String name;
 
