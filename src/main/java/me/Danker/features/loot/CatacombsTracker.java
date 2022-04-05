@@ -320,37 +320,37 @@ public class CatacombsTracker {
                 switch (Utils.currentFloor) {
                     case M1:
                         m1S++;
-                        m1SPlus++;
+                        m1SSession++;
                         ConfigHandler.writeIntConfig("catacombs", "masterOneS", m1S);
                         break;
                     case M2:
                         m2S++;
-                        m2SPlus++;
+                        m2SSession++;
                         ConfigHandler.writeIntConfig("catacombs", "masterTwoS", m2S);
                         break;
                     case M3:
                         m3S++;
-                        m3SPlus++;
+                        m3SSession++;
                         ConfigHandler.writeIntConfig("catacombs", "masterThreeS", m3S);
                         break;
                     case M4:
                         m4S++;
-                        m4SPlus++;
+                        m4SSession++;
                         ConfigHandler.writeIntConfig("catacombs", "masterFourS", m4S);
                         break;
                     case M5:
                         m5S++;
-                        m5SPlus++;
+                        m5SSession++;
                         ConfigHandler.writeIntConfig("catacombs", "masterFiveS", m5S);
                         break;
                     case M6:
                         m6S++;
-                        m6SPlus++;
+                        m6SSession++;
                         ConfigHandler.writeIntConfig("catacombs", "masterSixS", m6S);
                         break;
                     case M7:
                         m7S++;
-                        m7SPlus++;
+                        m7SSession++;
                         ConfigHandler.writeIntConfig("catacombs", "masterSevenS", m7S);
                         break;
                 }
