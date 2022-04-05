@@ -134,8 +134,10 @@ public class SameColourSolver {
 
     @SubscribeEvent
     public void onGuiOpen(GuiOpenEvent event) {
-        foundColour = false;
-        correctColour = 0;
+        if (!(event.gui instanceof GuiChest)) {
+            foundColour = false;
+            correctColour = 0;
+        }
     }
 
     public static int getDistance(int colour, int endColour) {
