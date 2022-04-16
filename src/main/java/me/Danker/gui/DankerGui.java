@@ -87,6 +87,7 @@ public class DankerGui extends GuiScreen {
 	private GuiButton bonzoTimer;
 	private GuiButton dungeonScore;
 	private GuiButton hideArmour;
+	private GuiButton autoJoinSkyblock;
 	// Chat Messages
 	private GuiButton sceptreMessages;
 	private GuiButton midasStaffMessages;
@@ -178,6 +179,7 @@ public class DankerGui extends GuiScreen {
 		abilityCooldown = new FeatureButton("Ability Cooldowns: " + Utils.getColouredBoolean(ToggleCommand.abilityCooldowns), "Displays ability cooldowns.");
 		dungeonScore = new FeatureButton("Dungeon Score Display: " + Utils.getColouredBoolean(ToggleCommand.dungeonScore), "Displays an estimated dungeon score with secrets.");
 		hideArmour = new FeatureButton("Hide Player Armour: " + Utils.getColouredBoolean(ToggleCommand.hideArmour), "Makes player armour invisible, showing their skin.");
+		autoJoinSkyblock = new FeatureButton("Automatically Join Skyblock: " + Utils.getColouredBoolean(ToggleCommand.autoJoinSkyblock), "Automatically join Skyblock when you join Hypixel.\nYou have an addiction.");
 
 		allButtons.clear();
 		allButtons.add(changeDisplay);
@@ -235,6 +237,7 @@ public class DankerGui extends GuiScreen {
 		allButtons.add(abilityCooldown);
 		allButtons.add(dungeonScore);
 		allButtons.add(hideArmour);
+		allButtons.add(autoJoinSkyblock);
 
 		search.setText(initSearchText);
 		search.setVisible(true);
@@ -518,6 +521,10 @@ public class DankerGui extends GuiScreen {
 			ToggleCommand.hideArmour = !ToggleCommand.hideArmour;
 			ConfigHandler.writeBooleanConfig("toggles", "HideArmour", ToggleCommand.hideArmour);
 			hideArmour.displayString = "Hide Player Armour: " + Utils.getColouredBoolean(ToggleCommand.hideArmour);
+		} else if (button == autoJoinSkyblock) {
+			ToggleCommand.autoJoinSkyblock = !ToggleCommand.autoJoinSkyblock;
+			ConfigHandler.writeBooleanConfig("toggles", "AutoJoinSkyblock", ToggleCommand.autoJoinSkyblock);
+			autoJoinSkyblock.displayString = "Automatically Join Skyblock: " + Utils.getColouredBoolean(ToggleCommand.autoJoinSkyblock);
 		}
 	}
 

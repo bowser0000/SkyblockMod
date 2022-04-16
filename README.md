@@ -64,6 +64,7 @@ Discord Server: https://discord.gg/QsEkNQS
 - Custom alerts based on chat
 - Predicted dungeon score display
 - Hide player armour
+- Automatically join skyblock
 
 ## Commands
 - /dhelp - Returns this message in-game.
