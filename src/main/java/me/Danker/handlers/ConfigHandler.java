@@ -221,11 +221,12 @@ public class ConfigHandler {
 		ToggleCommand.teammatesInRadius = initBoolean("toggles", "TeammatesInRadius", false);
 		ToggleCommand.giantHP = initBoolean("toggles", "GiantHP", false);
 		ToggleCommand.hidePetCandy = initBoolean("toggles", "HidePetCandy", false);
-		ToggleCommand.customColouredNames = initBoolean("toggles", "CustomColouredNames", true);
+		ToggleCommand.customColouredNames = initBoolean("toggles", "CustomColouredNames", true); // enabled by default
 		ToggleCommand.endOfFarmAlert = initBoolean("toggles", "EndOfFarmAlert", false);
 		ToggleCommand.gemstoneLore = initBoolean("toggles", "GemstoneLore", false);
 		ToggleCommand.crystalHollowWaypoints = initBoolean("toggles", "CrystalHollowWaypoints", false);
 		ToggleCommand.crystalAutoWaypoints = initBoolean("toggles", "CrystalAutoWaypoints", true); // enabled by default
+		ToggleCommand.crystalAutoPlayerWaypoints = initBoolean("toggles", "CrystalAutoPlayerWaypoints", false);
 		ToggleCommand.autoAcceptReparty = initBoolean("toggles", "AutoAcceptReparty", false);
 		ToggleCommand.abilityCooldowns = initBoolean("toggles", "AbilityCooldowns", false);
 		ToggleCommand.dungeonTimerToggled = initBoolean("toggles", "DungeonTimer", false);

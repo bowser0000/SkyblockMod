@@ -44,6 +44,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 	public static boolean gemstoneLore;
 	public static boolean crystalHollowWaypoints;
 	public static boolean crystalAutoWaypoints;
+	public static boolean crystalAutoPlayerWaypoints;
 	public static boolean autoAcceptReparty;
 	public static boolean abilityCooldowns;
 	public static boolean alerts;

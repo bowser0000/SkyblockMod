@@ -1,6 +1,7 @@
 package me.Danker.features;
 
 import me.Danker.DankersSkyblockMod;
+import me.Danker.commands.CrystalHollowWaypointCommand;
 import me.Danker.commands.ToggleCommand;
 import me.Danker.handlers.ScoreboardHandler;
 import me.Danker.utils.RenderUtils;
@@ -88,7 +89,7 @@ public class CrystalHollowWaypoints {
                             if (!king && entity.getCustomNameTag().endsWith("King Yolkar")) {
                                 king = found = true;
                                 waypoints.add(new Waypoint("King Yolkar", entity.getPosition()));
-                            } else if (!corleone && entity.getCustomNameTag().endsWith("Boss Corleone")) {
+                            } else if (!corleone && entity.getCustomNameTag().contains("Boss Corleone")) {
                                 corleone = found = true;
                                 waypoints.add(new Waypoint("Boss Corleone", entity.getPosition()));
                             } else if (!guardian && entity.getCustomNameTag().contains("Key Guardian")) {
@@ -123,8 +124,15 @@ public class CrystalHollowWaypoints {
         */
         if (ToggleCommand.crystalHollowWaypoints && Utils.tabLocation.equals("Crystal Hollows")) {
             if (!message.contains(player.getName()) && (message.contains(": $DSMCHWP:") || message.contains(": $SBECHWP:"))) {
+                String waypoints = message.substring(message.lastIndexOf(":") + 1);
+
+                if (ToggleCommand.crystalAutoPlayerWaypoints) {
+                    CrystalHollowWaypointCommand.addWaypoints(waypoints, true);
+                    return;
+                }
+
                 ChatComponentText add = new ChatComponentText(EnumChatFormatting.GREEN + "" + EnumChatFormatting.BOLD + "  [ADD]\n");
-                add.setChatStyle(add.getChatStyle().setChatClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/dsmaddcrystalhollowwaypoints " + message.substring(message.lastIndexOf(":") + 1))));
+                add.setChatStyle(add.getChatStyle().setChatClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/dsmaddcrystalhollowwaypoints " + waypoints)));
 
                 new Thread(() -> {
                     try {

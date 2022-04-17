@@ -1,5 +1,6 @@
 package me.Danker.gui.crystalhollowwaypoints;
 
+import javafx.scene.control.Toggle;
 import me.Danker.commands.ToggleCommand;
 import me.Danker.features.CrystalHollowWaypoints;
 import me.Danker.gui.DankerGui;
@@ -29,6 +30,7 @@ public class CrystalHollowWaypointsGui extends GuiScreen {
     private GuiButton add;
     private FeatureButton crystalHollowWaypoints;
     private FeatureButton crystalAutoWaypoints;
+    private FeatureButton crystalAutoPlayerWaypoints;
 
     public CrystalHollowWaypointsGui(int page) {
         this.page = page;
@@ -55,11 +57,13 @@ public class CrystalHollowWaypointsGui extends GuiScreen {
         add = new GuiButton(0, 0, 0, "Add Waypoint");
         crystalHollowWaypoints = new FeatureButton("Crystal Hollows Waypoints: " + Utils.getColouredBoolean(ToggleCommand.crystalHollowWaypoints), "Shows waypoints to various places in the Crystal Hollows.");
         crystalAutoWaypoints = new FeatureButton("Auto Waypoints: " + Utils.getColouredBoolean(ToggleCommand.crystalAutoWaypoints), "Automatically creates waypoints when you visit a special place in the Crystal Hollows.");
+        crystalAutoPlayerWaypoints = new FeatureButton("Auto Add Player Waypoints: " + Utils.getColouredBoolean(ToggleCommand.crystalAutoPlayerWaypoints), "Automatically adds waypoints sent from players.");
 
         allButtons.clear();
         allButtons.add(add);
         allButtons.add(crystalHollowWaypoints);
         allButtons.add(crystalAutoWaypoints);
+        allButtons.add(crystalAutoPlayerWaypoints);
         for (int i = 0; i < CrystalHollowWaypoints.waypoints.size(); i++) {
             CrystalHollowWaypoints.Waypoint waypoint = CrystalHollowWaypoints.waypoints.get(i);
             GuiButton button = new GuiButton(i, 0, 0, waypoint.location + " >");
@@ -135,6 +139,10 @@ public class CrystalHollowWaypointsGui extends GuiScreen {
             ToggleCommand.crystalAutoWaypoints = !ToggleCommand.crystalAutoWaypoints;
             ConfigHandler.writeBooleanConfig("toggles", "CrystalAutoWaypoints", ToggleCommand.crystalAutoWaypoints);
             crystalAutoWaypoints.displayString = "Auto Waypoints: " + Utils.getColouredBoolean(ToggleCommand.crystalAutoWaypoints);
+        } else if (button == crystalAutoPlayerWaypoints) {
+            ToggleCommand.crystalAutoPlayerWaypoints = !ToggleCommand.crystalAutoPlayerWaypoints;
+            ConfigHandler.writeBooleanConfig("toggles", "CrystalAutoPlayerWaypoints", ToggleCommand.crystalAutoPlayerWaypoints);
+            crystalAutoPlayerWaypoints.displayString = "Auto Add Player Waypoints: " + Utils.getColouredBoolean(ToggleCommand.crystalAutoPlayerWaypoints);
         } else {
             mc.displayGuiScreen(new CrystalHollowWaypointActionGui(button.id));
         }

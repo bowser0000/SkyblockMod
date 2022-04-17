@@ -2,6 +2,7 @@ package me.Danker.commands;
 
 import me.Danker.DankersSkyblockMod;
 import me.Danker.features.CrystalHollowWaypoints;
+import net.minecraft.client.Minecraft;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
@@ -28,11 +29,13 @@ public class CrystalHollowWaypointCommand extends CommandBase {
 
     @Override
     public void processCommand(ICommandSender arg0, String[] arg1) throws CommandException {
-        EntityPlayer player = (EntityPlayer) arg0;
-
         if (arg1.length == 0) return;
+        addWaypoints(String.join(" ", arg1), false);
+    }
 
-        String[] waypoints = String.join(" ", arg1).split("\\\\n");
+    public static void addWaypoints(String list, boolean auto) {
+        EntityPlayer player = Minecraft.getMinecraft().thePlayer;
+        String[] waypoints = list.split("\\\\n");
 
         for (String waypoint : waypoints) {
             String[] parts = waypoint.split("@-");
@@ -41,6 +44,17 @@ public class CrystalHollowWaypointCommand extends CommandBase {
             String location = parts[0];
             BlockPos pos = new BlockPos(Integer.parseInt(coords[0]), Integer.parseInt(coords[1]), Integer.parseInt(coords[2]));
             CrystalHollowWaypoints.Waypoint newWaypoint = new CrystalHollowWaypoints.Waypoint(location, pos);
+
+            if (auto) {
+                boolean contains = false;
+                for (CrystalHollowWaypoints.Waypoint existing : CrystalHollowWaypoints.waypoints) {
+                    if (existing.location.equals(location)) {
+                        contains = true;
+                        break;
+                    }
+                }
+                if (contains) continue;
+            }
 
             CrystalHollowWaypoints.waypoints.add(newWaypoint);
             player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Added " + newWaypoint.location + " @ " + newWaypoint.getPos()));
