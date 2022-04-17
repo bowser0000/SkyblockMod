@@ -2,6 +2,7 @@ package me.Danker.gui.alerts;
 
 import me.Danker.features.Alerts;
 import me.Danker.handlers.TextRenderer;
+import me.Danker.utils.RenderUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
@@ -20,11 +21,16 @@ public class AlertAddGui extends GuiScreen {
     private GuiButton cancel;
 
     private String mode = "Contains";
+    private String location = "Skyblock";
     private GuiButton startsWith;
     private GuiButton contains;
     private GuiButton endsWith;
+    private GuiButton everywhere;
+    private GuiButton skyblock;
+    private GuiButton dungeons;
     private GuiTextField message;
     private GuiTextField alert;
+    private GuiCheckBox desktop;
     private GuiCheckBox toggled;
     private GuiButton add;
 
@@ -54,15 +60,21 @@ public class AlertAddGui extends GuiScreen {
         startsWith = new GuiButton(0, width / 2 - 200, (int) (height * 0.2), 120, 20, "Starts With");
         contains = new GuiButton(0, width / 2 - 60, (int) (height * 0.2), 120, 20, "Contains");
         endsWith = new GuiButton(0, width / 2 + 80, (int) (height * 0.2), 120, 20, "Ends With");
-        message = new GuiTextField(0, this.fontRendererObj, width / 2 - 100, (int) (height * 0.3), 200, 20);
-        alert = new GuiTextField(0, this.fontRendererObj, width / 2 - 100, (int) (height * 0.4), 200, 20);
-        toggled = new GuiCheckBox(0, width / 2 - 26, (int) (height * 0.5), "Toggled", true);
-        add = new GuiButton(0, width / 2 - 25, (int) (height * 0.7), 50, 20, "Add");
+        everywhere = new GuiButton(0, width / 2 - 200, (int) (height * 0.3), 120, 20, "Everywhere");
+        skyblock = new GuiButton(0, width / 2 - 60, (int) (height * 0.3), 120, 20, "Skyblock");
+        dungeons = new GuiButton(0, width / 2 + 80, (int) (height * 0.3), 120, 20, "Dungeons");
+        message = new GuiTextField(0, this.fontRendererObj, width / 2 - 100, (int) (height * 0.4), 200, 20);
+        alert = new GuiTextField(0, this.fontRendererObj, width / 2 - 100, (int) (height * 0.5), 200, 20);
+        desktop = new GuiCheckBox(0, width / 2 - 58, (int) (height * 0.6), "Desktop Notification", false);
+        toggled = new GuiCheckBox(0, width / 2 - 26, (int) (height * 0.65), "Toggled", true);
+        add = new GuiButton(0, width / 2 - 25, (int) (height * 0.8), 50, 20, "Add");
 
         if (editing) {
             mode = base.mode;
+            location = base.location;
             message.setText(base.message);
             alert.setText(base.alert);
+            desktop.setIsChecked(base.desktop);
             toggled.setIsChecked(base.toggled);
         }
 
@@ -75,6 +87,10 @@ public class AlertAddGui extends GuiScreen {
         this.buttonList.add(startsWith);
         this.buttonList.add(contains);
         this.buttonList.add(endsWith);
+        this.buttonList.add(everywhere);
+        this.buttonList.add(skyblock);
+        this.buttonList.add(dungeons);
+        this.buttonList.add(desktop);
         this.buttonList.add(toggled);
         this.buttonList.add(add);
     }
@@ -87,9 +103,10 @@ public class AlertAddGui extends GuiScreen {
         message.drawTextBox();
         alert.drawTextBox();
 
-        new TextRenderer(mc, "Mode: " + mode, width / 2 - 35, (int) (height * 0.15), 1D);
-        new TextRenderer(mc, "Trigger:", width / 2 - 145, (int) (height * 0.32), 1D);
-        new TextRenderer(mc, "Alert Text:", width / 2 - 158, (int) (height * 0.42), 1D);
+        RenderUtils.drawCenteredText("Mode: " + mode, width, (int) (height * 0.1), 1D);
+        RenderUtils.drawCenteredText("Location: " + location, width, (int) (height * 0.15), 1D);
+        new TextRenderer(mc, "Trigger:", width / 2 - 145, (int) (height * 0.42), 1D);
+        new TextRenderer(mc, "Alert Text:", width / 2 - 158, (int) (height * 0.52), 1D);
     }
 
     @Override
@@ -102,9 +119,19 @@ public class AlertAddGui extends GuiScreen {
             mode = "Contains";
         } else if (button == endsWith) {
             mode = "Ends With";
+        } else if (button == everywhere) {
+            location = "Everywhere";
+        } else if (button == skyblock) {
+            location = "Skyblock";
+        } else if (button == dungeons) {
+            location = "Dungeons";
         } else if (button == add) {
-            Alerts.alerts.add(new Alerts.Alert(mode, message.getText(), alert.getText(), toggled.isChecked()));
-            if (editing) Alerts.alerts.remove(id);
+            Alerts.Alert newAlert = new Alerts.Alert(mode, location, message.getText(), alert.getText(), desktop.isChecked(), toggled.isChecked());
+            if (editing) {
+                Alerts.alerts.set(id, newAlert);
+            } else {
+                Alerts.alerts.add(newAlert);
+            }
             Alerts.saveToFile();
             mc.displayGuiScreen(new AlertsGui(1));
         }

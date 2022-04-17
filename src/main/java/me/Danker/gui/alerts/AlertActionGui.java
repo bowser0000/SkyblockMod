@@ -16,6 +16,7 @@ public class AlertActionGui extends GuiScreen {
 
     private GuiButton goBack;
     private GuiButton toggle;
+    private GuiButton toggleDesktop;
     private GuiButton edit;
     private GuiButton delete;
 
@@ -40,10 +41,12 @@ public class AlertActionGui extends GuiScreen {
 
         goBack = new GuiButton(0, 2, height - 30, 100, 20, "Go Back");
         toggle = new GuiButton(0, width / 2 - 100, (int) (height * 0.1), "Enabled: " + Utils.getColouredBoolean(alert.toggled));
-        edit = new GuiButton(0, width / 2 - 100, (int) (height * 0.2), "Edit >");
+        toggleDesktop = new GuiButton(0, width / 2 - 100, (int) (height * 0.2), "Desktop Notification: " + Utils.getColouredBoolean(alert.desktop));
+        edit = new GuiButton(0, width / 2 - 100, (int) (height * 0.3), "Edit >");
         delete = new GuiButton(0, width / 2 - 100, (int) (height * 0.8), EnumChatFormatting.RED + "Delete Alert");
 
         this.buttonList.add(toggle);
+        this.buttonList.add(toggleDesktop);
         this.buttonList.add(edit);
         this.buttonList.add(delete);
         this.buttonList.add(goBack);
@@ -70,6 +73,9 @@ public class AlertActionGui extends GuiScreen {
         } else if (button == toggle) {
             alert.toggle();
             toggle.displayString = "Enabled: " + Utils.getColouredBoolean(alert.toggled);
+        } else if (button == toggleDesktop) {
+            alert.toggleDesktop();
+            toggleDesktop.displayString = "Desktop Notification: " + Utils.getColouredBoolean(alert.desktop);
         } else if (button == edit) {
             mc.displayGuiScreen(new AlertAddGui(alert, id));
         } else if (button == delete) {
