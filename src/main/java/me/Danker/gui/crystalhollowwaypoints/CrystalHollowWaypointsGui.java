@@ -1,6 +1,5 @@
 package me.Danker.gui.crystalhollowwaypoints;
 
-import javafx.scene.control.Toggle;
 import me.Danker.commands.ToggleCommand;
 import me.Danker.features.CrystalHollowWaypoints;
 import me.Danker.gui.DankerGui;

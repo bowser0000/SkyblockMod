@@ -1,6 +1,5 @@
 package me.Danker.gui;
 
-import jdk.nashorn.internal.runtime.regexp.joni.Config;
 import me.Danker.commands.ToggleCommand;
 import me.Danker.gui.alerts.AlertsGui;
 import me.Danker.gui.buttons.FeatureButton;

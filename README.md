@@ -85,7 +85,7 @@ Discord Server: https://discord.gg/QsEkNQS
 - /bank [player] - Uses API to get bank and purse coins of a person. If no name is provided, it checks yours.
 - /armor [player] - Uses API to get armour of a person. If no name is provided, it checks yours.
 - /dungeons [player] - Uses API to get dungeon levels of a person. If no name is provided, it checks yours.
-- /weight [player] [lily] - Uses API to get weight of a person. If no name is provided, it checks yours. Adding lily uses lily's weight instead of Senither's.
+- /weight [player] [lily/farming] - Uses API to get weight of a person. If no name is provided, it checks yours. Adding lily uses lily's weight. Adding farming uses Kaeso's farming weight.
 - /importfishing - Imports your fishing stats from your latest profile to your fishing tracker using the API.
 - /sbplayers - Uses API to find how many players are on each Skyblock island.
 - /onlyslayer <zombie/spider/wolf/enderman> <1/2/3/4/5>
@@ -151,3 +151,4 @@ Software | License
 [SkyblockCatia](https://github.com/SteveKunG/SkyBlockcatia) | [MIT License](https://github.com/SteveKunG/SkyBlockcatia/blob/1.8.9/LICENSE.md)
 [MatterOverdrive (Legacy Edition)](https://bitbucket.org/hrznstudio/mo-legacy-edition/) | [GNU General Public License](https://bitbucket.org/hrznstudio/mo-legacy-edition/src/1.12.2/LICENSE.md)
 [Hide Armour](https://github.com/Furgl/Hide-Armor/tree/1.15.2) | No License
+[Elite Discord Bot](https://github.com/ptlthg/EliteDiscordBot) | [MIT License](https://github.com/ptlthg/EliteDiscordBot/blob/master/LICENSE)
