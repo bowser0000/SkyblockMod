@@ -287,7 +287,7 @@ public class ConfigHandler {
 		ToggleCommand.dwarvenMinesMusic = initBoolean("toggles", "DwarvenMinesMusic", false);
 		ToggleCommand.crystalHollowsMusic = initBoolean("toggles", "CrystalHollowsMusic", false);
 		ToggleCommand.spidersDenMusic = initBoolean("toggles", "SpidersDenMusic", false);
-		ToggleCommand.blazingFortressMusic = initBoolean("toggles", "BlazingFortressMusic", false);
+		ToggleCommand.crimsonIsleMusic = initBoolean("toggles", "CrimsonIsleMusic", false);
 		ToggleCommand.endMusic = initBoolean("toggles", "Music", false);
 		ToggleCommand.parkMusic = initBoolean("toggles", "Music", false);
 		// Music Volume
@@ -303,7 +303,7 @@ public class ConfigHandler {
 		CustomMusic.dwarvenMinesVolume = initInt("music", "DwarvenMinesVolume", 50);
 		CustomMusic.crystalHollowsVolume = initInt("music", "CrystalHollowsVolume", 50);
 		CustomMusic.spidersDenVolume = initInt("music", "SpidersDenVolume", 50);
-		CustomMusic.blazingFortressVolume = initInt("music", "BlazingFortressVolume", 50);
+		CustomMusic.crimsonIsleVolume = initInt("music", "CrimsonIsleVolume", 50);
 		CustomMusic.endVolume = initInt("music", "EndVolume", 50);
 		CustomMusic.parkVolume = initInt("music", "ParkVolume", 50);
 

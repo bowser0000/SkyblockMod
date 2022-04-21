@@ -51,8 +51,8 @@ public class CustomMusic {
     public static int crystalHollowsVolume;
     public static Song spidersDen;
     public static int spidersDenVolume;
-    public static Song blazingFortress;
-    public static int blazingFortressVolume;
+    public static Song crimsonIsle;
+    public static int crimsonIsleVolume;
     public static Song end;
     public static int endVolume;
     public static Song park;
@@ -119,8 +119,8 @@ public class CustomMusic {
                             case "Spider's Den":
                                 if (ToggleCommand.spidersDenMusic) spidersDen.start();
                                 break;
-                            case "Blazing Fortress":
-                                if (ToggleCommand.blazingFortressMusic) blazingFortress.start();
+                            case "Crimson Isle":
+                                if (ToggleCommand.crimsonIsleMusic) crimsonIsle.start();
                                 break;
                             case "The End":
                                 if (ToggleCommand.endMusic) end.start();
@@ -184,7 +184,7 @@ public class CustomMusic {
         dwarvenMines = new Song(directory, "dwarvenmines", dwarvenMinesVolume);
         crystalHollows = new Song(directory, "crystalhollows", crystalHollowsVolume);
         spidersDen = new Song(directory, "spidersden", spidersDenVolume);
-        blazingFortress = new Song(directory, "blazingfortress", blazingFortressVolume);
+        crimsonIsle = new Song(directory, "crimsonisle", crimsonIsleVolume);
         end = new Song(directory, "end", endVolume);
         park = new Song(directory, "park", parkVolume);
     }
@@ -202,7 +202,7 @@ public class CustomMusic {
         if (dwarvenMines != null) dwarvenMines.stop();
         if (crystalHollows != null) crystalHollows.stop();
         if (spidersDen != null) spidersDen.stop();
-        if (blazingFortress != null) blazingFortress.stop();
+        if (crimsonIsle != null) crimsonIsle.stop();
         if (end != null) end.stop();
         if (park != null) park.stop();
     }

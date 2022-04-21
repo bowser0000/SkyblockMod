@@ -106,7 +106,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 	public static boolean dwarvenMinesMusic;
 	public static boolean crystalHollowsMusic;
 	public static boolean spidersDenMusic;
-	public static boolean blazingFortressMusic;
+	public static boolean crimsonIsleMusic;
 	public static boolean endMusic;
 	public static boolean parkMusic;
 
@@ -576,10 +576,10 @@ public class ToggleCommand extends CommandBase implements ICommand {
 				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Custom spider's den music has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + spidersDenMusic + DankersSkyblockMod.MAIN_COLOUR + "."));
 				break;
 			case "blazingfortressmusic":
-				blazingFortressMusic = !blazingFortressMusic;
-				CustomMusic.blazingFortress.stop();
-				ConfigHandler.writeBooleanConfig("toggles", "BlazingFortressMusic", blazingFortressMusic);
-				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Custom blazing fortress music has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + blazingFortressMusic + DankersSkyblockMod.MAIN_COLOUR + "."));
+				crimsonIsleMusic = !crimsonIsleMusic;
+				CustomMusic.crimsonIsle.stop();
+				ConfigHandler.writeBooleanConfig("toggles", "CrimsonIsleMusic", crimsonIsleMusic);
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Custom crimson isle music has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + crimsonIsleMusic + DankersSkyblockMod.MAIN_COLOUR + "."));
 				break;
 			case "endmusic":
 				endMusic = !endMusic;
@@ -674,7 +674,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 															DankersSkyblockMod.TYPE_COLOUR + " Custom dwarven mines music: " + DankersSkyblockMod.VALUE_COLOUR + dwarvenMinesMusic + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Custom crystal hollows music: " + DankersSkyblockMod.VALUE_COLOUR + crystalHollowsMusic + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Custom spider's den music: " + DankersSkyblockMod.VALUE_COLOUR + spidersDenMusic + "\n" +
-															DankersSkyblockMod.TYPE_COLOUR + " Custom blazing fortress music: " + DankersSkyblockMod.VALUE_COLOUR + blazingFortressMusic + "\n" +
+															DankersSkyblockMod.TYPE_COLOUR + " Custom blazing fortress music: " + DankersSkyblockMod.VALUE_COLOUR + crimsonIsleMusic + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Custom end music: " + DankersSkyblockMod.VALUE_COLOUR + endMusic + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Custom park music: " + DankersSkyblockMod.VALUE_COLOUR + parkMusic + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Alerts: " + DankersSkyblockMod.VALUE_COLOUR + alerts + "\n" +

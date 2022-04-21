@@ -22,7 +22,7 @@ public class CustomMusicCommand extends CommandBase {
     @Override
     public String getCommandUsage(ICommandSender arg0) {
         return "/" + getCommandName() + " <stop/reload/volume> [dungeonboss/bloodroom/dungeon/hub/island/dungeonhub/farmingislands/" +
-                                                                "goldmine/deepcaverns/dwarvenmines/crystalhollows/spidersden/blazingfortress/end/park] [1-100]";
+                                                                "goldmine/deepcaverns/dwarvenmines/crystalhollows/spidersden/crimsonisle/end/park] [1-100]";
     }
 
     public static String usage(ICommandSender arg0) {
@@ -40,7 +40,7 @@ public class CustomMusicCommand extends CommandBase {
             return getListOfStringsMatchingLastWord(args, "stop", "reload", "volume");
         } else if (args.length == 2) {
             return getListOfStringsMatchingLastWord(args, "dungeonboss", "bloodroom", "dungeon", "hub", "island", "dungeonhub", "farmingislands", "goldmine",
-                                                          "deepcaverns", "dwarvenmines", "crystalhollows", "spidersden", "blazingfortress", "end", "park");
+                                                          "deepcaverns", "dwarvenmines", "crystalhollows", "spidersden", "crimsonisle", "end", "park");
         }
         return null;
     }
@@ -144,11 +144,11 @@ public class CustomMusicCommand extends CommandBase {
                         CustomMusic.spidersDenVolume = volume;
                         ConfigHandler.writeIntConfig("music", "SpidersDenVolume", volume);
                         break;
-                    case "blazingfortress":
-                        if (!CustomMusic.blazingFortress.setVolume(volume)) return;
+                    case "crimsonisle":
+                        if (!CustomMusic.crimsonIsle.setVolume(volume)) return;
 
-                        CustomMusic.blazingFortressVolume = volume;
-                        ConfigHandler.writeIntConfig("music", "BlazingFortressVolume", volume);
+                        CustomMusic.crimsonIsleVolume = volume;
+                        ConfigHandler.writeIntConfig("music", "CrimsonIsleVolume", volume);
                         break;
                     case "end":
                         if (!CustomMusic.end.setVolume(volume)) return;
