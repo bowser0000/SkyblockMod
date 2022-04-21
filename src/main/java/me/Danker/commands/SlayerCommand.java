@@ -113,15 +113,21 @@ public class SlayerCommand extends CommandBase {
 			if (slayersObject.get("enderman").getAsJsonObject().has("xp")) {
 				endermanXP = slayersObject.get("enderman").getAsJsonObject().get("xp").getAsInt();
 			}
+			// Blaze
+			int blazeXP = 0;
+			if (slayersObject.get("blaze").getAsJsonObject().has("xp")) {
+				blazeXP = slayersObject.get("blaze").getAsJsonObject().get("xp").getAsInt();
+			}
 			
 			NumberFormat nf = NumberFormat.getIntegerInstance(Locale.US);
 			player.addChatMessage(new ChatComponentText(DankersSkyblockMod.DELIMITER_COLOUR + "" + EnumChatFormatting.BOLD + "-------------------\n" +
-														EnumChatFormatting.AQUA + " " + username + "'s Total XP: " + EnumChatFormatting.GOLD + EnumChatFormatting.BOLD + nf.format(zombieXP + spiderXP + wolfXP + endermanXP) + "\n" +
+														EnumChatFormatting.AQUA + " " + username + "'s Total XP: " + EnumChatFormatting.GOLD + EnumChatFormatting.BOLD + nf.format(zombieXP + spiderXP + wolfXP + endermanXP + blazeXP) + "\n" +
 														DankersSkyblockMod.TYPE_COLOUR + " Zombie XP: " + DankersSkyblockMod.VALUE_COLOUR + EnumChatFormatting.BOLD + nf.format(zombieXP) + "\n" +
 														DankersSkyblockMod.TYPE_COLOUR + " Spider XP: " + DankersSkyblockMod.VALUE_COLOUR + EnumChatFormatting.BOLD + nf.format(spiderXP) + "\n" +
 														DankersSkyblockMod.TYPE_COLOUR + " Wolf XP: " + DankersSkyblockMod.VALUE_COLOUR + EnumChatFormatting.BOLD + nf.format(wolfXP) + "\n" +
 														DankersSkyblockMod.TYPE_COLOUR + " Enderman XP: " + DankersSkyblockMod.VALUE_COLOUR + EnumChatFormatting.BOLD + nf.format(endermanXP) + "\n" +
-														DankersSkyblockMod.DELIMITER_COLOUR + " " + EnumChatFormatting.BOLD + "-------------------"));
+														DankersSkyblockMod.TYPE_COLOUR + " Blaze XP: " + DankersSkyblockMod.VALUE_COLOUR + EnumChatFormatting.BOLD + nf.format(blazeXP) + "\n" +
+														DankersSkyblockMod.DELIMITER_COLOUR + EnumChatFormatting.BOLD + "-------------------"));
 			
 		}).start();
 	}

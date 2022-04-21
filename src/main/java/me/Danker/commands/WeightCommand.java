@@ -63,6 +63,8 @@ public class WeightCommand extends CommandBase {
     public List<String> addTabCompletionOptions(ICommandSender sender, String[] args, BlockPos pos) {
         if (args.length == 1) {
             return Utils.getMatchingPlayers(args[0]);
+        } else if (args.length == 2) {
+            return getListOfStringsMatchingLastWord(args, "lily", "farming");
         }
         return null;
     }

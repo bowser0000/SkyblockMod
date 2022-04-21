@@ -19,6 +19,7 @@ public class OnlySlayerGui extends GuiScreen {
     private GuiButton spider;
     private GuiButton wolf;
     private GuiButton enderman;
+    private GuiButton blaze;
     private GuiButton one;
     private GuiButton two;
     private GuiButton three;
@@ -60,10 +61,11 @@ public class OnlySlayerGui extends GuiScreen {
 
         goBack = new GuiButton(0, 2, height - 30, 100, 20, "Go Back");
         off = new GuiButton(0, width / 2 - 100, (int) (height * 0.3), "Off");
-        zombie = new GuiButton(0, width / 2 - 230, (int) (height * 0.4), 100, 20, "Zombie");
-        spider = new GuiButton(0, width / 2 - 110, (int) (height * 0.4), 100, 20, "Spider");
-        wolf = new GuiButton(0, width / 2 + 10, (int) (height * 0.4), 100, 20, "Wolf");
-        enderman = new GuiButton(0, width / 2 + 130, (int) (height * 0.4), 100, 20, "Enderman");
+        zombie = new GuiButton(0, width / 2 - 270, (int) (height * 0.4), 100, 20, "Zombie");
+        spider = new GuiButton(0, width / 2 - 160, (int) (height * 0.4), 100, 20, "Spider");
+        wolf = new GuiButton(0, width / 2 - 50, (int) (height * 0.4), 100, 20, "Wolf");
+        enderman = new GuiButton(0, width / 2 + 60, (int) (height * 0.4), 100, 20, "Enderman");
+        blaze = new GuiButton(0, width / 2 + 170, (int) (height * 0.4), 100, 20, "Blaze");
         one = new GuiButton(0, width / 2 - 190, (int) (height * 0.6), 60, 20, "I");
         two = new GuiButton(0, width / 2 - 110, (int) (height * 0.6), 60, 20, "II");
         three = new GuiButton(0, width / 2 - 30, (int) (height * 0.6), 60, 20, "III");
@@ -75,6 +77,7 @@ public class OnlySlayerGui extends GuiScreen {
         this.buttonList.add(spider);
         this.buttonList.add(wolf);
         this.buttonList.add(enderman);
+        this.buttonList.add(blaze);
         this.buttonList.add(one);
         this.buttonList.add(two);
         this.buttonList.add(three);
@@ -86,7 +89,6 @@ public class OnlySlayerGui extends GuiScreen {
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
         this.drawDefaultBackground();
-        Minecraft mc = Minecraft.getMinecraft();
 
         String displayText;
         if (BlockWrongSlayer.onlySlayerName.equals("")) {
@@ -117,6 +119,8 @@ public class OnlySlayerGui extends GuiScreen {
             onlyName = "Sven Packmaster";
         } else if (button == enderman) {
             onlyName = "Voidgloom Seraph";
+        } else if (button == blaze) {
+            onlyName = "Inferno Demonlord";
         } else if (button == one) {
             onlyNumberInt = 1;
         } else if (button == two) {

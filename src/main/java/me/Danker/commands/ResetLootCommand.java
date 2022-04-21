@@ -25,7 +25,7 @@ public class ResetLootCommand extends CommandBase {
 
 	@Override
 	public String getCommandUsage(ICommandSender arg0) {
-		return "/" + getCommandName() + "<zombie/spider/wolf/enderman/fishing/mythological/catacombs/confirm/cancel>";
+		return "/" + getCommandName() + "<zombie/spider/wolf/enderman/blaze/fishing/mythological/catacombs/confirm/cancel>";
 	}
 
 	public static String usage(ICommandSender arg0) {
@@ -44,7 +44,7 @@ public class ResetLootCommand extends CommandBase {
 		if (confirmReset) {
 			return getListOfStringsMatchingLastWord(args, "confirm", "cancel");
 		} else {
-			return getListOfStringsMatchingLastWord(args, "zombie", "spider", "wolf", "enderman", "fishing", "mythological", "catacombs");
+			return getListOfStringsMatchingLastWord(args, "zombie", "spider", "wolf", "enderman", "blaze", "fishing", "mythological", "catacombs");
 		}
 	}
 	
@@ -53,7 +53,7 @@ public class ResetLootCommand extends CommandBase {
 		final EntityPlayer player = (EntityPlayer) arg0;
 		
 		if (arg1.length == 0) {
-			player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Usage: /resetloot <zombie/spider/wolf/fishing/mythological/catacombs>"));
+			player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Usage: /resetloot <zombie/spider/wolf/enderman/blaze/fishing/mythological/catacombs>"));
 			return;
 		}
 		
@@ -74,6 +74,9 @@ public class ResetLootCommand extends CommandBase {
 							break;
 						case "enderman":
 							resetEnderman();
+							break;
+						case "blaze":
+							resetBlaze();
 							break;
 						case "fishing":
 							resetFishing();
@@ -102,6 +105,7 @@ public class ResetLootCommand extends CommandBase {
 				case "spider":
 				case "wolf":
 				case "enderman":
+				case "blaze":
 				case "fishing":
 				case "mythological":
 				case "catacombs":
@@ -199,6 +203,35 @@ public class ResetLootCommand extends CommandBase {
 		EndermanTracker.endermanTimeSession = -1;
 		EndermanTracker.endermanBossesSession = -1;
 		ConfigHandler.deleteCategory("enderman");
+		ConfigHandler.reloadConfig();
+	}
+
+	static void resetBlaze() {
+		BlazeTracker.demonlordsSession = 0;
+		BlazeTracker.derelictAshesSession = 0;
+		BlazeTracker.lavatearRunesSession = 0;
+		BlazeTracker.splashPotionsSession = 0;
+		BlazeTracker.magmaArrowsSession = 0;
+		BlazeTracker.manaDisintegratorsSession = 0;
+		BlazeTracker.scorchedBooksSession = 0;
+		BlazeTracker.kelvinInvertersSession = 0;
+		BlazeTracker.blazeRodDistillatesSession = 0;
+		BlazeTracker.glowstoneDistillatesSession = 0;
+		BlazeTracker.magmaCreamDistillatesSession = 0;
+		BlazeTracker.netherWartDistillatesSession = 0;
+		BlazeTracker.gabagoolDistillatesSession = 0;
+		BlazeTracker.scorchedPowerCrystalsSession = 0;
+		BlazeTracker.fireAspectBooksSession = 0;
+		BlazeTracker.fieryBurstRunesSession = 0;
+		BlazeTracker.opalGemsSession = 0;
+		BlazeTracker.archfiendDiceSession = 0;
+		BlazeTracker.duplexBooksSession = 0;
+		BlazeTracker.highClassArchfiendDiceSession = 0;
+		BlazeTracker.engineeringPlansSession = 0;
+		BlazeTracker.subzeroInvertersSession = 0;
+		BlazeTracker.timeSession = 0;
+		BlazeTracker.bossesSession = 0;
+		ConfigHandler.deleteCategory("blaze");
 		ConfigHandler.reloadConfig();
 	}
 	

@@ -20,6 +20,7 @@ public class DisplayGui extends GuiScreen {
 	private GuiButton spider;
 	private GuiButton wolf;
 	private GuiButton enderman;
+	private GuiButton blaze;
 	private GuiButton auto;
 	private GuiButton fishing;
 	private GuiButton fishingWinter;
@@ -54,10 +55,11 @@ public class DisplayGui extends GuiScreen {
 		showSession = new GuiButton(0, width / 2 - 100, (int) (height * 0.1), "Current Session Only: " + Utils.getColouredBoolean(addSession));
 		off = new GuiButton(0, width / 2 - 210, (int) (height * 0.2), "Off");
 		auto = new GuiButton(0, width / 2 + 10, (int) (height * 0.2), "Auto");
-		zombie = new GuiButton(0, width / 2 - 230, (int) (height * 0.35), 100, 20, "Zombie");
-		spider = new GuiButton(0, width / 2 - 110, (int) (height * 0.35), 100, 20, "Spider");
-		wolf = new GuiButton(0, width / 2 + 10, (int) (height * 0.35), 100, 20, "Wolf");
-		enderman = new GuiButton(0, width / 2 + 130, (int) (height * 0.35), 100, 20, "Enderman");
+		zombie = new GuiButton(0, width / 2 - 270, (int) (height * 0.35), 100, 20, "Zombie");
+		spider = new GuiButton(0, width / 2 - 160, (int) (height * 0.35), 100, 20, "Spider");
+		wolf = new GuiButton(0, width / 2 - 50, (int) (height * 0.35), 100, 20, "Wolf");
+		enderman = new GuiButton(0, width / 2 + 60, (int) (height * 0.35), 100, 20, "Enderman");
+		blaze = new GuiButton(0, width / 2 + 170, (int) (height * 0.35), 100, 20, "Blaze");
 		fishing = new GuiButton(0, width / 2 - 270, (int) (height * 0.5), 100, 20, "Fishing");
 		fishingWinter = new GuiButton(0, width / 2 - 160, (int) (height * 0.5), 100, 20, "Fishing Winter");
 		fishingFestival = new GuiButton(0, width / 2 - 50, (int) (height * 0.5), 100, 20, "Fishing Festival");
@@ -81,6 +83,7 @@ public class DisplayGui extends GuiScreen {
 		this.buttonList.add(spider);
 		this.buttonList.add(wolf);
 		this.buttonList.add(enderman);
+		this.buttonList.add(blaze);
 		this.buttonList.add(fishing);
 		this.buttonList.add(fishingWinter);
 		this.buttonList.add(fishingFestival);
@@ -130,6 +133,8 @@ public class DisplayGui extends GuiScreen {
 			setDisplay("wolf");
 		} else if (button == enderman) {
 			setDisplay("enderman");
+		} else if (button == blaze) {
+			setDisplay("blaze");
 		} else if (button == auto) {
 			LootDisplay.auto = true;
 			ConfigHandler.writeBooleanConfig("misc", "autoDisplay", true);

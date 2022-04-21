@@ -31,23 +31,27 @@ public class LootTracker {
                     int itemWebs = Utils.getItems("Tarantula Web");
                     int itemRev = Utils.getItems("Revenant Flesh");
                     int itemNullSphere = Utils.getItems("Null Sphere");
+                    int itemDerelictAshe = Utils.getItems("Derelict Ashe");
 
                     // If no items, are detected, allow check again. Should fix items not being found
-                    if (itemTeeth + itemWebs + itemRev + itemNullSphere > 0) {
+                    if (itemTeeth + itemWebs + itemRev + itemNullSphere + itemDerelictAshe > 0) {
                         itemsChecked = System.currentTimeMillis() / 1000;
                         WolfTracker.wolfTeeth += itemTeeth;
                         SpiderTracker.spiderWebs += itemWebs;
                         ZombieTracker.zombieRevFlesh += itemRev;
                         EndermanTracker.endermanNullSpheres += itemNullSphere;
+                        BlazeTracker.derelictAshes += itemDerelictAshe;
                         WolfTracker.wolfTeethSession += itemTeeth;
                         SpiderTracker.spiderWebsSession += itemWebs;
                         ZombieTracker.zombieRevFleshSession += itemRev;
                         EndermanTracker.endermanNullSpheresSession += itemNullSphere;
+                        BlazeTracker.derelictAshesSession += itemDerelictAshe;
 
                         ConfigHandler.writeIntConfig("wolf", "teeth", WolfTracker.wolfTeeth);
                         ConfigHandler.writeIntConfig("spider", "web", SpiderTracker.spiderWebs);
                         ConfigHandler.writeIntConfig("zombie", "revFlesh", ZombieTracker.zombieRevFlesh);
                         ConfigHandler.writeIntConfig("enderman", "nullSpheres", EndermanTracker.endermanNullSpheres);
+                        ConfigHandler.writeIntConfig("blaze", "derelictAshe", BlazeTracker.derelictAshes);
                     }
                 }
             }

@@ -21,7 +21,7 @@ public class DisplayCommand extends CommandBase {
 
 	@Override
 	public String getCommandUsage(ICommandSender arg0) {
-		return "/" + getCommandName() + " <zombie/spider/wolf/enderman/fishing/catacombs/mythological/ghost/auto/off> [winter/festival/spooky/ch/session/f(1-7)/mm]";
+		return "/" + getCommandName() + " <zombie/spider/wolf/enderman/blaze/fishing/catacombs/mythological/ghost/auto/off> [winter/festival/spooky/ch/session/f(1-7)/mm]";
 	}
 
 	public static String usage(ICommandSender arg0) {
@@ -36,7 +36,7 @@ public class DisplayCommand extends CommandBase {
 	@Override
 	public List<String> addTabCompletionOptions(ICommandSender sender, String[] args, BlockPos pos) {
 		if (args.length == 1) {
-			return getListOfStringsMatchingLastWord(args, "wolf", "spider", "zombie", "enderman", "fishing", "catacombs", "mythological", "ghost", "auto", "off");
+			return getListOfStringsMatchingLastWord(args, "wolf", "spider", "zombie", "enderman", "blaze", "fishing", "catacombs", "mythological", "ghost", "auto", "off");
 		} else if (args.length == 2 && args[0].equalsIgnoreCase("fishing")) {
 			return getListOfStringsMatchingLastWord(args, "winter", "festival", "spooky", "ch", "session");
 		} else if (args.length == 2 && args[0].equalsIgnoreCase("catacombs")) {
@@ -87,6 +87,13 @@ public class DisplayCommand extends CommandBase {
 				LootDisplay.display = "enderman_session";
 			} else {
 				LootDisplay.display = "enderman";
+			}
+			break;
+		case "blaze":
+			if (showSession) {
+				LootDisplay.display = "blaze_session";
+			} else {
+				LootDisplay.display = "blaze";
 			}
 			break;
 		case "fishing":
@@ -213,7 +220,7 @@ public class DisplayCommand extends CommandBase {
 						LootDisplay.display = "catacombs_master";
 					}
 				default:
-					player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Usage: /display catacombs <f1/f2/f3/f4/f5/f6/f7>"));
+					player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Usage: /display catacombs <f1/f2/f3/f4/f5/f6/f7/mm>"));
 					return;
 			}
 			break;

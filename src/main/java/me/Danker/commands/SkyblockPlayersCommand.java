@@ -70,15 +70,14 @@ public class SkyblockPlayersCommand extends CommandBase {
 			int skyblockTotalPlayers = 0; // players
 			int privateIsland = 0; // dynamic
 			int hub = 0; // hub
-			int barn = 0; // farming_1
-			int mushroomDesert = 0; // farming_2
+			int farmingIslands = 0; // farming_1
 			int park = 0; // foraging_1
 			int goldMine = 0; // mining_1
 			int deepCaverns = 0; // mining_2
 			int dwarvenMines = 0; // mining_3
 			int crystalHollows = 0; // crystal_hollows
 			int spidersDen = 0; // combat_1
-			int blazingFortress = 0; // combat_2
+			int crimsonIsle = 0; // crimson_isle
 			int end = 0; // combat_3
 			int dungeonsHub = 0; // dungeon_hub
 			int dungeons = 0; // dungeon
@@ -94,10 +93,7 @@ public class SkyblockPlayersCommand extends CommandBase {
 					hub = skyblockPlayers.get("hub").getAsInt();
 				}
 				if (skyblockPlayers.has("farming_1")) {
-					barn = skyblockPlayers.get("farming_1").getAsInt();
-				}
-				if (skyblockPlayers.has("farming_2")) {
-					mushroomDesert = skyblockPlayers.get("farming_2").getAsInt();
+					farmingIslands = skyblockPlayers.get("farming_1").getAsInt();
 				}
 				if (skyblockPlayers.has("foraging_1")) {
 					park = skyblockPlayers.get("foraging_1").getAsInt();
@@ -117,8 +113,8 @@ public class SkyblockPlayersCommand extends CommandBase {
 				if (skyblockPlayers.has("combat_1")) {
 					spidersDen = skyblockPlayers.get("combat_1").getAsInt();
 				}
-				if (skyblockPlayers.has("combat_2")) {
-					blazingFortress = skyblockPlayers.get("combat_2").getAsInt();
+				if (skyblockPlayers.has("crimson_isle")) {
+					crimsonIsle = skyblockPlayers.get("crimson_isle").getAsInt();
 				}
 				if (skyblockPlayers.has("combat_3")) {
 					end = skyblockPlayers.get("combat_3").getAsInt();
@@ -143,15 +139,14 @@ public class SkyblockPlayersCommand extends CommandBase {
 														DankersSkyblockMod.TYPE_COLOUR + " Skyblock: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(skyblockTotalPlayers) + " / " + Utils.getPercentage(skyblockTotalPlayers, totalPlayers) + "%\n" +
 														DankersSkyblockMod.TYPE_COLOUR + " Private Island: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(privateIsland) + " / " + Utils.getPercentage(privateIsland, skyblockTotalPlayers) + "%\n" +
 														DankersSkyblockMod.TYPE_COLOUR + " Hub: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(hub) + " / " + Utils.getPercentage(hub, skyblockTotalPlayers) + "%\n" +
-														DankersSkyblockMod.TYPE_COLOUR + " Barn: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(barn) + " / " + Utils.getPercentage(barn, skyblockTotalPlayers) + "%\n" +
-														DankersSkyblockMod.TYPE_COLOUR + " Mushroom Desert: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(mushroomDesert) + " / " + Utils.getPercentage(mushroomDesert, skyblockTotalPlayers) + "%\n" +
+														DankersSkyblockMod.TYPE_COLOUR + " Farming Islands: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(farmingIslands) + " / " + Utils.getPercentage(farmingIslands, skyblockTotalPlayers) + "%\n" +
 														DankersSkyblockMod.TYPE_COLOUR + " Park: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(park) + " / " + Utils.getPercentage(park, skyblockTotalPlayers) + "%\n" +
 														DankersSkyblockMod.TYPE_COLOUR + " Gold Mine: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(goldMine) + " / " + Utils.getPercentage(goldMine, skyblockTotalPlayers) + "%\n" +
 														DankersSkyblockMod.TYPE_COLOUR + " Deep Caverns: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(deepCaverns) + " / " + Utils.getPercentage(deepCaverns, skyblockTotalPlayers) + "%\n" +
 														DankersSkyblockMod.TYPE_COLOUR + " Dwarven Mines: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(dwarvenMines) + " / " + Utils.getPercentage(dwarvenMines, skyblockTotalPlayers) + "%\n" +
 														DankersSkyblockMod.TYPE_COLOUR + " Crystal Hollows: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(crystalHollows) + " / " + Utils.getPercentage(crystalHollows, skyblockTotalPlayers) + "%\n" +
 														DankersSkyblockMod.TYPE_COLOUR + " Spider's Den: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(spidersDen) + " / " + Utils.getPercentage(spidersDen, skyblockTotalPlayers) + "%\n" +
-														DankersSkyblockMod.TYPE_COLOUR + " Blazing Fortress: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(blazingFortress) + " / " + Utils.getPercentage(blazingFortress, skyblockTotalPlayers) + "%\n" +
+														DankersSkyblockMod.TYPE_COLOUR + " Crimson Isle: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(crimsonIsle) + " / " + Utils.getPercentage(crimsonIsle, skyblockTotalPlayers) + "%\n" +
 														DankersSkyblockMod.TYPE_COLOUR + " The End: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(end) + " / " + Utils.getPercentage(end, skyblockTotalPlayers) + "%\n" +
 														DankersSkyblockMod.TYPE_COLOUR + " Dungeons Hub: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(dungeonsHub) + " / " + Utils.getPercentage(dungeonsHub, skyblockTotalPlayers) + "%\n" +
 														DankersSkyblockMod.TYPE_COLOUR + " Dungeons: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(dungeons) + " / " + Utils.getPercentage(dungeons, skyblockTotalPlayers) + "%\n" +

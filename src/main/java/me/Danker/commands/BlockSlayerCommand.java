@@ -21,7 +21,7 @@ public class BlockSlayerCommand extends CommandBase {
 
     @Override
     public String getCommandUsage(ICommandSender arg0) {
-        return "/" + getCommandName() + " <zombie/spider/wolf/enderman> <1/2/3/4/5>";
+        return "/" + getCommandName() + " <zombie/spider/wolf/enderman/blaze> <1/2/3/4/5>";
     }
 
     public static String usage(ICommandSender arg0) {
@@ -36,7 +36,7 @@ public class BlockSlayerCommand extends CommandBase {
     @Override
     public List<String> addTabCompletionOptions(ICommandSender sender, String[] args, BlockPos pos) {
         if (args.length == 1) {
-            return getListOfStringsMatchingLastWord(args, "zombie", "spider", "wolf", "enderman");
+            return getListOfStringsMatchingLastWord(args, "zombie", "spider", "wolf", "enderman", "blaze");
         } else if (args.length == 2) {
             return getListOfStringsMatchingLastWord(args, "1", "2", "3", "4", "5");
         }
@@ -61,6 +61,12 @@ public class BlockSlayerCommand extends CommandBase {
                 break;
             case "wolf":
                 BlockWrongSlayer.onlySlayerName = "Sven Packmaster";
+                break;
+            case "enderman":
+                BlockWrongSlayer.onlySlayerName = "Voidgloom Seraph";
+                break;
+            case "blaze":
+                BlockWrongSlayer.onlySlayerName = "Inferno Demonlord";
                 break;
             case "off":
                 BlockWrongSlayer.onlySlayerName = "";

@@ -384,7 +384,32 @@ public class ConfigHandler {
 		EndermanTracker.endermanEnderBooks = initInt("enderman", "enderBooks", 0);
 		EndermanTracker.endermanTime = initDouble("enderman", "timeRNG", -1);
 		EndermanTracker.endermanBosses = initInt("enderman", "bossRNG", -1);
-		
+		// Blaze
+		BlazeTracker.demonlords = initInt("blaze", "demonlords", 0);
+		BlazeTracker.derelictAshes = initInt("blaze", "derelictAshes", 0);
+		BlazeTracker.lavatearRunes = initInt("blaze", "lavatearRunes", 0);
+		BlazeTracker.splashPotions = initInt("blaze", "splashPotions", 0);
+		BlazeTracker.magmaArrows = initInt("blaze", "magmaArrows", 0);
+		BlazeTracker.manaDisintegrators = initInt("blaze", "manaDisintegrators", 0);
+		BlazeTracker.scorchedBooks = initInt("blaze", "scorchedBooks", 0);
+		BlazeTracker.kelvinInverters = initInt("blaze", "kelvinInverters", 0);
+		BlazeTracker.blazeRodDistillates = initInt("blaze", "blazeRodDistillates", 0);
+		BlazeTracker.glowstoneDistillates = initInt("blaze", "glowstoneDistillates", 0);
+		BlazeTracker.magmaCreamDistillates = initInt("blaze", "magmaCreamDistillates", 0);
+		BlazeTracker.netherWartDistillates = initInt("blaze", "netherWartDistillates", 0);
+		BlazeTracker.gabagoolDistillates = initInt("blaze", "gabagoolDistillates", 0);
+		BlazeTracker.scorchedPowerCrystals = initInt("blaze", "scorchedPowerCrystals", 0);
+		BlazeTracker.fireAspectBooks = initInt("blaze", "fireAspectBooks", 0);
+		BlazeTracker.fieryBurstRunes = initInt("blaze", "fieryBurstRunes", 0);
+		BlazeTracker.opalGems = initInt("blaze", "opalGems", 0);
+		BlazeTracker.archfiendDice = initInt("blaze", "archfiendDice", 0);
+		BlazeTracker.duplexBooks = initInt("blaze", "duplexBooks", 0);
+		BlazeTracker.highClassArchfiendDice = initInt("blaze", "highClassArchfiendDice", 0);
+		BlazeTracker.engineeringPlans = initInt("blaze", "engineeringPlans", 0);
+		BlazeTracker.subzeroInverters = initInt("blaze", "subzeroInverters", 0);
+		BlazeTracker.time = initDouble("blaze", "timeRNG", -1);
+		BlazeTracker.bossesSession = initInt("blaze", "bossRNG", -1);
+
 		// Fishing
 		FishingTracker.seaCreatures = initInt("fishing", "seaCreature", 0);
 		FishingTracker.goodCatches = initInt("fishing", "goodCatch", 0);

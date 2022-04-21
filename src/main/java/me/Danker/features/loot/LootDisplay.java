@@ -416,6 +416,128 @@ public class LootDisplay {
                             EnumChatFormatting.AQUA + timeBetween + "\n" +
                             EnumChatFormatting.AQUA + bossesBetween;
                     break;
+                case "blaze":
+                    if (BlazeTracker.time == -1) {
+                        timeBetween = "Never";
+                    } else {
+                        timeBetween = Utils.getTimeBetween(BlazeTracker.time, timeNow);
+                    }
+                    if (BlazeTracker.bosses == -1) {
+                        bossesBetween = "Never";
+                    } else {
+                        bossesBetween = nf.format(BlazeTracker.bosses);
+                    }
+
+                    dropsText = EnumChatFormatting.GOLD + "Demonlords Killed:\n" +
+                            EnumChatFormatting.GRAY + "Derelict Ashes:\n" +
+                            EnumChatFormatting.RED + "Lavatear Runes:\n" +
+                            EnumChatFormatting.AQUA + "Splash Potions:\n" +
+                            EnumChatFormatting.DARK_RED + "Magma Arrows:\n" +
+                            EnumChatFormatting.DARK_AQUA + "Mana Disintegrators:\n" +
+                            EnumChatFormatting.LIGHT_PURPLE + "Scorched Books:\n" +
+                            EnumChatFormatting.WHITE + "Kelvin Inverters:\n" +
+                            EnumChatFormatting.BLUE + "Blaze Rod Distillates:\n" +
+                            EnumChatFormatting.BLUE + "Glowstone Distillates:\n" +
+                            EnumChatFormatting.BLUE + "Magma Cream Distillates:\n" +
+                            EnumChatFormatting.BLUE + "Nether Wart Distillates:\n" +
+                            EnumChatFormatting.BLUE + "Gabagool Distillates:\n" +
+                            EnumChatFormatting.RED + "Scorched Power Crystals:\n" +
+                            EnumChatFormatting.RED + "Fire Aspect Books:\n" +
+                            EnumChatFormatting.GOLD + "Fiery Burst Runes:\n" +
+                            EnumChatFormatting.WHITE + "Opal Gems:\n" +
+                            EnumChatFormatting.RED + "Archfiend Dice:\n" +
+                            EnumChatFormatting.LIGHT_PURPLE + "Duplex Books:\n" +
+                            EnumChatFormatting.GOLD + "High Class Archfiend Dice:\n" +
+                            EnumChatFormatting.GOLD + "Engineering Plans:\n" +
+                            EnumChatFormatting.GOLD + "Subzero Inverters:\n" +
+                            EnumChatFormatting.AQUA + "Time Since RNG:\n" +
+                            EnumChatFormatting.AQUA + "Bosses Since RNG:";
+                    countText = EnumChatFormatting.GOLD + nf.format(BlazeTracker.demonlords) + "\n" +
+                            EnumChatFormatting.GRAY + nf.format(BlazeTracker.derelictAshes) + "\n" +
+                            EnumChatFormatting.RED + nf.format(BlazeTracker.lavatearRunes) + "\n" +
+                            EnumChatFormatting.AQUA + nf.format(BlazeTracker.splashPotions) + "\n" +
+                            EnumChatFormatting.DARK_RED + nf.format(BlazeTracker.magmaArrows) + "\n" +
+                            EnumChatFormatting.DARK_AQUA + nf.format(BlazeTracker.manaDisintegrators) + "\n" +
+                            EnumChatFormatting.LIGHT_PURPLE + nf.format(BlazeTracker.scorchedBooks) + "\n" +
+                            EnumChatFormatting.WHITE + nf.format(BlazeTracker.kelvinInverters) + "\n" +
+                            EnumChatFormatting.BLUE + nf.format(BlazeTracker.blazeRodDistillates) + "\n" +
+                            EnumChatFormatting.BLUE + nf.format(BlazeTracker.glowstoneDistillates) + "\n" +
+                            EnumChatFormatting.BLUE + nf.format(BlazeTracker.magmaCreamDistillates) + "\n" +
+                            EnumChatFormatting.BLUE + nf.format(BlazeTracker.netherWartDistillates) + "\n" +
+                            EnumChatFormatting.BLUE + nf.format(BlazeTracker.gabagoolDistillates) + "\n" +
+                            EnumChatFormatting.RED + nf.format(BlazeTracker.scorchedPowerCrystals) + "\n" +
+                            EnumChatFormatting.RED + nf.format(BlazeTracker.fireAspectBooks) + "\n" +
+                            EnumChatFormatting.GOLD + nf.format(BlazeTracker.fieryBurstRunes) + "\n" +
+                            EnumChatFormatting.WHITE + nf.format(BlazeTracker.opalGems) + "\n" +
+                            EnumChatFormatting.RED + nf.format(BlazeTracker.archfiendDice) + "\n" +
+                            EnumChatFormatting.LIGHT_PURPLE + nf.format(BlazeTracker.duplexBooks) + "\n" +
+                            EnumChatFormatting.GOLD + nf.format(BlazeTracker.highClassArchfiendDice) + "\n" +
+                            EnumChatFormatting.GOLD + nf.format(BlazeTracker.engineeringPlans) + "\n" +
+                            EnumChatFormatting.GOLD + nf.format(BlazeTracker.subzeroInverters) + "\n" +
+                            EnumChatFormatting.AQUA + timeBetween + "\n" +
+                            EnumChatFormatting.AQUA + bossesBetween;
+                    break;
+                case "blaze_session":
+                    if (BlazeTracker.timeSession == -1) {
+                        timeBetween = "Never";
+                    } else {
+                        timeBetween = Utils.getTimeBetween(BlazeTracker.timeSession, timeNow);
+                    }
+                    if (BlazeTracker.bossesSession == -1) {
+                        bossesBetween = "Never";
+                    } else {
+                        bossesBetween = nf.format(BlazeTracker.bossesSession);
+                    }
+
+                    dropsText = EnumChatFormatting.GOLD + "Demonlords Killed:\n" +
+                            EnumChatFormatting.GRAY + "Derelict Ashes:\n" +
+                            EnumChatFormatting.RED + "Lavatear Runes:\n" +
+                            EnumChatFormatting.AQUA + "Splash Potions:\n" +
+                            EnumChatFormatting.DARK_RED + "Magma Arrows:\n" +
+                            EnumChatFormatting.DARK_AQUA + "Mana Disintegrators:\n" +
+                            EnumChatFormatting.LIGHT_PURPLE + "Scorched Books:\n" +
+                            EnumChatFormatting.WHITE + "Kelvin Inverters:\n" +
+                            EnumChatFormatting.BLUE + "Blaze Rod Distillates:\n" +
+                            EnumChatFormatting.BLUE + "Glowstone Distillates:\n" +
+                            EnumChatFormatting.BLUE + "Magma Cream Distillates:\n" +
+                            EnumChatFormatting.BLUE + "Nether Wart Distillates:\n" +
+                            EnumChatFormatting.BLUE + "Gabagool Distillates:\n" +
+                            EnumChatFormatting.RED + "Scorched Power Crystals:\n" +
+                            EnumChatFormatting.RED + "Fire Aspect Books:\n" +
+                            EnumChatFormatting.GOLD + "Fiery Burst Runes:\n" +
+                            EnumChatFormatting.WHITE + "Opal Gems:\n" +
+                            EnumChatFormatting.RED + "Archfiend Dice:\n" +
+                            EnumChatFormatting.LIGHT_PURPLE + "Duplex Books:\n" +
+                            EnumChatFormatting.GOLD + "High Class Archfiend Dice:\n" +
+                            EnumChatFormatting.GOLD + "Engineering Plans:\n" +
+                            EnumChatFormatting.GOLD + "Subzero Inverters:\n" +
+                            EnumChatFormatting.AQUA + "Time Since RNG:\n" +
+                            EnumChatFormatting.AQUA + "Bosses Since RNG:";
+                    countText = EnumChatFormatting.GOLD + nf.format(BlazeTracker.demonlordsSession) + "\n" +
+                            EnumChatFormatting.GRAY + nf.format(BlazeTracker.derelictAshesSession) + "\n" +
+                            EnumChatFormatting.RED + nf.format(BlazeTracker.lavatearRunesSession) + "\n" +
+                            EnumChatFormatting.AQUA + nf.format(BlazeTracker.splashPotionsSession) + "\n" +
+                            EnumChatFormatting.DARK_RED + nf.format(BlazeTracker.magmaArrowsSession) + "\n" +
+                            EnumChatFormatting.DARK_AQUA + nf.format(BlazeTracker.manaDisintegratorsSession) + "\n" +
+                            EnumChatFormatting.LIGHT_PURPLE + nf.format(BlazeTracker.scorchedBooksSession) + "\n" +
+                            EnumChatFormatting.WHITE + nf.format(BlazeTracker.kelvinInvertersSession) + "\n" +
+                            EnumChatFormatting.BLUE + nf.format(BlazeTracker.blazeRodDistillatesSession) + "\n" +
+                            EnumChatFormatting.BLUE + nf.format(BlazeTracker.glowstoneDistillatesSession) + "\n" +
+                            EnumChatFormatting.BLUE + nf.format(BlazeTracker.magmaCreamDistillatesSession) + "\n" +
+                            EnumChatFormatting.BLUE + nf.format(BlazeTracker.netherWartDistillatesSession) + "\n" +
+                            EnumChatFormatting.BLUE + nf.format(BlazeTracker.gabagoolDistillatesSession) + "\n" +
+                            EnumChatFormatting.RED + nf.format(BlazeTracker.scorchedPowerCrystalsSession) + "\n" +
+                            EnumChatFormatting.RED + nf.format(BlazeTracker.fireAspectBooksSession) + "\n" +
+                            EnumChatFormatting.GOLD + nf.format(BlazeTracker.fieryBurstRunesSession) + "\n" +
+                            EnumChatFormatting.WHITE + nf.format(BlazeTracker.opalGemsSession) + "\n" +
+                            EnumChatFormatting.RED + nf.format(BlazeTracker.archfiendDiceSession) + "\n" +
+                            EnumChatFormatting.LIGHT_PURPLE + nf.format(BlazeTracker.duplexBooksSession) + "\n" +
+                            EnumChatFormatting.GOLD + nf.format(BlazeTracker.highClassArchfiendDiceSession) + "\n" +
+                            EnumChatFormatting.GOLD + nf.format(BlazeTracker.engineeringPlansSession) + "\n" +
+                            EnumChatFormatting.GOLD + nf.format(BlazeTracker.subzeroInvertersSession) + "\n" +
+                            EnumChatFormatting.AQUA + timeBetween + "\n" +
+                            EnumChatFormatting.AQUA + bossesBetween;
+                    break;
                 case "fishing":
                     if (FishingTracker.empTime == -1) {
                         timeBetween = "Never";

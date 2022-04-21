@@ -42,6 +42,9 @@ public class AutoDisplay {
                     } else if (sCleaned.contains("Voidgloom Seraph")) {
                         LootDisplay.display = "enderman";
                         found = true;
+                    } else if (sCleaned.contains("Inferno Demonlord")) {
+                        LootDisplay.display = "blaze";
+                        found = true;
                     } else if (sCleaned.contains("The Mist")){
                         LootDisplay.display = "ghost";
                         found = true;

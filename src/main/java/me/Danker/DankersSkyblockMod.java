@@ -166,6 +166,7 @@ public class DankersSkyblockMod {
 
         MinecraftForge.EVENT_BUS.register(new LootDisplay());
         MinecraftForge.EVENT_BUS.register(new LootTracker());
+        MinecraftForge.EVENT_BUS.register(new BlazeTracker());
         MinecraftForge.EVENT_BUS.register(new CatacombsTracker());
         MinecraftForge.EVENT_BUS.register(new EndermanTracker());
         MinecraftForge.EVENT_BUS.register(new FishingTracker());
