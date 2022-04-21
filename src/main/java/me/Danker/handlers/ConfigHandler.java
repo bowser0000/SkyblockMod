@@ -408,7 +408,7 @@ public class ConfigHandler {
 		BlazeTracker.engineeringPlans = initInt("blaze", "engineeringPlans", 0);
 		BlazeTracker.subzeroInverters = initInt("blaze", "subzeroInverters", 0);
 		BlazeTracker.time = initDouble("blaze", "timeRNG", -1);
-		BlazeTracker.bossesSession = initInt("blaze", "bossRNG", -1);
+		BlazeTracker.bosses = initInt("blaze", "bossRNG", -1);
 
 		// Fishing
 		FishingTracker.seaCreatures = initInt("fishing", "seaCreature", 0);

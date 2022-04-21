@@ -438,16 +438,16 @@ public class LootDisplay {
                             EnumChatFormatting.WHITE + "Kelvin Inverters:\n" +
                             EnumChatFormatting.BLUE + "Blaze Rod Distillates:\n" +
                             EnumChatFormatting.BLUE + "Glowstone Distillates:\n" +
-                            EnumChatFormatting.BLUE + "Magma Cream Distillates:\n" +
-                            EnumChatFormatting.BLUE + "Nether Wart Distillates:\n" +
+                            EnumChatFormatting.BLUE + "Magma Distillates:\n" +
+                            EnumChatFormatting.BLUE + "Wart Distillates:\n" +
                             EnumChatFormatting.BLUE + "Gabagool Distillates:\n" +
-                            EnumChatFormatting.RED + "Scorched Power Crystals:\n" +
+                            EnumChatFormatting.RED + "Power Crystals:\n" +
                             EnumChatFormatting.RED + "Fire Aspect Books:\n" +
                             EnumChatFormatting.GOLD + "Fiery Burst Runes:\n" +
                             EnumChatFormatting.WHITE + "Opal Gems:\n" +
                             EnumChatFormatting.RED + "Archfiend Dice:\n" +
                             EnumChatFormatting.LIGHT_PURPLE + "Duplex Books:\n" +
-                            EnumChatFormatting.GOLD + "High Class Archfiend Dice:\n" +
+                            EnumChatFormatting.GOLD + "High Class Dice:\n" +
                             EnumChatFormatting.GOLD + "Engineering Plans:\n" +
                             EnumChatFormatting.GOLD + "Subzero Inverters:\n" +
                             EnumChatFormatting.AQUA + "Time Since RNG:\n" +
@@ -499,16 +499,16 @@ public class LootDisplay {
                             EnumChatFormatting.WHITE + "Kelvin Inverters:\n" +
                             EnumChatFormatting.BLUE + "Blaze Rod Distillates:\n" +
                             EnumChatFormatting.BLUE + "Glowstone Distillates:\n" +
-                            EnumChatFormatting.BLUE + "Magma Cream Distillates:\n" +
-                            EnumChatFormatting.BLUE + "Nether Wart Distillates:\n" +
+                            EnumChatFormatting.BLUE + "Magma Distillates:\n" +
+                            EnumChatFormatting.BLUE + "Wart Distillates:\n" +
                             EnumChatFormatting.BLUE + "Gabagool Distillates:\n" +
-                            EnumChatFormatting.RED + "Scorched Power Crystals:\n" +
+                            EnumChatFormatting.RED + "Power Crystals:\n" +
                             EnumChatFormatting.RED + "Fire Aspect Books:\n" +
                             EnumChatFormatting.GOLD + "Fiery Burst Runes:\n" +
                             EnumChatFormatting.WHITE + "Opal Gems:\n" +
                             EnumChatFormatting.RED + "Archfiend Dice:\n" +
                             EnumChatFormatting.LIGHT_PURPLE + "Duplex Books:\n" +
-                            EnumChatFormatting.GOLD + "High Class Archfiend Dice:\n" +
+                            EnumChatFormatting.GOLD + "High Class Dice:\n" +
                             EnumChatFormatting.GOLD + "Engineering Plans:\n" +
                             EnumChatFormatting.GOLD + "Subzero Inverters:\n" +
                             EnumChatFormatting.AQUA + "Time Since RNG:\n" +
