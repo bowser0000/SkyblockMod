@@ -60,7 +60,7 @@ public class CustomMusic {
                         firstLine.contains("30,344") || // F4
                         firstLine.contains("livid") || // F5
                         firstLine.contains("sadan") || // F6
-                        firstLine.contains("necron")) { // F7
+                        firstLine.contains("maxor")) { // F7
 
                         inDungeonBossRoom = true;
                         if (!prevInDungeonBossRoom) {
