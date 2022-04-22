@@ -2,7 +2,7 @@ package me.Danker;
 
 import com.google.gson.JsonObject;
 import me.Danker.commands.*;
-import me.Danker.commands.warp.*;
+import me.Danker.commands.warp.WarpCommandHandler;
 import me.Danker.events.ChestSlotClickedEvent;
 import me.Danker.events.GuiChestBackgroundDrawnEvent;
 import me.Danker.events.RenderOverlayEvent;
@@ -79,6 +79,7 @@ public class DankersSkyblockMod {
     public static boolean firstLaunch = false;
     public static String configDirectory;
     public static JsonObject data = null;
+    public static WarpCommandHandler warpCommandHandler;
 
     public static int farmingLevel;
     public static int miningLevel;
@@ -232,13 +233,7 @@ public class DankersSkyblockMod {
         ClientCommandHandler.instance.registerCommand(new ToggleCommand());
         ClientCommandHandler.instance.registerCommand(new WeightCommand());
 
-        ClientCommandHandler.instance.registerCommand(new Crypt());
-        ClientCommandHandler.instance.registerCommand(new DarkAuction());
-        ClientCommandHandler.instance.registerCommand(new Dragon());
-        ClientCommandHandler.instance.registerCommand(new DungeonHub());
-        ClientCommandHandler.instance.registerCommand(new HowlingCave());
-        ClientCommandHandler.instance.registerCommand(new Magma());
-        ClientCommandHandler.instance.registerCommand(new SpidersNest());
+        warpCommandHandler = new WarpCommandHandler();
 
         configDirectory = event.getModConfigurationDirectory().toString();
     }

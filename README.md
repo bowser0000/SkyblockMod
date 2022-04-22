@@ -101,16 +101,34 @@ Discord Server: https://discord.gg/QsEkNQS
 - /dsmfarmlength <min coords> <max coords> - Sets coords to be used for end of farm alert.
 - /hotmof [player] - Uses API to find total powder and HotM tree of a person. If no name is provided, it checks yours.
 
-##Warps
-Commands for to warp to the MVP+ exclusive warps
-- /crypt - Warps you to the Crypt in the Hub.
-- /da - Warps you to the Dark Auction in the Hub.
-- /drag - Warps you to the Dragons Nest in the End.
-- /dun - Warps you to the Dungeon Hub.
-- /howl - Warps you to the Howling Cave in the Park.
-- /magma - Warps you to the Magma Fields in the Blazing Fortress.
-- /nest - Warps you to the Top of the Spider's Nest in the Spider's Den.
+<details>
+  <summary>Warps</summary>
+### Warps
 
+Shortcut commands that save you the time of typing the whole warp command.
+ - /deep - Warps you to the Deep Caverns.
+ - /nether - Warps you to the Crimson Isle.
+ - /isle - Warps you to the Crimson Isle.
+ - /crimson - Warps you to the Crimson Isle.
+ - /mines - Warps you to the Dwarven Mines.
+ - /forge - Warps you to the Dwarven Forge.
+ - /crystals - Warps you to the Crystal Hollows.
+ - /gold - Warps you to the Gold Mine.
+ - /desert - Warps you to the Desert.
+ - /spider - Warps you to the Spiders Den.
+ - /barn - Warps you to the Barn.
+ - /end - Warps you to the End.
+ - /park - Warps you to the Park.
+ - /castle - Warps you to the Hub Castle.
+ - /da - Warps you to the Dark Auction.
+ - /crypt - Warps you to the Crypt in the Hub.
+ - /nest - Warps you to the top of the Spider's Den.
+ - /void - Warps you to the Void Sepulture in the End.
+ - /drag - Warps you to the Dragons Nest in the End.
+ - /jungle - Warps you to the Jungle.
+ - /howl - Warps you to the Howling Cave in the Park.
+ - /dun - Warps you to the Dungeon Hub.
+</details>
 
 ## Keybinds
 - Open Maddox menu - M by default.
