@@ -27,6 +27,7 @@ public class DisplayGui extends GuiScreen {
 	private GuiButton fishingFestival;
 	private GuiButton fishingSpooky;
 	private GuiButton fishingCH;
+	private GuiButton fishingLava;
 	private GuiButton catacombsF1;
 	private GuiButton catacombsF2;
 	private GuiButton catacombsF3;
@@ -60,11 +61,12 @@ public class DisplayGui extends GuiScreen {
 		wolf = new GuiButton(0, width / 2 - 50, (int) (height * 0.35), 100, 20, "Wolf");
 		enderman = new GuiButton(0, width / 2 + 60, (int) (height * 0.35), 100, 20, "Enderman");
 		blaze = new GuiButton(0, width / 2 + 170, (int) (height * 0.35), 100, 20, "Blaze");
-		fishing = new GuiButton(0, width / 2 - 270, (int) (height * 0.5), 100, 20, "Fishing");
-		fishingWinter = new GuiButton(0, width / 2 - 160, (int) (height * 0.5), 100, 20, "Fishing Winter");
-		fishingFestival = new GuiButton(0, width / 2 - 50, (int) (height * 0.5), 100, 20, "Fishing Festival");
-		fishingSpooky = new GuiButton(0, width / 2 + 60, (int) (height * 0.5), 100, 20, "Fishing Spooky");
-		fishingCH = new GuiButton(0, width / 2 + 170, (int) (height * 0.5), 100, 20, "CH Fishing");
+		fishing = new GuiButton(0, width / 2 - 295, (int) (height * 0.5), 90, 20, "Fishing");
+		fishingWinter = new GuiButton(0, width / 2 - 195, (int) (height * 0.5), 90, 20, "Fishing Winter");
+		fishingFestival = new GuiButton(0, width / 2 - 95, (int) (height * 0.5), 90, 20, "Fishing Festival");
+		fishingSpooky = new GuiButton(0, width / 2 + 5, (int) (height * 0.5), 90, 20, "Fishing Spooky");
+		fishingCH = new GuiButton(0, width / 2 + 105, (int) (height * 0.5), 90, 20, "CH Fishing");
+		fishingLava = new GuiButton(0, width / 2 + 205, (int) (height * 0.5), 90, 20, "Lava Fishing");
 		catacombsF1 = new GuiButton(0, width / 2 - 235, (int) (height * 0.65), 50, 20, "F1");
 		catacombsF2 = new GuiButton(0, width / 2 - 175, (int) (height * 0.65), 50, 20, "F2");
 		catacombsF3 = new GuiButton(0, width / 2 - 115, (int) (height * 0.65), 50, 20, "F3");
@@ -89,6 +91,7 @@ public class DisplayGui extends GuiScreen {
 		this.buttonList.add(fishingFestival);
 		this.buttonList.add(fishingSpooky);
 		this.buttonList.add(fishingCH);
+		this.buttonList.add(fishingLava);
 		this.buttonList.add(catacombsF1);
 		this.buttonList.add(catacombsF2);
 		this.buttonList.add(catacombsF3);
@@ -148,6 +151,8 @@ public class DisplayGui extends GuiScreen {
 			setDisplay("fishing_spooky");
 		} else if (button == fishingCH) {
 			setDisplay("fishing_ch");
+		} else if (button == fishingLava) {
+			setDisplay("fishing_lava");
 		} else if (button == mythological) {
 			setDisplay("mythological");
 		} else if (button == catacombsF1) {

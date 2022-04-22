@@ -848,6 +848,92 @@ public class LootDisplay {
                             EnumChatFormatting.DARK_PURPLE + nf.format(FishingTracker.lavaPigmenSession) + "\n" +
                             EnumChatFormatting.GOLD + nf.format(FishingTracker.zombieMinersSession);
                     break;
+                case "fishing_lava":
+                    if (FishingTracker.jawbusTime == -1) {
+                        timeBetween = "Never";
+                    } else {
+                        timeBetween = Utils.getTimeBetween(FishingTracker.jawbusTime, timeNow);
+                    }
+                    if (FishingTracker.jawbusSCs == -1) {
+                        bossesBetween = "Never";
+                    } else {
+                        bossesBetween = nf.format(FishingTracker.jawbusSCs);
+                    }
+
+                    dropsText = EnumChatFormatting.AQUA + "Creatures Caught:\n" +
+                            EnumChatFormatting.AQUA + "Fishing Milestone:\n" +
+                            EnumChatFormatting.GOLD + "Good Catches:\n" +
+                            EnumChatFormatting.DARK_PURPLE + "Great Catches:\n" +
+                            EnumChatFormatting.DARK_RED + "Magma Slugs:\n" +
+                            EnumChatFormatting.RED + "Moogmas:\n" +
+                            EnumChatFormatting.RED + "Lava Leeches:\n" +
+                            EnumChatFormatting.RED + "Pyroclastic Worms:\n" +
+                            EnumChatFormatting.DARK_RED + "Lava Flames:\n" +
+                            EnumChatFormatting.RED + "Fire Eels:\n" +
+                            EnumChatFormatting.GOLD + "Tauruses:\n" +
+                            EnumChatFormatting.LIGHT_PURPLE + "Thunders:\n" +
+                            EnumChatFormatting.LIGHT_PURPLE + "Lord Jawbuses:\n" +
+                            EnumChatFormatting.AQUA + "Time Since Jawbus:\n" +
+                            EnumChatFormatting.AQUA + "SC Since Jawbus:";
+                    countText = EnumChatFormatting.AQUA + nf.format(FishingTracker.seaCreatures) + "\n" +
+                            EnumChatFormatting.AQUA + nf.format(FishingTracker.fishingMilestone) + "\n" +
+                            EnumChatFormatting.GOLD + nf.format(FishingTracker.goodCatches) + "\n" +
+                            EnumChatFormatting.DARK_PURPLE + nf.format(FishingTracker.greatCatches) + "\n" +
+                            EnumChatFormatting.DARK_RED + nf.format(FishingTracker.magmaSlugs) + "\n" +
+                            EnumChatFormatting.RED + nf.format(FishingTracker.moogmas) + "\n" +
+                            EnumChatFormatting.RED + nf.format(FishingTracker.lavaLeeches) + "\n" +
+                            EnumChatFormatting.RED + nf.format(FishingTracker.pyroclasticWorms) + "\n" +
+                            EnumChatFormatting.DARK_RED + nf.format(FishingTracker.lavaFlames) + "\n" +
+                            EnumChatFormatting.RED + nf.format(FishingTracker.fireEels) + "\n" +
+                            EnumChatFormatting.GOLD + nf.format(FishingTracker.tauruses) + "\n" +
+                            EnumChatFormatting.LIGHT_PURPLE + nf.format(FishingTracker.thunders) + "\n" +
+                            EnumChatFormatting.LIGHT_PURPLE + nf.format(FishingTracker.lordJawbuses) + "\n" +
+                            EnumChatFormatting.AQUA + timeBetween + "\n" +
+                            EnumChatFormatting.AQUA + bossesBetween;
+                    break;
+                case "fishing_lava_session":
+                    if (FishingTracker.jawbusTimeSession == -1) {
+                        timeBetween = "Never";
+                    } else {
+                        timeBetween = Utils.getTimeBetween(FishingTracker.jawbusTimeSession, timeNow);
+                    }
+                    if (FishingTracker.jawbusSCsSession == -1) {
+                        bossesBetween = "Never";
+                    } else {
+                        bossesBetween = nf.format(FishingTracker.jawbusSCsSession);
+                    }
+
+                    dropsText = EnumChatFormatting.AQUA + "Creatures Caught:\n" +
+                            EnumChatFormatting.AQUA + "Fishing Milestone:\n" +
+                            EnumChatFormatting.GOLD + "Good Catches:\n" +
+                            EnumChatFormatting.DARK_PURPLE + "Great Catches:\n" +
+                            EnumChatFormatting.DARK_RED + "Magma Slugs:\n" +
+                            EnumChatFormatting.RED + "Moogmas:\n" +
+                            EnumChatFormatting.RED + "Lava Leeches:\n" +
+                            EnumChatFormatting.RED + "Pyroclastic Worms:\n" +
+                            EnumChatFormatting.DARK_RED + "Lava Flames:\n" +
+                            EnumChatFormatting.RED + "Fire Eels:\n" +
+                            EnumChatFormatting.GOLD + "Tauruses:\n" +
+                            EnumChatFormatting.LIGHT_PURPLE + "Thunders:\n" +
+                            EnumChatFormatting.LIGHT_PURPLE + "Lord Jawbuses:\n" +
+                            EnumChatFormatting.AQUA + "Time Since Jawbus:\n" +
+                            EnumChatFormatting.AQUA + "SC Since Jawbus:";
+                    countText = EnumChatFormatting.AQUA + nf.format(FishingTracker.seaCreaturesSession) + "\n" +
+                            EnumChatFormatting.AQUA + nf.format(FishingTracker.fishingMilestoneSession) + "\n" +
+                            EnumChatFormatting.GOLD + nf.format(FishingTracker.goodCatchesSession) + "\n" +
+                            EnumChatFormatting.DARK_PURPLE + nf.format(FishingTracker.greatCatchesSession) + "\n" +
+                            EnumChatFormatting.DARK_RED + nf.format(FishingTracker.magmaSlugsSession) + "\n" +
+                            EnumChatFormatting.RED + nf.format(FishingTracker.moogmasSession) + "\n" +
+                            EnumChatFormatting.RED + nf.format(FishingTracker.lavaLeechesSession) + "\n" +
+                            EnumChatFormatting.RED + nf.format(FishingTracker.pyroclasticWormsSession) + "\n" +
+                            EnumChatFormatting.DARK_RED + nf.format(FishingTracker.lavaFlamesSession) + "\n" +
+                            EnumChatFormatting.RED + nf.format(FishingTracker.fireEelsSession) + "\n" +
+                            EnumChatFormatting.GOLD + nf.format(FishingTracker.taurusesSession) + "\n" +
+                            EnumChatFormatting.LIGHT_PURPLE + nf.format(FishingTracker.thundersSession) + "\n" +
+                            EnumChatFormatting.LIGHT_PURPLE + nf.format(FishingTracker.lordJawbusesSession) + "\n" +
+                            EnumChatFormatting.AQUA + timeBetween + "\n" +
+                            EnumChatFormatting.AQUA + bossesBetween;
+                    break;
                 case "mythological":
                     dropsText = EnumChatFormatting.GOLD + "Coins:\n" +
                             EnumChatFormatting.WHITE + "Griffin Feathers:\n" +

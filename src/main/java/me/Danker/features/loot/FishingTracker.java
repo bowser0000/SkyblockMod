@@ -54,6 +54,18 @@ public class FishingTracker {
     public static int lavaBlazes;
     public static int lavaPigmen;
     public static int zombieMiners;
+    // Lava fishing
+    public static int magmaSlugs;
+    public static int moogmas;
+    public static int lavaLeeches;
+    public static int pyroclasticWorms;
+    public static int lavaFlames;
+    public static int fireEels;
+    public static int tauruses;
+    public static int thunders;
+    public static int lordJawbuses;
+    public static double jawbusTime;
+    public static int jawbusSCs;
 
     // Fishing
     public static int seaCreaturesSession = 0;
@@ -101,6 +113,18 @@ public class FishingTracker {
     public static int lavaBlazesSession = 0;
     public static int lavaPigmenSession = 0;
     public static int zombieMinersSession = 0;
+    // Lava fishing
+    public static int magmaSlugsSession = 0;
+    public static int moogmasSession = 0;
+    public static int lavaLeechesSession = 0;
+    public static int pyroclasticWormsSession = 0;
+    public static int lavaFlamesSession = 0;
+    public static int fireEelsSession = 0;
+    public static int taurusesSession = 0;
+    public static int thundersSession = 0;
+    public static int lordJawbusesSession = 0;
+    public static double jawbusTimeSession = 0;
+    public static int jawbusSCsSession = 0;
 
     @SubscribeEvent
     public void onChat(ClientChatReceivedEvent event) {
@@ -296,16 +320,61 @@ public class FishingTracker {
             zombieMinersSession++;
             ConfigHandler.writeIntConfig("fishing", "zombieMiner", zombieMiners);
             increaseSeaCreatures();
+        } else if (message.contains("From Beneath the lava appears a Magma Slug")) {
+            magmaSlugs++;
+            magmaSlugsSession++;
+            ConfigHandler.writeIntConfig("fishing", "magmaSlug", magmaSlugs);
+            increaseSeaCreatures();
+        } else if (message.contains("You hear a faint Moo from the lava... A Moogma appears")) {
+            moogmas++;
+            moogmasSession++;
+            ConfigHandler.writeIntConfig("fishing", "moogma", moogmas);
+            increaseSeaCreatures();
+        } else if (message.contains("A small but fearsome Lava Leech emerges")) {
+            lavaLeeches++;
+            lavaLeechesSession++;
+            ConfigHandler.writeIntConfig("fishing", "lavaLeech", lavaLeeches);
+            increaseSeaCreatures();
+        } else if (message.contains("You feel the heat radiating as a Pyroclastic Worm surfaces")) {
+            pyroclasticWorms++;
+            pyroclasticWormsSession++;
+            ConfigHandler.writeIntConfig("fishing", "pyroclasticWorm", pyroclasticWorms);
+            increaseSeaCreatures();
+        } else if (message.contains("A Lava Flame flies out from beneath the lava")) {
+            lavaFlames++;
+            lavaFlamesSession++;
+            ConfigHandler.writeIntConfig("fishing", "lavaFlame", lavaFlames);
+            increaseSeaCreatures();
+        } else if (message.contains("A Fire Eel slithers out from the depths")) {
+            fireEels++;
+            fireEelsSession++;
+            ConfigHandler.writeIntConfig("fishing", "fireEel", fireEels);
+            increaseSeaCreatures();
+        } else if (message.contains("Taurus and his steed emerge")) {
+            tauruses++;
+            taurusesSession++;
+            ConfigHandler.writeIntConfig("fishing", "taurus", tauruses);
+            increaseSeaCreatures();
+        } else if (message.contains("You hear a massive rumble as Thunder emerges")) {
+            thunders++;
+            thundersSession++;
+            ConfigHandler.writeIntConfig("fishing", "thunder", thunders);
+            increaseSeaCreatures();
+        } else if (message.contains("You have angered a legendary creature... Lord Jawbus has arrived")) {
+            lordJawbuses++;
+            jawbusTime = System.currentTimeMillis() / 1000;
+            jawbusSCs = 0;
+            lordJawbusesSession++;
+            jawbusTimeSession = System.currentTimeMillis() / 1000;
+            jawbusSCsSession = 0;
+            ConfigHandler.writeIntConfig("fishing", "lordJawbus", lordJawbuses);
+            ConfigHandler.writeDoubleConfig("fishing", "jawbusTime", jawbusTime);
+            ConfigHandler.writeIntConfig("fishing", "jawbusSC", jawbusSCs);
+            increaseSeaCreatures();
         }
     }
 
     public void increaseSeaCreatures() {
-        if (empSCs != -1) {
-            empSCs++;
-        }
-        if (empSCsSession != -1) {
-            empSCsSession++;
-        }
         // Only increment Yetis when in Jerry's Workshop
         if (Utils.isInScoreboard("Jerry's Workshop") || Utils.isInScoreboard("Jerry Pond")) {
             if (yetiSCs != -1) {
@@ -313,6 +382,20 @@ public class FishingTracker {
             }
             if (yetiSCsSession != -1) {
                 yetiSCsSession++;
+            }
+        } else if (Utils.tabLocation.equals("Crimson Isle")) {
+            if (jawbusSCs != -1) {
+                jawbusSCs++;
+            }
+            if (jawbusSCsSession != -1) {
+                jawbusSCsSession++;
+            }
+        } else {
+            if (empSCs != -1) {
+                empSCs++;
+            }
+            if (empSCsSession != -1) {
+                empSCsSession++;
             }
         }
 
@@ -324,6 +407,7 @@ public class FishingTracker {
         ConfigHandler.writeIntConfig("fishing", "milestone", fishingMilestone);
         ConfigHandler.writeIntConfig("fishing", "empSC", empSCs);
         ConfigHandler.writeIntConfig("fishing", "yetiSC", yetiSCs);
+        ConfigHandler.writeIntConfig("fishing", "jawbusSC", jawbusSCs);
     }
 
 }

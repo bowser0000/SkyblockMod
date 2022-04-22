@@ -95,7 +95,11 @@ public class AutoDisplay {
                         List<String> lore = hotbarItem.getTooltip(player, mc.gameSettings.advancedItemTooltips);
                         for (int j = lore.size() - 1; j >= 0; j--) { // reverse
                             if (lore.get(j).contains("FISHING ROD")) {
-                                LootDisplay.display = "fishing";
+                                if (Utils.tabLocation.equals("Crimson Isle")) {
+                                    LootDisplay.display = "fishing_lava";
+                                } else {
+                                    LootDisplay.display = "fishing";
+                                }
                                 found = true;
                                 break;
                             }

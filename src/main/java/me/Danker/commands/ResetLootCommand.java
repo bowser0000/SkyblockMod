@@ -277,6 +277,17 @@ public class ResetLootCommand extends CommandBase {
 		FishingTracker.lavaBlazesSession = 0;
 		FishingTracker.lavaPigmenSession = 0;
 		FishingTracker.zombieMinersSession = 0;
+		FishingTracker.magmaSlugsSession = 0;
+		FishingTracker.moogmasSession = 0;
+		FishingTracker.lavaLeechesSession = 0;
+		FishingTracker.pyroclasticWormsSession = 0;
+		FishingTracker.lavaFlamesSession = 0;
+		FishingTracker.fireEelsSession = 0;
+		FishingTracker.taurusesSession = 0;
+		FishingTracker.thundersSession = 0;
+		FishingTracker.lordJawbusesSession = 0;
+		FishingTracker.jawbusTimeSession = 0;
+		FishingTracker.jawbusSCsSession = 0;
 		ConfigHandler.deleteCategory("fishing");
 		ConfigHandler.reloadConfig();
 	}

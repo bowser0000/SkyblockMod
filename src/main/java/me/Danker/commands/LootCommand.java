@@ -24,7 +24,7 @@ public class LootCommand extends CommandBase {
 
 	@Override
 	public String getCommandUsage(ICommandSender arg0) {
-		return "/" + getCommandName() + " <zombie/spider/wolf/enderman/blaze/fishing/catacombs/mythological> [winter/festival/spooky/ch/f(1-7)/mm/session]";
+		return "/" + getCommandName() + " <zombie/spider/wolf/enderman/blaze/fishing/catacombs/mythological> [winter/festival/spooky/ch/lava/f(1-7)/mm/session]";
 	}
 
 	public static String usage(ICommandSender arg0) {
@@ -41,7 +41,7 @@ public class LootCommand extends CommandBase {
 		if (args.length == 1) {
 			return getListOfStringsMatchingLastWord(args, "wolf", "spider", "zombie", "enderman", "blaze", "fishing", "catacombs", "mythological");
 		} else if (args.length == 2 && args[0].equalsIgnoreCase("fishing")) {
-			return getListOfStringsMatchingLastWord(args, "winter", "festival", "spooky", "ch", "session");
+			return getListOfStringsMatchingLastWord(args, "winter", "festival", "spooky", "ch", "lava", "session");
 		} else if (args.length == 2 && args[0].equalsIgnoreCase("catacombs")) {
 			return getListOfStringsMatchingLastWord(args, "f1", "floor1", "f2", "floor2", "f3", "floor3", "f4", "floor4", "f5", "floor5", "f6", "floor6", "f7", "floor7", "mm", "master");
 		} else if (args.length > 1) {
@@ -511,6 +511,7 @@ public class LootCommand extends CommandBase {
 																	EnumChatFormatting.GOLD + "    Tiger Sharks: " + nf.format(FishingTracker.tigerSharks) + "\n" +
 																	EnumChatFormatting.WHITE + "    Great White Sharks: " + nf.format(FishingTracker.greatWhiteSharks) + "\n" +
 																	EnumChatFormatting.AQUA + EnumChatFormatting.BOLD + " -------------------"));
+						return;
 					} else if (arg1[1].equalsIgnoreCase("spooky")) {
 						if (showSession) {
 							player.addChatMessage(new ChatComponentText(EnumChatFormatting.AQUA + "" + EnumChatFormatting.BOLD + "-------------------\n" +
@@ -532,6 +533,7 @@ public class LootCommand extends CommandBase {
 																	EnumChatFormatting.GOLD + "    Phantom Fishers: " + nf.format(FishingTracker.phantomFishers) + "\n" +
 																	EnumChatFormatting.GOLD + "    Grim Reapers: " + nf.format(FishingTracker.grimReapers) + "\n" +
 																	EnumChatFormatting.AQUA + "" + EnumChatFormatting.BOLD + "-------------------"));
+						return;
 					} else if (arg1[1].equalsIgnoreCase("ch")) {
 						if (showSession) {
 							player.addChatMessage(new ChatComponentText(EnumChatFormatting.AQUA + "" + EnumChatFormatting.BOLD + "-------------------\n" +
@@ -556,9 +558,64 @@ public class LootCommand extends CommandBase {
 																	EnumChatFormatting.LIGHT_PURPLE + "    Lava Pigmen: " + nf.format(FishingTracker.lavaPigmen) + "\n" +
 																	EnumChatFormatting.GOLD + "    Zombie Miners: " + nf.format(FishingTracker.zombieMiners) + "\n" +
 																	EnumChatFormatting.AQUA + "" + EnumChatFormatting.BOLD + "-------------------"));
-					}
+						return;
+					} else if (arg1[1].equalsIgnoreCase("lava")) {
+						if (showSession) {
+							if (FishingTracker.jawbusTimeSession == -1) {
+								timeBetween = "Never";
+							} else {
+								timeBetween = Utils.getTimeBetween(FishingTracker.jawbusTimeSession, timeNow);
+							}
+							if (FishingTracker.jawbusSCsSession == -1) {
+								bossesBetween = "Never";
+							} else {
+								bossesBetween = nf.format(FishingTracker.jawbusSCsSession);
+							}
 
-					return;
+							player.addChatMessage(new ChatComponentText(EnumChatFormatting.AQUA + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+									EnumChatFormatting.RED + EnumChatFormatting.BOLD + " Lava Fishing Summary (Current Session):\n" +
+									EnumChatFormatting.DARK_RED + "    Magma Slugs: " + nf.format(FishingTracker.magmaSlugsSession) + "\n" +
+									EnumChatFormatting.RED + "    Moogmas: " + nf.format(FishingTracker.moogmasSession) + "\n" +
+									EnumChatFormatting.RED + "    Lava Leeches: " + nf.format(FishingTracker.lavaLeechesSession) + "\n" +
+									EnumChatFormatting.RED + "    Pyroclastic Worms: " + nf.format(FishingTracker.pyroclasticWormsSession) + "\n" +
+									EnumChatFormatting.DARK_RED + "    Lava Flames: " + nf.format(FishingTracker.lavaFlamesSession) + "\n" +
+									EnumChatFormatting.RED + "    Fire Eels: " + nf.format(FishingTracker.fireEelsSession) + "\n" +
+									EnumChatFormatting.GOLD + "    Tauruses: " + nf.format(FishingTracker.taurusesSession) + "\n" +
+									EnumChatFormatting.LIGHT_PURPLE + "    Thunders: " + nf.format(FishingTracker.thundersSession) + "\n" +
+									EnumChatFormatting.LIGHT_PURPLE + "    Lord Jawbuses: " + nf.format(FishingTracker.lordJawbusesSession) + "\n" +
+									EnumChatFormatting.AQUA + "    Time Since Lord Jawbus: " + timeBetween + "\n" +
+									EnumChatFormatting.AQUA + "    Creatures Since Lord Jawbus: " + bossesBetween + "\n" +
+									EnumChatFormatting.AQUA + EnumChatFormatting.BOLD + " -------------------"));
+							return;
+						}
+
+						if (FishingTracker.jawbusTime == -1) {
+							timeBetween = "Never";
+						} else {
+							timeBetween = Utils.getTimeBetween(FishingTracker.jawbusTime, timeNow);
+						}
+						if (FishingTracker.jawbusSCs == -1) {
+							bossesBetween = "Never";
+						} else {
+							bossesBetween = nf.format(FishingTracker.jawbusSCs);
+						}
+
+						player.addChatMessage(new ChatComponentText(EnumChatFormatting.AQUA + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+								EnumChatFormatting.RED + EnumChatFormatting.BOLD + " Lava Fishing Summary:\n" +
+								EnumChatFormatting.DARK_RED + "    Magma Slugs: " + nf.format(FishingTracker.magmaSlugs) + "\n" +
+								EnumChatFormatting.RED + "    Moogmas: " + nf.format(FishingTracker.moogmas) + "\n" +
+								EnumChatFormatting.RED + "    Lava Leeches: " + nf.format(FishingTracker.lavaLeeches) + "\n" +
+								EnumChatFormatting.RED + "    Pyroclastic Worms: " + nf.format(FishingTracker.pyroclasticWorms) + "\n" +
+								EnumChatFormatting.DARK_RED + "    Lava Flames: " + nf.format(FishingTracker.lavaFlames) + "\n" +
+								EnumChatFormatting.RED + "    Fire Eels: " + nf.format(FishingTracker.fireEels) + "\n" +
+								EnumChatFormatting.GOLD + "    Tauruses: " + nf.format(FishingTracker.tauruses) + "\n" +
+								EnumChatFormatting.LIGHT_PURPLE + "    Thunders: " + nf.format(FishingTracker.thunders) + "\n" +
+								EnumChatFormatting.LIGHT_PURPLE + "    Lord Jawbuses: " + nf.format(FishingTracker.lordJawbuses) + "\n" +
+								EnumChatFormatting.AQUA + "    Time Since Lord Jawbus: " + timeBetween + "\n" +
+								EnumChatFormatting.AQUA + "    Creatures Since Lord Jawbus: " + bossesBetween + "\n" +
+								EnumChatFormatting.AQUA + EnumChatFormatting.BOLD + " -------------------"));
+						return;
+					}
 				}
 
 				if (showSession) {

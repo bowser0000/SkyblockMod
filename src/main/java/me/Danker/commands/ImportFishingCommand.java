@@ -77,221 +77,50 @@ public class ImportFishingCommand extends CommandBase {
 			}
 
 			FishingTracker.seaCreatures = 0;
-			FishingTracker.squids = 0;
-			if (statsObject.has("kills_pond_squid")) {
-				FishingTracker.squids = statsObject.get("kills_pond_squid").getAsInt();
-			}
-			FishingTracker.seaCreatures += FishingTracker.squids;
 
-			FishingTracker.seaWalkers = 0;
-			if (statsObject.has("kills_sea_walker")) {
-				FishingTracker.seaWalkers = statsObject.get("kills_sea_walker").getAsInt();
-			}
-			FishingTracker.seaCreatures += FishingTracker.seaWalkers;
-
-			FishingTracker.nightSquids = 0;
-			if (statsObject.has("kills_night_squid")) {
-				FishingTracker.nightSquids = statsObject.get("kills_night_squid").getAsInt();
-			}
-			FishingTracker.seaCreatures += FishingTracker.nightSquids;
-
-			FishingTracker.seaGuardians = 0;
-			if (statsObject.has("kills_sea_guardian")) {
-				FishingTracker.seaGuardians = statsObject.get("kills_sea_guardian").getAsInt();
-			}
-			FishingTracker.seaCreatures += FishingTracker.seaGuardians;
-
-			FishingTracker.seaWitches = 0;
-			if (statsObject.has("kills_sea_witch")) {
-				FishingTracker.seaWitches = statsObject.get("kills_sea_witch").getAsInt();
-			}
-			FishingTracker.seaCreatures += FishingTracker.seaWitches;
-
-			FishingTracker.seaArchers = 0;
-			if (statsObject.has("kills_sea_archer")) {
-				FishingTracker.seaArchers = statsObject.get("kills_sea_archer").getAsInt();
-			}
-			FishingTracker.seaCreatures += FishingTracker.seaArchers;
-
-			FishingTracker.monsterOfTheDeeps = 0;
-			if (statsObject.has("kills_zombie_deep")) {
-				if (statsObject.has("kills_chicken_deep")) {
-					FishingTracker.monsterOfTheDeeps = statsObject.get("kills_zombie_deep").getAsInt() + statsObject.get("kills_chicken_deep").getAsInt();
-				} else {
-					FishingTracker.monsterOfTheDeeps = statsObject.get("kills_zombie_deep").getAsInt();
-				}
-			} else if (statsObject.has("kills_chicken_deep")) {
-				FishingTracker.monsterOfTheDeeps = statsObject.get("kills_chicken_deep").getAsInt();
-			}
-			FishingTracker.seaCreatures += FishingTracker.monsterOfTheDeeps;
-
-			FishingTracker.catfishes = 0;
-			if (statsObject.has("kills_catfish")) {
-				FishingTracker.catfishes = statsObject.get("kills_catfish").getAsInt();
-			}
-			FishingTracker.seaCreatures += FishingTracker.catfishes;
-
-			FishingTracker.carrotKings = 0;
-			if (statsObject.has("kills_carrot_king")) {
-				FishingTracker.carrotKings = statsObject.get("kills_carrot_king").getAsInt();
-			}
-			FishingTracker.seaCreatures += FishingTracker.carrotKings;
-
-			FishingTracker.seaLeeches = 0;
-			if (statsObject.has("kills_sea_leech")) {
-				FishingTracker.seaLeeches = statsObject.get("kills_sea_leech").getAsInt();
-			}
-			FishingTracker.seaCreatures += FishingTracker.seaLeeches;
-
-			FishingTracker.guardianDefenders = 0;
-			if (statsObject.has("kills_guardian_defender")) {
-				FishingTracker.guardianDefenders = statsObject.get("kills_guardian_defender").getAsInt();
-			}
-			FishingTracker.seaCreatures += FishingTracker.guardianDefenders;
-
-			FishingTracker.deepSeaProtectors = 0;
-			if (statsObject.has("kills_deep_sea_protector")) {
-				FishingTracker.deepSeaProtectors = statsObject.get("kills_deep_sea_protector").getAsInt();
-			}
-			FishingTracker.seaCreatures += FishingTracker.deepSeaProtectors;
-
-			FishingTracker.hydras = 0;
-			if (statsObject.has("kills_water_hydra")) {
-				// Hydra splits
-				FishingTracker.hydras = statsObject.get("kills_water_hydra").getAsInt() / 2;
-			}
-			FishingTracker.seaCreatures += FishingTracker.hydras;
-
-			FishingTracker.seaEmperors = 0;
-			if (statsObject.has("kills_skeleton_emperor")) {
-				if (statsObject.has("kills_guardian_emperor")) {
-					FishingTracker.seaEmperors = statsObject.get("kills_skeleton_emperor").getAsInt() + statsObject.get("kills_guardian_emperor").getAsInt();
-				} else {
-					FishingTracker.seaEmperors = statsObject.get("kills_skeleton_emperor").getAsInt();
-				}
-			} else if (statsObject.has("kills_guardian_emperor")) {
-				FishingTracker.seaEmperors = statsObject.get("kills_guardian_emperor").getAsInt();
-			}
-			FishingTracker.seaCreatures += FishingTracker.seaEmperors;
-
-			FishingTracker.fishingMilestone = 0;
-			if (statsObject.has("pet_milestone_sea_creatures_killed")) {
-				FishingTracker.fishingMilestone = statsObject.get("pet_milestone_sea_creatures_killed").getAsInt();
-			}
-
-			FishingTracker.frozenSteves = 0;
-			if (statsObject.has("kills_frozen_steve")) {
-				FishingTracker.frozenSteves = statsObject.get("kills_frozen_steve").getAsInt();
-			}
-			FishingTracker.seaCreatures += FishingTracker.frozenSteves;
-
-			FishingTracker.frostyTheSnowmans = 0;
-			if (statsObject.has("kills_frosty_the_snowman")) {
-				FishingTracker.frostyTheSnowmans = statsObject.get("kills_frosty_the_snowman").getAsInt();
-			}
-			FishingTracker.seaCreatures += FishingTracker.frostyTheSnowmans;
-
-			FishingTracker.grinches = 0;
-			if (statsObject.has("kills_grinch")) {
-				FishingTracker.grinches = statsObject.get("kills_grinch").getAsInt();
-			}
-			FishingTracker.seaCreatures += FishingTracker.grinches;
-
-			FishingTracker.yetis = 0;
-			if (statsObject.has("kills_yeti")) {
-				FishingTracker.yetis = statsObject.get("kills_yeti").getAsInt();
-			}
-			FishingTracker.seaCreatures += FishingTracker.yetis;
-
-			FishingTracker.nurseSharks = 0;
-			if (statsObject.has("kills_nurse_shark")) {
-				FishingTracker.nurseSharks = statsObject.get("kills_nurse_shark").getAsInt();
-			}
-			FishingTracker.seaCreatures += FishingTracker.nurseSharks;
-
-			FishingTracker.blueSharks = 0;
-			if (statsObject.has("kills_nurse_shark")) {
-				FishingTracker.blueSharks = statsObject.get("kills_blue_shark").getAsInt();
-			}
-			FishingTracker.seaCreatures += FishingTracker.blueSharks;
-
-			FishingTracker.tigerSharks = 0;
-			if (statsObject.has("kills_nurse_shark")) {
-				FishingTracker.tigerSharks = statsObject.get("kills_tiger_shark").getAsInt();
-			}
-			FishingTracker.seaCreatures += FishingTracker.tigerSharks;
-
-			FishingTracker.greatWhiteSharks = 0;
-			if (statsObject.has("kills_nurse_shark")) {
-				FishingTracker.greatWhiteSharks = statsObject.get("kills_great_white_shark").getAsInt();
-			}
-			FishingTracker.seaCreatures += FishingTracker.greatWhiteSharks;
-
-			FishingTracker.scarecrows = 0;
-			if (statsObject.has("kills_scarecrow")) {
-				FishingTracker.scarecrows = statsObject.get("kills_scarecrow").getAsInt();
-			}
-			FishingTracker.seaCreatures += FishingTracker.scarecrows;
-
-			FishingTracker.nightmares = 0;
-			if (statsObject.has("kills_nightmare")) {
-				FishingTracker.nightmares = statsObject.get("kills_nightmare").getAsInt();
-			}
-			FishingTracker.seaCreatures += FishingTracker.nightmares;
-
-			FishingTracker.werewolfs = 0;
-			if (statsObject.has("kills_werewolf")) {
-				FishingTracker.werewolfs = statsObject.get("kills_werewolf").getAsInt();
-			}
-			FishingTracker.seaCreatures += FishingTracker.werewolfs;
-
-			FishingTracker.phantomFishers = 0;
-			if (statsObject.has("kills_phantom_fisherman")) {
-				FishingTracker.phantomFishers = statsObject.get("kills_phantom_fisherman").getAsInt();
-			}
-			FishingTracker.seaCreatures += FishingTracker.phantomFishers;
-
-			FishingTracker.grimReapers = 0;
-			if (statsObject.has("kills_grim_reaper")) {
-				FishingTracker.grimReapers = statsObject.get("kills_grim_reaper").getAsInt();
-			}
-			FishingTracker.seaCreatures += FishingTracker.grimReapers;
-
-			FishingTracker.waterWorms = 0;
-			if (statsObject.has("kills_water_worm")) {
-				FishingTracker.waterWorms = statsObject.get("kills_water_worm").getAsInt();
-			}
-			FishingTracker.seaCreatures += FishingTracker.waterWorms;
-
-			FishingTracker.poisonedWaterWorms = 0;
-			if (statsObject.has("kills_poisoned_water_worm")) {
-				FishingTracker.poisonedWaterWorms = statsObject.get("kills_poisoned_water_worm").getAsInt();
-			}
-			FishingTracker.seaCreatures += FishingTracker.poisonedWaterWorms;
-
-			FishingTracker.flamingWorms = 0;
-			if (statsObject.has("kills_flaming_worm")) {
-				FishingTracker.flamingWorms = statsObject.get("kills_flaming_worm").getAsInt();
-			}
-			FishingTracker.seaCreatures += FishingTracker.flamingWorms;
-
-			FishingTracker.lavaBlazes = 0;
-			if (statsObject.has("kills_lava_blaze")) {
-				FishingTracker.lavaBlazes = statsObject.get("kills_lava_blaze").getAsInt();
-			}
-			FishingTracker.seaCreatures += FishingTracker.lavaBlazes;
-
-			FishingTracker.lavaPigmen = 0;
-			if (statsObject.has("kills_lava_pigman")) {
-				FishingTracker.lavaPigmen = statsObject.get("kills_lava_pigman").getAsInt();
-			}
-			FishingTracker.seaCreatures += FishingTracker.lavaPigmen;
-
-			FishingTracker.zombieMiners = 0;
-			if (statsObject.has("kills_zombie_miner")) {
-				FishingTracker.zombieMiners = statsObject.get("kills_zombie_miner").getAsInt();
-			}
-			FishingTracker.seaCreatures += FishingTracker.zombieMiners;
+			FishingTracker.squids = getSCFromApi(statsObject, "kills_pond_squid");
+			FishingTracker.seaWalkers = getSCFromApi(statsObject, "kills_sea_walker");
+			FishingTracker.nightSquids = getSCFromApi(statsObject, "kills_night_squid");
+			FishingTracker.seaGuardians = getSCFromApi(statsObject, "kills_sea_guardian");
+			FishingTracker.seaWitches = getSCFromApi(statsObject, "kills_sea_witch");
+			FishingTracker.seaArchers = getSCFromApi(statsObject, "kills_sea_archer");
+			FishingTracker.monsterOfTheDeeps = getSCFromApi(statsObject, "kills_zombie_deep") + getSCFromApi(statsObject, "kills_chicken_deep");
+			FishingTracker.catfishes = getSCFromApi(statsObject, "kills_catfish");
+			FishingTracker.carrotKings = getSCFromApi(statsObject, "kills_carrot_king");
+			FishingTracker.seaLeeches = getSCFromApi(statsObject, "kills_sea_leech");
+			FishingTracker.guardianDefenders = getSCFromApi(statsObject, "kills_guardian_defender");
+			FishingTracker.deepSeaProtectors = getSCFromApi(statsObject, "kills_deep_sea_protector");
+			FishingTracker.hydras = getSCFromApi(statsObject, "kills_water_hydra") / 2;
+			FishingTracker.seaEmperors = getSCFromApi(statsObject, "kills_skeleton_emperor") + getSCFromApi(statsObject, "kills_guardian_emperor");
+			FishingTracker.fishingMilestone = getSCFromApi(statsObject, "pet_milestone_sea_creatures_killed");
+			FishingTracker.frozenSteves = getSCFromApi(statsObject, "kills_frozen_steve");
+			FishingTracker.frostyTheSnowmans = getSCFromApi(statsObject, "kills_frosty_the_snowman");
+			FishingTracker.grinches = getSCFromApi(statsObject, "kills_grinch");
+			FishingTracker.yetis = getSCFromApi(statsObject, "kills_yeti");
+			FishingTracker.nurseSharks = getSCFromApi(statsObject, "kills_nurse_shark");
+			FishingTracker.blueSharks = getSCFromApi(statsObject, "kills_blue_shark");
+			FishingTracker.tigerSharks = getSCFromApi(statsObject, "kills_tiger_shark");
+			FishingTracker.greatWhiteSharks = getSCFromApi(statsObject, "kills_great_white_shark");
+			FishingTracker.scarecrows = getSCFromApi(statsObject, "kills_scarecrow");
+			FishingTracker.nightmares = getSCFromApi(statsObject, "kills_nightmare");
+			FishingTracker.werewolfs = getSCFromApi(statsObject, "kills_werewolf");
+			FishingTracker.phantomFishers = getSCFromApi(statsObject, "kills_phantom_fisherman");
+			FishingTracker.grimReapers = getSCFromApi(statsObject, "kills_grim_reaper");
+			FishingTracker.waterWorms = getSCFromApi(statsObject, "kills_water_worm");
+			FishingTracker.poisonedWaterWorms = getSCFromApi(statsObject, "kills_poisoned_water_worm");
+			FishingTracker.flamingWorms = getSCFromApi(statsObject, "kills_flaming_worm");
+			FishingTracker.lavaBlazes = getSCFromApi(statsObject, "kills_lava_blaze");
+			FishingTracker.lavaPigmen = getSCFromApi(statsObject, "kills_lava_pigman");
+			FishingTracker.zombieMiners = getSCFromApi(statsObject, "kills_zombie_miner");
+			FishingTracker.magmaSlugs = getSCFromApi(statsObject, "kills_magma_slug");
+			FishingTracker.moogmas = getSCFromApi(statsObject, "kills_moogma");
+			FishingTracker.lavaLeeches = getSCFromApi(statsObject, "kills_lava_leech");
+			FishingTracker.pyroclasticWorms = getSCFromApi(statsObject, "kills_pyroclastic_worm");
+			FishingTracker.lavaFlames = getSCFromApi(statsObject, "kills_lava_flame");
+			FishingTracker.fireEels = getSCFromApi(statsObject, "kills_fire_eel");
+			FishingTracker.tauruses = getSCFromApi(statsObject, "kills_taurus");
+			FishingTracker.thunders = getSCFromApi(statsObject, "kills_thunder");
+			FishingTracker.lordJawbuses = getSCFromApi(statsObject, "kills_lord_jawbus");
 
 			System.out.println("Writing to config...");
 			ConfigHandler.writeIntConfig("fishing", "goodCatch", FishingTracker.goodCatches);
@@ -331,9 +160,25 @@ public class ImportFishingCommand extends CommandBase {
 			ConfigHandler.writeIntConfig("fishing", "lavaBlaze", FishingTracker.lavaBlazes);
 			ConfigHandler.writeIntConfig("fishing", "lavaPigman", FishingTracker.lavaPigmen);
 			ConfigHandler.writeIntConfig("fishing", "zombieMiner", FishingTracker.zombieMiners);
+			ConfigHandler.writeIntConfig("fishing", "magmaSlug", FishingTracker.magmaSlugs);
+			ConfigHandler.writeIntConfig("fishing", "moogma", FishingTracker.moogmas);
+			ConfigHandler.writeIntConfig("fishing", "lavaLeech", FishingTracker.lavaLeeches);
+			ConfigHandler.writeIntConfig("fishing", "pyroclasticWorm", FishingTracker.pyroclasticWorms);
+			ConfigHandler.writeIntConfig("fishing", "lavaFlame", FishingTracker.lavaFlames);
+			ConfigHandler.writeIntConfig("fishing", "fireEel", FishingTracker.fireEels);
+			ConfigHandler.writeIntConfig("fishing", "taurus", FishingTracker.tauruses);
+			ConfigHandler.writeIntConfig("fishing", "thunder", FishingTracker.thunders);
+			ConfigHandler.writeIntConfig("fishing", "lordJawbus", FishingTracker.lordJawbuses);
 
 			player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Fishing stats imported."));
 		}).start();
+	}
+
+	static int getSCFromApi(JsonObject obj, String key) {
+		int sc = 0;
+		if (obj.has(key)) sc = obj.get(key).getAsInt();
+		FishingTracker.seaCreatures += sc;
+		return sc;
 	}
 
 }
