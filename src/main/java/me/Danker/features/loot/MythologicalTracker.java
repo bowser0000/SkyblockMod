@@ -2,9 +2,13 @@ package me.Danker.features.loot;
 
 import me.Danker.handlers.ConfigHandler;
 import me.Danker.utils.Utils;
+import net.minecraft.client.Minecraft;
+import net.minecraft.entity.Entity;
 import net.minecraft.util.StringUtils;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+
+import java.util.List;
 
 public class MythologicalTracker {
 
@@ -73,9 +77,19 @@ public class MythologicalTracker {
                 gaiaConstructsSession++;
                 ConfigHandler.writeIntConfig("mythological", "gaiaConstruct", gaiaConstructs);
             } else if (message.contains("a Minos Champion!")) {
-                minosChampions++;
-                minosChampionsSession++;
-                ConfigHandler.writeIntConfig("mythological", "minosChampion", minosChampions);
+                Minecraft mc = Minecraft.getMinecraft();
+                List<Entity> listWorldEntity = mc.theWorld.getLoadedEntityList();
+                for (Entity entity : listWorldEntity) {
+                    if (entity.getName().contains("Minos Champion")) {
+                        minosChampions++;
+                        minosChampionsSession++;
+                        ConfigHandler.writeIntConfig("mythological", "minosChampion", minosChampions);
+                    } else if (entity.getName().contains("Minos Inquisitor")) {
+                        minosInquisitors++;
+                        minosInquisitorsSession++;
+                        ConfigHandler.writeIntConfig("mythological", "minosInquisitor", minosInquisitors);
+                    }
+                }
             } else if (message.contains("a Minos Inquisitor!")) {
                 minosInquisitors++;
                 minosInquisitorsSession++;
