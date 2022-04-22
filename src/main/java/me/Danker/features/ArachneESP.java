@@ -1,7 +1,7 @@
 package me.Danker.features;
 
 import me.Danker.commands.ToggleCommand;
-import me.Danker.handlers.ScoreboardHandler;
+import me.Danker.utils.RenderUtils;
 import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
@@ -30,19 +30,10 @@ public class ArachneESP {
         arachne = null;
     }
 
-    public boolean inSpidersDen(List<String> scoreboard) {
-        for (String s : scoreboard) {
-            if (ScoreboardHandler.cleanSB(s).contains("Spiders Den")) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     @SubscribeEvent
     public void onChat(ClientChatReceivedEvent event) {
         if (!Utils.inSkyblock) return;
-        if (!inSpidersDen(ScoreboardHandler.getSidebarLines())) return;
+        if (!Utils.tabLocation.equals("Spider's Den")) return;
         String message = StringUtils.stripControlCodes(event.message.getUnformattedText());
         if (message.contains("Something is awakening")){
             arachneActive = true;
@@ -66,7 +57,7 @@ public class ArachneESP {
         if (arachne != null) {
             if (arachneActive && ToggleCommand.highlightArachne) {
                 AxisAlignedBB aabb = new AxisAlignedBB(arachne.posX - 0.75, arachne.posY - 1, arachne.posZ - 0.75, arachne.posX + 0.75, arachne.posY, arachne.posZ + 0.75);
-                Utils.draw3DBox(aabb, ARACHANE_COLOUR, event.partialTicks);
+                RenderUtils.draw3DBox(aabb, ARACHANE_COLOUR, event.partialTicks);
             }
         }
     }

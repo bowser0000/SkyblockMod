@@ -26,14 +26,16 @@ Discord Server: https://discord.gg/QsEkNQS
 - RNGesus drop alerts
 - Click anywhere on-screen to open Maddox
 - Maddox menu keybind
+- Block starting other slayer quests
 - Slayer slain alert
-- Fishing, jerry fishing, fishing festival, spooky fishing trackers
+- Fishing, jerry fishing, fishing festival, spooky fishing, crystal hollows fishing, lava fishing trackers
 - Expertise kills in fishing rod lore
+- Gemstones applied in item lore
 - Catacombs trackers
 - Dungeons puzzle solver (Riddle, trivia, blaze, creeper, water, tic tac toe, boulder, silverfish, ice walk)
 - Dungeons timer (watcher, boss, deaths, and puzzle fails)
 - Watcher ready message
-- Catacombs F7 Stage 3 solvers (Starts with letter, select all colour)
+- Catacombs F7 Stage 3 solvers (Starts with letter, select all colour, ignore arrows on sea lanterns)
 - Find correct Livid (with graphic display of HP)
 - Catacombs F6 and F7 Giant HP display
 - Use custom music in supported locations
@@ -50,25 +52,32 @@ Discord Server: https://discord.gg/QsEkNQS
 - API commands
 - Update checker
 - Reparty command
+- Auto accept reparty
 - Highlight Slayer Bosses
 - Highlight Arachne
 - Highlight Skeleton Masters
 - Show teammates in 30 block radius
 - Hide pet candy in pet tooltip
 - Highlighting completed commissions
-
+- Custom name colors
+- Crystal Hollows waypoints (with SkyblockExtras support)
+- Ability cooldowns display
+- Custom alerts based on chat
+- Predicted dungeon score display
+- Hide player armour
+- Automatically join skyblock
 
 ## Commands
 - /dhelp - Returns this message in-game.
 - /dsm - Opens the GUI for Danker's Skyblock Mod.
-- /toggle <gparty/coords/golden/slayercount/rngesusalerts/splitfishing/ghostdisplay/chatmaddox/spiritbearalert/sceptremessages/petcolors/dungeontimer/golemalerts/expertiselore/skill50display/outlinetext/midasstaffmessages/implosionmessages/healmessages/cooldownmessages/manamessages/killcombomessages/caketimer/lowhealthnotify/lividsolver/stopsalvagestarred/notifyslayerslain/necronnotifications/bonzotimer/threemanpuzzle/oruopuzzle/blazepuzzle/creeperpuzzle/waterpuzzle/tictactoepuzzle/boulderpuzzle/silverfishpuzzle/icewalkpuzzle/watchermessage/startswithterminal/selectallterminal/clickinorderterminal/ultrasequencer/chronomatron/superpairs/hidetooltipsinaddons/pickblock/melodytooltips/highlightslayers/highlightarachne/highlightskeletonmasters/teammatesinradius/gianthp/hidepetcandy/dungeonbossmusic/bloodroommusic/dungeonmusic/highlightcommissions/list> - Toggles features. /toggle list returns values of every toggle.
+- /toggle <too many to list> - Toggles features. /toggle list returns values of every toggle.
 - /setkey <key> - Sets API key.
 - /getkey - Returns key set with /setkey and copies it to your clipboard.
-- /loot <zombie/spider/wolf/fishing/catacombs/mythological/> [winter/festival/spooky/f(1-7)/session] - Returns loot received from slayer quests or fishing stats. /loot fishing winter returns winter sea creatures instead.
-- /display <zombie/spider/wolf/fishing/catacombs/mythological/ghosts/auto/off> [winter/festival/spooky/f(1-7)/session] - Text display for trackers. /display fishing winter displays winter sea creatures instead. /display auto automatically displays the loot for the slayer quest you have active.
-- /resetloot <zombie/spider/wolf/fishing/catacombs/mythological/confirm/cancel> -  - Resets loot for trackers. /resetloot confirm confirms the reset.
-- /move <coords/display/dungeontimer/skill50/lividhp/caketimer/skilltracker/wateranswer/bonzotimer/golemtimer/teammatesinradius/gianthp> <x> <y> - Moves text display to specified X and Y coordinates.
-- /scale <coords/display/dungeontimer/skill50/lividhp/caketimer/skilltracker/wateranswer/bonzotimer/golemtimer/teammatesinradius/gianthp> <scale (0.1 - 10)> - Scales text display to a specified multipler between 0.1x and 10x.
+- /loot <zombie/spider/wolf/enderman/blaze/fishing/catacombs/mythological/> [winter/festival/spooky/ch/lava/f(1-7)/mm/session] - Returns loot received from slayer quests or fishing stats. /loot fishing winter returns winter sea creatures instead.
+- /display <zombie/spider/wolf/enderman/blaze/fishing/catacombs/mythological/ghosts/auto/off> [winter/festival/spooky/ch/lava/f(1-7)/mm/session] - Text display for trackers. /display fishing winter displays winter sea creatures instead. /display auto automatically displays the loot for the slayer quest you have active.
+- /resetloot <zombie/spider/wolf/enderman/blaze/fishing/catacombs/mythological/confirm/cancel> -  - Resets loot for trackers. /resetloot confirm confirms the reset.
+- /move <coords/display/dungeontimer/skill50/lividhp/caketimer/skilltracker/wateranswer/bonzotimer/golemtimer/teammatesinradius/gianthp/abilitycooldowns/dungeonscore> <x> <y> - Moves text display to specified X and Y coordinates.
+- /scale <coords/display/dungeontimer/skill50/lividhp/caketimer/skilltracker/wateranswer/bonzotimer/golemtimer/teammatesinradius/gianthp/abilitycooldowns/dungeonscore> <scale (0.1 - 10)> - Scales text display to a specified multipler between 0.1x and 10x.
 - /slayer [player] - Uses API to get slayer xp of a person. If no name is provided, it checks yours.
 - /skill [player] - Uses API to get skill levels of a person. If no name is provided, it checks yours.
 - /lobbyskills - Uses API to find the average skills of the lobby, as well the three players with the highest skill average.
@@ -77,15 +86,20 @@ Discord Server: https://discord.gg/QsEkNQS
 - /bank [player] - Uses API to get bank and purse coins of a person. If no name is provided, it checks yours.
 - /armor [player] - Uses API to get armour of a person. If no name is provided, it checks yours.
 - /dungeons [player] - Uses API to get dungeon levels of a person. If no name is provided, it checks yours.
+- /weight [player] [lily/farming] - Uses API to get weight of a person. If no name is provided, it checks yours. Adding lily uses lily's weight. Adding farming uses Kaeso's farming weight.
 - /importfishing - Imports your fishing stats from your latest profile to your fishing tracker using the API.
 - /sbplayers - Uses API to find how many players are on each Skyblock island.
+- /onlyslayer <zombie/spider/wolf/enderman/blaze> <1/2/3/4/5>
 - /skilltracker <start/stop/reset> - Text display for skill xp/hour.
 - /reparty - Disbands and reparties all members in the party
 - /fairysouls - Check the fairysouls of a player
 - /lobbybank - Uses API to find the average bank total of the lobby, as well the three players with the highest total money in the bank (and purse).
-- /dsmmusic <stop/reload/volume> [dungeonboss/bloodroom/dungeon] [1-100] - Stops, reloads or changes the volume of custom music.
+- /dsmmusic <stop/reload/volume> [dungeonboss/bloodroom/dungeon/hub/island/dungeonhub/farmingislands/goldmine/deepcaverns/dwarvenmines/crystalhollows/spidersden/crimsonisle/end/park] [1-100] - Stops, reloads or changes the volume of custom music.
 - /player [player] - Uses API to find skills, slayers, coins and weight of a player.
-- /setangle [yaw] [pitch] - Sets your yaw and pitch
+- /reloadconfig - Reloads Danker's Skyblock Mod config.
+- /reloaddsmrepo - Reloads Danker's Skyblock Mod repository.
+- /dsmfarmlength <min coords> <max coords> - Sets coords to be used for end of farm alert.
+- /hotmof [player] - Uses API to find total powder and HotM tree of a person. If no name is provided, it checks yours.
 
 ##Warps
 Commands for to warp to the MVP+ exclusive warps
@@ -97,19 +111,39 @@ Commands for to warp to the MVP+ exclusive warps
 - /magma - Warps you to the Magma Fields in the Blazing Fortress.
 - /nest - Warps you to the Top of the Spider's Nest in the Spider's Den.
 
+
 ## Keybinds
 - Open Maddox menu - M by default.
 - Regular Ability - Numpad 4 by default.
 - Start/Stop Skill Tracker - Numpad 5 by default.
 
 ## Custom Music
-1. Place a music file with the given name in the `.mincraft/config/dsmmusic` folder:
-  - Dungeon music: `dungeon.wav`
-  - Blood room music: `bloodroom.wav`
-  - Dungeon boss music: `dungeonboss.wav`
+1. Place a music file with the given name in the `.minecraft/config/dsmmusic` folder:
+  - Dungeon: `dungeon.wav`
+  - Blood room: `bloodroom.wav`
+  - Dungeon boss: `dungeonboss.wav`
+  - Dungeon hub: `dungeonhub.wav`
+  - Hub: `hub.wav`
+  - Private Island: `island.wav`
+  - Farming Islands: `farmingislands.wav`
+  - Gold Mine: `goldmine.wav`
+  - Deep Caverns: `deepcaverns.wav`
+  - Dwarven Mines: `dwarvenmines.wav`
+  - Crystal Hollows: `crystalhollows.wav`
+  - Spider's Den: `spidersden.wav`
+  - Crimson Isle: `crimsonisle.wav`
+  - The End: `end.wav`
+  - The Park: `park.wav`
 2. Either run `/dsmmusic reload` or restart your game.
 3. Enable the custom music in `/dsm`.
 4. (Optional) Change the volume of the music with `/dsmmusic volume`.
+
+#### Shuffling
+By adding numbers to the end of the file, you can have multiple music files for the same area. One of them will be randomly selected (the same song could play twice in a row). For example:
+- dungeon.wav
+- dungeon1.wav
+- dungeon2.wav
+- dungeon99.wav
 
 ### Notes
 - Slayer tracker for token drops and 20% chance drops uses a 12x12x12 bounding box centered on the player to detect the drops. If you are out of the range of the item drop, it will not count on the tracker.
@@ -125,3 +159,8 @@ Software | License
 [SkyblockAddons](https://github.com/BiscuitDevelopment/SkyblockAddons/) | [MIT License](https://github.com/BiscuitDevelopment/SkyblockAddons/blob/master/LICENSE)
 [Zealot Counter](https://github.com/symt/zealot-counter/) | [Apache License](https://github.com/symt/zealot-counter/blob/master/LICENSE.md)
 [NotEnoughUpdates](https://github.com/Moulberry/NotEnoughUpdates/) | [Creative Commons Public License](https://github.com/Moulberry/NotEnoughUpdates/blob/master/LICENSE)
+[HyChat](https://github.com/Moulberry/Hychat) | [Creative Commons Public License](https://github.com/Moulberry/Hychat/blob/master/LICENSE)
+[SkyblockCatia](https://github.com/SteveKunG/SkyBlockcatia) | [MIT License](https://github.com/SteveKunG/SkyBlockcatia/blob/1.8.9/LICENSE.md)
+[MatterOverdrive (Legacy Edition)](https://bitbucket.org/hrznstudio/mo-legacy-edition/) | [GNU General Public License](https://bitbucket.org/hrznstudio/mo-legacy-edition/src/1.12.2/LICENSE.md)
+[Hide Armour](https://github.com/Furgl/Hide-Armor/tree/1.15.2) | No License
+[Elite Discord Bot](https://github.com/ptlthg/EliteDiscordBot) | [MIT License](https://github.com/ptlthg/EliteDiscordBot/blob/master/LICENSE)

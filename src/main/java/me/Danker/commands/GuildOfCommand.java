@@ -56,6 +56,7 @@ public class GuildOfCommand extends CommandBase {
 			String key = ConfigHandler.getString("api", "APIKey");
 			if (key.equals("")) {
 				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "API key not set. Use /setkey."));
+				return;
 			}
 			
 			// Get UUID for Hypixel API requests
@@ -74,7 +75,7 @@ public class GuildOfCommand extends CommandBase {
 			// Find guild ID
 			System.out.println("Fetching guild...");
 			String guildURL = "https://api.hypixel.net/guild?player=" + uuid + "&key=" + key;
-			JsonObject guildResponse = APIHandler.getResponse(guildURL);
+			JsonObject guildResponse = APIHandler.getResponse(guildURL, true);
 			if (!guildResponse.get("success").getAsBoolean()) {
 				String reason = guildResponse.get("cause").getAsString();
 				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Failed with reason: " + reason));

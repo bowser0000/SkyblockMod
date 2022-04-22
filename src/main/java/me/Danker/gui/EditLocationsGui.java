@@ -31,6 +31,8 @@ public class EditLocationsGui extends GuiScreen {
 	private LocationButton golemTimer;
 	private LocationButton teammatesInRadius;
 	private LocationButton giantHP;
+	private LocationButton abilityCooldown;
+	private LocationButton dungeonScore;
 	
 	@Override
 	public boolean doesGuiPauseGame() {
@@ -99,6 +101,22 @@ public class EditLocationsGui extends GuiScreen {
 							 EnumChatFormatting.LIGHT_PURPLE + "Jolly Pink Giant " + EnumChatFormatting.GREEN + "25M" + EnumChatFormatting.RED + "❤\n" +
 							 EnumChatFormatting.DARK_AQUA + "The Diamond Giant " + EnumChatFormatting.GREEN + "25M" + EnumChatFormatting.RED + "❤";
 
+		String abilityCooldownText = EnumChatFormatting.GREEN + "Spirit Glide: " + EnumChatFormatting.YELLOW + "32.734s\n" +
+									 EnumChatFormatting.GREEN + "Parley: " + EnumChatFormatting.YELLOW + "2.652s\n" +
+									 EnumChatFormatting.GREEN + "Ice Spray: " + EnumChatFormatting.YELLOW + "1.429s";
+
+		String dungeonScoreText = " Secrets Found: " + EnumChatFormatting.GREEN + "100.0%\n" +
+								  EnumChatFormatting.GOLD + "Skill:\n" +
+								  EnumChatFormatting.GOLD + "Explore:\n" +
+								  EnumChatFormatting.GOLD + "Speed:\n" +
+								  EnumChatFormatting.GOLD + "Bonus:\n" +
+								  EnumChatFormatting.GOLD + "Total:";
+		String dungeonScoreNums = "\n" +
+								  EnumChatFormatting.GOLD + "100\n" +
+								  EnumChatFormatting.GOLD + "100\n" +
+								  EnumChatFormatting.GOLD + "100\n" +
+								  EnumChatFormatting.GOLD + "5\n" +
+								  EnumChatFormatting.GOLD + "305 " + EnumChatFormatting.GRAY + "(" + EnumChatFormatting.GOLD + "S+" + EnumChatFormatting.GRAY + ")";
 
 		display = new LocationButton(MoveCommand.displayXY[0], MoveCommand.displayXY[1], ScaleCommand.displayScale, displayText, displayNums, 110);
 		dungeonTimer = new LocationButton(MoveCommand.dungeonTimerXY[0], MoveCommand.dungeonTimerXY[1], ScaleCommand.dungeonTimerScale, dungeonTimerText, dungeonTimerNums, 80);
@@ -112,6 +130,8 @@ public class EditLocationsGui extends GuiScreen {
 		golemTimer = new LocationButton(MoveCommand.golemTimerXY[0], MoveCommand.golemTimerXY[1] + 5, ScaleCommand.golemTimerScale, GolemSpawningAlert.GOLEM_COLOUR + "     20s", null, null);
 		teammatesInRadius = new LocationButton(MoveCommand.teammatesInRadiusXY[0], MoveCommand.teammatesInRadiusXY[1], ScaleCommand.teammatesInRadiusScale, teammatesInRadiusText, null, null);
 		giantHP = new LocationButton(MoveCommand.giantHPXY[0], MoveCommand.giantHPXY[1], ScaleCommand.giantHPScale, giantHPText, null, null);
+		abilityCooldown = new LocationButton(MoveCommand.abilityCooldownsXY[0], MoveCommand.abilityCooldownsXY[1], ScaleCommand.abilityCooldownsScale, abilityCooldownText, null, null);
+		dungeonScore = new LocationButton(MoveCommand.dungeonScoreXY[0], MoveCommand.dungeonScoreXY[1], ScaleCommand.dungeonScoreScale, dungeonScoreText, dungeonScoreNums, 80);
 
 		this.buttonList.add(coords);
 		this.buttonList.add(dungeonTimer);
@@ -125,6 +145,8 @@ public class EditLocationsGui extends GuiScreen {
 		this.buttonList.add(golemTimer);
 		this.buttonList.add(teammatesInRadius);
 		this.buttonList.add(giantHP);
+		this.buttonList.add(abilityCooldown);
+		this.buttonList.add(dungeonScore);
 	}
 	
 	@Override
@@ -234,6 +256,17 @@ public class EditLocationsGui extends GuiScreen {
 					giantHP.xPosition = MoveCommand.giantHPXY[0];
 					giantHP.yPosition = MoveCommand.giantHPXY[1];
 					break;
+				case "abilityCooldown":
+					MoveCommand.abilityCooldownsXY[0] += xMoved;
+					MoveCommand.abilityCooldownsXY[1] += yMoved;
+					abilityCooldown.xPosition = MoveCommand.abilityCooldownsXY[0];
+					abilityCooldown.yPosition = MoveCommand.abilityCooldownsXY[1];
+					break;
+				case "dungeonScore":
+					MoveCommand.dungeonScoreXY[0] += xMoved;
+					MoveCommand.dungeonScoreXY[1] += yMoved;
+					dungeonScore.xPosition = MoveCommand.dungeonScoreXY[0];
+					dungeonScore.yPosition = MoveCommand.dungeonScoreXY[1];
 			}
 			this.buttonList.clear();
 			initGui();
@@ -270,6 +303,10 @@ public class EditLocationsGui extends GuiScreen {
 				moving = "teammatesInRadius";
 			} else if (button == giantHP) {
 				moving = "giantHP";
+			} else if (button == abilityCooldown) {
+				moving = "abilityCooldown";
+			} else if (button == dungeonScore) {
+				moving = "dungeonScore";
 			}
 		}
 	}
@@ -302,6 +339,10 @@ public class EditLocationsGui extends GuiScreen {
 		ConfigHandler.writeIntConfig("locations", "teammatesInRadiusY", MoveCommand.teammatesInRadiusXY[1]);
 		ConfigHandler.writeIntConfig("locations", "giantHPX", MoveCommand.giantHPXY[0]);
 		ConfigHandler.writeIntConfig("locations", "giantHPY", MoveCommand.giantHPXY[1]);
+		ConfigHandler.writeIntConfig("locations", "abilityCooldownsX", MoveCommand.abilityCooldownsXY[0]);
+		ConfigHandler.writeIntConfig("locations", "abilityCooldownsY", MoveCommand.abilityCooldownsXY[1]);
+		ConfigHandler.writeIntConfig("locations", "dungeonScoreX", MoveCommand.dungeonScoreXY[0]);
+		ConfigHandler.writeIntConfig("locations", "dungeonScoreY", MoveCommand.dungeonScoreXY[1]);
 	}
 	
 }

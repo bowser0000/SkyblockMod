@@ -1,10 +1,11 @@
 package me.Danker.gui;
 
-import me.Danker.DankersSkyblockMod;
 import me.Danker.commands.ToggleCommand;
+import me.Danker.gui.alerts.AlertsGui;
 import me.Danker.gui.buttons.FeatureButton;
+import me.Danker.gui.crystalhollowwaypoints.CrystalHollowWaypointsGui;
 import me.Danker.handlers.ConfigHandler;
-import me.Danker.handlers.TextRenderer;
+import me.Danker.utils.RenderUtils;
 import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
@@ -24,9 +25,9 @@ import java.util.List;
 
 public class DankerGui extends GuiScreen {
 
-	private int page;
-	private List<GuiButton> allButtons = new ArrayList<>();
-	private List<GuiButton> foundButtons = new ArrayList<>();
+	private final int page;
+	private final List<GuiButton> allButtons = new ArrayList<>();
+	private final List<GuiButton> foundButtons = new ArrayList<>();
 	String initSearchText;
 	
 	private GuiButton closeGUI;
@@ -38,15 +39,19 @@ public class DankerGui extends GuiScreen {
 	private GuiTextField search;
 
 	private GuiButton changeDisplay;
+	private GuiButton onlySlayer;
 	private GuiButton puzzleSolvers;
 	private GuiButton experimentationTableSolvers;
 	private GuiButton skillTracker;
 	private GuiButton customMusic;
+	private GuiButton crystalHollowWaypoints;
+	private GuiButton alerts;
 	// Toggles
 	private GuiButton gparty;
 	private GuiButton coords;
 	private GuiButton goldenEnch;
 	private GuiButton slayerCount;
+	private GuiButton masterSPlusDisplay;
 	private GuiButton rngesusAlert;
 	private GuiButton splitFishing;
 	private GuiButton chatMaddox;
@@ -68,6 +73,22 @@ public class DankerGui extends GuiScreen {
 	private GuiButton giantHP;
 	private GuiButton hidePetCandy;
 	private GuiButton highlightCommissions;
+	private GuiButton customColouredNames;
+	private GuiButton endOfFarmAlert;
+	private GuiButton gemstoneLore;
+	private GuiButton autoAcceptReparty;
+	private GuiButton abilityCooldown;
+	private GuiButton dungeonTimer;
+	private GuiButton lowHealthNotify;
+	private GuiButton lividSolver;
+	private GuiButton stopSalvageStarred;
+	private GuiButton watcherReadyMessage;
+	private GuiButton flowerWeapons;
+	private GuiButton necronNotifications;
+	private GuiButton bonzoTimer;
+	private GuiButton dungeonScore;
+	private GuiButton hideArmour;
+	private GuiButton autoJoinSkyblock;
 	// Chat Messages
 	private GuiButton sceptreMessages;
 	private GuiButton midasStaffMessages;
@@ -76,14 +97,6 @@ public class DankerGui extends GuiScreen {
 	private GuiButton cooldownMessages;
 	private GuiButton manaMessages;
 	private GuiButton killComboMessages;
-	// Dungeons
-	private GuiButton dungeonTimer;
-	private GuiButton lowHealthNotify;
-	private GuiButton lividSolver;
-	private GuiButton stopSalvageStarred;
-	private GuiButton watcherReadyMessage;
-	private GuiButton necronNotifications;
-	private GuiButton bonzoTimer;
 
 	public DankerGui(int page, String searchText) {
 		this.page = page;
@@ -113,10 +126,13 @@ public class DankerGui extends GuiScreen {
 		search = new GuiTextField(0, this.fontRendererObj, width - 202, 5, 200, 20);
 
 		changeDisplay = new GuiButton(0, 0, 0, "Change Display Settings");
+		onlySlayer = new GuiButton(0, 0, 0, "Set Slayer Quest");
 		puzzleSolvers = new GuiButton(0, 0, 0, "Toggle Dungeons Puzzle Solvers");
 		experimentationTableSolvers = new GuiButton(0, 0, 0, "Toggle Experimentation Table Solvers");
 		skillTracker = new GuiButton(0, 0, 0, "Toggle Skill XP/Hour Tracking");
 		customMusic = new GuiButton(0, 0, 0, "Custom Music");
+		crystalHollowWaypoints = new GuiButton(0, 0, 0, "Crystal Hollows Waypoints");
+		alerts = new GuiButton(0, 0, 0, "Alerts");
 		outlineText = new FeatureButton("Outline Displayed Text: " + Utils.getColouredBoolean(ToggleCommand.outlineTextToggled), "Adds bold outline to on-screen text.");
 		pickBlock = new FeatureButton("Auto-Swap to Pick Block: " + Utils.getColouredBoolean(ToggleCommand.swapToPickBlockToggled), "Automatically changes left clicks to middle clicks.\nHelpful when lagging.");
 		coords = new FeatureButton("Coordinate/Angle Display: " + Utils.getColouredBoolean(ToggleCommand.coordsToggled), "Displays coordinates and angle.");
@@ -124,6 +140,7 @@ public class DankerGui extends GuiScreen {
 		cakeTimer = new FeatureButton("Cake Timer: " + Utils.getColouredBoolean(ToggleCommand.cakeTimerToggled), "Displays time until century cake buffs run out.");
 		skill50Display = new FeatureButton("Display Progress To Skill Level 50: " + Utils.getColouredBoolean(ToggleCommand.skill50DisplayToggled), "Display total progress to max skill level.");
 		slayerCount = new FeatureButton("Count Total 20% Drops: " + Utils.getColouredBoolean(ToggleCommand.slayerCountTotal), "Counts times dropped instead of amount dropped.\nE.x. Hamster Wheels: 40 -> Hamster Wheels: 10 times.");
+		masterSPlusDisplay = new FeatureButton("Display MM S+ Runs: " + Utils.getColouredBoolean(ToggleCommand.masterSPlusDisplay), "Dispay Master Mode S+ runs instead of S runs.");
 		spiritBearAlert = new FeatureButton("Spirit Bear Spawn Alerts: " + Utils.getColouredBoolean(ToggleCommand.spiritBearAlerts), "Alert when Spirit Bear spawns.");
 		sceptreMessages = new FeatureButton("Spirit Sceptre Messages: " + Utils.getColouredBoolean(ToggleCommand.sceptreMessages), "Turn " + EnumChatFormatting.RED + "off" + EnumChatFormatting.RESET + " to hide Spirit Sceptre messages.");
 		midasStaffMessages = new FeatureButton("Midas Staff Messages: " + Utils.getColouredBoolean(ToggleCommand.midasStaffMessages), "Turn " + EnumChatFormatting.RED + "off" + EnumChatFormatting.RESET + " to hide Midas Staff messages.");
@@ -144,8 +161,9 @@ public class DankerGui extends GuiScreen {
 		dungeonTimer = new FeatureButton("Display Dungeon Timers: " + Utils.getColouredBoolean(ToggleCommand.dungeonTimerToggled), "Displays timing of certain dungeon objectives and other information.");
 		stopSalvageStarred = new FeatureButton("Stop Salvaging Starred Items: " + Utils.getColouredBoolean(ToggleCommand.stopSalvageStarredToggled), "Blocks salvaging starred items.");
 		watcherReadyMessage = new FeatureButton("Display Watcher Ready Message: " + Utils.getColouredBoolean(ToggleCommand.watcherReadyToggled), "Alerts when Watcher finishes spawning mobs.");
+		flowerWeapons = new FeatureButton("Prevent Placing FoT/Spirit Sceptre: " + Utils.getColouredBoolean(ToggleCommand.flowerWeaponsToggled), "Blocks placing Flower of Truth or Spirit Sceptre.");
 		notifySlayerSlain = new FeatureButton("Notify when Slayer Slain: " + Utils.getColouredBoolean(ToggleCommand.notifySlayerSlainToggled), "Alerts when slayer boss has been slain.");
-		necronNotifications = new FeatureButton("Necron Phase Notifications: " + Utils.getColouredBoolean(ToggleCommand.necronNotificationsToggled), "Creates alert on different phases of the Necron fight.");
+		necronNotifications = new FeatureButton("Floor 7 Phase Notifications: " + Utils.getColouredBoolean(ToggleCommand.necronNotificationsToggled), "Creates alert on different phases of the floor 7 fight.");
 		bonzoTimer = new FeatureButton("Bonzo's Mask Timer: " + Utils.getColouredBoolean(ToggleCommand.bonzoTimerToggled), "Displays cooldown of Bonzo Mask ability.");
 		autoSkillTracker = new FeatureButton("Auto Start/Stop Skill Tracker: " + Utils.getColouredBoolean(ToggleCommand.autoSkillTrackerToggled), "Automatically pauses skill tracker when opening a gui.");
 		melodyTooltips = new FeatureButton("Hide tooltips in Melody's Harp: " + Utils.getColouredBoolean(ToggleCommand.melodyTooltips), "Hides tooltips in Melody's Harp.");
@@ -156,13 +174,24 @@ public class DankerGui extends GuiScreen {
 		giantHP = new FeatureButton("Display Giant HP: " + Utils.getColouredBoolean(ToggleCommand.giantHP), "Displays health of Sadan's giants during F6 bossfight and F7 blood room.");
 		hidePetCandy = new FeatureButton("Hide Pet Candy: " + Utils.getColouredBoolean(ToggleCommand.hidePetCandy), "Hide pet candy in pet tooltips.");
 		highlightCommissions = new FeatureButton("Highlight Commissions: " + Utils.getColouredBoolean(ToggleCommand.highlightCommissions), "Show which commissions are completed.");
+		customColouredNames = new FeatureButton("Custom Name Colors: " + Utils.getColouredBoolean(ToggleCommand.customColouredNames), "Replaces some player's usernames with a custom color.");
+		endOfFarmAlert = new FeatureButton("Alert When Reaching End of Farm: " + Utils.getColouredBoolean(ToggleCommand.endOfFarmAlert), "Alerts when you go past coords set with /dsmfarmlength.");
+		gemstoneLore = new FeatureButton("Applied Gemstones in Lore: " + Utils.getColouredBoolean(ToggleCommand.gemstoneLore), "Adds applied gemstones to item tooltip.");
+		autoAcceptReparty = new FeatureButton("Auto Accept Reparty: " + Utils.getColouredBoolean(ToggleCommand.autoAcceptReparty), "Automatically rejoins parties when disbanded and invited.");
+		abilityCooldown = new FeatureButton("Ability Cooldowns: " + Utils.getColouredBoolean(ToggleCommand.abilityCooldowns), "Displays ability cooldowns.");
+		dungeonScore = new FeatureButton("Dungeon Score Display: " + Utils.getColouredBoolean(ToggleCommand.dungeonScore), "Displays an estimated dungeon score with secrets.");
+		hideArmour = new FeatureButton("Hide Player Armour: " + Utils.getColouredBoolean(ToggleCommand.hideArmour), "Makes player armour invisible, showing their skin.");
+		autoJoinSkyblock = new FeatureButton("Automatically Join Skyblock: " + Utils.getColouredBoolean(ToggleCommand.autoJoinSkyblock), "Automatically join Skyblock when you join Hypixel.\nYou have an addiction.");
 
 		allButtons.clear();
 		allButtons.add(changeDisplay);
+		allButtons.add(onlySlayer);
 		allButtons.add(puzzleSolvers);
 		allButtons.add(experimentationTableSolvers);
 		allButtons.add(skillTracker);
 		allButtons.add(customMusic);
+		allButtons.add(crystalHollowWaypoints);
+		allButtons.add(alerts);
 		allButtons.add(outlineText);
 		allButtons.add(pickBlock);
 		allButtons.add(coords);
@@ -170,6 +199,7 @@ public class DankerGui extends GuiScreen {
 		allButtons.add(cakeTimer);
 		allButtons.add(skill50Display);
 		allButtons.add(slayerCount);
+		allButtons.add(masterSPlusDisplay);
 		allButtons.add(spiritBearAlert);
 		allButtons.add(sceptreMessages);
 		allButtons.add(midasStaffMessages);
@@ -190,6 +220,7 @@ public class DankerGui extends GuiScreen {
 		allButtons.add(dungeonTimer);
 		allButtons.add(stopSalvageStarred);
 		allButtons.add(watcherReadyMessage);
+		allButtons.add(flowerWeapons);
 		allButtons.add(notifySlayerSlain);
 		allButtons.add(necronNotifications);
 		allButtons.add(bonzoTimer);
@@ -202,6 +233,14 @@ public class DankerGui extends GuiScreen {
 		allButtons.add(giantHP);
 		allButtons.add(hidePetCandy);
 		allButtons.add(highlightCommissions);
+		allButtons.add(customColouredNames);
+		allButtons.add(endOfFarmAlert);
+		allButtons.add(gemstoneLore);
+		allButtons.add(autoAcceptReparty);
+		allButtons.add(abilityCooldown);
+		allButtons.add(dungeonScore);
+		allButtons.add(hideArmour);
+		allButtons.add(autoJoinSkyblock);
 
 		search.setText(initSearchText);
 		search.setVisible(true);
@@ -247,8 +286,7 @@ public class DankerGui extends GuiScreen {
 		super.drawScreen(mouseX, mouseY, partialTicks);
 
 		String pageText = "Page: " + page + "/" + (int) Math.ceil(foundButtons.size() / 7D);
-		int pageWidth = mc.fontRendererObj.getStringWidth(pageText);
-		new TextRenderer(mc, pageText, width / 2 - pageWidth / 2, 10, 1D);
+		RenderUtils.drawCenteredText(pageText, width, 10, 1D);
 
 		for (GuiButton button : this.buttonList) {
 			if (button instanceof FeatureButton && button.isMouseOver()) {
@@ -269,7 +307,7 @@ public class DankerGui extends GuiScreen {
 		} else if (button == backPage) {
 			mc.displayGuiScreen(new DankerGui(page - 1, search.getText()));
 		} else if (button == editLocations) {
-			DankersSkyblockMod.guiToOpen = "editlocations";
+			mc.displayGuiScreen(new EditLocationsGui());
 		} else if (button == githubLink) {
 			try {
 				Desktop.getDesktop().browse(new URI("https://github.com/bowser0000/SkyblockMod"));
@@ -283,15 +321,21 @@ public class DankerGui extends GuiScreen {
 				ex.printStackTrace();
 			}
 		} else if (button == changeDisplay) {
-			DankersSkyblockMod.guiToOpen = "displaygui";
+			mc.displayGuiScreen(new DisplayGui());
+		} else if (button == onlySlayer) {
+			mc.displayGuiScreen(new OnlySlayerGui());
 		} else if (button == puzzleSolvers) {
-			DankersSkyblockMod.guiToOpen = "puzzlesolvers";
+			mc.displayGuiScreen(new PuzzleSolversGui(1));
 		} else if (button == experimentationTableSolvers) {
-			DankersSkyblockMod.guiToOpen = "experimentsolvers";
+			mc.displayGuiScreen(new ExperimentsGui());
 		} else if (button == skillTracker) {
-			DankersSkyblockMod.guiToOpen = "skilltracker";
+			mc.displayGuiScreen(new SkillTrackerGui());
 		} else if (button == customMusic) {
-			DankersSkyblockMod.guiToOpen = "custommusic";
+			mc.displayGuiScreen(new CustomMusicGui(1));
+		} else if (button == crystalHollowWaypoints) {
+			mc.displayGuiScreen(new CrystalHollowWaypointsGui(1));
+		} else if (button == alerts) {
+			mc.displayGuiScreen(new AlertsGui(1));
 		} else if (button == outlineText) {
 			ToggleCommand.outlineTextToggled = !ToggleCommand.outlineTextToggled;
 			ConfigHandler.writeBooleanConfig("toggles", "OutlineText", ToggleCommand.outlineTextToggled);
@@ -399,7 +443,7 @@ public class DankerGui extends GuiScreen {
 		} else if (button == necronNotifications) {
 			ToggleCommand.necronNotificationsToggled = !ToggleCommand.necronNotificationsToggled;
 			ConfigHandler.writeBooleanConfig("toggles", "NecronNotifications", ToggleCommand.necronNotificationsToggled);
-			necronNotifications.displayString = "Necron Phase Notifications: " + Utils.getColouredBoolean(ToggleCommand.necronNotificationsToggled);
+			necronNotifications.displayString = "Floor 7 Phase Notifications: " + Utils.getColouredBoolean(ToggleCommand.necronNotificationsToggled);
 		} else if (button == bonzoTimer) {
 			ToggleCommand.bonzoTimerToggled = !ToggleCommand.bonzoTimerToggled;
 			ConfigHandler.writeBooleanConfig("toggles", "BonzoTimer", ToggleCommand.bonzoTimerToggled);
@@ -408,6 +452,10 @@ public class DankerGui extends GuiScreen {
 			ToggleCommand.swapToPickBlockToggled = !ToggleCommand.swapToPickBlockToggled;
 			ConfigHandler.writeBooleanConfig("toggles", "PickBlock", ToggleCommand.swapToPickBlockToggled);
 			pickBlock.displayString = "Auto-Swap to Pick Block: " + Utils.getColouredBoolean(ToggleCommand.swapToPickBlockToggled);
+		} else if (button == flowerWeapons) {
+			ToggleCommand.flowerWeaponsToggled = !ToggleCommand.flowerWeaponsToggled;
+			ConfigHandler.writeBooleanConfig("toggles", "FlowerWeapons", ToggleCommand.flowerWeaponsToggled);
+			flowerWeapons.displayString = "Prevent Placing FoT/Spirit Sceptre: " + Utils.getColouredBoolean(ToggleCommand.flowerWeaponsToggled);
 		} else if (button == autoSkillTracker) {
 			ToggleCommand.autoSkillTrackerToggled = !ToggleCommand.autoSkillTrackerToggled;
 			ConfigHandler.writeBooleanConfig("toggles", "AutoSkillTracker", ToggleCommand.autoSkillTrackerToggled);
@@ -448,6 +496,42 @@ public class DankerGui extends GuiScreen {
 			ToggleCommand.highlightCommissions = !ToggleCommand.highlightCommissions;
 			ConfigHandler.writeBooleanConfig("toggles", "HighlightCommissions", ToggleCommand.highlightCommissions);
 			highlightCommissions.displayString = "Highlight Commissions: " + Utils.getColouredBoolean(ToggleCommand.highlightCommissions);
+		} else if (button == customColouredNames) {
+			ToggleCommand.customColouredNames = !ToggleCommand.customColouredNames;
+			ConfigHandler.writeBooleanConfig("toggles", "CustomColouredNames", ToggleCommand.customColouredNames);
+			customColouredNames.displayString = "Custom Name Colors: " + Utils.getColouredBoolean(ToggleCommand.customColouredNames);
+		} else if (button == endOfFarmAlert) {
+			ToggleCommand.endOfFarmAlert = !ToggleCommand.endOfFarmAlert;
+			ConfigHandler.writeBooleanConfig("toggles", "EndOfFarmAlert", ToggleCommand.endOfFarmAlert);
+			endOfFarmAlert.displayString = "Alert When Reaching End of Farm: " + Utils.getColouredBoolean(ToggleCommand.endOfFarmAlert);
+		} else if (button == gemstoneLore) {
+			ToggleCommand.gemstoneLore = !ToggleCommand.gemstoneLore;
+			ConfigHandler.writeBooleanConfig("toggles", "GemstoneLore", ToggleCommand.gemstoneLore);
+			gemstoneLore.displayString = "Applied Gemstones in Lore: " + Utils.getColouredBoolean(ToggleCommand.gemstoneLore);
+		} else if (button == autoAcceptReparty) {
+			ToggleCommand.autoAcceptReparty = !ToggleCommand.autoAcceptReparty;
+			ConfigHandler.writeBooleanConfig("toggles", "AutoAcceptReparty", ToggleCommand.autoAcceptReparty);
+			autoAcceptReparty.displayString = "Auto Accept Reparty: " + Utils.getColouredBoolean(ToggleCommand.autoAcceptReparty);
+		} else if (button == abilityCooldown) {
+			ToggleCommand.abilityCooldowns = !ToggleCommand.abilityCooldowns;
+			ConfigHandler.writeBooleanConfig("toggles", "AbilityCooldowns", ToggleCommand.abilityCooldowns);
+			abilityCooldown.displayString = "Ability Cooldowns: " + Utils.getColouredBoolean(ToggleCommand.abilityCooldowns);
+		} else if (button == dungeonScore) {
+			ToggleCommand.dungeonScore = !ToggleCommand.dungeonScore;
+			ConfigHandler.writeBooleanConfig("toggles", "DungeonScore", ToggleCommand.dungeonScore);
+			dungeonScore.displayString = "Dungeon Score Display: " + Utils.getColouredBoolean(ToggleCommand.dungeonScore);
+		} else if (button == masterSPlusDisplay) {
+			ToggleCommand.masterSPlusDisplay = !ToggleCommand.masterSPlusDisplay;
+			ConfigHandler.writeBooleanConfig("toggles", "MasterSPlusDisplay", ToggleCommand.masterSPlusDisplay);
+			masterSPlusDisplay.displayString = "Display MM S+ Runs: " + Utils.getColouredBoolean(ToggleCommand.masterSPlusDisplay);
+		} else if (button == hideArmour) {
+			ToggleCommand.hideArmour = !ToggleCommand.hideArmour;
+			ConfigHandler.writeBooleanConfig("toggles", "HideArmour", ToggleCommand.hideArmour);
+			hideArmour.displayString = "Hide Player Armour: " + Utils.getColouredBoolean(ToggleCommand.hideArmour);
+		} else if (button == autoJoinSkyblock) {
+			ToggleCommand.autoJoinSkyblock = !ToggleCommand.autoJoinSkyblock;
+			ConfigHandler.writeBooleanConfig("toggles", "AutoJoinSkyblock", ToggleCommand.autoJoinSkyblock);
+			autoJoinSkyblock.displayString = "Automatically Join Skyblock: " + Utils.getColouredBoolean(ToggleCommand.autoJoinSkyblock);
 		}
 	}
 

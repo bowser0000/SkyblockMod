@@ -2,6 +2,7 @@ package me.Danker.features.puzzlesolvers;
 
 import me.Danker.DankersSkyblockMod;
 import me.Danker.commands.ToggleCommand;
+import me.Danker.utils.RenderUtils;
 import me.Danker.utils.Utils;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
@@ -81,9 +82,10 @@ public class CreeperSolver {
                 Vec3 pos1 = creeperLines.get(i)[0];
                 Vec3 pos2 = creeperLines.get(i)[1];
                 int colour = CREEPER_COLOURS[i % 10];
-                Utils.draw3DLine(pos1, pos2, colour, 2, true, event.partialTicks);
-                Utils.drawFilled3DBox(new AxisAlignedBB(pos1.xCoord - 0.51, pos1.yCoord - 0.51, pos1.zCoord - 0.51, pos1.xCoord + 0.51, pos1.yCoord + 0.51, pos1.zCoord + 0.51), colour, true, true, event.partialTicks);
-                Utils.drawFilled3DBox(new AxisAlignedBB(pos2.xCoord - 0.51, pos2.yCoord - 0.51, pos2.zCoord - 0.51, pos2.xCoord + 0.51, pos2.yCoord + 0.51, pos2.zCoord + 0.51), colour, true, true, event.partialTicks);
+
+                if (ToggleCommand.creeperLinesToggled) RenderUtils.draw3DLine(pos1, pos2, colour, 2, true, event.partialTicks);
+                RenderUtils.drawFilled3DBox(new AxisAlignedBB(pos1.xCoord - 0.51, pos1.yCoord - 0.51, pos1.zCoord - 0.51, pos1.xCoord + 0.51, pos1.yCoord + 0.51, pos1.zCoord + 0.51), colour, true, true, event.partialTicks);
+                RenderUtils.drawFilled3DBox(new AxisAlignedBB(pos2.xCoord - 0.51, pos2.yCoord - 0.51, pos2.zCoord - 0.51, pos2.xCoord + 0.51, pos2.yCoord + 0.51, pos2.zCoord + 0.51), colour, true, true, event.partialTicks);
             }
         }
     }

@@ -3,6 +3,7 @@ package me.Danker.features.puzzlesolvers;
 import me.Danker.DankersSkyblockMod;
 import me.Danker.commands.ToggleCommand;
 import me.Danker.utils.BoulderUtils;
+import me.Danker.utils.RenderUtils;
 import me.Danker.utils.Utils;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
@@ -145,7 +146,7 @@ public class BoulderSolver {
             int[] currentBlockArray = route.get(currentStep);
             AxisAlignedBB currentBoulder = BoulderUtils.getBoulder(currentBlockArray[0], currentBlockArray[1], chest, boulderRoomDirection);
             if (currentBoulder == null) return;
-            Utils.drawFilled3DBox(currentBoulder, BOULDER_COLOUR, true, false, event.partialTicks);
+            RenderUtils.drawFilled3DBox(currentBoulder, BOULDER_COLOUR, true, false, event.partialTicks);
             char direction;
             switch (currentBlockArray[2]) {
                 case 1:

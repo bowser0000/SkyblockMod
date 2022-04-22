@@ -1,18 +1,14 @@
 package me.Danker.utils;
 
 import me.Danker.DankersSkyblockMod;
+import me.Danker.features.ColouredNames;
 import me.Danker.features.GoldenEnchants;
+import me.Danker.handlers.APIHandler;
+import me.Danker.handlers.ConfigHandler;
 import me.Danker.handlers.ScoreboardHandler;
-import me.Danker.handlers.TextRenderer;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.Gui;
-import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.network.NetworkPlayerInfo;
-import net.minecraft.client.renderer.*;
-import net.minecraft.client.renderer.entity.RenderManager;
-import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.item.EntityItemFrame;
 import net.minecraft.entity.player.EntityPlayer;
@@ -22,20 +18,18 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.scoreboard.ScoreObjective;
 import net.minecraft.util.*;
-import org.lwjgl.opengl.GL11;
 
-import java.awt.*;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 public class Utils {
 	
 	public static boolean inSkyblock = false;
 	public static boolean inDungeons = false;
+	public static DungeonFloor currentFloor = DungeonFloor.NONE;
+	public static String tabLocation = "";
 	public static int[] skillXPPerLevel = {0, 50, 125, 200, 300, 500, 750, 1000, 1500, 2000, 3500, 5000, 7500, 10000, 15000, 20000, 30000, 50000,
 										   75000, 100000, 200000, 300000, 400000, 500000, 600000, 700000, 800000, 900000, 1000000, 1100000,
 										   1200000, 1300000, 1400000, 1500000, 1600000, 1700000, 1800000, 1900000, 2000000, 2100000, 2200000,
@@ -47,6 +41,15 @@ public class Utils {
 									  19000000, 24000000, 30000000, 38000000, 48000000, 60000000, 75000000, 93000000, 116250000};
 	static int[] expertiseKills = {50, 100, 250, 500, 1000, 2500, 5500, 10000, 15000};
 	static Pattern boldPattern = Pattern.compile("(?i)\\u00A7L");
+	static Map<Character, Integer> romanNumerals = new HashMap<Character, Integer>(){{
+		put('I', 1);
+		put('V', 5);
+		put('X', 10);
+		put('L', 50);
+		put('C', 100);
+		put('D', 500);
+		put('M', 1000);
+	}};
 	
     public static int getItems(String item) {
     	Minecraft mc = Minecraft.getMinecraft();
@@ -99,29 +102,6 @@ public class Utils {
 		DankersSkyblockMod.showTitle = true;
 		DankersSkyblockMod.titleText = text;
 	}
-	
-	public static void drawTitle(String text) {
-		Minecraft mc = Minecraft.getMinecraft();
-		ScaledResolution scaledResolution = new ScaledResolution(mc);
-		
-		int height = scaledResolution.getScaledHeight();
-		int width = scaledResolution.getScaledWidth();
-		int drawHeight = 0;
-		String[] splitText = text.split("\n");
-		for (String title : splitText) {
-			int textLength = mc.fontRendererObj.getStringWidth(title);
-
-			double scale = 4;
-			if (textLength * scale > (width * 0.9F)) {
-				scale = (width * 0.9F) / (float) textLength;
-			}
-
-			int titleX = (int) ((width / 2) - (textLength * scale / 2));
-			int titleY = (int) ((height * 0.45) / scale) + (int) (drawHeight * scale);
-			new TextRenderer(mc, title, titleX, titleY, scale);
-			drawHeight += mc.fontRendererObj.FONT_HEIGHT;
-		}
-	}
 
 	public static boolean isOnHypixel() {
 		Minecraft mc = Minecraft.getMinecraft();
@@ -156,6 +136,46 @@ public class Utils {
     	inDungeons = false;
 	}
 
+	public static void checkForDungeonFloor() {
+		if (inDungeons) {
+			List<String> scoreboard = ScoreboardHandler.getSidebarLines();
+
+			for (String s : scoreboard) {
+				String sCleaned = ScoreboardHandler.cleanSB(s);
+
+				if (sCleaned.contains("The Catacombs (")) {
+					String floor = sCleaned.substring(sCleaned.indexOf("(") + 1, sCleaned.indexOf(")"));
+
+					try {
+						currentFloor = DungeonFloor.valueOf(floor);
+					} catch (IllegalArgumentException ex) {
+						currentFloor = DungeonFloor.NONE;
+						ex.printStackTrace();
+					}
+
+					break;
+				}
+			}
+		} else {
+			currentFloor = DungeonFloor.NONE;
+		}
+	}
+
+	public static void checkTabLocation() {
+    	if (inSkyblock) {
+			Collection<NetworkPlayerInfo> players = Minecraft.getMinecraft().getNetHandler().getPlayerInfoMap();
+			for (NetworkPlayerInfo player : players) {
+				if (player == null || player.getDisplayName() == null) continue;
+				String text = player.getDisplayName().getUnformattedText();
+				if (text.startsWith("Area: ")) {
+					tabLocation = text.substring(text.indexOf(":") + 2);
+					return;
+				}
+			}
+		}
+    	tabLocation = "";
+	}
+
 	public static boolean isInScoreboard(String text) {
 		List<String> scoreboard = ScoreboardHandler.getSidebarLines();
 		for (String s : scoreboard) {
@@ -180,20 +200,6 @@ public class Utils {
 		double result = ((double) num1 * 100D) / (double) num2;
 		result = Math.round(result * 100D) / 100D;
 		return result;
-	}
-	
-	public static void drawOnSlot(int size, int xSlotPos, int ySlotPos, int colour) {
-		ScaledResolution sr = new ScaledResolution(Minecraft.getMinecraft());
-		int guiLeft = (sr.getScaledWidth() - 176) / 2;
-		int guiTop = (sr.getScaledHeight() - 222) / 2;
-		int x = guiLeft + xSlotPos;
-		int y = guiTop + ySlotPos;
-		// Move down when chest isn't 6 rows
-		if (size != 90) y += (6 - (size - 36) / 9) * 9;
-		
-		GL11.glTranslated(0, 0, 1);
-		Gui.drawRect(x, y, x + 16, y + 16, colour);
-		GL11.glTranslated(0, 0, -1);
 	}
 	
 	public static String getTimeBetween(double timeOne, double timeTwo) {
@@ -246,10 +252,10 @@ public class Utils {
 			xpAdded += dungeonsXPPerLevel[i];
 			if (xp < xpAdded) {
 				double level =  (i - 1) + (xp - (xpAdded - dungeonsXPPerLevel[i])) / dungeonsXPPerLevel[i];
-				return (double) Math.round(level * 100) / 100;
+				return (double) Math.round(level * 100D) / 100;
 			}
 		}
-		return 50D;
+		return 50D + MathHelper.clamp_double(Math.round((xp - 569809640D) / 200000000D * 100D) / 100D, 0D, 49D);
 	}
 	
 	public static int expertiseKillsLeft(int kills) {
@@ -260,7 +266,8 @@ public class Utils {
 		}
 		return -1;
 	}
-	
+
+	// Only used when over limit
 	public static int getPastXpEarned(int currentLevelXp, int limit) {
 		if (currentLevelXp == 0) {
 			int xpAdded = 0;
@@ -274,6 +281,16 @@ public class Utils {
 			if (currentLevelXp == skillXPPerLevel[i]) return xpAdded;
 		}
 		return 0;
+	}
+
+	public static double getTotalXpEarned(int currentLevel, double percentage) {
+    	double progress = 0;
+    	if (currentLevel < 60) progress = skillXPPerLevel[currentLevel + 1] * (percentage / 100D);
+    	double xpAdded = 0;
+    	for (int i = 1; i <= currentLevel; i++) {
+    		xpAdded += skillXPPerLevel[i];
+		}
+    	return xpAdded + progress;
 	}
 	
 	public static String getColouredBoolean(boolean bool) {
@@ -310,180 +327,6 @@ public class Utils {
 			String stripped = StringUtils.stripControlCodes(line);
 			return stripped.startsWith("Item Ability:") && stripped.endsWith("RIGHT CLICK");
 		});
-	}
-	
-	public static void draw3DLine(Vec3 pos1, Vec3 pos2, int colourInt, int lineWidth, boolean depth, float partialTicks) {
-		Entity render = Minecraft.getMinecraft().getRenderViewEntity();
-		WorldRenderer worldRenderer = Tessellator.getInstance().getWorldRenderer();
-		Color colour = new Color(colourInt);
-		
-		double realX = render.lastTickPosX + (render.posX - render.lastTickPosX) * partialTicks;
-		double realY = render.lastTickPosY + (render.posY - render.lastTickPosY) * partialTicks;
-		double realZ = render.lastTickPosZ + (render.posZ - render.lastTickPosZ) * partialTicks;
-		
-		GlStateManager.pushMatrix();
-		GlStateManager.translate(-realX, -realY, -realZ);
-		GlStateManager.disableTexture2D();
-		GlStateManager.enableBlend();
-		GlStateManager.disableAlpha();
-		GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
-		GL11.glLineWidth(lineWidth);
-		if (!depth) {
-			GL11.glDisable(GL11.GL_DEPTH_TEST);
-			GlStateManager.depthMask(false);
-		}
-		GlStateManager.color(colour.getRed() / 255f, colour.getGreen() / 255f, colour.getBlue() / 255f, colour.getAlpha() / 255f);
-		worldRenderer.begin(GL11.GL_LINE_STRIP, DefaultVertexFormats.POSITION);
-		
-		worldRenderer.pos(pos1.xCoord, pos1.yCoord, pos1.zCoord).endVertex();
-		worldRenderer.pos(pos2.xCoord, pos2.yCoord, pos2.zCoord).endVertex();
-		Tessellator.getInstance().draw();
-
-		GlStateManager.translate(realX, realY, realZ);
-		if (!depth) {
-			GL11.glEnable(GL11.GL_DEPTH_TEST);
-			GlStateManager.depthMask(true);
-		}
-		GlStateManager.disableBlend();
-		GlStateManager.enableAlpha();
-		GlStateManager.enableTexture2D();
-		GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-		GlStateManager.popMatrix();
-	}
-	
-	public static void draw3DString(BlockPos pos, String text, int colour, float partialTicks) {
-		Minecraft mc = Minecraft.getMinecraft();
-		EntityPlayer player = mc.thePlayer;
-		double x = (pos.getX() - player.lastTickPosX) + ((pos.getX() - player.posX) - (pos.getX() - player.lastTickPosX)) * partialTicks;
-		double y = (pos.getY() - player.lastTickPosY) + ((pos.getY() - player.posY) - (pos.getY() - player.lastTickPosY)) * partialTicks;
-		double z = (pos.getZ() - player.lastTickPosZ) + ((pos.getZ() - player.posZ) - (pos.getZ() - player.lastTickPosZ)) * partialTicks;
-		RenderManager renderManager = mc.getRenderManager();
-		
-		float f = 1.6F;
-		float f1 = 0.016666668F * f;
-		int width = mc.fontRendererObj.getStringWidth(text) / 2;
-		GlStateManager.pushMatrix();
-		GlStateManager.translate(x, y, z);
-		GL11.glNormal3f(0f, 1f, 0f);
-		GlStateManager.rotate(-renderManager.playerViewY, 0f, 1f, 0f);
-		GlStateManager.rotate(renderManager.playerViewX, 1f, 0f, 0f);
-		GlStateManager.scale(-f1, -f1, -f1);
-		GlStateManager.enableBlend();
-		GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
-		mc.fontRendererObj.drawString(text, -width, 0, colour);
-		GlStateManager.disableBlend();
-		GlStateManager.popMatrix();
-	}
-
-	public static void draw3DBox(AxisAlignedBB aabb, int colourInt, float partialTicks) {
-    	Entity render = Minecraft.getMinecraft().getRenderViewEntity();
-		Color colour = new Color(colourInt);
-		
-		double realX = render.lastTickPosX + (render.posX - render.lastTickPosX) * partialTicks;
-		double realY = render.lastTickPosY + (render.posY - render.lastTickPosY) * partialTicks;
-		double realZ = render.lastTickPosZ + (render.posZ - render.lastTickPosZ) * partialTicks;
-		
-		GlStateManager.pushMatrix();
-		GlStateManager.translate(-realX, -realY, -realZ);
-		GlStateManager.disableTexture2D();
-		GlStateManager.enableBlend();
-		GlStateManager.disableAlpha();
-		GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
-		GL11.glLineWidth(2);
-
-		RenderGlobal.drawOutlinedBoundingBox(aabb, colour.getRed(), colour.getGreen(), colour.getBlue(), colour.getAlpha());
-
-		GlStateManager.translate(realX, realY, realZ);
-		GlStateManager.disableBlend();
-		GlStateManager.enableAlpha();
-		GlStateManager.enableTexture2D();
-		GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-		GlStateManager.popMatrix();
-	}
-
-	public static void drawFilled3DBox(AxisAlignedBB aabb, int colourInt, boolean translucent, boolean depth, float partialTicks) {
-		Entity render = Minecraft.getMinecraft().getRenderViewEntity();
-		WorldRenderer worldRenderer = Tessellator.getInstance().getWorldRenderer();
-		Color colour = new Color(colourInt);
-
-		double realX = render.lastTickPosX + (render.posX - render.lastTickPosX) * partialTicks;
-		double realY = render.lastTickPosY + (render.posY - render.lastTickPosY) * partialTicks;
-		double realZ = render.lastTickPosZ + (render.posZ - render.lastTickPosZ) * partialTicks;
-
-		GlStateManager.pushMatrix();
-		GlStateManager.pushAttrib();
-		GlStateManager.translate(-realX, -realY, -realZ);
-		GlStateManager.disableTexture2D();
-		GlStateManager.enableAlpha();
-		GlStateManager.enableBlend();
-		GlStateManager.disableCull();
-		GlStateManager.tryBlendFuncSeparate(770, translucent ? 1 : 771, 1, 0);
-		if (!depth) {
-			GL11.glDisable(GL11.GL_DEPTH_TEST);
-			GlStateManager.depthMask(false);
-		}
-		GlStateManager.color(colour.getRed() / 255f, colour.getGreen() / 255f, colour.getBlue() / 255f, colour.getAlpha() / 255f);
-		worldRenderer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION);
-		// Bottom
-		worldRenderer.pos(aabb.minX, aabb.minY, aabb.minZ).endVertex();
-		worldRenderer.pos(aabb.maxX, aabb.minY, aabb.minZ).endVertex();
-		worldRenderer.pos(aabb.maxX, aabb.minY, aabb.maxZ).endVertex();
-		worldRenderer.pos(aabb.minX, aabb.minY, aabb.maxZ).endVertex();
-		// Top
-		worldRenderer.pos(aabb.minX, aabb.maxY, aabb.minZ).endVertex();
-		worldRenderer.pos(aabb.maxX, aabb.maxY, aabb.minZ).endVertex();
-		worldRenderer.pos(aabb.maxX, aabb.maxY, aabb.maxZ).endVertex();
-		worldRenderer.pos(aabb.minX, aabb.maxY, aabb.maxZ).endVertex();
-		// West
-		worldRenderer.pos(aabb.minX, aabb.minY, aabb.minZ).endVertex();
-		worldRenderer.pos(aabb.minX, aabb.maxY, aabb.minZ).endVertex();
-		worldRenderer.pos(aabb.minX, aabb.maxY, aabb.maxZ).endVertex();
-		worldRenderer.pos(aabb.minX, aabb.minY, aabb.maxZ).endVertex();
-		// East
-		worldRenderer.pos(aabb.maxX, aabb.minY, aabb.minZ).endVertex();
-		worldRenderer.pos(aabb.maxX, aabb.maxY, aabb.minZ).endVertex();
-		worldRenderer.pos(aabb.maxX, aabb.maxY, aabb.maxZ).endVertex();
-		worldRenderer.pos(aabb.maxX, aabb.minY, aabb.maxZ).endVertex();
-		// North
-		worldRenderer.pos(aabb.minX, aabb.minY, aabb.minZ).endVertex();
-		worldRenderer.pos(aabb.maxX, aabb.minY, aabb.minZ).endVertex();
-		worldRenderer.pos(aabb.maxX, aabb.maxY, aabb.minZ).endVertex();
-		worldRenderer.pos(aabb.minX, aabb.maxY, aabb.minZ).endVertex();
-		// South
-		worldRenderer.pos(aabb.minX, aabb.minY, aabb.maxZ).endVertex();
-		worldRenderer.pos(aabb.maxX, aabb.minY, aabb.maxZ).endVertex();
-		worldRenderer.pos(aabb.maxX, aabb.maxY, aabb.maxZ).endVertex();
-		worldRenderer.pos(aabb.minX, aabb.maxY, aabb.maxZ).endVertex();
-		Tessellator.getInstance().draw();
-
-		GlStateManager.translate(realX, realY, realZ);
-		if (!depth) {
-			GL11.glEnable(GL11.GL_DEPTH_TEST);
-			GlStateManager.depthMask(true);
-		}
-		GlStateManager.enableCull();
-		GlStateManager.disableAlpha();
-		GlStateManager.disableBlend();
-		GlStateManager.enableTexture2D();
-		GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-		GlStateManager.popAttrib();
-		GlStateManager.popMatrix();
-	}
-
-	public static void renderItem(ItemStack item, float x, float y, float z) {
-
-		GlStateManager.enableRescaleNormal();
-		RenderHelper.enableGUIStandardItemLighting();
-		GlStateManager.enableDepth();
-
-		GlStateManager.pushMatrix();
-		GlStateManager.translate(x, y, z);
-		Minecraft.getMinecraft().getRenderItem().renderItemIntoGUI(item, 0, 0);
-		GlStateManager.popMatrix();
-
-		GlStateManager.disableDepth();
-		RenderHelper.disableStandardItemLighting();
-		GlStateManager.disableRescaleNormal();
 	}
 	
 	public static BlockPos getFirstBlockPosAfterVectors(Minecraft mc, Vec3 pos1, Vec3 pos2, int strength, int distance) {
@@ -546,7 +389,125 @@ public class Utils {
 	}
 
 	public static String removeBold(String text) {
-		return boldPattern.matcher(text).replaceAll("");
+    	return boldPattern.matcher(text).replaceAll("");
 	}
-	
+
+	public static int getIntFromString(String text, boolean romanNumeral) {
+    	if (text.matches(".*\\d.*")) {
+			return Integer.parseInt(StringUtils.stripControlCodes(text).replaceAll("[^\\d]", ""));
+		} else if (romanNumeral) {
+    		int number = 0;
+
+    		for (int i = 0; i < text.length(); i++) {
+    			if (!romanNumerals.containsKey(text.charAt(i))) continue;
+    			int roman = romanNumerals.get(text.charAt(i));
+
+				if (i != text.length() - 1 && romanNumerals.containsKey(text.charAt(i + 1)) && roman < romanNumerals.get(text.charAt(i + 1))) {
+					number += romanNumerals.get(text.charAt(i + 1)) - roman;
+					i++;
+				} else {
+					number += roman;
+				}
+			}
+
+    		return number;
+		}
+
+    	return -1;
+	}
+
+	public static boolean skillsInitialized() {
+    	return DankersSkyblockMod.miningLevel != -1;
+	}
+
+	public static int initializeSkill(ItemStack skillStack, String configValue) {
+    	int level = -1;
+
+    	if (skillStack != null) {
+    		String display = skillStack.getDisplayName();
+    		if (display.startsWith("§a")) {
+    			if (display.contains(" ")) {
+    				level = Utils.getIntFromString(display.substring(display.indexOf(" ") + 1), true);
+				} else {
+    				level = 0;
+				}
+			}
+		}
+
+		ConfigHandler.writeIntConfig("skills", configValue, level);
+		return level;
+	}
+
+	public static void refreshRepo() {
+		DankersSkyblockMod.data = APIHandler.getResponse("https://raw.githubusercontent.com/bowser0000/SkyblockMod-REPO/main/data.json", false);
+		System.out.println("Loaded data from GitHub?: " + (DankersSkyblockMod.data != null && DankersSkyblockMod.data.has("trivia")));
+		ColouredNames.users = DankersSkyblockMod.data.get("colourednames").getAsJsonObject().entrySet().stream()
+				.map(Map.Entry::getKey)
+				.collect(Collectors.toCollection(ArrayList::new));
+		System.out.println("Refreshed DSM repo at " + System.currentTimeMillis());
+	}
+
+	public static int getCooldownFromAbility(String ability) {
+    	EntityPlayer player = Minecraft.getMinecraft().thePlayer;
+		boolean foundAbility = false;
+
+		List<ItemStack> itemsToSearch = new ArrayList<>();
+
+		for (int i = 0; i < 8; i++) {
+			ItemStack hotbarItem = player.inventory.getStackInSlot(i);
+			if (hotbarItem == null) continue;
+			itemsToSearch.add(hotbarItem);
+		}
+
+		for (int i = 0; i < 4; i++) {
+			ItemStack armorItem = player.inventory.armorItemInSlot(0);
+			if (armorItem == null) continue;
+			itemsToSearch.add(armorItem);
+		}
+
+		for (ItemStack item : itemsToSearch) {
+			List<String> tooltip = item.getTooltip(player, false);
+
+			for (String line : tooltip) {
+				if (line.contains(EnumChatFormatting.GOLD + "Ability: ") || line.contains(EnumChatFormatting.GOLD + "Full Set Bonus: ")) {
+					if (line.contains(EnumChatFormatting.GOLD + "Ability: " + ability)) {
+						foundAbility = true;
+						continue;
+					} else if (foundAbility) {
+						break;
+					}
+				}
+
+				if (foundAbility && line.contains(EnumChatFormatting.DARK_GRAY + "Cooldown: ")) {
+					return Integer.parseInt(StringUtils.stripControlCodes(line).replaceAll("[^\\d]", ""));
+				}
+			}
+		}
+
+    	return 0;
+	}
+
+	public static double getCooldownReductionFromLevel(int level) {
+    	return (Math.floor(level / 2D) + 25) / 100D;
+	}
+
+	public enum DungeonFloor {
+		NONE,
+		E0,
+		F1,
+		F2,
+		F3,
+		F4,
+		F5,
+		F6,
+		F7,
+		M1,
+		M2,
+		M3,
+		M4,
+		M5,
+		M6,
+		M7
+	}
+
 }

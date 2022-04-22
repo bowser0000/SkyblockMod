@@ -2,6 +2,7 @@ package me.Danker.features.puzzlesolvers;
 
 import me.Danker.commands.ToggleCommand;
 import me.Danker.events.GuiChestBackgroundDrawnEvent;
+import me.Danker.utils.RenderUtils;
 import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.inventory.Slot;
@@ -45,7 +46,7 @@ public class SelectAllColourSolver {
                         (terminalColorNeeded.equals("BLACK") && itemName.equals("INK SACK")) ||
                         (terminalColorNeeded.equals("BLUE") && itemName.equals("LAPIS LAZULI")) ||
                         (terminalColorNeeded.equals("BROWN") && itemName.equals("COCOA BEAN"))) {
-                    Utils.drawOnSlot(event.chestSize, slot.xDisplayPosition, slot.yDisplayPosition, 0xBF40FF40);
+                    RenderUtils.drawOnSlot(event.chestSize, slot.xDisplayPosition, slot.yDisplayPosition, 0xBF40FF40);
                 }
             }
         }

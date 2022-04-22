@@ -4,7 +4,7 @@ import me.Danker.DankersSkyblockMod;
 import me.Danker.commands.MoveCommand;
 import me.Danker.commands.ScaleCommand;
 import me.Danker.commands.ToggleCommand;
-import me.Danker.events.RenderOverlay;
+import me.Danker.events.RenderOverlayEvent;
 import me.Danker.handlers.TextRenderer;
 import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;
@@ -52,86 +52,127 @@ public class SkillTracker {
         String[] actionBarSections = event.message.getUnformattedText().split(" {3,}");
 
         for (String section : actionBarSections) {
-            if (section.contains("+") && section.contains("/") && section.contains("(")) {
-                if (!section.contains("Runecrafting") && !section.contains("Carpentry")) {
-                    if (ToggleCommand.autoSkillTrackerToggled && System.currentTimeMillis() / 1000 - timeSinceGained <= 2) {
-                        if (skillStopwatch.isStarted() && skillStopwatch.isSuspended()) {
-                            skillStopwatch.resume();
-                        } else if (!skillStopwatch.isStarted()) {
-                            skillStopwatch.start();
-                        }
+            if (section.contains("+") && section.contains("(") && section.contains(")") && !section.contains("Runecrafting") && !section.contains("Carpentry")) {
+                if (ToggleCommand.autoSkillTrackerToggled && System.currentTimeMillis() / 1000 - timeSinceGained <= 2) {
+                    if (skillStopwatch.isStarted() && skillStopwatch.isSuspended()) {
+                        skillStopwatch.resume();
+                    } else if (!skillStopwatch.isStarted()) {
+                        skillStopwatch.start();
                     }
-                    timeSinceGained = System.currentTimeMillis() / 1000;
+                }
+                timeSinceGained = System.currentTimeMillis() / 1000;
 
+                String skill = section.substring(section.indexOf(" ") + 1, section.lastIndexOf(" "));
+                double totalXP;
+
+                if (section.contains("/")) {
                     int limit = section.contains("Farming") || section.contains("Enchanting") || section.contains("Mining") || section.contains("Combat") ? 60 : 50;
                     double currentXP = Double.parseDouble(section.substring(section.indexOf("(") + 1, section.indexOf("/")).replace(",", ""));
-                    int xpToLevelUp = Integer.parseInt(section.substring(section.indexOf("/") + 1, section.indexOf(")")).replaceAll(",", ""));
+
+                    int xpToLevelUp;
+                    String nextLevelXpString = section.substring(section.indexOf("/") + 1, section.indexOf(")")).replaceAll(",", "");
+                    if (nextLevelXpString.contains("k")) {
+                        xpToLevelUp = (int) (Double.parseDouble(nextLevelXpString.substring(0, nextLevelXpString.indexOf("k"))) * 1000);
+                    } else {
+                        xpToLevelUp = Integer.parseInt(nextLevelXpString);
+                    }
+
                     xpLeft = xpToLevelUp - currentXP;
                     int previousXP = Utils.getPastXpEarned(xpToLevelUp, limit);
-                    double totalXP = currentXP + previousXP;
-
-                    String skill = section.substring(section.indexOf(" ") + 1, section.lastIndexOf(" "));
-                    switch (skill) {
-                        case "Farming":
-                            lastSkill = "Farming";
-                            if (farmingXP != 0) {
-                                if (skillStopwatch.isStarted() && !skillStopwatch.isSuspended()) farmingXPGained += totalXP - farmingXP;
-                            }
-                            farmingXP = totalXP;
-                            break;
-                        case "Mining":
-                            lastSkill = "Mining";
-                            if (miningXP != 0) {
-                                if (skillStopwatch.isStarted() && !skillStopwatch.isSuspended()) miningXPGained += totalXP - miningXP;
-                            }
-                            miningXP = totalXP;
-                            break;
-                        case "Combat":
-                            lastSkill = "Combat";
-                            if (combatXP != 0) {
-                                if (skillStopwatch.isStarted() && !skillStopwatch.isSuspended()) combatXPGained += totalXP - combatXP;
-                            }
-                            combatXP = totalXP;
-                            break;
-                        case "Foraging":
-                            lastSkill = "Foraging";
-                            if (foragingXP != 0) {
-                                if (skillStopwatch.isStarted() && !skillStopwatch.isSuspended()) foragingXPGained += totalXP - foragingXP;
-                            }
-                            foragingXP = totalXP;
-                            break;
-                        case "Fishing":
-                            lastSkill = "Fishing";
-                            if (fishingXP != 0) {
-                                if (skillStopwatch.isStarted() && !skillStopwatch.isSuspended()) fishingXPGained += totalXP - fishingXP;
-                            }
-                            fishingXP = totalXP;
-                            break;
-                        case "Enchanting":
-                            lastSkill = "Enchanting";
-                            if (enchantingXP != 0) {
-                                if (skillStopwatch.isStarted() && !skillStopwatch.isSuspended()) enchantingXPGained += totalXP - enchantingXP;
-                            }
-                            enchantingXP = totalXP;
-                            break;
-                        case "Alchemy":
-                            lastSkill = "Alchemy";
-                            if (alchemyXP != 0) {
-                                if (skillStopwatch.isStarted() && !skillStopwatch.isSuspended()) alchemyXPGained += totalXP - alchemyXP;
-                            }
-                            alchemyXP = totalXP;
-                            break;
-                        default:
-                            System.err.println("Unknown skill.");
+                    totalXP = currentXP + previousXP;
+                } else {
+                    if (!Utils.skillsInitialized()) {
+                        return;
                     }
+
+                    int level = 1;
+                    if (section.contains("Farming")) {
+                        level = DankersSkyblockMod.farmingLevel;
+                    } else if (section.contains("Mining")) {
+                        level = DankersSkyblockMod.miningLevel;
+                    } else if (section.contains("Combat")) {
+                        level = DankersSkyblockMod.combatLevel;
+                    } else if (section.contains("Foraging")) {
+                        level = DankersSkyblockMod.foragingLevel;
+                    } else if (section.contains("Fishing")) {
+                        level = DankersSkyblockMod.fishingLevel;
+                    } else if (section.contains("Enchanting")) {
+                        level = DankersSkyblockMod.enchantingLevel;
+                    } else if (section.contains("Alchemy")) {
+                        level = DankersSkyblockMod.alchemyLevel;
+                    } else if (section.contains("Carpentry")) {
+                        level = DankersSkyblockMod.carpentryLevel;
+                    }
+
+                    totalXP = Utils.getTotalXpEarned(level, Double.parseDouble(section.substring(section.indexOf("(") + 1, section.indexOf("%"))));
+                    xpLeft = Utils.getTotalXpEarned(level + 1, 0) - totalXP;
+                }
+
+                switch (skill) {
+                    case "Farming":
+                        lastSkill = "Farming";
+                        if (farmingXP != 0) {
+                            if (skillStopwatch.isStarted() && !skillStopwatch.isSuspended()) farmingXPGained += totalXP - farmingXP;
+                        }
+                        farmingXP = totalXP;
+                        break;
+                    case "Mining":
+                        lastSkill = "Mining";
+                        if (miningXP != 0) {
+                            if (skillStopwatch.isStarted() && !skillStopwatch.isSuspended()) miningXPGained += totalXP - miningXP;
+                        }
+                        miningXP = totalXP;
+                        break;
+                    case "Combat":
+                        lastSkill = "Combat";
+                        if (combatXP != 0) {
+                            if (skillStopwatch.isStarted() && !skillStopwatch.isSuspended()) combatXPGained += totalXP - combatXP;
+                        }
+                        combatXP = totalXP;
+                        break;
+                    case "Foraging":
+                        lastSkill = "Foraging";
+                        if (foragingXP != 0) {
+                            if (skillStopwatch.isStarted() && !skillStopwatch.isSuspended()) foragingXPGained += totalXP - foragingXP;
+                        }
+                        foragingXP = totalXP;
+                        break;
+                    case "Fishing":
+                        lastSkill = "Fishing";
+                        if (fishingXP != 0) {
+                            if (skillStopwatch.isStarted() && !skillStopwatch.isSuspended()) fishingXPGained += totalXP - fishingXP;
+                        }
+                        fishingXP = totalXP;
+                        break;
+                    case "Enchanting":
+                        lastSkill = "Enchanting";
+                        if (enchantingXP != 0) {
+                            if (skillStopwatch.isStarted() && !skillStopwatch.isSuspended()) enchantingXPGained += totalXP - enchantingXP;
+                        }
+                        enchantingXP = totalXP;
+                        break;
+                    case "Alchemy":
+                        lastSkill = "Alchemy";
+                        if (alchemyXP != 0) {
+                            if (skillStopwatch.isStarted() && !skillStopwatch.isSuspended()) alchemyXPGained += totalXP - alchemyXP;
+                        }
+                        alchemyXP = totalXP;
+                        break;
+                    default:
+                        System.err.println("Unknown skill.");
                 }
             }
         }
     }
 
     @SubscribeEvent
-    public void renderPlayerInfo(RenderOverlay event) {
+    public void renderPlayerInfo(RenderOverlayEvent event) {
         if (showSkillTracker && Utils.inSkyblock) {
+            if (!Utils.skillsInitialized()) {
+                new TextRenderer(Minecraft.getMinecraft(), EnumChatFormatting.RED + "Please open the skill menu to use skill features. (/skills)", MoveCommand.skillTrackerXY[0], MoveCommand.skillTrackerXY[0], ScaleCommand.skillTrackerScale);
+                return;
+            }
+
             int xpPerHour;
             double xpToShow = 0;
             switch (lastSkill) {
@@ -196,12 +237,8 @@ public class SkillTracker {
 
     @SubscribeEvent
     public void onGuiOpen(GuiOpenEvent event) {
-        if (event.gui instanceof GuiChest) {
-            if (ToggleCommand.autoSkillTrackerToggled) {
-                if (skillStopwatch.isStarted() && !skillStopwatch.isSuspended()) {
-                    skillStopwatch.suspend();
-                }
-            }
+        if (event.gui instanceof GuiChest && ToggleCommand.autoSkillTrackerToggled && skillStopwatch.isStarted() && !skillStopwatch.isSuspended()) {
+            skillStopwatch.suspend();
         }
     }
 

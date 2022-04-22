@@ -1,6 +1,5 @@
 package me.Danker.gui;
 
-import me.Danker.DankersSkyblockMod;
 import me.Danker.commands.ToggleCommand;
 import me.Danker.handlers.ConfigHandler;
 import me.Danker.utils.Utils;
@@ -52,7 +51,7 @@ public class ExperimentsGui extends GuiScreen {
     @Override
     public void actionPerformed(GuiButton button) {
         if (button == goBack) {
-            DankersSkyblockMod.guiToOpen = "dankergui1";
+            mc.displayGuiScreen(new DankerGui(1, ""));
         } else if (button == ultrasequencer) {
             ToggleCommand.ultrasequencerToggled = !ToggleCommand.ultrasequencerToggled;
             ConfigHandler.writeBooleanConfig("toggles", "UltraSequencer", ToggleCommand.ultrasequencerToggled);

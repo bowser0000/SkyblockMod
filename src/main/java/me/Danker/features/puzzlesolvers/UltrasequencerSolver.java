@@ -1,17 +1,20 @@
 package me.Danker.features.puzzlesolvers;
 
 import me.Danker.commands.ToggleCommand;
+import me.Danker.events.ChestSlotClickedEvent;
 import me.Danker.events.GuiChestBackgroundDrawnEvent;
-import me.Danker.utils.Utils;
+import me.Danker.utils.RenderUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.inventory.GuiChest;
 import net.minecraft.inventory.ContainerChest;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.util.StringUtils;
 import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
+import org.lwjgl.input.Keyboard;
 
 import java.util.List;
 
@@ -50,6 +53,27 @@ public class UltrasequencerSolver {
     }
 
     @SubscribeEvent
+    public void onSlotClick(ChestSlotClickedEvent event) {
+        if (ToggleCommand.ultrasequencerToggled && event.inventoryName.startsWith("Ultrasequencer (")) {
+            IInventory inventory = event.inventory;
+            if (event.item == null) {
+                if (event.isCancelable() && !Keyboard.isKeyDown(Keyboard.KEY_LCONTROL) && !Keyboard.isKeyDown(Keyboard.KEY_RCONTROL))
+                    event.setCanceled(true);
+                return;
+            }
+            if (inventory.getStackInSlot(49).getDisplayName().equals("§aRemember the pattern!")) {
+                if (event.isCancelable()) event.setCanceled(true);
+            } else if (inventory.getStackInSlot(49).getDisplayName().startsWith("§7Timer: §a")) {
+                if (clickInOrderSlots[lastUltraSequencerClicked] != null && event.slot.getSlotIndex() != clickInOrderSlots[lastUltraSequencerClicked].getSlotIndex()) {
+                    if (event.isCancelable() && !Keyboard.isKeyDown(Keyboard.KEY_LCONTROL) && !Keyboard.isKeyDown(Keyboard.KEY_RCONTROL)) {
+                        event.setCanceled(true);
+                    }
+                }
+            }
+        }
+    }
+
+    @SubscribeEvent
     public void onGuiRender(GuiChestBackgroundDrawnEvent event) {
         if (ToggleCommand.ultrasequencerToggled && event.displayName.startsWith("Ultrasequencer (")) {
             List<Slot> invSlots = event.slots;
@@ -66,12 +90,12 @@ public class UltrasequencerSolver {
                     }
                     if (clickInOrderSlots[lastUltraSequencerClicked] != null) {
                         Slot nextSlot = clickInOrderSlots[lastUltraSequencerClicked];
-                        Utils.drawOnSlot(event.chestSize, nextSlot.xDisplayPosition, nextSlot.yDisplayPosition, ULTRASEQUENCER_NEXT + 0xE5000000);
+                        RenderUtils.drawOnSlot(event.chestSize, nextSlot.xDisplayPosition, nextSlot.yDisplayPosition, ULTRASEQUENCER_NEXT + 0xE5000000);
                     }
                     if (lastUltraSequencerClicked + 1 < clickInOrderSlots.length) {
                         if (clickInOrderSlots[lastUltraSequencerClicked + 1] != null) {
                             Slot nextSlot = clickInOrderSlots[lastUltraSequencerClicked + 1];
-                            Utils.drawOnSlot(event.chestSize, nextSlot.xDisplayPosition, nextSlot.yDisplayPosition, ULTRASEQUENCER_NEXT_TO_NEXT + 0xD7000000);
+                            RenderUtils.drawOnSlot(event.chestSize, nextSlot.xDisplayPosition, nextSlot.yDisplayPosition, ULTRASEQUENCER_NEXT_TO_NEXT + 0xD7000000);
                         }
                     }
                 }

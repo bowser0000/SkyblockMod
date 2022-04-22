@@ -4,7 +4,7 @@ import me.Danker.DankersSkyblockMod;
 import me.Danker.commands.MoveCommand;
 import me.Danker.commands.ScaleCommand;
 import me.Danker.commands.ToggleCommand;
-import me.Danker.events.RenderOverlay;
+import me.Danker.events.RenderOverlayEvent;
 import me.Danker.handlers.TextRenderer;
 import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;
@@ -38,7 +38,7 @@ public class LividSolver {
         World world = Minecraft.getMinecraft().theWorld;
         if (DankersSkyblockMod.tickAmount % 20 == 0) {
             if (ToggleCommand.lividSolverToggled && Utils.inDungeons && !foundLivid && world != null) {
-                if (Utils.isInScoreboard("The Catacombs (F5)")) {
+                if (Utils.currentFloor == Utils.DungeonFloor.F5 || Utils.currentFloor == Utils.DungeonFloor.M5) {
                     List<Entity> loadedLivids = new ArrayList<>();
                     List<Entity> entities = world.getLoadedEntityList();
                     for (Entity entity : entities) {
@@ -57,7 +57,7 @@ public class LividSolver {
     }
 
     @SubscribeEvent
-    public void renderPlayerInfo(RenderOverlay event) {
+    public void renderPlayerInfo(RenderOverlayEvent event) {
         if (ToggleCommand.lividSolverToggled && foundLivid && livid != null) {
             new TextRenderer(Minecraft.getMinecraft(), livid.getName().replace("" + EnumChatFormatting.BOLD, ""), MoveCommand.lividHpXY[0], MoveCommand.lividHpXY[1], ScaleCommand.lividHpScale);
         }

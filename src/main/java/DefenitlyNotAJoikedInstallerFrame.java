@@ -80,7 +80,7 @@ public class DefenitlyNotAJoikedInstallerFrame extends JFrame implements ActionL
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
             DefenitlyNotAJoikedInstallerFrame frame = new DefenitlyNotAJoikedInstallerFrame();
             frame.centerFrame(frame);
-            frame.show();
+            frame.setVisible(true);
 
         } catch (Exception ex) {
             showErrorPopup(ex);
@@ -421,10 +421,7 @@ public class DefenitlyNotAJoikedInstallerFrame extends JFrame implements ActionL
         File thisFile = getThisFile();
 
         if (thisFile != null) {
-            boolean inSubFolder = false;
-            if (IN_MODS_SUBFOLDER.matcher(modsFolder.getPath()).find()) {
-                inSubFolder = true;
-            }
+            boolean inSubFolder = IN_MODS_SUBFOLDER.matcher(modsFolder.getPath()).find();
 
             File newFile = new File(modsFolder, "Danker's Skyblock Mod - " + DankersSkyblockMod.VERSION + ".jar");
 
@@ -625,24 +622,6 @@ public class DefenitlyNotAJoikedInstallerFrame extends JFrame implements ActionL
         JScrollPane errorScrollPane = new JScrollPane(textArea);
         errorScrollPane.setPreferredSize(new Dimension(600, 400));
         JOptionPane.showMessageDialog(null, errorScrollPane, "Error", JOptionPane.ERROR_MESSAGE);
-    }
-
-    private String getVersionFromMcmodInfo() {
-        String version = "";
-        try {
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(Objects.requireNonNull(getClass().
-                    getClassLoader().getResourceAsStream("mcmod.info"), "mcmod.info not found.")));
-            while ((version = bufferedReader.readLine()) != null) {
-                if (version.contains("\"version\": \"")) {
-                    version = version.split(Pattern.quote("\"version\": \""))[1];
-                    version = version.substring(0, version.length() - 2);
-                    break;
-                }
-            }
-        } catch (Exception ex) {
-            // It's okay, I guess just don't use the version lol.
-        }
-        return version;
     }
 
     private String getModIDFromInputStream(InputStream inputStream) {

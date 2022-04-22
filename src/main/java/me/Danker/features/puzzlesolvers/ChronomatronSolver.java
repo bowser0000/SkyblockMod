@@ -4,7 +4,7 @@ import me.Danker.commands.ToggleCommand;
 import me.Danker.events.ChestSlotClickedEvent;
 import me.Danker.events.GuiChestBackgroundDrawnEvent;
 import me.Danker.handlers.TextRenderer;
-import me.Danker.utils.Utils;
+import me.Danker.utils.RenderUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.init.Blocks;
@@ -15,6 +15,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.StringUtils;
 import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import org.lwjgl.input.Keyboard;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,10 +33,24 @@ public class ChronomatronSolver {
         if (ToggleCommand.chronomatronToggled && event.inventoryName.startsWith("Chronomatron (")) {
             IInventory inventory = event.inventory;
             ItemStack item = event.item;
-            if (item == null) return;
+
+            if (item == null) {
+                if (event.isCancelable() && !Keyboard.isKeyDown(Keyboard.KEY_LCONTROL) && !Keyboard.isKeyDown(Keyboard.KEY_RCONTROL)) {
+                    event.setCanceled(true);
+                }
+                return;
+            }
 
             if (inventory.getStackInSlot(49).getDisplayName().startsWith("§7Timer: §a") && (item.getItem() == Item.getItemFromBlock(Blocks.stained_glass) || item.getItem() == Item.getItemFromBlock(Blocks.stained_hardened_clay))) {
+                if (chronomatronPattern.size() > chronomatronMouseClicks && !item.getDisplayName().equals(chronomatronPattern.get(chronomatronMouseClicks))) {
+                    if (event.isCancelable() && !Keyboard.isKeyDown(Keyboard.KEY_LCONTROL) && !Keyboard.isKeyDown(Keyboard.KEY_RCONTROL)) {
+                        event.setCanceled(true);
+                        return;
+                    }
+                }
                 chronomatronMouseClicks++;
+            } else if (inventory.getStackInSlot(49).getDisplayName().startsWith("§aRemember the pattern!")) {
+                if (event.isCancelable()) event.setCanceled(true);
             }
         }
     }
@@ -67,19 +82,13 @@ public class ChronomatronSolver {
 
                             Slot glassSlot = invSlots.get(i);
 
-                            if (chronomatronMouseClicks + 1 < chronomatronPattern.size()) {
-                                if (chronomatronPattern.get(chronomatronMouseClicks).equals(chronomatronPattern.get(chronomatronMouseClicks + 1))) {
-                                    if (glass.getDisplayName().equals(chronomatronPattern.get(chronomatronMouseClicks))) {
-                                        Utils.drawOnSlot(chestSize, glassSlot.xDisplayPosition, glassSlot.yDisplayPosition, CHRONOMATRON_NEXT + 0xE5000000);
-                                    }
-                                } else if (glass.getDisplayName().equals(chronomatronPattern.get(chronomatronMouseClicks))) {
-                                    Utils.drawOnSlot(chestSize, glassSlot.xDisplayPosition, glassSlot.yDisplayPosition, CHRONOMATRON_NEXT + 0xE5000000);
-                                } else if (glass.getDisplayName().equals(chronomatronPattern.get(chronomatronMouseClicks + 1))) {
-                                    Utils.drawOnSlot(chestSize, glassSlot.xDisplayPosition, glassSlot.yDisplayPosition, CHRONOMATRON_NEXT_TO_NEXT + 0XBE000000);
-                                }
-                            } else if (glass.getDisplayName().equals(chronomatronPattern.get(chronomatronMouseClicks))) {
-                                Utils.drawOnSlot(chestSize, glassSlot.xDisplayPosition, glassSlot.yDisplayPosition, CHRONOMATRON_NEXT + 0xE5000000);
+                                
+                            if (glass.getDisplayName().equals(chronomatronPattern.get(chronomatronMouseClicks))) {
+                                RenderUtils.drawOnSlot(chestSize, glassSlot.xDisplayPosition, glassSlot.yDisplayPosition, CHRONOMATRON_NEXT + 0xE5000000);
+                            } else if (chronomatronMouseClicks + 1 < chronomatronPattern.size() && glass.getDisplayName().equals(chronomatronPattern.get(chronomatronMouseClicks + 1))) {
+                                RenderUtils.drawOnSlot(chestSize, glassSlot.xDisplayPosition, glassSlot.yDisplayPosition, CHRONOMATRON_NEXT_TO_NEXT + 0XBE000000);
                             }
+                            
                         }
                     }
                 } else if (invSlots.get(49).getStack().getDisplayName().equals("§aRemember the pattern!")) {

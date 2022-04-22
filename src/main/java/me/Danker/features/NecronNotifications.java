@@ -24,55 +24,58 @@ public class NecronNotifications {
 
         if (!Utils.inDungeons) return;
 
-        if (ToggleCommand.necronNotificationsToggled && message.contains("[BOSS] Necron:")) {
+        if (ToggleCommand.necronNotificationsToggled) {
             Minecraft mc = Minecraft.getMinecraft();
             World world = mc.theWorld;
-            if (message.contains("You tricked me!") || message.contains("That beam, it hurts! IT HURTS!!")) {
-                Utils.createTitle(EnumChatFormatting.RED + "NECRON STUCK!", 2);
-            } else if (message.contains("STOP USING MY FACTORY AGAINST ME!") || message.contains("OOF") || message.contains("ANOTHER TRAP!! YOUR TRICKS ARE FUTILE!") || message.contains("SERIOUSLY? AGAIN?!") || message.contains("STOP!!!!!")) {
-                List<EntityArmorStand> necronLabels = world.getEntities(EntityArmorStand.class, (entity -> {
-                    if (!entity.hasCustomName()) return false;
-                    if (!entity.getCustomNameTag().contains("Necron")) return false;
-                    return true;
-                }));
-                if (necronLabels.size() == 0) {
-                    Utils.createTitle(EnumChatFormatting.WHITE + "NECRON STUNNED!", 2);
-                } else {
-                    EntityArmorStand necron = necronLabels.get(0);
-                    double x = necron.posX;
-                    double z = necron.posZ;
 
-                    BlockPos blockPos = new BlockPos(x, 168, z);
-
-                    IBlockState blockState = world.getBlockState(blockPos);
-                    Block block = blockState.getBlock();
-
-                    if (block != Blocks.stained_hardened_clay) {
-                        Utils.createTitle(EnumChatFormatting.WHITE + "NECRON STUNNED!", 2);
-                    } else {
-                        switch (block.getDamageValue(world, blockPos)) {
-                            case 4:
-                                Utils.createTitle(EnumChatFormatting.YELLOW + "YELLOW PILLAR!", 2);
-                                break;
-                            case 5:
-                                Utils.createTitle(EnumChatFormatting.DARK_GREEN + "GREEN PILLAR!", 2);
-                                break;
-                            case 11:
-                                Utils.createTitle(EnumChatFormatting.DARK_PURPLE + "PURPLE PILLAR!", 2);
-                                break;
-                            default:
-                                Utils.createTitle(EnumChatFormatting.WHITE + "NECRON STUNNED!", 2);
-                        }
-                    }
-
+            if (message.startsWith("[BOSS] Maxor:")) {
+                if (message.contains("THAT BEAM! IT HURTS! IT HURTS!!") || message.contains("YOU TRICKED ME!")) {
+                    Utils.createTitle(EnumChatFormatting.RED + "MAXOR STUCK!", 2);
                 }
-            } else if (message.contains("I'VE HAD ENOUGH! YOU'RE NOT HITTING ME WITH ANY MORE PILLARS!")) {
-                Utils.createTitle(EnumChatFormatting.RED + "RED PILLAR!", 2);
-            } else if (message.contains("ARGH!")) {
+            } else if (message.startsWith("[BOSS] Storm:")) {
+                if (message.contains("Ouch, that hurt!") || message.contains("Oof")) {
+                    List<EntityArmorStand> stormLabels = world.getEntities(EntityArmorStand.class, (entity -> {
+                        if (!entity.hasCustomName()) return false;
+                        return entity.getCustomNameTag().contains("Storm");
+                    }));
+                    if (stormLabels.size() == 0) {
+                        Utils.createTitle(EnumChatFormatting.WHITE + "STORM STUNNED!", 2);
+                    } else {
+                        EntityArmorStand storm = stormLabels.get(0);
+                        double x = storm.posX;
+                        double z = storm.posZ;
+
+                        BlockPos blockPos = new BlockPos(x, 168, z);
+
+                        IBlockState blockState = world.getBlockState(blockPos);
+                        Block block = blockState.getBlock();
+
+                        if (block != Blocks.stained_hardened_clay) {
+                            Utils.createTitle(EnumChatFormatting.WHITE + "STORM STUNNED!", 2);
+                        } else {
+                            switch (block.getDamageValue(world, blockPos)) {
+                                case 4:
+                                    Utils.createTitle(EnumChatFormatting.YELLOW + "YELLOW PILLAR!", 2);
+                                    break;
+                                case 5:
+                                    Utils.createTitle(EnumChatFormatting.DARK_GREEN + "GREEN PILLAR!", 2);
+                                    break;
+                                case 11:
+                                    Utils.createTitle(EnumChatFormatting.DARK_PURPLE + "PURPLE PILLAR!", 2);
+                                    break;
+                                default:
+                                    Utils.createTitle(EnumChatFormatting.WHITE + "STORM STUNNED!", 2);
+                            }
+                        }
+
+                    }
+                } else if (message.contains("I should have known that I stood no chance.")) {
+                    Utils.createTitle(EnumChatFormatting.RED + "RED PILLAR!", 2);
+                }
+            } else if (message.startsWith("[BOSS] Necron:") && message.contains("ARGH!")) {
                 Utils.createTitle(EnumChatFormatting.RED + "EXPLOSION OVER!", 2);
             }
         }
-
     }
 
 }

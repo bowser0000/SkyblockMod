@@ -254,26 +254,26 @@ public class BoulderUtils {
         double averageZ = (aabb.minZ + aabb.maxZ) / 2;
         if (((boulderRoomDirection.equals("north") || boulderRoomDirection.equals("south")) && (direction == 'u' || direction == 'd')) ||
             ((boulderRoomDirection.equals("east") || boulderRoomDirection.equals("west")) && (direction == 'l' || direction == 'r'))) {
-            Utils.draw3DLine(new Vec3(averageX, aabb.minY, aabb.minZ), new Vec3(averageX, aabb.minY, aabb.maxZ), colourInt, 10, false, partialTicks);
+            RenderUtils.draw3DLine(new Vec3(averageX, aabb.minY, aabb.minZ), new Vec3(averageX, aabb.minY, aabb.maxZ), colourInt, 10, false, partialTicks);
         } else {
-            Utils.draw3DLine(new Vec3(aabb.minX, aabb.minY, averageZ), new Vec3(aabb.maxX, aabb.minY, averageZ), colourInt, 10, false, partialTicks);
+            RenderUtils.draw3DLine(new Vec3(aabb.minX, aabb.minY, averageZ), new Vec3(aabb.maxX, aabb.minY, averageZ), colourInt, 10, false, partialTicks);
         }
 
         if ((boulderRoomDirection.equals("north") && direction == 'u') || (boulderRoomDirection.equals("south") && direction == 'd') ||
             (boulderRoomDirection.equals("east") && direction == 'l') || (boulderRoomDirection.equals("west") && direction == 'r')) {
-            Utils.draw3DLine(new Vec3(averageX, aabb.minY, aabb.minZ), new Vec3(aabb.minX + thirtyPercent, aabb.minY, aabb.minZ + thirtyPercent), colourInt, 10, false, partialTicks);
-            Utils.draw3DLine(new Vec3(averageX, aabb.minY, aabb.minZ), new Vec3(aabb.maxX - thirtyPercent, aabb.minY, aabb.minZ + thirtyPercent), colourInt, 10, false, partialTicks);
+            RenderUtils.draw3DLine(new Vec3(averageX, aabb.minY, aabb.minZ), new Vec3(aabb.minX + thirtyPercent, aabb.minY, aabb.minZ + thirtyPercent), colourInt, 10, false, partialTicks);
+            RenderUtils.draw3DLine(new Vec3(averageX, aabb.minY, aabb.minZ), new Vec3(aabb.maxX - thirtyPercent, aabb.minY, aabb.minZ + thirtyPercent), colourInt, 10, false, partialTicks);
         } else if ((boulderRoomDirection.equals("north") && direction == 'd') || (boulderRoomDirection.equals("south") && direction == 'u') ||
                     (boulderRoomDirection.equals("east") && direction == 'r') || (boulderRoomDirection.equals("west") && direction == 'l')) {
-            Utils.draw3DLine(new Vec3(averageX, aabb.minY, aabb.maxZ), new Vec3(aabb.minX + thirtyPercent, aabb.minY, aabb.maxZ - thirtyPercent), colourInt, 10, false, partialTicks);
-            Utils.draw3DLine(new Vec3(averageX, aabb.minY, aabb.maxZ), new Vec3(aabb.maxX - thirtyPercent, aabb.minY, aabb.maxZ - thirtyPercent), colourInt, 10, false, partialTicks);
+            RenderUtils.draw3DLine(new Vec3(averageX, aabb.minY, aabb.maxZ), new Vec3(aabb.minX + thirtyPercent, aabb.minY, aabb.maxZ - thirtyPercent), colourInt, 10, false, partialTicks);
+            RenderUtils.draw3DLine(new Vec3(averageX, aabb.minY, aabb.maxZ), new Vec3(aabb.maxX - thirtyPercent, aabb.minY, aabb.maxZ - thirtyPercent), colourInt, 10, false, partialTicks);
         } else if ((boulderRoomDirection.equals("north") && direction == 'l') || (boulderRoomDirection.equals("south") && direction == 'r') ||
                     (boulderRoomDirection.equals("east") && direction == 'd') || (boulderRoomDirection.equals("west") && direction == 'u')) {
-            Utils.draw3DLine(new Vec3(aabb.minX, aabb.minY, averageZ), new Vec3(aabb.minX + thirtyPercent, aabb.minY, aabb.minZ + thirtyPercent), colourInt, 10, false, partialTicks);
-            Utils.draw3DLine(new Vec3(aabb.minX, aabb.minY, averageZ), new Vec3(aabb.minX + thirtyPercent, aabb.minY, aabb.maxZ - thirtyPercent), colourInt, 10, false, partialTicks);
+            RenderUtils.draw3DLine(new Vec3(aabb.minX, aabb.minY, averageZ), new Vec3(aabb.minX + thirtyPercent, aabb.minY, aabb.minZ + thirtyPercent), colourInt, 10, false, partialTicks);
+            RenderUtils.draw3DLine(new Vec3(aabb.minX, aabb.minY, averageZ), new Vec3(aabb.minX + thirtyPercent, aabb.minY, aabb.maxZ - thirtyPercent), colourInt, 10, false, partialTicks);
         } else {
-            Utils.draw3DLine(new Vec3(aabb.maxX, aabb.minY, averageZ), new Vec3(aabb.maxX - thirtyPercent, aabb.minY, aabb.minZ + thirtyPercent), colourInt, 10, false, partialTicks);
-            Utils.draw3DLine(new Vec3(aabb.maxX, aabb.minY, averageZ), new Vec3(aabb.maxX - thirtyPercent, aabb.minY, aabb.maxZ - thirtyPercent), colourInt, 10, false, partialTicks);
+            RenderUtils.draw3DLine(new Vec3(aabb.maxX, aabb.minY, averageZ), new Vec3(aabb.maxX - thirtyPercent, aabb.minY, aabb.minZ + thirtyPercent), colourInt, 10, false, partialTicks);
+            RenderUtils.draw3DLine(new Vec3(aabb.maxX, aabb.minY, averageZ), new Vec3(aabb.maxX - thirtyPercent, aabb.minY, aabb.maxZ - thirtyPercent), colourInt, 10, false, partialTicks);
         }
     }
 

@@ -3,7 +3,7 @@ package me.Danker.features;
 import me.Danker.commands.MoveCommand;
 import me.Danker.commands.ScaleCommand;
 import me.Danker.commands.ToggleCommand;
-import me.Danker.events.RenderOverlay;
+import me.Danker.events.RenderOverlayEvent;
 import me.Danker.handlers.TextRenderer;
 import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;
@@ -37,7 +37,7 @@ public class GolemSpawningAlert {
     }
 
     @SubscribeEvent
-    public void renderPlayerInfo(RenderOverlay event) {
+    public void renderPlayerInfo(RenderOverlayEvent event) {
         if (ToggleCommand.golemAlertToggled && Utils.inSkyblock && golemTime > System.currentTimeMillis() / 1000) {
             Minecraft mc = Minecraft.getMinecraft();
             double scale = ScaleCommand.golemTimerScale;

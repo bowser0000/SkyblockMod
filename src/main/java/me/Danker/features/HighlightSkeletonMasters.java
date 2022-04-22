@@ -1,6 +1,7 @@
 package me.Danker.features;
 
 import me.Danker.commands.ToggleCommand;
+import me.Danker.utils.RenderUtils;
 import me.Danker.utils.Utils;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -33,7 +34,7 @@ public class HighlightSkeletonMasters {
         if (ToggleCommand.highlightSkeletonMasters) {
             for (Entity skeletonMaster : skeletonMasters) {
                 if (!skeletonMaster.isDead)
-                    Utils.draw3DBox(skeletonMaster.getEntityBoundingBox(), SKELETON_MASTER_COLOUR, event.partialTicks);
+                    RenderUtils.draw3DBox(skeletonMaster.getEntityBoundingBox(), SKELETON_MASTER_COLOUR, event.partialTicks);
             }
             skeletonMasters.clear();
         }

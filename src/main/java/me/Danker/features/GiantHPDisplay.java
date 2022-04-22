@@ -1,8 +1,10 @@
 package me.Danker.features;
 
 import me.Danker.DankersSkyblockMod;
+import me.Danker.commands.MoveCommand;
+import me.Danker.commands.ScaleCommand;
 import me.Danker.commands.ToggleCommand;
-import me.Danker.events.RenderOverlay;
+import me.Danker.events.RenderOverlayEvent;
 import me.Danker.handlers.ScoreboardHandler;
 import me.Danker.handlers.TextRenderer;
 import me.Danker.utils.Utils;
@@ -56,7 +58,7 @@ public class GiantHPDisplay {
     }
 
     @SubscribeEvent
-    public void renderPlayerInfo(RenderOverlay event) {
+    public void renderPlayerInfo(RenderOverlayEvent event) {
         if (ToggleCommand.giantHP && Utils.inDungeons && giants.size() > 0) {
             StringBuilder sb = new StringBuilder();
 
@@ -64,7 +66,7 @@ public class GiantHPDisplay {
                 if (!giant.isDead) sb.append(Utils.removeBold(giant.getDisplayName().getFormattedText())).append("\n");
             }
 
-            new TextRenderer(Minecraft.getMinecraft(), sb.toString(), 100, 100, 1);
+            new TextRenderer(Minecraft.getMinecraft(), sb.toString(), MoveCommand.giantHPXY[0], MoveCommand.giantHPXY[1], ScaleCommand.giantHPScale);
         }
     }
 

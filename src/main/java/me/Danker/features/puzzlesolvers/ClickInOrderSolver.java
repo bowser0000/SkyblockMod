@@ -2,6 +2,7 @@ package me.Danker.features.puzzlesolvers;
 
 import me.Danker.commands.ToggleCommand;
 import me.Danker.events.GuiChestBackgroundDrawnEvent;
+import me.Danker.utils.RenderUtils;
 import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -91,10 +92,10 @@ public class ClickInOrderSolver {
             int chestSize = event.chestSize;
             List<Slot> invSlots = event.slots;
             Slot slot = invSlots.get(terminalNumberNeeded[1]);
-            Utils.drawOnSlot(chestSize, slot.xDisplayPosition, slot.yDisplayPosition, CLICK_IN_ORDER_NEXT + 0xFF000000);
+            RenderUtils.drawOnSlot(chestSize, slot.xDisplayPosition, slot.yDisplayPosition, CLICK_IN_ORDER_NEXT + 0xFF000000);
             Slot nextSlot = invSlots.get(terminalNumberNeeded[3]);
             if (nextSlot != slot && nextSlot.getSlotIndex() != 0) {
-                Utils.drawOnSlot(chestSize, nextSlot.xDisplayPosition, nextSlot.yDisplayPosition, CLICK_IN_ORDER_NEXT_TO_NEXT + 0xFF000000);
+                RenderUtils.drawOnSlot(chestSize, nextSlot.xDisplayPosition, nextSlot.yDisplayPosition, CLICK_IN_ORDER_NEXT_TO_NEXT + 0xFF000000);
             }
         }
     }

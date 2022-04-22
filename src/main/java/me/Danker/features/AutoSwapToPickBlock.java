@@ -1,6 +1,7 @@
 package me.Danker.features;
 
 import me.Danker.commands.ToggleCommand;
+import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiChest;
 import net.minecraft.client.settings.GameSettings;
@@ -17,6 +18,8 @@ public class AutoSwapToPickBlock {
 
     @SubscribeEvent
     public void onGuiOpen(GuiOpenEvent event) {
+        if (!ToggleCommand.swapToPickBlockToggled || !Utils.inSkyblock) return;
+
         Minecraft mc = Minecraft.getMinecraft();
         GameSettings gameSettings = mc.gameSettings;
         if (event.gui instanceof GuiChest) {
@@ -25,18 +28,16 @@ public class AutoSwapToPickBlock {
                 IInventory inventory = ((ContainerChest) containerChest).getLowerChestInventory();
                 String inventoryName = inventory.getDisplayName().getUnformattedText();
 
-                if (ToggleCommand.swapToPickBlockToggled) {
-                    if (inventoryName.startsWith("Chronomatron (") || inventoryName.startsWith("Superpairs (") || inventoryName.startsWith("Ultrasequencer (") || inventoryName.startsWith("What starts with:") || inventoryName.startsWith("Select all the") || inventoryName.startsWith("Navigate the maze!") || inventoryName.startsWith("Correct all the panes!") || inventoryName.startsWith("Click in order!") || inventoryName.startsWith("Harp -")) {
-                        if (!pickBlockBindSwapped) {
-                            pickBlockBind = gameSettings.keyBindPickBlock.getKeyCode();
-                            gameSettings.keyBindPickBlock.setKeyCode(-100);
-                            pickBlockBindSwapped = true;
-                        }
-                    } else {
-                        if (pickBlockBindSwapped) {
-                            gameSettings.keyBindPickBlock.setKeyCode(pickBlockBind);
-                            pickBlockBindSwapped = false;
-                        }
+                if (inventoryName.startsWith("Chronomatron (") || inventoryName.startsWith("Superpairs (") || inventoryName.startsWith("Ultrasequencer (") || inventoryName.startsWith("What starts with:") || inventoryName.startsWith("Select all the") || inventoryName.startsWith("Change all to same color!") || inventoryName.startsWith("Correct all the panes!") || inventoryName.startsWith("Click in order!") || inventoryName.startsWith("Click the button on time!") || inventoryName.startsWith("Harp -")) {
+                    if (!pickBlockBindSwapped) {
+                        pickBlockBind = gameSettings.keyBindPickBlock.getKeyCode();
+                        gameSettings.keyBindPickBlock.setKeyCode(-100);
+                        pickBlockBindSwapped = true;
+                    }
+                } else {
+                    if (pickBlockBindSwapped) {
+                        gameSettings.keyBindPickBlock.setKeyCode(pickBlockBind);
+                        pickBlockBindSwapped = false;
                     }
                 }
             }

@@ -78,7 +78,7 @@ public class PlayerCommand extends CommandBase {
 
             String profileURL = "https://api.hypixel.net/skyblock/profile?profile=" + latestProfile + "&key=" + key;
             System.out.println("Fetching profile...");
-            JsonObject profileResponse = APIHandler.getResponse(profileURL);
+            JsonObject profileResponse = APIHandler.getResponse(profileURL, true);
             if (!profileResponse.get("success").getAsBoolean()) {
                 String reason = profileResponse.get("cause").getAsString();
                 player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Failed with reason: " + reason));
@@ -136,7 +136,7 @@ public class PlayerCommand extends CommandBase {
 
                 String playerURL = "https://api.hypixel.net/player?uuid=" + uuid + "&key=" + key;
                 System.out.println("Fetching skills from achievement API");
-                JsonObject playerObject = APIHandler.getResponse(playerURL);
+                JsonObject playerObject = APIHandler.getResponse(playerURL, true);
 
                 if (!playerObject.get("success").getAsBoolean()) {
                     String reason = profileResponse.get("cause").getAsString();
@@ -193,6 +193,11 @@ public class PlayerCommand extends CommandBase {
             if (slayersObject.get("wolf").getAsJsonObject().has("xp")) {
                 wolfXP = slayersObject.get("wolf").getAsJsonObject().get("xp").getAsInt();
             }
+            // Enderman
+            int endermanXP = 0;
+            if (slayersObject.get("enderman").getAsJsonObject().has("xp")) {
+                endermanXP = slayersObject.get("enderman").getAsJsonObject().get("xp").getAsInt();
+            }
 
             // Bank
             System.out.println("Fetching bank + purse coins...");
@@ -209,7 +214,7 @@ public class PlayerCommand extends CommandBase {
             // Weight
             System.out.println("Fetching weight from Senither API...");
             String weightURL = "https://hypixel-api.senither.com/v1/profiles/" + uuid + "/weight?key=" + key;
-            JsonObject weightResponse = APIHandler.getResponse(weightURL);
+            JsonObject weightResponse = APIHandler.getResponse(weightURL, true);
             if (weightResponse.get("status").getAsInt() != 200) {
                 String reason = weightResponse.get("reason").getAsString();
                 player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Failed with reason: " + reason));
@@ -233,10 +238,11 @@ public class PlayerCommand extends CommandBase {
                                                         DankersSkyblockMod.TYPE_COLOUR + " Taming: " + DankersSkyblockMod.VALUE_COLOUR + EnumChatFormatting.BOLD + tamingLevel + "\n" +
                                                         EnumChatFormatting.AQUA + " Average Skill Level: " + DankersSkyblockMod.SKILL_AVERAGE_COLOUR + EnumChatFormatting.BOLD + skillAvg + "\n" +
                                                         EnumChatFormatting.AQUA + " True Average Skill Level: " + DankersSkyblockMod.SKILL_AVERAGE_COLOUR + EnumChatFormatting.BOLD + trueAvg + "\n\n" +
-                                                        EnumChatFormatting.AQUA + " " + username + "'s Total Slayer XP: " + EnumChatFormatting.GOLD + EnumChatFormatting.BOLD + nf.format(zombieXP + spiderXP + wolfXP) + "\n" +
+                                                        EnumChatFormatting.AQUA + " " + username + "'s Total Slayer XP: " + EnumChatFormatting.GOLD + EnumChatFormatting.BOLD + nf.format(zombieXP + spiderXP + wolfXP + endermanXP) + "\n" +
                                                         DankersSkyblockMod.TYPE_COLOUR + " Zombie XP: " + DankersSkyblockMod.VALUE_COLOUR + EnumChatFormatting.BOLD + nf.format(zombieXP) + "\n" +
                                                         DankersSkyblockMod.TYPE_COLOUR + " Spider XP: " + DankersSkyblockMod.VALUE_COLOUR + EnumChatFormatting.BOLD + nf.format(spiderXP) + "\n" +
-                                                        DankersSkyblockMod.TYPE_COLOUR + " Wolf XP: " + DankersSkyblockMod.VALUE_COLOUR + EnumChatFormatting.BOLD + nf.format(wolfXP) + "\n\n" +
+                                                        DankersSkyblockMod.TYPE_COLOUR + " Wolf XP: " + DankersSkyblockMod.VALUE_COLOUR + EnumChatFormatting.BOLD + nf.format(wolfXP) + "\n" +
+                                                        DankersSkyblockMod.TYPE_COLOUR + " Enderman XP: " + DankersSkyblockMod.VALUE_COLOUR + EnumChatFormatting.BOLD + nf.format(endermanXP) + "\n\n" +
                                                         EnumChatFormatting.AQUA + " " + username + "'s Coins:\n" +
                                                         DankersSkyblockMod.TYPE_COLOUR + " Bank: " + (bankCoins == 0 ? EnumChatFormatting.RED + "Bank API disabled." : EnumChatFormatting.GOLD + nf.format(bankCoins)) + "\n" +
                                                         DankersSkyblockMod.TYPE_COLOUR + " Purse: " + EnumChatFormatting.GOLD + nf.format(purseCoins) + "\n" +

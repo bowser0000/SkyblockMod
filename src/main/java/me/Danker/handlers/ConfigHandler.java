@@ -1,12 +1,13 @@
 package me.Danker.handlers;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import me.Danker.DankersSkyblockMod;
 import me.Danker.commands.MoveCommand;
 import me.Danker.commands.ScaleCommand;
 import me.Danker.commands.ToggleCommand;
 import me.Danker.features.*;
-import me.Danker.features.loot.LootDisplay;
-import me.Danker.features.loot.LootTracker;
+import me.Danker.features.loot.*;
 import me.Danker.features.puzzlesolvers.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
@@ -15,6 +16,11 @@ import net.minecraftforge.common.config.ConfigCategory;
 import net.minecraftforge.common.config.Configuration;
 
 import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class ConfigHandler {
 	public static Configuration config;
@@ -195,6 +201,7 @@ public class ConfigHandler {
 		ToggleCommand.coordsToggled = initBoolean("toggles", "Coords", false);
 		ToggleCommand.goldenToggled = initBoolean("toggles", "Golden", false);
 		ToggleCommand.slayerCountTotal = initBoolean("toggles", "SlayerCount", true);
+		ToggleCommand.masterSPlusDisplay = initBoolean("toggles", "MasterSPlusDisplay", true);
 		ToggleCommand.rngesusAlerts = initBoolean("toggles", "RNGesusAlerts", false);
 		ToggleCommand.ghostDisplay = initBoolean("toggles", "GhostDisplay", true);
 		ToggleCommand.dungeonTimerToggled = initBoolean("toggles", "GhostTimer", false);
@@ -215,15 +222,14 @@ public class ConfigHandler {
 		ToggleCommand.teammatesInRadius = initBoolean("toggles", "TeammatesInRadius", false);
 		ToggleCommand.giantHP = initBoolean("toggles", "GiantHP", false);
 		ToggleCommand.hidePetCandy = initBoolean("toggles", "HidePetCandy", false);
-		// Chat Messages
-		ToggleCommand.sceptreMessages = initBoolean("toggles", "SceptreMessages", true);
-		ToggleCommand.midasStaffMessages = initBoolean("toggles", "MidasStaffMessages", true);
-		ToggleCommand.implosionMessages = initBoolean("toggles", "ImplosionMessages", true);
-		ToggleCommand.healMessages = initBoolean("toggles", "HealMessages", true);
-		ToggleCommand.cooldownMessages = initBoolean("toggles", "CooldownMessages", true);
-		ToggleCommand.manaMessages = initBoolean("toggles", "ManaMessages", true);
-		ToggleCommand.killComboMessages = initBoolean("toggles", "KillComboMessages", true);
-		// Dungeons
+		ToggleCommand.customColouredNames = initBoolean("toggles", "CustomColouredNames", true); // enabled by default
+		ToggleCommand.endOfFarmAlert = initBoolean("toggles", "EndOfFarmAlert", false);
+		ToggleCommand.gemstoneLore = initBoolean("toggles", "GemstoneLore", false);
+		ToggleCommand.crystalHollowWaypoints = initBoolean("toggles", "CrystalHollowWaypoints", false);
+		ToggleCommand.crystalAutoWaypoints = initBoolean("toggles", "CrystalAutoWaypoints", true); // enabled by default
+		ToggleCommand.crystalAutoPlayerWaypoints = initBoolean("toggles", "CrystalAutoPlayerWaypoints", false);
+		ToggleCommand.autoAcceptReparty = initBoolean("toggles", "AutoAcceptReparty", false);
+		ToggleCommand.abilityCooldowns = initBoolean("toggles", "AbilityCooldowns", false);
 		ToggleCommand.dungeonTimerToggled = initBoolean("toggles", "DungeonTimer", false);
 		ToggleCommand.lowHealthNotifyToggled = initBoolean("toggles", "LowHealthNotify", false);
 		ToggleCommand.lividSolverToggled = initBoolean("toggles", "LividSolver", false);
@@ -233,12 +239,26 @@ public class ConfigHandler {
 		ToggleCommand.necronNotificationsToggled = initBoolean("toggles", "NecronNotifications", false);
 		ToggleCommand.bonzoTimerToggled = initBoolean("toggles", "BonzoTimer", false);
 		ToggleCommand.swapToPickBlockToggled = initBoolean("toggles", "PickBlock", false);
-		ToggleCommand.autoSkillTrackerToggled =  initBoolean("toggles", "AutoSkillTracker", false);
+		ToggleCommand.flowerWeaponsToggled = initBoolean("toggles", "FlowerWeapons", false);
+		ToggleCommand.autoSkillTrackerToggled = initBoolean("toggles", "AutoSkillTracker", false);
+		ToggleCommand.alerts = initBoolean("toggles", "Alerts", false);
+		ToggleCommand.dungeonScore = initBoolean("toggles", "DungeonScore", false);
+		ToggleCommand.hideArmour = initBoolean("toggles", "HideArmour", false);
+		ToggleCommand.autoJoinSkyblock = initBoolean("toggles", "AutoJoinSkyblock", false);
+		// Chat Messages
+		ToggleCommand.sceptreMessages = initBoolean("toggles", "SceptreMessages", true);
+		ToggleCommand.midasStaffMessages = initBoolean("toggles", "MidasStaffMessages", true);
+		ToggleCommand.implosionMessages = initBoolean("toggles", "ImplosionMessages", true);
+		ToggleCommand.healMessages = initBoolean("toggles", "HealMessages", true);
+		ToggleCommand.cooldownMessages = initBoolean("toggles", "CooldownMessages", true);
+		ToggleCommand.manaMessages = initBoolean("toggles", "ManaMessages", true);
+		ToggleCommand.killComboMessages = initBoolean("toggles", "KillComboMessages", true);
 		// Puzzle Solvers
 		ToggleCommand.threeManToggled = initBoolean("toggles", "ThreeManPuzzle", false);
 		ToggleCommand.oruoToggled = initBoolean("toggles", "OruoPuzzle", false);
 		ToggleCommand.blazeToggled = initBoolean("toggles", "BlazePuzzle", false);
 		ToggleCommand.creeperToggled = initBoolean("toggles", "CreeperPuzzle", false);
+		ToggleCommand.creeperLinesToggled = initBoolean("toggles", "CreeperLines", true);
 		ToggleCommand.waterToggled = initBoolean("toggles", "WaterPuzzle", false);
 		ToggleCommand.ticTacToeToggled = initBoolean("toggles", "TicTacToePuzzle", false);
 		ToggleCommand.boulderToggled = initBoolean("toggles", "BoulderPuzzle", false);
@@ -247,6 +267,9 @@ public class ConfigHandler {
 		ToggleCommand.startsWithToggled = initBoolean("toggles", "StartsWithTerminal", false);
 		ToggleCommand.selectAllToggled = initBoolean("toggles", "SelectAllTerminal", false);
 		ToggleCommand.clickInOrderToggled = initBoolean("toggles", "ClickInOrderTerminal", false);
+		ToggleCommand.sameColourToggled = initBoolean("toggles", "SameColourTerminal", false);
+		ToggleCommand.blockWrongTerminalClicksToggled = initBoolean("toggles", "BlockWrongTerminalClicks", false);
+		ToggleCommand.itemFrameOnSeaLanternsToggled = initBoolean("toggles", "IgnoreItemFrameOnSeaLanterns", false);
 		// Experiment Solvers
 		ToggleCommand.ultrasequencerToggled = initBoolean("toggles", "UltraSequencer", false);
 		ToggleCommand.chronomatronToggled = initBoolean("toggles", "Chronomatron", false);
@@ -256,182 +279,315 @@ public class ConfigHandler {
 		ToggleCommand.dungeonBossMusic = initBoolean("toggles", "DungeonBossMusic", false);
 		ToggleCommand.bloodRoomMusic = initBoolean("toggles", "BloodRoomMusic", false);
 		ToggleCommand.dungeonMusic = initBoolean("toggles", "DungeonMusic", false);
+		ToggleCommand.hubMusic = initBoolean("toggles", "HubMusic", false);
+		ToggleCommand.islandMusic = initBoolean("toggles", "IslandMusic", false);
+		ToggleCommand.dungeonHubMusic = initBoolean("toggles", "DungeonHubMusic", false);
+		ToggleCommand.farmingIslandsMusic = initBoolean("toggles", "FarmingIslandsMusic", false);
+		ToggleCommand.goldMineMusic = initBoolean("toggles", "GoldMineMusic", false);
+		ToggleCommand.deepCavernsMusic = initBoolean("toggles", "DeepCavernsMusic", false);
+		ToggleCommand.dwarvenMinesMusic = initBoolean("toggles", "DwarvenMinesMusic", false);
+		ToggleCommand.crystalHollowsMusic = initBoolean("toggles", "CrystalHollowsMusic", false);
+		ToggleCommand.spidersDenMusic = initBoolean("toggles", "SpidersDenMusic", false);
+		ToggleCommand.crimsonIsleMusic = initBoolean("toggles", "CrimsonIsleMusic", false);
+		ToggleCommand.endMusic = initBoolean("toggles", "Music", false);
+		ToggleCommand.parkMusic = initBoolean("toggles", "Music", false);
 		// Music Volume
 		CustomMusic.dungeonbossVolume = initInt("music", "DungeonBossVolume", 50);
 		CustomMusic.bloodroomVolume = initInt("music", "BloodRoomVolume", 50);
 		CustomMusic.dungeonVolume = initInt("music", "DungeonVolume", 50);
+		CustomMusic.hubVolume = initInt("music", "HubVolume", 50);
+		CustomMusic.islandVolume = initInt("music", "IslandVolume", 50);
+		CustomMusic.dungeonHubVolume = initInt("music", "DungeonHubVolume", 50);
+		CustomMusic.farmingIslandsVolume = initInt("music", "FarmingIslandsVolume", 50);
+		CustomMusic.goldMineVolume = initInt("music", "GoldMineVolume", 50);
+		CustomMusic.deepCavernsVolume = initInt("music", "DeepCavernsVolume", 50);
+		CustomMusic.dwarvenMinesVolume = initInt("music", "DwarvenMinesVolume", 50);
+		CustomMusic.crystalHollowsVolume = initInt("music", "CrystalHollowsVolume", 50);
+		CustomMusic.spidersDenVolume = initInt("music", "SpidersDenVolume", 50);
+		CustomMusic.crimsonIsleVolume = initInt("music", "CrimsonIsleVolume", 50);
+		CustomMusic.endVolume = initInt("music", "EndVolume", 50);
+		CustomMusic.parkVolume = initInt("music", "ParkVolume", 50);
 
 		// API
 		if (!hasKey("api", "APIKey")) writeStringConfig("api", "APIKey", "");
+
+		// Block Wrong Slayer
+		if (!hasKey("toggles", "BlockSlayer")) writeStringConfig("toggles", "BlockSlayer", "");
+		String onlySlayer = getString("toggles", "BlockSlayer");
+		if (!onlySlayer.equals("")) {
+			BlockWrongSlayer.onlySlayerName = onlySlayer.substring(0, onlySlayer.lastIndexOf(" "));
+			BlockWrongSlayer.onlySlayerNumber = onlySlayer.substring(onlySlayer.lastIndexOf(" ") + 1);
+		}
 		
 		// Wolf
-		LootTracker.wolfSvens = initInt("wolf", "svens", 0);
-		LootTracker.wolfTeeth = initInt("wolf", "teeth", 0);
-		LootTracker.wolfWheels = initInt("wolf", "wheel", 0);
-		LootTracker.wolfWheelsDrops = initInt("wolf", "wheelDrops", 0);
-		LootTracker.wolfSpirits = initInt("wolf", "spirit", 0);
-		LootTracker.wolfBooks = initInt("wolf", "book", 0);
-		LootTracker.wolfEggs = initInt("wolf", "egg", 0);
-		LootTracker.wolfCoutures = initInt("wolf", "couture", 0);
-		LootTracker.wolfBaits = initInt("wolf", "bait", 0);
-		LootTracker.wolfFluxes = initInt("wolf", "flux", 0);
-		LootTracker.wolfTime = initDouble("wolf", "timeRNG", -1);
-		LootTracker.wolfBosses = initInt("wolf", "bossRNG", -1);
+		WolfTracker.wolfSvens = initInt("wolf", "svens", 0);
+		WolfTracker.wolfTeeth = initInt("wolf", "teeth", 0);
+		WolfTracker.wolfWheels = initInt("wolf", "wheel", 0);
+		WolfTracker.wolfWheelsDrops = initInt("wolf", "wheelDrops", 0);
+		WolfTracker.wolfSpirits = initInt("wolf", "spirit", 0);
+		WolfTracker.wolfBooks = initInt("wolf", "book", 0);
+		WolfTracker.wolfEggs = initInt("wolf", "egg", 0);
+		WolfTracker.wolfCoutures = initInt("wolf", "couture", 0);
+		WolfTracker.wolfBaits = initInt("wolf", "bait", 0);
+		WolfTracker.wolfFluxes = initInt("wolf", "flux", 0);
+		WolfTracker.wolfTime = initDouble("wolf", "timeRNG", -1);
+		WolfTracker.wolfBosses = initInt("wolf", "bossRNG", -1);
 		// Spider
-		LootTracker.spiderTarantulas = initInt("spider", "tarantulas", 0);
-		LootTracker.spiderWebs = initInt("spider", "web", 0);
-		LootTracker.spiderTAP = initInt("spider", "tap", 0);
-		LootTracker.spiderTAPDrops = initInt("spider", "tapDrops", 0);
-		LootTracker.spiderBites = initInt("spider", "bite", 0);
-		LootTracker.spiderCatalysts = initInt("spider", "catalyst", 0);
-		LootTracker.spiderBooks = initInt("spider", "book", 0);
-		LootTracker.spiderSwatters = initInt("spider", "swatter", 0);
-		LootTracker.spiderTalismans = initInt("spider", "talisman", 0);
-		LootTracker.spiderMosquitos = initInt("spider", "mosquito", 0);
-		LootTracker.spiderTime = initDouble("spider", "timeRNG", -1);
-		LootTracker.spiderBosses = initInt("spider", "bossRNG", -1);
+		SpiderTracker.spiderTarantulas = initInt("spider", "tarantulas", 0);
+		SpiderTracker.spiderWebs = initInt("spider", "web", 0);
+		SpiderTracker.spiderTAP = initInt("spider", "tap", 0);
+		SpiderTracker.spiderTAPDrops = initInt("spider", "tapDrops", 0);
+		SpiderTracker.spiderBites = initInt("spider", "bite", 0);
+		SpiderTracker.spiderCatalysts = initInt("spider", "catalyst", 0);
+		SpiderTracker.spiderBooks = initInt("spider", "book", 0);
+		SpiderTracker.spiderSwatters = initInt("spider", "swatter", 0);
+		SpiderTracker.spiderTalismans = initInt("spider", "talisman", 0);
+		SpiderTracker.spiderMosquitos = initInt("spider", "mosquito", 0);
+		SpiderTracker.spiderTime = initDouble("spider", "timeRNG", -1);
+		SpiderTracker.spiderBosses = initInt("spider", "bossRNG", -1);
 		// Zombie
-		LootTracker.zombieRevs = initInt("zombie", "revs", 0);
-		LootTracker.zombieRevFlesh = initInt("zombie", "revFlesh", 0);
-		LootTracker.zombieFoulFlesh = initInt("zombie", "foulFlesh", 0);
-		LootTracker.zombieFoulFleshDrops = initInt("zombie", "foulFleshDrops", 0);
-		LootTracker.zombiePestilences = initInt("zombie", "pestilence", 0);
-		LootTracker.zombieUndeadCatas = initInt("zombie", "undeadCatalyst", 0);
-		LootTracker.zombieBooks = initInt("zombie", "book", 0);
-		LootTracker.zombieBeheadeds = initInt("zombie", "beheaded", 0);
-		LootTracker.zombieRevCatas = initInt("zombie", "revCatalyst", 0);
-		LootTracker.zombieSnakes = initInt("zombie", "snake", 0);
-		LootTracker.zombieScythes = initInt("zombie", "scythe", 0);
-		LootTracker.zombieShards = initInt("zombie", "shard", 0);
-		LootTracker.zombieWardenHearts = initInt("zombie", "heart", 0);
-		LootTracker.zombieTime = initDouble("zombie", "timeRNG", -1);
-		LootTracker.zombieBosses = initInt("zombie", "bossRNG", -1);
-		
+		ZombieTracker.zombieRevs = initInt("zombie", "revs", 0);
+		ZombieTracker.zombieRevFlesh = initInt("zombie", "revFlesh", 0);
+		ZombieTracker.zombieRevViscera = initInt("zombie", "revViscera", 0);
+		ZombieTracker.zombieFoulFlesh = initInt("zombie", "foulFlesh", 0);
+		ZombieTracker.zombieFoulFleshDrops = initInt("zombie", "foulFleshDrops", 0);
+		ZombieTracker.zombiePestilences = initInt("zombie", "pestilence", 0);
+		ZombieTracker.zombieUndeadCatas = initInt("zombie", "undeadCatalyst", 0);
+		ZombieTracker.zombieBooks = initInt("zombie", "book", 0);
+		ZombieTracker.zombieBeheadeds = initInt("zombie", "beheaded", 0);
+		ZombieTracker.zombieRevCatas = initInt("zombie", "revCatalyst", 0);
+		ZombieTracker.zombieSnakes = initInt("zombie", "snake", 0);
+		ZombieTracker.zombieScythes = initInt("zombie", "scythe", 0);
+		ZombieTracker.zombieShards = initInt("zombie", "shard", 0);
+		ZombieTracker.zombieWardenHearts = initInt("zombie", "heart", 0);
+		ZombieTracker.zombieTime = initDouble("zombie", "timeRNG", -1);
+		ZombieTracker.zombieBosses = initInt("zombie", "bossRNG", -1);
+		// Enderman
+		EndermanTracker.endermanVoidglooms = initInt("enderman", "voidglooms", 0);
+		EndermanTracker.endermanNullSpheres = initInt("enderman", "nullSpheres", 0);
+		EndermanTracker.endermanTAP = initInt("enderman", "tap", 0);
+		EndermanTracker.endermanTAPDrops = initInt("enderman", "tapDrops", 0);
+		EndermanTracker.endermanEndersnakes = initInt("enderman", "endersnakes", 0);
+		EndermanTracker.endermanSummoningEyes = initInt("enderman", "summoningEyes", 0);
+		EndermanTracker.endermanManaBooks = initInt("enderman", "manaBooks", 0);
+		EndermanTracker.endermanTuners = initInt("enderman", "tuners", 0);
+		EndermanTracker.endermanAtoms = initInt("enderman", "atoms", 0);
+		EndermanTracker.endermanEspressoMachines = initInt("enderman", "espressoMachines", 0);
+		EndermanTracker.endermanSmartyBooks = initInt("enderman", "smartyBooks", 0);
+		EndermanTracker.endermanEndRunes = initInt("enderman", "endRunes", 0);
+		EndermanTracker.endermanChalices = initInt("enderman", "chalices", 0);
+		EndermanTracker.endermanDice = initInt("enderman", "dice", 0);
+		EndermanTracker.endermanArtifacts = initInt("enderman", "artifacts", 0);
+		EndermanTracker.endermanSkins = initInt("enderman", "skins", 0);
+		EndermanTracker.endermanMergers = initInt("enderman", "mergers", 0);
+		EndermanTracker.endermanCores = initInt("enderman", "cores", 0);
+		EndermanTracker.endermanEnchantRunes = initInt("enderman", "enchantRunes", 0);
+		EndermanTracker.endermanEnderBooks = initInt("enderman", "enderBooks", 0);
+		EndermanTracker.endermanTime = initDouble("enderman", "timeRNG", -1);
+		EndermanTracker.endermanBosses = initInt("enderman", "bossRNG", -1);
+		// Blaze
+		BlazeTracker.demonlords = initInt("blaze", "demonlords", 0);
+		BlazeTracker.derelictAshes = initInt("blaze", "derelictAshes", 0);
+		BlazeTracker.lavatearRunes = initInt("blaze", "lavatearRunes", 0);
+		BlazeTracker.splashPotions = initInt("blaze", "splashPotions", 0);
+		BlazeTracker.magmaArrows = initInt("blaze", "magmaArrows", 0);
+		BlazeTracker.manaDisintegrators = initInt("blaze", "manaDisintegrators", 0);
+		BlazeTracker.scorchedBooks = initInt("blaze", "scorchedBooks", 0);
+		BlazeTracker.kelvinInverters = initInt("blaze", "kelvinInverters", 0);
+		BlazeTracker.blazeRodDistillates = initInt("blaze", "blazeRodDistillates", 0);
+		BlazeTracker.glowstoneDistillates = initInt("blaze", "glowstoneDistillates", 0);
+		BlazeTracker.magmaCreamDistillates = initInt("blaze", "magmaCreamDistillates", 0);
+		BlazeTracker.netherWartDistillates = initInt("blaze", "netherWartDistillates", 0);
+		BlazeTracker.gabagoolDistillates = initInt("blaze", "gabagoolDistillates", 0);
+		BlazeTracker.scorchedPowerCrystals = initInt("blaze", "scorchedPowerCrystals", 0);
+		BlazeTracker.fireAspectBooks = initInt("blaze", "fireAspectBooks", 0);
+		BlazeTracker.fieryBurstRunes = initInt("blaze", "fieryBurstRunes", 0);
+		BlazeTracker.opalGems = initInt("blaze", "opalGems", 0);
+		BlazeTracker.archfiendDice = initInt("blaze", "archfiendDice", 0);
+		BlazeTracker.duplexBooks = initInt("blaze", "duplexBooks", 0);
+		BlazeTracker.highClassArchfiendDice = initInt("blaze", "highClassArchfiendDice", 0);
+		BlazeTracker.engineeringPlans = initInt("blaze", "engineeringPlans", 0);
+		BlazeTracker.subzeroInverters = initInt("blaze", "subzeroInverters", 0);
+		BlazeTracker.time = initDouble("blaze", "timeRNG", -1);
+		BlazeTracker.bosses = initInt("blaze", "bossRNG", -1);
+
 		// Fishing
-		LootTracker.seaCreatures = initInt("fishing", "seaCreature", 0);
-		LootTracker.goodCatches = initInt("fishing", "goodCatch", 0);
-		LootTracker.greatCatches = initInt("fishing", "greatCatch", 0);
-		LootTracker.squids = initInt("fishing", "squid", 0);
-		LootTracker.seaWalkers = initInt("fishing", "seaWalker", 0);
-		LootTracker.nightSquids = initInt("fishing", "nightSquid", 0);
-		LootTracker.seaGuardians = initInt("fishing", "seaGuardian", 0);
-		LootTracker.seaWitches = initInt("fishing", "seaWitch", 0);
-		LootTracker.seaArchers = initInt("fishing", "seaArcher", 0);
-		LootTracker.monsterOfTheDeeps = initInt("fishing", "monsterOfDeep", 0);
-		LootTracker.catfishes = initInt("fishing", "catfish", 0);
-		LootTracker.carrotKings = initInt("fishing", "carrotKing", 0);
-		LootTracker.seaLeeches = initInt("fishing", "seaLeech", 0);
-		LootTracker.guardianDefenders = initInt("fishing", "guardianDefender", 0);
-		LootTracker.deepSeaProtectors = initInt("fishing", "deepSeaProtector", 0);
-		LootTracker.hydras = initInt("fishing", "hydra", 0);
-		LootTracker.seaEmperors = initInt("fishing", "seaEmperor", 0);
-		LootTracker.empTime = initDouble("fishing", "empTime", -1);
-		LootTracker.empSCs = initInt("fishing", "empSC", -1);
-		LootTracker.fishingMilestone = initInt("fishing", "milestone", 0);
+		FishingTracker.seaCreatures = initInt("fishing", "seaCreature", 0);
+		FishingTracker.goodCatches = initInt("fishing", "goodCatch", 0);
+		FishingTracker.greatCatches = initInt("fishing", "greatCatch", 0);
+		FishingTracker.squids = initInt("fishing", "squid", 0);
+		FishingTracker.seaWalkers = initInt("fishing", "seaWalker", 0);
+		FishingTracker.nightSquids = initInt("fishing", "nightSquid", 0);
+		FishingTracker.seaGuardians = initInt("fishing", "seaGuardian", 0);
+		FishingTracker.seaWitches = initInt("fishing", "seaWitch", 0);
+		FishingTracker.seaArchers = initInt("fishing", "seaArcher", 0);
+		FishingTracker.monsterOfTheDeeps = initInt("fishing", "monsterOfDeep", 0);
+		FishingTracker.catfishes = initInt("fishing", "catfish", 0);
+		FishingTracker.carrotKings = initInt("fishing", "carrotKing", 0);
+		FishingTracker.seaLeeches = initInt("fishing", "seaLeech", 0);
+		FishingTracker.guardianDefenders = initInt("fishing", "guardianDefender", 0);
+		FishingTracker.deepSeaProtectors = initInt("fishing", "deepSeaProtector", 0);
+		FishingTracker.hydras = initInt("fishing", "hydra", 0);
+		FishingTracker.seaEmperors = initInt("fishing", "seaEmperor", 0);
+		FishingTracker.empTime = initDouble("fishing", "empTime", -1);
+		FishingTracker.empSCs = initInt("fishing", "empSC", -1);
+		FishingTracker.fishingMilestone = initInt("fishing", "milestone", 0);
 		// Fishing Winter
-		LootTracker.frozenSteves = initInt("fishing", "frozenSteve", 0);
-		LootTracker.frostyTheSnowmans = initInt("fishing", "snowman", 0);
-		LootTracker.grinches = initInt("fishing", "grinch", 0);
-		LootTracker.yetis = initInt("fishing", "yeti", 0);
-		LootTracker.yetiTime = initDouble("fishing", "yetiTime", -1);
-		LootTracker.yetiSCs = initInt("fishing", "yetiSC", -1);
+		FishingTracker.frozenSteves = initInt("fishing", "frozenSteve", 0);
+		FishingTracker.frostyTheSnowmans = initInt("fishing", "snowman", 0);
+		FishingTracker.grinches = initInt("fishing", "grinch", 0);
+		FishingTracker.yetis = initInt("fishing", "yeti", 0);
+		FishingTracker.yetiTime = initDouble("fishing", "yetiTime", -1);
+		FishingTracker.yetiSCs = initInt("fishing", "yetiSC", -1);
 		// Fishing Festival
-		LootTracker.nurseSharks = initInt("fishing", "nurseShark", 0);
-		LootTracker.blueSharks = initInt("fishing", "blueShark", 0);
-		LootTracker.tigerSharks = initInt("fishing", "tigerShark", 0);
-		LootTracker.greatWhiteSharks = initInt("fishing", "greatWhiteShark", 0);
+		FishingTracker.nurseSharks = initInt("fishing", "nurseShark", 0);
+		FishingTracker.blueSharks = initInt("fishing", "blueShark", 0);
+		FishingTracker.tigerSharks = initInt("fishing", "tigerShark", 0);
+		FishingTracker.greatWhiteSharks = initInt("fishing", "greatWhiteShark", 0);
 		// Spooky Fishing
-		LootTracker.scarecrows = initInt("fishing", "scarecrow", 0);
-		LootTracker.nightmares = initInt("fishing", "nightmare", 0);
-		LootTracker.werewolfs = initInt("fishing", "werewolf", 0);
-		LootTracker.phantomFishers = initInt("fishing", "phantomFisher", 0);
-		LootTracker.grimReapers = initInt("fishing", "grimReaper", 0);
+		FishingTracker.scarecrows = initInt("fishing", "scarecrow", 0);
+		FishingTracker.nightmares = initInt("fishing", "nightmare", 0);
+		FishingTracker.werewolfs = initInt("fishing", "werewolf", 0);
+		FishingTracker.phantomFishers = initInt("fishing", "phantomFisher", 0);
+		FishingTracker.grimReapers = initInt("fishing", "grimReaper", 0);
+		// CH Fishing
+		FishingTracker.waterWorms = initInt("fishing", "waterWorm", 0);
+		FishingTracker.poisonedWaterWorms = initInt("fishing", "poisonedWaterWorm", 0);
+		FishingTracker.flamingWorms = initInt("fishing", "flamingWorm", 0);
+		FishingTracker.lavaBlazes = initInt("fishing", "lavaBlaze", 0);
+		FishingTracker.lavaPigmen = initInt("fishing", "lavaPigman", 0);
+		FishingTracker.zombieMiners = initInt("fishing", "zombieMiner", 0);
+		// Lava Fishing
+		FishingTracker.magmaSlugs = initInt("fishing", "magmaSlug", 0);
+		FishingTracker.moogmas = initInt("fishing", "moogma", 0);
+		FishingTracker.lavaLeeches = initInt("fishing", "lavaLeech", 0);
+		FishingTracker.pyroclasticWorms = initInt("fishing", "pyroclasticWorm", 0);
+		FishingTracker.lavaFlames = initInt("fishing", "lavaFlame", 0);
+		FishingTracker.fireEels = initInt("fishing", "fireEel", 0);
+		FishingTracker.tauruses = initInt("fishing", "taurus", 0);
+		FishingTracker.thunders = initInt("fishing", "thunder", 0);
+		FishingTracker.lordJawbuses = initInt("fishing", "lordJawbus", 0);
+		FishingTracker.jawbusTime = initDouble("fishing", "jawbusTime", -1);
+		FishingTracker.jawbusSCs = initInt("fishing", "jawbusSC", -1);
 		
 		// Mythological
-		LootTracker.mythCoins = initDouble("mythological", "coins", 0);
-		LootTracker.griffinFeathers = initInt("mythological", "griffinFeather", 0);
-		LootTracker.crownOfGreeds = initInt("mythological", "crownOfGreed", 0);
-		LootTracker.washedUpSouvenirs = initInt("mythological", "washedUpSouvenir", 0);
-		LootTracker.minosHunters = initInt("mythological", "minosHunter", 0);
-		LootTracker.siameseLynxes = initInt("mythological", "siameseLynx", 0);
-		LootTracker.minotaurs = initInt("mythological", "minotaur", 0);
-		LootTracker.gaiaConstructs = initInt("mythological", "gaiaConstruct", 0);
-		LootTracker.minosChampions = initInt("mythological", "minosChampion", 0);
-		LootTracker.minosInquisitors = initInt("mythological", "minosInquisitor", 0);
+		MythologicalTracker.mythCoins = initDouble("mythological", "coins", 0);
+		MythologicalTracker.griffinFeathers = initInt("mythological", "griffinFeather", 0);
+		MythologicalTracker.crownOfGreeds = initInt("mythological", "crownOfGreed", 0);
+		MythologicalTracker.washedUpSouvenirs = initInt("mythological", "washedUpSouvenir", 0);
+		MythologicalTracker.minosHunters = initInt("mythological", "minosHunter", 0);
+		MythologicalTracker.siameseLynxes = initInt("mythological", "siameseLynx", 0);
+		MythologicalTracker.minotaurs = initInt("mythological", "minotaur", 0);
+		MythologicalTracker.gaiaConstructs = initInt("mythological", "gaiaConstruct", 0);
+		MythologicalTracker.minosChampions = initInt("mythological", "minosChampion", 0);
+		MythologicalTracker.minosInquisitors = initInt("mythological", "minosInquisitor", 0);
 		
 		// Dungeons
-		LootTracker.recombobulators =  initInt("catacombs", "recombobulator", 0);
-		LootTracker.fumingPotatoBooks = initInt("catacombs", "fumingBooks", 0);
+		CatacombsTracker.recombobulators =  initInt("catacombs", "recombobulator", 0);
+		CatacombsTracker.fumingPotatoBooks = initInt("catacombs", "fumingBooks", 0);
 		// F1
-		LootTracker.bonzoStaffs = initInt("catacombs", "bonzoStaff", 0);
-		LootTracker.f1CoinsSpent = initDouble("catacombs", "floorOneCoins", 0);
-		LootTracker.f1TimeSpent = initDouble("catacombs", "floorOneTime", 0);
+		CatacombsTracker.f1SPlus = initInt("catacombs", "floorOneSPlus", 0);
+		CatacombsTracker.bonzoStaffs = initInt("catacombs", "bonzoStaff", 0);
+		CatacombsTracker.f1CoinsSpent = initDouble("catacombs", "floorOneCoins", 0);
+		CatacombsTracker.f1TimeSpent = initDouble("catacombs", "floorOneTime", 0);
 		// F2
-		LootTracker.scarfStudies = initInt("catacombs", "scarfStudies", 0);
-		LootTracker.f2CoinsSpent = initDouble("catacombs", "floorTwoCoins", 0);
-		LootTracker.f2TimeSpent = initDouble("catacombs", "floorTwoTime", 0);
+		CatacombsTracker.f2SPlus = initInt("catacombs", "floorTwoSPlus", 0);
+		CatacombsTracker.scarfStudies = initInt("catacombs", "scarfStudies", 0);
+		CatacombsTracker.f2CoinsSpent = initDouble("catacombs", "floorTwoCoins", 0);
+		CatacombsTracker.f2TimeSpent = initDouble("catacombs", "floorTwoTime", 0);
 		// F3
-		LootTracker.adaptiveHelms = initInt("catacombs", "adaptiveHelm", 0);
-		LootTracker.adaptiveChests = initInt("catacombs", "adaptiveChest", 0);
-		LootTracker.adaptiveLegs = initInt("catacombs", "adaptiveLegging", 0);
-		LootTracker.adaptiveBoots = initInt("catacombs", "adaptiveBoot", 0);
-		LootTracker.adaptiveSwords = initInt("catacombs", "adaptiveSword", 0);
-		LootTracker.f3CoinsSpent = initDouble("catacombs", "floorThreeCoins", 0);
-		LootTracker.f3TimeSpent = initDouble("catacombs", "floorThreeTime", 0);
+		CatacombsTracker.f3SPlus = initInt("catacombs", "floorThreeSPlus", 0);
+		CatacombsTracker.adaptiveHelms = initInt("catacombs", "adaptiveHelm", 0);
+		CatacombsTracker.adaptiveChests = initInt("catacombs", "adaptiveChest", 0);
+		CatacombsTracker.adaptiveLegs = initInt("catacombs", "adaptiveLegging", 0);
+		CatacombsTracker.adaptiveBoots = initInt("catacombs", "adaptiveBoot", 0);
+		CatacombsTracker.adaptiveSwords = initInt("catacombs", "adaptiveSword", 0);
+		CatacombsTracker.f3CoinsSpent = initDouble("catacombs", "floorThreeCoins", 0);
+		CatacombsTracker.f3TimeSpent = initDouble("catacombs", "floorThreeTime", 0);
 		// F4
-		LootTracker.spiritWings = initInt("catacombs", "spiritWing", 0);
-		LootTracker.spiritBones = initInt("catacombs", "spiritBone", 0);
-		LootTracker.spiritBoots = initInt("catacombs", "spiritBoot", 0);
-		LootTracker.spiritSwords = initInt("catacombs", "spiritSword", 0);
-		LootTracker.spiritBows = initInt("catacombs", "spiritBow", 0);
-		LootTracker.epicSpiritPets = initInt("catacombs", "spiritPetEpic", 0);
-		LootTracker.legSpiritPets = initInt("catacombs", "spiritPetLeg", 0);
-		LootTracker.f4CoinsSpent = initDouble("catacombs", "floorFourCoins", 0);
-		LootTracker.f4TimeSpent = initDouble("catacombs", "floorFourTime", 0);
+		CatacombsTracker.f4SPlus = initInt("catacombs", "floorFourSPlus", 0);
+		CatacombsTracker.spiritWings = initInt("catacombs", "spiritWing", 0);
+		CatacombsTracker.spiritBones = initInt("catacombs", "spiritBone", 0);
+		CatacombsTracker.spiritBoots = initInt("catacombs", "spiritBoot", 0);
+		CatacombsTracker.spiritSwords = initInt("catacombs", "spiritSword", 0);
+		CatacombsTracker.spiritBows = initInt("catacombs", "spiritBow", 0);
+		CatacombsTracker.epicSpiritPets = initInt("catacombs", "spiritPetEpic", 0);
+		CatacombsTracker.legSpiritPets = initInt("catacombs", "spiritPetLeg", 0);
+		CatacombsTracker.f4CoinsSpent = initDouble("catacombs", "floorFourCoins", 0);
+		CatacombsTracker.f4TimeSpent = initDouble("catacombs", "floorFourTime", 0);
 		// F5
-		LootTracker.warpedStones = initInt("catacombs", "warpedStone", 0);
-		LootTracker.shadowAssHelms = initInt("catacombs", "shadowAssassinHelm", 0);
-		LootTracker.shadowAssChests = initInt("catacombs", "shadowAssassinChest", 0);
-		LootTracker.shadowAssLegs = initInt("catacombs", "shadowAssassinLegging", 0);
-		LootTracker.shadowAssBoots = initInt("catacombs", "shadowAssassinBoot", 0);
-		LootTracker.lastBreaths = initInt("catacombs", "lastBreath", 0);
-		LootTracker.lividDaggers = initInt("catacombs", "lividDagger", 0);
-		LootTracker.shadowFurys = initInt("catacombs", "shadowFury", 0);
-		LootTracker.f5CoinsSpent = initDouble("catacombs", "floorFiveCoins", 0);
-		LootTracker.f5TimeSpent = initDouble("catacombs", "floorFiveTime", 0);
+		CatacombsTracker.f5SPlus = initInt("catacombs", "floorFiveSPlus", 0);
+		CatacombsTracker.warpedStones = initInt("catacombs", "warpedStone", 0);
+		CatacombsTracker.shadowAssHelms = initInt("catacombs", "shadowAssassinHelm", 0);
+		CatacombsTracker.shadowAssChests = initInt("catacombs", "shadowAssassinChest", 0);
+		CatacombsTracker.shadowAssLegs = initInt("catacombs", "shadowAssassinLegging", 0);
+		CatacombsTracker.shadowAssBoots = initInt("catacombs", "shadowAssassinBoot", 0);
+		CatacombsTracker.lastBreaths = initInt("catacombs", "lastBreath", 0);
+		CatacombsTracker.lividDaggers = initInt("catacombs", "lividDagger", 0);
+		CatacombsTracker.shadowFurys = initInt("catacombs", "shadowFury", 0);
+		CatacombsTracker.f5CoinsSpent = initDouble("catacombs", "floorFiveCoins", 0);
+		CatacombsTracker.f5TimeSpent = initDouble("catacombs", "floorFiveTime", 0);
 		// F6
-		LootTracker.ancientRoses = initInt("catacombs", "ancientRose", 0);
-		LootTracker.precursorEyes = initInt("catacombs", "precursorEye", 0);
-		LootTracker.giantsSwords = initInt("catacombs", "giantsSword", 0);
-		LootTracker.necroLordHelms = initInt("catacombs", "necroLordHelm", 0);
-		LootTracker.necroLordChests = initInt("catacombs", "necroLordChest", 0);
-		LootTracker.necroLordLegs = initInt("catacombs", "necroLordLegging", 0);
-		LootTracker.necroLordBoots = initInt("catacombs", "necroLordBoot", 0);
-		LootTracker.necroSwords = initInt("catacombs", "necroSword", 0);
-		LootTracker.f6CoinsSpent = initDouble("catacombs", "floorSixCoins", 0);
-		LootTracker.f6TimeSpent = initDouble("catacombs", "floorSixTime", 0);
+		CatacombsTracker.f6SPlus = initInt("catacombs", "floorSixSPlus", 0);
+		CatacombsTracker.ancientRoses = initInt("catacombs", "ancientRose", 0);
+		CatacombsTracker.precursorEyes = initInt("catacombs", "precursorEye", 0);
+		CatacombsTracker.giantsSwords = initInt("catacombs", "giantsSword", 0);
+		CatacombsTracker.necroLordHelms = initInt("catacombs", "necroLordHelm", 0);
+		CatacombsTracker.necroLordChests = initInt("catacombs", "necroLordChest", 0);
+		CatacombsTracker.necroLordLegs = initInt("catacombs", "necroLordLegging", 0);
+		CatacombsTracker.necroLordBoots = initInt("catacombs", "necroLordBoot", 0);
+		CatacombsTracker.necroSwords = initInt("catacombs", "necroSword", 0);
+		CatacombsTracker.f6Rerolls = initInt("catacombs", "floorSixRerolls", 0);
+		CatacombsTracker.f6CoinsSpent = initDouble("catacombs", "floorSixCoins", 0);
+		CatacombsTracker.f6TimeSpent = initDouble("catacombs", "floorSixTime", 0);
 		// F7
-		LootTracker.witherBloods = initInt("catacombs", "witherBlood", 0);
-		LootTracker.witherCloaks = initInt("catacombs", "witherCloak", 0);
-		LootTracker.implosions = initInt("catacombs", "implosion", 0);
-		LootTracker.witherShields = initInt("catacombs", "witherShield", 0);
-		LootTracker.shadowWarps = initInt("catacombs", "shadowWarp", 0);
-		LootTracker.necronsHandles = initInt("catacombs", "necronsHandle", 0);
-		LootTracker.autoRecombs = initInt("catacombs", "autoRecomb", 0);
-		LootTracker.witherHelms = initInt("catacombs", "witherHelm", 0);
-		LootTracker.witherChests = initInt("catacombs", "witherChest", 0);
-		LootTracker.witherLegs = initInt("catacombs", "witherLegging", 0);
-		LootTracker.witherBoots = initInt("catacombs", "witherBoot", 0);
-		LootTracker.f7CoinsSpent = initDouble("catacombs", "floorSevenCoins", 0);
-		LootTracker.f7TimeSpent = initDouble("catacombs", "floorSevenTime", 0);
+		CatacombsTracker.f7SPlus = initInt("catacombs", "floorSevenSPlus", 0);
+		CatacombsTracker.witherBloods = initInt("catacombs", "witherBlood", 0);
+		CatacombsTracker.witherCloaks = initInt("catacombs", "witherCloak", 0);
+		CatacombsTracker.implosions = initInt("catacombs", "implosion", 0);
+		CatacombsTracker.witherShields = initInt("catacombs", "witherShield", 0);
+		CatacombsTracker.shadowWarps = initInt("catacombs", "shadowWarp", 0);
+		CatacombsTracker.necronsHandles = initInt("catacombs", "necronsHandle", 0);
+		CatacombsTracker.autoRecombs = initInt("catacombs", "autoRecomb", 0);
+		CatacombsTracker.witherHelms = initInt("catacombs", "witherHelm", 0);
+		CatacombsTracker.witherChests = initInt("catacombs", "witherChest", 0);
+		CatacombsTracker.witherLegs = initInt("catacombs", "witherLegging", 0);
+		CatacombsTracker.witherBoots = initInt("catacombs", "witherBoot", 0);
+		CatacombsTracker.f7Rerolls = initInt("catacombs", "floorSevenRerolls", 0);
+		CatacombsTracker.f7CoinsSpent = initDouble("catacombs", "floorSevenCoins", 0);
+		CatacombsTracker.f7TimeSpent = initDouble("catacombs", "floorSevenTime", 0);
+		// MM
+		CatacombsTracker.m1S = initInt("catacombs", "masterOneS", 0);
+		CatacombsTracker.m1SPlus = initInt("catacombs", "masterOneSPlus", 0);
+		CatacombsTracker.m2S = initInt("catacombs", "masterTwoS", 0);
+		CatacombsTracker.m2SPlus = initInt("catacombs", "masterTwoSPlus", 0);
+		CatacombsTracker.m3S = initInt("catacombs", "masterThreeS", 0);
+		CatacombsTracker.m3SPlus = initInt("catacombs", "masterThreeSPlus", 0);
+		CatacombsTracker.m4S = initInt("catacombs", "masterFourS", 0);
+		CatacombsTracker.m4SPlus = initInt("catacombs", "masterFourSPlus", 0);
+		CatacombsTracker.m5S = initInt("catacombs", "masterFiveS", 0);
+		CatacombsTracker.m5SPlus = initInt("catacombs", "masterFiveSPlus", 0);
+		CatacombsTracker.m6S = initInt("catacombs", "masterSixS", 0);
+		CatacombsTracker.m6SPlus = initInt("catacombs", "masterSixSPlus", 0);
+		CatacombsTracker.m7S = initInt("catacombs", "masterSevenS", 0);
+		CatacombsTracker.m7SPlus = initInt("catacombs", "masterSevenSPlus", 0);
+		CatacombsTracker.firstStars = initInt("catacombs", "firstStar", 0);
+		CatacombsTracker.secondStars = initInt("catacombs", "secondStar", 0);
+		CatacombsTracker.thirdStars = initInt("catacombs", "thirdStar", 0);
+		CatacombsTracker.fourthStars = initInt("catacombs", "fourthStar", 0);
+		CatacombsTracker.fifthStars = initInt("catacombs", "fifthStar", 0);
+		CatacombsTracker.necronDyes = initInt("catacombs", "necronDye", 0);
+		CatacombsTracker.darkClaymores = initInt("catacombs", "darkClaymore", 0);
+		CatacombsTracker.masterRerolls = initInt("catacombs", "masterRerolls", 0);
+		CatacombsTracker.masterCoinsSpent = initDouble("catacombs", "masterCoins", 0);
+		CatacombsTracker.masterTimeSpent = initDouble("catacombs", "masterTime", 0);
 
 		// Ghost
-		LootTracker.sorrows = initInt("ghosts", "sorrow", 0);
-		LootTracker.voltas = initInt("ghosts", "volta", 0);
-		LootTracker.plasmas = initInt("ghosts", "plasma", 0);
-		LootTracker.ghostlyBoots = initInt("ghosts", "ghostlyBoots", 0);
-		LootTracker.bagOfCashs = initInt("ghosts", "bagOfCash", 0);
-
+		GhostTracker.sorrows = initInt("ghosts", "sorrow", 0);
+		GhostTracker.voltas = initInt("ghosts", "volta", 0);
+		GhostTracker.plasmas = initInt("ghosts", "plasma", 0);
+		GhostTracker.ghostlyBoots = initInt("ghosts", "ghostlyBoots", 0);
+		GhostTracker.bagOfCashs = initInt("ghosts", "bagOfCash", 0);
 
 		// Misc
 		LootDisplay.display = initString("misc", "display", "off");
@@ -440,6 +596,8 @@ public class ConfigHandler {
 		CakeTimer.cakeTime = initDouble("misc", "cakeTime", 0);
 		SkillTracker.showSkillTracker = initBoolean("misc", "showSkillTracker", false);
 		DankersSkyblockMod.firstLaunch = initBoolean("misc", "firstLaunch", true);
+		EndOfFarmAlert.min = initDouble("misc", "farmMin", -78.5);
+		EndOfFarmAlert.max = initDouble("misc", "farmMax", 79.5);
 
 		// Locations
 		ScaledResolution scaled = new ScaledResolution(Minecraft.getMinecraft());
@@ -468,6 +626,10 @@ public class ConfigHandler {
 		MoveCommand.teammatesInRadiusXY[1] = initInt("locations", "teammatesInRadiusY", 100);
 		MoveCommand.giantHPXY[0] = initInt("locations", "giantHPX", 80);
 		MoveCommand.giantHPXY[1] = initInt("locations", "giantHPY", 150);
+		MoveCommand.abilityCooldownsXY[0] = initInt("locations", "abilityCooldownsX", 120);
+		MoveCommand.abilityCooldownsXY[1] = initInt("locations", "abilityCooldownsY", 150);
+		MoveCommand.dungeonScoreXY[0] = initInt("locations", "dungeonScoreX", 150);
+		MoveCommand.dungeonScoreXY[1] = initInt("locations", "dungeonScoreY", 150);
 
 		// Scales
 		ScaleCommand.coordsScale = initDouble("scales", "coordsScale", 1);
@@ -482,11 +644,23 @@ public class ConfigHandler {
 		ScaleCommand.golemTimerScale = initDouble("scales", "golemTimerScale", 1);
 		ScaleCommand.teammatesInRadiusScale = initDouble("scales", "teammatesInRadiusScale", 1);
 		ScaleCommand.giantHPScale = initDouble("scales", "giantHPScale", 1);
+		ScaleCommand.abilityCooldownsScale = initDouble("scales", "abilityCooldownsScale", 1);
+		ScaleCommand.dungeonScoreScale = initDouble("scales", "dungeonScoreScale", 1);
+
+		// Skills
+		DankersSkyblockMod.farmingLevel = initInt("skills", "farming", -1);
+		DankersSkyblockMod.miningLevel = initInt("skills", "mining", -1);
+		DankersSkyblockMod.combatLevel = initInt("skills", "combat", -1);
+		DankersSkyblockMod.foragingLevel = initInt("skills", "foraging", -1);
+		DankersSkyblockMod.fishingLevel = initInt("skills", "fishing", -1);
+		DankersSkyblockMod.enchantingLevel = initInt("skills", "enchanting", -1);
+		DankersSkyblockMod.alchemyLevel = initInt("skills", "alchemy", -1);
+		DankersSkyblockMod.carpentryLevel = initInt("skills", "carpentry", -1);
 
 		// Colours
 		DankersSkyblockMod.MAIN_COLOUR = initString("colors", "main", EnumChatFormatting.GREEN.toString());
 		DankersSkyblockMod.SECONDARY_COLOUR = initString("colors", "secondary", EnumChatFormatting.DARK_GREEN.toString());
-		DankersSkyblockMod.DELIMITER_COLOUR = initString("colors", "delimiter", EnumChatFormatting.AQUA.toString() + EnumChatFormatting.STRIKETHROUGH.toString());
+		DankersSkyblockMod.DELIMITER_COLOUR = initString("colors", "delimiter", EnumChatFormatting.AQUA.toString() + EnumChatFormatting.STRIKETHROUGH);
 		DankersSkyblockMod.ERROR_COLOUR = initString("colors", "error", EnumChatFormatting.RED.toString());
 		DankersSkyblockMod.TYPE_COLOUR = initString("colors", "type", EnumChatFormatting.GREEN.toString());
 		DankersSkyblockMod.VALUE_COLOUR = initString("colors", "value", EnumChatFormatting.DARK_GREEN.toString());
@@ -507,7 +681,7 @@ public class ConfigHandler {
 		PetColours.PET_1_TO_9 = initInt("colors", "pet1To9", 0x999999); // Grey
 		PetColours.PET_10_TO_19 = initInt("colors", "pet10To19", 0xD62440); // Red
 		PetColours.PET_20_TO_29 = initInt("colors", "pet20To29", 0xEF5230); // Orange
-		PetColours.PET_30_TO_39 = initInt("colors", "pet30To39", 0xFFC400); // Yellow
+		PetColours.PET_30_TO_39 = initInt("colors", "pet30To39", 0x113CF2); // Dark Blue
 		PetColours.PET_40_TO_49 = initInt("colors", "pet40To49", 0x0EAC35); // Green
 		PetColours.PET_50_TO_59 = initInt("colors", "pet50To59", 0x008AD8); // Light Blue
 		PetColours.PET_60_TO_69 = initInt("colors", "pet60To69", 0x7E4FC6); // Purple
@@ -529,6 +703,21 @@ public class ConfigHandler {
 
 		// Commands
 		if (!hasKey("commands", "reparty")) writeBooleanConfig("commands", "reparty", false);
+
+		// JSON
+		Gson gson = new Gson();
+
+		try {
+			if (!(new File(Alerts.configFile).exists())) {
+				FileWriter file = new FileWriter(Alerts.configFile);
+				file.write(new JsonArray().toString());
+				file.close();
+			}
+			Alerts.Alert[] alerts = gson.fromJson(new FileReader(Alerts.configFile), Alerts.Alert[].class);
+			if (alerts != null) Alerts.alerts = new ArrayList<>(Arrays.asList(alerts));
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}
 	}
 	
 }
