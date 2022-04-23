@@ -320,7 +320,7 @@ public class FishingTracker {
             zombieMinersSession++;
             ConfigHandler.writeIntConfig("fishing", "zombieMiner", zombieMiners);
             increaseSeaCreatures();
-        } else if (message.contains("From Beneath the lava appears a Magma Slug")) {
+        } else if (message.contains("From beneath the lava appears a Magma Slug")) {
             magmaSlugs++;
             magmaSlugsSession++;
             ConfigHandler.writeIntConfig("fishing", "magmaSlug", magmaSlugs);
