@@ -8,10 +8,13 @@ import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class LootTracker {
 
     public static long itemsChecked = 0;
+    static Pattern dropPattern = Pattern.compile(".*? \\((?<amount>\\d+)x .*\\).*");
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void onSound(PlaySoundEvent event) {
@@ -59,11 +62,11 @@ public class LootTracker {
     }
 
     public static int getAmountfromMessage(String message) {
-        if (message.charAt(message.indexOf("(") + 2) == 'x' || message.charAt(message.indexOf("(") + 3) == 'x') {
-            return Integer.parseInt(message.substring(message.indexOf("(") + 1, message.indexOf("x")));
-        } else {
-            return 1;
+        Matcher matcher = dropPattern.matcher(message);
+        if (matcher.find()) {
+            return Integer.parseInt(matcher.group("amount"));
         }
+        return 1;
     }
     
 }
