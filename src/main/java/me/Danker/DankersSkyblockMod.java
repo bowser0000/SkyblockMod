@@ -126,6 +126,7 @@ public class DankersSkyblockMod {
         MinecraftForge.EVENT_BUS.register(new EndOfFarmAlert());
         MinecraftForge.EVENT_BUS.register(new ExpertiseLore());
         MinecraftForge.EVENT_BUS.register(new FasterMaddoxCalling());
+        MinecraftForge.EVENT_BUS.register(new FirePillarDisplay());
         MinecraftForge.EVENT_BUS.register(new GemstonesLore());
         MinecraftForge.EVENT_BUS.register(new GiantHPDisplay());
         MinecraftForge.EVENT_BUS.register(new GoldenEnchants());

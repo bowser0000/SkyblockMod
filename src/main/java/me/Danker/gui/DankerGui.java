@@ -87,6 +87,7 @@ public class DankerGui extends GuiScreen {
 	private GuiButton dungeonScore;
 	private GuiButton hideArmour;
 	private GuiButton autoJoinSkyblock;
+	private GuiButton firePillar;
 	// Chat Messages
 	private GuiButton sceptreMessages;
 	private GuiButton midasStaffMessages;
@@ -179,6 +180,7 @@ public class DankerGui extends GuiScreen {
 		dungeonScore = new FeatureButton("Dungeon Score Display: " + Utils.getColouredBoolean(ToggleCommand.dungeonScore), "Displays an estimated dungeon score with secrets.");
 		hideArmour = new FeatureButton("Hide Player Armour: " + Utils.getColouredBoolean(ToggleCommand.hideArmour), "Makes player armour invisible, showing their skin.");
 		autoJoinSkyblock = new FeatureButton("Automatically Join Skyblock: " + Utils.getColouredBoolean(ToggleCommand.autoJoinSkyblock), "Automatically join Skyblock when you join Hypixel.\nYou have an addiction.");
+		firePillar = new FeatureButton("Fire Pillar Display: " + Utils.getColouredBoolean(ToggleCommand.firePillar), "Displays blaze fire pillar text on screen");
 
 		allButtons.clear();
 		allButtons.add(changeDisplay);
@@ -237,6 +239,7 @@ public class DankerGui extends GuiScreen {
 		allButtons.add(dungeonScore);
 		allButtons.add(hideArmour);
 		allButtons.add(autoJoinSkyblock);
+		allButtons.add(firePillar);
 
 		search.setText(initSearchText);
 		search.setVisible(true);
@@ -524,6 +527,10 @@ public class DankerGui extends GuiScreen {
 			ToggleCommand.autoJoinSkyblock = !ToggleCommand.autoJoinSkyblock;
 			ConfigHandler.writeBooleanConfig("toggles", "AutoJoinSkyblock", ToggleCommand.autoJoinSkyblock);
 			autoJoinSkyblock.displayString = "Automatically Join Skyblock: " + Utils.getColouredBoolean(ToggleCommand.autoJoinSkyblock);
+		} else if (button == firePillar) {
+			ToggleCommand.firePillar = !ToggleCommand.firePillar;
+			ConfigHandler.writeBooleanConfig("toggles", "FirePillar", ToggleCommand.firePillar);
+			firePillar.displayString = "Fire Pillar Display: " + Utils.getColouredBoolean(ToggleCommand.firePillar);
 		}
 	}
 

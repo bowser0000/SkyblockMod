@@ -244,6 +244,7 @@ public class ConfigHandler {
 		ToggleCommand.dungeonScore = initBoolean("toggles", "DungeonScore", false);
 		ToggleCommand.hideArmour = initBoolean("toggles", "HideArmour", false);
 		ToggleCommand.autoJoinSkyblock = initBoolean("toggles", "AutoJoinSkyblock", false);
+		ToggleCommand.firePillar = initBoolean("toggles", "FirePillar", false);
 		// Chat Messages
 		ToggleCommand.sceptreMessages = initBoolean("toggles", "SceptreMessages", true);
 		ToggleCommand.midasStaffMessages = initBoolean("toggles", "MidasStaffMessages", true);
@@ -629,6 +630,8 @@ public class ConfigHandler {
 		MoveCommand.abilityCooldownsXY[1] = initInt("locations", "abilityCooldownsY", 150);
 		MoveCommand.dungeonScoreXY[0] = initInt("locations", "dungeonScoreX", 150);
 		MoveCommand.dungeonScoreXY[1] = initInt("locations", "dungeonScoreY", 150);
+		MoveCommand.firePillarXY[0] = initInt("locations", "firePillarX", 200);
+		MoveCommand.firePillarXY[1] = initInt("locations", "firePillarY", 200);
 
 		// Scales
 		ScaleCommand.coordsScale = initDouble("scales", "coordsScale", 1);
@@ -645,6 +648,7 @@ public class ConfigHandler {
 		ScaleCommand.giantHPScale = initDouble("scales", "giantHPScale", 1);
 		ScaleCommand.abilityCooldownsScale = initDouble("scales", "abilityCooldownsScale", 1);
 		ScaleCommand.dungeonScoreScale = initDouble("scales", "dungeonScoreScale", 1);
+		ScaleCommand.firePillarScale = initDouble("scales", "firePillarScale", 1);
 
 		// Skills
 		DankersSkyblockMod.farmingLevel = initInt("skills", "farming", -1);
