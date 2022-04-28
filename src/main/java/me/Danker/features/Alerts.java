@@ -1,6 +1,7 @@
 package me.Danker.features;
 
 import com.google.gson.GsonBuilder;
+import javafx.scene.control.Alert;
 import me.Danker.commands.ToggleCommand;
 import me.Danker.utils.Utils;
 import net.minecraft.util.EnumChatFormatting;
@@ -12,11 +13,15 @@ import java.awt.*;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Alerts {
 
     public static List<Alert> alerts = new ArrayList<>();
+    public static HashMap<Alert, Pattern> patterns = new HashMap<>();
     public static String configFile;
 
     @SubscribeEvent
@@ -41,45 +46,59 @@ public class Alerts {
             }
             if (!location) continue;
 
-            boolean trigger;
-            switch (alert.mode) {
-                case "Starts With":
-                    trigger = message.startsWith(alert.message);
-                    break;
-                case "Contains":
-                    trigger = message.contains(alert.message);
-                    break;
-                case "Ends With":
-                    trigger = message.endsWith(alert.message);
-                    break;
-                default:
-                    continue;
-            }
+            if (alert.mode.equals("Regex")) {
+                Matcher matcher = patterns.get(alert).matcher(message);
+                if (matcher.matches()) {
+                    matcher.reset();
+                    String alertText = alert.alert;
 
-            if (trigger) {
-                Utils.createTitle(EnumChatFormatting.RED + alert.alert.replace("&", "§"), 2);
-
-                if (alert.desktop) {
-                    try {
-                        final SystemTray tray = SystemTray.getSystemTray();
-                        final Image image = Toolkit.getDefaultToolkit().createImage("icon.png");
-                        final TrayIcon trayIcon = new TrayIcon(image, "Alert");
-                        trayIcon.setImageAutoSize(true);
-                        trayIcon.setToolTip("Alert");
-                        tray.add(trayIcon);
-                        trayIcon.displayMessage(StringUtils.stripControlCodes(alert.alert), message, TrayIcon.MessageType.INFO);
-                        tray.remove(trayIcon);
-                    } catch (Exception ex) {
-                        ex.printStackTrace();
+                    int i = 0;
+                    while (matcher.find()) {
+                        for (int j = 0; j <= matcher.groupCount(); j++) {
+                            alertText = alertText.replace("$$" + i + "$$", matcher.group(j));
+                            i++;
+                        }
                     }
+
+                    Utils.createTitle(EnumChatFormatting.RED + alertText.replace("&", "§"), 2);
+                    if (alert.desktop) Utils.desktopNotification("Alert", alertText, message, TrayIcon.MessageType.INFO);
+
+                    return;
+                }
+            } else {
+                boolean trigger;
+                switch (alert.mode) {
+                    case "Starts With":
+                        trigger = message.startsWith(alert.message);
+                        break;
+                    case "Contains":
+                        trigger = message.contains(alert.message);
+                        break;
+                    case "Ends With":
+                        trigger = message.endsWith(alert.message);
+                        break;
+                    default:
+                        continue;
                 }
 
-                return;
+                if (trigger) {
+                    Utils.createTitle(EnumChatFormatting.RED + alert.alert.replace("&", "§"), 2);
+                    if (alert.desktop) Utils.desktopNotification("Alert", alert.alert, message, TrayIcon.MessageType.INFO);
+
+                    return;
+                }
             }
         }
     }
 
-    public static void saveToFile() {
+    public static void save() {
+        for (Alert alert : alerts) {
+            if (alert.mode.equals("Regex")) {
+                Pattern pattern = Pattern.compile(alert.message);
+                patterns.put(alert, pattern);
+            }
+        }
+
         try (FileWriter writer = new FileWriter(configFile)) {
             new GsonBuilder().create().toJson(alerts, writer);
             writer.flush();

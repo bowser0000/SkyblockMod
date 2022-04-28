@@ -19,7 +19,9 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.scoreboard.ScoreObjective;
 import net.minecraft.util.*;
 
+import java.awt.*;
 import java.util.*;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -490,6 +492,21 @@ public class Utils {
 
 	public static double getCooldownReductionFromLevel(int level) {
     	return (Math.floor(level / 2D) + 25) / 100D;
+	}
+
+	public static void desktopNotification(String name, String title, String text, TrayIcon.MessageType messageType) {
+		try {
+			final SystemTray tray = SystemTray.getSystemTray();
+			final Image image = Toolkit.getDefaultToolkit().createImage("icon.png");
+			final TrayIcon trayIcon = new TrayIcon(image, name);
+			trayIcon.setImageAutoSize(true);
+			trayIcon.setToolTip(name);
+			tray.add(trayIcon);
+			trayIcon.displayMessage(title, text, messageType);
+			tray.remove(trayIcon);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
 	}
 
 	public enum DungeonFloor {

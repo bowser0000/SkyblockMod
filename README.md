@@ -134,6 +134,20 @@ By adding numbers to the end of the file, you can have multiple music files for 
 - dungeon2.wav
 - dungeon99.wav
 
+## Alert Regex
+To replace alert text with a captured group, add `$$x$$` to the alert text, with `x` being the number of the capture group. `$$0$$` will always be replaced with the entire trigger message.
+
+For example, with the following alert
+
+Regex: `From (.*) (.*): (.*)`  
+Alert Text: `$$2$$ says $$3$$`  
+Trigger Message: `From [ADMIN] Plancke: Nice autogg`  
+
+the following alert text would appear
+
+`Plancke says Nice autogg`.
+
+
 ### Notes
 - Slayer tracker for token drops and 20% chance drops uses a 12x12x12 bounding box centered on the player to detect the drops. If you are out of the range of the item drop, it will not count on the tracker.
 - API commands may take a while depending on your internet connection. The API may also go down.
