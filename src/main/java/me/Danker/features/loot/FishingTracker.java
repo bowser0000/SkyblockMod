@@ -55,6 +55,7 @@ public class FishingTracker {
     public static int lavaPigmen;
     public static int zombieMiners;
     // Lava fishing
+    public static int plhlegblasts;
     public static int magmaSlugs;
     public static int moogmas;
     public static int lavaLeeches;
@@ -114,6 +115,7 @@ public class FishingTracker {
     public static int lavaPigmenSession = 0;
     public static int zombieMinersSession = 0;
     // Lava fishing
+    public static int plhlegblastsSession = 0;
     public static int magmaSlugsSession = 0;
     public static int moogmasSession = 0;
     public static int lavaLeechesSession = 0;
@@ -319,6 +321,11 @@ public class FishingTracker {
             zombieMiners++;
             zombieMinersSession++;
             ConfigHandler.writeIntConfig("fishing", "zombieMiner", zombieMiners);
+            increaseSeaCreatures();
+        } else if (message.contains("WOAH! A Plhlegblast appeared")) {
+            plhlegblasts++;
+            plhlegblastsSession++;
+            ConfigHandler.writeIntConfig("fishing", "plhlegblast", plhlegblasts);
             increaseSeaCreatures();
         } else if (message.contains("From beneath the lava appears a Magma Slug")) {
             magmaSlugs++;

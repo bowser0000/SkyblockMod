@@ -872,6 +872,7 @@ public class LootDisplay {
                             EnumChatFormatting.AQUA + "Fishing Milestone:\n" +
                             EnumChatFormatting.GOLD + "Good Catches:\n" +
                             EnumChatFormatting.DARK_PURPLE + "Great Catches:\n" +
+                            EnumChatFormatting.BLUE + "Plhlegblasts:\n" +
                             EnumChatFormatting.DARK_RED + "Magma Slugs:\n" +
                             EnumChatFormatting.RED + "Moogmas:\n" +
                             EnumChatFormatting.RED + "Lava Leeches:\n" +
@@ -887,6 +888,7 @@ public class LootDisplay {
                             EnumChatFormatting.AQUA + nf.format(FishingTracker.fishingMilestone) + "\n" +
                             EnumChatFormatting.GOLD + nf.format(FishingTracker.goodCatches) + "\n" +
                             EnumChatFormatting.DARK_PURPLE + nf.format(FishingTracker.greatCatches) + "\n" +
+                            EnumChatFormatting.BLUE + nf.format(FishingTracker.plhlegblasts) + "\n" +
                             EnumChatFormatting.DARK_RED + nf.format(FishingTracker.magmaSlugs) + "\n" +
                             EnumChatFormatting.RED + nf.format(FishingTracker.moogmas) + "\n" +
                             EnumChatFormatting.RED + nf.format(FishingTracker.lavaLeeches) + "\n" +
@@ -915,6 +917,7 @@ public class LootDisplay {
                             EnumChatFormatting.AQUA + "Fishing Milestone:\n" +
                             EnumChatFormatting.GOLD + "Good Catches:\n" +
                             EnumChatFormatting.DARK_PURPLE + "Great Catches:\n" +
+                            EnumChatFormatting.BLUE + "Plhlegblasts:\n" +
                             EnumChatFormatting.DARK_RED + "Magma Slugs:\n" +
                             EnumChatFormatting.RED + "Moogmas:\n" +
                             EnumChatFormatting.RED + "Lava Leeches:\n" +
@@ -930,6 +933,7 @@ public class LootDisplay {
                             EnumChatFormatting.AQUA + nf.format(FishingTracker.fishingMilestoneSession) + "\n" +
                             EnumChatFormatting.GOLD + nf.format(FishingTracker.goodCatchesSession) + "\n" +
                             EnumChatFormatting.DARK_PURPLE + nf.format(FishingTracker.greatCatchesSession) + "\n" +
+                            EnumChatFormatting.BLUE + nf.format(FishingTracker.plhlegblastsSession) + "\n" +
                             EnumChatFormatting.DARK_RED + nf.format(FishingTracker.magmaSlugsSession) + "\n" +
                             EnumChatFormatting.RED + nf.format(FishingTracker.moogmasSession) + "\n" +
                             EnumChatFormatting.RED + nf.format(FishingTracker.lavaLeechesSession) + "\n" +

@@ -578,6 +578,7 @@ public class LootCommand extends CommandBase {
 
 							player.addChatMessage(new ChatComponentText(EnumChatFormatting.AQUA + "" + EnumChatFormatting.BOLD + "-------------------\n" +
 									EnumChatFormatting.RED + EnumChatFormatting.BOLD + " Lava Fishing Summary (Current Session):\n" +
+									EnumChatFormatting.BLUE + "    Plhlegblasts: " + nf.format(FishingTracker.plhlegblastsSession) + "\n" +
 									EnumChatFormatting.DARK_RED + "    Magma Slugs: " + nf.format(FishingTracker.magmaSlugsSession) + "\n" +
 									EnumChatFormatting.RED + "    Moogmas: " + nf.format(FishingTracker.moogmasSession) + "\n" +
 									EnumChatFormatting.RED + "    Lava Leeches: " + nf.format(FishingTracker.lavaLeechesSession) + "\n" +
@@ -606,6 +607,7 @@ public class LootCommand extends CommandBase {
 
 						player.addChatMessage(new ChatComponentText(EnumChatFormatting.AQUA + "" + EnumChatFormatting.BOLD + "-------------------\n" +
 								EnumChatFormatting.RED + EnumChatFormatting.BOLD + " Lava Fishing Summary:\n" +
+								EnumChatFormatting.BLUE + "    Plhlegblasts: " + nf.format(FishingTracker.plhlegblasts) + "\n" +
 								EnumChatFormatting.DARK_RED + "    Magma Slugs: " + nf.format(FishingTracker.magmaSlugs) + "\n" +
 								EnumChatFormatting.RED + "    Moogmas: " + nf.format(FishingTracker.moogmas) + "\n" +
 								EnumChatFormatting.RED + "    Lava Leeches: " + nf.format(FishingTracker.lavaLeeches) + "\n" +

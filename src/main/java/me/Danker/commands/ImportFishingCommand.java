@@ -112,6 +112,7 @@ public class ImportFishingCommand extends CommandBase {
 			FishingTracker.lavaBlazes = getSCFromApi(statsObject, "kills_lava_blaze");
 			FishingTracker.lavaPigmen = getSCFromApi(statsObject, "kills_lava_pigman");
 			FishingTracker.zombieMiners = getSCFromApi(statsObject, "kills_zombie_miner");
+			FishingTracker.plhlegblasts = getSCFromApi(statsObject, "kills_plhlegblast");
 			FishingTracker.magmaSlugs = getSCFromApi(statsObject, "kills_magma_slug");
 			FishingTracker.moogmas = getSCFromApi(statsObject, "kills_moogma");
 			FishingTracker.lavaLeeches = getSCFromApi(statsObject, "kills_lava_leech");
@@ -160,6 +161,7 @@ public class ImportFishingCommand extends CommandBase {
 			ConfigHandler.writeIntConfig("fishing", "lavaBlaze", FishingTracker.lavaBlazes);
 			ConfigHandler.writeIntConfig("fishing", "lavaPigman", FishingTracker.lavaPigmen);
 			ConfigHandler.writeIntConfig("fishing", "zombieMiner", FishingTracker.zombieMiners);
+			ConfigHandler.writeIntConfig("fishing", "plhlegblast", FishingTracker.plhlegblasts);
 			ConfigHandler.writeIntConfig("fishing", "magmaSlug", FishingTracker.magmaSlugs);
 			ConfigHandler.writeIntConfig("fishing", "moogma", FishingTracker.moogmas);
 			ConfigHandler.writeIntConfig("fishing", "lavaLeech", FishingTracker.lavaLeeches);

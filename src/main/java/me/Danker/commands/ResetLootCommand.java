@@ -279,6 +279,7 @@ public class ResetLootCommand extends CommandBase {
 		FishingTracker.lavaBlazesSession = 0;
 		FishingTracker.lavaPigmenSession = 0;
 		FishingTracker.zombieMinersSession = 0;
+		FishingTracker.plhlegblastsSession = 0;
 		FishingTracker.magmaSlugsSession = 0;
 		FishingTracker.moogmasSession = 0;
 		FishingTracker.lavaLeechesSession = 0;

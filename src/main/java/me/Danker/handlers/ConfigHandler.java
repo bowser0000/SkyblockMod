@@ -461,6 +461,7 @@ public class ConfigHandler {
 		FishingTracker.lavaPigmen = initInt("fishing", "lavaPigman", 0);
 		FishingTracker.zombieMiners = initInt("fishing", "zombieMiner", 0);
 		// Lava Fishing
+		FishingTracker.plhlegblasts = initInt("fishing", "plhlegblast", 0);
 		FishingTracker.magmaSlugs = initInt("fishing", "magmaSlug", 0);
 		FishingTracker.moogmas = initInt("fishing", "moogma", 0);
 		FishingTracker.lavaLeeches = initInt("fishing", "lavaLeech", 0);
