@@ -118,7 +118,7 @@ public class ImportFishingCommand extends CommandBase {
 			FishingTracker.pyroclasticWorms = getSCFromApi(statsObject, "kills_pyroclastic_worm");
 			FishingTracker.lavaFlames = getSCFromApi(statsObject, "kills_lava_flame");
 			FishingTracker.fireEels = getSCFromApi(statsObject, "kills_fire_eel");
-			FishingTracker.tauruses = getSCFromApi(statsObject, "kills_taurus");
+			FishingTracker.tauruses = getSCFromApi(statsObject, "kills_pig_rider");
 			FishingTracker.thunders = getSCFromApi(statsObject, "kills_thunder");
 			FishingTracker.lordJawbuses = getSCFromApi(statsObject, "kills_lord_jawbus");
 
