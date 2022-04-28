@@ -10,41 +10,41 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class ZombieTracker {
 
-    public static int zombieRevs;
-    public static int zombieRevFlesh;
-    public static int zombieRevViscera;
-    public static int zombieFoulFlesh;
-    public static int zombieFoulFleshDrops;
-    public static int zombiePestilences;
-    public static int zombieUndeadCatas;
-    public static int zombieBooks;
-    public static int zombieBooksT7;
-    public static int zombieBeheadeds;
-    public static int zombieRevCatas;
-    public static int zombieSnakes;
-    public static int zombieScythes;
-    public static int zombieShards;
-    public static int zombieWardenHearts;
-    public static double zombieTime;
-    public static int zombieBosses;
+    public static int revs;
+    public static int revFlesh;
+    public static int revViscera;
+    public static int foulFlesh;
+    public static int foulFleshDrops;
+    public static int pestilences;
+    public static int undeadCatas;
+    public static int books;
+    public static int booksT7;
+    public static int beheadeds;
+    public static int revCatas;
+    public static int snakes;
+    public static int scythes;
+    public static int shards;
+    public static int wardenHearts;
+    public static double time;
+    public static int bosses;
 
-    public static int zombieRevsSession = 0;
-    public static int zombieRevFleshSession = 0;
-    public static int zombieRevVisceraSession = 0;
-    public static int zombieFoulFleshSession = 0;
-    public static int zombieFoulFleshDropsSession = 0;
-    public static int zombiePestilencesSession = 0;
-    public static int zombieUndeadCatasSession = 0;
-    public static int zombieBooksSession = 0;
-    public static int zombieBooksT7Session = 0;
-    public static int zombieBeheadedsSession = 0;
-    public static int zombieRevCatasSession = 0;
-    public static int zombieSnakesSession = 0;
-    public static int zombieScythesSession = 0;
-    public static int zombieShardsSession = 0;
-    public static int zombieWardenHeartsSession = 0;
-    public static double zombieTimeSession = -1;
-    public static int zombieBossesSession = -1;
+    public static int revsSession = 0;
+    public static int revFleshSession = 0;
+    public static int revVisceraSession = 0;
+    public static int foulFleshSession = 0;
+    public static int foulFleshDropsSession = 0;
+    public static int pestilencesSession = 0;
+    public static int undeadCatasSession = 0;
+    public static int booksSession = 0;
+    public static int booksT7Session = 0;
+    public static int beheadedsSession = 0;
+    public static int revCatasSession = 0;
+    public static int snakesSession = 0;
+    public static int scythesSession = 0;
+    public static int shardsSession = 0;
+    public static int wardenHeartsSession = 0;
+    public static double timeSession = -1;
+    public static int bossesSession = -1;
 
     @SubscribeEvent
     public void onChat(ClientChatReceivedEvent event) {
@@ -57,87 +57,87 @@ public class ZombieTracker {
         boolean rng = false;
 
         if (message.contains("   Zombie Slayer LVL ")) { // Zombie
-            zombieRevs++;
-            zombieRevsSession++;
-            if (zombieBosses != -1) {
-                zombieBosses++;
+            revs++;
+            revsSession++;
+            if (bosses != -1) {
+                bosses++;
             }
-            if (zombieBossesSession != 1) {
-                zombieBossesSession++;
+            if (bossesSession != 1) {
+                bossesSession++;
             }
-            ConfigHandler.writeIntConfig("zombie", "revs", zombieRevs);
-            ConfigHandler.writeIntConfig("zombie", "bossRNG", zombieBosses);
+            ConfigHandler.writeIntConfig("zombie", "revs", revs);
+            ConfigHandler.writeIntConfig("zombie", "bossRNG", bosses);
         } else if (message.contains("RARE DROP! (") && message.contains("Revenant Viscera)")) {
             int amount = LootTracker.getAmountfromMessage(message);
-            zombieRevViscera += amount;
-            zombieRevVisceraSession += amount;
-            ConfigHandler.writeIntConfig("zombie", "revViscera", zombieRevViscera);
+            revViscera += amount;
+            revVisceraSession += amount;
+            ConfigHandler.writeIntConfig("zombie", "revViscera", revViscera);
         } else if (message.contains("RARE DROP! (") && message.contains("Foul Flesh)")) {
             int amount = LootTracker.getAmountfromMessage(message);
-            zombieFoulFlesh += amount;
-            zombieFoulFleshSession += amount;
-            zombieFoulFleshDrops++;
-            zombieFoulFleshDropsSession++;
-            ConfigHandler.writeIntConfig("zombie", "foulFlesh", zombieFoulFlesh);
-            ConfigHandler.writeIntConfig("zombie", "foulFleshDrops", zombieFoulFleshDrops);
+            foulFlesh += amount;
+            foulFleshSession += amount;
+            foulFleshDrops++;
+            foulFleshDropsSession++;
+            ConfigHandler.writeIntConfig("zombie", "foulFlesh", foulFlesh);
+            ConfigHandler.writeIntConfig("zombie", "foulFleshDrops", foulFleshDrops);
         } else if (message.contains("VERY RARE DROP!  (Revenant Catalyst)")) {
-            zombieRevCatas++;
-            zombieRevCatasSession++;
-            ConfigHandler.writeIntConfig("zombie", "revCatalyst", zombieRevCatas);
+            revCatas++;
+            revCatasSession++;
+            ConfigHandler.writeIntConfig("zombie", "revCatalyst", revCatas);
         } else if (message.contains("VERY RARE DROP!  (") && message.contains(" Pestilence Rune I)")) {
-            zombiePestilences++;
-            zombiePestilencesSession++;
-            ConfigHandler.writeIntConfig("zombie", "pestilence", zombiePestilences);
+            pestilences++;
+            pestilencesSession++;
+            ConfigHandler.writeIntConfig("zombie", "pestilence", pestilences);
         } else if (message.contains("VERY RARE DROP!  (Smite VI)")) {
-            zombieBooks++;
-            zombieBooksSession++;
-            ConfigHandler.writeIntConfig("zombie", "book", zombieBooks);
+            books++;
+            booksSession++;
+            ConfigHandler.writeIntConfig("zombie", "book", books);
         } else if (message.contains("VERY RARE DROP!  (Smite VII)")) {
-            zombieBooksT7++;
-            zombieBooksT7Session++;
-            ConfigHandler.writeIntConfig("zombie", "bookT7", zombieBooksT7);
+            booksT7++;
+            booksT7Session++;
+            ConfigHandler.writeIntConfig("zombie", "bookT7", booksT7);
         } else if (message.contains("VERY RARE DROP!  (Undead Catalyst)")) {
-            zombieUndeadCatas++;
-            zombieUndeadCatasSession++;
-            ConfigHandler.writeIntConfig("zombie", "undeadCatalyst", zombieUndeadCatas);
+            undeadCatas++;
+            undeadCatasSession++;
+            ConfigHandler.writeIntConfig("zombie", "undeadCatalyst", undeadCatas);
         } else if (message.contains("CRAZY RARE DROP!  (Beheaded Horror)")) {
             rng = true;
-            zombieBeheadeds++;
-            zombieBeheadedsSession++;
-            ConfigHandler.writeIntConfig("zombie", "beheaded", zombieBeheadeds);
+            beheadeds++;
+            beheadedsSession++;
+            ConfigHandler.writeIntConfig("zombie", "beheaded", beheadeds);
             if (ToggleCommand.rngesusAlerts) Utils.createTitle(EnumChatFormatting.DARK_PURPLE + "BEHEADED HORROR!", 3);
         } else if (message.contains("CRAZY RARE DROP!  (") && message.contains(" Snake Rune I)")) {
             rng = true;
-            zombieSnakes++;
-            zombieSnakesSession++;
-            ConfigHandler.writeIntConfig("zombie", "snake", zombieSnakes);
+            snakes++;
+            snakesSession++;
+            ConfigHandler.writeIntConfig("zombie", "snake", snakes);
             if (ToggleCommand.rngesusAlerts) Utils.createTitle(EnumChatFormatting.DARK_GREEN + "SNAKE RUNE!", 3);
         } else if (message.contains("CRAZY RARE DROP!  (Scythe Blade)")) {
             rng = true;
-            zombieScythes++;
-            zombieScythesSession++;
-            ConfigHandler.writeIntConfig("zombie", "scythe", zombieScythes);
+            scythes++;
+            scythesSession++;
+            ConfigHandler.writeIntConfig("zombie", "scythe", scythes);
             if (ToggleCommand.rngesusAlerts) Utils.createTitle(EnumChatFormatting.GOLD + "SCYTHE BLADE!", 5);
         } else if (message.contains("CRAZY RARE DROP!  (Shard of the Shredded)")) {
             rng = true;
-            zombieShards++;
-            zombieShardsSession++;
-            ConfigHandler.writeIntConfig("zombie", "shard", zombieShards);
+            shards++;
+            shardsSession++;
+            ConfigHandler.writeIntConfig("zombie", "shard", shards);
             if (ToggleCommand.rngesusAlerts) Utils.createTitle(EnumChatFormatting.RED + "SHARD OF THE SHREDDED!", 5);
         } else if (message.contains("INSANE DROP!  (Warden Heart)") || message.contains("CRAZY RARE DROP!  (Warden Heart)")) {
             rng = true;
-            zombieWardenHearts++;
-            zombieWardenHeartsSession++;
-            ConfigHandler.writeIntConfig("zombie", "heart", zombieWardenHearts);
+            wardenHearts++;
+            wardenHeartsSession++;
+            ConfigHandler.writeIntConfig("zombie", "heart", wardenHearts);
             if (ToggleCommand.rngesusAlerts) Utils.createTitle(EnumChatFormatting.RED + "WARDEN HEART!", 5);
         }
 
         if (rng) {
-            zombieTime = System.currentTimeMillis() / 1000;
-            zombieBosses = 0;
-            zombieTimeSession = System.currentTimeMillis() / 1000;
-            zombieBossesSession = 0;
-            ConfigHandler.writeDoubleConfig("zombie", "timeRNG", zombieTime);
+            time = System.currentTimeMillis() / 1000;
+            bosses = 0;
+            timeSession = System.currentTimeMillis() / 1000;
+            bossesSession = 0;
+            ConfigHandler.writeDoubleConfig("zombie", "timeRNG", time);
             ConfigHandler.writeIntConfig("zombie", "bossRNG", 0);
         }
     }

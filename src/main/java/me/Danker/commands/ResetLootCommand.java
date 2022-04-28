@@ -126,82 +126,84 @@ public class ResetLootCommand extends CommandBase {
 	}
 	
 	static void resetZombie() {		
-		ZombieTracker.zombieRevsSession = 0;
-		ZombieTracker.zombieRevFleshSession = 0;
-		ZombieTracker.zombieRevVisceraSession = 0;
-		ZombieTracker.zombieFoulFleshSession = 0;
-		ZombieTracker.zombieFoulFleshDropsSession = 0;
-		ZombieTracker.zombiePestilencesSession = 0;
-		ZombieTracker.zombieUndeadCatasSession = 0;
-		ZombieTracker.zombieBooksSession = 0;
-		ZombieTracker.zombieBooksT7Session = 0;
-		ZombieTracker.zombieBeheadedsSession = 0;
-		ZombieTracker.zombieRevCatasSession = 0;
-		ZombieTracker.zombieSnakesSession = 0;
-		ZombieTracker.zombieScythesSession = 0;
-		ZombieTracker.zombieTimeSession = -1;
-		ZombieTracker.zombieBossesSession = -1;
+		ZombieTracker.revsSession = 0;
+		ZombieTracker.revFleshSession = 0;
+		ZombieTracker.revVisceraSession = 0;
+		ZombieTracker.foulFleshSession = 0;
+		ZombieTracker.foulFleshDropsSession = 0;
+		ZombieTracker.pestilencesSession = 0;
+		ZombieTracker.undeadCatasSession = 0;
+		ZombieTracker.booksSession = 0;
+		ZombieTracker.booksT7Session = 0;
+		ZombieTracker.beheadedsSession = 0;
+		ZombieTracker.revCatasSession = 0;
+		ZombieTracker.snakesSession = 0;
+		ZombieTracker.scythesSession = 0;
+		ZombieTracker.timeSession = -1;
+		ZombieTracker.bossesSession = -1;
 		ConfigHandler.deleteCategory("zombie");
 		ConfigHandler.reloadConfig();
 	}
 	
 	static void resetSpider() {
-		SpiderTracker.spiderTarantulasSession = 0;
-		SpiderTracker.spiderWebsSession = 0;
-		SpiderTracker.spiderTAPSession = 0;
-		SpiderTracker.spiderTAPDropsSession = 0;
-		SpiderTracker.spiderBitesSession = 0;
-		SpiderTracker.spiderCatalystsSession = 0;
-		SpiderTracker.spiderBooksSession = 0;
-		SpiderTracker.spiderSwattersSession = 0;
-		SpiderTracker.spiderTalismansSession = 0;
-		SpiderTracker.spiderMosquitosSession = 0;
-		SpiderTracker.spiderTimeSession = -1;
-		SpiderTracker.spiderBossesSession = -1;
+		SpiderTracker.tarantulasSession = 0;
+		SpiderTracker.websSession = 0;
+		SpiderTracker.TAPSession = 0;
+		SpiderTracker.TAPDropsSession = 0;
+		SpiderTracker.bitesSession = 0;
+		SpiderTracker.catalystsSession = 0;
+		SpiderTracker.booksSession = 0;
+		SpiderTracker.swattersSession = 0;
+		SpiderTracker.talismansSession = 0;
+		SpiderTracker.mosquitosSession = 0;
+		SpiderTracker.timeSession = -1;
+		SpiderTracker.bossesSession = -1;
 		ConfigHandler.deleteCategory("spider");
 		ConfigHandler.reloadConfig();
 	}
 	
 	static void resetWolf() {
-		WolfTracker.wolfSvensSession = 0;
-		WolfTracker.wolfTeethSession = 0;
-		WolfTracker.wolfWheelsSession = 0;
-		WolfTracker.wolfWheelsDropsSession = 0;
-		WolfTracker.wolfSpiritsSession = 0;
-		WolfTracker.wolfBooksSession = 0;
-		WolfTracker.wolfEggsSession = 0;
-		WolfTracker.wolfCouturesSession = 0;
-		WolfTracker.wolfBaitsSession = 0;
-		WolfTracker.wolfFluxesSession = 0;
-		WolfTracker.wolfTimeSession = -1;
-		WolfTracker.wolfBossesSession = -1;
+		WolfTracker.svensSession = 0;
+		WolfTracker.teethSession = 0;
+		WolfTracker.wheelsSession = 0;
+		WolfTracker.wheelsDropsSession = 0;
+		WolfTracker.spiritsSession = 0;
+		WolfTracker.booksSession = 0;
+		WolfTracker.furballsSession = 0;
+		WolfTracker.eggsSession = 0;
+		WolfTracker.couturesSession = 0;
+		WolfTracker.baitsSession = 0;
+		WolfTracker.fluxesSession = 0;
+		WolfTracker.timeSession = -1;
+		WolfTracker.bossesSession = -1;
 		ConfigHandler.deleteCategory("wolf");
 		ConfigHandler.reloadConfig();
 	}
 
 	static void resetEnderman() {
-		EndermanTracker.endermanVoidgloomsSession = 0;
-		EndermanTracker.endermanNullSpheresSession = 0;
-		EndermanTracker.endermanTAPSession = 0;
-		EndermanTracker.endermanTAPDropsSession = 0;
-		EndermanTracker.endermanEndersnakesSession = 0;
-		EndermanTracker.endermanSummoningEyesSession = 0;
-		EndermanTracker.endermanManaBooksSession = 0;
-		EndermanTracker.endermanTunersSession = 0;
-		EndermanTracker.endermanAtomsSession = 0;
-		EndermanTracker.endermanEspressoMachinesSession = 0;
-		EndermanTracker.endermanSmartyBooksSession = 0;
-		EndermanTracker.endermanEndRunesSession = 0;
-		EndermanTracker.endermanChalicesSession = 0;
-		EndermanTracker.endermanDiceSession = 0;
-		EndermanTracker.endermanArtifactsSession = 0;
-		EndermanTracker.endermanSkinsSession = 0;
-		EndermanTracker.endermanMergersSession = 0;
-		EndermanTracker.endermanCoresSession = 0;
-		EndermanTracker.endermanEnchantRunesSession = 0;
-		EndermanTracker.endermanEnderBooksSession = 0;
-		EndermanTracker.endermanTimeSession = -1;
-		EndermanTracker.endermanBossesSession = -1;
+		EndermanTracker.voidgloomsSession = 0;
+		EndermanTracker.nullSpheresSession = 0;
+		EndermanTracker.TAPSession = 0;
+		EndermanTracker.TAPDropsSession = 0;
+		EndermanTracker.endersnakesSession = 0;
+		EndermanTracker.summoningEyesSession = 0;
+		EndermanTracker.manaBooksSession = 0;
+		EndermanTracker.tunersSession = 0;
+		EndermanTracker.atomsSession = 0;
+		EndermanTracker.hazmatsSession = 0;
+		EndermanTracker.espressoMachinesSession = 0;
+		EndermanTracker.smartyBooksSession = 0;
+		EndermanTracker.endRunesSession = 0;
+		EndermanTracker.chalicesSession = 0;
+		EndermanTracker.diceSession = 0;
+		EndermanTracker.artifactsSession = 0;
+		EndermanTracker.skinsSession = 0;
+		EndermanTracker.mergersSession = 0;
+		EndermanTracker.coresSession = 0;
+		EndermanTracker.enchantRunesSession = 0;
+		EndermanTracker.enderBooksSession = 0;
+		EndermanTracker.timeSession = -1;
+		EndermanTracker.bossesSession = -1;
 		ConfigHandler.deleteCategory("enderman");
 		ConfigHandler.reloadConfig();
 	}

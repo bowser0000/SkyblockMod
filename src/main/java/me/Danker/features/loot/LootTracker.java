@@ -39,21 +39,21 @@ public class LootTracker {
                     // If no items, are detected, allow check again. Should fix items not being found
                     if (itemTeeth + itemWebs + itemRev + itemNullSphere + itemDerelictAshe > 0) {
                         itemsChecked = System.currentTimeMillis() / 1000;
-                        WolfTracker.wolfTeeth += itemTeeth;
-                        SpiderTracker.spiderWebs += itemWebs;
-                        ZombieTracker.zombieRevFlesh += itemRev;
-                        EndermanTracker.endermanNullSpheres += itemNullSphere;
+                        WolfTracker.teeth += itemTeeth;
+                        SpiderTracker.webs += itemWebs;
+                        ZombieTracker.revFlesh += itemRev;
+                        EndermanTracker.nullSpheres += itemNullSphere;
                         BlazeTracker.derelictAshes += itemDerelictAshe;
-                        WolfTracker.wolfTeethSession += itemTeeth;
-                        SpiderTracker.spiderWebsSession += itemWebs;
-                        ZombieTracker.zombieRevFleshSession += itemRev;
-                        EndermanTracker.endermanNullSpheresSession += itemNullSphere;
+                        WolfTracker.teethSession += itemTeeth;
+                        SpiderTracker.websSession += itemWebs;
+                        ZombieTracker.revFleshSession += itemRev;
+                        EndermanTracker.nullSpheresSession += itemNullSphere;
                         BlazeTracker.derelictAshesSession += itemDerelictAshe;
 
-                        ConfigHandler.writeIntConfig("wolf", "teeth", WolfTracker.wolfTeeth);
-                        ConfigHandler.writeIntConfig("spider", "web", SpiderTracker.spiderWebs);
-                        ConfigHandler.writeIntConfig("zombie", "revFlesh", ZombieTracker.zombieRevFlesh);
-                        ConfigHandler.writeIntConfig("enderman", "nullSpheres", EndermanTracker.endermanNullSpheres);
+                        ConfigHandler.writeIntConfig("wolf", "teeth", WolfTracker.teeth);
+                        ConfigHandler.writeIntConfig("spider", "web", SpiderTracker.webs);
+                        ConfigHandler.writeIntConfig("zombie", "revFlesh", ZombieTracker.revFlesh);
+                        ConfigHandler.writeIntConfig("enderman", "nullSpheres", EndermanTracker.nullSpheres);
                         ConfigHandler.writeIntConfig("blaze", "derelictAshe", BlazeTracker.derelictAshes);
                     }
                 }
