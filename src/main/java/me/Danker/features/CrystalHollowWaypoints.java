@@ -2,10 +2,12 @@ package me.Danker.features;
 
 import me.Danker.DankersSkyblockMod;
 import me.Danker.commands.ToggleCommand;
+import me.Danker.gui.crystalhollowwaypoints.CrystalHollowAddWaypointGui;
 import me.Danker.handlers.ScoreboardHandler;
 import me.Danker.utils.RenderUtils;
 import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.item.EntityArmorStand;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.event.ClickEvent;
@@ -15,6 +17,7 @@ import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.InputEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 import java.util.ArrayList;
@@ -174,6 +177,18 @@ public class CrystalHollowWaypoints {
                     }
                 }
             }
+        }
+    }
+
+    @SubscribeEvent
+    public void onKey(InputEvent.KeyInputEvent event) {
+        if (!Utils.tabLocation.equals("Crystal Hollows")) return;
+
+        if (DankersSkyblockMod.keyBindings[3].isPressed()) {
+            Minecraft mc = Minecraft.getMinecraft();
+            EntityPlayer player = mc.thePlayer;
+
+            mc.displayGuiScreen(new CrystalHollowAddWaypointGui((int) player.posX, (int) player.posY, (int) player.posZ));
         }
     }
 

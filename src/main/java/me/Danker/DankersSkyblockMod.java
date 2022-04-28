@@ -70,7 +70,7 @@ public class DankersSkyblockMod {
     public static String titleText = "";
     public static int tickAmount = 1;
     public static int repoTickAmount = 1;
-    public static KeyBinding[] keyBindings = new KeyBinding[3];
+    public static KeyBinding[] keyBindings = new KeyBinding[4];
     public static boolean usingLabymod = false;
     public static boolean usingOAM = false;
     static boolean OAMWarning = false;
@@ -188,6 +188,7 @@ public class DankersSkyblockMod {
         keyBindings[0] = new KeyBinding("Open Maddox Menu", Keyboard.KEY_M, "Danker's Skyblock Mod");
         keyBindings[1] = new KeyBinding("Regular Ability", Keyboard.KEY_NUMPAD4, "Danker's Skyblock Mod");
         keyBindings[2] = new KeyBinding("Start/Stop Skill Tracker", Keyboard.KEY_NUMPAD5, "Danker's Skyblock Mod");
+        keyBindings[3] = new KeyBinding("Create Waypoint", Keyboard.KEY_NUMPAD6, "Danker's Skyblock Mod");
 
         for (KeyBinding keyBinding : keyBindings) {
             ClientRegistry.registerKeyBinding(keyBinding);
@@ -457,14 +458,8 @@ public class DankersSkyblockMod {
 
     @SubscribeEvent
     public void onKey(KeyInputEvent event) {
-        if (!Utils.inSkyblock) return;
-
-        EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
-        if (keyBindings[1].isPressed()) {
-            if (Utils.inDungeons) {
-                player.dropOneItem(true);
-            }
-        }
+        if (!Utils.inDungeons) return;
+        if (keyBindings[1].isPressed()) Minecraft.getMinecraft().thePlayer.dropOneItem(true);
     }
 
     @SubscribeEvent
