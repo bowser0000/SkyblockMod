@@ -64,7 +64,7 @@ import java.util.Map;
 @Mod(modid = DankersSkyblockMod.MODID, version = DankersSkyblockMod.VERSION, clientSideOnly = true)
 public class DankersSkyblockMod {
     public static final String MODID = "Danker's Skyblock Mod";
-    public static final String VERSION = "1.8.7-beta5";
+    public static final String VERSION = "1.8.7-beta6";
     public static int titleTimer = -1;
     public static boolean showTitle = false;
     public static String titleText = "";
