@@ -9,6 +9,7 @@ import me.Danker.commands.ToggleCommand;
 import me.Danker.features.*;
 import me.Danker.features.loot.*;
 import me.Danker.features.puzzlesolvers.*;
+import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.util.EnumChatFormatting;
@@ -598,6 +599,7 @@ public class ConfigHandler {
 		DankersSkyblockMod.firstLaunch = initBoolean("misc", "firstLaunch", true);
 		EndOfFarmAlert.min = initDouble("misc", "farmMin", -78.5);
 		EndOfFarmAlert.max = initDouble("misc", "farmMax", 79.5);
+		Utils.TITLE_SOUND = initString("misc", "titleSound", "random.orb");
 
 		// Locations
 		ScaledResolution scaled = new ScaledResolution(Minecraft.getMinecraft());

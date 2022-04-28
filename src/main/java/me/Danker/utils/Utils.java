@@ -50,6 +50,7 @@ public class Utils {
 		put('D', 500);
 		put('M', 1000);
 	}};
+	public static String TITLE_SOUND;
 	
     public static int getItems(String item) {
     	Minecraft mc = Minecraft.getMinecraft();
@@ -97,7 +98,7 @@ public class Utils {
 	}
 	
 	public static void createTitle(String text, int seconds) {
-		Minecraft.getMinecraft().thePlayer.playSound("random.orb", 1, (float) 0.5);
+		Minecraft.getMinecraft().thePlayer.playSound(TITLE_SOUND, 1, (float) 0.5);
 		DankersSkyblockMod.titleTimer = seconds * 20;
 		DankersSkyblockMod.showTitle = true;
 		DankersSkyblockMod.titleText = text;
