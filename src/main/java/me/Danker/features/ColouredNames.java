@@ -11,6 +11,7 @@ import net.minecraft.network.play.server.S45PacketTitle;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IChatComponent;
+import net.minecraft.util.StringUtils;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.client.event.RenderLivingEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
@@ -53,7 +54,7 @@ public class ColouredNames {
 
         for (String user : users) {
             for (int i = 0; i < event.toolTip.size(); i++) {
-                if (event.toolTip.get(i).contains(user)) {
+                if (StringUtils.stripControlCodes(event.toolTip.get(i)).contains(user)) {
                     event.toolTip.set(i, replaceName(event.toolTip.get(i), user, getColourFromName(user)));
                 }
             }
