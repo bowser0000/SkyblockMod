@@ -21,7 +21,7 @@ public class CustomMusicCommand extends CommandBase {
 
     @Override
     public String getCommandUsage(ICommandSender arg0) {
-        return "/" + getCommandName() + " <stop/reload/volume> [dungeonboss/bloodroom/dungeon/hub/island/dungeonhub/farmingislands/" +
+        return "/" + getCommandName() + " <stop/reload/volume> [dungeonboss/bloodroom/dungeon/p2/p3/p4/p5/hub/island/dungeonhub/farmingislands/" +
                                                                 "goldmine/deepcaverns/dwarvenmines/crystalhollows/spidersden/crimsonisle/end/park] [1-100]";
     }
 
@@ -89,6 +89,30 @@ public class CustomMusicCommand extends CommandBase {
 
                         CustomMusic.dungeonVolume = volume;
                         ConfigHandler.writeIntConfig("music", "DungeonVolume", volume);
+                        break;
+                    case "p2":
+                        if (!CustomMusic.phase2.setVolume(volume)) return;
+
+                        CustomMusic.phase2Volume = volume;
+                        ConfigHandler.writeIntConfig("music", "Phase2Volume", volume);
+                        break;
+                    case "p3":
+                        if (!CustomMusic.phase3.setVolume(volume)) return;
+
+                        CustomMusic.phase3Volume = volume;
+                        ConfigHandler.writeIntConfig("music", "Phase3Volume", volume);
+                        break;
+                    case "p4":
+                        if (!CustomMusic.phase4.setVolume(volume)) return;
+
+                        CustomMusic.phase4Volume = volume;
+                        ConfigHandler.writeIntConfig("music", "Phase4Volume", volume);
+                        break;
+                    case "p5":
+                        if (!CustomMusic.phase5.setVolume(volume)) return;
+
+                        CustomMusic.phase5Volume = volume;
+                        ConfigHandler.writeIntConfig("music", "Phase5Volume", volume);
                         break;
                     case "hub":
                         if (!CustomMusic.hub.setVolume(volume)) return;

@@ -296,6 +296,10 @@ public class ConfigHandler {
 		CustomMusic.dungeonbossVolume = initInt("music", "DungeonBossVolume", 50);
 		CustomMusic.bloodroomVolume = initInt("music", "BloodRoomVolume", 50);
 		CustomMusic.dungeonVolume = initInt("music", "DungeonVolume", 50);
+		CustomMusic.phase2Volume = initInt("music", "Phase2Volume", 50);
+		CustomMusic.phase3Volume = initInt("music", "Phase3Volume", 50);
+		CustomMusic.phase4Volume = initInt("music", "Phase4Volume", 50);
+		CustomMusic.phase5Volume = initInt("music", "Phase5Volume", 50);
 		CustomMusic.hubVolume = initInt("music", "HubVolume", 50);
 		CustomMusic.islandVolume = initInt("music", "IslandVolume", 50);
 		CustomMusic.dungeonHubVolume = initInt("music", "DungeonHubVolume", 50);

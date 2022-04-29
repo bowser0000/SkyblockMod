@@ -94,7 +94,7 @@ Discord Server: https://discord.gg/QsEkNQS
 - /reparty - Disbands and reparties all members in the party
 - /fairysouls - Check the fairysouls of a player
 - /lobbybank - Uses API to find the average bank total of the lobby, as well the three players with the highest total money in the bank (and purse).
-- /dsmmusic <stop/reload/volume> [dungeonboss/bloodroom/dungeon/hub/island/dungeonhub/farmingislands/goldmine/deepcaverns/dwarvenmines/crystalhollows/spidersden/crimsonisle/end/park] [1-100] - Stops, reloads or changes the volume of custom music.
+- /dsmmusic <stop/reload/volume> [dungeonboss/bloodroom/dungeon/p2/p3/p4/p5/hub/island/dungeonhub/farmingislands/goldmine/deepcaverns/dwarvenmines/crystalhollows/spidersden/crimsonisle/end/park] [1-100] - Stops, reloads or changes the volume of custom music.
 - /player [player] - Uses API to find skills, slayers, coins and weight of a player.
 - /reloadconfig - Reloads Danker's Skyblock Mod config.
 - /reloaddsmrepo - Reloads Danker's Skyblock Mod repository.
@@ -112,6 +112,10 @@ Discord Server: https://discord.gg/QsEkNQS
   - Blood room: `bloodroom.wav`
   - Dungeon boss: `dungeonboss.wav`
   - Dungeon hub: `dungeonhub.wav`
+  - F7 Phase 2 (Storm): `phasetwo.wav`
+  - F7 Phase 3 (Goldor): `phasethree.wav`
+  - F7 Phase 4 (Necron): `phasefour.wav`
+  - F7 Phase 5 (Wither King): `phasefive.wav`
   - Hub: `hub.wav`
   - Private Island: `island.wav`
   - Farming Islands: `farmingislands.wav`
