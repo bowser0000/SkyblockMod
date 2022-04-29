@@ -115,6 +115,7 @@ public class DankersSkyblockMod {
         MinecraftForge.EVENT_BUS.register(new BonzoMaskTimer());
         MinecraftForge.EVENT_BUS.register(new BoulderSolver());
         MinecraftForge.EVENT_BUS.register(new CakeTimer());
+        MinecraftForge.EVENT_BUS.register(new ChatAliases());
         MinecraftForge.EVENT_BUS.register(new ChronomatronSolver());
         MinecraftForge.EVENT_BUS.register(new ClickInOrderSolver());
         MinecraftForge.EVENT_BUS.register(new ColouredNames());
@@ -178,6 +179,7 @@ public class DankersSkyblockMod {
         MinecraftForge.EVENT_BUS.register(new ZombieTracker());
 
         Alerts.configFile = configDirectory + "/dsmalerts.json";
+        ChatAliases.configFile = configDirectory + "/dsmaliases.json";
 
         ConfigHandler.reloadConfig();
         GoldenEnchants.init();

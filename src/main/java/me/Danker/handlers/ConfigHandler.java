@@ -246,6 +246,7 @@ public class ConfigHandler {
 		ToggleCommand.hideArmour = initBoolean("toggles", "HideArmour", false);
 		ToggleCommand.autoJoinSkyblock = initBoolean("toggles", "AutoJoinSkyblock", false);
 		ToggleCommand.firePillar = initBoolean("toggles", "FirePillar", false);
+		ToggleCommand.aliases = initBoolean("toggles", "Aliases", false);
 		// Chat Messages
 		ToggleCommand.sceptreMessages = initBoolean("toggles", "SceptreMessages", true);
 		ToggleCommand.midasStaffMessages = initBoolean("toggles", "MidasStaffMessages", true);
@@ -719,6 +720,7 @@ public class ConfigHandler {
 		Gson gson = new Gson();
 
 		try {
+			// Alerts
 			if (!(new File(Alerts.configFile).exists())) {
 				FileWriter file = new FileWriter(Alerts.configFile);
 				file.write(new JsonArray().toString());
@@ -726,6 +728,15 @@ public class ConfigHandler {
 			}
 			Alerts.Alert[] alerts = gson.fromJson(new FileReader(Alerts.configFile), Alerts.Alert[].class);
 			if (alerts != null) Alerts.alerts = new ArrayList<>(Arrays.asList(alerts));
+
+			// Aliases
+			if (!(new File(ChatAliases.configFile).exists())) {
+				FileWriter file = new FileWriter(ChatAliases.configFile);
+				file.write(new JsonArray().toString());
+				file.close();
+			}
+			ChatAliases.Alias[] aliases = gson.fromJson(new FileReader(ChatAliases.configFile), ChatAliases.Alias[].class);
+			if (aliases != null) ChatAliases.aliases = new ArrayList<>(Arrays.asList(aliases));
 		} catch (IOException ex) {
 			ex.printStackTrace();
 		}

@@ -66,6 +66,7 @@ Discord Server: https://discord.gg/QsEkNQS
 - Hide player armour
 - Automatically join skyblock
 - Fire pillar display
+- Chat aliases
 
 ## Commands
 - /dhelp - Returns this message in-game.

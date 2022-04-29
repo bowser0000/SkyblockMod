@@ -60,9 +60,6 @@ public class AlertActionGui extends GuiScreen {
         Alerts.Alert alert = Alerts.alerts.get(id);
 
         RenderUtils.drawCenteredText(alert.alert, width, 10, 1D);
-        String alertText = alert.alert;
-        int textWidth = mc.fontRendererObj.getStringWidth(alertText);
-        new TextRenderer(mc, alertText, width / 2 - textWidth / 2, 10, 1D);
     }
 
     @Override
