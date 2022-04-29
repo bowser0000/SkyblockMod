@@ -60,9 +60,6 @@ public class AlertActionGui extends GuiScreen {
         Alerts.Alert alert = Alerts.alerts.get(id);
 
         RenderUtils.drawCenteredText(alert.alert, width, 10, 1D);
-        String alertText = alert.alert;
-        int textWidth = mc.fontRendererObj.getStringWidth(alertText);
-        new TextRenderer(mc, alertText, width / 2 - textWidth / 2, 10, 1D);
     }
 
     @Override
@@ -80,12 +77,12 @@ public class AlertActionGui extends GuiScreen {
             mc.displayGuiScreen(new AlertAddGui(alert, id));
         } else if (button == delete) {
             Alerts.alerts.remove(id);
-            Alerts.saveToFile();
+            Alerts.save();
             mc.displayGuiScreen(new AlertsGui(1));
             return;
         }
         Alerts.alerts.set(id, alert);
-        Alerts.saveToFile();
+        Alerts.save();
     }
 
 }

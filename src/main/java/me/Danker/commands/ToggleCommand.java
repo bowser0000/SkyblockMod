@@ -32,6 +32,15 @@ public class ToggleCommand extends CommandBase implements ICommand {
 	public static boolean expertiseLoreToggled;
 	public static boolean skill50DisplayToggled;
 	public static boolean outlineTextToggled;
+	public static boolean lowHealthNotifyToggled;
+	public static boolean stopSalvageStarredToggled;
+	public static boolean watcherReadyToggled;
+	public static boolean swapToPickBlockToggled;
+	public static boolean flowerWeaponsToggled;
+	public static boolean notifySlayerSlainToggled;
+	public static boolean necronNotificationsToggled;
+	public static boolean bonzoTimerToggled;
+	public static boolean autoSkillTrackerToggled;
 	public static boolean cakeTimerToggled;
 	public static boolean highlightSlayers;
 	public static boolean highlightArachne;
@@ -52,6 +61,8 @@ public class ToggleCommand extends CommandBase implements ICommand {
 	public static boolean dungeonScore;
 	public static boolean hideArmour;
 	public static boolean autoJoinSkyblock;
+	public static boolean firePillar;
+	public static boolean aliases;
 	// Chat Messages
 	public static boolean sceptreMessages;
 	public static boolean midasStaffMessages;
@@ -60,16 +71,6 @@ public class ToggleCommand extends CommandBase implements ICommand {
 	public static boolean cooldownMessages;
 	public static boolean manaMessages;
 	public static boolean killComboMessages;
-	public static boolean lowHealthNotifyToggled;
-	public static boolean lividSolverToggled;
-	public static boolean stopSalvageStarredToggled;
-	public static boolean watcherReadyToggled;
-	public static boolean swapToPickBlockToggled;
-	public static boolean flowerWeaponsToggled;
-	public static boolean notifySlayerSlainToggled;
-	public static boolean necronNotificationsToggled;
-	public static boolean bonzoTimerToggled;
-	public static boolean autoSkillTrackerToggled;
 	// Puzzle Solvers
 	public static boolean threeManToggled;
 	public static boolean oruoToggled;
@@ -81,6 +82,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 	public static boolean boulderToggled;
 	public static boolean silverfishToggled;
 	public static boolean iceWalkToggled;
+	public static boolean lividSolverToggled;
 	// Terminal Helpers
 	public static boolean startsWithToggled;
 	public static boolean selectAllToggled;

@@ -9,6 +9,7 @@ import me.Danker.commands.ToggleCommand;
 import me.Danker.features.*;
 import me.Danker.features.loot.*;
 import me.Danker.features.puzzlesolvers.*;
+import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.util.EnumChatFormatting;
@@ -245,6 +246,8 @@ public class ConfigHandler {
 		ToggleCommand.dungeonScore = initBoolean("toggles", "DungeonScore", false);
 		ToggleCommand.hideArmour = initBoolean("toggles", "HideArmour", false);
 		ToggleCommand.autoJoinSkyblock = initBoolean("toggles", "AutoJoinSkyblock", false);
+		ToggleCommand.firePillar = initBoolean("toggles", "FirePillar", false);
+		ToggleCommand.aliases = initBoolean("toggles", "Aliases", false);
 		// Chat Messages
 		ToggleCommand.sceptreMessages = initBoolean("toggles", "SceptreMessages", true);
 		ToggleCommand.midasStaffMessages = initBoolean("toggles", "MidasStaffMessages", true);
@@ -295,6 +298,10 @@ public class ConfigHandler {
 		CustomMusic.dungeonbossVolume = initInt("music", "DungeonBossVolume", 50);
 		CustomMusic.bloodroomVolume = initInt("music", "BloodRoomVolume", 50);
 		CustomMusic.dungeonVolume = initInt("music", "DungeonVolume", 50);
+		CustomMusic.phase2Volume = initInt("music", "Phase2Volume", 50);
+		CustomMusic.phase3Volume = initInt("music", "Phase3Volume", 50);
+		CustomMusic.phase4Volume = initInt("music", "Phase4Volume", 50);
+		CustomMusic.phase5Volume = initInt("music", "Phase5Volume", 50);
 		CustomMusic.hubVolume = initInt("music", "HubVolume", 50);
 		CustomMusic.islandVolume = initInt("music", "IslandVolume", 50);
 		CustomMusic.dungeonHubVolume = initInt("music", "DungeonHubVolume", 50);
@@ -320,71 +327,73 @@ public class ConfigHandler {
 		}
 		
 		// Wolf
-		WolfTracker.wolfSvens = initInt("wolf", "svens", 0);
-		WolfTracker.wolfTeeth = initInt("wolf", "teeth", 0);
-		WolfTracker.wolfWheels = initInt("wolf", "wheel", 0);
-		WolfTracker.wolfWheelsDrops = initInt("wolf", "wheelDrops", 0);
-		WolfTracker.wolfSpirits = initInt("wolf", "spirit", 0);
-		WolfTracker.wolfBooks = initInt("wolf", "book", 0);
-		WolfTracker.wolfEggs = initInt("wolf", "egg", 0);
-		WolfTracker.wolfCoutures = initInt("wolf", "couture", 0);
-		WolfTracker.wolfBaits = initInt("wolf", "bait", 0);
-		WolfTracker.wolfFluxes = initInt("wolf", "flux", 0);
-		WolfTracker.wolfTime = initDouble("wolf", "timeRNG", -1);
-		WolfTracker.wolfBosses = initInt("wolf", "bossRNG", -1);
+		WolfTracker.svens = initInt("wolf", "svens", 0);
+		WolfTracker.teeth = initInt("wolf", "teeth", 0);
+		WolfTracker.wheels = initInt("wolf", "wheel", 0);
+		WolfTracker.wheelsDrops = initInt("wolf", "wheelDrops", 0);
+		WolfTracker.spirits = initInt("wolf", "spirit", 0);
+		WolfTracker.books = initInt("wolf", "book", 0);
+		WolfTracker.furballs = initInt("wolf", "furball", 0);
+		WolfTracker.eggs = initInt("wolf", "egg", 0);
+		WolfTracker.coutures = initInt("wolf", "couture", 0);
+		WolfTracker.baits = initInt("wolf", "bait", 0);
+		WolfTracker.fluxes = initInt("wolf", "flux", 0);
+		WolfTracker.time = initDouble("wolf", "timeRNG", -1);
+		WolfTracker.bosses = initInt("wolf", "bossRNG", -1);
 		// Spider
-		SpiderTracker.spiderTarantulas = initInt("spider", "tarantulas", 0);
-		SpiderTracker.spiderWebs = initInt("spider", "web", 0);
-		SpiderTracker.spiderTAP = initInt("spider", "tap", 0);
-		SpiderTracker.spiderTAPDrops = initInt("spider", "tapDrops", 0);
-		SpiderTracker.spiderBites = initInt("spider", "bite", 0);
-		SpiderTracker.spiderCatalysts = initInt("spider", "catalyst", 0);
-		SpiderTracker.spiderBooks = initInt("spider", "book", 0);
-		SpiderTracker.spiderSwatters = initInt("spider", "swatter", 0);
-		SpiderTracker.spiderTalismans = initInt("spider", "talisman", 0);
-		SpiderTracker.spiderMosquitos = initInt("spider", "mosquito", 0);
-		SpiderTracker.spiderTime = initDouble("spider", "timeRNG", -1);
-		SpiderTracker.spiderBosses = initInt("spider", "bossRNG", -1);
+		SpiderTracker.tarantulas = initInt("spider", "tarantulas", 0);
+		SpiderTracker.webs = initInt("spider", "web", 0);
+		SpiderTracker.TAP = initInt("spider", "tap", 0);
+		SpiderTracker.TAPDrops = initInt("spider", "tapDrops", 0);
+		SpiderTracker.bites = initInt("spider", "bite", 0);
+		SpiderTracker.catalysts = initInt("spider", "catalyst", 0);
+		SpiderTracker.books = initInt("spider", "book", 0);
+		SpiderTracker.swatters = initInt("spider", "swatter", 0);
+		SpiderTracker.talismans = initInt("spider", "talisman", 0);
+		SpiderTracker.mosquitos = initInt("spider", "mosquito", 0);
+		SpiderTracker.time = initDouble("spider", "timeRNG", -1);
+		SpiderTracker.bosses = initInt("spider", "bossRNG", -1);
 		// Zombie
-		ZombieTracker.zombieRevs = initInt("zombie", "revs", 0);
-		ZombieTracker.zombieRevFlesh = initInt("zombie", "revFlesh", 0);
-		ZombieTracker.zombieRevViscera = initInt("zombie", "revViscera", 0);
-		ZombieTracker.zombieFoulFlesh = initInt("zombie", "foulFlesh", 0);
-		ZombieTracker.zombieFoulFleshDrops = initInt("zombie", "foulFleshDrops", 0);
-		ZombieTracker.zombiePestilences = initInt("zombie", "pestilence", 0);
-		ZombieTracker.zombieUndeadCatas = initInt("zombie", "undeadCatalyst", 0);
-		ZombieTracker.zombieBooks = initInt("zombie", "book", 0);
-		ZombieTracker.zombieBeheadeds = initInt("zombie", "beheaded", 0);
-		ZombieTracker.zombieRevCatas = initInt("zombie", "revCatalyst", 0);
-		ZombieTracker.zombieSnakes = initInt("zombie", "snake", 0);
-		ZombieTracker.zombieScythes = initInt("zombie", "scythe", 0);
-		ZombieTracker.zombieShards = initInt("zombie", "shard", 0);
-		ZombieTracker.zombieWardenHearts = initInt("zombie", "heart", 0);
-		ZombieTracker.zombieTime = initDouble("zombie", "timeRNG", -1);
-		ZombieTracker.zombieBosses = initInt("zombie", "bossRNG", -1);
+		ZombieTracker.revs = initInt("zombie", "revs", 0);
+		ZombieTracker.revFlesh = initInt("zombie", "revFlesh", 0);
+		ZombieTracker.revViscera = initInt("zombie", "revViscera", 0);
+		ZombieTracker.foulFlesh = initInt("zombie", "foulFlesh", 0);
+		ZombieTracker.foulFleshDrops = initInt("zombie", "foulFleshDrops", 0);
+		ZombieTracker.pestilences = initInt("zombie", "pestilence", 0);
+		ZombieTracker.undeadCatas = initInt("zombie", "undeadCatalyst", 0);
+		ZombieTracker.books = initInt("zombie", "book", 0);
+		ZombieTracker.beheadeds = initInt("zombie", "beheaded", 0);
+		ZombieTracker.revCatas = initInt("zombie", "revCatalyst", 0);
+		ZombieTracker.snakes = initInt("zombie", "snake", 0);
+		ZombieTracker.scythes = initInt("zombie", "scythe", 0);
+		ZombieTracker.shards = initInt("zombie", "shard", 0);
+		ZombieTracker.wardenHearts = initInt("zombie", "heart", 0);
+		ZombieTracker.time = initDouble("zombie", "timeRNG", -1);
+		ZombieTracker.bosses = initInt("zombie", "bossRNG", -1);
 		// Enderman
-		EndermanTracker.endermanVoidglooms = initInt("enderman", "voidglooms", 0);
-		EndermanTracker.endermanNullSpheres = initInt("enderman", "nullSpheres", 0);
-		EndermanTracker.endermanTAP = initInt("enderman", "tap", 0);
-		EndermanTracker.endermanTAPDrops = initInt("enderman", "tapDrops", 0);
-		EndermanTracker.endermanEndersnakes = initInt("enderman", "endersnakes", 0);
-		EndermanTracker.endermanSummoningEyes = initInt("enderman", "summoningEyes", 0);
-		EndermanTracker.endermanManaBooks = initInt("enderman", "manaBooks", 0);
-		EndermanTracker.endermanTuners = initInt("enderman", "tuners", 0);
-		EndermanTracker.endermanAtoms = initInt("enderman", "atoms", 0);
-		EndermanTracker.endermanEspressoMachines = initInt("enderman", "espressoMachines", 0);
-		EndermanTracker.endermanSmartyBooks = initInt("enderman", "smartyBooks", 0);
-		EndermanTracker.endermanEndRunes = initInt("enderman", "endRunes", 0);
-		EndermanTracker.endermanChalices = initInt("enderman", "chalices", 0);
-		EndermanTracker.endermanDice = initInt("enderman", "dice", 0);
-		EndermanTracker.endermanArtifacts = initInt("enderman", "artifacts", 0);
-		EndermanTracker.endermanSkins = initInt("enderman", "skins", 0);
-		EndermanTracker.endermanMergers = initInt("enderman", "mergers", 0);
-		EndermanTracker.endermanCores = initInt("enderman", "cores", 0);
-		EndermanTracker.endermanEnchantRunes = initInt("enderman", "enchantRunes", 0);
-		EndermanTracker.endermanEnderBooks = initInt("enderman", "enderBooks", 0);
-		EndermanTracker.endermanTime = initDouble("enderman", "timeRNG", -1);
-		EndermanTracker.endermanBosses = initInt("enderman", "bossRNG", -1);
+		EndermanTracker.voidglooms = initInt("enderman", "voidglooms", 0);
+		EndermanTracker.nullSpheres = initInt("enderman", "nullSpheres", 0);
+		EndermanTracker.TAP = initInt("enderman", "tap", 0);
+		EndermanTracker.TAPDrops = initInt("enderman", "tapDrops", 0);
+		EndermanTracker.endersnakes = initInt("enderman", "endersnakes", 0);
+		EndermanTracker.summoningEyes = initInt("enderman", "summoningEyes", 0);
+		EndermanTracker.manaBooks = initInt("enderman", "manaBooks", 0);
+		EndermanTracker.tuners = initInt("enderman", "tuners", 0);
+		EndermanTracker.atoms = initInt("enderman", "atoms", 0);
+		EndermanTracker.hazmats = initInt("enderman", "hazmats", 0);
+		EndermanTracker.espressoMachines = initInt("enderman", "espressoMachines", 0);
+		EndermanTracker.smartyBooks = initInt("enderman", "smartyBooks", 0);
+		EndermanTracker.endRunes = initInt("enderman", "endRunes", 0);
+		EndermanTracker.chalices = initInt("enderman", "chalices", 0);
+		EndermanTracker.dice = initInt("enderman", "dice", 0);
+		EndermanTracker.artifacts = initInt("enderman", "artifacts", 0);
+		EndermanTracker.skins = initInt("enderman", "skins", 0);
+		EndermanTracker.mergers = initInt("enderman", "mergers", 0);
+		EndermanTracker.cores = initInt("enderman", "cores", 0);
+		EndermanTracker.enchantRunes = initInt("enderman", "enchantRunes", 0);
+		EndermanTracker.enderBooks = initInt("enderman", "enderBooks", 0);
+		EndermanTracker.time = initDouble("enderman", "timeRNG", -1);
+		EndermanTracker.bosses = initInt("enderman", "bossRNG", -1);
 		// Blaze
 		BlazeTracker.demonlords = initInt("blaze", "demonlords", 0);
 		BlazeTracker.derelictAshes = initInt("blaze", "derelictAshes", 0);
@@ -458,6 +467,7 @@ public class ConfigHandler {
 		FishingTracker.lavaPigmen = initInt("fishing", "lavaPigman", 0);
 		FishingTracker.zombieMiners = initInt("fishing", "zombieMiner", 0);
 		// Lava Fishing
+		FishingTracker.plhlegblasts = initInt("fishing", "plhlegblast", 0);
 		FishingTracker.magmaSlugs = initInt("fishing", "magmaSlug", 0);
 		FishingTracker.moogmas = initInt("fishing", "moogma", 0);
 		FishingTracker.lavaLeeches = initInt("fishing", "lavaLeech", 0);
@@ -598,6 +608,7 @@ public class ConfigHandler {
 		DankersSkyblockMod.firstLaunch = initBoolean("misc", "firstLaunch", true);
 		EndOfFarmAlert.min = initDouble("misc", "farmMin", -78.5);
 		EndOfFarmAlert.max = initDouble("misc", "farmMax", 79.5);
+		Utils.TITLE_SOUND = initString("misc", "titleSound", "random.orb");
 
 		// Locations
 		ScaledResolution scaled = new ScaledResolution(Minecraft.getMinecraft());
@@ -630,6 +641,8 @@ public class ConfigHandler {
 		MoveCommand.abilityCooldownsXY[1] = initInt("locations", "abilityCooldownsY", 150);
 		MoveCommand.dungeonScoreXY[0] = initInt("locations", "dungeonScoreX", 150);
 		MoveCommand.dungeonScoreXY[1] = initInt("locations", "dungeonScoreY", 150);
+		MoveCommand.firePillarXY[0] = initInt("locations", "firePillarX", 200);
+		MoveCommand.firePillarXY[1] = initInt("locations", "firePillarY", 200);
 
 		// Scales
 		ScaleCommand.coordsScale = initDouble("scales", "coordsScale", 1);
@@ -646,6 +659,7 @@ public class ConfigHandler {
 		ScaleCommand.giantHPScale = initDouble("scales", "giantHPScale", 1);
 		ScaleCommand.abilityCooldownsScale = initDouble("scales", "abilityCooldownsScale", 1);
 		ScaleCommand.dungeonScoreScale = initDouble("scales", "dungeonScoreScale", 1);
+		ScaleCommand.firePillarScale = initDouble("scales", "firePillarScale", 1);
 
 		// Skills
 		DankersSkyblockMod.farmingLevel = initInt("skills", "farming", -1);
@@ -708,6 +722,7 @@ public class ConfigHandler {
 		Gson gson = new Gson();
 
 		try {
+			// Alerts
 			if (!(new File(Alerts.configFile).exists())) {
 				FileWriter file = new FileWriter(Alerts.configFile);
 				file.write(new JsonArray().toString());
@@ -715,6 +730,15 @@ public class ConfigHandler {
 			}
 			Alerts.Alert[] alerts = gson.fromJson(new FileReader(Alerts.configFile), Alerts.Alert[].class);
 			if (alerts != null) Alerts.alerts = new ArrayList<>(Arrays.asList(alerts));
+
+			// Aliases
+			if (!(new File(ChatAliases.configFile).exists())) {
+				FileWriter file = new FileWriter(ChatAliases.configFile);
+				file.write(new JsonArray().toString());
+				file.close();
+			}
+			ChatAliases.Alias[] aliases = gson.fromJson(new FileReader(ChatAliases.configFile), ChatAliases.Alias[].class);
+			if (aliases != null) ChatAliases.aliases = new ArrayList<>(Arrays.asList(aliases));
 		} catch (IOException ex) {
 			ex.printStackTrace();
 		}

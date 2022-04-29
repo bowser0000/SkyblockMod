@@ -27,12 +27,21 @@ import java.util.Random;
 public class CustomMusic {
 
     static boolean cancelNotes;
+
     public static Song dungeonboss;
     public static int dungeonbossVolume;
     public static Song bloodroom;
     public static int bloodroomVolume;
     public static Song dungeon;
     public static int dungeonVolume;
+    public static Song phase2;
+    public static int phase2Volume;
+    public static Song phase3;
+    public static int phase3Volume;
+    public static Song phase4;
+    public static int phase4Volume;
+    public static Song phase5;
+    public static int phase5Volume;
     public static Song hub;
     public static int hubVolume;
     public static Song island;
@@ -79,56 +88,56 @@ public class CustomMusic {
                         String firstLine = ScoreboardHandler.cleanSB(scoreboard.get(scoreboard.size() - 1));
                         String secondLine = ScoreboardHandler.cleanSB(scoreboard.get(scoreboard.size() - 2));
                         if (firstLine.contains("30,30") || // F1
-                                firstLine.contains("30,125") || // F2
-                                firstLine.contains("30,225") || // F3
-                                secondLine.contains("- Healthy") || // F3
-                                firstLine.contains("30,344") || // F4
-                                firstLine.contains("livid") || // F5
-                                firstLine.contains("sadan") || // F6
-                                firstLine.contains("necron")) { // F7
+                            firstLine.contains("30,125") || // F2
+                            firstLine.contains("30,225") || // F3
+                            secondLine.contains("- Healthy") || // F3
+                            firstLine.contains("30,344") || // F4
+                            firstLine.contains("livid") || // F5
+                            firstLine.contains("sadan") || // F6
+                            firstLine.contains("maxor")) { // F7
 
-                                if (ToggleCommand.dungeonBossMusic) dungeonboss.start();
-                            }
+                            if (ToggleCommand.dungeonBossMusic) dungeonboss.start();
                         }
-                    } else {
-                        switch (Utils.tabLocation) {
-                            case "Hub":
-                                if (ToggleCommand.hubMusic) hub.start();
-                                break;
-                            case "Private Island":
-                                if (ToggleCommand.islandMusic) island.start();
-                                break;
-                            case "Dungeon Hub":
-                                if (ToggleCommand.dungeonHubMusic) dungeonHub.start();
-                                break;
-                            case "The Farming Islands":
-                                if (ToggleCommand.farmingIslandsMusic) farmingIslands.start();
-                                break;
-                            case "Gold Mine":
-                                if (ToggleCommand.goldMineMusic) goldMine.start();
-                                break;
-                            case "Deep Caverns":
-                                if (ToggleCommand.deepCavernsMusic) deepCaverns.start();
-                                break;
-                            case "Dwarven Mines":
-                                if (ToggleCommand.dwarvenMinesMusic) dwarvenMines.start();
-                                break;
-                            case "Crystal Hollows":
-                                if (ToggleCommand.crystalHollowsMusic) crystalHollows.start();
-                                break;
-                            case "Spider's Den":
-                                if (ToggleCommand.spidersDenMusic) spidersDen.start();
-                                break;
-                            case "Crimson Isle":
-                                if (ToggleCommand.crimsonIsleMusic) crimsonIsle.start();
-                                break;
-                            case "The End":
-                                if (ToggleCommand.endMusic) end.start();
-                                break;
-                            case "The Park":
-                                if (ToggleCommand.parkMusic) park.start();
-                                break;
-                        }
+                    }
+                } else {
+                    switch (Utils.tabLocation) {
+                        case "Hub":
+                            if (ToggleCommand.hubMusic) hub.start();
+                            break;
+                        case "Private Island":
+                            if (ToggleCommand.islandMusic) island.start();
+                            break;
+                        case "Dungeon Hub":
+                            if (ToggleCommand.dungeonHubMusic) dungeonHub.start();
+                            break;
+                        case "The Farming Islands":
+                            if (ToggleCommand.farmingIslandsMusic) farmingIslands.start();
+                            break;
+                        case "Gold Mine":
+                            if (ToggleCommand.goldMineMusic) goldMine.start();
+                            break;
+                        case "Deep Caverns":
+                            if (ToggleCommand.deepCavernsMusic) deepCaverns.start();
+                            break;
+                        case "Dwarven Mines":
+                            if (ToggleCommand.dwarvenMinesMusic) dwarvenMines.start();
+                            break;
+                        case "Crystal Hollows":
+                            if (ToggleCommand.crystalHollowsMusic) crystalHollows.start();
+                            break;
+                        case "Spider's Den":
+                            if (ToggleCommand.spidersDenMusic) spidersDen.start();
+                            break;
+                        case "Crimson Isle":
+                            if (ToggleCommand.crimsonIsleMusic) crimsonIsle.start();
+                            break;
+                        case "The End":
+                            if (ToggleCommand.endMusic) end.start();
+                            break;
+                        case "The Park":
+                            if (ToggleCommand.parkMusic) park.start();
+                            break;
+                    }
                 }
             }
         }
@@ -147,10 +156,26 @@ public class CustomMusic {
         if (message.contains(":")) return;
 
         if (Utils.inDungeons) {
+            if (ToggleCommand.dungeonBossMusic) {
+                if (message.startsWith("[BOSS] Storm: Pathetic Maxor")) {
+                    phase2.start();
+                } else if (message.startsWith("[BOSS] Goldor: Who dares trespass into my domain?")) {
+                    phase3.start();
+                } else if (message.startsWith("[BOSS] Necron: You went further than any human before")) {
+                    phase4.start();
+                } else if (message.startsWith("[BOSS] ") && message.endsWith("You.. again?")) {
+                    phase5.start();
+                }
+            }
+
             if (message.contains("EXTRA STATS ")) {
                 dungeonboss.stop();
                 bloodroom.stop();
                 dungeon.stop();
+                phase2.stop();
+                phase3.stop();
+                phase4.stop();
+                phase5.stop();
             } else if (message.contains("The BLOOD DOOR has been opened!")) {
                 dungeon.stop();
                 if (ToggleCommand.bloodRoomMusic) bloodroom.start();
@@ -175,6 +200,10 @@ public class CustomMusic {
         dungeonboss = new Song(directory, "dungeonboss", dungeonbossVolume);
         bloodroom = new Song(directory, "bloodroom", bloodroomVolume);
         dungeon = new Song(directory, "dungeon", dungeonVolume);
+        phase2 = new Song(directory, "phasetwo", phase2Volume);
+        phase3 = new Song(directory, "phasethree", phase3Volume);
+        phase4 = new Song(directory, "phasefour", phase4Volume);
+        phase5 = new Song(directory, "phasefive", phase5Volume);
         hub = new Song(directory, "hub", hubVolume);
         island = new Song(directory, "island", hubVolume);
         dungeonHub = new Song(directory, "dungeonhub", dungeonHubVolume);
@@ -193,6 +222,10 @@ public class CustomMusic {
         if (dungeonboss != null) dungeonboss.stop();
         if (bloodroom != null) bloodroom.stop();
         if (dungeon != null) dungeon.stop();
+        if (phase2 != null) phase2.stop();
+        if (phase3 != null) phase3.stop();
+        if (phase4 != null) phase4.stop();
+        if (phase5 != null) phase5.stop();
         if (hub != null) hub.stop();
         if (island != null) island.stop();
         if (dungeonHub != null) dungeonHub.stop();
@@ -230,7 +263,6 @@ public class CustomMusic {
         public void start() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
 
             try {
-                if (music == null) music = AudioSystem.getClip();
                 if (!music.isRunning()) {
                     reset();
                     shuffle();

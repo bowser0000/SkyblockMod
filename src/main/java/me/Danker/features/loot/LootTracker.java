@@ -8,10 +8,13 @@ import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class LootTracker {
 
     public static long itemsChecked = 0;
+    static Pattern dropPattern = Pattern.compile(".*? \\((?<amount>\\d+)x .*\\).*");
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void onSound(PlaySoundEvent event) {
@@ -36,21 +39,21 @@ public class LootTracker {
                     // If no items, are detected, allow check again. Should fix items not being found
                     if (itemTeeth + itemWebs + itemRev + itemNullSphere + itemDerelictAshe > 0) {
                         itemsChecked = System.currentTimeMillis() / 1000;
-                        WolfTracker.wolfTeeth += itemTeeth;
-                        SpiderTracker.spiderWebs += itemWebs;
-                        ZombieTracker.zombieRevFlesh += itemRev;
-                        EndermanTracker.endermanNullSpheres += itemNullSphere;
+                        WolfTracker.teeth += itemTeeth;
+                        SpiderTracker.webs += itemWebs;
+                        ZombieTracker.revFlesh += itemRev;
+                        EndermanTracker.nullSpheres += itemNullSphere;
                         BlazeTracker.derelictAshes += itemDerelictAshe;
-                        WolfTracker.wolfTeethSession += itemTeeth;
-                        SpiderTracker.spiderWebsSession += itemWebs;
-                        ZombieTracker.zombieRevFleshSession += itemRev;
-                        EndermanTracker.endermanNullSpheresSession += itemNullSphere;
+                        WolfTracker.teethSession += itemTeeth;
+                        SpiderTracker.websSession += itemWebs;
+                        ZombieTracker.revFleshSession += itemRev;
+                        EndermanTracker.nullSpheresSession += itemNullSphere;
                         BlazeTracker.derelictAshesSession += itemDerelictAshe;
 
-                        ConfigHandler.writeIntConfig("wolf", "teeth", WolfTracker.wolfTeeth);
-                        ConfigHandler.writeIntConfig("spider", "web", SpiderTracker.spiderWebs);
-                        ConfigHandler.writeIntConfig("zombie", "revFlesh", ZombieTracker.zombieRevFlesh);
-                        ConfigHandler.writeIntConfig("enderman", "nullSpheres", EndermanTracker.endermanNullSpheres);
+                        ConfigHandler.writeIntConfig("wolf", "teeth", WolfTracker.teeth);
+                        ConfigHandler.writeIntConfig("spider", "web", SpiderTracker.webs);
+                        ConfigHandler.writeIntConfig("zombie", "revFlesh", ZombieTracker.revFlesh);
+                        ConfigHandler.writeIntConfig("enderman", "nullSpheres", EndermanTracker.nullSpheres);
                         ConfigHandler.writeIntConfig("blaze", "derelictAshe", BlazeTracker.derelictAshes);
                     }
                 }
@@ -59,11 +62,11 @@ public class LootTracker {
     }
 
     public static int getAmountfromMessage(String message) {
-        if (message.charAt(message.indexOf("(") + 2) == 'x' || message.charAt(message.indexOf("(") + 3) == 'x') {
-            return Integer.parseInt(message.substring(message.indexOf("(") + 1, message.indexOf("x")));
-        } else {
-            return 1;
+        Matcher matcher = dropPattern.matcher(message);
+        if (matcher.find()) {
+            return Integer.parseInt(matcher.group("amount"));
         }
+        return 1;
     }
     
 }

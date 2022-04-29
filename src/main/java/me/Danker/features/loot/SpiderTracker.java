@@ -10,31 +10,31 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class SpiderTracker {
 
-    public static int spiderTarantulas;
-    public static int spiderWebs;
-    public static int spiderTAP;
-    public static int spiderTAPDrops;
-    public static int spiderBites;
-    public static int spiderCatalysts;
-    public static int spiderBooks;
-    public static int spiderSwatters;
-    public static int spiderTalismans;
-    public static int spiderMosquitos;
-    public static double spiderTime;
-    public static int spiderBosses;
+    public static int tarantulas;
+    public static int webs;
+    public static int TAP;
+    public static int TAPDrops;
+    public static int bites;
+    public static int catalysts;
+    public static int books;
+    public static int swatters;
+    public static int talismans;
+    public static int mosquitos;
+    public static double time;
+    public static int bosses;
 
-    public static int spiderTarantulasSession = 0;
-    public static int spiderWebsSession = 0;
-    public static int spiderTAPSession = 0;
-    public static int spiderTAPDropsSession = 0;
-    public static int spiderBitesSession = 0;
-    public static int spiderCatalystsSession = 0;
-    public static int spiderBooksSession = 0;
-    public static int spiderSwattersSession = 0;
-    public static int spiderTalismansSession = 0;
-    public static int spiderMosquitosSession = 0;
-    public static double spiderTimeSession = -1;
-    public static int spiderBossesSession = -1;
+    public static int tarantulasSession = 0;
+    public static int websSession = 0;
+    public static int TAPSession = 0;
+    public static int TAPDropsSession = 0;
+    public static int bitesSession = 0;
+    public static int catalystsSession = 0;
+    public static int booksSession = 0;
+    public static int swattersSession = 0;
+    public static int talismansSession = 0;
+    public static int mosquitosSession = 0;
+    public static double timeSession = -1;
+    public static int bossesSession = -1;
 
     @SubscribeEvent
     public void onChat(ClientChatReceivedEvent event) {
@@ -47,62 +47,62 @@ public class SpiderTracker {
         boolean rng = false;
 
         if (message.contains("   Spider Slayer LVL ")) { // Spider
-            spiderTarantulas++;
-            spiderTarantulasSession++;
-            if (spiderBosses != -1) {
-                spiderBosses++;
+            tarantulas++;
+            tarantulasSession++;
+            if (bosses != -1) {
+                bosses++;
             }
-            if (spiderBossesSession != -1) {
-                spiderBossesSession++;
+            if (bossesSession != -1) {
+                bossesSession++;
             }
-            ConfigHandler.writeIntConfig("spider", "tarantulas", spiderTarantulas);
-            ConfigHandler.writeIntConfig("spider", "bossRNG", spiderBosses);
+            ConfigHandler.writeIntConfig("spider", "tarantulas", tarantulas);
+            ConfigHandler.writeIntConfig("spider", "bossRNG", bosses);
         } else if (message.contains("RARE DROP! (") && message.contains("Toxic Arrow Poison)")) {
             int amount = LootTracker.getAmountfromMessage(message);
-            spiderTAP += amount;
-            spiderTAPSession += amount;
-            spiderTAPDrops++;
-            spiderTAPDropsSession++;
-            ConfigHandler.writeIntConfig("spider", "tap", spiderTAP);
-            ConfigHandler.writeIntConfig("spider", "tapDrops", spiderTAPDrops);
+            TAP += amount;
+            TAPSession += amount;
+            TAPDrops++;
+            TAPDropsSession++;
+            ConfigHandler.writeIntConfig("spider", "tap", TAP);
+            ConfigHandler.writeIntConfig("spider", "tapDrops", TAPDrops);
         } else if (message.contains("VERY RARE DROP!  (") && message.contains(" Bite Rune I)")) {
-            spiderBites++;
-            spiderBitesSession++;
-            ConfigHandler.writeIntConfig("spider", "bite", spiderBites);
+            bites++;
+            bitesSession++;
+            ConfigHandler.writeIntConfig("spider", "bite", bites);
         } else if (message.contains("VERY RARE DROP!  (Bane of Arthropods VI)")) {
-            spiderBooks++;
-            spiderBooksSession++;
-            ConfigHandler.writeIntConfig("spider", "book", spiderBooks);
+            books++;
+            booksSession++;
+            ConfigHandler.writeIntConfig("spider", "book", books);
         } else if (message.contains("VERY RARE DROP!  (Spider Catalyst)")) {
-            spiderCatalysts++;
-            spiderCatalystsSession++;
-            ConfigHandler.writeIntConfig("spider", "catalyst", spiderCatalysts);
+            catalysts++;
+            catalystsSession++;
+            ConfigHandler.writeIntConfig("spider", "catalyst", catalysts);
         } else if (message.contains("CRAZY RARE DROP!  (Fly Swatter)")) {
             rng = true;
-            spiderSwatters++;
-            spiderSwattersSession++;
-            ConfigHandler.writeIntConfig("spider", "swatter", spiderSwatters);
+            swatters++;
+            swattersSession++;
+            ConfigHandler.writeIntConfig("spider", "swatter", swatters);
             if (ToggleCommand.rngesusAlerts) Utils.createTitle(EnumChatFormatting.LIGHT_PURPLE + "FLY SWATTER!", 3);
         } else if (message.contains("CRAZY RARE DROP!  (Tarantula Talisman")) {
             rng = true;
-            spiderTalismans++;
-            spiderTalismansSession++;
-            ConfigHandler.writeIntConfig("spider", "talisman", spiderTalismans);
+            talismans++;
+            talismansSession++;
+            ConfigHandler.writeIntConfig("spider", "talisman", talismans);
             if (ToggleCommand.rngesusAlerts) Utils.createTitle(EnumChatFormatting.DARK_PURPLE + "TARANTULA TALISMAN!", 3);
         } else if (message.contains("CRAZY RARE DROP!  (Digested Mosquito)")) {
             rng = true;
-            spiderMosquitos++;
-            spiderMosquitosSession++;
-            ConfigHandler.writeIntConfig("spider", "mosquito", spiderMosquitos);
+            mosquitos++;
+            mosquitosSession++;
+            ConfigHandler.writeIntConfig("spider", "mosquito", mosquitos);
             if (ToggleCommand.rngesusAlerts) Utils.createTitle(EnumChatFormatting.GOLD + "DIGESTED MOSQUITO!", 5);
         }
 
         if (rng) {
-            spiderTime = System.currentTimeMillis() / 1000;
-            spiderBosses = 0;
-            spiderTimeSession = System.currentTimeMillis() / 1000;
-            spiderBossesSession = 0;
-            ConfigHandler.writeDoubleConfig("spider", "timeRNG", spiderTime);
+            time = System.currentTimeMillis() / 1000;
+            bosses = 0;
+            timeSession = System.currentTimeMillis() / 1000;
+            bossesSession = 0;
+            ConfigHandler.writeDoubleConfig("spider", "timeRNG", time);
             ConfigHandler.writeIntConfig("spider", "bossRNG", 0);
         }
     }

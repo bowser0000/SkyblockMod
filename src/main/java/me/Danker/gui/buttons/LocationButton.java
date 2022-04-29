@@ -44,6 +44,10 @@ public class LocationButton extends GuiButton {
 		this.height = (int) ((splitText.length * 9 + 3) * scale);
 		this.width = (int) ((this.longestText + offset + 3) * scale);
 	}
+
+	public LocationButton(int x, int y, double scale, String text) {
+		this(x, y, scale, text, null, null);
+	}
 	
 	@Override
 	public void drawButton(Minecraft mc, int mouseX, int mouseY) {

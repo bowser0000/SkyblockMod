@@ -63,6 +63,7 @@ public class DankerGuiCommand extends CommandBase {
 			debug.append("[gianthp][").append(MoveCommand.giantHPXY[0]).append(", ").append(MoveCommand.giantHPXY[1]).append("]\n");
 			debug.append("[abilitycooldowns][").append(MoveCommand.abilityCooldownsXY[0]).append(", ").append(MoveCommand.abilityCooldownsXY[1]).append("]\n");
 			debug.append("[dungeonscore][").append(MoveCommand.dungeonScoreXY[0]).append(", ").append(MoveCommand.dungeonScoreXY[1]).append("]\n");
+			debug.append("[firepillar][").append(MoveCommand.firePillarXY[0]).append(", ").append(MoveCommand.firePillarXY[1]).append("]\n");
 			debug.append("# Other Settings\n");
 			debug.append("[Current Display][").append(LootDisplay.display).append("]\n");
 			debug.append("[Auto Display][").append(LootDisplay.auto).append("]\n");

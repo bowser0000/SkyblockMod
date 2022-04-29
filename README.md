@@ -3,14 +3,21 @@ QOL changes that enhances your Hypixel Skyblock experience. Created to add featu
 
 Discord Server: https://discord.gg/QsEkNQS
 
+<details>
+<summary>Incompatibilites</summary>
+
 ## Incompatibilities
 - Old Animations <2.6.4 - Frequent crashes
 - Old Animations 2.6.4
   - Pet colors does not color slots
   - Catacombs F7 terminal solvers do not color slots
   - Enchanting solvers do not color slots
+</details>
 
-## Current features
+<details>
+<summary>Current Features</summary>
+
+## Current Features
 - Guild party desktop notifications
 - Coordinate and angle display
 - Golden T10/T6/T4 enchant display
@@ -66,6 +73,12 @@ Discord Server: https://discord.gg/QsEkNQS
 - Predicted dungeon score display
 - Hide player armour
 - Automatically join skyblock
+- Fire pillar display
+- Chat aliases
+</details>
+
+<details>
+<summary>Commands</summary>
 
 ## Commands
 - /dhelp - Returns this message in-game.
@@ -76,8 +89,8 @@ Discord Server: https://discord.gg/QsEkNQS
 - /loot <zombie/spider/wolf/enderman/blaze/fishing/catacombs/mythological/> [winter/festival/spooky/ch/lava/f(1-7)/mm/session] - Returns loot received from slayer quests or fishing stats. /loot fishing winter returns winter sea creatures instead.
 - /display <zombie/spider/wolf/enderman/blaze/fishing/catacombs/mythological/ghosts/auto/off> [winter/festival/spooky/ch/lava/f(1-7)/mm/session] - Text display for trackers. /display fishing winter displays winter sea creatures instead. /display auto automatically displays the loot for the slayer quest you have active.
 - /resetloot <zombie/spider/wolf/enderman/blaze/fishing/catacombs/mythological/confirm/cancel> -  - Resets loot for trackers. /resetloot confirm confirms the reset.
-- /move <coords/display/dungeontimer/skill50/lividhp/caketimer/skilltracker/wateranswer/bonzotimer/golemtimer/teammatesinradius/gianthp/abilitycooldowns/dungeonscore> <x> <y> - Moves text display to specified X and Y coordinates.
-- /scale <coords/display/dungeontimer/skill50/lividhp/caketimer/skilltracker/wateranswer/bonzotimer/golemtimer/teammatesinradius/gianthp/abilitycooldowns/dungeonscore> <scale (0.1 - 10)> - Scales text display to a specified multipler between 0.1x and 10x.
+- /move <coords/display/dungeontimer/skill50/lividhp/caketimer/skilltracker/wateranswer/bonzotimer/golemtimer/teammatesinradius/gianthp/abilitycooldowns/dungeonscore/firepillar> <x> <y> - Moves text display to specified X and Y coordinates.
+- /scale <coords/display/dungeontimer/skill50/lividhp/caketimer/skilltracker/wateranswer/bonzotimer/golemtimer/teammatesinradius/gianthp/abilitycooldowns/dungeonscore/firepillar> <scale (0.1 - 10)> - Scales text display to a specified multipler between 0.1x and 10x.
 - /slayer [player] - Uses API to get slayer xp of a person. If no name is provided, it checks yours.
 - /skill [player] - Uses API to get skill levels of a person. If no name is provided, it checks yours.
 - /lobbyskills - Uses API to find the average skills of the lobby, as well the three players with the highest skill average.
@@ -94,12 +107,16 @@ Discord Server: https://discord.gg/QsEkNQS
 - /reparty - Disbands and reparties all members in the party
 - /fairysouls - Check the fairysouls of a player
 - /lobbybank - Uses API to find the average bank total of the lobby, as well the three players with the highest total money in the bank (and purse).
-- /dsmmusic <stop/reload/volume> [dungeonboss/bloodroom/dungeon/hub/island/dungeonhub/farmingislands/goldmine/deepcaverns/dwarvenmines/crystalhollows/spidersden/crimsonisle/end/park] [1-100] - Stops, reloads or changes the volume of custom music.
+- /dsmmusic <stop/reload/volume> [dungeonboss/bloodroom/dungeon/p2/p3/p4/p5/hub/island/dungeonhub/farmingislands/goldmine/deepcaverns/dwarvenmines/crystalhollows/spidersden/crimsonisle/end/park] [1-100] - Stops, reloads or changes the volume of custom music.
 - /player [player] - Uses API to find skills, slayers, coins and weight of a player.
 - /reloadconfig - Reloads Danker's Skyblock Mod config.
 - /reloaddsmrepo - Reloads Danker's Skyblock Mod repository.
 - /dsmfarmlength <min coords> <max coords> - Sets coords to be used for end of farm alert.
 - /hotmof [player] - Uses API to find total powder and HotM tree of a person. If no name is provided, it checks yours.
+</details>
+
+<details>
+<summary>Keybinds</summary>
 
 <details>
   <summary>Warps</summary>
@@ -134,6 +151,10 @@ Shortcut commands that save you the time of typing the whole warp command.
 - Open Maddox menu - M by default.
 - Regular Ability - Numpad 4 by default.
 - Start/Stop Skill Tracker - Numpad 5 by default.
+</details>
+
+<details>
+<summary>Custom Music</summary>
 
 ## Custom Music
 1. Place a music file with the given name in the `.minecraft/config/dsmmusic` folder:
@@ -141,6 +162,10 @@ Shortcut commands that save you the time of typing the whole warp command.
   - Blood room: `bloodroom.wav`
   - Dungeon boss: `dungeonboss.wav`
   - Dungeon hub: `dungeonhub.wav`
+  - F7 Phase 2 (Storm): `phasetwo.wav`
+  - F7 Phase 3 (Goldor): `phasethree.wav`
+  - F7 Phase 4 (Necron): `phasefour.wav`
+  - F7 Phase 5 (Wither King): `phasefive.wav`
   - Hub: `hub.wav`
   - Private Island: `island.wav`
   - Farming Islands: `farmingislands.wav`
@@ -162,12 +187,34 @@ By adding numbers to the end of the file, you can have multiple music files for 
 - dungeon1.wav
 - dungeon2.wav
 - dungeon99.wav
+</details>
+
+<details>
+<summary>Alert Regex</summary>
+
+## Alert Regex
+To replace alert text with a captured group, add `$$x$$` to the alert text, with `x` being the number of the capture group. `$$0$$` will always be replaced with the entire trigger message.
+
+For example, with the following alert
+
+Regex: `From (.*) (.*): (.*)`  
+Alert Text: `$$2$$ says $$3$$`  
+Trigger Message: `From [ADMIN] Plancke: Nice autogg`  
+
+the following alert text would appear
+
+`Plancke says Nice autogg`.
+</details>
+
+<details>
+<summary>Notes</summary>
 
 ### Notes
 - Slayer tracker for token drops and 20% chance drops uses a 12x12x12 bounding box centered on the player to detect the drops. If you are out of the range of the item drop, it will not count on the tracker.
 - API commands may take a while depending on your internet connection. The API may also go down.
 - If you use too many API commands too fast, you can and will get rate-limited.
 - Importing fishing uses your sea creature kills, which may not always be exactly correct (e.x. someone else kills your sea creature).
+</details>
 
 ### Credits to Open Source Software
 Credit to all the following open source software used in this mod.

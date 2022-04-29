@@ -19,18 +19,7 @@ public class GpartyNotifications {
 
         if (ToggleCommand.gpartyToggled) {
             if (message.contains(" has invited all members of ")) {
-                try {
-                    final SystemTray tray = SystemTray.getSystemTray();
-                    final Image image = Toolkit.getDefaultToolkit().createImage("icon.png");
-                    final TrayIcon trayIcon = new TrayIcon(image, "Guild Party Notifier");
-                    trayIcon.setImageAutoSize(true);
-                    trayIcon.setToolTip("Guild Party Notifier");
-                    tray.add(trayIcon);
-                    trayIcon.displayMessage("Guild Party", message, TrayIcon.MessageType.INFO);
-                    tray.remove(trayIcon);
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }
+                Utils.desktopNotification("Guild Party Notifier", "Guild Party", message, TrayIcon.MessageType.INFO);
             }
         }
     }

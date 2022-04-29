@@ -27,6 +27,7 @@ public class ScaleCommand extends CommandBase {
 	public static double giantHPScale;
 	public static double abilityCooldownsScale;
 	public static double dungeonScoreScale;
+	public static double firePillarScale;
 	
 	@Override
 	public String getCommandName() {
@@ -36,7 +37,7 @@ public class ScaleCommand extends CommandBase {
 	@Override
 	public String getCommandUsage(ICommandSender arg0) {
 		return "/" + getCommandName() + " <coords/display/dungeontimer/skill50/lividhp/caketimer/skilltracker/wateranswer/" +
-										"bonzotimer/golemtimer/teammatesinradius/gianthp/abilitycooldown/dungeonscore> <size (0.1 - 10)>";
+										"bonzotimer/golemtimer/teammatesinradius/gianthp/abilitycooldown/dungeonscore/firepillar> <size (0.1 - 10)>";
 	}
 
 	public static String usage(ICommandSender arg0) {
@@ -53,7 +54,7 @@ public class ScaleCommand extends CommandBase {
 		if (args.length == 1) {
 			return getListOfStringsMatchingLastWord(args, "coords", "display", "dungeontimer", "skill50", "lividhp", "caketimer",
 														  "skilltracker", "wateranswer", "bonzotimer", "golemtimer", "teammatesinradius",
-														  "gianthp", "abilitycooldowns", "dungeonscore");
+														  "gianthp", "abilitycooldowns", "dungeonscore", "firepillar");
 		}
 		return null;
 	}
@@ -143,6 +144,11 @@ public class ScaleCommand extends CommandBase {
 				dungeonScoreScale = scaleAmount;
 				ConfigHandler.writeDoubleConfig("scales", "dungeonScoreScale", dungeonScoreScale);
 				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Dungeon score has been scaled to " + DankersSkyblockMod.SECONDARY_COLOUR + dungeonScoreScale + "x"));
+				break;
+			case "firepillar":
+				firePillarScale = scaleAmount;
+				ConfigHandler.writeDoubleConfig("scales", "firePillarScale", firePillarScale);
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Fire pillar has been scaled to " + DankersSkyblockMod.SECONDARY_COLOUR + firePillarScale + "x"));
 				break;
 			default:
 				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Usage: " + getCommandUsage(arg0)));

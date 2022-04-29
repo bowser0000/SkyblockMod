@@ -25,6 +25,7 @@ public class AlertAddGui extends GuiScreen {
     private GuiButton startsWith;
     private GuiButton contains;
     private GuiButton endsWith;
+    private GuiButton regex;
     private GuiButton everywhere;
     private GuiButton skyblock;
     private GuiButton dungeons;
@@ -57,9 +58,10 @@ public class AlertAddGui extends GuiScreen {
 
         cancel = new GuiButton(0, 2, height - 30, 100, 20, "Cancel");
 
-        startsWith = new GuiButton(0, width / 2 - 200, (int) (height * 0.2), 120, 20, "Starts With");
-        contains = new GuiButton(0, width / 2 - 60, (int) (height * 0.2), 120, 20, "Contains");
-        endsWith = new GuiButton(0, width / 2 + 80, (int) (height * 0.2), 120, 20, "Ends With");
+        startsWith = new GuiButton(0, width / 2 - 260, (int) (height * 0.2), 120, 20, "Starts With");
+        contains = new GuiButton(0, width / 2 - 130, (int) (height * 0.2), 120, 20, "Contains");
+        endsWith = new GuiButton(0, width / 2 + 10, (int) (height * 0.2), 120, 20, "Ends With");
+        regex = new GuiButton(0, width / 2 + 140, (int) (height * 0.2), 120, 20, "Regex");
         everywhere = new GuiButton(0, width / 2 - 200, (int) (height * 0.3), 120, 20, "Everywhere");
         skyblock = new GuiButton(0, width / 2 - 60, (int) (height * 0.3), 120, 20, "Skyblock");
         dungeons = new GuiButton(0, width / 2 + 80, (int) (height * 0.3), 120, 20, "Dungeons");
@@ -80,13 +82,16 @@ public class AlertAddGui extends GuiScreen {
 
         message.setVisible(true);
         message.setEnabled(true);
+        message.setMaxStringLength(100);
         alert.setVisible(true);
         alert.setEnabled(true);
+        alert.setMaxStringLength(100);
 
         this.buttonList.add(cancel);
         this.buttonList.add(startsWith);
         this.buttonList.add(contains);
         this.buttonList.add(endsWith);
+        this.buttonList.add(regex);
         this.buttonList.add(everywhere);
         this.buttonList.add(skyblock);
         this.buttonList.add(dungeons);
@@ -119,6 +124,8 @@ public class AlertAddGui extends GuiScreen {
             mode = "Contains";
         } else if (button == endsWith) {
             mode = "Ends With";
+        } else if (button == regex) {
+            mode = "Regex";
         } else if (button == everywhere) {
             location = "Everywhere";
         } else if (button == skyblock) {
@@ -132,7 +139,7 @@ public class AlertAddGui extends GuiScreen {
             } else {
                 Alerts.alerts.add(newAlert);
             }
-            Alerts.saveToFile();
+            Alerts.save();
             mc.displayGuiScreen(new AlertsGui(1));
         }
     }

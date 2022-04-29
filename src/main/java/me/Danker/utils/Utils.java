@@ -22,7 +22,9 @@ import net.minecraft.scoreboard.ScoreObjective;
 import net.minecraft.util.*;
 import org.lwjgl.opengl.GL11;
 
+import java.awt.*;
 import java.util.*;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -53,6 +55,7 @@ public class Utils {
 		put('D', 500);
 		put('M', 1000);
 	}};
+	public static String TITLE_SOUND;
 	
     public static int getItems(String item) {
     	Minecraft mc = Minecraft.getMinecraft();
@@ -100,7 +103,7 @@ public class Utils {
 	}
 	
 	public static void createTitle(String text, int seconds) {
-		Minecraft.getMinecraft().thePlayer.playSound("random.orb", 1, (float) 0.5);
+		Minecraft.getMinecraft().thePlayer.playSound(TITLE_SOUND, 1, (float) 0.5);
 		DankersSkyblockMod.titleTimer = seconds * 20;
 		DankersSkyblockMod.showTitle = true;
 		DankersSkyblockMod.titleText = text;
@@ -506,6 +509,20 @@ public class Utils {
 		GL11.glTranslated(0, 0, 1);
 		Gui.drawRect(x, y, x + 16, y + 16, colour);
 		GL11.glTranslated(0, 0, -1);
+
+	public static void desktopNotification(String name, String title, String text, TrayIcon.MessageType messageType) {
+		try {
+			final SystemTray tray = SystemTray.getSystemTray();
+			final Image image = Toolkit.getDefaultToolkit().createImage("icon.png");
+			final TrayIcon trayIcon = new TrayIcon(image, name);
+			trayIcon.setImageAutoSize(true);
+			trayIcon.setToolTip(name);
+			tray.add(trayIcon);
+			trayIcon.displayMessage(title, text, messageType);
+			tray.remove(trayIcon);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
 	}
 
 	public enum DungeonFloor {

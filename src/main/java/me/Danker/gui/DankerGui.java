@@ -2,6 +2,7 @@ package me.Danker.gui;
 
 import me.Danker.commands.ToggleCommand;
 import me.Danker.gui.alerts.AlertsGui;
+import me.Danker.gui.aliases.AliasesGui;
 import me.Danker.gui.buttons.FeatureButton;
 import me.Danker.gui.crystalhollowwaypoints.CrystalHollowWaypointsGui;
 import me.Danker.handlers.ConfigHandler;
@@ -46,6 +47,7 @@ public class DankerGui extends GuiScreen {
 	private GuiButton customMusic;
 	private GuiButton crystalHollowWaypoints;
 	private GuiButton alerts;
+	private GuiButton aliases;
 	// Toggles
 	private GuiButton gparty;
 	private GuiButton coords;
@@ -89,6 +91,7 @@ public class DankerGui extends GuiScreen {
 	private GuiButton dungeonScore;
 	private GuiButton hideArmour;
 	private GuiButton autoJoinSkyblock;
+	private GuiButton firePillar;
 	// Chat Messages
 	private GuiButton sceptreMessages;
 	private GuiButton midasStaffMessages;
@@ -133,6 +136,7 @@ public class DankerGui extends GuiScreen {
 		customMusic = new GuiButton(0, 0, 0, "Custom Music");
 		crystalHollowWaypoints = new GuiButton(0, 0, 0, "Crystal Hollows Waypoints");
 		alerts = new GuiButton(0, 0, 0, "Alerts");
+		aliases = new GuiButton(0, 0, 0, "Aliases");
 		outlineText = new FeatureButton("Outline Displayed Text: " + Utils.getColouredBoolean(ToggleCommand.outlineTextToggled), "Adds bold outline to on-screen text.");
 		pickBlock = new FeatureButton("Auto-Swap to Pick Block: " + Utils.getColouredBoolean(ToggleCommand.swapToPickBlockToggled), "Automatically changes left clicks to middle clicks.\nHelpful when lagging.");
 		coords = new FeatureButton("Coordinate/Angle Display: " + Utils.getColouredBoolean(ToggleCommand.coordsToggled), "Displays coordinates and angle.");
@@ -182,6 +186,7 @@ public class DankerGui extends GuiScreen {
 		dungeonScore = new FeatureButton("Dungeon Score Display: " + Utils.getColouredBoolean(ToggleCommand.dungeonScore), "Displays an estimated dungeon score with secrets.");
 		hideArmour = new FeatureButton("Hide Player Armour: " + Utils.getColouredBoolean(ToggleCommand.hideArmour), "Makes player armour invisible, showing their skin.");
 		autoJoinSkyblock = new FeatureButton("Automatically Join Skyblock: " + Utils.getColouredBoolean(ToggleCommand.autoJoinSkyblock), "Automatically join Skyblock when you join Hypixel.\nYou have an addiction.");
+		firePillar = new FeatureButton("Fire Pillar Display: " + Utils.getColouredBoolean(ToggleCommand.firePillar), "Displays blaze fire pillar text on screen");
 
 		allButtons.clear();
 		allButtons.add(changeDisplay);
@@ -192,6 +197,7 @@ public class DankerGui extends GuiScreen {
 		allButtons.add(customMusic);
 		allButtons.add(crystalHollowWaypoints);
 		allButtons.add(alerts);
+		allButtons.add(aliases);
 		allButtons.add(outlineText);
 		allButtons.add(pickBlock);
 		allButtons.add(coords);
@@ -241,6 +247,7 @@ public class DankerGui extends GuiScreen {
 		allButtons.add(dungeonScore);
 		allButtons.add(hideArmour);
 		allButtons.add(autoJoinSkyblock);
+		allButtons.add(firePillar);
 
 		search.setText(initSearchText);
 		search.setVisible(true);
@@ -336,6 +343,8 @@ public class DankerGui extends GuiScreen {
 			mc.displayGuiScreen(new CrystalHollowWaypointsGui(1));
 		} else if (button == alerts) {
 			mc.displayGuiScreen(new AlertsGui(1));
+		} else if (button == aliases) {
+			mc.displayGuiScreen(new AliasesGui(1));
 		} else if (button == outlineText) {
 			ToggleCommand.outlineTextToggled = !ToggleCommand.outlineTextToggled;
 			ConfigHandler.writeBooleanConfig("toggles", "OutlineText", ToggleCommand.outlineTextToggled);
@@ -532,6 +541,10 @@ public class DankerGui extends GuiScreen {
 			ToggleCommand.autoJoinSkyblock = !ToggleCommand.autoJoinSkyblock;
 			ConfigHandler.writeBooleanConfig("toggles", "AutoJoinSkyblock", ToggleCommand.autoJoinSkyblock);
 			autoJoinSkyblock.displayString = "Automatically Join Skyblock: " + Utils.getColouredBoolean(ToggleCommand.autoJoinSkyblock);
+		} else if (button == firePillar) {
+			ToggleCommand.firePillar = !ToggleCommand.firePillar;
+			ConfigHandler.writeBooleanConfig("toggles", "FirePillar", ToggleCommand.firePillar);
+			firePillar.displayString = "Fire Pillar Display: " + Utils.getColouredBoolean(ToggleCommand.firePillar);
 		}
 	}
 

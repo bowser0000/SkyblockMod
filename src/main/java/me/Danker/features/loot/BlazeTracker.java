@@ -89,7 +89,7 @@ public class BlazeTracker {
             splashPotions++;
             splashPotionsSession++;
             ConfigHandler.writeIntConfig("blaze", "splashPotions", splashPotions);
-        } else if (message.contains("RARE DROP!  (Bundle of Magma Arrows)")) {
+        } else if (message.contains("RARE DROP! (Bundle of Magma Arrows)")) {
             magmaArrows++;
             magmaArrowsSession++;
             ConfigHandler.writeIntConfig("blaze", "magmaArrows", magmaArrows);
@@ -105,25 +105,30 @@ public class BlazeTracker {
             kelvinInverters++;
             kelvinInvertersSession++;
             ConfigHandler.writeIntConfig("blaze", "kelvinInverters", kelvinInverters);
-        } else if (message.contains("VERY RARE DROP!  (Blaze Rod Distillate)")) {
-            blazeRodDistillates++;
-            blazeRodDistillatesSession++;
+        } else if (message.contains("VERY RARE DROP!  (") && message.contains("Blaze Rod Distillate)")) {
+            int amount = LootTracker.getAmountfromMessage(message);
+            blazeRodDistillates += amount;
+            blazeRodDistillatesSession += amount;
             ConfigHandler.writeIntConfig("blaze", "blazeRodDistillates", blazeRodDistillates);
-        } else if (message.contains("VERY RARE DROP!  (Glowstone Distillate)")) {
-            glowstoneDistillates++;
-            glowstoneDistillatesSession++;
+        } else if (message.contains("VERY RARE DROP!  (") && message.contains("Glowstone Distillate)")) {
+            int amount = LootTracker.getAmountfromMessage(message);
+            glowstoneDistillates += amount;
+            glowstoneDistillatesSession += amount;
             ConfigHandler.writeIntConfig("blaze", "glowstoneDistillates", glowstoneDistillates);
-        } else if (message.contains("VERY RARE DROP!  (Magma Cream Distillate)")) {
-            magmaCreamDistillates++;
-            magmaCreamDistillatesSession++;
+        } else if (message.contains("VERY RARE DROP!  (") && message.contains("Magma Cream Distillate)")) {
+            int amount = LootTracker.getAmountfromMessage(message);
+            magmaCreamDistillates += amount;
+            magmaCreamDistillatesSession += amount;
             ConfigHandler.writeIntConfig("blaze", "magmaCreamDistillates", magmaCreamDistillates);
-        } else if (message.contains("VERY RARE DROP!  (Nether Wart Distillate)")) {
-            netherWartDistillates++;
-            netherWartDistillatesSession++;
+        } else if (message.contains("VERY RARE DROP!  (") && message.contains("Nether Wart Distillate)")) {
+            int amount = LootTracker.getAmountfromMessage(message);
+            netherWartDistillates += amount;
+            netherWartDistillatesSession += amount;
             ConfigHandler.writeIntConfig("blaze", "netherWartDistillates", netherWartDistillates);
-        } else if (message.contains("VERY RARE DROP!  (Gabagool Distillate)")) {
-            gabagoolDistillates++;
-            gabagoolDistillatesSession++;
+        } else if (message.contains("VERY RARE DROP!  (") && message.contains("Gabagool Distillate)")) {
+            int amount = LootTracker.getAmountfromMessage(message);
+            gabagoolDistillates += amount;
+            gabagoolDistillatesSession += amount;
             ConfigHandler.writeIntConfig("blaze", "gabagoolDistillates", gabagoolDistillates);
         } else if (message.contains("VERY RARE DROP!  (Scorched Power Crystal)")) {
             scorchedPowerCrystals++;
@@ -140,8 +145,9 @@ public class BlazeTracker {
             ConfigHandler.writeIntConfig("blaze", "fieryBurstRunes", fieryBurstRunes);
             if (ToggleCommand.rngesusAlerts) Utils.createTitle(EnumChatFormatting.RED + "FIERY BURST RUNE!", 5);
         } else if (message.contains("VERY RARE DROP!  (") && message.contains(" Flawed Opal Gemstone)")) {
-            opalGems++;
-            opalGemsSession++;
+            int amount = LootTracker.getAmountfromMessage(message);
+            opalGems += amount;
+            opalGemsSession += amount;
             ConfigHandler.writeIntConfig("blaze", "opalGems", opalGems);
         } else if (message.contains("VERY RARE DROP!  (Archfiend Dice)")) {
             archfiendDice++;

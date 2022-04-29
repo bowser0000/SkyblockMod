@@ -65,13 +65,13 @@ import java.util.Map;
 @Mod(modid = DankersSkyblockMod.MODID, version = DankersSkyblockMod.VERSION, clientSideOnly = true)
 public class DankersSkyblockMod {
     public static final String MODID = "Danker's Skyblock Mod";
-    public static final String VERSION = "1.8.7-beta5";
+    public static final String VERSION = "1.8.7-beta6";
     public static int titleTimer = -1;
     public static boolean showTitle = false;
     public static String titleText = "";
     public static int tickAmount = 1;
     public static int repoTickAmount = 1;
-    public static KeyBinding[] keyBindings = new KeyBinding[3];
+    public static KeyBinding[] keyBindings = new KeyBinding[4];
     public static boolean usingLabymod = false;
     public static boolean usingOAM = false;
     static boolean OAMWarning = false;
@@ -117,6 +117,7 @@ public class DankersSkyblockMod {
         MinecraftForge.EVENT_BUS.register(new BonzoMaskTimer());
         MinecraftForge.EVENT_BUS.register(new BoulderSolver());
         MinecraftForge.EVENT_BUS.register(new CakeTimer());
+        MinecraftForge.EVENT_BUS.register(new ChatAliases());
         MinecraftForge.EVENT_BUS.register(new ChronomatronSolver());
         MinecraftForge.EVENT_BUS.register(new ClickInOrderSolver());
         MinecraftForge.EVENT_BUS.register(new ColouredNames());
@@ -128,6 +129,7 @@ public class DankersSkyblockMod {
         MinecraftForge.EVENT_BUS.register(new EndOfFarmAlert());
         MinecraftForge.EVENT_BUS.register(new ExpertiseLore());
         MinecraftForge.EVENT_BUS.register(new FasterMaddoxCalling());
+        MinecraftForge.EVENT_BUS.register(new FirePillarDisplay());
         MinecraftForge.EVENT_BUS.register(new GemstonesLore());
         MinecraftForge.EVENT_BUS.register(new GiantHPDisplay());
         MinecraftForge.EVENT_BUS.register(new GoldenEnchants());
@@ -179,6 +181,7 @@ public class DankersSkyblockMod {
         MinecraftForge.EVENT_BUS.register(new ZombieTracker());
 
         Alerts.configFile = configDirectory + "/dsmalerts.json";
+        ChatAliases.configFile = configDirectory + "/dsmaliases.json";
 
         ConfigHandler.reloadConfig();
         GoldenEnchants.init();
@@ -189,6 +192,7 @@ public class DankersSkyblockMod {
         keyBindings[0] = new KeyBinding("Open Maddox Menu", Keyboard.KEY_M, "Danker's Skyblock Mod");
         keyBindings[1] = new KeyBinding("Regular Ability", Keyboard.KEY_NUMPAD4, "Danker's Skyblock Mod");
         keyBindings[2] = new KeyBinding("Start/Stop Skill Tracker", Keyboard.KEY_NUMPAD5, "Danker's Skyblock Mod");
+        keyBindings[3] = new KeyBinding("Create Waypoint", Keyboard.KEY_NUMPAD6, "Danker's Skyblock Mod");
 
         for (KeyBinding keyBinding : keyBindings) {
             ClientRegistry.registerKeyBinding(keyBinding);
@@ -459,14 +463,8 @@ public class DankersSkyblockMod {
 
     @SubscribeEvent
     public void onKey(KeyInputEvent event) {
-        if (!Utils.inSkyblock) return;
-
-        EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
-        if (keyBindings[1].isPressed()) {
-            if (Utils.inDungeons) {
-                player.dropOneItem(true);
-            }
-        }
+        if (!Utils.inDungeons) return;
+        if (keyBindings[1].isPressed()) Minecraft.getMinecraft().thePlayer.dropOneItem(true);
     }
 
     @SubscribeEvent

@@ -23,6 +23,18 @@ public class CrystalHollowAddWaypointGui extends GuiScreen {
     private GuiTextField z;
     private GuiButton add;
 
+    private int xPos = -1;
+    private int yPos = -1;
+    private int zPos = -1;
+
+    public CrystalHollowAddWaypointGui() {}
+
+    public CrystalHollowAddWaypointGui(int x, int y, int z) {
+        xPos = x;
+        yPos = y;
+        zPos = z;
+    }
+
     @Override
     public boolean doesGuiPauseGame() {
         return false;
@@ -49,10 +61,13 @@ public class CrystalHollowAddWaypointGui extends GuiScreen {
         name.setEnabled(true);
         x.setVisible(true);
         x.setEnabled(true);
+        if (xPos != -1) x.setText(xPos + "");
         y.setVisible(true);
         y.setEnabled(true);
+        if (yPos != -1) y.setText(yPos + "");
         z.setVisible(true);
         z.setEnabled(true);
+        if (zPos != -1) z.setText(zPos + "");
 
         this.buttonList.add(cancel);
         this.buttonList.add(curPos);
