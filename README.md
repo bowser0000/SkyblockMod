@@ -3,14 +3,21 @@ QOL changes that enhances your Hypixel Skyblock experience. Created to add featu
 
 Discord Server: https://discord.gg/QsEkNQS
 
+<details>
+<summary>Incompatibilites</summary>
+
 ## Incompatibilities
 - Old Animations <2.6.4 - Frequent crashes
 - Old Animations 2.6.4
   - Pet colors does not color slots
   - Catacombs F7 terminal solvers do not color slots
   - Enchanting solvers do not color slots
+</details>
 
-## Current features
+<details>
+<summary>Current Features</summary>
+
+## Current Features
 - Guild party desktop notifications
 - Coordinate and angle display
 - Golden T10/T6/T4 enchant display
@@ -67,6 +74,10 @@ Discord Server: https://discord.gg/QsEkNQS
 - Automatically join skyblock
 - Fire pillar display
 - Chat aliases
+</details>
+
+<details>
+<summary>Commands</summary>
 
 ## Commands
 - /dhelp - Returns this message in-game.
@@ -101,11 +112,19 @@ Discord Server: https://discord.gg/QsEkNQS
 - /reloaddsmrepo - Reloads Danker's Skyblock Mod repository.
 - /dsmfarmlength <min coords> <max coords> - Sets coords to be used for end of farm alert.
 - /hotmof [player] - Uses API to find total powder and HotM tree of a person. If no name is provided, it checks yours.
+</details>
+
+<details>
+<summary>Keybinds</summary>
 
 ## Keybinds
 - Open Maddox menu - M by default.
 - Regular Ability - Numpad 4 by default.
 - Start/Stop Skill Tracker - Numpad 5 by default.
+</details>
+
+<details>
+<summary>Custom Music</summary>
 
 ## Custom Music
 1. Place a music file with the given name in the `.minecraft/config/dsmmusic` folder:
@@ -138,6 +157,10 @@ By adding numbers to the end of the file, you can have multiple music files for 
 - dungeon1.wav
 - dungeon2.wav
 - dungeon99.wav
+</details>
+
+<details>
+<summary>Alert Regex</summary>
 
 ## Alert Regex
 To replace alert text with a captured group, add `$$x$$` to the alert text, with `x` being the number of the capture group. `$$0$$` will always be replaced with the entire trigger message.
@@ -151,13 +174,17 @@ Trigger Message: `From [ADMIN] Plancke: Nice autogg`
 the following alert text would appear
 
 `Plancke says Nice autogg`.
+</details>
 
+<details>
+<summary>Notes</summary>
 
 ### Notes
 - Slayer tracker for token drops and 20% chance drops uses a 12x12x12 bounding box centered on the player to detect the drops. If you are out of the range of the item drop, it will not count on the tracker.
 - API commands may take a while depending on your internet connection. The API may also go down.
 - If you use too many API commands too fast, you can and will get rate-limited.
 - Importing fishing uses your sea creature kills, which may not always be exactly correct (e.x. someone else kills your sea creature).
+</details>
 
 ### Credits to Open Source Software
 Credit to all the following open source software used in this mod.
