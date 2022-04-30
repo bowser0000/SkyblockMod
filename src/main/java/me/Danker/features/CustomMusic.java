@@ -263,6 +263,7 @@ public class CustomMusic {
         public void start() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
 
             try {
+                if (music == null) music = AudioSystem.getClip();
                 if (!music.isRunning()) {
                     reset();
                     shuffle();
