@@ -247,6 +247,7 @@ public class ConfigHandler {
 		ToggleCommand.autoJoinSkyblock = initBoolean("toggles", "AutoJoinSkyblock", false);
 		ToggleCommand.firePillar = initBoolean("toggles", "FirePillar", false);
 		ToggleCommand.aliases = initBoolean("toggles", "Aliases", false);
+		ToggleCommand.fishingAlert = initBoolean("toggles", "FishingAlert", false);
 		// Chat Messages
 		ToggleCommand.sceptreMessages = initBoolean("toggles", "SceptreMessages", true);
 		ToggleCommand.midasStaffMessages = initBoolean("toggles", "MidasStaffMessages", true);

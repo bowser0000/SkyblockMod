@@ -90,6 +90,7 @@ public class DankerGui extends GuiScreen {
 	private GuiButton hideArmour;
 	private GuiButton autoJoinSkyblock;
 	private GuiButton firePillar;
+	private GuiButton fishingAlert;
 	// Chat Messages
 	private GuiButton sceptreMessages;
 	private GuiButton midasStaffMessages;
@@ -184,6 +185,7 @@ public class DankerGui extends GuiScreen {
 		hideArmour = new FeatureButton("Hide Player Armour: " + Utils.getColouredBoolean(ToggleCommand.hideArmour), "Makes player armour invisible, showing their skin.");
 		autoJoinSkyblock = new FeatureButton("Automatically Join Skyblock: " + Utils.getColouredBoolean(ToggleCommand.autoJoinSkyblock), "Automatically join Skyblock when you join Hypixel.\nYou have an addiction.");
 		firePillar = new FeatureButton("Fire Pillar Display: " + Utils.getColouredBoolean(ToggleCommand.firePillar), "Displays blaze fire pillar text on screen");
+		fishingAlert = new FeatureButton("Fishing Spawn Alerts: " + Utils.getColouredBoolean(ToggleCommand.fishingAlert), "Alerts when a Thunder or Lord Jawbus spawns nearby");
 
 		allButtons.clear();
 		allButtons.add(changeDisplay);
@@ -244,6 +246,7 @@ public class DankerGui extends GuiScreen {
 		allButtons.add(hideArmour);
 		allButtons.add(autoJoinSkyblock);
 		allButtons.add(firePillar);
+		allButtons.add(fishingAlert);
 
 		search.setText(initSearchText);
 		search.setVisible(true);
@@ -537,6 +540,10 @@ public class DankerGui extends GuiScreen {
 			ToggleCommand.firePillar = !ToggleCommand.firePillar;
 			ConfigHandler.writeBooleanConfig("toggles", "FirePillar", ToggleCommand.firePillar);
 			firePillar.displayString = "Fire Pillar Display: " + Utils.getColouredBoolean(ToggleCommand.firePillar);
+		} else if (button == fishingAlert) {
+			ToggleCommand.fishingAlert = !ToggleCommand.fishingAlert;
+			ConfigHandler.writeBooleanConfig("toggles", "FishingAlert", ToggleCommand.fishingAlert);
+			fishingAlert.displayString = "Fishing Spawn Alerts: " + Utils.getColouredBoolean(ToggleCommand.fishingAlert);
 		}
 	}
 

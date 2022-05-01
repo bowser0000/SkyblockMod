@@ -74,6 +74,7 @@ Discord Server: https://discord.gg/QsEkNQS
 - Automatically join skyblock
 - Fire pillar display
 - Chat aliases
+- Thunder/Lord Jawbus spawn alerts
 </details>
 
 <details>

@@ -62,6 +62,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 	public static boolean autoJoinSkyblock;
 	public static boolean firePillar;
 	public static boolean aliases;
+	public static boolean fishingAlert;
 	// Chat Messages
 	public static boolean sceptreMessages;
 	public static boolean midasStaffMessages;
