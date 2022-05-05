@@ -174,7 +174,7 @@ public class FishingTracker {
             seaArchersSession++;
             ConfigHandler.writeIntConfig("fishing", "seaArcher", seaArchers);
             increaseSeaCreatures();
-        } else if (message.contains("The Monster of the Deep has emerged")) {
+        } else if (message.contains("The Rider of the Deep has emerged")) {
             monsterOfTheDeeps++;
             monsterOfTheDeepsSession++;
             ConfigHandler.writeIntConfig("fishing", "monsterOfDeep", monsterOfTheDeeps);
