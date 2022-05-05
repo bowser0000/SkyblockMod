@@ -148,7 +148,7 @@ public class CrystalHollowWaypoints {
                         }
                         player.addChatMessage(new ChatComponentText("\n" + DankersSkyblockMod.MAIN_COLOUR + "DSM/SBE Crystal Hollows waypoints found. Click to add.\n").appendSibling(add));
                     }).start();
-                } else {
+                } else if (message.indexOf(":") != message.lastIndexOf(":")) {
                     String text = message.substring(message.indexOf(":") + 2);
                     Matcher matcher = skytilsPattern.matcher(text);
 
