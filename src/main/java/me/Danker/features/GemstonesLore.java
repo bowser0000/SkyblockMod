@@ -26,6 +26,7 @@ public class GemstonesLore {
         gemstoneColours.put("Topaz", EnumChatFormatting.YELLOW);
         gemstoneColours.put("Jade", EnumChatFormatting.GREEN);
         gemstoneColours.put("Ruby", EnumChatFormatting.RED);
+        gemstoneColours.put("Opal", EnumChatFormatting.WHITE);
     }
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
