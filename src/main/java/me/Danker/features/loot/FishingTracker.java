@@ -125,8 +125,8 @@ public class FishingTracker {
     public static int taurusesSession = 0;
     public static int thundersSession = 0;
     public static int lordJawbusesSession = 0;
-    public static double jawbusTimeSession = 0;
-    public static int jawbusSCsSession = 0;
+    public static double jawbusTimeSession = -1;
+    public static int jawbusSCsSession = -1;
 
     @SubscribeEvent
     public void onChat(ClientChatReceivedEvent event) {
