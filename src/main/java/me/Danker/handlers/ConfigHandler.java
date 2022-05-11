@@ -223,6 +223,7 @@ public class ConfigHandler {
 		ToggleCommand.giantHP = initBoolean("toggles", "GiantHP", false);
 		ToggleCommand.hidePetCandy = initBoolean("toggles", "HidePetCandy", false);
 		ToggleCommand.customColouredNames = initBoolean("toggles", "CustomColouredNames", true); // enabled by default
+		ToggleCommand.customNametags = initBoolean("toggles", "CustomNametags", true);
 		ToggleCommand.endOfFarmAlert = initBoolean("toggles", "EndOfFarmAlert", false);
 		ToggleCommand.gemstoneLore = initBoolean("toggles", "GemstoneLore", false);
 		ToggleCommand.crystalHollowWaypoints = initBoolean("toggles", "CrystalHollowWaypoints", false);

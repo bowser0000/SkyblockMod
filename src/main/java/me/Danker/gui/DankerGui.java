@@ -74,6 +74,7 @@ public class DankerGui extends GuiScreen {
 	private GuiButton giantHP;
 	private GuiButton hidePetCandy;
 	private GuiButton customColouredNames;
+	private GuiButton customNametags;
 	private GuiButton endOfFarmAlert;
 	private GuiButton gemstoneLore;
 	private GuiButton autoAcceptReparty;
@@ -177,6 +178,7 @@ public class DankerGui extends GuiScreen {
 		giantHP = new FeatureButton("Display Giant HP: " + Utils.getColouredBoolean(ToggleCommand.giantHP), "Displays health of Sadan's giants during F6 bossfight and F7 blood room.");
 		hidePetCandy = new FeatureButton("Hide Pet Candy: " + Utils.getColouredBoolean(ToggleCommand.hidePetCandy), "Hide pet candy in pet tooltips.");
 		customColouredNames = new FeatureButton("Custom Name Colors: " + Utils.getColouredBoolean(ToggleCommand.customColouredNames), "Replaces some player's usernames with a custom color.");
+		customNametags = new FeatureButton("Custom Color on Nametags: " + Utils.getColouredBoolean(ToggleCommand.customNametags), "Displays custom name colors on nametags. Disabling will increase performance with custom colors.");
 		endOfFarmAlert = new FeatureButton("Alert When Reaching End of Farm: " + Utils.getColouredBoolean(ToggleCommand.endOfFarmAlert), "Alerts when you go past coords set with /dsmfarmlength.");
 		gemstoneLore = new FeatureButton("Applied Gemstones in Lore: " + Utils.getColouredBoolean(ToggleCommand.gemstoneLore), "Adds applied gemstones to item tooltip.");
 		autoAcceptReparty = new FeatureButton("Auto Accept Reparty: " + Utils.getColouredBoolean(ToggleCommand.autoAcceptReparty), "Automatically rejoins parties when disbanded and invited.");
@@ -238,6 +240,7 @@ public class DankerGui extends GuiScreen {
 		allButtons.add(giantHP);
 		allButtons.add(hidePetCandy);
 		allButtons.add(customColouredNames);
+		allButtons.add(customNametags);
 		allButtons.add(endOfFarmAlert);
 		allButtons.add(gemstoneLore);
 		allButtons.add(autoAcceptReparty);
@@ -544,6 +547,10 @@ public class DankerGui extends GuiScreen {
 			ToggleCommand.fishingAlert = !ToggleCommand.fishingAlert;
 			ConfigHandler.writeBooleanConfig("toggles", "FishingAlert", ToggleCommand.fishingAlert);
 			fishingAlert.displayString = "Fishing Spawn Alerts: " + Utils.getColouredBoolean(ToggleCommand.fishingAlert);
+		} else if (button == customNametags) {
+			ToggleCommand.customNametags = !ToggleCommand.customNametags;
+			ConfigHandler.writeBooleanConfig("toggles", "CustomNametags", ToggleCommand.customNametags);
+			customNametags.displayString = "Custom Color on Nametags: " + Utils.getColouredBoolean(ToggleCommand.customNametags);
 		}
 	}
 

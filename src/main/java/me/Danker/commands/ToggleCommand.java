@@ -49,6 +49,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 	public static boolean giantHP;
 	public static boolean hidePetCandy;
 	public static boolean customColouredNames;
+	public static boolean customNametags;
 	public static boolean endOfFarmAlert;
 	public static boolean gemstoneLore;
 	public static boolean crystalHollowWaypoints;
