@@ -75,6 +75,7 @@ Discord Server: https://discord.gg/QsEkNQS
 - Fire pillar display
 - Chat aliases
 - Thunder/Lord Jawbus spawn alerts
+- Show when minion was last collected
 </details>
 
 <details>

@@ -92,6 +92,7 @@ public class DankerGui extends GuiScreen {
 	private GuiButton autoJoinSkyblock;
 	private GuiButton firePillar;
 	private GuiButton fishingAlert;
+	private GuiButton minionLastCollected;
 	// Chat Messages
 	private GuiButton sceptreMessages;
 	private GuiButton midasStaffMessages;
@@ -188,6 +189,7 @@ public class DankerGui extends GuiScreen {
 		autoJoinSkyblock = new FeatureButton("Automatically Join Skyblock: " + Utils.getColouredBoolean(ToggleCommand.autoJoinSkyblock), "Automatically join Skyblock when you join Hypixel.\nYou have an addiction.");
 		firePillar = new FeatureButton("Fire Pillar Display: " + Utils.getColouredBoolean(ToggleCommand.firePillar), "Displays blaze fire pillar text on screen");
 		fishingAlert = new FeatureButton("Fishing Spawn Alerts: " + Utils.getColouredBoolean(ToggleCommand.fishingAlert), "Alerts when a Thunder or Lord Jawbus spawns nearby");
+		minionLastCollected = new FeatureButton("Show When Minion Last Collected: " + Utils.getColouredBoolean(ToggleCommand.minionLastCollected), "Displays when a minion was last collected over the minion.");
 
 		allButtons.clear();
 		allButtons.add(changeDisplay);
@@ -250,6 +252,7 @@ public class DankerGui extends GuiScreen {
 		allButtons.add(autoJoinSkyblock);
 		allButtons.add(firePillar);
 		allButtons.add(fishingAlert);
+		allButtons.add(minionLastCollected);
 
 		search.setText(initSearchText);
 		search.setVisible(true);
@@ -551,6 +554,10 @@ public class DankerGui extends GuiScreen {
 			ToggleCommand.customNametags = !ToggleCommand.customNametags;
 			ConfigHandler.writeBooleanConfig("toggles", "CustomNametags", ToggleCommand.customNametags);
 			customNametags.displayString = "Custom Color on Nametags: " + Utils.getColouredBoolean(ToggleCommand.customNametags);
+		} else if (button == minionLastCollected) {
+			ToggleCommand.minionLastCollected = !ToggleCommand.minionLastCollected;
+			ConfigHandler.writeBooleanConfig("toggles", "MinionLastCollected", ToggleCommand.minionLastCollected);
+			minionLastCollected.displayString = "Show When Minion Last Collected: " + Utils.getColouredBoolean(ToggleCommand.minionLastCollected);
 		}
 	}
 

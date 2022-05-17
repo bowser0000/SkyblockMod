@@ -141,6 +141,7 @@ public class DankersSkyblockMod {
         MinecraftForge.EVENT_BUS.register(new IceWalkSolver());
         MinecraftForge.EVENT_BUS.register(new LividSolver());
         MinecraftForge.EVENT_BUS.register(new LowHealthNotifications());
+        MinecraftForge.EVENT_BUS.register(new MinionLastCollected());
         MinecraftForge.EVENT_BUS.register(new NecronNotifications());
         MinecraftForge.EVENT_BUS.register(new NoF3Coords());
         MinecraftForge.EVENT_BUS.register(new NotifySlayerSlain());
@@ -181,6 +182,7 @@ public class DankersSkyblockMod {
 
         Alerts.configFile = configDirectory + "/dsmalerts.json";
         ChatAliases.configFile = configDirectory + "/dsmaliases.json";
+        MinionLastCollected.configFile = configDirectory + "/dsmminions.json";
 
         ConfigHandler.reloadConfig();
         GoldenEnchants.init();

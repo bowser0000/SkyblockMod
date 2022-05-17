@@ -249,6 +249,7 @@ public class ConfigHandler {
 		ToggleCommand.firePillar = initBoolean("toggles", "FirePillar", false);
 		ToggleCommand.aliases = initBoolean("toggles", "Aliases", false);
 		ToggleCommand.fishingAlert = initBoolean("toggles", "FishingAlert", false);
+		ToggleCommand.minionLastCollected = initBoolean("toggles", "MinionLastCollected", false);
 		// Chat Messages
 		ToggleCommand.sceptreMessages = initBoolean("toggles", "SceptreMessages", true);
 		ToggleCommand.midasStaffMessages = initBoolean("toggles", "MidasStaffMessages", true);
@@ -714,6 +715,7 @@ public class ConfigHandler {
 		BoulderSolver.BOULDER_ARROW_COLOUR = initInt("colors", "boulderArrow", 0x006000);
 		SilverfishSolver.SILVERFISH_LINE_COLOUR = initInt("colors", "silverfishLine", 0x40FF40);
 		IceWalkSolver.ICE_WALK_LINE_COLOUR = initInt("colors", "iceWalkLine", 0x40FF40);
+		MinionLastCollected.LAST_COLLECTED_COLOUR = initInt("colors", "lastCollected", 0x55FFFF);
 
 		// Commands
 		if (!hasKey("commands", "reparty")) writeBooleanConfig("commands", "reparty", false);
@@ -739,6 +741,15 @@ public class ConfigHandler {
 			}
 			ChatAliases.Alias[] aliases = gson.fromJson(new FileReader(ChatAliases.configFile), ChatAliases.Alias[].class);
 			if (aliases != null) ChatAliases.aliases = new ArrayList<>(Arrays.asList(aliases));
+
+			// Minions
+			if (!(new File(MinionLastCollected.configFile).exists())) {
+				FileWriter file = new FileWriter(MinionLastCollected.configFile);
+				file.write(new JsonArray().toString());
+				file.close();
+			}
+			MinionLastCollected.Minion[] minions = gson.fromJson(new FileReader(MinionLastCollected.configFile), MinionLastCollected.Minion[].class);
+			if (minions != null) MinionLastCollected.minions = new ArrayList<>(Arrays.asList(minions));
 		} catch (IOException ex) {
 			ex.printStackTrace();
 		}

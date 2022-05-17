@@ -138,6 +138,30 @@ public class RenderUtils {
         GlStateManager.popMatrix();
     }
 
+    public static void draw3DString(double x, double y, double z, String text, int colour, float partialTicks) {
+        Minecraft mc = Minecraft.getMinecraft();
+        EntityPlayer player = mc.thePlayer;
+        double realX = (x - player.lastTickPosX) + ((x - player.posX) - (x - player.lastTickPosX)) * partialTicks;
+        double realY = (y - player.lastTickPosY) + ((y - player.posY) - (y - player.lastTickPosY)) * partialTicks;
+        double realZ = (z - player.lastTickPosZ) + ((z - player.posZ) - (z - player.lastTickPosZ)) * partialTicks;
+        RenderManager renderManager = mc.getRenderManager();
+
+        float f = 1.6F;
+        float f1 = 0.016666668F * f;
+        int width = mc.fontRendererObj.getStringWidth(text) / 2;
+        GlStateManager.pushMatrix();
+        GlStateManager.translate(realX, realY, realZ);
+        GL11.glNormal3f(0f, 1f, 0f);
+        GlStateManager.rotate(-renderManager.playerViewY, 0f, 1f, 0f);
+        GlStateManager.rotate(renderManager.playerViewX, 1f, 0f, 0f);
+        GlStateManager.scale(-f1, -f1, -f1);
+        GlStateManager.enableBlend();
+        GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
+        mc.fontRendererObj.drawString(text, -width, 0, colour);
+        GlStateManager.disableBlend();
+        GlStateManager.popMatrix();
+    }
+
     // I couldnt get waypoint strings to work so in the end I just copied from NEU
     // If anyone sees this please help
 	/*public static void draw3DWaypointString(CrystalHollowWaypoints.Waypoint waypoint, float partialTicks) {
