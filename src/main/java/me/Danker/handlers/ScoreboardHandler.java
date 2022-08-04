@@ -11,6 +11,7 @@ import net.minecraft.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.ConcurrentModificationException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -38,7 +39,14 @@ public class ScoreboardHandler {
 		ScoreObjective objective = scoreboard.getObjectiveInDisplaySlot(1);
 		if (objective == null) return lines;
 		
-		Collection<Score> scores = scoreboard.getSortedScores(objective);
+		Collection<Score> scores;
+		try {
+			scores = scoreboard.getSortedScores(objective);
+		} catch (ConcurrentModificationException ex) {
+			ex.printStackTrace();
+			return new ArrayList<>();
+		}
+
 		List<Score> list = scores.stream()
 				.filter(input -> input != null && input.getPlayerName() != null && !input.getPlayerName()
 				.startsWith("#"))
