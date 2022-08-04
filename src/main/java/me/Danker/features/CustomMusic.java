@@ -67,6 +67,8 @@ public class CustomMusic {
     public static Song park;
     public static int parkVolume;
 
+    static int curPhase = -1;
+
 
     @SubscribeEvent
     public void onWorldChange(WorldEvent.Load event) {
@@ -96,7 +98,7 @@ public class CustomMusic {
                             firstLine.contains("sadan") || // F6
                             firstLine.contains("maxor")) { // F7
 
-                            if (ToggleCommand.dungeonBossMusic) dungeonboss.start();
+                            if (ToggleCommand.dungeonBossMusic && curPhase == -1) dungeonboss.start();
                         }
                     }
                 } else {
@@ -159,12 +161,16 @@ public class CustomMusic {
             if (ToggleCommand.dungeonBossMusic) {
                 if (message.startsWith("[BOSS] Storm: Pathetic Maxor")) {
                     phase2.start();
+                    curPhase = 2;
                 } else if (message.startsWith("[BOSS] Goldor: Who dares trespass into my domain?")) {
                     phase3.start();
+                    curPhase = 3;
                 } else if (message.startsWith("[BOSS] Necron: You went further than any human before")) {
                     phase4.start();
+                    curPhase = 4;
                 } else if (message.startsWith("[BOSS] ") && message.endsWith("You.. again?")) {
                     phase5.start();
+                    curPhase = 5;
                 }
             }
 
@@ -238,6 +244,7 @@ public class CustomMusic {
         if (crimsonIsle != null) crimsonIsle.stop();
         if (end != null) end.stop();
         if (park != null) park.stop();
+        curPhase = -1;
     }
 
     public static class Song {
