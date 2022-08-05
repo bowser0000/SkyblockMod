@@ -2,6 +2,7 @@ package me.Danker.features;
 
 import me.Danker.DankersSkyblockMod;
 import me.Danker.commands.ToggleCommand;
+import me.Danker.events.ModInitEvent;
 import me.Danker.handlers.ScoreboardHandler;
 import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;
@@ -13,6 +14,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.client.event.sound.PlaySoundEvent;
 import net.minecraftforge.event.world.WorldEvent;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
@@ -194,6 +196,11 @@ public class CustomMusic {
         if (cancelNotes && event.name.startsWith("note.")) {
             event.result = null;
         }
+    }
+
+    @SubscribeEvent
+    public void init(ModInitEvent event) {
+        init(event.configDirectory);
     }
 
     public static void init(String configDirectory) {

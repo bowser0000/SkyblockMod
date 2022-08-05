@@ -3,6 +3,7 @@ package me.Danker.features;
 import com.google.gson.GsonBuilder;
 import me.Danker.commands.ToggleCommand;
 import me.Danker.events.ChestSlotClickedEvent;
+import me.Danker.events.ModInitEvent;
 import me.Danker.events.PacketWriteEvent;
 import me.Danker.utils.RenderUtils;
 import me.Danker.utils.Utils;
@@ -27,6 +28,11 @@ public class MinionLastCollected {
     public static String configFile;
     static BlockPos lastMinion = null;
     public static int LAST_COLLECTED_COLOUR;
+
+    @SubscribeEvent
+    public void init(ModInitEvent event) {
+        configFile = event.configDirectory + "/dsmminions.json";
+    }
 
     @SubscribeEvent
     public void onPacketWrite(PacketWriteEvent event) {

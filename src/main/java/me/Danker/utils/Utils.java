@@ -1,5 +1,7 @@
 package me.Danker.utils;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import me.Danker.DankersSkyblockMod;
 import me.Danker.features.ColouredNames;
 import me.Danker.features.GoldenEnchants;
@@ -507,6 +509,16 @@ public class Utils {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
+	}
+
+	public static JsonObject deepCopy(JsonObject obj) {
+		JsonObject newObj = new JsonObject();
+
+		for (Map.Entry<String, JsonElement> entry : obj.entrySet()) {
+			newObj.add(entry.getKey(), entry.getValue());
+		}
+
+		return newObj;
 	}
 
 	public enum DungeonFloor {

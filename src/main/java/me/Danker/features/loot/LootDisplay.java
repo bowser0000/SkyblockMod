@@ -946,6 +946,82 @@ public class LootDisplay {
                             EnumChatFormatting.AQUA + timeBetween + "\n" +
                             EnumChatFormatting.AQUA + bossesBetween;
                     break;
+                case "fishing_trophy":
+                    dropsText = EnumChatFormatting.WHITE + "Sulpher Skitter:\n" +
+                            EnumChatFormatting.WHITE + "Obfuscated 1:\n" +
+                            EnumChatFormatting.WHITE + "Steaminghot Flounder:\n" +
+                            EnumChatFormatting.WHITE + "Gusher:\n" +
+                            EnumChatFormatting.WHITE + "Blobfish:\n" +
+                            EnumChatFormatting.GREEN + "Obfuscated 2:\n" +
+                            EnumChatFormatting.GREEN + "Slugfish:\n" +
+                            EnumChatFormatting.GREEN + "Flyfish:\n" +
+                            EnumChatFormatting.BLUE + "Obfuscated 3:\n" +
+                            EnumChatFormatting.BLUE + "Lavahorse:\n" +
+                            EnumChatFormatting.BLUE + "Mana Ray:\n" +
+                            EnumChatFormatting.BLUE + "Volcanic Stonefish:\n" +
+                            EnumChatFormatting.BLUE + "Vanille:\n" +
+                            EnumChatFormatting.DARK_PURPLE + "Skeleton Fish:\n" +
+                            EnumChatFormatting.DARK_PURPLE + "Moldfin:\n" +
+                            EnumChatFormatting.DARK_PURPLE + "Soul Fish:\n" +
+                            EnumChatFormatting.DARK_PURPLE + "Karate Fish:\n" +
+                            EnumChatFormatting.GOLD + "Golden Fish:";
+                    countText = EnumChatFormatting.WHITE + TrophyFishTracker.getTierCount(TrophyFishTracker.fish, "Sulpher Skitter") + "\n" +
+                            EnumChatFormatting.WHITE + TrophyFishTracker.getTierCount(TrophyFishTracker.fish, "Obfuscated 1") + "\n" +
+                            EnumChatFormatting.WHITE + TrophyFishTracker.getTierCount(TrophyFishTracker.fish, "Steaming-Hot Flounder") + "\n" +
+                            EnumChatFormatting.WHITE + TrophyFishTracker.getTierCount(TrophyFishTracker.fish, "Gusher") + "\n" +
+                            EnumChatFormatting.WHITE + TrophyFishTracker.getTierCount(TrophyFishTracker.fish, "Blobfish") + "\n" +
+                            EnumChatFormatting.GREEN + TrophyFishTracker.getTierCount(TrophyFishTracker.fish, "Obfuscated 2") + "\n" +
+                            EnumChatFormatting.GREEN + TrophyFishTracker.getTierCount(TrophyFishTracker.fish, "Slugfish") + "\n" +
+                            EnumChatFormatting.GREEN + TrophyFishTracker.getTierCount(TrophyFishTracker.fish, "Flyfish") + "\n" +
+                            EnumChatFormatting.BLUE + TrophyFishTracker.getTierCount(TrophyFishTracker.fish, "Obfuscated 3") + "\n" +
+                            EnumChatFormatting.BLUE + TrophyFishTracker.getTierCount(TrophyFishTracker.fish, "Lavahorse") + "\n" +
+                            EnumChatFormatting.BLUE + TrophyFishTracker.getTierCount(TrophyFishTracker.fish, "Mana Ray") + "\n" +
+                            EnumChatFormatting.BLUE + TrophyFishTracker.getTierCount(TrophyFishTracker.fish, "Volcanic Stonefish") + "\n" +
+                            EnumChatFormatting.BLUE + TrophyFishTracker.getTierCount(TrophyFishTracker.fish, "Vanille") + "\n" +
+                            EnumChatFormatting.DARK_PURPLE + TrophyFishTracker.getTierCount(TrophyFishTracker.fish, "Skeleton Fish") + "\n" +
+                            EnumChatFormatting.DARK_PURPLE + TrophyFishTracker.getTierCount(TrophyFishTracker.fish, "Moldfin") + "\n" +
+                            EnumChatFormatting.DARK_PURPLE + TrophyFishTracker.getTierCount(TrophyFishTracker.fish, "Soul Fish") + "\n" +
+                            EnumChatFormatting.DARK_PURPLE + TrophyFishTracker.getTierCount(TrophyFishTracker.fish, "Karate Fish") + "\n" +
+                            EnumChatFormatting.GOLD + TrophyFishTracker.getTierCount(TrophyFishTracker.fish, "Golden Fish");
+                    break;
+                case "fishing_trophy_session":
+                    dropsText = EnumChatFormatting.WHITE + "Sulpher Skitter:\n" +
+                            EnumChatFormatting.WHITE + "Obfuscated 1:\n" +
+                            EnumChatFormatting.WHITE + "Steaminghot Flounder:\n" +
+                            EnumChatFormatting.WHITE + "Gusher:\n" +
+                            EnumChatFormatting.WHITE + "Blobfish:\n" +
+                            EnumChatFormatting.GREEN + "Obfuscated 2:\n" +
+                            EnumChatFormatting.GREEN + "Slugfish:\n" +
+                            EnumChatFormatting.GREEN + "Flyfish:\n" +
+                            EnumChatFormatting.BLUE + "Obfuscated 3:\n" +
+                            EnumChatFormatting.BLUE + "Lavahorse:\n" +
+                            EnumChatFormatting.BLUE + "Mana Ray:\n" +
+                            EnumChatFormatting.BLUE + "Volcanic Stonefish:\n" +
+                            EnumChatFormatting.BLUE + "Vanille:\n" +
+                            EnumChatFormatting.DARK_PURPLE + "Skeleton Fish:\n" +
+                            EnumChatFormatting.DARK_PURPLE + "Moldfin:\n" +
+                            EnumChatFormatting.DARK_PURPLE + "Soul Fish:\n" +
+                            EnumChatFormatting.DARK_PURPLE + "Karate Fish:\n" +
+                            EnumChatFormatting.GOLD + "Golden Fish:";
+                    countText = EnumChatFormatting.WHITE + TrophyFishTracker.getTierCount(TrophyFishTracker.fishSession, "Sulpher Skitter") + "\n" +
+                            EnumChatFormatting.WHITE + TrophyFishTracker.getTierCount(TrophyFishTracker.fishSession, "Obfuscated 1") + "\n" +
+                            EnumChatFormatting.WHITE + TrophyFishTracker.getTierCount(TrophyFishTracker.fishSession, "Steaming-Hot Flounder") + "\n" +
+                            EnumChatFormatting.WHITE + TrophyFishTracker.getTierCount(TrophyFishTracker.fishSession, "Gusher") + "\n" +
+                            EnumChatFormatting.WHITE + TrophyFishTracker.getTierCount(TrophyFishTracker.fishSession, "Blobfish") + "\n" +
+                            EnumChatFormatting.GREEN + TrophyFishTracker.getTierCount(TrophyFishTracker.fishSession, "Obfuscated 2") + "\n" +
+                            EnumChatFormatting.GREEN + TrophyFishTracker.getTierCount(TrophyFishTracker.fishSession, "Slugfish") + "\n" +
+                            EnumChatFormatting.GREEN + TrophyFishTracker.getTierCount(TrophyFishTracker.fishSession, "Flyfish") + "\n" +
+                            EnumChatFormatting.BLUE + TrophyFishTracker.getTierCount(TrophyFishTracker.fishSession, "Obfuscated 3") + "\n" +
+                            EnumChatFormatting.BLUE + TrophyFishTracker.getTierCount(TrophyFishTracker.fishSession, "Lavahorse") + "\n" +
+                            EnumChatFormatting.BLUE + TrophyFishTracker.getTierCount(TrophyFishTracker.fishSession, "Mana Ray") + "\n" +
+                            EnumChatFormatting.BLUE + TrophyFishTracker.getTierCount(TrophyFishTracker.fishSession, "Volcanic Stonefish") + "\n" +
+                            EnumChatFormatting.BLUE + TrophyFishTracker.getTierCount(TrophyFishTracker.fishSession, "Vanille") + "\n" +
+                            EnumChatFormatting.DARK_PURPLE + TrophyFishTracker.getTierCount(TrophyFishTracker.fishSession, "Skeleton Fish") + "\n" +
+                            EnumChatFormatting.DARK_PURPLE + TrophyFishTracker.getTierCount(TrophyFishTracker.fishSession, "Moldfin") + "\n" +
+                            EnumChatFormatting.DARK_PURPLE + TrophyFishTracker.getTierCount(TrophyFishTracker.fishSession, "Soul Fish") + "\n" +
+                            EnumChatFormatting.DARK_PURPLE + TrophyFishTracker.getTierCount(TrophyFishTracker.fishSession, "Karate Fish") + "\n" +
+                            EnumChatFormatting.GOLD + TrophyFishTracker.getTierCount(TrophyFishTracker.fishSession, "Golden Fish");
+                    break;
                 case "mythological":
                     dropsText = EnumChatFormatting.GOLD + "Coins:\n" +
                             EnumChatFormatting.WHITE + "Griffin Feathers:\n" +

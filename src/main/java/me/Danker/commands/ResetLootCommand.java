@@ -293,6 +293,10 @@ public class ResetLootCommand extends CommandBase {
 		FishingTracker.jawbusSCsSession = -1;
 		ConfigHandler.deleteCategory("fishing");
 		ConfigHandler.reloadConfig();
+
+		TrophyFishTracker.fish = TrophyFishTracker.createEmpty();
+		TrophyFishTracker.fishSession = TrophyFishTracker.createEmpty();
+		TrophyFishTracker.save();
 	}
 	
 	static void resetMythological() {

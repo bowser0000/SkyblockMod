@@ -1,7 +1,6 @@
 package me.Danker.handlers;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
+import com.google.gson.*;
 import me.Danker.DankersSkyblockMod;
 import me.Danker.commands.MoveCommand;
 import me.Danker.commands.ScaleCommand;
@@ -750,6 +749,14 @@ public class ConfigHandler {
 			}
 			MinionLastCollected.Minion[] minions = gson.fromJson(new FileReader(MinionLastCollected.configFile), MinionLastCollected.Minion[].class);
 			if (minions != null) MinionLastCollected.minions = new ArrayList<>(Arrays.asList(minions));
+
+			// Trophy Fish
+			if (!(new File(TrophyFishTracker.configFile).exists())) {
+				FileWriter file = new FileWriter(TrophyFishTracker.configFile);
+				file.write(new JsonObject().toString());
+				file.close();
+			}
+			TrophyFishTracker.fish = new JsonParser().parse(new FileReader(TrophyFishTracker.configFile)).getAsJsonObject();
 		} catch (IOException ex) {
 			ex.printStackTrace();
 		}

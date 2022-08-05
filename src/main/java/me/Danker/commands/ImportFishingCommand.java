@@ -3,6 +3,7 @@ package me.Danker.commands;
 import com.google.gson.JsonObject;
 import me.Danker.DankersSkyblockMod;
 import me.Danker.features.loot.FishingTracker;
+import me.Danker.features.loot.TrophyFishTracker;
 import me.Danker.handlers.APIHandler;
 import me.Danker.handlers.ConfigHandler;
 import net.minecraft.command.CommandBase;
@@ -63,7 +64,9 @@ public class ImportFishingCommand extends CommandBase {
 			}
 
 			System.out.println("Fetching fishing stats...");
-			JsonObject statsObject = profileResponse.get("profile").getAsJsonObject().get("members").getAsJsonObject().get(uuid).getAsJsonObject().get("stats").getAsJsonObject();
+			JsonObject memberObject = profileResponse.get("profile").getAsJsonObject().get("members").getAsJsonObject().get(uuid).getAsJsonObject();
+			JsonObject statsObject = memberObject.get("stats").getAsJsonObject();
+			JsonObject trophyObject = memberObject.get("trophy_fish").getAsJsonObject();
 
 			FishingTracker.greatCatches = 0;
 			FishingTracker.goodCatches = 0;
@@ -123,7 +126,7 @@ public class ImportFishingCommand extends CommandBase {
 			FishingTracker.thunders = getSCFromApi(statsObject, "kills_thunder");
 			FishingTracker.lordJawbuses = getSCFromApi(statsObject, "kills_lord_jawbus");
 
-			System.out.println("Writing to config...");
+			System.out.println("Writing SC to config...");
 			ConfigHandler.writeIntConfig("fishing", "goodCatch", FishingTracker.goodCatches);
 			ConfigHandler.writeIntConfig("fishing", "greatCatch", FishingTracker.greatCatches);
 			ConfigHandler.writeIntConfig("fishing", "seaCreature", FishingTracker.seaCreatures);
@@ -172,6 +175,27 @@ public class ImportFishingCommand extends CommandBase {
 			ConfigHandler.writeIntConfig("fishing", "thunder", FishingTracker.thunders);
 			ConfigHandler.writeIntConfig("fishing", "lordJawbus", FishingTracker.lordJawbuses);
 
+			TrophyFishTracker.fish = TrophyFishTracker.createEmpty();
+			TrophyFishTracker.fish.add("Sulpher Skitter", getTrophyFromAPI(trophyObject, "sulphur_skitter"));
+			TrophyFishTracker.fish.add("Obfuscated 1", getTrophyFromAPI(trophyObject, "obfuscated_fish_1"));
+			TrophyFishTracker.fish.add("Steaming-Hot Flounder", getTrophyFromAPI(trophyObject, "steaming_hot_flounder"));
+			TrophyFishTracker.fish.add("Obfuscated 2", getTrophyFromAPI(trophyObject, "obfuscated_fish_2"));
+			TrophyFishTracker.fish.add("Gusher", getTrophyFromAPI(trophyObject, "gusher"));
+			TrophyFishTracker.fish.add("Blobfish", getTrophyFromAPI(trophyObject, "blobfish"));
+			TrophyFishTracker.fish.add("Slugfish", getTrophyFromAPI(trophyObject, "slugfish"));
+			TrophyFishTracker.fish.add("Obfuscated 3", getTrophyFromAPI(trophyObject, "obfuscated_fish_3"));
+			TrophyFishTracker.fish.add("Flyfish", getTrophyFromAPI(trophyObject, "flyfish"));
+			TrophyFishTracker.fish.add("Lavahorse", getTrophyFromAPI(trophyObject, "lava_horse"));
+			TrophyFishTracker.fish.add("Mana Ray", getTrophyFromAPI(trophyObject, "mana_ray"));
+			TrophyFishTracker.fish.add("Volcanic Stonefish", getTrophyFromAPI(trophyObject, "volcanic_stonefish"));
+			TrophyFishTracker.fish.add("Vanille", getTrophyFromAPI(trophyObject, "vanille"));
+			TrophyFishTracker.fish.add("Skeleton Fish", getTrophyFromAPI(trophyObject, "skeleton_fish"));
+			TrophyFishTracker.fish.add("Moldfin", getTrophyFromAPI(trophyObject, "moldfin"));
+			TrophyFishTracker.fish.add("Soul Fish", getTrophyFromAPI(trophyObject, "soul_fish"));
+			TrophyFishTracker.fish.add("Karate Fish", getTrophyFromAPI(trophyObject, "karate_fish"));
+			TrophyFishTracker.fish.add("Golden Fish", getTrophyFromAPI(trophyObject, "golden_fish"));
+			TrophyFishTracker.save();
+
 			player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Fishing stats imported."));
 		}).start();
 	}
@@ -181,6 +205,17 @@ public class ImportFishingCommand extends CommandBase {
 		if (obj.has(key)) sc = obj.get(key).getAsInt();
 		FishingTracker.seaCreatures += sc;
 		return sc;
+	}
+
+	static JsonObject getTrophyFromAPI(JsonObject obj, String name) {
+		JsonObject tiers = new JsonObject();
+
+		tiers.addProperty("BRONZE", obj.has(name + "_bronze") ? obj.get(name + "_bronze").getAsInt() : 0);
+		tiers.addProperty("SILVER", obj.has(name + "_silver") ? obj.get(name + "_silver").getAsInt() : 0);
+		tiers.addProperty("GOLD", obj.has(name + "_gold") ? obj.get(name + "_gold").getAsInt() : 0);
+		tiers.addProperty("DIAMOND", obj.has(name + "_diamond") ? obj.get(name + "_diamond").getAsInt() : 0);
+
+		return tiers;
 	}
 
 }
