@@ -13,6 +13,7 @@ import net.minecraft.entity.item.EntityArmorStand;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.play.client.C02PacketUseEntity;
+import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.BlockPos;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -72,6 +73,7 @@ public class MinionLastCollected {
     public void onWorldRender(RenderWorldLastEvent event) {
         if (ToggleCommand.minionLastCollected && Utils.inSkyblock && Utils.tabLocation.equals("Private Island")) {
             for (Minion minion : minions) {
+                if (!minionExistsAtPos(minion.pos)) continue;
                 RenderUtils.draw3DString(minion.pos.getX() + 0.5, minion.pos.getY() + 2.2, minion.pos.getZ() + 0.5, minion.getTimeCollected(), LAST_COLLECTED_COLOUR, event.partialTicks);
             }
         }
@@ -96,6 +98,12 @@ public class MinionLastCollected {
             if (minion.pos.equals(pos)) return minion;
         }
         return null;
+    }
+
+    public boolean minionExistsAtPos(BlockPos pos) {
+        AxisAlignedBB aabb = new AxisAlignedBB(pos, pos.add(1, 1, 1));
+        List<EntityArmorStand> entities = Minecraft.getMinecraft().theWorld.getEntitiesWithinAABB(EntityArmorStand.class, aabb);
+        return entities.size() > 0; // just assume theres a minion there
     }
 
     public static void save() {
