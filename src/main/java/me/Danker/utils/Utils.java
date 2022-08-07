@@ -251,6 +251,16 @@ public class Utils {
 		}
 		return limit;
 	}
+
+	public static int skillLevelToXp(int level) {
+		int sum = 0;
+
+		for (int i = 1; i <= level; i++) {
+			sum += skillXPPerLevel[i];
+		}
+
+		return sum;
+	}
 	
 	public static double xpToDungeonsLevel(double xp) {
 		for (int i = 0, xpAdded = 0; i < dungeonsXPPerLevel.length; i++) {
