@@ -965,7 +965,7 @@ public class LootDisplay {
                             EnumChatFormatting.DARK_PURPLE + "Soul Fish:\n" +
                             EnumChatFormatting.DARK_PURPLE + "Karate Fish:\n" +
                             EnumChatFormatting.GOLD + "Golden Fish:";
-                    countText = EnumChatFormatting.WHITE + TrophyFishTracker.getTierCount(TrophyFishTracker.fish, "Sulpher Skitter") + "\n" +
+                    if (!ToggleCommand.showTrophyCompletion) countText = EnumChatFormatting.WHITE + TrophyFishTracker.getTierCount(TrophyFishTracker.fish, "Sulpher Skitter") + "\n" +
                             EnumChatFormatting.WHITE + TrophyFishTracker.getTierCount(TrophyFishTracker.fish, "Obfuscated 1") + "\n" +
                             EnumChatFormatting.WHITE + TrophyFishTracker.getTierCount(TrophyFishTracker.fish, "Steaming-Hot Flounder") + "\n" +
                             EnumChatFormatting.WHITE + TrophyFishTracker.getTierCount(TrophyFishTracker.fish, "Gusher") + "\n" +
@@ -983,6 +983,27 @@ public class LootDisplay {
                             EnumChatFormatting.DARK_PURPLE + TrophyFishTracker.getTierCount(TrophyFishTracker.fish, "Soul Fish") + "\n" +
                             EnumChatFormatting.DARK_PURPLE + TrophyFishTracker.getTierCount(TrophyFishTracker.fish, "Karate Fish") + "\n" +
                             EnumChatFormatting.GOLD + TrophyFishTracker.getTierCount(TrophyFishTracker.fish, "Golden Fish");
+
+                    if (ToggleCommand.showTrophyCompletion) {
+                        TrophyFishTracker.drawCompletion(TrophyFishTracker.fish, "Sulpher Skitter", (int) (MoveCommand.displayXY[0] + (110 * ScaleCommand.displayScale)), MoveCommand.displayXY[1], ScaleCommand.displayScale);
+                        TrophyFishTracker.drawCompletion(TrophyFishTracker.fish, "Obfuscated 1", (int) (MoveCommand.displayXY[0] + (110 * ScaleCommand.displayScale)), (int) (MoveCommand.displayXY[1] + (mc.fontRendererObj.FONT_HEIGHT * ScaleCommand.displayScale)), ScaleCommand.displayScale);
+                        TrophyFishTracker.drawCompletion(TrophyFishTracker.fish, "Steaming-Hot Flounder", (int) (MoveCommand.displayXY[0] + (110 * ScaleCommand.displayScale)), (int) (MoveCommand.displayXY[1] + (2 * mc.fontRendererObj.FONT_HEIGHT * ScaleCommand.displayScale)), ScaleCommand.displayScale);
+                        TrophyFishTracker.drawCompletion(TrophyFishTracker.fish, "Gusher", (int) (MoveCommand.displayXY[0] + (110 * ScaleCommand.displayScale)), (int) (MoveCommand.displayXY[1] + (3 * mc.fontRendererObj.FONT_HEIGHT * ScaleCommand.displayScale)), ScaleCommand.displayScale);
+                        TrophyFishTracker.drawCompletion(TrophyFishTracker.fish, "Blobfish", (int) (MoveCommand.displayXY[0] + (110 * ScaleCommand.displayScale)), (int) (MoveCommand.displayXY[1] + (4 * mc.fontRendererObj.FONT_HEIGHT * ScaleCommand.displayScale)), ScaleCommand.displayScale);
+                        TrophyFishTracker.drawCompletion(TrophyFishTracker.fish, "Obfuscated 2", (int) (MoveCommand.displayXY[0] + (110 * ScaleCommand.displayScale)), (int) (MoveCommand.displayXY[1] + (5 * mc.fontRendererObj.FONT_HEIGHT * ScaleCommand.displayScale)), ScaleCommand.displayScale);
+                        TrophyFishTracker.drawCompletion(TrophyFishTracker.fish, "Slugfish", (int) (MoveCommand.displayXY[0] + (110 * ScaleCommand.displayScale)), (int) (MoveCommand.displayXY[1] + (6 * mc.fontRendererObj.FONT_HEIGHT * ScaleCommand.displayScale)), ScaleCommand.displayScale);
+                        TrophyFishTracker.drawCompletion(TrophyFishTracker.fish, "Flyfish", (int) (MoveCommand.displayXY[0] + (110 * ScaleCommand.displayScale)), (int) (MoveCommand.displayXY[1] + (7 * mc.fontRendererObj.FONT_HEIGHT * ScaleCommand.displayScale)), ScaleCommand.displayScale);
+                        TrophyFishTracker.drawCompletion(TrophyFishTracker.fish, "Obfuscated 3", (int) (MoveCommand.displayXY[0] + (110 * ScaleCommand.displayScale)), (int) (MoveCommand.displayXY[1] + (8 * mc.fontRendererObj.FONT_HEIGHT * ScaleCommand.displayScale)), ScaleCommand.displayScale);
+                        TrophyFishTracker.drawCompletion(TrophyFishTracker.fish, "Lavahorse", (int) (MoveCommand.displayXY[0] + (110 * ScaleCommand.displayScale)), (int) (MoveCommand.displayXY[1] + (9 * mc.fontRendererObj.FONT_HEIGHT * ScaleCommand.displayScale)), ScaleCommand.displayScale);
+                        TrophyFishTracker.drawCompletion(TrophyFishTracker.fish, "Mana Ray", (int) (MoveCommand.displayXY[0] + (110 * ScaleCommand.displayScale)), (int) (MoveCommand.displayXY[1] + (10 * mc.fontRendererObj.FONT_HEIGHT * ScaleCommand.displayScale)), ScaleCommand.displayScale);
+                        TrophyFishTracker.drawCompletion(TrophyFishTracker.fish, "Volcanic Stonefish", (int) (MoveCommand.displayXY[0] + (110 * ScaleCommand.displayScale)), (int) (MoveCommand.displayXY[1] + (11 * mc.fontRendererObj.FONT_HEIGHT * ScaleCommand.displayScale)), ScaleCommand.displayScale);
+                        TrophyFishTracker.drawCompletion(TrophyFishTracker.fish, "Vanille", (int) (MoveCommand.displayXY[0] + (110 * ScaleCommand.displayScale)), (int) (MoveCommand.displayXY[1] + (12 * mc.fontRendererObj.FONT_HEIGHT * ScaleCommand.displayScale)), ScaleCommand.displayScale);
+                        TrophyFishTracker.drawCompletion(TrophyFishTracker.fish, "Skeleton Fish", (int) (MoveCommand.displayXY[0] + (110 * ScaleCommand.displayScale)), (int) (MoveCommand.displayXY[1] + (13 * mc.fontRendererObj.FONT_HEIGHT * ScaleCommand.displayScale)), ScaleCommand.displayScale);
+                        TrophyFishTracker.drawCompletion(TrophyFishTracker.fish, "Moldfin", (int) (MoveCommand.displayXY[0] + (110 * ScaleCommand.displayScale)), (int) (MoveCommand.displayXY[1] + (14 * mc.fontRendererObj.FONT_HEIGHT * ScaleCommand.displayScale)), ScaleCommand.displayScale);
+                        TrophyFishTracker.drawCompletion(TrophyFishTracker.fish, "Soul Fish", (int) (MoveCommand.displayXY[0] + (110 * ScaleCommand.displayScale)), (int) (MoveCommand.displayXY[1] + (15 * mc.fontRendererObj.FONT_HEIGHT * ScaleCommand.displayScale)), ScaleCommand.displayScale);
+                        TrophyFishTracker.drawCompletion(TrophyFishTracker.fish, "Karate Fish", (int) (MoveCommand.displayXY[0] + (110 * ScaleCommand.displayScale)), (int) (MoveCommand.displayXY[1] + (16 * mc.fontRendererObj.FONT_HEIGHT * ScaleCommand.displayScale)), ScaleCommand.displayScale);
+                        TrophyFishTracker.drawCompletion(TrophyFishTracker.fish, "Golden Fish", (int) (MoveCommand.displayXY[0] + (110 * ScaleCommand.displayScale)), (int) (MoveCommand.displayXY[1] + (17 * mc.fontRendererObj.FONT_HEIGHT * ScaleCommand.displayScale)), ScaleCommand.displayScale);
+                    }
                     break;
                 case "fishing_trophy_session":
                     dropsText = EnumChatFormatting.WHITE + "Sulpher Skitter:\n" +
@@ -1003,7 +1024,7 @@ public class LootDisplay {
                             EnumChatFormatting.DARK_PURPLE + "Soul Fish:\n" +
                             EnumChatFormatting.DARK_PURPLE + "Karate Fish:\n" +
                             EnumChatFormatting.GOLD + "Golden Fish:";
-                    countText = EnumChatFormatting.WHITE + TrophyFishTracker.getTierCount(TrophyFishTracker.fishSession, "Sulpher Skitter") + "\n" +
+                    if (!ToggleCommand.showTrophyCompletion) countText = EnumChatFormatting.WHITE + TrophyFishTracker.getTierCount(TrophyFishTracker.fishSession, "Sulpher Skitter") + "\n" +
                             EnumChatFormatting.WHITE + TrophyFishTracker.getTierCount(TrophyFishTracker.fishSession, "Obfuscated 1") + "\n" +
                             EnumChatFormatting.WHITE + TrophyFishTracker.getTierCount(TrophyFishTracker.fishSession, "Steaming-Hot Flounder") + "\n" +
                             EnumChatFormatting.WHITE + TrophyFishTracker.getTierCount(TrophyFishTracker.fishSession, "Gusher") + "\n" +
@@ -1021,6 +1042,27 @@ public class LootDisplay {
                             EnumChatFormatting.DARK_PURPLE + TrophyFishTracker.getTierCount(TrophyFishTracker.fishSession, "Soul Fish") + "\n" +
                             EnumChatFormatting.DARK_PURPLE + TrophyFishTracker.getTierCount(TrophyFishTracker.fishSession, "Karate Fish") + "\n" +
                             EnumChatFormatting.GOLD + TrophyFishTracker.getTierCount(TrophyFishTracker.fishSession, "Golden Fish");
+
+                    if (ToggleCommand.showTrophyCompletion) {
+                        TrophyFishTracker.drawCompletion(TrophyFishTracker.fishSession, "Sulpher Skitter", (int) (MoveCommand.displayXY[0] + (110 * ScaleCommand.displayScale)), MoveCommand.displayXY[1], ScaleCommand.displayScale);
+                        TrophyFishTracker.drawCompletion(TrophyFishTracker.fishSession, "Obfuscated 1", (int) (MoveCommand.displayXY[0] + (110 * ScaleCommand.displayScale)), (int) (MoveCommand.displayXY[1] + (mc.fontRendererObj.FONT_HEIGHT * ScaleCommand.displayScale)), ScaleCommand.displayScale);
+                        TrophyFishTracker.drawCompletion(TrophyFishTracker.fishSession, "Steaming-Hot Flounder", (int) (MoveCommand.displayXY[0] + (110 * ScaleCommand.displayScale)), (int) (MoveCommand.displayXY[1] + (2 * mc.fontRendererObj.FONT_HEIGHT * ScaleCommand.displayScale)), ScaleCommand.displayScale);
+                        TrophyFishTracker.drawCompletion(TrophyFishTracker.fishSession, "Gusher", (int) (MoveCommand.displayXY[0] + (110 * ScaleCommand.displayScale)), (int) (MoveCommand.displayXY[1] + (3 * mc.fontRendererObj.FONT_HEIGHT * ScaleCommand.displayScale)), ScaleCommand.displayScale);
+                        TrophyFishTracker.drawCompletion(TrophyFishTracker.fishSession, "Blobfish", (int) (MoveCommand.displayXY[0] + (110 * ScaleCommand.displayScale)), (int) (MoveCommand.displayXY[1] + (4 * mc.fontRendererObj.FONT_HEIGHT * ScaleCommand.displayScale)), ScaleCommand.displayScale);
+                        TrophyFishTracker.drawCompletion(TrophyFishTracker.fishSession, "Obfuscated 2", (int) (MoveCommand.displayXY[0] + (110 * ScaleCommand.displayScale)), (int) (MoveCommand.displayXY[1] + (5 * mc.fontRendererObj.FONT_HEIGHT * ScaleCommand.displayScale)), ScaleCommand.displayScale);
+                        TrophyFishTracker.drawCompletion(TrophyFishTracker.fishSession, "Slugfish", (int) (MoveCommand.displayXY[0] + (110 * ScaleCommand.displayScale)), (int) (MoveCommand.displayXY[1] + (6 * mc.fontRendererObj.FONT_HEIGHT * ScaleCommand.displayScale)), ScaleCommand.displayScale);
+                        TrophyFishTracker.drawCompletion(TrophyFishTracker.fishSession, "Flyfish", (int) (MoveCommand.displayXY[0] + (110 * ScaleCommand.displayScale)), (int) (MoveCommand.displayXY[1] + (7 * mc.fontRendererObj.FONT_HEIGHT * ScaleCommand.displayScale)), ScaleCommand.displayScale);
+                        TrophyFishTracker.drawCompletion(TrophyFishTracker.fishSession, "Obfuscated 3", (int) (MoveCommand.displayXY[0] + (110 * ScaleCommand.displayScale)), (int) (MoveCommand.displayXY[1] + (8 * mc.fontRendererObj.FONT_HEIGHT * ScaleCommand.displayScale)), ScaleCommand.displayScale);
+                        TrophyFishTracker.drawCompletion(TrophyFishTracker.fishSession, "Lavahorse", (int) (MoveCommand.displayXY[0] + (110 * ScaleCommand.displayScale)), (int) (MoveCommand.displayXY[1] + (9 * mc.fontRendererObj.FONT_HEIGHT * ScaleCommand.displayScale)), ScaleCommand.displayScale);
+                        TrophyFishTracker.drawCompletion(TrophyFishTracker.fishSession, "Mana Ray", (int) (MoveCommand.displayXY[0] + (110 * ScaleCommand.displayScale)), (int) (MoveCommand.displayXY[1] + (10 * mc.fontRendererObj.FONT_HEIGHT * ScaleCommand.displayScale)), ScaleCommand.displayScale);
+                        TrophyFishTracker.drawCompletion(TrophyFishTracker.fishSession, "Volcanic Stonefish", (int) (MoveCommand.displayXY[0] + (110 * ScaleCommand.displayScale)), (int) (MoveCommand.displayXY[1] + (11 * mc.fontRendererObj.FONT_HEIGHT * ScaleCommand.displayScale)), ScaleCommand.displayScale);
+                        TrophyFishTracker.drawCompletion(TrophyFishTracker.fishSession, "Vanille", (int) (MoveCommand.displayXY[0] + (110 * ScaleCommand.displayScale)), (int) (MoveCommand.displayXY[1] + (12 * mc.fontRendererObj.FONT_HEIGHT * ScaleCommand.displayScale)), ScaleCommand.displayScale);
+                        TrophyFishTracker.drawCompletion(TrophyFishTracker.fishSession, "Skeleton Fish", (int) (MoveCommand.displayXY[0] + (110 * ScaleCommand.displayScale)), (int) (MoveCommand.displayXY[1] + (13 * mc.fontRendererObj.FONT_HEIGHT * ScaleCommand.displayScale)), ScaleCommand.displayScale);
+                        TrophyFishTracker.drawCompletion(TrophyFishTracker.fishSession, "Moldfin", (int) (MoveCommand.displayXY[0] + (110 * ScaleCommand.displayScale)), (int) (MoveCommand.displayXY[1] + (14 * mc.fontRendererObj.FONT_HEIGHT * ScaleCommand.displayScale)), ScaleCommand.displayScale);
+                        TrophyFishTracker.drawCompletion(TrophyFishTracker.fishSession, "Soul Fish", (int) (MoveCommand.displayXY[0] + (110 * ScaleCommand.displayScale)), (int) (MoveCommand.displayXY[1] + (15 * mc.fontRendererObj.FONT_HEIGHT * ScaleCommand.displayScale)), ScaleCommand.displayScale);
+                        TrophyFishTracker.drawCompletion(TrophyFishTracker.fishSession, "Karate Fish", (int) (MoveCommand.displayXY[0] + (110 * ScaleCommand.displayScale)), (int) (MoveCommand.displayXY[1] + (16 * mc.fontRendererObj.FONT_HEIGHT * ScaleCommand.displayScale)), ScaleCommand.displayScale);
+                        TrophyFishTracker.drawCompletion(TrophyFishTracker.fishSession, "Golden Fish", (int) (MoveCommand.displayXY[0] + (110 * ScaleCommand.displayScale)), (int) (MoveCommand.displayXY[1] + (17 * mc.fontRendererObj.FONT_HEIGHT * ScaleCommand.displayScale)), ScaleCommand.displayScale);
+                    }
                     break;
                 case "mythological":
                     dropsText = EnumChatFormatting.GOLD + "Coins:\n" +

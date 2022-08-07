@@ -3,7 +3,10 @@ package me.Danker.features.loot;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import me.Danker.events.ModInitEvent;
+import me.Danker.utils.RenderUtils;
 import me.Danker.utils.Utils;
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StringUtils;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
@@ -115,6 +118,26 @@ public class TrophyFishTracker {
                type.get("SILVER").getAsInt() +
                type.get("GOLD").getAsInt() +
                type.get("DIAMOND").getAsInt();
+    }
+
+    public static void drawCompletion(JsonObject obj, String name, int x, int y, double scale) {
+        JsonObject type = obj.get(name).getAsJsonObject();
+
+        boolean bronze = type.get("BRONZE").getAsInt() > 0;
+        boolean silver = type.get("SILVER").getAsInt() > 0;
+        boolean gold = type.get("GOLD").getAsInt() > 0;
+        boolean diamond = type.get("DIAMOND").getAsInt() > 0;
+
+        ItemStack incomplete = new ItemStack(Items.dye, 1, 8);
+        ItemStack bronzeComplete = new ItemStack(Items.brick);
+        ItemStack silverComplete = new ItemStack(Items.iron_ingot);
+        ItemStack goldComplete = new ItemStack(Items.gold_ingot);
+        ItemStack diamondComplete = new ItemStack(Items.diamond);
+
+        RenderUtils.renderItem(bronze ? bronzeComplete : incomplete, x, y - 2, scale / 1.3D);
+        RenderUtils.renderItem(silver ? silverComplete : incomplete, x + 15, y - 2, scale / 1.3D);
+        RenderUtils.renderItem(gold ? goldComplete : incomplete, x + 30, y - 2, scale / 1.3D);
+        RenderUtils.renderItem(diamond ? diamondComplete : incomplete, x + 45, y - 2, scale / 1.3D);
     }
 
 }

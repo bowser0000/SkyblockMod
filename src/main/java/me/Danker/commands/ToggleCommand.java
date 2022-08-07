@@ -65,6 +65,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 	public static boolean aliases;
 	public static boolean fishingAlert;
 	public static boolean minionLastCollected;
+	public static boolean showTrophyCompletion;
 	// Chat Messages
 	public static boolean sceptreMessages;
 	public static boolean midasStaffMessages;

@@ -1,7 +1,6 @@
 package me.Danker.features;
 
 import com.google.gson.GsonBuilder;
-import javafx.scene.control.Alert;
 import me.Danker.commands.ToggleCommand;
 import me.Danker.events.ModInitEvent;
 import me.Danker.utils.Utils;

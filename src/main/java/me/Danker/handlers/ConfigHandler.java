@@ -1,6 +1,9 @@
 package me.Danker.handlers;
 
-import com.google.gson.*;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import me.Danker.DankersSkyblockMod;
 import me.Danker.commands.MoveCommand;
 import me.Danker.commands.ScaleCommand;
@@ -249,6 +252,7 @@ public class ConfigHandler {
 		ToggleCommand.aliases = initBoolean("toggles", "Aliases", false);
 		ToggleCommand.fishingAlert = initBoolean("toggles", "FishingAlert", false);
 		ToggleCommand.minionLastCollected = initBoolean("toggles", "MinionLastCollected", false);
+		ToggleCommand.showTrophyCompletion = initBoolean("toggles", "ShowTrophyCompletion", false);
 		// Chat Messages
 		ToggleCommand.sceptreMessages = initBoolean("toggles", "SceptreMessages", true);
 		ToggleCommand.midasStaffMessages = initBoolean("toggles", "MidasStaffMessages", true);

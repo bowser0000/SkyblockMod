@@ -93,6 +93,7 @@ public class DankerGui extends GuiScreen {
 	private GuiButton firePillar;
 	private GuiButton fishingAlert;
 	private GuiButton minionLastCollected;
+	private GuiButton showTrophyCompletion;
 	// Chat Messages
 	private GuiButton sceptreMessages;
 	private GuiButton midasStaffMessages;
@@ -190,6 +191,7 @@ public class DankerGui extends GuiScreen {
 		firePillar = new FeatureButton("Fire Pillar Display: " + Utils.getColouredBoolean(ToggleCommand.firePillar), "Displays blaze fire pillar text on screen");
 		fishingAlert = new FeatureButton("Fishing Spawn Alerts: " + Utils.getColouredBoolean(ToggleCommand.fishingAlert), "Alerts when a Thunder or Lord Jawbus spawns nearby");
 		minionLastCollected = new FeatureButton("Show When Minion Last Collected: " + Utils.getColouredBoolean(ToggleCommand.minionLastCollected), "Displays when a minion was last collected over the minion.");
+		showTrophyCompletion = new FeatureButton("Show Trophy Fish Completion: " + Utils.getColouredBoolean(ToggleCommand.showTrophyCompletion), "Show completion instead of count in trophy fish tracker display.");
 
 		allButtons.clear();
 		allButtons.add(changeDisplay);
@@ -253,6 +255,7 @@ public class DankerGui extends GuiScreen {
 		allButtons.add(firePillar);
 		allButtons.add(fishingAlert);
 		allButtons.add(minionLastCollected);
+		allButtons.add(showTrophyCompletion);
 
 		search.setText(initSearchText);
 		search.setVisible(true);
@@ -558,6 +561,10 @@ public class DankerGui extends GuiScreen {
 			ToggleCommand.minionLastCollected = !ToggleCommand.minionLastCollected;
 			ConfigHandler.writeBooleanConfig("toggles", "MinionLastCollected", ToggleCommand.minionLastCollected);
 			minionLastCollected.displayString = "Show When Minion Last Collected: " + Utils.getColouredBoolean(ToggleCommand.minionLastCollected);
+		} else if (button == showTrophyCompletion) {
+			ToggleCommand.showTrophyCompletion = !ToggleCommand.showTrophyCompletion;
+			ConfigHandler.writeBooleanConfig("toggles", "ShowTrophyCompletion", ToggleCommand.showTrophyCompletion);
+			showTrophyCompletion.displayString = "Show Trophy Fish Completion: " + Utils.getColouredBoolean(ToggleCommand.showTrophyCompletion);
 		}
 	}
 
