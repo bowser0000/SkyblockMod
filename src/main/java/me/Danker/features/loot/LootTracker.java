@@ -1,13 +1,11 @@
 package me.Danker.features.loot;
 
+import me.Danker.events.PacketReadEvent;
 import me.Danker.handlers.ConfigHandler;
-import me.Danker.handlers.ScoreboardHandler;
 import me.Danker.utils.Utils;
-import net.minecraftforge.client.event.sound.PlaySoundEvent;
-import net.minecraftforge.fml.common.eventhandler.EventPriority;
+import net.minecraft.network.play.server.S29PacketSoundEffect;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -16,20 +14,17 @@ public class LootTracker {
     public static long itemsChecked = 0;
     static Pattern dropPattern = Pattern.compile(".*? \\((?<amount>\\d+)x .*\\).*");
 
-    @SubscribeEvent(priority = EventPriority.HIGHEST)
-    public void onSound(PlaySoundEvent event) {
+    @SubscribeEvent
+    public void onPacketRead(PacketReadEvent event) {
         if (!Utils.inSkyblock) return;
-        if (event.name.equals("note.pling")) {
-            // Don't check twice within 3 seconds
-            long checkItemsNow = System.currentTimeMillis() / 1000;
-            if (checkItemsNow - itemsChecked < 3) return;
 
-            List<String> scoreboard = ScoreboardHandler.getSidebarLines();
+        if (event.packet instanceof S29PacketSoundEffect) {
+            S29PacketSoundEffect packet = (S29PacketSoundEffect) event.packet;
 
-            for (String line : scoreboard) {
-                String cleanedLine = ScoreboardHandler.cleanSB(line);
-                // If Hypixel lags and scoreboard doesn't update
-                if (cleanedLine.contains("Boss slain!") || cleanedLine.contains("Slay the boss!")) {
+            if (packet.getSoundName().equals("note.pling")) {
+                if (System.currentTimeMillis() / 1000 - itemsChecked < 3) return;
+
+                if (Utils.isInScoreboard("Boss slain!") || Utils.isInScoreboard("Slay the boss!")) {
                     int itemTeeth = Utils.getItems("Wolf Tooth");
                     int itemWebs = Utils.getItems("Tarantula Web");
                     int itemRev = Utils.getItems("Revenant Flesh");
