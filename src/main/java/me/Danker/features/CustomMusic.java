@@ -68,8 +68,7 @@ public class CustomMusic {
     public static Song park;
     public static int parkVolume;
 
-    static int curPhase = -1;
-
+    static int curPhase = 0;
 
     @SubscribeEvent
     public void onWorldChange(WorldEvent.Load event) {
@@ -97,9 +96,29 @@ public class CustomMusic {
                             firstLine.contains("30,344") || // F4
                             firstLine.contains("livid") || // F5
                             firstLine.contains("sadan") || // F6
-                            firstLine.contains("maxor")) { // F7
+                            firstLine.contains("maxor") || // F7
+                            firstLine.contains("f7")) {
 
-                            if (ToggleCommand.dungeonBossMusic && curPhase == -1) dungeonboss.start();
+                            if (ToggleCommand.dungeonBossMusic) {
+                                switch (curPhase) {
+                                    case -1:
+                                        break;
+                                    case 2:
+                                        phase2.start();
+                                        break;
+                                    case 3:
+                                        phase3.start();
+                                        break;
+                                    case 4:
+                                        phase4.start();
+                                        break;
+                                    case 5:
+                                        phase5.start();
+                                        break;
+                                    default:
+                                        dungeonboss.start();
+                                }
+                            }
                         }
                     }
                 } else {
@@ -156,26 +175,27 @@ public class CustomMusic {
             }
         }
 
-        if (message.contains(":")) return;
-
         if (Utils.inDungeons) {
             if (ToggleCommand.dungeonBossMusic) {
-                if (message.startsWith("[BOSS] Storm: Pathetic Maxor")) {
+                if (phase2.hasSongs() && message.startsWith("[BOSS] Storm: Pathetic Maxor")) {
                     phase2.start();
                     curPhase = 2;
-                } else if (message.startsWith("[BOSS] Goldor: Who dares trespass into my domain?")) {
+                } else if (phase3.hasSongs() && message.startsWith("[BOSS] Goldor: Who dares trespass into my domain?")) {
                     phase3.start();
                     curPhase = 3;
-                } else if (message.startsWith("[BOSS] Necron: You went further than any human before")) {
+                } else if (phase4.hasSongs() && message.startsWith("[BOSS] Necron: You went further than any human before")) {
                     phase4.start();
                     curPhase = 4;
-                } else if (message.startsWith("[BOSS] ") && message.endsWith("You.. again?")) {
+                } else if (phase5.hasSongs() && message.startsWith("[BOSS] ") && message.endsWith("You.. again?")) {
                     phase5.start();
                     curPhase = 5;
                 }
             }
 
+            if (message.contains(":")) return;
+
             if (message.contains("EXTRA STATS ")) {
+                curPhase = -1; // force no play
                 dungeonboss.stop();
                 bloodroom.stop();
                 dungeon.stop();
@@ -250,7 +270,7 @@ public class CustomMusic {
         if (crimsonIsle != null) crimsonIsle.stop();
         if (end != null) end.stop();
         if (park != null) park.stop();
-        curPhase = -1;
+        curPhase = 0;
     }
 
     public static class Song {
@@ -321,12 +341,18 @@ public class CustomMusic {
                 return false;
             }
 
-            float decibels = (float) (20 * Math.log(volume / 100.0));
-            FloatControl control = (FloatControl) music.getControl(FloatControl.Type.MASTER_GAIN);
-            if (decibels <= control.getMinimum() || decibels >= control.getMaximum()) return false;
-            control.setValue(decibels);
+            if (music != null) {
+                float decibels = (float) (20 * Math.log(volume / 100.0));
+                FloatControl control = (FloatControl) music.getControl(FloatControl.Type.MASTER_GAIN);
+                if (decibels <= control.getMinimum() || decibels >= control.getMaximum()) return false;
+                control.setValue(decibels);
+            }
 
             return true;
+        }
+
+        public boolean hasSongs() {
+            return playlist.size() > 0;
         }
 
     }
