@@ -14,6 +14,7 @@ import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.client.gui.*;
 import net.minecraft.util.StringUtils;
 
 import java.awt.*;
@@ -73,6 +74,7 @@ public class DankerGui extends GuiScreen {
 	private GuiButton teammatesInRadius;
 	private GuiButton giantHP;
 	private GuiButton hidePetCandy;
+	private GuiButton highlightCommissions;
 	private GuiButton customColouredNames;
 	private GuiButton customNametags;
 	private GuiButton endOfFarmAlert;
@@ -179,6 +181,7 @@ public class DankerGui extends GuiScreen {
 		teammatesInRadius = new FeatureButton("Display Players in 30 Block Radius: " + Utils.getColouredBoolean(ToggleCommand.teammatesInRadius), "Displays dungeon teammates in 30 block radius for tether and diversion.");
 		giantHP = new FeatureButton("Display Giant HP: " + Utils.getColouredBoolean(ToggleCommand.giantHP), "Displays health of Sadan's giants during F6 bossfight and F7 blood room.");
 		hidePetCandy = new FeatureButton("Hide Pet Candy: " + Utils.getColouredBoolean(ToggleCommand.hidePetCandy), "Hide pet candy in pet tooltips.");
+		highlightCommissions = new FeatureButton("Highlight Commissions: " + Utils.getColouredBoolean(ToggleCommand.highlightCommissions), "Show which commissions are completed.");
 		customColouredNames = new FeatureButton("Custom Name Colors: " + Utils.getColouredBoolean(ToggleCommand.customColouredNames), "Replaces some player's usernames with a custom color.");
 		customNametags = new FeatureButton("Custom Color on Nametags: " + Utils.getColouredBoolean(ToggleCommand.customNametags), "Displays custom name colors on nametags. Disabling will increase performance with custom colors.");
 		endOfFarmAlert = new FeatureButton("Alert When Reaching End of Farm: " + Utils.getColouredBoolean(ToggleCommand.endOfFarmAlert), "Alerts when you go past coords set with /dsmfarmlength.");
@@ -243,6 +246,7 @@ public class DankerGui extends GuiScreen {
 		allButtons.add(teammatesInRadius);
 		allButtons.add(giantHP);
 		allButtons.add(hidePetCandy);
+		allButtons.add(highlightCommissions);
 		allButtons.add(customColouredNames);
 		allButtons.add(customNametags);
 		allButtons.add(endOfFarmAlert);
@@ -509,6 +513,10 @@ public class DankerGui extends GuiScreen {
 			ToggleCommand.hidePetCandy = !ToggleCommand.hidePetCandy;
 			ConfigHandler.writeBooleanConfig("toggles", "HidePetCandy", ToggleCommand.hidePetCandy);
 			hidePetCandy.displayString = "Hide Pet Candy: " + Utils.getColouredBoolean(ToggleCommand.hidePetCandy);
+		} else if (button == highlightCommissions) {
+			ToggleCommand.highlightCommissions = !ToggleCommand.highlightCommissions;
+			ConfigHandler.writeBooleanConfig("toggles", "HighlightCommissions", ToggleCommand.highlightCommissions);
+			highlightCommissions.displayString = "Highlight Commissions: " + Utils.getColouredBoolean(ToggleCommand.highlightCommissions);
 		} else if (button == customColouredNames) {
 			ToggleCommand.customColouredNames = !ToggleCommand.customColouredNames;
 			ConfigHandler.writeBooleanConfig("toggles", "CustomColouredNames", ToggleCommand.customColouredNames);

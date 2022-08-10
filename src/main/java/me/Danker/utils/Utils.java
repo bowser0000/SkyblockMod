@@ -10,6 +10,8 @@ import me.Danker.handlers.ConfigHandler;
 import me.Danker.handlers.ScoreboardHandler;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.network.NetworkPlayerInfo;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.item.EntityItemFrame;
@@ -20,6 +22,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.scoreboard.ScoreObjective;
 import net.minecraft.util.*;
+import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
 import java.util.List;
@@ -505,6 +508,19 @@ public class Utils {
 	public static double getCooldownReductionFromLevel(int level) {
     	return (Math.floor(level / 2D) + 25) / 100D;
 	}
+
+	public static void drawOnSlot(int size, int xSlotPos, int ySlotPos, int colour) {
+		ScaledResolution sr = new ScaledResolution(Minecraft.getMinecraft());
+		int guiLeft = (sr.getScaledWidth() - 176) / 2;
+		int guiTop = (sr.getScaledHeight() - 222) / 2;
+		int x = guiLeft + xSlotPos;
+		int y = guiTop + ySlotPos;
+		// Move down when chest isn't 6 rows
+		if (size != 90) y += (6 - (size - 36) / 9) * 9;
+
+		GL11.glTranslated(0, 0, 1);
+		Gui.drawRect(x, y, x + 16, y + 16, colour);
+		GL11.glTranslated(0, 0, -1);
 
 	public static void desktopNotification(String name, String title, String text, TrayIcon.MessageType messageType) {
 		try {

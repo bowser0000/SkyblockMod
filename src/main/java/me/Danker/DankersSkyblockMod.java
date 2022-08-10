@@ -2,6 +2,7 @@ package me.Danker;
 
 import com.google.gson.JsonObject;
 import me.Danker.commands.*;
+import me.Danker.commands.warp.WarpCommandHandler;
 import me.Danker.events.*;
 import me.Danker.features.*;
 import me.Danker.features.loot.*;
@@ -76,6 +77,7 @@ public class DankersSkyblockMod {
     public static boolean firstLaunch = false;
     public static String configDirectory;
     public static JsonObject data = null;
+    public static WarpCommandHandler warpCommandHandler;
 
     public static int farmingLevel;
     public static int miningLevel;
@@ -165,7 +167,7 @@ public class DankersSkyblockMod {
         MinecraftForge.EVENT_BUS.register(new UpdateChecker());
         MinecraftForge.EVENT_BUS.register(new WatcherReadyAlert());
         MinecraftForge.EVENT_BUS.register(new WaterSolver());
-
+        MinecraftForge.EVENT_BUS.register(new HighlightCommissions());
         MinecraftForge.EVENT_BUS.register(new LootDisplay());
         MinecraftForge.EVENT_BUS.register(new LootTracker());
         MinecraftForge.EVENT_BUS.register(new BlazeTracker());
@@ -205,7 +207,6 @@ public class DankersSkyblockMod {
         ClientCommandHandler.instance.registerCommand(new DHelpCommand());
         ClientCommandHandler.instance.registerCommand(new DankerGuiCommand());
         ClientCommandHandler.instance.registerCommand(new DisplayCommand());
-        ClientCommandHandler.instance.registerCommand(new DungeonsCommand());
         ClientCommandHandler.instance.registerCommand(new FairySoulsCommand());
         ClientCommandHandler.instance.registerCommand(new FarmLengthCommand());
         ClientCommandHandler.instance.registerCommand(new GetkeyCommand());
@@ -231,6 +232,8 @@ public class DankersSkyblockMod {
         ClientCommandHandler.instance.registerCommand(new SlayerCommand());
         ClientCommandHandler.instance.registerCommand(new ToggleCommand());
         ClientCommandHandler.instance.registerCommand(new WeightCommand());
+
+        warpCommandHandler = new WarpCommandHandler();
 
         configDirectory = event.getModConfigurationDirectory().toString();
     }

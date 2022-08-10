@@ -48,6 +48,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 	public static boolean teammatesInRadius;
 	public static boolean giantHP;
 	public static boolean hidePetCandy;
+	public static boolean highlightCommissions;
 	public static boolean customColouredNames;
 	public static boolean customNametags;
 	public static boolean endOfFarmAlert;
@@ -157,7 +158,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 														  "gemstonelore", "crystalhollowwaypoints", "crystalautowaypoints", "autoacceptreparty",
 														  "itemcooldowns", "hubmusic", "islandmusic", "dungeonhubmusic", "farmingislandsmusic", "goldminemusic",
 														  "deepcavernsmusic", "dwarvenminesmusic", "crystalhollowsmusic", "spidersdenmusic", "blazingfortressmusic",
-														  "endmusic", "parkmusic", "alerts", "dungeonscore", "list");
+														  "endmusic", "parkmusic", "alerts", "dungeonscore", "highlightcommissions", "list");
 		}
 		return null;
 	}
@@ -473,6 +474,10 @@ public class ToggleCommand extends CommandBase implements ICommand {
 				ConfigHandler.writeBooleanConfig("toggles", "HidePetCandy", hidePetCandy);
 				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Hide pet candy has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + hidePetCandy + DankersSkyblockMod.MAIN_COLOUR + "."));
 				break;
+			case "highlightcommissions":
+				highlightCommissions = !highlightCommissions;
+				ConfigHandler.writeBooleanConfig("toggles", "HighlightCommissions", highlightCommissions);
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Highlight Commissions has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + highlightCommissions + DankersSkyblockMod.MAIN_COLOUR + "."));
 			case "customcolorednames":
 			case "customcolourednames":
 				customColouredNames = !customColouredNames;
@@ -661,6 +666,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 															DankersSkyblockMod.TYPE_COLOUR + " Teammates in radius: " + DankersSkyblockMod.VALUE_COLOUR + teammatesInRadius + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Giant HP display: " + DankersSkyblockMod.VALUE_COLOUR + giantHP + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Hide pet candy: " + DankersSkyblockMod.VALUE_COLOUR + hidePetCandy + "\n" +
+															DankersSkyblockMod.TYPE_COLOUR + " Highlight commissions: " + DankersSkyblockMod.VALUE_COLOUR + highlightCommissions + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Custom name colors: " + DankersSkyblockMod.VALUE_COLOUR + customColouredNames + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " End of farm alert: " + DankersSkyblockMod.VALUE_COLOUR + endOfFarmAlert + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Gemstone in lore: " + DankersSkyblockMod.VALUE_COLOUR + gemstoneLore + "\n" +

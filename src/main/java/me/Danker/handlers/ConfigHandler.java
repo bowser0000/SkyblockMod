@@ -220,6 +220,7 @@ public class ConfigHandler {
 		ToggleCommand.melodyTooltips = initBoolean("toggles", "MelodyTooltips", false);
 		ToggleCommand.highlightSlayers = initBoolean("toggles", "HighlightSlayers", false);
 		ToggleCommand.highlightArachne = initBoolean("toggles", "HighlightArachne", false);
+		ToggleCommand.highlightCommissions = initBoolean("toggles", "HighlightCommissions", false);
 		ToggleCommand.highlightSkeletonMasters = initBoolean("toggles", "HighlightSkeletonMasters", false);
 		ToggleCommand.teammatesInRadius = initBoolean("toggles", "TeammatesInRadius", false);
 		ToggleCommand.giantHP = initBoolean("toggles", "GiantHP", false);
@@ -718,6 +719,7 @@ public class ConfigHandler {
 		BoulderSolver.BOULDER_ARROW_COLOUR = initInt("colors", "boulderArrow", 0x006000);
 		SilverfishSolver.SILVERFISH_LINE_COLOUR = initInt("colors", "silverfishLine", 0x40FF40);
 		IceWalkSolver.ICE_WALK_LINE_COLOUR = initInt("colors", "iceWalkLine", 0x40FF40);
+		HighlightCommissions.HIGHLIGHT_COLOUR = initInt("colors", "highlight_colour", 0x51FF51);
 		MinionLastCollected.LAST_COLLECTED_COLOUR = initInt("colors", "lastCollected", 0x55FFFF);
 
 		// Commands
