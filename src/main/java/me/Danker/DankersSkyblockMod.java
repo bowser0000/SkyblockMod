@@ -2,10 +2,7 @@ package me.Danker;
 
 import com.google.gson.JsonObject;
 import me.Danker.commands.*;
-import me.Danker.events.ChestSlotClickedEvent;
-import me.Danker.events.GuiChestBackgroundDrawnEvent;
-import me.Danker.events.ModInitEvent;
-import me.Danker.events.RenderOverlayEvent;
+import me.Danker.events.*;
 import me.Danker.features.*;
 import me.Danker.features.loot.*;
 import me.Danker.features.puzzlesolvers.*;
@@ -181,9 +178,10 @@ public class DankersSkyblockMod {
         MinecraftForge.EVENT_BUS.register(new TrophyFishTracker());
         MinecraftForge.EVENT_BUS.register(new WolfTracker());
         MinecraftForge.EVENT_BUS.register(new ZombieTracker());
-
+        
         MinecraftForge.EVENT_BUS.post(new ModInitEvent(configDirectory));
         ConfigHandler.reloadConfig();
+        MinecraftForge.EVENT_BUS.post(new PostConfigInitEvent(configDirectory));
 
         keyBindings[0] = new KeyBinding("Open Maddox Menu", Keyboard.KEY_M, "Danker's Skyblock Mod");
         keyBindings[1] = new KeyBinding("Regular Ability", Keyboard.KEY_NUMPAD4, "Danker's Skyblock Mod");

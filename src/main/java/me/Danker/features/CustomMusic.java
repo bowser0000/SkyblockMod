@@ -3,6 +3,7 @@ package me.Danker.features;
 import me.Danker.DankersSkyblockMod;
 import me.Danker.commands.ToggleCommand;
 import me.Danker.events.ModInitEvent;
+import me.Danker.events.PostConfigInitEvent;
 import me.Danker.handlers.ScoreboardHandler;
 import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;
@@ -218,7 +219,7 @@ public class CustomMusic {
     }
 
     @SubscribeEvent
-    public void init(ModInitEvent event) {
+    public void postConfigInit(PostConfigInitEvent event) {
         init(event.configDirectory);
     }
 
@@ -237,7 +238,7 @@ public class CustomMusic {
         phase4 = new Song(directory, "phasefour", phase4Volume);
         phase5 = new Song(directory, "phasefive", phase5Volume);
         hub = new Song(directory, "hub", hubVolume);
-        island = new Song(directory, "island", hubVolume);
+        island = new Song(directory, "island", islandVolume);
         dungeonHub = new Song(directory, "dungeonhub", dungeonHubVolume);
         farmingIslands = new Song(directory, "farmingislands", farmingIslandsVolume);
         goldMine = new Song(directory, "goldmine", goldMineVolume);
