@@ -24,7 +24,7 @@ public class LootCommand extends CommandBase {
 
 	@Override
 	public String getCommandUsage(ICommandSender arg0) {
-		return "/" + getCommandName() + " <zombie/spider/wolf/enderman/blaze/fishing/catacombs/mythological> [winter/festival/spooky/ch/lava/f(1-7)/mm/session]";
+		return "/" + getCommandName() + " <zombie/spider/wolf/enderman/blaze/fishing/catacombs/mythological> [winter/festival/spooky/ch/lava/trophy/f(1-7)/mm/session]";
 	}
 
 	public static String usage(ICommandSender arg0) {
@@ -41,7 +41,7 @@ public class LootCommand extends CommandBase {
 		if (args.length == 1) {
 			return getListOfStringsMatchingLastWord(args, "wolf", "spider", "zombie", "enderman", "blaze", "fishing", "catacombs", "mythological");
 		} else if (args.length == 2 && args[0].equalsIgnoreCase("fishing")) {
-			return getListOfStringsMatchingLastWord(args, "winter", "festival", "spooky", "ch", "lava", "session");
+			return getListOfStringsMatchingLastWord(args, "winter", "festival", "spooky", "ch", "lava", "trophy", "session");
 		} else if (args.length == 2 && args[0].equalsIgnoreCase("catacombs")) {
 			return getListOfStringsMatchingLastWord(args, "f1", "floor1", "f2", "floor2", "f3", "floor3", "f4", "floor4", "f5", "floor5", "f6", "floor6", "f7", "floor7", "mm", "master");
 		} else if (args.length > 1) {
@@ -620,6 +620,54 @@ public class LootCommand extends CommandBase {
 								EnumChatFormatting.AQUA + "    Time Since Lord Jawbus: " + timeBetween + "\n" +
 								EnumChatFormatting.AQUA + "    Creatures Since Lord Jawbus: " + bossesBetween + "\n" +
 								EnumChatFormatting.AQUA + EnumChatFormatting.BOLD + " -------------------"));
+						return;
+					} else if (arg1[1].equalsIgnoreCase("trophy")) {
+						if (showSession) {
+							player.addChatMessage(new ChatComponentText(EnumChatFormatting.AQUA + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+									EnumChatFormatting.GOLD + EnumChatFormatting.BOLD + " Trophy Fishing Summary (Current Session):\n" +
+									EnumChatFormatting.WHITE + "    Sulpher Skitter " + EnumChatFormatting.DARK_GRAY + "(" + TrophyFishTracker.getSum(TrophyFishTracker.fishSession, "Sulpher Skitter") + ")" + EnumChatFormatting.WHITE + ": " + TrophyFishTracker.getTierCount(TrophyFishTracker.fishSession, "Sulpher Skitter") + "\n" +
+									EnumChatFormatting.WHITE + "    Obfuscated 1 " + EnumChatFormatting.DARK_GRAY + "(" + TrophyFishTracker.getSum(TrophyFishTracker.fishSession, "Obfuscated 1") + ")" + EnumChatFormatting.WHITE + ": " + TrophyFishTracker.getTierCount(TrophyFishTracker.fishSession, "Obfuscated 1") + "\n" +
+									EnumChatFormatting.WHITE + "    Steaminghot Flounder " + EnumChatFormatting.DARK_GRAY + "(" + TrophyFishTracker.getSum(TrophyFishTracker.fishSession, "Steaming-Hot Flounder") + ")" + EnumChatFormatting.WHITE + ": " + TrophyFishTracker.getTierCount(TrophyFishTracker.fishSession, "Steaming-Hot Flounder") + "\n" +
+									EnumChatFormatting.WHITE + "    Gusher " + EnumChatFormatting.DARK_GRAY + "(" + TrophyFishTracker.getSum(TrophyFishTracker.fishSession, "Gusher") + ")" + EnumChatFormatting.WHITE + ": " + TrophyFishTracker.getTierCount(TrophyFishTracker.fishSession, "Gusher") + "\n" +
+									EnumChatFormatting.WHITE + "    Blobfish " + EnumChatFormatting.DARK_GRAY + "(" + TrophyFishTracker.getSum(TrophyFishTracker.fishSession, "Blobfish") + ")" + EnumChatFormatting.WHITE + ": " + TrophyFishTracker.getTierCount(TrophyFishTracker.fishSession, "Blobfish") + "\n" +
+									EnumChatFormatting.GREEN + "    Obfuscated 2 " + EnumChatFormatting.DARK_GRAY + "(" + TrophyFishTracker.getSum(TrophyFishTracker.fishSession, "Obfuscated 2") + ")" + EnumChatFormatting.GREEN + ": " + TrophyFishTracker.getTierCount(TrophyFishTracker.fishSession, "Obfuscated 2") + "\n" +
+									EnumChatFormatting.GREEN + "    Slugfish " + EnumChatFormatting.DARK_GRAY + "(" + TrophyFishTracker.getSum(TrophyFishTracker.fishSession, "Slugfish") + ")" + EnumChatFormatting.GREEN + ": " + TrophyFishTracker.getTierCount(TrophyFishTracker.fishSession, "Slugfish") + "\n" +
+									EnumChatFormatting.GREEN + "    Flyfish " + EnumChatFormatting.DARK_GRAY + "(" + TrophyFishTracker.getSum(TrophyFishTracker.fishSession, "Flyfish") + ")" + EnumChatFormatting.GREEN + ": " + TrophyFishTracker.getTierCount(TrophyFishTracker.fishSession, "Flyfish") + "\n" +
+									EnumChatFormatting.BLUE + "    Obfuscated 3 " + EnumChatFormatting.DARK_GRAY + "(" + TrophyFishTracker.getSum(TrophyFishTracker.fishSession, "Obfuscated 3") + ")" + EnumChatFormatting.BLUE + ": " + TrophyFishTracker.getTierCount(TrophyFishTracker.fishSession, "Obfuscated 3") + "\n" +
+									EnumChatFormatting.BLUE + "    Lavahorse " + EnumChatFormatting.DARK_GRAY + "(" + TrophyFishTracker.getSum(TrophyFishTracker.fishSession, "Lavahorse") + ")" + EnumChatFormatting.BLUE + ": " + TrophyFishTracker.getTierCount(TrophyFishTracker.fishSession, "Lavahorse") + "\n" +
+									EnumChatFormatting.BLUE + "    Mana Ray " + EnumChatFormatting.DARK_GRAY + "(" + TrophyFishTracker.getSum(TrophyFishTracker.fishSession, "Mana Ray") + ")" + EnumChatFormatting.BLUE + ": " + TrophyFishTracker.getTierCount(TrophyFishTracker.fishSession, "Mana Ray") + "\n" +
+									EnumChatFormatting.BLUE + "    Volcanic Stonefish " + EnumChatFormatting.DARK_GRAY + "(" + TrophyFishTracker.getSum(TrophyFishTracker.fishSession, "Volcanic Stonefish") + ")" + EnumChatFormatting.BLUE + ": " + TrophyFishTracker.getTierCount(TrophyFishTracker.fishSession, "Volcanic Stonefish") + "\n" +
+									EnumChatFormatting.BLUE + "    Vanille " + EnumChatFormatting.DARK_GRAY + "(" + TrophyFishTracker.getSum(TrophyFishTracker.fishSession, "Vanille") + ")" + EnumChatFormatting.BLUE + ": " + TrophyFishTracker.getTierCount(TrophyFishTracker.fishSession, "Vanille") + "\n" +
+									EnumChatFormatting.DARK_PURPLE + "    Skeleton Fish " + EnumChatFormatting.DARK_GRAY + "(" + TrophyFishTracker.getSum(TrophyFishTracker.fishSession, "Skeleton Fish") + ")" + EnumChatFormatting.DARK_PURPLE + ": " + TrophyFishTracker.getTierCount(TrophyFishTracker.fishSession, "Skeleton Fish") + "\n" +
+									EnumChatFormatting.DARK_PURPLE + "    Moldfin " + EnumChatFormatting.DARK_GRAY + "(" + TrophyFishTracker.getSum(TrophyFishTracker.fishSession, "Moldfin") + ")" + EnumChatFormatting.DARK_PURPLE + ": " + TrophyFishTracker.getTierCount(TrophyFishTracker.fishSession, "Moldfin") + "\n" +
+									EnumChatFormatting.DARK_PURPLE + "    Soul Fish " + EnumChatFormatting.DARK_GRAY + "(" + TrophyFishTracker.getSum(TrophyFishTracker.fishSession, "Soul Fish") + ")" + EnumChatFormatting.DARK_PURPLE + ": " + TrophyFishTracker.getTierCount(TrophyFishTracker.fishSession, "Soul Fish") + "\n" +
+									EnumChatFormatting.DARK_PURPLE + "    Karate Fish " + EnumChatFormatting.DARK_GRAY + "(" + TrophyFishTracker.getSum(TrophyFishTracker.fishSession, "Karate Fish") + ")" + EnumChatFormatting.DARK_PURPLE + ": " + TrophyFishTracker.getTierCount(TrophyFishTracker.fishSession, "Karate Fish") + "\n" +
+									EnumChatFormatting.GOLD + "    Golden Fish " + EnumChatFormatting.DARK_GRAY + "(" + TrophyFishTracker.getSum(TrophyFishTracker.fishSession, "Golden Fish") + ")" + EnumChatFormatting.GOLD + ": " + TrophyFishTracker.getTierCount(TrophyFishTracker.fishSession, "Golden Fish") + "\n" +
+									EnumChatFormatting.AQUA + EnumChatFormatting.BOLD + "-------------------"));
+							return;
+						}
+
+						player.addChatMessage(new ChatComponentText(EnumChatFormatting.AQUA + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+								EnumChatFormatting.GOLD + EnumChatFormatting.BOLD + " Trophy Fishing Summary:\n" +
+								EnumChatFormatting.WHITE + "    Sulpher Skitter " + EnumChatFormatting.DARK_GRAY + "(" + TrophyFishTracker.getSum(TrophyFishTracker.fish, "Sulpher Skitter") + ")" + EnumChatFormatting.WHITE + ": " + TrophyFishTracker.getTierCount(TrophyFishTracker.fish, "Sulpher Skitter") + "\n" +
+								EnumChatFormatting.WHITE + "    Obfuscated 1 " + EnumChatFormatting.DARK_GRAY + "(" + TrophyFishTracker.getSum(TrophyFishTracker.fish, "Obfuscated 1") + ")" + EnumChatFormatting.WHITE + ": " + TrophyFishTracker.getTierCount(TrophyFishTracker.fish, "Obfuscated 1") + "\n" +
+								EnumChatFormatting.WHITE + "    Steaminghot Flounder " + EnumChatFormatting.DARK_GRAY + "(" + TrophyFishTracker.getSum(TrophyFishTracker.fish, "Steaming-Hot Flounder") + ")" + EnumChatFormatting.WHITE + ": " + TrophyFishTracker.getTierCount(TrophyFishTracker.fish, "Steaming-Hot Flounder") + "\n" +
+								EnumChatFormatting.WHITE + "    Gusher " + EnumChatFormatting.DARK_GRAY + "(" + TrophyFishTracker.getSum(TrophyFishTracker.fish, "Gusher") + ")" + EnumChatFormatting.WHITE + ": " + TrophyFishTracker.getTierCount(TrophyFishTracker.fish, "Gusher") + "\n" +
+								EnumChatFormatting.WHITE + "    Blobfish " + EnumChatFormatting.DARK_GRAY + "(" + TrophyFishTracker.getSum(TrophyFishTracker.fish, "Blobfish") + ")" + EnumChatFormatting.WHITE + ": " + TrophyFishTracker.getTierCount(TrophyFishTracker.fish, "Blobfish") + "\n" +
+								EnumChatFormatting.GREEN + "    Obfuscated 2 " + EnumChatFormatting.DARK_GRAY + "(" + TrophyFishTracker.getSum(TrophyFishTracker.fish, "Obfuscated 2") + ")" + EnumChatFormatting.GREEN + ": " + TrophyFishTracker.getTierCount(TrophyFishTracker.fish, "Obfuscated 2") + "\n" +
+								EnumChatFormatting.GREEN + "    Slugfish " + EnumChatFormatting.DARK_GRAY + "(" + TrophyFishTracker.getSum(TrophyFishTracker.fish, "Slugfish") + ")" + EnumChatFormatting.GREEN + ": " + TrophyFishTracker.getTierCount(TrophyFishTracker.fish, "Slugfish") + "\n" +
+								EnumChatFormatting.GREEN + "    Flyfish " + EnumChatFormatting.DARK_GRAY + "(" + TrophyFishTracker.getSum(TrophyFishTracker.fish, "Flyfish") + ")" + EnumChatFormatting.GREEN + ": " + TrophyFishTracker.getTierCount(TrophyFishTracker.fish, "Flyfish") + "\n" +
+								EnumChatFormatting.BLUE + "    Obfuscated 3 " + EnumChatFormatting.DARK_GRAY + "(" + TrophyFishTracker.getSum(TrophyFishTracker.fish, "Obfuscated 3") + ")" + EnumChatFormatting.BLUE + ": " + TrophyFishTracker.getTierCount(TrophyFishTracker.fish, "Obfuscated 3") + "\n" +
+								EnumChatFormatting.BLUE + "    Lavahorse " + EnumChatFormatting.DARK_GRAY + "(" + TrophyFishTracker.getSum(TrophyFishTracker.fish, "Lavahorse") + ")" + EnumChatFormatting.BLUE + ": " + TrophyFishTracker.getTierCount(TrophyFishTracker.fish, "Lavahorse") + "\n" +
+								EnumChatFormatting.BLUE + "    Mana Ray " + EnumChatFormatting.DARK_GRAY + "(" + TrophyFishTracker.getSum(TrophyFishTracker.fish, "Mana Ray") + ")" + EnumChatFormatting.BLUE + ": " + TrophyFishTracker.getTierCount(TrophyFishTracker.fish, "Mana Ray") + "\n" +
+								EnumChatFormatting.BLUE + "    Volcanic Stonefish " + EnumChatFormatting.DARK_GRAY + "(" + TrophyFishTracker.getSum(TrophyFishTracker.fish, "Volcanic Stonefish") + ")" + EnumChatFormatting.BLUE + ": " + TrophyFishTracker.getTierCount(TrophyFishTracker.fish, "Volcanic Stonefish") + "\n" +
+								EnumChatFormatting.BLUE + "    Vanille " + EnumChatFormatting.DARK_GRAY + "(" + TrophyFishTracker.getSum(TrophyFishTracker.fish, "Vanille") + ")" + EnumChatFormatting.BLUE + ": " + TrophyFishTracker.getTierCount(TrophyFishTracker.fish, "Vanille") + "\n" +
+								EnumChatFormatting.DARK_PURPLE + "    Skeleton Fish " + EnumChatFormatting.DARK_GRAY + "(" + TrophyFishTracker.getSum(TrophyFishTracker.fish, "Skeleton Fish") + ")" + EnumChatFormatting.DARK_PURPLE + ": " + TrophyFishTracker.getTierCount(TrophyFishTracker.fish, "Skeleton Fish") + "\n" +
+								EnumChatFormatting.DARK_PURPLE + "    Moldfin " + EnumChatFormatting.DARK_GRAY + "(" + TrophyFishTracker.getSum(TrophyFishTracker.fish, "Moldfin") + ")" + EnumChatFormatting.DARK_PURPLE + ": " + TrophyFishTracker.getTierCount(TrophyFishTracker.fish, "Moldfin") + "\n" +
+								EnumChatFormatting.DARK_PURPLE + "    Soul Fish " + EnumChatFormatting.DARK_GRAY + "(" + TrophyFishTracker.getSum(TrophyFishTracker.fish, "Soul Fish") + ")" + EnumChatFormatting.DARK_PURPLE + ": " + TrophyFishTracker.getTierCount(TrophyFishTracker.fish, "Soul Fish") + "\n" +
+								EnumChatFormatting.DARK_PURPLE + "    Karate Fish " + EnumChatFormatting.DARK_GRAY + "(" + TrophyFishTracker.getSum(TrophyFishTracker.fish, "Karate Fish") + ")" + EnumChatFormatting.DARK_PURPLE + ": " + TrophyFishTracker.getTierCount(TrophyFishTracker.fish, "Karate Fish") + "\n" +
+								EnumChatFormatting.GOLD + "    Golden Fish " + EnumChatFormatting.DARK_GRAY + "(" + TrophyFishTracker.getSum(TrophyFishTracker.fish, "Golden Fish") + ")" + EnumChatFormatting.GOLD + ": " + TrophyFishTracker.getTierCount(TrophyFishTracker.fish, "Golden Fish") + "\n" +
+								EnumChatFormatting.AQUA + EnumChatFormatting.BOLD + "-------------------"));
 						return;
 					}
 				}

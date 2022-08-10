@@ -2,6 +2,8 @@ package me.Danker.features;
 
 import me.Danker.DankersSkyblockMod;
 import me.Danker.commands.ToggleCommand;
+import me.Danker.events.ModInitEvent;
+import me.Danker.events.PostConfigInitEvent;
 import me.Danker.handlers.ScoreboardHandler;
 import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;
@@ -67,6 +69,7 @@ public class CustomMusic {
     public static Song park;
     public static int parkVolume;
 
+    static int curPhase = 0;
 
     @SubscribeEvent
     public void onWorldChange(WorldEvent.Load event) {
@@ -94,9 +97,29 @@ public class CustomMusic {
                             firstLine.contains("30,344") || // F4
                             firstLine.contains("livid") || // F5
                             firstLine.contains("sadan") || // F6
-                            firstLine.contains("maxor")) { // F7
+                            firstLine.contains("maxor") || // F7
+                            firstLine.contains("f7")) {
 
-                            if (ToggleCommand.dungeonBossMusic) dungeonboss.start();
+                            if (ToggleCommand.dungeonBossMusic) {
+                                switch (curPhase) {
+                                    case -1:
+                                        break;
+                                    case 2:
+                                        phase2.start();
+                                        break;
+                                    case 3:
+                                        phase3.start();
+                                        break;
+                                    case 4:
+                                        phase4.start();
+                                        break;
+                                    case 5:
+                                        phase5.start();
+                                        break;
+                                    default:
+                                        dungeonboss.start();
+                                }
+                            }
                         }
                     }
                 } else {
@@ -153,22 +176,27 @@ public class CustomMusic {
             }
         }
 
-        if (message.contains(":")) return;
-
         if (Utils.inDungeons) {
             if (ToggleCommand.dungeonBossMusic) {
-                if (message.startsWith("[BOSS] Storm: Pathetic Maxor")) {
+                if (phase2.hasSongs() && message.startsWith("[BOSS] Storm: Pathetic Maxor")) {
                     phase2.start();
-                } else if (message.startsWith("[BOSS] Goldor: Who dares trespass into my domain?")) {
+                    curPhase = 2;
+                } else if (phase3.hasSongs() && message.startsWith("[BOSS] Goldor: Who dares trespass into my domain?")) {
                     phase3.start();
-                } else if (message.startsWith("[BOSS] Necron: You went further than any human before")) {
+                    curPhase = 3;
+                } else if (phase4.hasSongs() && message.startsWith("[BOSS] Necron: You went further than any human before")) {
                     phase4.start();
-                } else if (message.startsWith("[BOSS] ") && message.endsWith("You.. again?")) {
+                    curPhase = 4;
+                } else if (phase5.hasSongs() && message.startsWith("[BOSS] ") && message.endsWith("You.. again?")) {
                     phase5.start();
+                    curPhase = 5;
                 }
             }
 
+            if (message.contains(":")) return;
+
             if (message.contains("EXTRA STATS ")) {
+                curPhase = -1; // force no play
                 dungeonboss.stop();
                 bloodroom.stop();
                 dungeon.stop();
@@ -190,6 +218,11 @@ public class CustomMusic {
         }
     }
 
+    @SubscribeEvent
+    public void postConfigInit(PostConfigInitEvent event) {
+        init(event.configDirectory);
+    }
+
     public static void init(String configDirectory) {
         if (configDirectory == null) return;
         File directory = new File(configDirectory + "/dsmmusic");
@@ -205,7 +238,7 @@ public class CustomMusic {
         phase4 = new Song(directory, "phasefour", phase4Volume);
         phase5 = new Song(directory, "phasefive", phase5Volume);
         hub = new Song(directory, "hub", hubVolume);
-        island = new Song(directory, "island", hubVolume);
+        island = new Song(directory, "island", islandVolume);
         dungeonHub = new Song(directory, "dungeonhub", dungeonHubVolume);
         farmingIslands = new Song(directory, "farmingislands", farmingIslandsVolume);
         goldMine = new Song(directory, "goldmine", goldMineVolume);
@@ -238,6 +271,7 @@ public class CustomMusic {
         if (crimsonIsle != null) crimsonIsle.stop();
         if (end != null) end.stop();
         if (park != null) park.stop();
+        curPhase = 0;
     }
 
     public static class Song {
@@ -263,6 +297,7 @@ public class CustomMusic {
         public void start() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
 
             try {
+                if (music == null) music = AudioSystem.getClip();
                 if (!music.isRunning()) {
                     reset();
                     shuffle();
@@ -307,12 +342,18 @@ public class CustomMusic {
                 return false;
             }
 
-            float decibels = (float) (20 * Math.log(volume / 100.0));
-            FloatControl control = (FloatControl) music.getControl(FloatControl.Type.MASTER_GAIN);
-            if (decibels <= control.getMinimum() || decibels >= control.getMaximum()) return false;
-            control.setValue(decibels);
+            if (music != null) {
+                float decibels = (float) (20 * Math.log(volume / 100.0));
+                FloatControl control = (FloatControl) music.getControl(FloatControl.Type.MASTER_GAIN);
+                if (decibels <= control.getMinimum() || decibels >= control.getMaximum()) return false;
+                control.setValue(decibels);
+            }
 
             return true;
+        }
+
+        public boolean hasSongs() {
+            return playlist.size() > 0;
         }
 
     }

@@ -35,7 +35,7 @@ Discord Server: https://discord.gg/QsEkNQS
 - Maddox menu keybind
 - Block starting other slayer quests
 - Slayer slain alert
-- Fishing, jerry fishing, fishing festival, spooky fishing, crystal hollows fishing, lava fishing trackers
+- Fishing, jerry fishing, fishing festival, spooky fishing, crystal hollows fishing, lava fishing, trophy fishing trackers
 - Expertise kills in fishing rod lore
 - Gemstones applied in item lore
 - Catacombs trackers
@@ -75,6 +75,8 @@ Discord Server: https://discord.gg/QsEkNQS
 - Automatically join skyblock
 - Fire pillar display
 - Chat aliases
+- Thunder/Lord Jawbus spawn alerts
+- Show when minion was last collected
 </details>
 
 <details>
@@ -86,8 +88,8 @@ Discord Server: https://discord.gg/QsEkNQS
 - /toggle <too many to list> - Toggles features. /toggle list returns values of every toggle.
 - /setkey <key> - Sets API key.
 - /getkey - Returns key set with /setkey and copies it to your clipboard.
-- /loot <zombie/spider/wolf/enderman/blaze/fishing/catacombs/mythological/> [winter/festival/spooky/ch/lava/f(1-7)/mm/session] - Returns loot received from slayer quests or fishing stats. /loot fishing winter returns winter sea creatures instead.
-- /display <zombie/spider/wolf/enderman/blaze/fishing/catacombs/mythological/ghosts/auto/off> [winter/festival/spooky/ch/lava/f(1-7)/mm/session] - Text display for trackers. /display fishing winter displays winter sea creatures instead. /display auto automatically displays the loot for the slayer quest you have active.
+- /loot <zombie/spider/wolf/enderman/blaze/fishing/catacombs/mythological/> [winter/festival/spooky/ch/lava/trophy/f(1-7)/mm/session] - Returns loot received from slayer quests or fishing stats. /loot fishing winter returns winter sea creatures instead.
+- /display <zombie/spider/wolf/enderman/blaze/fishing/catacombs/mythological/ghosts/auto/off> [winter/festival/spooky/ch/lava/trophy/f(1-7)/mm/session] - Text display for trackers. /display fishing winter displays winter sea creatures instead. /display auto automatically displays the loot for the slayer quest you have active.
 - /resetloot <zombie/spider/wolf/enderman/blaze/fishing/catacombs/mythological/confirm/cancel> -  - Resets loot for trackers. /resetloot confirm confirms the reset.
 - /move <coords/display/dungeontimer/skill50/lividhp/caketimer/skilltracker/wateranswer/bonzotimer/golemtimer/teammatesinradius/gianthp/abilitycooldowns/dungeonscore/firepillar> <x> <y> - Moves text display to specified X and Y coordinates.
 - /scale <coords/display/dungeontimer/skill50/lividhp/caketimer/skilltracker/wateranswer/bonzotimer/golemtimer/teammatesinradius/gianthp/abilitycooldowns/dungeonscore/firepillar> <scale (0.1 - 10)> - Scales text display to a specified multipler between 0.1x and 10x.

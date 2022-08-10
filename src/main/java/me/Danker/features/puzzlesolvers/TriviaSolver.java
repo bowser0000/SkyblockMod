@@ -5,6 +5,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import me.Danker.DankersSkyblockMod;
 import me.Danker.commands.ToggleCommand;
+import me.Danker.events.ModInitEvent;
 import me.Danker.utils.Utils;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
@@ -26,7 +27,8 @@ public class TriviaSolver {
     static JsonArray triviaAnswersJson = null;
     public static String TRIVIA_WRONG_ANSWER_COLOUR;
 
-    public static void init() {
+    @SubscribeEvent
+    public void init(ModInitEvent event) {
         // Hard coded solutions if api call fails
         triviaSolutions.put("What is the status of The Watcher?", new String[]{"Stalker"});
         triviaSolutions.put("What is the status of Bonzo?", new String[]{"New Necromancer"});
@@ -39,11 +41,12 @@ public class TriviaSolver {
         triviaSolutions.put("What is the status of Goldor?", new String[]{"Wither Soldier"});
         triviaSolutions.put("What is the status of Storm?", new String[]{"Elementalist"});
         triviaSolutions.put("What is the status of Necron?", new String[]{"Wither Lord"});
-        triviaSolutions.put("How many total Fairy Souls are there?", new String[]{"227 Fairy Souls"});
+        triviaSolutions.put("What is the status of Maxor, Storm, Goldor and Necron?", new String[]{"Wither Lord"});
+        triviaSolutions.put("How many total Fairy Souls are there?", new String[]{"238 Fairy Souls"});
         triviaSolutions.put("How many Fairy Souls are there in Spider's Den?", new String[]{"19 Fairy Souls"});
         triviaSolutions.put("How many Fairy Souls are there in The End?", new String[]{"12 Fairy Souls"});
         triviaSolutions.put("How many Fairy Souls are there in The Farming Islands?", new String[]{"20 Fairy Souls"});
-        triviaSolutions.put("How many Fairy Souls are there in Blazing Fortress?", new String[]{"19 Fairy Souls"});
+        triviaSolutions.put("How many Fairy Souls are there in Crimson Isle?", new String[]{"29 Fairy Souls"});
         triviaSolutions.put("How many Fairy Souls are there in The Park?", new String[]{"11 Fairy Souls"});
         triviaSolutions.put("How many Fairy Souls are there in Jerry's Workshop?", new String[]{"5 Fairy Souls"});
         triviaSolutions.put("How many Fairy Souls are there in Hub?", new String[]{"79 Fairy Souls"});
@@ -57,7 +60,7 @@ public class TriviaSolver {
         triviaSolutions.put("What is the name of the person that upgrades pets?", new String[]{"Kat"});
         triviaSolutions.put("What is the name of the lady of the Nether?", new String[]{"Elle"});
         triviaSolutions.put("Which villager in the Village gives you a Rogue Sword?", new String[]{"Jamie"});
-        triviaSolutions.put("How many unique minions are there?", new String[]{"53 Minions"});
+        triviaSolutions.put("How many unique minions are there?", new String[]{"55 Minions"});
         triviaSolutions.put("Which of these enemies does not spawn in the Spider's Den?", new String[]{"Zombie Spider", "Cave Spider", "Wither Skeleton",
                 "Dashing Spooder", "Broodfather", "Night Spider"});
         triviaSolutions.put("Which of these monsters only spawns at night?", new String[]{"Zombie Villager", "Ghast"});

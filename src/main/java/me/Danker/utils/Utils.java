@@ -1,5 +1,7 @@
 package me.Danker.utils;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import me.Danker.DankersSkyblockMod;
 import me.Danker.features.ColouredNames;
 import me.Danker.features.GoldenEnchants;
@@ -23,8 +25,8 @@ import net.minecraft.util.*;
 import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
-import java.util.*;
 import java.util.List;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -251,6 +253,16 @@ public class Utils {
 			}
 		}
 		return limit;
+	}
+
+	public static int skillLevelToXp(int level) {
+		int sum = 0;
+
+		for (int i = 1; i <= level; i++) {
+			sum += skillXPPerLevel[i];
+		}
+
+		return sum;
 	}
 	
 	public static double xpToDungeonsLevel(double xp) {
@@ -523,6 +535,16 @@ public class Utils {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
+	}
+
+	public static JsonObject deepCopy(JsonObject obj) {
+		JsonObject newObj = new JsonObject();
+
+		for (Map.Entry<String, JsonElement> entry : obj.entrySet()) {
+			newObj.add(entry.getKey(), entry.getValue());
+		}
+
+		return newObj;
 	}
 
 	public enum DungeonFloor {

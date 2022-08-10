@@ -97,6 +97,8 @@ public class AutoDisplay {
                             if (lore.get(j).contains("FISHING ROD")) {
                                 if (Utils.tabLocation.equals("Crimson Isle")) {
                                     LootDisplay.display = "fishing_lava";
+                                } else if (Utils.tabLocation.equals("Jerry's Workshop")) {
+                                    LootDisplay.display = "fishing_winter";
                                 } else {
                                     LootDisplay.display = "fishing";
                                 }

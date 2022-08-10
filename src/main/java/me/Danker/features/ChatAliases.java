@@ -1,6 +1,7 @@
 package me.Danker.features;
 
 import com.google.gson.GsonBuilder;
+import me.Danker.events.ModInitEvent;
 import me.Danker.events.PacketWriteEvent;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.play.client.C01PacketChatMessage;
@@ -15,6 +16,11 @@ public class ChatAliases {
 
     public static List<Alias> aliases = new ArrayList<>();
     public static String configFile;
+
+    @SubscribeEvent
+    public void init(ModInitEvent event) {
+        configFile = event.configDirectory + "/dsmaliases.json";
+    }
 
     @SubscribeEvent
     public void onPacketWrite(PacketWriteEvent event) {

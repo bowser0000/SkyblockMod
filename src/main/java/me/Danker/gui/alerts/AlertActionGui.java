@@ -1,7 +1,6 @@
 package me.Danker.gui.alerts;
 
 import me.Danker.features.Alerts;
-import me.Danker.handlers.TextRenderer;
 import me.Danker.utils.RenderUtils;
 import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;

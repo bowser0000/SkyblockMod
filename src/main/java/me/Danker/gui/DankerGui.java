@@ -76,6 +76,7 @@ public class DankerGui extends GuiScreen {
 	private GuiButton hidePetCandy;
 	private GuiButton highlightCommissions;
 	private GuiButton customColouredNames;
+	private GuiButton customNametags;
 	private GuiButton endOfFarmAlert;
 	private GuiButton gemstoneLore;
 	private GuiButton autoAcceptReparty;
@@ -92,6 +93,9 @@ public class DankerGui extends GuiScreen {
 	private GuiButton hideArmour;
 	private GuiButton autoJoinSkyblock;
 	private GuiButton firePillar;
+	private GuiButton fishingAlert;
+	private GuiButton minionLastCollected;
+	private GuiButton showTrophyCompletion;
 	// Chat Messages
 	private GuiButton sceptreMessages;
 	private GuiButton midasStaffMessages;
@@ -179,6 +183,7 @@ public class DankerGui extends GuiScreen {
 		hidePetCandy = new FeatureButton("Hide Pet Candy: " + Utils.getColouredBoolean(ToggleCommand.hidePetCandy), "Hide pet candy in pet tooltips.");
 		highlightCommissions = new FeatureButton("Highlight Commissions: " + Utils.getColouredBoolean(ToggleCommand.highlightCommissions), "Show which commissions are completed.");
 		customColouredNames = new FeatureButton("Custom Name Colors: " + Utils.getColouredBoolean(ToggleCommand.customColouredNames), "Replaces some player's usernames with a custom color.");
+		customNametags = new FeatureButton("Custom Color on Nametags: " + Utils.getColouredBoolean(ToggleCommand.customNametags), "Displays custom name colors on nametags. Disabling will increase performance with custom colors.");
 		endOfFarmAlert = new FeatureButton("Alert When Reaching End of Farm: " + Utils.getColouredBoolean(ToggleCommand.endOfFarmAlert), "Alerts when you go past coords set with /dsmfarmlength.");
 		gemstoneLore = new FeatureButton("Applied Gemstones in Lore: " + Utils.getColouredBoolean(ToggleCommand.gemstoneLore), "Adds applied gemstones to item tooltip.");
 		autoAcceptReparty = new FeatureButton("Auto Accept Reparty: " + Utils.getColouredBoolean(ToggleCommand.autoAcceptReparty), "Automatically rejoins parties when disbanded and invited.");
@@ -187,6 +192,9 @@ public class DankerGui extends GuiScreen {
 		hideArmour = new FeatureButton("Hide Player Armour: " + Utils.getColouredBoolean(ToggleCommand.hideArmour), "Makes player armour invisible, showing their skin.");
 		autoJoinSkyblock = new FeatureButton("Automatically Join Skyblock: " + Utils.getColouredBoolean(ToggleCommand.autoJoinSkyblock), "Automatically join Skyblock when you join Hypixel.\nYou have an addiction.");
 		firePillar = new FeatureButton("Fire Pillar Display: " + Utils.getColouredBoolean(ToggleCommand.firePillar), "Displays blaze fire pillar text on screen");
+		fishingAlert = new FeatureButton("Fishing Spawn Alerts: " + Utils.getColouredBoolean(ToggleCommand.fishingAlert), "Alerts when a Thunder or Lord Jawbus spawns nearby");
+		minionLastCollected = new FeatureButton("Show When Minion Last Collected: " + Utils.getColouredBoolean(ToggleCommand.minionLastCollected), "Displays when a minion was last collected over the minion.");
+		showTrophyCompletion = new FeatureButton("Show Trophy Fish Completion: " + Utils.getColouredBoolean(ToggleCommand.showTrophyCompletion), "Show completion instead of count in trophy fish tracker display.");
 
 		allButtons.clear();
 		allButtons.add(changeDisplay);
@@ -240,6 +248,7 @@ public class DankerGui extends GuiScreen {
 		allButtons.add(hidePetCandy);
 		allButtons.add(highlightCommissions);
 		allButtons.add(customColouredNames);
+		allButtons.add(customNametags);
 		allButtons.add(endOfFarmAlert);
 		allButtons.add(gemstoneLore);
 		allButtons.add(autoAcceptReparty);
@@ -248,6 +257,9 @@ public class DankerGui extends GuiScreen {
 		allButtons.add(hideArmour);
 		allButtons.add(autoJoinSkyblock);
 		allButtons.add(firePillar);
+		allButtons.add(fishingAlert);
+		allButtons.add(minionLastCollected);
+		allButtons.add(showTrophyCompletion);
 
 		search.setText(initSearchText);
 		search.setVisible(true);
@@ -545,6 +557,22 @@ public class DankerGui extends GuiScreen {
 			ToggleCommand.firePillar = !ToggleCommand.firePillar;
 			ConfigHandler.writeBooleanConfig("toggles", "FirePillar", ToggleCommand.firePillar);
 			firePillar.displayString = "Fire Pillar Display: " + Utils.getColouredBoolean(ToggleCommand.firePillar);
+		} else if (button == fishingAlert) {
+			ToggleCommand.fishingAlert = !ToggleCommand.fishingAlert;
+			ConfigHandler.writeBooleanConfig("toggles", "FishingAlert", ToggleCommand.fishingAlert);
+			fishingAlert.displayString = "Fishing Spawn Alerts: " + Utils.getColouredBoolean(ToggleCommand.fishingAlert);
+		} else if (button == customNametags) {
+			ToggleCommand.customNametags = !ToggleCommand.customNametags;
+			ConfigHandler.writeBooleanConfig("toggles", "CustomNametags", ToggleCommand.customNametags);
+			customNametags.displayString = "Custom Color on Nametags: " + Utils.getColouredBoolean(ToggleCommand.customNametags);
+		} else if (button == minionLastCollected) {
+			ToggleCommand.minionLastCollected = !ToggleCommand.minionLastCollected;
+			ConfigHandler.writeBooleanConfig("toggles", "MinionLastCollected", ToggleCommand.minionLastCollected);
+			minionLastCollected.displayString = "Show When Minion Last Collected: " + Utils.getColouredBoolean(ToggleCommand.minionLastCollected);
+		} else if (button == showTrophyCompletion) {
+			ToggleCommand.showTrophyCompletion = !ToggleCommand.showTrophyCompletion;
+			ConfigHandler.writeBooleanConfig("toggles", "ShowTrophyCompletion", ToggleCommand.showTrophyCompletion);
+			showTrophyCompletion.displayString = "Show Trophy Fish Completion: " + Utils.getColouredBoolean(ToggleCommand.showTrophyCompletion);
 		}
 	}
 

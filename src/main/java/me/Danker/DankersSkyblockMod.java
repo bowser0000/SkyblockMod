@@ -3,9 +3,7 @@ package me.Danker;
 import com.google.gson.JsonObject;
 import me.Danker.commands.*;
 import me.Danker.commands.warp.WarpCommandHandler;
-import me.Danker.events.ChestSlotClickedEvent;
-import me.Danker.events.GuiChestBackgroundDrawnEvent;
-import me.Danker.events.RenderOverlayEvent;
+import me.Danker.events.*;
 import me.Danker.features.*;
 import me.Danker.features.loot.*;
 import me.Danker.features.puzzlesolvers.*;
@@ -65,7 +63,7 @@ import java.util.Map;
 @Mod(modid = DankersSkyblockMod.MODID, version = DankersSkyblockMod.VERSION, clientSideOnly = true)
 public class DankersSkyblockMod {
     public static final String MODID = "Danker's Skyblock Mod";
-    public static final String VERSION = "1.8.7-beta6";
+    public static final String VERSION = "1.8.7-beta7";
     public static int titleTimer = -1;
     public static boolean showTitle = false;
     public static String titleText = "";
@@ -130,6 +128,7 @@ public class DankersSkyblockMod {
         MinecraftForge.EVENT_BUS.register(new ExpertiseLore());
         MinecraftForge.EVENT_BUS.register(new FasterMaddoxCalling());
         MinecraftForge.EVENT_BUS.register(new FirePillarDisplay());
+        MinecraftForge.EVENT_BUS.register(new FishingSpawnAlerts());
         MinecraftForge.EVENT_BUS.register(new GemstonesLore());
         MinecraftForge.EVENT_BUS.register(new GiantHPDisplay());
         MinecraftForge.EVENT_BUS.register(new GoldenEnchants());
@@ -142,6 +141,7 @@ public class DankersSkyblockMod {
         MinecraftForge.EVENT_BUS.register(new IceWalkSolver());
         MinecraftForge.EVENT_BUS.register(new LividSolver());
         MinecraftForge.EVENT_BUS.register(new LowHealthNotifications());
+        MinecraftForge.EVENT_BUS.register(new MinionLastCollected());
         MinecraftForge.EVENT_BUS.register(new NecronNotifications());
         MinecraftForge.EVENT_BUS.register(new NoF3Coords());
         MinecraftForge.EVENT_BUS.register(new NotifySlayerSlain());
@@ -177,17 +177,13 @@ public class DankersSkyblockMod {
         MinecraftForge.EVENT_BUS.register(new GhostTracker());
         MinecraftForge.EVENT_BUS.register(new MythologicalTracker());
         MinecraftForge.EVENT_BUS.register(new SpiderTracker());
+        MinecraftForge.EVENT_BUS.register(new TrophyFishTracker());
         MinecraftForge.EVENT_BUS.register(new WolfTracker());
         MinecraftForge.EVENT_BUS.register(new ZombieTracker());
-
-        Alerts.configFile = configDirectory + "/dsmalerts.json";
-        ChatAliases.configFile = configDirectory + "/dsmaliases.json";
-
+        
+        MinecraftForge.EVENT_BUS.post(new ModInitEvent(configDirectory));
         ConfigHandler.reloadConfig();
-        GoldenEnchants.init();
-        TriviaSolver.init();
-        CustomMusic.init(configDirectory);
-        GemstonesLore.init();
+        MinecraftForge.EVENT_BUS.post(new PostConfigInitEvent(configDirectory));
 
         keyBindings[0] = new KeyBinding("Open Maddox Menu", Keyboard.KEY_M, "Danker's Skyblock Mod");
         keyBindings[1] = new KeyBinding("Regular Ability", Keyboard.KEY_NUMPAD4, "Danker's Skyblock Mod");

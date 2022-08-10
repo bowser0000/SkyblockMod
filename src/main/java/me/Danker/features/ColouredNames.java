@@ -72,7 +72,7 @@ public class ColouredNames {
 
     @SubscribeEvent(priority = EventPriority.LOW)
     public void onRenderLiving(RenderLivingEvent.Specials.Pre<EntityLivingBase> event) {
-        if (!ToggleCommand.customColouredNames || !Utils.inSkyblock) return;
+        if (!ToggleCommand.customColouredNames || !ToggleCommand.customNametags || !Utils.inSkyblock) return;
 
         Entity entity = event.entity;
         if (entity instanceof EntityArmorStand && !entity.isDead && entity.hasCustomName()) {

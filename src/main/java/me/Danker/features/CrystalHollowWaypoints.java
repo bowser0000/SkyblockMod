@@ -7,7 +7,6 @@ import me.Danker.handlers.ScoreboardHandler;
 import me.Danker.utils.RenderUtils;
 import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.item.EntityArmorStand;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.event.ClickEvent;
@@ -148,7 +147,7 @@ public class CrystalHollowWaypoints {
                         }
                         player.addChatMessage(new ChatComponentText("\n" + DankersSkyblockMod.MAIN_COLOUR + "DSM/SBE Crystal Hollows waypoints found. Click to add.\n").appendSibling(add));
                     }).start();
-                } else {
+                } else if (message.indexOf(":") != message.lastIndexOf(":")) {
                     String text = message.substring(message.indexOf(":") + 2);
                     Matcher matcher = skytilsPattern.matcher(text);
 

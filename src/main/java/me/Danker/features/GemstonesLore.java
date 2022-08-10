@@ -1,6 +1,7 @@
 package me.Danker.features;
 
 import me.Danker.commands.ToggleCommand;
+import me.Danker.events.ModInitEvent;
 import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
@@ -18,7 +19,8 @@ public class GemstonesLore {
 
     static Map<String, EnumChatFormatting> gemstoneColours = new HashMap<>();
 
-    public static void init() {
+    @SubscribeEvent
+    public void init(ModInitEvent event) {
         gemstoneColours.put("Amber", EnumChatFormatting.GOLD);
         gemstoneColours.put("Sapphire", EnumChatFormatting.AQUA);
         gemstoneColours.put("Jasper", EnumChatFormatting.LIGHT_PURPLE);
@@ -26,6 +28,7 @@ public class GemstonesLore {
         gemstoneColours.put("Topaz", EnumChatFormatting.YELLOW);
         gemstoneColours.put("Jade", EnumChatFormatting.GREEN);
         gemstoneColours.put("Ruby", EnumChatFormatting.RED);
+        gemstoneColours.put("Opal", EnumChatFormatting.WHITE);
     }
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)

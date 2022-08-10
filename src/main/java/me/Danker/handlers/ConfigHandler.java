@@ -2,6 +2,8 @@ package me.Danker.handlers;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import me.Danker.DankersSkyblockMod;
 import me.Danker.commands.MoveCommand;
 import me.Danker.commands.ScaleCommand;
@@ -224,6 +226,7 @@ public class ConfigHandler {
 		ToggleCommand.giantHP = initBoolean("toggles", "GiantHP", false);
 		ToggleCommand.hidePetCandy = initBoolean("toggles", "HidePetCandy", false);
 		ToggleCommand.customColouredNames = initBoolean("toggles", "CustomColouredNames", true); // enabled by default
+		ToggleCommand.customNametags = initBoolean("toggles", "CustomNametags", true);
 		ToggleCommand.endOfFarmAlert = initBoolean("toggles", "EndOfFarmAlert", false);
 		ToggleCommand.gemstoneLore = initBoolean("toggles", "GemstoneLore", false);
 		ToggleCommand.crystalHollowWaypoints = initBoolean("toggles", "CrystalHollowWaypoints", false);
@@ -248,6 +251,9 @@ public class ConfigHandler {
 		ToggleCommand.autoJoinSkyblock = initBoolean("toggles", "AutoJoinSkyblock", false);
 		ToggleCommand.firePillar = initBoolean("toggles", "FirePillar", false);
 		ToggleCommand.aliases = initBoolean("toggles", "Aliases", false);
+		ToggleCommand.fishingAlert = initBoolean("toggles", "FishingAlert", false);
+		ToggleCommand.minionLastCollected = initBoolean("toggles", "MinionLastCollected", false);
+		ToggleCommand.showTrophyCompletion = initBoolean("toggles", "ShowTrophyCompletion", false);
 		// Chat Messages
 		ToggleCommand.sceptreMessages = initBoolean("toggles", "SceptreMessages", true);
 		ToggleCommand.midasStaffMessages = initBoolean("toggles", "MidasStaffMessages", true);
@@ -714,6 +720,7 @@ public class ConfigHandler {
 		SilverfishSolver.SILVERFISH_LINE_COLOUR = initInt("colors", "silverfishLine", 0x40FF40);
 		IceWalkSolver.ICE_WALK_LINE_COLOUR = initInt("colors", "iceWalkLine", 0x40FF40);
 		HighlightCommissions.HIGHLIGHT_COLOUR = initInt("colors", "highlight_colour", 0x51FF51);
+		MinionLastCollected.LAST_COLLECTED_COLOUR = initInt("colors", "lastCollected", 0x55FFFF);
 
 		// Commands
 		if (!hasKey("commands", "reparty")) writeBooleanConfig("commands", "reparty", false);
@@ -739,6 +746,23 @@ public class ConfigHandler {
 			}
 			ChatAliases.Alias[] aliases = gson.fromJson(new FileReader(ChatAliases.configFile), ChatAliases.Alias[].class);
 			if (aliases != null) ChatAliases.aliases = new ArrayList<>(Arrays.asList(aliases));
+
+			// Minions
+			if (!(new File(MinionLastCollected.configFile).exists())) {
+				FileWriter file = new FileWriter(MinionLastCollected.configFile);
+				file.write(new JsonArray().toString());
+				file.close();
+			}
+			MinionLastCollected.Minion[] minions = gson.fromJson(new FileReader(MinionLastCollected.configFile), MinionLastCollected.Minion[].class);
+			if (minions != null) MinionLastCollected.minions = new ArrayList<>(Arrays.asList(minions));
+
+			// Trophy Fish
+			if (!(new File(TrophyFishTracker.configFile).exists())) {
+				FileWriter file = new FileWriter(TrophyFishTracker.configFile);
+				file.write(new JsonObject().toString());
+				file.close();
+			}
+			TrophyFishTracker.fish = new JsonParser().parse(new FileReader(TrophyFishTracker.configFile)).getAsJsonObject();
 		} catch (IOException ex) {
 			ex.printStackTrace();
 		}

@@ -1,8 +1,8 @@
 package me.Danker.features;
 
 import com.google.gson.GsonBuilder;
-import javafx.scene.control.Alert;
 import me.Danker.commands.ToggleCommand;
+import me.Danker.events.ModInitEvent;
 import me.Danker.utils.Utils;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StringUtils;
@@ -23,6 +23,11 @@ public class Alerts {
     public static List<Alert> alerts = new ArrayList<>();
     public static HashMap<Alert, Pattern> patterns = new HashMap<>();
     public static String configFile;
+
+    @SubscribeEvent
+    public void init(ModInitEvent event) {
+        configFile = event.configDirectory + "/dsmalerts.json";
+    }
 
     @SubscribeEvent
     public void onChat(ClientChatReceivedEvent event) {

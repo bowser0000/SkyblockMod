@@ -50,6 +50,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 	public static boolean hidePetCandy;
 	public static boolean highlightCommissions;
 	public static boolean customColouredNames;
+	public static boolean customNametags;
 	public static boolean endOfFarmAlert;
 	public static boolean gemstoneLore;
 	public static boolean crystalHollowWaypoints;
@@ -63,6 +64,9 @@ public class ToggleCommand extends CommandBase implements ICommand {
 	public static boolean autoJoinSkyblock;
 	public static boolean firePillar;
 	public static boolean aliases;
+	public static boolean fishingAlert;
+	public static boolean minionLastCollected;
+	public static boolean showTrophyCompletion;
 	// Chat Messages
 	public static boolean sceptreMessages;
 	public static boolean midasStaffMessages;
