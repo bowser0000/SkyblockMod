@@ -2,7 +2,6 @@ package me.Danker.features;
 
 import me.Danker.DankersSkyblockMod;
 import me.Danker.commands.ToggleCommand;
-import me.Danker.events.ModInitEvent;
 import me.Danker.events.PostConfigInitEvent;
 import me.Danker.handlers.ScoreboardHandler;
 import me.Danker.utils.Utils;

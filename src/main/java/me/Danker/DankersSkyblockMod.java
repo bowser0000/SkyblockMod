@@ -137,6 +137,7 @@ public class DankersSkyblockMod {
         MinecraftForge.EVENT_BUS.register(new HidePetCandy());
         MinecraftForge.EVENT_BUS.register(new HidePlayerArmour());
         MinecraftForge.EVENT_BUS.register(new HideTooltipsInExperiments());
+        MinecraftForge.EVENT_BUS.register(new HighlightCommissions());
         MinecraftForge.EVENT_BUS.register(new HighlightSkeletonMasters());
         MinecraftForge.EVENT_BUS.register(new IceWalkSolver());
         MinecraftForge.EVENT_BUS.register(new LividSolver());
@@ -167,7 +168,7 @@ public class DankersSkyblockMod {
         MinecraftForge.EVENT_BUS.register(new UpdateChecker());
         MinecraftForge.EVENT_BUS.register(new WatcherReadyAlert());
         MinecraftForge.EVENT_BUS.register(new WaterSolver());
-        MinecraftForge.EVENT_BUS.register(new HighlightCommissions());
+
         MinecraftForge.EVENT_BUS.register(new LootDisplay());
         MinecraftForge.EVENT_BUS.register(new LootTracker());
         MinecraftForge.EVENT_BUS.register(new BlazeTracker());
