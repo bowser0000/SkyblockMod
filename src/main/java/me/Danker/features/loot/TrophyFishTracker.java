@@ -3,6 +3,7 @@ package me.Danker.features.loot;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import me.Danker.events.ModInitEvent;
+import me.Danker.events.PostConfigInitEvent;
 import me.Danker.utils.RenderUtils;
 import me.Danker.utils.Utils;
 import net.minecraft.init.Items;
@@ -58,8 +59,13 @@ public class TrophyFishTracker {
     @SubscribeEvent
     public void init(ModInitEvent event) {
         configFile = event.configDirectory + "/dsmtrophyfish.json";
+    }
+
+    @SubscribeEvent
+    public void postConfigInit(PostConfigInitEvent event) {
         if (fish.entrySet().isEmpty()) fish = createEmpty();
         fishSession = createEmpty();
+        save();
     }
 
     @SubscribeEvent(receiveCanceled = true)
