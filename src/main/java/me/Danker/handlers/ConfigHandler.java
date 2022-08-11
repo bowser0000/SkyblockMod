@@ -225,7 +225,7 @@ public class ConfigHandler {
 		ToggleCommand.teammatesInRadius = initBoolean("toggles", "TeammatesInRadius", false);
 		ToggleCommand.giantHP = initBoolean("toggles", "GiantHP", false);
 		ToggleCommand.hidePetCandy = initBoolean("toggles", "HidePetCandy", false);
-		ToggleCommand.customColouredNames = initBoolean("toggles", "CustomColouredNames", true); // enabled by default
+		ToggleCommand.customColouredNames = initBoolean("toggles", "CustomColouredNames", false);
 		ToggleCommand.customNametags = initBoolean("toggles", "CustomNametags", true);
 		ToggleCommand.endOfFarmAlert = initBoolean("toggles", "EndOfFarmAlert", false);
 		ToggleCommand.gemstoneLore = initBoolean("toggles", "GemstoneLore", false);
