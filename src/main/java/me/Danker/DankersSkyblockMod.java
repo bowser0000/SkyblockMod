@@ -203,11 +203,12 @@ public class DankersSkyblockMod {
         ClientCommandHandler.instance.registerCommand(new ArmourCommand());
         ClientCommandHandler.instance.registerCommand(new BankCommand());
         ClientCommandHandler.instance.registerCommand(new BlockSlayerCommand());
-        ClientCommandHandler.instance.registerCommand(new CustomMusicCommand());
         ClientCommandHandler.instance.registerCommand(new CrystalHollowWaypointCommand());
-        ClientCommandHandler.instance.registerCommand(new DHelpCommand());
+        ClientCommandHandler.instance.registerCommand(new CustomMusicCommand());
         ClientCommandHandler.instance.registerCommand(new DankerGuiCommand());
+        ClientCommandHandler.instance.registerCommand(new DHelpCommand());
         ClientCommandHandler.instance.registerCommand(new DisplayCommand());
+        ClientCommandHandler.instance.registerCommand(new DungeonsCommand());
         ClientCommandHandler.instance.registerCommand(new FairySoulsCommand());
         ClientCommandHandler.instance.registerCommand(new FarmLengthCommand());
         ClientCommandHandler.instance.registerCommand(new GetkeyCommand());
@@ -227,8 +228,8 @@ public class DankersSkyblockMod {
         ClientCommandHandler.instance.registerCommand(new ResetLootCommand());
         ClientCommandHandler.instance.registerCommand(new ScaleCommand());
         ClientCommandHandler.instance.registerCommand(new SetkeyCommand());
-        ClientCommandHandler.instance.registerCommand(new SkillTrackerCommand());
         ClientCommandHandler.instance.registerCommand(new SkillsCommand());
+        ClientCommandHandler.instance.registerCommand(new SkillTrackerCommand());
         ClientCommandHandler.instance.registerCommand(new SkyblockPlayersCommand());
         ClientCommandHandler.instance.registerCommand(new SlayerCommand());
         ClientCommandHandler.instance.registerCommand(new ToggleCommand());
