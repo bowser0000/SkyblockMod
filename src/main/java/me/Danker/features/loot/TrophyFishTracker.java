@@ -140,10 +140,11 @@ public class TrophyFishTracker {
         ItemStack goldComplete = new ItemStack(Items.gold_ingot);
         ItemStack diamondComplete = new ItemStack(Items.diamond);
 
-        RenderUtils.renderItem(bronze ? bronzeComplete : incomplete, x, y - 2, scale / 1.3D);
-        RenderUtils.renderItem(silver ? silverComplete : incomplete, x + 15, y - 2, scale / 1.3D);
-        RenderUtils.renderItem(gold ? goldComplete : incomplete, x + 30, y - 2, scale / 1.3D);
-        RenderUtils.renderItem(diamond ? diamondComplete : incomplete, x + 45, y - 2, scale / 1.3D);
+        // -116 hides behind chat + tab
+        RenderUtils.renderItem(bronze ? bronzeComplete : incomplete, x, y - 2, -116, scale / 1.3D);
+        RenderUtils.renderItem(silver ? silverComplete : incomplete, x + 15, y - 2, -116, scale / 1.3D);
+        RenderUtils.renderItem(gold ? goldComplete : incomplete, x + 30, y - 2, -116, scale / 1.3D);
+        RenderUtils.renderItem(diamond ? diamondComplete : incomplete, x + 45, y - 2, -116, scale / 1.3D);
     }
 
 }
