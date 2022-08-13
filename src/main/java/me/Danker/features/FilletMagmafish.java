@@ -108,10 +108,12 @@ public class FilletMagmafish {
             ItemStack[] inv = Minecraft.getMinecraft().thePlayer.inventory.mainInventory;
 
             for (ItemStack stack : inv) {
+                if (stack == null) continue;
+
                 String id = Utils.getSkyblockItemID(stack);
                 if (id == null) continue;
 
-                total += Optional.ofNullable(fillet.get(id)).orElse(0);
+                total += Optional.ofNullable(fillet.get(id)).orElse(0) * stack.stackSize;
             }
         } else {
             total = 0;
