@@ -77,6 +77,7 @@ Discord Server: https://discord.gg/QsEkNQS
 - Chat aliases
 - Thunder/Lord Jawbus spawn alerts
 - Show when minion was last collected
+- Show amount of Magmafish if trophy fish are filleted
 </details>
 
 <details>

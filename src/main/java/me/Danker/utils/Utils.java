@@ -531,6 +531,22 @@ public class Utils {
 		return newObj;
 	}
 
+	// https://github.com/BiscuitDevelopment/SkyblockAddons/blob/main/src/main/java/codes/biscuit/skyblockaddons/utils/ItemUtils.java#L139-L148
+	public static NBTTagCompound getExtraAttributes(ItemStack item) {
+		if (item == null || !item.hasTagCompound()) return null;
+		return item.getSubCompound("ExtraAttributes", false);
+	}
+
+	// https://github.com/BiscuitDevelopment/SkyblockAddons/blob/main/src/main/java/codes/biscuit/skyblockaddons/utils/ItemUtils.java#L116-L131
+	public static String getSkyblockItemID(ItemStack item) {
+		if (item == null) return null;
+
+		NBTTagCompound extraAttributes = getExtraAttributes(item);
+		if (extraAttributes == null || !extraAttributes.hasKey("id", 8)) return null;
+
+		return extraAttributes.getString("id");
+	}
+
 	public enum DungeonFloor {
 		NONE,
 		E0,

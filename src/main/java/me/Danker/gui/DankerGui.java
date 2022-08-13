@@ -95,6 +95,7 @@ public class DankerGui extends GuiScreen {
 	private GuiButton fishingAlert;
 	private GuiButton minionLastCollected;
 	private GuiButton showTrophyCompletion;
+	private GuiButton showTotalMagmafish;
 	// Chat Messages
 	private GuiButton sceptreMessages;
 	private GuiButton midasStaffMessages;
@@ -194,6 +195,7 @@ public class DankerGui extends GuiScreen {
 		fishingAlert = new FeatureButton("Fishing Spawn Alerts: " + Utils.getColouredBoolean(ToggleCommand.fishingAlert), "Alerts when a Thunder or Lord Jawbus spawns nearby");
 		minionLastCollected = new FeatureButton("Show When Minion Last Collected: " + Utils.getColouredBoolean(ToggleCommand.minionLastCollected), "Displays when a minion was last collected over the minion.");
 		showTrophyCompletion = new FeatureButton("Show Trophy Fish Completion: " + Utils.getColouredBoolean(ToggleCommand.showTrophyCompletion), "Show completion instead of count in trophy fish tracker display.");
+		showTotalMagmafish = new FeatureButton("Show Total Fillet Magmafish: " + Utils.getColouredBoolean(ToggleCommand.showTotalMagmafish), "Show total Magmafish you would get if you filleted all the trophy fish in your inventory.");
 
 		allButtons.clear();
 		allButtons.add(changeDisplay);
@@ -259,6 +261,7 @@ public class DankerGui extends GuiScreen {
 		allButtons.add(fishingAlert);
 		allButtons.add(minionLastCollected);
 		allButtons.add(showTrophyCompletion);
+		allButtons.add(showTotalMagmafish);
 
 		search.setText(initSearchText);
 		search.setVisible(true);
@@ -572,6 +575,10 @@ public class DankerGui extends GuiScreen {
 			ToggleCommand.showTrophyCompletion = !ToggleCommand.showTrophyCompletion;
 			ConfigHandler.writeBooleanConfig("toggles", "ShowTrophyCompletion", ToggleCommand.showTrophyCompletion);
 			showTrophyCompletion.displayString = "Show Trophy Fish Completion: " + Utils.getColouredBoolean(ToggleCommand.showTrophyCompletion);
+		} else if (button == showTotalMagmafish) {
+			ToggleCommand.showTotalMagmafish = !ToggleCommand.showTotalMagmafish;
+			ConfigHandler.writeBooleanConfig("toggles", "ShowTotalMagmafish", ToggleCommand.showTotalMagmafish);
+			showTotalMagmafish.displayString = "Show Total Fillet Magmafish: " + Utils.getColouredBoolean(ToggleCommand.showTotalMagmafish);
 		}
 	}
 
