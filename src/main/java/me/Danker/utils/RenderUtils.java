@@ -394,16 +394,15 @@ public class RenderUtils {
     public static void renderItem(ItemStack stack, int x, int y, int z, double scale) {
         GlStateManager.enableRescaleNormal();
         RenderHelper.enableGUIStandardItemLighting();
-        GlStateManager.enableDepth();
 
         GlStateManager.pushMatrix();
         GlStateManager.translate(x, y, z);
         GlStateManager.scale(scale, scale, scale);
-        //Minecraft.getMinecraft().getRenderItem().renderItemIntoGUI(stack, 0, 0);
+
         Minecraft.getMinecraft().getRenderItem().renderItemAndEffectIntoGUI(stack, 0, 0);
+
         GlStateManager.popMatrix();
 
-        GlStateManager.disableDepth();
         RenderHelper.disableStandardItemLighting();
         GlStateManager.disableRescaleNormal();
     }
