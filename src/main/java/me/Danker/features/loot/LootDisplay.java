@@ -294,7 +294,7 @@ public class LootDisplay {
                             EnumChatFormatting.DARK_PURPLE + ZombieTracker.beheadedsSession + "\n" +
                             EnumChatFormatting.RED + ZombieTracker.revCatasSession + "\n" +
                             EnumChatFormatting.DARK_GREEN + ZombieTracker.snakesSession + "\n" +
-                            EnumChatFormatting.GOLD + ZombieTracker.scythes + "\n" +
+                            EnumChatFormatting.GOLD + ZombieTracker.scythesSession + "\n" +
                             EnumChatFormatting.RED + ZombieTracker.shardsSession + "\n" +
                             EnumChatFormatting.RED + ZombieTracker.wardenHeartsSession + "\n" +
                             EnumChatFormatting.AQUA + timeBetween + "\n" +
