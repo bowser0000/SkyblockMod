@@ -699,12 +699,12 @@ public class CatacombsTracker {
                     case F6:
                         f6Rerolls++;
                         f6RerollsSession++;
-                        ConfigHandler.writeDoubleConfig("catacombs", "floorSixRerolls", f6Rerolls);
+                        ConfigHandler.writeIntConfig("catacombs", "floorSixRerolls", f6Rerolls);
                         break;
                     case F7:
                         f7Rerolls++;
                         f7RerollsSession++;
-                        ConfigHandler.writeDoubleConfig("catacombs", "floorSevenRerolls", f7Rerolls);
+                        ConfigHandler.writeIntConfig("catacombs", "floorSevenRerolls", f7Rerolls);
                         break;
                     case M1:
                     case M2:
@@ -715,7 +715,7 @@ public class CatacombsTracker {
                     case M7:
                         masterRerolls++;
                         masterRerollsSession++;
-                        ConfigHandler.writeDoubleConfig("catacombs", "masterRerolls", masterRerolls);
+                        ConfigHandler.writeIntConfig("catacombs", "masterRerolls", masterRerolls);
                         break;
                 }
             }
