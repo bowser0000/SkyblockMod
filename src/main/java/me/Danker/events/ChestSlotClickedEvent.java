@@ -23,12 +23,4 @@ public class ChestSlotClickedEvent extends Event {
         this.item = item;
     }
 
-    public ChestSlotClickedEvent(GuiChest chest, IInventory inventory, String inventoryName, Slot slot) {
-        this.chest = chest;
-        this.inventory = inventory;
-        this.inventoryName = inventoryName;
-        this.slot = slot;
-        item = null;
-    }
-
 }

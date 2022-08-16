@@ -3,7 +3,7 @@ package me.Danker.features;
 import me.Danker.commands.MoveCommand;
 import me.Danker.commands.ScaleCommand;
 import me.Danker.commands.ToggleCommand;
-import me.Danker.events.RenderOverlay;
+import me.Danker.events.RenderOverlayEvent;
 import me.Danker.handlers.TextRenderer;
 import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;
@@ -56,7 +56,7 @@ public class DungeonTimer {
     }
 
     @SubscribeEvent
-    public void renderPlayerInfo(RenderOverlay event) {
+    public void renderPlayerInfo(RenderOverlayEvent event) {
         if (ToggleCommand.dungeonTimerToggled && Utils.inDungeons) {
             Minecraft mc = Minecraft.getMinecraft();
             String dungeonTimerText = EnumChatFormatting.GRAY + "Wither Doors:\n" +

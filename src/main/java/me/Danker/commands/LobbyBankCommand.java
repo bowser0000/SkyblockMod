@@ -5,6 +5,7 @@ import com.google.gson.JsonObject;
 import me.Danker.DankersSkyblockMod;
 import me.Danker.handlers.APIHandler;
 import me.Danker.handlers.ConfigHandler;
+import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.network.NetworkPlayerInfo;
 import net.minecraft.command.CommandBase;
@@ -55,7 +56,7 @@ public class LobbyBankCommand extends CommandBase {
             try {
                 // Create deep copy of players to prevent passing reference and ConcurrentModificationException
                 Collection<NetworkPlayerInfo> players = new ArrayList<>(Minecraft.getMinecraft().getNetHandler().getPlayerInfoMap());
-                playerSP.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Checking skill average of lobby. Estimated time: " + (int) (players.size() * 1.2 + 1) + " seconds."));
+                playerSP.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Checking bank of lobby. Estimated time: " + (int) (Utils.getMatchingPlayers("").size() * 1.2 + 1) + " seconds."));
                 // Send request every .6 seconds, leaving room for another 20 requests per minute
 
                 for (final NetworkPlayerInfo player : players) {
@@ -65,7 +66,7 @@ public class LobbyBankCommand extends CommandBase {
                     long biggestLastSave = 0;
                     int profileIndex = -1;
                     Thread.sleep(600);
-                    JsonObject profileResponse = APIHandler.getResponse("https://api.hypixel.net/skyblock/profiles?uuid=" + UUID + "&key=" + key);
+                    JsonObject profileResponse = APIHandler.getResponse("https://api.hypixel.net/skyblock/profiles?uuid=" + UUID + "&key=" + key, true);
                     if (!profileResponse.get("success").getAsBoolean()) {
                         String reason = profileResponse.get("cause").getAsString();
                         System.out.println("User " + player.getGameProfile().getName() + " failed with reason: " + reason);

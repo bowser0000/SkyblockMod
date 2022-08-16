@@ -21,7 +21,7 @@ public class DisplayCommand extends CommandBase {
 
 	@Override
 	public String getCommandUsage(ICommandSender arg0) {
-		return "/" + getCommandName() + " <zombie/spider/wolf/fishing/catacombs/mythological/ghost/auto/off> [winter/festival/spooky/session/f(1-7)]";
+		return "/" + getCommandName() + " <zombie/spider/wolf/enderman/blaze/fishing/catacombs/mythological/ghost/auto/off> [winter/festival/spooky/ch/lava/trophy/session/f(1-7)/mm]";
 	}
 
 	public static String usage(ICommandSender arg0) {
@@ -36,11 +36,11 @@ public class DisplayCommand extends CommandBase {
 	@Override
 	public List<String> addTabCompletionOptions(ICommandSender sender, String[] args, BlockPos pos) {
 		if (args.length == 1) {
-			return getListOfStringsMatchingLastWord(args, "wolf", "spider", "zombie", "fishing", "catacombs", "mythological", "ghost", "auto", "off");
+			return getListOfStringsMatchingLastWord(args, "wolf", "spider", "zombie", "enderman", "blaze", "fishing", "catacombs", "mythological", "ghost", "auto", "off");
 		} else if (args.length == 2 && args[0].equalsIgnoreCase("fishing")) {
-			return getListOfStringsMatchingLastWord(args, "winter", "festival", "spooky", "session");
+			return getListOfStringsMatchingLastWord(args, "winter", "festival", "spooky", "ch", "lava", "trophy", "session");
 		} else if (args.length == 2 && args[0].equalsIgnoreCase("catacombs")) {
-			return getListOfStringsMatchingLastWord(args, "f1", "floor1", "f2", "floor2", "f3", "floor3", "f4", "floor4", "f5", "floor5", "f6", "floor6", "f7", "floor7");
+			return getListOfStringsMatchingLastWord(args, "f1", "floor1", "f2", "floor2", "f3", "floor3", "f4", "floor4", "f5", "floor5", "f6", "floor6", "f7", "floor7", "mm", "master");
 		} else if (args.length > 1) {
 			return getListOfStringsMatchingLastWord(args, "session");
 		}
@@ -56,10 +56,8 @@ public class DisplayCommand extends CommandBase {
 			return;
 		}
 		
-		boolean showSession = false;
-		
-		if (arg1[arg1.length - 1].equalsIgnoreCase("session")) showSession = true;
-		
+		boolean showSession = arg1[arg1.length - 1].equalsIgnoreCase("session");
+
 		switch (arg1[0].toLowerCase()) {
 		case "wolf":
 			if (showSession) {
@@ -80,6 +78,20 @@ public class DisplayCommand extends CommandBase {
 				LootDisplay.display = "zombie_session";
 			} else {
 				LootDisplay.display = "zombie";
+			}
+			break;
+		case "enderman":
+			if (showSession) {
+				LootDisplay.display = "enderman_session";
+			} else {
+				LootDisplay.display = "enderman";
+			}
+			break;
+		case "blaze":
+			if (showSession) {
+				LootDisplay.display = "blaze_session";
+			} else {
+				LootDisplay.display = "blaze";
 			}
 			break;
 		case "fishing":
@@ -104,6 +116,27 @@ public class DisplayCommand extends CommandBase {
 							LootDisplay.display = "fishing_spooky_session";
 						} else {
 							LootDisplay.display = "fishing_spooky";
+						}
+						break;
+					case "ch":
+						if (showSession) {
+							LootDisplay.display = "fishing_ch_session";
+						} else {
+							LootDisplay.display = "fishing_ch";
+						}
+						break;
+					case "lava":
+						if (showSession) {
+							LootDisplay.display = "fishing_lava_session";
+						} else {
+							LootDisplay.display = "fishing_lava";
+						}
+						break;
+					case "trophy":
+						if (showSession) {
+							LootDisplay.display = "fishing_trophy_session";
+						} else {
+							LootDisplay.display = "fishing_trophy";
 						}
 						break;
 					default:
@@ -191,8 +224,15 @@ public class DisplayCommand extends CommandBase {
 						LootDisplay.display = "catacombs_floor_seven";
 					}
 					break;
+				case "mm":
+				case "master":
+					if (showSession) {
+						LootDisplay.display = "catacombs_master_session";
+					} else {
+						LootDisplay.display = "catacombs_master";
+					}
 				default:
-					player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Usage: /display catacombs <f1/f2/f3/f4/f5/f6/f7>"));
+					player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Usage: /display catacombs <f1/f2/f3/f4/f5/f6/f7/mm>"));
 					return;
 			}
 			break;
@@ -202,7 +242,7 @@ public class DisplayCommand extends CommandBase {
 			} else {
 				LootDisplay.display = "ghost";
 			}
-
+			break;
 		case "auto":
 			LootDisplay.auto = true;
 			player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Display set to " + DankersSkyblockMod.SECONDARY_COLOUR + "auto" + DankersSkyblockMod.MAIN_COLOUR + "."));

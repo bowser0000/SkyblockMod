@@ -14,10 +14,12 @@ import net.minecraft.util.ChatComponentText;
 import java.util.List;
 
 public class ToggleCommand extends CommandBase implements ICommand {
+	// Some of these end with toggled and some don't, I don't want to go back and fix them all for consistency
 	public static boolean gpartyToggled;
 	public static boolean coordsToggled;
 	public static boolean goldenToggled;
 	public static boolean slayerCountTotal;
+	public static boolean masterSPlusDisplay;
 	public static boolean rngesusAlerts;
 	public static boolean ghostDisplay;
 	public static boolean splitFishing;
@@ -30,9 +32,42 @@ public class ToggleCommand extends CommandBase implements ICommand {
 	public static boolean expertiseLoreToggled;
 	public static boolean skill50DisplayToggled;
 	public static boolean outlineTextToggled;
+	public static boolean lowHealthNotifyToggled;
+	public static boolean stopSalvageStarredToggled;
+	public static boolean watcherReadyToggled;
+	public static boolean swapToPickBlockToggled;
+	public static boolean flowerWeaponsToggled;
+	public static boolean notifySlayerSlainToggled;
+	public static boolean necronNotificationsToggled;
+	public static boolean bonzoTimerToggled;
+	public static boolean autoSkillTrackerToggled;
 	public static boolean cakeTimerToggled;
 	public static boolean highlightSlayers;
 	public static boolean highlightArachne;
+	public static boolean highlightSkeletonMasters;
+	public static boolean teammatesInRadius;
+	public static boolean giantHP;
+	public static boolean hidePetCandy;
+	public static boolean highlightCommissions;
+	public static boolean customColouredNames;
+	public static boolean customNametags;
+	public static boolean endOfFarmAlert;
+	public static boolean gemstoneLore;
+	public static boolean crystalHollowWaypoints;
+	public static boolean crystalAutoWaypoints;
+	public static boolean crystalAutoPlayerWaypoints;
+	public static boolean autoAcceptReparty;
+	public static boolean abilityCooldowns;
+	public static boolean alerts;
+	public static boolean dungeonScore;
+	public static boolean hideArmour;
+	public static boolean autoJoinSkyblock;
+	public static boolean firePillar;
+	public static boolean aliases;
+	public static boolean fishingAlert;
+	public static boolean minionLastCollected;
+	public static boolean showTrophyCompletion;
+	public static boolean showTotalMagmafish;
 	// Chat Messages
 	public static boolean sceptreMessages;
 	public static boolean midasStaffMessages;
@@ -41,30 +76,25 @@ public class ToggleCommand extends CommandBase implements ICommand {
 	public static boolean cooldownMessages;
 	public static boolean manaMessages;
 	public static boolean killComboMessages;
-	// Dungeons Messages
-	public static boolean lowHealthNotifyToggled;
-	public static boolean lividSolverToggled;
-	public static boolean stopSalvageStarredToggled;
-	public static boolean watcherReadyToggled;
-	public static boolean swapToPickBlockToggled;
-	public static boolean notifySlayerSlainToggled;
-	public static boolean necronNotificationsToggled;
-	public static boolean bonzoTimerToggled;
-	public static boolean autoSkillTrackerToggled;
 	// Puzzle Solvers
 	public static boolean threeManToggled;
 	public static boolean oruoToggled;
 	public static boolean blazeToggled;
 	public static boolean creeperToggled;
+	public static boolean creeperLinesToggled;
 	public static boolean waterToggled;
 	public static boolean ticTacToeToggled;
 	public static boolean boulderToggled;
 	public static boolean silverfishToggled;
 	public static boolean iceWalkToggled;
+	public static boolean lividSolverToggled;
 	// Terminal Helpers
 	public static boolean startsWithToggled;
 	public static boolean selectAllToggled;
 	public static boolean clickInOrderToggled;
+	public static boolean sameColourToggled;
+	public static boolean blockWrongTerminalClicksToggled;
+	public static boolean itemFrameOnSeaLanternsToggled;
 	// Experiments
 	public static boolean ultrasequencerToggled;
 	public static boolean chronomatronToggled;
@@ -75,7 +105,20 @@ public class ToggleCommand extends CommandBase implements ICommand {
 	public static boolean dungeonBossMusic;
 	public static boolean bloodRoomMusic;
 	public static boolean dungeonMusic;
+	public static boolean hubMusic;
+	public static boolean islandMusic;
+	public static boolean dungeonHubMusic;
+	public static boolean farmingIslandsMusic;
+	public static boolean goldMineMusic;
+	public static boolean deepCavernsMusic;
+	public static boolean dwarvenMinesMusic;
+	public static boolean crystalHollowsMusic;
+	public static boolean spidersDenMusic;
+	public static boolean crimsonIsleMusic;
+	public static boolean endMusic;
+	public static boolean parkMusic;
 
+	// NO LONGER UPDATED
 	@Override
 	public String getCommandName() {
 		return "toggle";
@@ -83,17 +126,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 
 	@Override
 	public String getCommandUsage(ICommandSender arg0) {
-
-		return "/" + getCommandName() + " <gparty/coords/golden/slayercount/rngesusalerts/splitfishing/ghostdisplay/chatmaddox/spiritbearalert/" +
-										  "sceptremessages/petcolors/dungeontimer/golemalerts/expertiselore/" + //ghosttimer
-										  "skill50display/outlinetext/midasstaffmessages/implosionmessages/healmessages/cooldownmessages/" +
-										  "manamessages/killcombomessages/caketimer/lowhealthnotify/lividsolver/stopsalvagestarred/" +
-										  "notifyslayerslain/necronnotifications/bonzotimer/threemanpuzzle/oruopuzzle/blazepuzzle/" +
-										  "creeperpuzzle/waterpuzzle/tictactoepuzzle/boulderpuzzle/silverfishpuzzle/icewalkpuzzle/watchermessage/" +
-										  "startswithterminal/selectallterminal/clickinorderterminal/" +
-										  "ultrasequencer/chronomatron/superpairs/hidetooltipsinaddons/pickblock/" +
-										  "melodytooltips/highlightslayers/highlightarachne/dungeonbossmusic/bloodroommusic/" +
-										  "dungeonmusic/list>";
+		return "/" + getCommandName() + " <too many to list>";
 	}
 
 	public static String usage(ICommandSender arg0) {
@@ -109,23 +142,28 @@ public class ToggleCommand extends CommandBase implements ICommand {
 	public List<String> addTabCompletionOptions(ICommandSender sender, String[] args, BlockPos pos) {
 		if (args.length == 1) {
 			return getListOfStringsMatchingLastWord(args, "gparty", "coords", "golden", "slayercount", "rngesusalerts", "highlightArachne",
-														  "splitfishing", "chatmaddox", "spiritbearalerts",
+														  "splitfishing", "chatmaddox", "spiritbearalerts", "flowerweapons",
 														  "sceptremessages", "petcolors", "dungeontimer", "golemalerts",
 														  "expertiselore", "skill50display", "outlinetext", "midasstaffmessages",
 														  "implosionmessages", "healmessages", "cooldownmessages", "manamessages",
 														  "killcombomessages", "caketimer", "lowhealthnotify", "autoskilltracker", "lividsolver",
 														  "stopsalvagestarred", "notifyslayerslain", "necronnotifications",
 														  "bonzotimer", "threemanpuzzle", "oruopuzzle", "blazepuzzle",
-														  "creeperpuzzle", "waterpuzzle", "tictactoepuzzle", "boulderpuzzle",
+														  "creeperpuzzle", "creeperlines", "waterpuzzle", "tictactoepuzzle", "boulderpuzzle",
 														  "silverfishpuzzle", "icewalkpuzzle", "watchermessage", "startswithterminal",
-														  "selectallterminal", "clickinorderterminal",
-														  "ultrasequencer", "chronomatron", "superpairs",
+														  "selectallterminal", "clickinorderterminal", "blockwrongterminalclicks",
+														  "ultrasequencer", "chronomatron", "superpairs", "itemframeonsealanterns",
 														  "hidetooltipsinaddons", "pickblock", "melodytooltips", "highlightslayers",
-														  "dungeonbossmusic", "bloodroommusic", "dungeonmusic", "list");
+														  "highlightskeletonmasters", "dungeonbossmusic", "bloodroommusic", "dungeonmusic",
+														  "teammatesinradius", "gianthp", "hidepetcandy", "customcolorednames", "endoffarmalert",
+														  "gemstonelore", "crystalhollowwaypoints", "crystalautowaypoints", "autoacceptreparty",
+														  "itemcooldowns", "hubmusic", "islandmusic", "dungeonhubmusic", "farmingislandsmusic", "goldminemusic",
+														  "deepcavernsmusic", "dwarvenminesmusic", "crystalhollowsmusic", "spidersdenmusic", "blazingfortressmusic",
+														  "endmusic", "parkmusic", "alerts", "dungeonscore", "highlightcommissions", "list");
 		}
 		return null;
 	}
-	
+
 	@Override
 	public void processCommand(ICommandSender arg0, String[] arg1) throws CommandException {
 		final EntityPlayer player = (EntityPlayer)arg0;
@@ -185,6 +223,11 @@ public class ToggleCommand extends CommandBase implements ICommand {
 				sceptreMessages = !sceptreMessages;
 				ConfigHandler.writeBooleanConfig("toggles", "SceptreMessages", sceptreMessages);
 				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Spirit Sceptre messages have been set to " + DankersSkyblockMod.SECONDARY_COLOUR + sceptreMessages + DankersSkyblockMod.MAIN_COLOUR + "."));
+				break;
+			case "flowerweapons":
+				flowerWeaponsToggled = !flowerWeaponsToggled;
+				ConfigHandler.writeBooleanConfig("toggles", "FlowerWeapons", flowerWeaponsToggled);
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Prevent Placing FoT/Spirit Sceptre been set to " + DankersSkyblockMod.SECONDARY_COLOUR + flowerWeaponsToggled + DankersSkyblockMod.MAIN_COLOUR + "."));
 				break;
 			case "midasstaffmessages":
 				midasStaffMessages = !midasStaffMessages;
@@ -285,7 +328,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 			case "bonzotimer":
 				bonzoTimerToggled = !bonzoTimerToggled;
 				ConfigHandler.writeBooleanConfig("toggles", "BonzoTimer", bonzoTimerToggled);
-				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Bonzo's Mask timer has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + necronNotificationsToggled + DankersSkyblockMod.MAIN_COLOUR + "."));
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Bonzo's Mask timer has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + bonzoTimerToggled + DankersSkyblockMod.MAIN_COLOUR + "."));
 				break;
 			case "autoskilltracker":
 				autoSkillTrackerToggled = !autoSkillTrackerToggled;
@@ -311,6 +354,11 @@ public class ToggleCommand extends CommandBase implements ICommand {
 				creeperToggled = !creeperToggled;
 				ConfigHandler.writeBooleanConfig("toggles", "CreeperPuzzle", creeperToggled);
 				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Creeper puzzle solver has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + creeperToggled + DankersSkyblockMod.MAIN_COLOUR + "."));
+				break;
+			case "creeperlines":
+				creeperLinesToggled = !creeperLinesToggled;
+				ConfigHandler.writeBooleanConfig("toggles", "CreeperLines", creeperLinesToggled);
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Creeper lines has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + creeperLinesToggled + DankersSkyblockMod.MAIN_COLOUR + "."));
 				break;
 			case "waterpuzzle":
 				waterToggled = !waterToggled;
@@ -357,6 +405,16 @@ public class ToggleCommand extends CommandBase implements ICommand {
 				ConfigHandler.writeBooleanConfig("toggles", "ClickInOrderTerminal", clickInOrderToggled);
 				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Click in order terminal helper has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + selectAllToggled + DankersSkyblockMod.MAIN_COLOUR + "."));
 				break;
+			case "blockwrongterminalclicks":
+				blockWrongTerminalClicksToggled = !blockWrongTerminalClicksToggled;
+				ConfigHandler.writeBooleanConfig("toggles", "BlockWrongTerminalClicks", blockWrongTerminalClicksToggled);
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Block wrong clicks on terminals has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + blockWrongTerminalClicksToggled + DankersSkyblockMod.MAIN_COLOUR + "."));
+				break;
+			case "itemframeonsealanterns":
+				itemFrameOnSeaLanternsToggled = !itemFrameOnSeaLanternsToggled;
+				ConfigHandler.writeBooleanConfig("toggles", "IgnoreItemFrameOnSeaLanterns", itemFrameOnSeaLanternsToggled);
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Ignore item frames on sea lanterns has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + itemFrameOnSeaLanternsToggled + DankersSkyblockMod.MAIN_COLOUR + "."));
+				break;
 			case "ultrasequencer":
 				ultrasequencerToggled = !ultrasequencerToggled;
 				ConfigHandler.writeBooleanConfig("toggles", "UltraSequencer", ultrasequencerToggled);
@@ -385,17 +443,78 @@ public class ToggleCommand extends CommandBase implements ICommand {
 			case "melodytooltips":
 				melodyTooltips = !melodyTooltips;
 				ConfigHandler.writeBooleanConfig("toggles", "MelodyTooltips", melodyTooltips);
-				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Hide tooltips in Melody's Harp " + DankersSkyblockMod.SECONDARY_COLOUR + melodyTooltips + DankersSkyblockMod.MAIN_COLOUR + "."));
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Hide tooltips in Melody's Harp has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + melodyTooltips + DankersSkyblockMod.MAIN_COLOUR + "."));
 				break;
 			case "highlightslayers":
 				highlightSlayers = !highlightSlayers;
 				ConfigHandler.writeBooleanConfig("toggles", "HighlightSlayers", highlightSlayers);
-				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Highlight Slayer Bosses " + DankersSkyblockMod.SECONDARY_COLOUR + highlightSlayers + DankersSkyblockMod.MAIN_COLOUR + "."));
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Highlight Slayer Bosses has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + highlightSlayers + DankersSkyblockMod.MAIN_COLOUR + "."));
 				break;
-			case "highlightArachne":
+			case "highlightarachne":
 				highlightArachne = !highlightArachne;
 				ConfigHandler.writeBooleanConfig("toggles", "HighlightArachne", highlightArachne);
-				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Highlight Arachne " + DankersSkyblockMod.SECONDARY_COLOUR + highlightArachne + DankersSkyblockMod.MAIN_COLOUR + "."));
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Highlight Arachne has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + highlightArachne + DankersSkyblockMod.MAIN_COLOUR + "."));
+				break;
+			case "highlightskeletonmasters":
+				highlightSkeletonMasters = !highlightSkeletonMasters;
+				ConfigHandler.writeBooleanConfig("toggles", "HighlightSkeletonMasters", highlightSkeletonMasters);
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Highlight Skeleton Masters has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + highlightSkeletonMasters + DankersSkyblockMod.MAIN_COLOUR + "."));
+				break;
+			case "teammatesinradius":
+				teammatesInRadius = !teammatesInRadius;
+				ConfigHandler.writeBooleanConfig("toggles", "TeammatesInRadius", teammatesInRadius);
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Teammates in radius has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + teammatesInRadius + DankersSkyblockMod.MAIN_COLOUR + "."));
+				break;
+			case "gianthp":
+				giantHP = !giantHP;
+				ConfigHandler.writeBooleanConfig("toggles", "GiantHP", giantHP);
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Giant HP display has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + giantHP + DankersSkyblockMod.MAIN_COLOUR + "."));
+				break;
+			case "hidepetcandy":
+				hidePetCandy = !hidePetCandy;
+				ConfigHandler.writeBooleanConfig("toggles", "HidePetCandy", hidePetCandy);
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Hide pet candy has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + hidePetCandy + DankersSkyblockMod.MAIN_COLOUR + "."));
+				break;
+			case "highlightcommissions":
+				highlightCommissions = !highlightCommissions;
+				ConfigHandler.writeBooleanConfig("toggles", "HighlightCommissions", highlightCommissions);
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Highlight Commissions has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + highlightCommissions + DankersSkyblockMod.MAIN_COLOUR + "."));
+			case "customcolorednames":
+			case "customcolourednames":
+				customColouredNames = !customColouredNames;
+				ConfigHandler.writeBooleanConfig("toggles", "CustomColouredNames", customColouredNames);
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Custom name colors has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + customColouredNames + DankersSkyblockMod.MAIN_COLOUR + "."));
+				break;
+			case "endoffarmalert":
+				endOfFarmAlert = !endOfFarmAlert;
+				ConfigHandler.writeBooleanConfig("toggles", "EndOfFarmAlert", endOfFarmAlert);
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "End of farm alert has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + endOfFarmAlert + DankersSkyblockMod.MAIN_COLOUR + "."));
+				break;
+			case "gemstonelore":
+				gemstoneLore = !gemstoneLore;
+				ConfigHandler.writeBooleanConfig("toggles", "GemstoneLore", gemstoneLore);
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Gemstone in lore has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + gemstoneLore + DankersSkyblockMod.MAIN_COLOUR + "."));
+				break;
+			case "crystalhollowwaypoints":
+				crystalHollowWaypoints = !crystalHollowWaypoints;
+				ConfigHandler.writeBooleanConfig("toggles", "CrystalHollowWaypoints", crystalHollowWaypoints);
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Crystal Hollows waypoints has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + crystalHollowWaypoints + DankersSkyblockMod.MAIN_COLOUR + "."));
+				break;
+			case "crystalautowaypoints":
+				crystalAutoWaypoints = !crystalAutoWaypoints;
+				ConfigHandler.writeBooleanConfig("toggles", "CrystalAutoWaypoints", crystalAutoWaypoints);
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Auto Crystal Hollows waypoints has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + crystalAutoWaypoints + DankersSkyblockMod.MAIN_COLOUR + "."));
+				break;
+			case "autoacceptreparty":
+				autoAcceptReparty = !autoAcceptReparty;
+				ConfigHandler.writeBooleanConfig("toggles", "AutoAcceptReparty", autoAcceptReparty);
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Auto accept reparty has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + autoAcceptReparty + DankersSkyblockMod.MAIN_COLOUR + "."));
+				break;
+			case "abilitycooldowns":
+				abilityCooldowns = !abilityCooldowns;
+				ConfigHandler.writeBooleanConfig("toggles", "AbilityCooldowns", abilityCooldowns);
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Ability cooldowns display as been set to " + DankersSkyblockMod.SECONDARY_COLOUR + abilityCooldowns + DankersSkyblockMod.MAIN_COLOUR + "."));
+				break;
 			case "dungeonbossmusic":
 				dungeonBossMusic = !dungeonBossMusic;
 				CustomMusic.dungeonboss.stop();
@@ -414,6 +533,88 @@ public class ToggleCommand extends CommandBase implements ICommand {
 				ConfigHandler.writeBooleanConfig("toggles", "DungeonMusic", dungeonMusic);
 				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Custom dungeon music has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + dungeonMusic + DankersSkyblockMod.MAIN_COLOUR + "."));
 				break;
+			case "hubmusic":
+				hubMusic = !hubMusic;
+				CustomMusic.hub.stop();
+				ConfigHandler.writeBooleanConfig("toggles", "HubMusic", hubMusic);
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Custom hub music has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + hubMusic + DankersSkyblockMod.MAIN_COLOUR + "."));
+				break;
+			case "islandmusic":
+				islandMusic = !islandMusic;
+				CustomMusic.island.stop();
+				ConfigHandler.writeBooleanConfig("toggles", "IslandMusic", islandMusic);
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Custom island music has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + islandMusic + DankersSkyblockMod.MAIN_COLOUR + "."));
+				break;
+			case "dungeonhubmusic":
+				dungeonHubMusic = !dungeonHubMusic;
+				CustomMusic.dungeonHub.stop();
+				ConfigHandler.writeBooleanConfig("toggles", "DungeonHubMusic", dungeonHubMusic);
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Custom dungeon hub music has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + dungeonHubMusic + DankersSkyblockMod.MAIN_COLOUR + "."));
+				break;
+			case "farmingislandsmusic":
+				farmingIslandsMusic = !farmingIslandsMusic;
+				CustomMusic.farmingIslands.stop();
+				ConfigHandler.writeBooleanConfig("toggles", "FarmingIslandsMusic", farmingIslandsMusic);
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Custom farming islands music has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + farmingIslandsMusic + DankersSkyblockMod.MAIN_COLOUR + "."));
+				break;
+			case "goldminemusic":
+				goldMineMusic = !goldMineMusic;
+				CustomMusic.goldMine.stop();
+				ConfigHandler.writeBooleanConfig("toggles", "GoldMineMusic", goldMineMusic);
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Custom gold mine music has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + goldMineMusic + DankersSkyblockMod.MAIN_COLOUR + "."));
+				break;
+			case "deepcavernsmusic":
+				deepCavernsMusic = !deepCavernsMusic;
+				CustomMusic.deepCaverns.stop();
+				ConfigHandler.writeBooleanConfig("toggles", "DeepCavernsMusic", deepCavernsMusic);
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Custom deep caverns music has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + deepCavernsMusic + DankersSkyblockMod.MAIN_COLOUR + "."));
+				break;
+			case "dwarvenminesmusic":
+				dwarvenMinesMusic = !dwarvenMinesMusic;
+				CustomMusic.dwarvenMines.stop();
+				ConfigHandler.writeBooleanConfig("toggles", "DwarvenMinesMusic", dwarvenMinesMusic);
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Custom dwarven mines music has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + dwarvenMinesMusic + DankersSkyblockMod.MAIN_COLOUR + "."));
+				break;
+			case "crystalhollowsmusic":
+				crystalHollowsMusic = !crystalHollowsMusic;
+				CustomMusic.crystalHollows.stop();
+				ConfigHandler.writeBooleanConfig("toggles", "CrystalHollowsMusic", crystalHollowsMusic);
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Custom crystal hollows music has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + crystalHollowsMusic + DankersSkyblockMod.MAIN_COLOUR + "."));
+				break;
+			case "spidersdenmusic":
+				spidersDenMusic = !spidersDenMusic;
+				CustomMusic.spidersDen.stop();
+				ConfigHandler.writeBooleanConfig("toggles", "SpidersDenMusic", spidersDenMusic);
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Custom spider's den music has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + spidersDenMusic + DankersSkyblockMod.MAIN_COLOUR + "."));
+				break;
+			case "blazingfortressmusic":
+				crimsonIsleMusic = !crimsonIsleMusic;
+				CustomMusic.crimsonIsle.stop();
+				ConfigHandler.writeBooleanConfig("toggles", "CrimsonIsleMusic", crimsonIsleMusic);
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Custom crimson isle music has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + crimsonIsleMusic + DankersSkyblockMod.MAIN_COLOUR + "."));
+				break;
+			case "endmusic":
+				endMusic = !endMusic;
+				CustomMusic.end.stop();
+				ConfigHandler.writeBooleanConfig("toggles", "EndMusic", endMusic);
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Custom end music has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + endMusic + DankersSkyblockMod.MAIN_COLOUR + "."));
+				break;
+			case "parkmusic":
+				parkMusic = !parkMusic;
+				CustomMusic.park.stop();
+				ConfigHandler.writeBooleanConfig("toggles", "DungeonMusic", parkMusic);
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Custom park music has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + parkMusic + DankersSkyblockMod.MAIN_COLOUR + "."));
+				break;
+			case "alert":
+				alerts = !alerts;
+				ConfigHandler.writeBooleanConfig("toggles", "Alerts", alerts);
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Alerts has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + alerts + DankersSkyblockMod.MAIN_COLOUR + "."));
+				break;
+			case "dungeonscore":
+				dungeonScore = !dungeonScore;
+				ConfigHandler.writeBooleanConfig("toggles", "DungeonScore", dungeonScore);
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Dungeon score has been set to " + DankersSkyblockMod.SECONDARY_COLOUR + dungeonScore + DankersSkyblockMod.MAIN_COLOUR + "."));
+				break;
 			case "list":
 				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.TYPE_COLOUR + "Guild party notifications: " + DankersSkyblockMod.VALUE_COLOUR + gpartyToggled + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Coord/Angle display: " + DankersSkyblockMod.VALUE_COLOUR + coordsToggled + "\n" +
@@ -423,6 +624,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 															DankersSkyblockMod.TYPE_COLOUR + " Split fishing display: " + DankersSkyblockMod.VALUE_COLOUR + splitFishing + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Chat Maddox menu: " + DankersSkyblockMod.VALUE_COLOUR + chatMaddoxToggled + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Spirit Bear alerts: " + DankersSkyblockMod.VALUE_COLOUR + spiritBearAlerts + "\n" +
+															DankersSkyblockMod.TYPE_COLOUR + " Prevent Placing FoT/Spirit Sceptre: " + DankersSkyblockMod.VALUE_COLOUR + flowerWeaponsToggled + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Spirit Sceptre messages: " + DankersSkyblockMod.VALUE_COLOUR + sceptreMessages + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Midas Staff messages: " + DankersSkyblockMod.VALUE_COLOUR + midasStaffMessages + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Implosion messages: " + DankersSkyblockMod.VALUE_COLOUR + implosionMessages + "\n" +
@@ -443,6 +645,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 															DankersSkyblockMod.TYPE_COLOUR + " Oruo trivia solver: " + DankersSkyblockMod.VALUE_COLOUR + oruoToggled + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Blaze puzzle solver: " + DankersSkyblockMod.VALUE_COLOUR + blazeToggled + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Creeper puzzle solver: " + DankersSkyblockMod.VALUE_COLOUR + creeperToggled + "\n" +
+															DankersSkyblockMod.TYPE_COLOUR + " Creeper lines: " + DankersSkyblockMod.VALUE_COLOUR + creeperLinesToggled + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Water puzzle solver: " + DankersSkyblockMod.VALUE_COLOUR + waterToggled + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Tic tac toe puzzle solver: " + DankersSkyblockMod.VALUE_COLOUR + ticTacToeToggled + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Boulder puzzle solver: " + DankersSkyblockMod.VALUE_COLOUR + boulderToggled + "\n" +
@@ -451,17 +654,44 @@ public class ToggleCommand extends CommandBase implements ICommand {
 															DankersSkyblockMod.TYPE_COLOUR + " Watcher ready message: " + DankersSkyblockMod.VALUE_COLOUR + watcherReadyToggled + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Starts with letter terminal solver: " + DankersSkyblockMod.VALUE_COLOUR + startsWithToggled + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Select all color items terminal solver: " + DankersSkyblockMod.VALUE_COLOUR + selectAllToggled + "\n" +
+															DankersSkyblockMod.TYPE_COLOUR + " Ignore item frames on sea lanterns: " + DankersSkyblockMod.VALUE_COLOUR + itemFrameOnSeaLanternsToggled + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Ultra sequencer solver: " + DankersSkyblockMod.VALUE_COLOUR + ultrasequencerToggled + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Chronomatron solver: " + DankersSkyblockMod.VALUE_COLOUR + chronomatronToggled + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Superpairs solver: " + DankersSkyblockMod.VALUE_COLOUR + superpairsToggled + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Hide tooltips in experiment addons: " + DankersSkyblockMod.VALUE_COLOUR + hideTooltipsInExperimentAddonsToggled + "\n" +
-															DankersSkyblockMod.TYPE_COLOUR + " Auto-swap to pick block " + DankersSkyblockMod.VALUE_COLOUR + swapToPickBlockToggled + "\n" +
-															DankersSkyblockMod.TYPE_COLOUR + " Hide tooltips in Melody's Harp " + DankersSkyblockMod.VALUE_COLOUR + melodyTooltips + "\n" +
-															DankersSkyblockMod.TYPE_COLOUR + " Highlight Slayer Bosses " + DankersSkyblockMod.VALUE_COLOUR + highlightSlayers + "\n" +
-															DankersSkyblockMod.TYPE_COLOUR + " Highlight Arachne Boss " + DankersSkyblockMod.VALUE_COLOUR + highlightArachne + "\n" +
+															DankersSkyblockMod.TYPE_COLOUR + " Auto-swap to pick block: " + DankersSkyblockMod.VALUE_COLOUR + swapToPickBlockToggled + "\n" +
+															DankersSkyblockMod.TYPE_COLOUR + " Hide tooltips in Melody's Harp: " + DankersSkyblockMod.VALUE_COLOUR + melodyTooltips + "\n" +
+															DankersSkyblockMod.TYPE_COLOUR + " Highlight Slayer Bosses: " + DankersSkyblockMod.VALUE_COLOUR + highlightSlayers + "\n" +
+															DankersSkyblockMod.TYPE_COLOUR + " Highlight Arachne Boss: " + DankersSkyblockMod.VALUE_COLOUR + highlightArachne + "\n" +
+															DankersSkyblockMod.TYPE_COLOUR + " Highlight Skeleton Masters: " + DankersSkyblockMod.VALUE_COLOUR + highlightSkeletonMasters + "\n" +
+															DankersSkyblockMod.TYPE_COLOUR + " Teammates in radius: " + DankersSkyblockMod.VALUE_COLOUR + teammatesInRadius + "\n" +
+															DankersSkyblockMod.TYPE_COLOUR + " Giant HP display: " + DankersSkyblockMod.VALUE_COLOUR + giantHP + "\n" +
+															DankersSkyblockMod.TYPE_COLOUR + " Hide pet candy: " + DankersSkyblockMod.VALUE_COLOUR + hidePetCandy + "\n" +
+															DankersSkyblockMod.TYPE_COLOUR + " Highlight commissions: " + DankersSkyblockMod.VALUE_COLOUR + highlightCommissions + "\n" +
+															DankersSkyblockMod.TYPE_COLOUR + " Custom name colors: " + DankersSkyblockMod.VALUE_COLOUR + customColouredNames + "\n" +
+															DankersSkyblockMod.TYPE_COLOUR + " End of farm alert: " + DankersSkyblockMod.VALUE_COLOUR + endOfFarmAlert + "\n" +
+															DankersSkyblockMod.TYPE_COLOUR + " Gemstone in lore: " + DankersSkyblockMod.VALUE_COLOUR + gemstoneLore + "\n" +
+															DankersSkyblockMod.TYPE_COLOUR + " Crystal Hollows waypoints: " + DankersSkyblockMod.VALUE_COLOUR + crystalHollowWaypoints + "\n" +
+															DankersSkyblockMod.TYPE_COLOUR + " Auto Crystal Hollows waypoints: " + DankersSkyblockMod.VALUE_COLOUR + crystalAutoWaypoints + "\n" +
+															DankersSkyblockMod.TYPE_COLOUR + " Auto accept reparty: " + DankersSkyblockMod.VALUE_COLOUR + autoAcceptReparty + "\n" +
+															DankersSkyblockMod.TYPE_COLOUR + " Ability cooldown display: " + DankersSkyblockMod.VALUE_COLOUR + abilityCooldowns + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Custom dungeon boss music: " + DankersSkyblockMod.VALUE_COLOUR + dungeonBossMusic + "\n" +
 															DankersSkyblockMod.TYPE_COLOUR + " Custom blood room music: " + DankersSkyblockMod.VALUE_COLOUR + bloodRoomMusic + "\n" +
-															DankersSkyblockMod.TYPE_COLOUR + " Custom dungeon music: " + DankersSkyblockMod.VALUE_COLOUR + dungeonMusic
+															DankersSkyblockMod.TYPE_COLOUR + " Custom dungeon music: " + DankersSkyblockMod.VALUE_COLOUR + dungeonMusic + "\n" +
+															DankersSkyblockMod.TYPE_COLOUR + " Custom hub music: " + DankersSkyblockMod.VALUE_COLOUR + hubMusic + "\n" +
+															DankersSkyblockMod.TYPE_COLOUR + " Custom island music: " + DankersSkyblockMod.VALUE_COLOUR + islandMusic + "\n" +
+															DankersSkyblockMod.TYPE_COLOUR + " Custom dungeon hub music: " + DankersSkyblockMod.VALUE_COLOUR + dungeonHubMusic + "\n" +
+															DankersSkyblockMod.TYPE_COLOUR + " Custom farming islands music: " + DankersSkyblockMod.VALUE_COLOUR + farmingIslandsMusic + "\n" +
+															DankersSkyblockMod.TYPE_COLOUR + " Custom gold mine music: " + DankersSkyblockMod.VALUE_COLOUR + goldMineMusic + "\n" +
+															DankersSkyblockMod.TYPE_COLOUR + " Custom deep caverns music: " + DankersSkyblockMod.VALUE_COLOUR + deepCavernsMusic + "\n" +
+															DankersSkyblockMod.TYPE_COLOUR + " Custom dwarven mines music: " + DankersSkyblockMod.VALUE_COLOUR + dwarvenMinesMusic + "\n" +
+															DankersSkyblockMod.TYPE_COLOUR + " Custom crystal hollows music: " + DankersSkyblockMod.VALUE_COLOUR + crystalHollowsMusic + "\n" +
+															DankersSkyblockMod.TYPE_COLOUR + " Custom spider's den music: " + DankersSkyblockMod.VALUE_COLOUR + spidersDenMusic + "\n" +
+															DankersSkyblockMod.TYPE_COLOUR + " Custom blazing fortress music: " + DankersSkyblockMod.VALUE_COLOUR + crimsonIsleMusic + "\n" +
+															DankersSkyblockMod.TYPE_COLOUR + " Custom end music: " + DankersSkyblockMod.VALUE_COLOUR + endMusic + "\n" +
+															DankersSkyblockMod.TYPE_COLOUR + " Custom park music: " + DankersSkyblockMod.VALUE_COLOUR + parkMusic + "\n" +
+															DankersSkyblockMod.TYPE_COLOUR + " Alerts: " + DankersSkyblockMod.VALUE_COLOUR + alerts + "\n" +
+															DankersSkyblockMod.TYPE_COLOUR + " Dungeon score: " + DankersSkyblockMod.VALUE_COLOUR + dungeonScore
 				));
 				break;
 			default:

@@ -1,6 +1,7 @@
 package me.Danker.features;
 
 import me.Danker.commands.ToggleCommand;
+import me.Danker.events.ModInitEvent;
 import me.Danker.utils.Utils;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
@@ -15,7 +16,8 @@ public class GoldenEnchants {
     public static Map<String, String> t6Enchants = new HashMap<>();
     public static Pattern t6EnchantPattern = Pattern.compile("");
 
-    public static void init() {
+    @SubscribeEvent
+    public void init(ModInitEvent event) {
         t6Enchants.put("9Angler VI", "6Angler VI");
         t6Enchants.put("9Bane of Arthropods VI", "6Bane of Arthropods VI");
         t6Enchants.put("9Caster VI", "6Caster VI");

@@ -27,7 +27,7 @@ public class SlayerCommand extends CommandBase {
 
 	@Override
 	public List<String> getCommandAliases() {
-		return Collections.singletonList("slayer");
+		return Collections.singletonList("slayers");
 	}
 
 	@Override
@@ -62,6 +62,7 @@ public class SlayerCommand extends CommandBase {
 			String key = ConfigHandler.getString("api", "APIKey");
 			if (key.equals("")) {
 				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "API key not set. Use /setkey."));
+				return;
 			}
 			
 			// Get UUID for Hypixel API requests
@@ -83,7 +84,7 @@ public class SlayerCommand extends CommandBase {
 			
 			String profileURL = "https://api.hypixel.net/skyblock/profile?profile=" + latestProfile + "&key=" + key;
 			System.out.println("Fetching profile...");
-			JsonObject profileResponse = APIHandler.getResponse(profileURL);
+			JsonObject profileResponse = APIHandler.getResponse(profileURL, true);
 			if (!profileResponse.get("success").getAsBoolean()) {
 				String reason = profileResponse.get("cause").getAsString();
 				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Failed with reason: " + reason));
@@ -107,14 +108,26 @@ public class SlayerCommand extends CommandBase {
 			if (slayersObject.get("wolf").getAsJsonObject().has("xp")) {
 				wolfXP = slayersObject.get("wolf").getAsJsonObject().get("xp").getAsInt();
 			}
+			// Enderman
+			int endermanXP = 0;
+			if (slayersObject.get("enderman").getAsJsonObject().has("xp")) {
+				endermanXP = slayersObject.get("enderman").getAsJsonObject().get("xp").getAsInt();
+			}
+			// Blaze
+			int blazeXP = 0;
+			if (slayersObject.get("blaze").getAsJsonObject().has("xp")) {
+				blazeXP = slayersObject.get("blaze").getAsJsonObject().get("xp").getAsInt();
+			}
 			
 			NumberFormat nf = NumberFormat.getIntegerInstance(Locale.US);
 			player.addChatMessage(new ChatComponentText(DankersSkyblockMod.DELIMITER_COLOUR + "" + EnumChatFormatting.BOLD + "-------------------\n" +
-														EnumChatFormatting.AQUA + " " + username + "'s Total XP: " + EnumChatFormatting.GOLD + EnumChatFormatting.BOLD + nf.format(zombieXP + spiderXP + wolfXP) + "\n" +
+														EnumChatFormatting.AQUA + " " + username + "'s Total XP: " + EnumChatFormatting.GOLD + EnumChatFormatting.BOLD + nf.format(zombieXP + spiderXP + wolfXP + endermanXP + blazeXP) + "\n" +
 														DankersSkyblockMod.TYPE_COLOUR + " Zombie XP: " + DankersSkyblockMod.VALUE_COLOUR + EnumChatFormatting.BOLD + nf.format(zombieXP) + "\n" +
 														DankersSkyblockMod.TYPE_COLOUR + " Spider XP: " + DankersSkyblockMod.VALUE_COLOUR + EnumChatFormatting.BOLD + nf.format(spiderXP) + "\n" +
 														DankersSkyblockMod.TYPE_COLOUR + " Wolf XP: " + DankersSkyblockMod.VALUE_COLOUR + EnumChatFormatting.BOLD + nf.format(wolfXP) + "\n" +
-														DankersSkyblockMod.DELIMITER_COLOUR + " " + EnumChatFormatting.BOLD + "-------------------"));
+														DankersSkyblockMod.TYPE_COLOUR + " Enderman XP: " + DankersSkyblockMod.VALUE_COLOUR + EnumChatFormatting.BOLD + nf.format(endermanXP) + "\n" +
+														DankersSkyblockMod.TYPE_COLOUR + " Blaze XP: " + DankersSkyblockMod.VALUE_COLOUR + EnumChatFormatting.BOLD + nf.format(blazeXP) + "\n" +
+														DankersSkyblockMod.DELIMITER_COLOUR + EnumChatFormatting.BOLD + "-------------------"));
 			
 		}).start();
 	}

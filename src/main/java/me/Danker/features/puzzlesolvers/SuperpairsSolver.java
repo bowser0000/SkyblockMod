@@ -2,6 +2,7 @@ package me.Danker.features.puzzlesolvers;
 
 import me.Danker.commands.ToggleCommand;
 import me.Danker.events.GuiChestBackgroundDrawnEvent;
+import me.Danker.utils.RenderUtils;
 import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -135,9 +136,7 @@ public class SuperpairsSolver {
                 ArrayList<Slot> slots = new ArrayList<>();
                 slotSet.forEach(slotNum -> slots.add(event.slots.get(slotNum)));
                 Color color = colorIterator.next();
-                slots.forEach(slot -> {
-                    Utils.drawOnSlot(event.chestSize, slot.xDisplayPosition, slot.yDisplayPosition, color.getRGB());
-                });
+                slots.forEach(slot -> RenderUtils.drawOnSlot(event.chestSize, slot.xDisplayPosition, slot.yDisplayPosition, color.getRGB()));
             });
         }
     }

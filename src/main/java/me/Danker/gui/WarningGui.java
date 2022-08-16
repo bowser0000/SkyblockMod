@@ -1,10 +1,11 @@
 package me.Danker.gui;
 
-import me.Danker.handlers.TextRenderer;
+import me.Danker.utils.RenderUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.util.EnumChatFormatting;
 
 public class WarningGui extends GuiScreen {
     private GuiButton close;
@@ -34,15 +35,11 @@ public class WarningGui extends GuiScreen {
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
         this.drawDefaultBackground();
-        String text0 = "§cWARNING!§0";
-        int text0Width = mc.fontRendererObj.getStringWidth(text0);
-        new TextRenderer(mc, text0, (int)(width * 0.45) - text0Width / 2, (int) (height * 0.1), 2 );
-        String text1 = "You are using SpiderFrog's Old Animations mod.";
-        int text1Width = mc.fontRendererObj.getStringWidth(text1);
-        new TextRenderer(mc, text1, width / 2 - text1Width / 2, (int) (height * 0.3), 1D );
-        String text2 = "This mod breaks Danker's Skyblock Mod.";
-        int text2Width = mc.fontRendererObj.getStringWidth(text2);
-        new TextRenderer(mc, text2, width / 2 - text2Width / 2, (int) (height * 0.4), 1D);
+
+        RenderUtils.drawCenteredText(EnumChatFormatting.RED + "WARNING!", (int) (width * 0.9), (int) (height * 0.1), 2D);
+        RenderUtils.drawCenteredText("You are using SpiderFrog's Old Animations mod.", width, (int) (height * 0.3), 1D);
+        RenderUtils.drawCenteredText("This mod breaks Danker's Skyblock Mod.", width, (int) (height * 0.4), 1D);
+
         super.drawScreen(mouseX, mouseY, partialTicks);
     }
 

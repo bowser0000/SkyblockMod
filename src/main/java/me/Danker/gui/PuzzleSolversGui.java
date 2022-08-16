@@ -1,6 +1,5 @@
 package me.Danker.gui;
 
-import me.Danker.DankersSkyblockMod;
 import me.Danker.commands.ToggleCommand;
 import me.Danker.handlers.ConfigHandler;
 import me.Danker.utils.Utils;
@@ -20,6 +19,7 @@ public class PuzzleSolversGui extends GuiScreen {
 	private GuiButton trivia;
 	private GuiButton blaze;
 	private GuiButton creeper;
+	private GuiButton creeperLines;
 	private GuiButton water;
 	private GuiButton ticTacToe;
 	private GuiButton boulder;
@@ -28,6 +28,9 @@ public class PuzzleSolversGui extends GuiScreen {
 	private GuiButton startsWith;
 	private GuiButton selectAll;
 	private GuiButton clickOrder;
+	private GuiButton sameColour;
+	private GuiButton blockClicks;
+	private GuiButton itemFrameOnSeaLanterns;
 	
 	public PuzzleSolversGui(int page) {
 		this.page = page;
@@ -55,35 +58,47 @@ public class PuzzleSolversGui extends GuiScreen {
 		trivia = new GuiButton(0, width / 2 - 100, (int) (height * 0.2), "Trivia Solver: " + Utils.getColouredBoolean(ToggleCommand.oruoToggled));
 		blaze = new GuiButton(0, width / 2 - 100, (int) (height * 0.3), "Blaze Solver: " + Utils.getColouredBoolean(ToggleCommand.blazeToggled));
 		creeper = new GuiButton(0, width / 2 - 100, (int) (height * 0.4), "Creeper Solver: " + Utils.getColouredBoolean(ToggleCommand.creeperToggled));
-		water = new GuiButton(0, width / 2 - 100, (int) (height * 0.5), "Water Solver: " + Utils.getColouredBoolean(ToggleCommand.waterToggled));
-		ticTacToe = new GuiButton(0, width / 2 - 100, (int) (height * 0.6), "Tic Tac Toe Solver: " + Utils.getColouredBoolean(ToggleCommand.ticTacToeToggled));
-		boulder = new GuiButton(0, width / 2 - 100, (int) (height * 0.7), "Boulder Solver: " + Utils.getColouredBoolean(ToggleCommand.boulderToggled));
+		creeperLines = new GuiButton(0, width / 2 - 100, (int) (height * 0.5), "Lines In Creeper Solver: " + Utils.getColouredBoolean(ToggleCommand.creeperLinesToggled));
+		water = new GuiButton(0, width / 2 - 100, (int) (height * 0.6), "Water Solver: " + Utils.getColouredBoolean(ToggleCommand.waterToggled));
+		ticTacToe = new GuiButton(0, width / 2 - 100, (int) (height * 0.7), "Tic Tac Toe Solver: " + Utils.getColouredBoolean(ToggleCommand.ticTacToeToggled));
 		// Page 2
-		silverfish = new GuiButton(0, width / 2 - 100, (int) (height * 0.1), "Silverfish Solver: " + Utils.getColouredBoolean(ToggleCommand.silverfishToggled));
-		iceWalk = new GuiButton(0, width / 2 - 100, (int) (height * 0.2), "Ice Walk Solver: " + Utils.getColouredBoolean(ToggleCommand.iceWalkToggled));
-		startsWith = new GuiButton(0, width / 2 - 100, (int) (height * 0.3), "Starts With Letter Terminal Solver: " + Utils.getColouredBoolean(ToggleCommand.startsWithToggled));
-		selectAll = new GuiButton(0, width / 2 - 100, (int) (height * 0.4), "Select All Color Terminal Solver: " + Utils.getColouredBoolean(ToggleCommand.selectAllToggled));
-		clickOrder = new GuiButton(0, width / 2 - 100, (int) (height * 0.5), "Click in Order Terminal Helper: " + Utils.getColouredBoolean(ToggleCommand.clickInOrderToggled));
-		
+		boulder = new GuiButton(0, width / 2 - 100, (int) (height * 0.1), "Boulder Solver: " + Utils.getColouredBoolean(ToggleCommand.boulderToggled));
+		silverfish = new GuiButton(0, width / 2 - 100, (int) (height * 0.2), "Silverfish Solver: " + Utils.getColouredBoolean(ToggleCommand.silverfishToggled));
+		iceWalk = new GuiButton(0, width / 2 - 100, (int) (height * 0.3), "Ice Walk Solver: " + Utils.getColouredBoolean(ToggleCommand.iceWalkToggled));
+		startsWith = new GuiButton(0, width / 2 - 100, (int) (height * 0.4), "Starts With Letter Terminal Solver: " + Utils.getColouredBoolean(ToggleCommand.startsWithToggled));
+		selectAll = new GuiButton(0, width / 2 - 100, (int) (height * 0.5), "Select All Color Terminal Solver: " + Utils.getColouredBoolean(ToggleCommand.selectAllToggled));
+		clickOrder = new GuiButton(0, width / 2 - 100, (int) (height * 0.6), "Click in Order Terminal Helper: " + Utils.getColouredBoolean(ToggleCommand.clickInOrderToggled));
+		sameColour = new GuiButton(0, width / 2 - 100, (int) (height * 0.7), "Same Colour Terminal Solver: " + Utils.getColouredBoolean(ToggleCommand.sameColourToggled));
+		// Page 3
+		blockClicks = new GuiButton(0, width / 2 - 100, (int) (height * 0.1), "Block Wrong Clicks on Terminals: " + Utils.getColouredBoolean(ToggleCommand.blockWrongTerminalClicksToggled));
+		itemFrameOnSeaLanterns = new GuiButton(0, width / 2 - 100, (int) (height * 0.2), "Ignore Arrows On Sea Lanterns: " + Utils.getColouredBoolean(ToggleCommand.itemFrameOnSeaLanternsToggled));
+
 		switch (page) {
 			case 1:
 				this.buttonList.add(riddle);
 				this.buttonList.add(trivia);
 				this.buttonList.add(blaze);
 				this.buttonList.add(creeper);
+				this.buttonList.add(creeperLines);
 				this.buttonList.add(water);
 				this.buttonList.add(ticTacToe);
-				this.buttonList.add(boulder);
 				this.buttonList.add(nextPage);
 				break;
 			case 2:
+				this.buttonList.add(boulder);
 				this.buttonList.add(silverfish);
 				this.buttonList.add(iceWalk);
 				this.buttonList.add(startsWith);
 				this.buttonList.add(selectAll);
 				this.buttonList.add(clickOrder);
+				this.buttonList.add(sameColour);
+				this.buttonList.add(nextPage);
 				this.buttonList.add(backPage);
 				break;
+			case 3:
+				this.buttonList.add(blockClicks);
+				this.buttonList.add(itemFrameOnSeaLanterns);
+				this.buttonList.add(backPage);
 		}
 		this.buttonList.add(goBack);
 	}
@@ -97,7 +112,7 @@ public class PuzzleSolversGui extends GuiScreen {
 	@Override
 	public void actionPerformed(GuiButton button) {
 		if (button == goBack) {
-			DankersSkyblockMod.guiToOpen = "dankergui1";
+			mc.displayGuiScreen(new DankerGui(1, ""));
 		} else if (button == backPage) {
 			Minecraft.getMinecraft().displayGuiScreen(new PuzzleSolversGui(page - 1));
 		} else if (button == nextPage) {
@@ -118,6 +133,10 @@ public class PuzzleSolversGui extends GuiScreen {
 			ToggleCommand.creeperToggled = !ToggleCommand.creeperToggled;
 			ConfigHandler.writeBooleanConfig("toggles", "CreeperPuzzle", ToggleCommand.creeperToggled);
 			creeper.displayString = "Creeper Solver: " + Utils.getColouredBoolean(ToggleCommand.creeperToggled);
+		} else if (button == creeperLines) {
+			ToggleCommand.creeperLinesToggled = !ToggleCommand.creeperLinesToggled;
+			ConfigHandler.writeBooleanConfig("toggles", "CreeperLines", ToggleCommand.creeperLinesToggled);
+			creeperLines.displayString = "Lines In Creeper Solver: " + Utils.getColouredBoolean(ToggleCommand.creeperLinesToggled);
 		} else if (button == water) {
 			ToggleCommand.waterToggled = !ToggleCommand.waterToggled;
 			ConfigHandler.writeBooleanConfig("toggles", "WaterPuzzle", ToggleCommand.waterToggled);
@@ -150,6 +169,18 @@ public class PuzzleSolversGui extends GuiScreen {
 			ToggleCommand.clickInOrderToggled = !ToggleCommand.clickInOrderToggled;
 			ConfigHandler.writeBooleanConfig("toggles", "ClickInOrderTerminal", ToggleCommand.clickInOrderToggled);
 			clickOrder.displayString = "Click in Order Terminal Helper: " + Utils.getColouredBoolean(ToggleCommand.clickInOrderToggled);
+		} else if (button == blockClicks) {
+			ToggleCommand.blockWrongTerminalClicksToggled = !ToggleCommand.blockWrongTerminalClicksToggled;
+			ConfigHandler.writeBooleanConfig("toggles", "BlockWrongTerminalClicks", ToggleCommand.blockWrongTerminalClicksToggled);
+			blockClicks.displayString = "Block Wrong Clicks on Terminals: " + Utils.getColouredBoolean(ToggleCommand.blockWrongTerminalClicksToggled);
+		} else if (button == itemFrameOnSeaLanterns) {
+			ToggleCommand.itemFrameOnSeaLanternsToggled = !ToggleCommand.itemFrameOnSeaLanternsToggled;
+			ConfigHandler.writeBooleanConfig("toggles", "IgnoreItemFrameOnSeaLanterns", ToggleCommand.itemFrameOnSeaLanternsToggled);
+			itemFrameOnSeaLanterns.displayString = "Ignore Arrows On Sea Lanterns: " + Utils.getColouredBoolean(ToggleCommand.itemFrameOnSeaLanternsToggled);
+		} else if (button == sameColour) {
+			ToggleCommand.sameColourToggled = !ToggleCommand.sameColourToggled;
+			ConfigHandler.writeBooleanConfig("toggles", "SameColourTerminal", ToggleCommand.sameColourToggled);
+			sameColour.displayString = "Same Colour Terminal Solver: " + Utils.getColouredBoolean(ToggleCommand.sameColourToggled);
 		}
 	}
 	

@@ -3,7 +3,7 @@ package me.Danker.features;
 import me.Danker.commands.MoveCommand;
 import me.Danker.commands.ScaleCommand;
 import me.Danker.commands.ToggleCommand;
-import me.Danker.events.RenderOverlay;
+import me.Danker.events.RenderOverlayEvent;
 import me.Danker.handlers.TextRenderer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
@@ -14,7 +14,7 @@ public class NoF3Coords {
     public static String COORDS_COLOUR;
 
     @SubscribeEvent
-    public void renderPlayerInfo(RenderOverlay event) {
+    public void renderPlayerInfo(RenderOverlayEvent event) {
         Minecraft mc = Minecraft.getMinecraft();
 
         if (ToggleCommand.coordsToggled) {

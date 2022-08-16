@@ -58,7 +58,7 @@ public class LobbySkillsCommand extends CommandBase {
 			try {
 				// Create deep copy of players to prevent passing reference and ConcurrentModificationException
 				Collection<NetworkPlayerInfo> players = new ArrayList<>(Minecraft.getMinecraft().getNetHandler().getPlayerInfoMap());
-				playerSP.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Checking skill average of lobby. Estimated time: " + (int) (players.size() * 1.2 + 1) + " seconds."));
+				playerSP.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Checking skill average of lobby. Estimated time: " + (int) (Utils.getMatchingPlayers("").size() * 1.2 + 1) + " seconds."));
 				// Send request every .6 seconds, leaving room for another 20 requests per minute
 				
 				for (final NetworkPlayerInfo player : players) {
@@ -68,7 +68,7 @@ public class LobbySkillsCommand extends CommandBase {
 					long biggestLastSave = 0;
 					int profileIndex = -1;
 					Thread.sleep(600);
-					JsonObject profileResponse = APIHandler.getResponse("https://api.hypixel.net/skyblock/profiles?uuid=" + UUID + "&key=" + key);
+					JsonObject profileResponse = APIHandler.getResponse("https://api.hypixel.net/skyblock/profiles?uuid=" + UUID + "&key=" + key, true);
 					if (!profileResponse.get("success").getAsBoolean()) {
 						String reason = profileResponse.get("cause").getAsString();
 						System.out.println("User " + player.getGameProfile().getName() + " failed with reason: " + reason);
@@ -134,7 +134,7 @@ public class LobbySkillsCommand extends CommandBase {
 					} else {
 						Thread.sleep(600); // Sleep for another request
 						System.out.println("Fetching skills from achievement API");
-						JsonObject playerObject = APIHandler.getResponse("https://api.hypixel.net/player?uuid=" + UUID + "&key=" + key);
+						JsonObject playerObject = APIHandler.getResponse("https://api.hypixel.net/player?uuid=" + UUID + "&key=" + key, true);
 						
 						if (!playerObject.get("success").getAsBoolean()) {
 							String reason = profileResponse.get("cause").getAsString();

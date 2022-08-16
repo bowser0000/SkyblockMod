@@ -1,7 +1,7 @@
 package me.Danker.commands;
 
 import me.Danker.DankersSkyblockMod;
-import me.Danker.features.loot.LootTracker;
+import me.Danker.features.loot.*;
 import me.Danker.handlers.ConfigHandler;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
@@ -25,7 +25,7 @@ public class ResetLootCommand extends CommandBase {
 
 	@Override
 	public String getCommandUsage(ICommandSender arg0) {
-		return "/" + getCommandName() + "<zombie/spider/wolf/fishing/mythological/catacombs/confirm/cancel>";
+		return "/" + getCommandName() + "<zombie/spider/wolf/enderman/blaze/fishing/mythological/catacombs/confirm/cancel>";
 	}
 
 	public static String usage(ICommandSender arg0) {
@@ -44,7 +44,7 @@ public class ResetLootCommand extends CommandBase {
 		if (confirmReset) {
 			return getListOfStringsMatchingLastWord(args, "confirm", "cancel");
 		} else {
-			return getListOfStringsMatchingLastWord(args, "zombie", "spider", "wolf", "fishing", "mythological", "catacombs");
+			return getListOfStringsMatchingLastWord(args, "zombie", "spider", "wolf", "enderman", "blaze", "fishing", "mythological", "catacombs");
 		}
 	}
 	
@@ -53,7 +53,7 @@ public class ResetLootCommand extends CommandBase {
 		final EntityPlayer player = (EntityPlayer) arg0;
 		
 		if (arg1.length == 0) {
-			player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Usage: /resetloot <zombie/spider/wolf/fishing/mythological/catacombs>"));
+			player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Usage: /resetloot <zombie/spider/wolf/enderman/blaze/fishing/mythological/catacombs>"));
 			return;
 		}
 		
@@ -71,6 +71,12 @@ public class ResetLootCommand extends CommandBase {
 							break;
 						case "wolf":
 							resetWolf();
+							break;
+						case "enderman":
+							resetEnderman();
+							break;
+						case "blaze":
+							resetBlaze();
 							break;
 						case "fishing":
 							resetFishing();
@@ -98,6 +104,8 @@ public class ResetLootCommand extends CommandBase {
 				case "zombie":
 				case "spider":
 				case "wolf":
+				case "enderman":
+				case "blaze":
 				case "fishing":
 				case "mythological":
 				case "catacombs":
@@ -118,167 +126,281 @@ public class ResetLootCommand extends CommandBase {
 	}
 	
 	static void resetZombie() {		
-		LootTracker.zombieRevsSession = 0;
-		LootTracker.zombieRevFleshSession = 0;
-		LootTracker.zombieFoulFleshSession = 0;
-		LootTracker.zombieFoulFleshDropsSession = 0;
-		LootTracker.zombiePestilencesSession = 0;
-		LootTracker.zombieUndeadCatasSession = 0;
-		LootTracker.zombieBooksSession = 0;
-		LootTracker.zombieBeheadedsSession = 0;
-		LootTracker.zombieRevCatasSession = 0;
-		LootTracker.zombieSnakesSession = 0;
-		LootTracker.zombieScythesSession = 0;
-		LootTracker.zombieTimeSession = -1;
-		LootTracker.zombieBossesSession = -1;
+		ZombieTracker.revsSession = 0;
+		ZombieTracker.revFleshSession = 0;
+		ZombieTracker.revVisceraSession = 0;
+		ZombieTracker.foulFleshSession = 0;
+		ZombieTracker.foulFleshDropsSession = 0;
+		ZombieTracker.pestilencesSession = 0;
+		ZombieTracker.undeadCatasSession = 0;
+		ZombieTracker.booksSession = 0;
+		ZombieTracker.booksT7Session = 0;
+		ZombieTracker.beheadedsSession = 0;
+		ZombieTracker.revCatasSession = 0;
+		ZombieTracker.snakesSession = 0;
+		ZombieTracker.scythesSession = 0;
+		ZombieTracker.timeSession = -1;
+		ZombieTracker.bossesSession = -1;
 		ConfigHandler.deleteCategory("zombie");
 		ConfigHandler.reloadConfig();
 	}
 	
 	static void resetSpider() {
-		LootTracker.spiderTarantulasSession = 0;
-		LootTracker.spiderWebsSession = 0;
-		LootTracker.spiderTAPSession = 0;
-		LootTracker.spiderTAPDropsSession = 0;
-		LootTracker.spiderBitesSession = 0;
-		LootTracker.spiderCatalystsSession = 0;
-		LootTracker.spiderBooksSession = 0;
-		LootTracker.spiderSwattersSession = 0;
-		LootTracker.spiderTalismansSession = 0;
-		LootTracker.spiderMosquitosSession = 0;
-		LootTracker.spiderTimeSession = -1;
-		LootTracker.spiderBossesSession = -1;
+		SpiderTracker.tarantulasSession = 0;
+		SpiderTracker.websSession = 0;
+		SpiderTracker.TAPSession = 0;
+		SpiderTracker.TAPDropsSession = 0;
+		SpiderTracker.bitesSession = 0;
+		SpiderTracker.catalystsSession = 0;
+		SpiderTracker.booksSession = 0;
+		SpiderTracker.swattersSession = 0;
+		SpiderTracker.talismansSession = 0;
+		SpiderTracker.mosquitosSession = 0;
+		SpiderTracker.timeSession = -1;
+		SpiderTracker.bossesSession = -1;
 		ConfigHandler.deleteCategory("spider");
 		ConfigHandler.reloadConfig();
 	}
 	
 	static void resetWolf() {
-		LootTracker.wolfSvensSession = 0;
-		LootTracker.wolfTeethSession = 0;
-		LootTracker.wolfWheelsSession = 0;
-		LootTracker.wolfWheelsDropsSession = 0;
-		LootTracker.wolfSpiritsSession = 0;
-		LootTracker.wolfBooksSession = 0;
-		LootTracker.wolfEggsSession = 0;
-		LootTracker.wolfCouturesSession = 0;
-		LootTracker.wolfBaitsSession = 0;
-		LootTracker.wolfFluxesSession = 0;
-		LootTracker.wolfTimeSession = -1;
-		LootTracker.wolfBossesSession = -1;
+		WolfTracker.svensSession = 0;
+		WolfTracker.teethSession = 0;
+		WolfTracker.wheelsSession = 0;
+		WolfTracker.wheelsDropsSession = 0;
+		WolfTracker.spiritsSession = 0;
+		WolfTracker.booksSession = 0;
+		WolfTracker.furballsSession = 0;
+		WolfTracker.eggsSession = 0;
+		WolfTracker.couturesSession = 0;
+		WolfTracker.baitsSession = 0;
+		WolfTracker.fluxesSession = 0;
+		WolfTracker.timeSession = -1;
+		WolfTracker.bossesSession = -1;
 		ConfigHandler.deleteCategory("wolf");
+		ConfigHandler.reloadConfig();
+	}
+
+	static void resetEnderman() {
+		EndermanTracker.voidgloomsSession = 0;
+		EndermanTracker.nullSpheresSession = 0;
+		EndermanTracker.TAPSession = 0;
+		EndermanTracker.TAPDropsSession = 0;
+		EndermanTracker.endersnakesSession = 0;
+		EndermanTracker.summoningEyesSession = 0;
+		EndermanTracker.manaBooksSession = 0;
+		EndermanTracker.tunersSession = 0;
+		EndermanTracker.atomsSession = 0;
+		EndermanTracker.hazmatsSession = 0;
+		EndermanTracker.espressoMachinesSession = 0;
+		EndermanTracker.smartyBooksSession = 0;
+		EndermanTracker.endRunesSession = 0;
+		EndermanTracker.chalicesSession = 0;
+		EndermanTracker.diceSession = 0;
+		EndermanTracker.artifactsSession = 0;
+		EndermanTracker.skinsSession = 0;
+		EndermanTracker.mergersSession = 0;
+		EndermanTracker.coresSession = 0;
+		EndermanTracker.enchantRunesSession = 0;
+		EndermanTracker.enderBooksSession = 0;
+		EndermanTracker.timeSession = -1;
+		EndermanTracker.bossesSession = -1;
+		ConfigHandler.deleteCategory("enderman");
+		ConfigHandler.reloadConfig();
+	}
+
+	static void resetBlaze() {
+		BlazeTracker.demonlordsSession = 0;
+		BlazeTracker.derelictAshesSession = 0;
+		BlazeTracker.lavatearRunesSession = 0;
+		BlazeTracker.splashPotionsSession = 0;
+		BlazeTracker.magmaArrowsSession = 0;
+		BlazeTracker.manaDisintegratorsSession = 0;
+		BlazeTracker.scorchedBooksSession = 0;
+		BlazeTracker.kelvinInvertersSession = 0;
+		BlazeTracker.blazeRodDistillatesSession = 0;
+		BlazeTracker.glowstoneDistillatesSession = 0;
+		BlazeTracker.magmaCreamDistillatesSession = 0;
+		BlazeTracker.netherWartDistillatesSession = 0;
+		BlazeTracker.gabagoolDistillatesSession = 0;
+		BlazeTracker.scorchedPowerCrystalsSession = 0;
+		BlazeTracker.fireAspectBooksSession = 0;
+		BlazeTracker.fieryBurstRunesSession = 0;
+		BlazeTracker.opalGemsSession = 0;
+		BlazeTracker.archfiendDiceSession = 0;
+		BlazeTracker.duplexBooksSession = 0;
+		BlazeTracker.highClassArchfiendDiceSession = 0;
+		BlazeTracker.engineeringPlansSession = 0;
+		BlazeTracker.subzeroInvertersSession = 0;
+		BlazeTracker.timeSession = 0;
+		BlazeTracker.bossesSession = 0;
+		ConfigHandler.deleteCategory("blaze");
 		ConfigHandler.reloadConfig();
 	}
 	
 	static void resetFishing() {
-		LootTracker.seaCreaturesSession = 0;
-		LootTracker.goodCatchesSession = 0;
-		LootTracker.greatCatchesSession = 0;
-		LootTracker.squidsSession = 0;
-		LootTracker.seaWalkersSession = 0;
-		LootTracker.nightSquidsSession = 0;
-		LootTracker.seaGuardiansSession = 0;
-		LootTracker.seaWitchesSession = 0;
-		LootTracker.seaArchersSession = 0;
-		LootTracker.monsterOfTheDeepsSession = 0;
-		LootTracker.catfishesSession = 0;
-		LootTracker.carrotKingsSession = 0;
-		LootTracker.seaLeechesSession = 0;
-		LootTracker.guardianDefendersSession = 0;
-		LootTracker.deepSeaProtectorsSession = 0;
-		LootTracker.hydrasSession = 0;
-		LootTracker.seaEmperorsSession = 0;
-		LootTracker.empTimeSession = -1;
-		LootTracker.empSCsSession = -1;
-		LootTracker.fishingMilestoneSession = 0;
-		LootTracker.frozenStevesSession = 0;
-		LootTracker.frostyTheSnowmansSession = 0;
-		LootTracker.grinchesSession = 0;
-		LootTracker.yetisSession = 0;
-		LootTracker.yetiTimeSession = -1;
-		LootTracker.yetiSCsSession = -1;
-		LootTracker.nurseSharksSession = 0;
-		LootTracker.blueSharksSession = 0;
-		LootTracker.tigerSharksSession = 0;
-		LootTracker.greatWhiteSharksSession = 0;
-		LootTracker.scarecrowsSession = 0;
-		LootTracker.nightmaresSession = 0;
-		LootTracker.werewolfsSession = 0;
-		LootTracker.phantomFishersSession = 0;
-		LootTracker.grimReapersSession = 0;
+		FishingTracker.seaCreaturesSession = 0;
+		FishingTracker.goodCatchesSession = 0;
+		FishingTracker.greatCatchesSession = 0;
+		FishingTracker.squidsSession = 0;
+		FishingTracker.seaWalkersSession = 0;
+		FishingTracker.nightSquidsSession = 0;
+		FishingTracker.seaGuardiansSession = 0;
+		FishingTracker.seaWitchesSession = 0;
+		FishingTracker.seaArchersSession = 0;
+		FishingTracker.monsterOfTheDeepsSession = 0;
+		FishingTracker.catfishesSession = 0;
+		FishingTracker.carrotKingsSession = 0;
+		FishingTracker.seaLeechesSession = 0;
+		FishingTracker.guardianDefendersSession = 0;
+		FishingTracker.deepSeaProtectorsSession = 0;
+		FishingTracker.hydrasSession = 0;
+		FishingTracker.seaEmperorsSession = 0;
+		FishingTracker.empTimeSession = -1;
+		FishingTracker.empSCsSession = -1;
+		FishingTracker.fishingMilestoneSession = 0;
+		FishingTracker.frozenStevesSession = 0;
+		FishingTracker.frostyTheSnowmansSession = 0;
+		FishingTracker.grinchesSession = 0;
+		FishingTracker.yetisSession = 0;
+		FishingTracker.yetiTimeSession = -1;
+		FishingTracker.yetiSCsSession = -1;
+		FishingTracker.nurseSharksSession = 0;
+		FishingTracker.blueSharksSession = 0;
+		FishingTracker.tigerSharksSession = 0;
+		FishingTracker.greatWhiteSharksSession = 0;
+		FishingTracker.scarecrowsSession = 0;
+		FishingTracker.nightmaresSession = 0;
+		FishingTracker.werewolfsSession = 0;
+		FishingTracker.phantomFishersSession = 0;
+		FishingTracker.grimReapersSession = 0;
+		FishingTracker.waterWormsSession = 0;
+		FishingTracker.poisonedWaterWormsSession = 0;
+		FishingTracker.flamingWormsSession = 0;
+		FishingTracker.lavaBlazesSession = 0;
+		FishingTracker.lavaPigmenSession = 0;
+		FishingTracker.zombieMinersSession = 0;
+		FishingTracker.plhlegblastsSession = 0;
+		FishingTracker.magmaSlugsSession = 0;
+		FishingTracker.moogmasSession = 0;
+		FishingTracker.lavaLeechesSession = 0;
+		FishingTracker.pyroclasticWormsSession = 0;
+		FishingTracker.lavaFlamesSession = 0;
+		FishingTracker.fireEelsSession = 0;
+		FishingTracker.taurusesSession = 0;
+		FishingTracker.thundersSession = 0;
+		FishingTracker.lordJawbusesSession = 0;
+		FishingTracker.jawbusTimeSession = -1;
+		FishingTracker.jawbusSCsSession = -1;
 		ConfigHandler.deleteCategory("fishing");
 		ConfigHandler.reloadConfig();
+
+		TrophyFishTracker.fish = TrophyFishTracker.createEmpty();
+		TrophyFishTracker.fishSession = TrophyFishTracker.createEmpty();
+		TrophyFishTracker.save();
 	}
 	
 	static void resetMythological() {
-		LootTracker.mythCoinsSession = 0;
-		LootTracker.griffinFeathersSession = 0;
-		LootTracker.crownOfGreedsSession = 0;
-		LootTracker.washedUpSouvenirsSession = 0;
-		LootTracker.minosHuntersSession = 0;
-		LootTracker.siameseLynxesSession = 0;
-		LootTracker.minotaursSession = 0;
-		LootTracker.gaiaConstructsSession = 0;
-		LootTracker.minosChampionsSession = 0;
-		LootTracker.minosInquisitorsSession = 0;
+		MythologicalTracker.mythCoinsSession = 0;
+		MythologicalTracker.griffinFeathersSession = 0;
+		MythologicalTracker.crownOfGreedsSession = 0;
+		MythologicalTracker.washedUpSouvenirsSession = 0;
+		MythologicalTracker.minosHuntersSession = 0;
+		MythologicalTracker.siameseLynxesSession = 0;
+		MythologicalTracker.minotaursSession = 0;
+		MythologicalTracker.gaiaConstructsSession = 0;
+		MythologicalTracker.minosChampionsSession = 0;
+		MythologicalTracker.minosInquisitorsSession = 0;
 		ConfigHandler.deleteCategory("mythological");
 		ConfigHandler.reloadConfig();
 	}
 	
 	static void resetCatacombs() {
-		LootTracker.recombobulatorsSession = 0;
-		LootTracker.fumingPotatoBooksSession = 0;
-		LootTracker.bonzoStaffsSession = 0;
-		LootTracker.f1CoinsSpentSession = 0;
-		LootTracker.f1TimeSpentSession = 0;
-		LootTracker.scarfStudiesSession = 0;
-		LootTracker.f2CoinsSpentSession = 0;
-		LootTracker.f2TimeSpentSession = 0;
-		LootTracker.adaptiveHelmsSession = 0;
-		LootTracker.adaptiveChestsSession = 0;
-		LootTracker.adaptiveLegsSession = 0;
-		LootTracker.adaptiveBootsSession = 0;
-		LootTracker.adaptiveSwordsSession = 0;
-		LootTracker.f3CoinsSpentSession = 0;
-		LootTracker.f3TimeSpentSession = 0;
-		LootTracker.spiritWingsSession = 0;
-		LootTracker.spiritBonesSession = 0;
-		LootTracker.spiritBootsSession = 0;
-		LootTracker.spiritSwordsSession = 0;
-		LootTracker.epicSpiritPetsSession = 0;
-		LootTracker.f4CoinsSpentSession = 0;
-		LootTracker.f4TimeSpentSession = 0;
-		LootTracker.warpedStonesSession = 0;
-		LootTracker.shadowAssHelmsSession = 0;
-		LootTracker.shadowAssChestsSession = 0;
-		LootTracker.shadowAssLegsSession = 0;
-		LootTracker.shadowAssBootsSession = 0;
-		LootTracker.lividDaggersSession = 0;
-		LootTracker.shadowFurysSession = 0;
-		LootTracker.f5CoinsSpentSession = 0;
-		LootTracker.f5TimeSpentSession = 0;
-		LootTracker.ancientRosesSession = 0;
-		LootTracker.precursorEyesSession = 0;
-		LootTracker.giantsSwordsSession = 0;
-		LootTracker.necroLordHelmsSession = 0;
-		LootTracker.necroLordChestsSession = 0;
-		LootTracker.necroLordLegsSession = 0;
-		LootTracker.necroLordBootsSession = 0;
-		LootTracker.necroSwordsSession = 0;
-		LootTracker.f6CoinsSpentSession = 0;
-		LootTracker.f6TimeSpentSession = 0;
-		LootTracker.witherBloodsSession = 0;
-		LootTracker.witherCloaksSession = 0;
-		LootTracker.implosionsSession = 0;
-		LootTracker.witherShieldsSession = 0;
-		LootTracker.shadowWarpsSession = 0;
-		LootTracker.necronsHandlesSession = 0;
-		LootTracker.autoRecombsSession = 0;
-		LootTracker.witherHelmsSession = 0;
-		LootTracker.witherChestsSession = 0;
-		LootTracker.witherLegsSession = 0;
-		LootTracker.witherBootsSession = 0;
-		LootTracker.f7CoinsSpentSession = 0;
-		LootTracker.f7TimeSpentSession = 0;
+		CatacombsTracker.recombobulatorsSession = 0;
+		CatacombsTracker.fumingPotatoBooksSession = 0;
+		CatacombsTracker.f1SPlusSession = 0;
+		CatacombsTracker.bonzoStaffsSession = 0;
+		CatacombsTracker.f1CoinsSpentSession = 0;
+		CatacombsTracker.f1TimeSpentSession = 0;
+		CatacombsTracker.f2SPlusSession = 0;
+		CatacombsTracker.scarfStudiesSession = 0;
+		CatacombsTracker.f2CoinsSpentSession = 0;
+		CatacombsTracker.f2TimeSpentSession = 0;
+		CatacombsTracker.f3SPlusSession = 0;
+		CatacombsTracker.adaptiveHelmsSession = 0;
+		CatacombsTracker.adaptiveChestsSession = 0;
+		CatacombsTracker.adaptiveLegsSession = 0;
+		CatacombsTracker.adaptiveBootsSession = 0;
+		CatacombsTracker.adaptiveSwordsSession = 0;
+		CatacombsTracker.f3CoinsSpentSession = 0;
+		CatacombsTracker.f3TimeSpentSession = 0;
+		CatacombsTracker.f4SPlusSession = 0;
+		CatacombsTracker.spiritWingsSession = 0;
+		CatacombsTracker.spiritBonesSession = 0;
+		CatacombsTracker.spiritBootsSession = 0;
+		CatacombsTracker.spiritSwordsSession = 0;
+		CatacombsTracker.epicSpiritPetsSession = 0;
+		CatacombsTracker.f4CoinsSpentSession = 0;
+		CatacombsTracker.f4TimeSpentSession = 0;
+		CatacombsTracker.f5SPlusSession = 0;
+		CatacombsTracker.warpedStonesSession = 0;
+		CatacombsTracker.shadowAssHelmsSession = 0;
+		CatacombsTracker.shadowAssChestsSession = 0;
+		CatacombsTracker.shadowAssLegsSession = 0;
+		CatacombsTracker.shadowAssBootsSession = 0;
+		CatacombsTracker.lividDaggersSession = 0;
+		CatacombsTracker.shadowFurysSession = 0;
+		CatacombsTracker.f5CoinsSpentSession = 0;
+		CatacombsTracker.f5TimeSpentSession = 0;
+		CatacombsTracker.f6SPlusSession = 0;
+		CatacombsTracker.ancientRosesSession = 0;
+		CatacombsTracker.precursorEyesSession = 0;
+		CatacombsTracker.giantsSwordsSession = 0;
+		CatacombsTracker.necroLordHelmsSession = 0;
+		CatacombsTracker.necroLordChestsSession = 0;
+		CatacombsTracker.necroLordLegsSession = 0;
+		CatacombsTracker.necroLordBootsSession = 0;
+		CatacombsTracker.necroSwordsSession = 0;
+		CatacombsTracker.f6RerollsSession = 0;
+		CatacombsTracker.f6CoinsSpentSession = 0;
+		CatacombsTracker.f6TimeSpentSession = 0;
+		CatacombsTracker.f7SPlusSession = 0;
+		CatacombsTracker.witherBloodsSession = 0;
+		CatacombsTracker.witherCloaksSession = 0;
+		CatacombsTracker.implosionsSession = 0;
+		CatacombsTracker.witherShieldsSession = 0;
+		CatacombsTracker.shadowWarpsSession = 0;
+		CatacombsTracker.necronsHandlesSession = 0;
+		CatacombsTracker.autoRecombsSession = 0;
+		CatacombsTracker.witherHelmsSession = 0;
+		CatacombsTracker.witherChestsSession = 0;
+		CatacombsTracker.witherLegsSession = 0;
+		CatacombsTracker.witherBootsSession = 0;
+		CatacombsTracker.f7RerollsSession = 0;
+		CatacombsTracker.f7CoinsSpentSession = 0;
+		CatacombsTracker.f7TimeSpentSession = 0;
+		CatacombsTracker.m1SSession = 0;
+		CatacombsTracker.m1SPlusSession = 0;
+		CatacombsTracker.m2SSession = 0;
+		CatacombsTracker.m2SPlusSession = 0;
+		CatacombsTracker.m3SSession = 0;
+		CatacombsTracker.m3SPlusSession = 0;
+		CatacombsTracker.m4SSession = 0;
+		CatacombsTracker.m4SPlusSession = 0;
+		CatacombsTracker.m5SSession = 0;
+		CatacombsTracker.m5SPlusSession = 0;
+		CatacombsTracker.m6SSession = 0;
+		CatacombsTracker.m6SPlusSession = 0;
+		CatacombsTracker.m7SSession = 0;
+		CatacombsTracker.m7SPlusSession = 0;
+		CatacombsTracker.firstStarsSession = 0;
+		CatacombsTracker.secondStarsSession = 0;
+		CatacombsTracker.thirdStarsSession = 0;
+		CatacombsTracker.fourthStarsSession = 0;
+		CatacombsTracker.fifthStarsSession = 0;
+		CatacombsTracker.darkClaymoresSession = 0;
+		CatacombsTracker.masterRerollsSession = 0;
+		CatacombsTracker.masterCoinsSpentSession = 0;
+		CatacombsTracker.masterTimeSpentSession = 0;
 		ConfigHandler.deleteCategory("catacombs");
 		ConfigHandler.reloadConfig();
 	}

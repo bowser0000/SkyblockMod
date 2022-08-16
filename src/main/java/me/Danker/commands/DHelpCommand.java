@@ -50,12 +50,19 @@ public class DHelpCommand extends CommandBase {
 													EnumChatFormatting.GOLD + BankCommand.usage(arg0) + EnumChatFormatting.AQUA + " - Uses API to get bank and purse coins of a person. If no name is provided, it checks yours.\n" +
 													EnumChatFormatting.GOLD + ArmourCommand.usage(arg0) + EnumChatFormatting.AQUA + " - Uses API to get armour of a person. If no name is provided, it checks yours.\n" +
 													EnumChatFormatting.GOLD + DungeonsCommand.usage(arg0) + EnumChatFormatting.AQUA + " - Uses API to get dungeon levels of a person. If no name is provided, it checks yours.\n" +
+													EnumChatFormatting.GOLD + WeightCommand.usage(arg0) + EnumChatFormatting.AQUA + " - Uses API to get weight of a person. If no name is provided, it checks yours. Adding lily uses lily's weight instead of Senither's.\n" +
 													EnumChatFormatting.GOLD + ImportFishingCommand.usage(arg0) + EnumChatFormatting.AQUA + " - Imports your fishing stats from your latest profile to your fishing tracker using the API.\n" +
 													EnumChatFormatting.GOLD + SkyblockPlayersCommand.usage(arg0) + EnumChatFormatting.AQUA + " - Uses API to find how many players are on each Skyblock island.\n" +
+													EnumChatFormatting.GOLD + BlockSlayerCommand.usage(arg0) + EnumChatFormatting.AQUA + " - Stops you from starting a slayer quest other than the one specified.\n" +
 													EnumChatFormatting.GOLD + SkillTrackerCommand.usage(arg0) + EnumChatFormatting.AQUA + " - Text display for skill xp/hour.\n" +
                           							EnumChatFormatting.GOLD + LobbyBankCommand.usage(arg0) + EnumChatFormatting.AQUA + " - Uses API to find the average bank total of the lobby, as well the three players with the highest total money in the bank(and purse).\n" +
 													EnumChatFormatting.GOLD + RepartyCommand.usage(arg0) + EnumChatFormatting.AQUA + " - Disbands and reparties all members in the party.\n" +
 													EnumChatFormatting.GOLD + CustomMusicCommand.usage(arg0) + EnumChatFormatting.AQUA + " - Stops or reloads the custom music.\n" +
+													EnumChatFormatting.GOLD + PlayerCommand.usage(arg0) + EnumChatFormatting.AQUA + " - Uses API to find skills, slayers, coins and weight of a player.\n" +
+													EnumChatFormatting.GOLD + ReloadConfigCommand.usage(arg0) + EnumChatFormatting.AQUA + " - Reloads Danker's Skyblock Mod config.\n" +
+													EnumChatFormatting.GOLD + ReloadRepoCommand.usage(arg0) + EnumChatFormatting.AQUA + " - Reloads Danker's Skyblock Mod repository.\n" +
+													EnumChatFormatting.GOLD + FarmLengthCommand.usage(arg0) + EnumChatFormatting.AQUA + " - Sets coords to be used for end of farm alert.\n" +
+													EnumChatFormatting.GOLD + HOTMCommand.usage(arg0) + EnumChatFormatting.AQUA + " - Uses API to find total powder and HotM tree of a person. If no name is provided, it checks yours.\n" +
 													EnumChatFormatting.GREEN + " Open Maddox Menu" + EnumChatFormatting.AQUA + " - M by default.\n" +
 													EnumChatFormatting.GREEN + " Start/Stop Skill Tracker" + EnumChatFormatting.AQUA + " - Numpad 5 by default.\n"));
 	}

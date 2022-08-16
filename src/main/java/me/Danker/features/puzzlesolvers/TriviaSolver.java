@@ -1,6 +1,11 @@
 package me.Danker.features.puzzlesolvers;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
+import me.Danker.DankersSkyblockMod;
 import me.Danker.commands.ToggleCommand;
+import me.Danker.events.ModInitEvent;
 import me.Danker.utils.Utils;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
@@ -9,16 +14,22 @@ import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class TriviaSolver {
 
     static Map<String, String[]> triviaSolutions = new HashMap<>();
     static String[] triviaAnswers = null;
+    static JsonArray triviaAnswersJson = null;
     public static String TRIVIA_WRONG_ANSWER_COLOUR;
 
-    public static void init() {
+    @SubscribeEvent
+    public void init(ModInitEvent event) {
+        // Hard coded solutions if api call fails
         triviaSolutions.put("What is the status of The Watcher?", new String[]{"Stalker"});
         triviaSolutions.put("What is the status of Bonzo?", new String[]{"New Necromancer"});
         triviaSolutions.put("What is the status of Scarf?", new String[]{"Apprentice Necromancer"});
@@ -30,12 +41,12 @@ public class TriviaSolver {
         triviaSolutions.put("What is the status of Goldor?", new String[]{"Wither Soldier"});
         triviaSolutions.put("What is the status of Storm?", new String[]{"Elementalist"});
         triviaSolutions.put("What is the status of Necron?", new String[]{"Wither Lord"});
-        triviaSolutions.put("How many total Fairy Souls are there?", new String[]{"222 Fairy Souls"});
+        triviaSolutions.put("What is the status of Maxor, Storm, Goldor and Necron?", new String[]{"Wither Lord"});
+        triviaSolutions.put("How many total Fairy Souls are there?", new String[]{"238 Fairy Souls"});
         triviaSolutions.put("How many Fairy Souls are there in Spider's Den?", new String[]{"19 Fairy Souls"});
         triviaSolutions.put("How many Fairy Souls are there in The End?", new String[]{"12 Fairy Souls"});
-        triviaSolutions.put("How many Fairy Souls are there in The Barn?", new String[]{"7 Fairy Souls"});
-        triviaSolutions.put("How many Fairy Souls are there in Mushroom Desert?", new String[]{"8 Fairy Souls"});
-        triviaSolutions.put("How many Fairy Souls are there in Blazing Fortress?", new String[]{"19 Fairy Souls"});
+        triviaSolutions.put("How many Fairy Souls are there in The Farming Islands?", new String[]{"20 Fairy Souls"});
+        triviaSolutions.put("How many Fairy Souls are there in Crimson Isle?", new String[]{"29 Fairy Souls"});
         triviaSolutions.put("How many Fairy Souls are there in The Park?", new String[]{"11 Fairy Souls"});
         triviaSolutions.put("How many Fairy Souls are there in Jerry's Workshop?", new String[]{"5 Fairy Souls"});
         triviaSolutions.put("How many Fairy Souls are there in Hub?", new String[]{"79 Fairy Souls"});
@@ -49,7 +60,7 @@ public class TriviaSolver {
         triviaSolutions.put("What is the name of the person that upgrades pets?", new String[]{"Kat"});
         triviaSolutions.put("What is the name of the lady of the Nether?", new String[]{"Elle"});
         triviaSolutions.put("Which villager in the Village gives you a Rogue Sword?", new String[]{"Jamie"});
-        triviaSolutions.put("How many unique minions are there?", new String[]{"53 Minions"});
+        triviaSolutions.put("How many unique minions are there?", new String[]{"55 Minions"});
         triviaSolutions.put("Which of these enemies does not spawn in the Spider's Den?", new String[]{"Zombie Spider", "Cave Spider", "Wither Skeleton",
                 "Dashing Spooder", "Broodfather", "Night Spider"});
         triviaSolutions.put("Which of these monsters only spawns at night?", new String[]{"Zombie Villager", "Ghast"});
@@ -65,35 +76,76 @@ public class TriviaSolver {
         if (event.type == 2) return;
 
         if (ToggleCommand.oruoToggled) {
-            if (message.contains("What SkyBlock year is it?")) {
-                double currentTime = System.currentTimeMillis() /1000L;
+            if (DankersSkyblockMod.data != null && DankersSkyblockMod.data.has("trivia")) {
+                if (message.contains("What SkyBlock year is it?")) {
+                    double currentTime = System.currentTimeMillis() / 1000L;
 
-                double diff = Math.floor(currentTime - 1560276000);
+                    double diff = Math.floor(currentTime - 1560276000);
 
-                int year = (int) (diff / 446400 + 1);
-                triviaAnswers = new String[]{"Year " + year};
+                    int year = (int) (diff / 446400 + 1);
+                    triviaAnswersJson = new JsonArray();
+                    triviaAnswersJson.add(new JsonPrimitive("Year " + year));
+                } else {
+                    JsonObject triviaSolutions = DankersSkyblockMod.data.get("trivia").getAsJsonObject();
+
+                    List<String> triviaSolutionsList = triviaSolutions.entrySet().stream()
+                                                       .map(Map.Entry::getKey)
+                                                       .collect(Collectors.toCollection(ArrayList::new));
+                    for (String question : triviaSolutionsList) {
+                        if (message.contains(question)) {
+                            triviaAnswersJson = triviaSolutions.get(question).getAsJsonArray();
+                            break;
+                        }
+                    }
+                }
+
+                // Set wrong answers to red and remove click events
+                if (triviaAnswersJson != null && (message.contains("ⓐ") || message.contains("ⓑ") || message.contains("ⓒ"))) {
+                    boolean isSolution = false;
+                    for (int i = 0; i < triviaAnswersJson.size(); i++) {
+                        String solution = triviaAnswersJson.get(i).getAsString();
+                        if (message.contains(solution)) {
+                            isSolution = true;
+                            break;
+                        }
+                    }
+                    if (!isSolution) {
+                        char letter = message.charAt(5);
+                        String option = message.substring(6);
+                        event.message = new ChatComponentText("     " + EnumChatFormatting.GOLD + letter + TRIVIA_WRONG_ANSWER_COLOUR + option);
+                    }
+                }
             } else {
-                for (String question : triviaSolutions.keySet()) {
-                    if (message.contains(question)) {
-                        triviaAnswers = triviaSolutions.get(question);
-                        break;
-                    }
-                }
-            }
+                if (message.contains("What SkyBlock year is it?")) {
+                    double currentTime = System.currentTimeMillis() / 1000L;
 
-            // Set wrong answers to red and remove click events
-            if (triviaAnswers != null && (message.contains("ⓐ") || message.contains("ⓑ") || message.contains("ⓒ"))) {
-                boolean isSolution = false;
-                for (String solution : triviaAnswers) {
-                    if (message.contains(solution)) {
-                        isSolution = true;
-                        break;
+                    double diff = Math.floor(currentTime - 1560276000);
+
+                    int year = (int) (diff / 446400 + 1);
+                    triviaAnswers = new String[]{"Year " + year};
+                } else {
+                    for (String question : triviaSolutions.keySet()) {
+                        if (message.contains(question)) {
+                            triviaAnswers = triviaSolutions.get(question);
+                            break;
+                        }
                     }
                 }
-                if (!isSolution) {
-                    char letter = message.charAt(5);
-                    String option = message.substring(6);
-                    event.message = new ChatComponentText("     " + EnumChatFormatting.GOLD + letter + TRIVIA_WRONG_ANSWER_COLOUR + option);
+
+                // Set wrong answers to red and remove click events
+                if (triviaAnswers != null && (message.contains("ⓐ") || message.contains("ⓑ") || message.contains("ⓒ"))) {
+                    boolean isSolution = false;
+                    for (String solution : triviaAnswers) {
+                        if (message.contains(solution)) {
+                            isSolution = true;
+                            break;
+                        }
+                    }
+                    if (!isSolution) {
+                        char letter = message.charAt(5);
+                        String option = message.substring(6);
+                        event.message = new ChatComponentText("     " + EnumChatFormatting.GOLD + letter + TRIVIA_WRONG_ANSWER_COLOUR + option);
+                    }
                 }
             }
         }

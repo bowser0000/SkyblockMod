@@ -4,8 +4,10 @@ import me.Danker.DankersSkyblockMod;
 import me.Danker.features.loot.LootDisplay;
 import me.Danker.handlers.ConfigHandler;
 import me.Danker.handlers.ScoreboardHandler;
+import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -37,24 +39,47 @@ public class AutoDisplay {
                     } else if (sCleaned.contains("Revenant Horror")) {
                         LootDisplay.display = "zombie";
                         found = true;
+                    } else if (sCleaned.contains("Voidgloom Seraph")) {
+                        LootDisplay.display = "enderman";
+                        found = true;
+                    } else if (sCleaned.contains("Inferno Demonlord")) {
+                        LootDisplay.display = "blaze";
+                        found = true;
                     } else if (sCleaned.contains("The Mist")){
                         LootDisplay.display = "ghost";
                         found = true;
-                    } else if (sCleaned.contains("The Catacombs (")) {
-                        if (sCleaned.contains("F1")) {
-                            LootDisplay.display = "catacombs_floor_one";
-                        } else if (sCleaned.contains("F2")) {
-                            LootDisplay.display = "catacombs_floor_two";
-                        } else if (sCleaned.contains("F3")) {
-                            LootDisplay.display = "catacombs_floor_three";
-                        } else if (sCleaned.contains("F4")) {
-                            LootDisplay.display = "catacombs_floor_four";
-                        } else if (sCleaned.contains("F5")) {
-                            LootDisplay.display = "catacombs_floor_five";
-                        } else if (sCleaned.contains("F6")) {
-                            LootDisplay.display = "catacombs_floor_six";
-                        } else if (sCleaned.contains("F7")) {
-                            LootDisplay.display = "catacombs_floor_seven";
+                    } else if (Utils.inDungeons) {
+                        switch (Utils.currentFloor) {
+                            case F1:
+                                LootDisplay.display = "catacombs_floor_one";
+                                break;
+                            case F2:
+                                LootDisplay.display = "catacombs_floor_two";
+                                break;
+                            case F3:
+                                LootDisplay.display = "catacombs_floor_three";
+                                break;
+                            case F4:
+                                LootDisplay.display = "catacombs_floor_four";
+                                break;
+                            case F5:
+                                LootDisplay.display = "catacombs_floor_five";
+                                break;
+                            case F6:
+                                LootDisplay.display = "catacombs_floor_six";
+                                break;
+                            case F7:
+                                LootDisplay.display = "catacombs_floor_seven";
+                                break;
+                            case M1:
+                            case M2:
+                            case M3:
+                            case M4:
+                            case M5:
+                            case M6:
+                            case M7:
+                                LootDisplay.display = "catacombs_master";
+                                break;
                         }
                         found = true;
                     }
@@ -65,6 +90,22 @@ public class AutoDisplay {
                     if (hotbarItem.getDisplayName().contains("Ancestral Spade")) {
                         LootDisplay.display = "mythological";
                         found = true;
+                        break;
+                    } else if (hotbarItem.getItem() == Items.fishing_rod) {
+                        List<String> lore = hotbarItem.getTooltip(player, mc.gameSettings.advancedItemTooltips);
+                        for (int j = lore.size() - 1; j >= 0; j--) { // reverse
+                            if (lore.get(j).contains("FISHING ROD")) {
+                                if (Utils.tabLocation.equals("Crimson Isle")) {
+                                    LootDisplay.display = "fishing_lava";
+                                } else if (Utils.tabLocation.equals("Jerry's Workshop")) {
+                                    LootDisplay.display = "fishing_winter";
+                                } else {
+                                    LootDisplay.display = "fishing";
+                                }
+                                found = true;
+                                break;
+                            }
+                        }
                     }
                 }
                 if (!found) LootDisplay.display = "off";

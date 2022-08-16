@@ -3,6 +3,7 @@ package me.Danker.features;
 import me.Danker.DankersSkyblockMod;
 import me.Danker.commands.ToggleCommand;
 import me.Danker.handlers.ScoreboardHandler;
+import me.Danker.utils.RenderUtils;
 import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
@@ -26,6 +27,7 @@ public class SlayerESP {
     static Entity zombie = null;
     static Entity spider = null;
     static Entity wolf = null;
+    static Entity enderman = null;
     static boolean slayerActive = false;
     static boolean slayerStarted = false;
     public static int SLAYER_COLOUR;
@@ -35,6 +37,7 @@ public class SlayerESP {
         zombie = null;
         spider = null;
         wolf = null;
+        enderman = null;
     }
 
     @SubscribeEvent
@@ -45,7 +48,7 @@ public class SlayerESP {
         World world = Minecraft.getMinecraft().theWorld;
         if (world == null) return;
         if (!slayerStarted) return;
-        if (zombie != null || spider != null || wolf != null) {
+        if (zombie != null || spider != null || wolf != null || enderman != null) {
             return;
         }
         slayerActive = true;
@@ -66,8 +69,10 @@ public class SlayerESP {
                         } else if (e.getName().contains("Sven Packmaster")) {
                             wolf = e;
                             return;
+                        } else if (e.getName().contains("Voidgloom Seraph")) {
+                            enderman = e;
+                            return;
                         }
-
                     }
                     break;
                 }
@@ -88,6 +93,7 @@ public class SlayerESP {
             zombie = null;
             spider = null;
             wolf = null;
+            enderman = null;
         }
 
     }
@@ -100,17 +106,22 @@ public class SlayerESP {
         if (slayerActive && ToggleCommand.highlightSlayers) {
             if (zombie != null) {
                 AxisAlignedBB aabb = new AxisAlignedBB(zombie.posX - 0.5, zombie.posY - 2, zombie.posZ - 0.5, zombie.posX + 0.5, zombie.posY, zombie.posZ + 0.5);
-                Utils.draw3DBox(aabb, SLAYER_COLOUR, event.partialTicks);
+                RenderUtils.draw3DBox(aabb, SLAYER_COLOUR, event.partialTicks);
                 return;
             }
             if (spider != null) {
                 AxisAlignedBB aabb = new AxisAlignedBB(spider.posX - 0.75, spider.posY - 1, spider.posZ - 0.75, spider.posX + 0.75, spider.posY, spider.posZ + 0.75);
-                Utils.draw3DBox(aabb, SLAYER_COLOUR, event.partialTicks);
+                RenderUtils.draw3DBox(aabb, SLAYER_COLOUR, event.partialTicks);
                 return;
             }
             if (wolf != null) {
                 AxisAlignedBB aabb = new AxisAlignedBB(wolf.posX - 0.5, wolf.posY - 1, wolf.posZ - 0.5, wolf.posX + 0.5, wolf.posY, wolf.posZ + 0.5);
-                Utils.draw3DBox(aabb, SLAYER_COLOUR, event.partialTicks);
+                RenderUtils.draw3DBox(aabb, SLAYER_COLOUR, event.partialTicks);
+                return;
+            }
+            if (enderman != null) {
+                AxisAlignedBB aabb = new AxisAlignedBB(enderman.posX - 0.5, enderman.posY - 3, enderman.posZ - 0.5, enderman.posX + 0.5, enderman.posY, enderman.posZ + 0.5);
+                RenderUtils.draw3DBox(aabb, SLAYER_COLOUR, event.partialTicks);
                 return;
             }
         }
