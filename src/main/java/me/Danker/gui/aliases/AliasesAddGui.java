@@ -22,6 +22,7 @@ public class AliasesAddGui extends GuiScreen {
     private GuiTextField text;
     private GuiTextField alias;
     private GuiCheckBox toggled;
+    private GuiCheckBox allowInCommand;
     private GuiButton add;
 
     public AliasesAddGui() {}
@@ -47,16 +48,17 @@ public class AliasesAddGui extends GuiScreen {
 
         cancel = new GuiButton(0, 2, height - 30, 100, 20, "Cancel");
 
-
         text = new GuiTextField(0, this.fontRendererObj, width / 2 - 100, (int) (height * 0.2), 200, 20);
         alias = new GuiTextField(0, this.fontRendererObj, width / 2 - 100, (int) (height * 0.3), 200, 20);
         toggled = new GuiCheckBox(0, width / 2 - 26, (int) (height * 0.4), "Toggled", true);
+        allowInCommand = new GuiCheckBox(0, width / 2 - 48, (int) (height * 0.5), "Allow in Command", true);
         add = new GuiButton(0, width / 2 - 25, (int) (height * 0.8), 50, 20, "Add");
 
         if (editing) {
             text.setText(base.text);
             alias.setText(base.alias);
             toggled.setIsChecked(base.toggled);
+            allowInCommand.setIsChecked(base.allowInCommand);
         }
 
         text.setVisible(true);
@@ -67,6 +69,7 @@ public class AliasesAddGui extends GuiScreen {
 
         this.buttonList.add(cancel);
         this.buttonList.add(toggled);
+        this.buttonList.add(allowInCommand);
         this.buttonList.add(add);
     }
 
@@ -79,7 +82,7 @@ public class AliasesAddGui extends GuiScreen {
         alias.drawTextBox();
 
         new TextRenderer(mc, "Text:", width / 2 - 135, (int) (height * 0.22), 1D);
-        new TextRenderer(mc, "Alias:", width / 2 - 137, (int) (height * 0.32), 1D);
+        new TextRenderer(mc, "Alias:", width / 2 - 136, (int) (height * 0.32), 1D);
     }
 
     @Override
@@ -87,7 +90,7 @@ public class AliasesAddGui extends GuiScreen {
         if (button == cancel) {
             mc.displayGuiScreen(new AliasesGui(1));
         } else if (button == add) {
-            ChatAliases.Alias newAlias = new ChatAliases.Alias(text.getText(), alias.getText(), toggled.isChecked());
+            ChatAliases.Alias newAlias = new ChatAliases.Alias(text.getText(), alias.getText(), toggled.isChecked(), allowInCommand.isChecked());
             if (editing) {
                 ChatAliases.aliases.set(id, newAlias);
             } else {
