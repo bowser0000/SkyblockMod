@@ -22,7 +22,7 @@ public class TrophyFishTracker {
 
     public static JsonObject fish = new JsonObject();
     public static JsonObject fishSession = new JsonObject();
-    public static Pattern fishPattern = Pattern.compile("TROPHY FISH! You caught a (?<fish>.*) (?<tier>.*).");
+    public static Pattern fishPattern = Pattern.compile("TROPHY FISH! You caught an? (?<fish>.*) (?<tier>.*).");
     public static String configFile;
 
     public static JsonObject createEmpty() {
