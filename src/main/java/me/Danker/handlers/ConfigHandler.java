@@ -321,6 +321,7 @@ public class ConfigHandler {
 		ToggleCommand.superpairsToggled = initBoolean("toggles", "Superpairs", false);
 		ToggleCommand.hideTooltipsInExperimentAddonsToggled = initBoolean("toggles", "HideTooltipsInExperimentAddons", false);
 		// Custom Music
+		ToggleCommand.disableHypixelMusic = initBoolean("toggles", "DisableHypixelMusic", true);
 		ToggleCommand.dungeonBossMusic = initBoolean("toggles", "DungeonBossMusic", false);
 		ToggleCommand.bloodRoomMusic = initBoolean("toggles", "BloodRoomMusic", false);
 		ToggleCommand.dungeonMusic = initBoolean("toggles", "DungeonMusic", false);
