@@ -112,49 +112,49 @@ public class SkillTracker {
                     case "Farming":
                         lastSkill = "Farming";
                         if (farmingXP != 0) {
-                            if (skillStopwatch.isStarted() && !skillStopwatch.isSuspended()) farmingXPGained += totalXP - farmingXP;
+                            if (skillStopwatch.isStarted() && !skillStopwatch.isSuspended() && totalXP > farmingXP) farmingXPGained += totalXP - farmingXP;
                         }
                         farmingXP = totalXP;
                         break;
                     case "Mining":
                         lastSkill = "Mining";
                         if (miningXP != 0) {
-                            if (skillStopwatch.isStarted() && !skillStopwatch.isSuspended()) miningXPGained += totalXP - miningXP;
+                            if (skillStopwatch.isStarted() && !skillStopwatch.isSuspended() && totalXP > miningXP) miningXPGained += totalXP - miningXP;
                         }
                         miningXP = totalXP;
                         break;
                     case "Combat":
                         lastSkill = "Combat";
                         if (combatXP != 0) {
-                            if (skillStopwatch.isStarted() && !skillStopwatch.isSuspended()) combatXPGained += totalXP - combatXP;
+                            if (skillStopwatch.isStarted() && !skillStopwatch.isSuspended() && totalXP > combatXP) combatXPGained += totalXP - combatXP;
                         }
                         combatXP = totalXP;
                         break;
                     case "Foraging":
                         lastSkill = "Foraging";
                         if (foragingXP != 0) {
-                            if (skillStopwatch.isStarted() && !skillStopwatch.isSuspended()) foragingXPGained += totalXP - foragingXP;
+                            if (skillStopwatch.isStarted() && !skillStopwatch.isSuspended() && totalXP > foragingXP) foragingXPGained += totalXP - foragingXP;
                         }
                         foragingXP = totalXP;
                         break;
                     case "Fishing":
                         lastSkill = "Fishing";
                         if (fishingXP != 0) {
-                            if (skillStopwatch.isStarted() && !skillStopwatch.isSuspended()) fishingXPGained += totalXP - fishingXP;
+                            if (skillStopwatch.isStarted() && !skillStopwatch.isSuspended() && totalXP > fishingXP) fishingXPGained += totalXP - fishingXP;
                         }
                         fishingXP = totalXP;
                         break;
                     case "Enchanting":
                         lastSkill = "Enchanting";
                         if (enchantingXP != 0) {
-                            if (skillStopwatch.isStarted() && !skillStopwatch.isSuspended()) enchantingXPGained += totalXP - enchantingXP;
+                            if (skillStopwatch.isStarted() && !skillStopwatch.isSuspended() && totalXP > enchantingXP) enchantingXPGained += totalXP - enchantingXP;
                         }
                         enchantingXP = totalXP;
                         break;
                     case "Alchemy":
                         lastSkill = "Alchemy";
                         if (alchemyXP != 0) {
-                            if (skillStopwatch.isStarted() && !skillStopwatch.isSuspended()) alchemyXPGained += totalXP - alchemyXP;
+                            if (skillStopwatch.isStarted() && !skillStopwatch.isSuspended() && totalXP > alchemyXP) alchemyXPGained += totalXP - alchemyXP;
                         }
                         alchemyXP = totalXP;
                         break;
