@@ -1,9 +1,6 @@
 package me.Danker.handlers;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+import com.google.gson.*;
 import me.Danker.DankersSkyblockMod;
 import me.Danker.commands.MoveCommand;
 import me.Danker.commands.ScaleCommand;
@@ -22,6 +19,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -194,6 +192,43 @@ public class ConfigHandler {
 		} else {
 			return getBoolean(category, key);
 		}
+	}
+
+	public static void createNewJsonObject(String file) throws IOException {
+		FileWriter fileWriter = new FileWriter(file);
+		fileWriter.write(new JsonObject().toString());
+		fileWriter.close();
+	}
+
+	public static void createNewJsonArray(String file) throws IOException {
+		FileWriter fileWriter = new FileWriter(file);
+		fileWriter.write(new JsonArray().toString());
+		fileWriter.close();
+	}
+
+	public static JsonObject initJsonObject(String file) throws IOException {
+		if (!(new File(file).exists())) createNewJsonObject(file);
+		try {
+			return new JsonParser().parse(new FileReader(file)).getAsJsonObject();
+		} catch (IllegalStateException corrupted) {
+			corrupted.printStackTrace();
+			System.out.println("Recreating " + file);
+			createNewJsonObject(file);
+			return new JsonParser().parse(new FileReader(file)).getAsJsonObject();
+		}
+	}
+
+	public static <T> Object[] initJsonArray(String file, Class<T> clazz) throws IOException {
+		if (!(new File(file).exists())) createNewJsonArray(file);
+		Object[] arr = null;
+		try {
+			arr = new Gson().fromJson(new FileReader(file), (Type) clazz);
+		} catch (JsonSyntaxException corrupted) {
+			corrupted.printStackTrace();
+			System.out.println("Recreating " + file);
+			createNewJsonArray(file);
+		}
+		return arr;
 	}
 	
 	public static void reloadConfig() {
@@ -727,43 +762,21 @@ public class ConfigHandler {
 		if (!hasKey("commands", "reparty")) writeBooleanConfig("commands", "reparty", false);
 
 		// JSON
-		Gson gson = new Gson();
-
 		try {
 			// Alerts
-			if (!(new File(Alerts.configFile).exists())) {
-				FileWriter file = new FileWriter(Alerts.configFile);
-				file.write(new JsonArray().toString());
-				file.close();
-			}
-			Alerts.Alert[] alerts = gson.fromJson(new FileReader(Alerts.configFile), Alerts.Alert[].class);
-			if (alerts != null) Alerts.alerts = new ArrayList<>(Arrays.asList(alerts));
+			Object[] alerts = initJsonArray(Alerts.configFile, Alerts.Alert[].class);
+			if (alerts != null) Alerts.alerts = new ArrayList<>(Arrays.asList((Alerts.Alert[]) alerts));
 
 			// Aliases
-			if (!(new File(ChatAliases.configFile).exists())) {
-				FileWriter file = new FileWriter(ChatAliases.configFile);
-				file.write(new JsonArray().toString());
-				file.close();
-			}
-			ChatAliases.Alias[] aliases = gson.fromJson(new FileReader(ChatAliases.configFile), ChatAliases.Alias[].class);
-			if (aliases != null) ChatAliases.aliases = new ArrayList<>(Arrays.asList(aliases));
+			Object[] aliases = initJsonArray(ChatAliases.configFile, ChatAliases.Alias[].class);
+			if (aliases != null) ChatAliases.aliases = new ArrayList<>(Arrays.asList((ChatAliases.Alias[]) aliases));
 
 			// Minions
-			if (!(new File(MinionLastCollected.configFile).exists())) {
-				FileWriter file = new FileWriter(MinionLastCollected.configFile);
-				file.write(new JsonArray().toString());
-				file.close();
-			}
-			MinionLastCollected.Minion[] minions = gson.fromJson(new FileReader(MinionLastCollected.configFile), MinionLastCollected.Minion[].class);
-			if (minions != null) MinionLastCollected.minions = new ArrayList<>(Arrays.asList(minions));
+			Object[] minions = initJsonArray(MinionLastCollected.configFile, MinionLastCollected.Minion[].class);
+			if (minions != null) MinionLastCollected.minions = new ArrayList<>(Arrays.asList((MinionLastCollected.Minion[]) minions));
 
 			// Trophy Fish
-			if (!(new File(TrophyFishTracker.configFile).exists())) {
-				FileWriter file = new FileWriter(TrophyFishTracker.configFile);
-				file.write(new JsonObject().toString());
-				file.close();
-			}
-			TrophyFishTracker.fish = new JsonParser().parse(new FileReader(TrophyFishTracker.configFile)).getAsJsonObject();
+			TrophyFishTracker.fish = initJsonObject(TrophyFishTracker.configFile);
 		} catch (IOException ex) {
 			ex.printStackTrace();
 		}
