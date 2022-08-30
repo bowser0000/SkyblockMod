@@ -290,6 +290,7 @@ public class ConfigHandler {
 		ToggleCommand.minionLastCollected = initBoolean("toggles", "MinionLastCollected", false);
 		ToggleCommand.showTrophyCompletion = initBoolean("toggles", "ShowTrophyCompletion", false);
 		ToggleCommand.showTotalMagmafish = initBoolean("toggles", "ShowTotalMagmafish", false);
+		ToggleCommand.bazaarTimeToFill = initBoolean("toggles", "BazaarTimeToFill", false);
 		// Chat Messages
 		ToggleCommand.sceptreMessages = initBoolean("toggles", "SceptreMessages", true);
 		ToggleCommand.midasStaffMessages = initBoolean("toggles", "MidasStaffMessages", true);

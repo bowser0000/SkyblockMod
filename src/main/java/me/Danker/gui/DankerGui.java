@@ -96,6 +96,7 @@ public class DankerGui extends GuiScreen {
 	private GuiButton minionLastCollected;
 	private GuiButton showTrophyCompletion;
 	private GuiButton showTotalMagmafish;
+	private GuiButton bazaarTimeToFill;
 	// Chat Messages
 	private GuiButton sceptreMessages;
 	private GuiButton midasStaffMessages;
@@ -196,6 +197,7 @@ public class DankerGui extends GuiScreen {
 		minionLastCollected = new FeatureButton("Show When Minion Last Collected: " + Utils.getColouredBoolean(ToggleCommand.minionLastCollected), "Displays when a minion was last collected over the minion.");
 		showTrophyCompletion = new FeatureButton("Show Trophy Fish Completion: " + Utils.getColouredBoolean(ToggleCommand.showTrophyCompletion), "Show completion instead of count in trophy fish tracker display.");
 		showTotalMagmafish = new FeatureButton("Show Total Fillet Magmafish: " + Utils.getColouredBoolean(ToggleCommand.showTotalMagmafish), "Show total Magmafish you would get if you filleted all the trophy fish in your inventory.");
+		bazaarTimeToFill = new FeatureButton("Show Time to Fill Bazaar Order: " + Utils.getColouredBoolean(ToggleCommand.bazaarTimeToFill), "Shows an estimated amount of time it would take for a bazaar order to be filled.\nAssumes you are not over/undercut.\nOnly works when moving through menus. Doesn't work when clicking items as shortcut.");
 
 		allButtons.clear();
 		allButtons.add(changeDisplay);
@@ -262,6 +264,7 @@ public class DankerGui extends GuiScreen {
 		allButtons.add(minionLastCollected);
 		allButtons.add(showTrophyCompletion);
 		allButtons.add(showTotalMagmafish);
+		allButtons.add(bazaarTimeToFill);
 
 		search.setText(initSearchText);
 		search.setVisible(true);
@@ -579,6 +582,10 @@ public class DankerGui extends GuiScreen {
 			ToggleCommand.showTotalMagmafish = !ToggleCommand.showTotalMagmafish;
 			ConfigHandler.writeBooleanConfig("toggles", "ShowTotalMagmafish", ToggleCommand.showTotalMagmafish);
 			showTotalMagmafish.displayString = "Show Total Fillet Magmafish: " + Utils.getColouredBoolean(ToggleCommand.showTotalMagmafish);
+		} else if (button == bazaarTimeToFill) {
+			ToggleCommand.bazaarTimeToFill = !ToggleCommand.bazaarTimeToFill;
+			ConfigHandler.writeBooleanConfig("toggles", "BazaarTimeToFill", ToggleCommand.bazaarTimeToFill);
+			bazaarTimeToFill.displayString = "Show Time to Fill Bazaar Order: " + Utils.getColouredBoolean(ToggleCommand.bazaarTimeToFill);
 		}
 	}
 

@@ -78,6 +78,7 @@ Discord Server: https://discord.gg/QsEkNQS
 - Thunder/Lord Jawbus spawn alerts
 - Show when minion was last collected
 - Show amount of Magmafish if trophy fish are filleted
+- Show estimated time until bazaar order is filled
 </details>
 
 <details>

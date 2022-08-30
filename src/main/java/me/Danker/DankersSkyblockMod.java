@@ -108,6 +108,7 @@ public class DankersSkyblockMod {
         MinecraftForge.EVENT_BUS.register(new AutoDisplay());
         MinecraftForge.EVENT_BUS.register(new AutoJoinSkyblock());
         MinecraftForge.EVENT_BUS.register(new AutoSwapToPickBlock());
+        MinecraftForge.EVENT_BUS.register(new BazaarTimeToFill());
         MinecraftForge.EVENT_BUS.register(new BlazeSolver());
         MinecraftForge.EVENT_BUS.register(new BlockPlacingFlowers());
         MinecraftForge.EVENT_BUS.register(new BlockWrongSlayer());
