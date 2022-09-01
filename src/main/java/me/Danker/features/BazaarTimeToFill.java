@@ -51,7 +51,7 @@ public class BazaarTimeToFill {
     }
 
     @SubscribeEvent
-    public void onTick(TickEvent event) {
+    public void onTick(TickEvent.ClientTickEvent event) {
         if (!ToggleCommand.bazaarTimeToFill || !Utils.inSkyblock) return;
         if (event.phase != TickEvent.Phase.START) return;
         if (DankersSkyblockMod.tickAmount % 10 != 0) return;
@@ -74,6 +74,7 @@ public class BazaarTimeToFill {
                     if (cleaned.startsWith("Ordering: ")) {
                         double amount = Double.parseDouble(cleaned.replaceAll("\\D", ""));
                         textToDisplay = getTextToDisplay(amount, lastInstaSells);
+                        break;
                     }
                 }
             } else if (chestName.equals("At what price are you selling?")) {
@@ -82,6 +83,7 @@ public class BazaarTimeToFill {
                     if (cleaned.startsWith("Selling: ")) {
                         double amount = Double.parseDouble(cleaned.replaceAll("\\D", ""));
                         textToDisplay = getTextToDisplay(amount, lastInstaBuys);
+                        break;
                     }
                 }
             }
