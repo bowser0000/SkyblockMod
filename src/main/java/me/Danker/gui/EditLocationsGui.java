@@ -3,7 +3,9 @@ package me.Danker.gui;
 import me.Danker.DankersSkyblockMod;
 import me.Danker.commands.MoveCommand;
 import me.Danker.commands.ScaleCommand;
+import me.Danker.commands.ToggleCommand;
 import me.Danker.features.*;
+import me.Danker.features.loot.LootDisplay;
 import me.Danker.gui.buttons.LocationButton;
 import me.Danker.handlers.ConfigHandler;
 import me.Danker.utils.Utils;
@@ -135,21 +137,21 @@ public class EditLocationsGui extends GuiScreen {
 		dungeonScore = new LocationButton(MoveCommand.dungeonScoreXY[0], MoveCommand.dungeonScoreXY[1], ScaleCommand.dungeonScoreScale, dungeonScoreText, dungeonScoreNums, 80);
 		firePillar = new LocationButton(MoveCommand.firePillarXY[0], MoveCommand.firePillarXY[1], ScaleCommand.firePillarScale, EnumChatFormatting.GOLD + "3s " + EnumChatFormatting.RED + "8 hits");
 
-		this.buttonList.add(coords);
-		this.buttonList.add(dungeonTimer);
-		this.buttonList.add(lividHP);
-		this.buttonList.add(cakeTimer);
-		this.buttonList.add(skillTracker);
-		this.buttonList.add(waterAnswer);
-		this.buttonList.add(bonzoTimer);
-		this.buttonList.add(display);
-		this.buttonList.add(skill50);
-		this.buttonList.add(golemTimer);
-		this.buttonList.add(teammatesInRadius);
-		this.buttonList.add(giantHP);
-		this.buttonList.add(abilityCooldown);
-		this.buttonList.add(dungeonScore);
-		this.buttonList.add(firePillar);
+		if (!ToggleCommand.onlyEditEnabled || ToggleCommand.coordsToggled) this.buttonList.add(coords);
+		if (!ToggleCommand.onlyEditEnabled || ToggleCommand.dungeonTimerToggled) this.buttonList.add(dungeonTimer);
+		if (!ToggleCommand.onlyEditEnabled || ToggleCommand.lividSolverToggled) this.buttonList.add(lividHP);
+		if (!ToggleCommand.onlyEditEnabled || ToggleCommand.cakeTimerToggled) this.buttonList.add(cakeTimer);
+		if (!ToggleCommand.onlyEditEnabled || SkillTracker.showSkillTracker) this.buttonList.add(skillTracker);
+		if (!ToggleCommand.onlyEditEnabled || ToggleCommand.waterToggled) this.buttonList.add(waterAnswer);
+		if (!ToggleCommand.onlyEditEnabled || ToggleCommand.bonzoTimerToggled) this.buttonList.add(bonzoTimer);
+		if (!ToggleCommand.onlyEditEnabled || LootDisplay.display.equals("off")) this.buttonList.add(display);
+		if (!ToggleCommand.onlyEditEnabled || ToggleCommand.skill50DisplayToggled) this.buttonList.add(skill50);
+		if (!ToggleCommand.onlyEditEnabled || ToggleCommand.golemAlertToggled) this.buttonList.add(golemTimer);
+		if (!ToggleCommand.onlyEditEnabled || ToggleCommand.teammatesInRadius) this.buttonList.add(teammatesInRadius);
+		if (!ToggleCommand.onlyEditEnabled || ToggleCommand.giantHP) this.buttonList.add(giantHP);
+		if (!ToggleCommand.onlyEditEnabled || ToggleCommand.abilityCooldowns) this.buttonList.add(abilityCooldown);
+		if (!ToggleCommand.onlyEditEnabled || ToggleCommand.dungeonScore) this.buttonList.add(dungeonScore);
+		if (!ToggleCommand.onlyEditEnabled || ToggleCommand.firePillar) this.buttonList.add(firePillar);
 	}
 	
 	@Override

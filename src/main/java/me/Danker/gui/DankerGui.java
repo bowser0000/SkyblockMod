@@ -97,6 +97,7 @@ public class DankerGui extends GuiScreen {
 	private GuiButton showTrophyCompletion;
 	private GuiButton showTotalMagmafish;
 	private GuiButton bazaarTimeToFill;
+	private GuiButton onlyEditEnabled;
 	// Chat Messages
 	private GuiButton sceptreMessages;
 	private GuiButton midasStaffMessages;
@@ -143,6 +144,7 @@ public class DankerGui extends GuiScreen {
 		alerts = new GuiButton(0, 0, 0, "Alerts");
 		aliases = new GuiButton(0, 0, 0, "Aliases");
 		outlineText = new FeatureButton("Outline Displayed Text: " + Utils.getColouredBoolean(ToggleCommand.outlineTextToggled), "Adds bold outline to on-screen text.");
+		onlyEditEnabled = new FeatureButton("Only Edit Enabled: " + Utils.getColouredBoolean(ToggleCommand.onlyEditEnabled), "Only shows enabled features in Edit Locations menu.");
 		pickBlock = new FeatureButton("Auto-Swap to Pick Block: " + Utils.getColouredBoolean(ToggleCommand.swapToPickBlockToggled), "Automatically changes left clicks to middle clicks.\nHelpful when lagging.");
 		coords = new FeatureButton("Coordinate/Angle Display: " + Utils.getColouredBoolean(ToggleCommand.coordsToggled), "Displays coordinates and angle.");
 		chatMaddox = new FeatureButton("Click On-Screen to Open Maddox: " + Utils.getColouredBoolean(ToggleCommand.chatMaddoxToggled), "Open chat then click anywhere after calling Maddox to open the menu.");
@@ -210,6 +212,7 @@ public class DankerGui extends GuiScreen {
 		allButtons.add(alerts);
 		allButtons.add(aliases);
 		allButtons.add(outlineText);
+		allButtons.add(onlyEditEnabled);
 		allButtons.add(pickBlock);
 		allButtons.add(coords);
 		allButtons.add(chatMaddox);
@@ -586,6 +589,10 @@ public class DankerGui extends GuiScreen {
 			ToggleCommand.bazaarTimeToFill = !ToggleCommand.bazaarTimeToFill;
 			ConfigHandler.writeBooleanConfig("toggles", "BazaarTimeToFill", ToggleCommand.bazaarTimeToFill);
 			bazaarTimeToFill.displayString = "Show Time to Fill Bazaar Order: " + Utils.getColouredBoolean(ToggleCommand.bazaarTimeToFill);
+		} else if (button == onlyEditEnabled) {
+			ToggleCommand.onlyEditEnabled = !ToggleCommand.onlyEditEnabled;
+			ConfigHandler.writeBooleanConfig("toggles", "OnlyEditEnabled", ToggleCommand.onlyEditEnabled);
+			onlyEditEnabled.displayString = "Only Edit Enabled: " + Utils.getColouredBoolean(ToggleCommand.onlyEditEnabled);
 		}
 	}
 

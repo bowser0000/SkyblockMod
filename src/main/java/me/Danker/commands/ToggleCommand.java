@@ -69,6 +69,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 	public static boolean showTrophyCompletion;
 	public static boolean showTotalMagmafish;
 	public static boolean bazaarTimeToFill;
+	public static boolean onlyEditEnabled;
 	// Chat Messages
 	public static boolean sceptreMessages;
 	public static boolean midasStaffMessages;
