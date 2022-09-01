@@ -39,10 +39,12 @@ public class ColouredNames {
 
     @SubscribeEvent
     public void onChat(ClientChatReceivedEvent event) {
-        if (!ToggleCommand.customColouredNames || !Utils.inSkyblock || event.type != 0) return;
+        if (!ToggleCommand.customColouredNames || !Utils.inSkyblock) return;
+        if (event.type == 2) return;
 
+        String text = event.message.getFormattedText();
         for (String user : users) {
-            if (event.message.getFormattedText().contains(user)) {
+            if (text.contains(user)) {
                 event.message = replaceChat(event.message, user);
             }
         }
@@ -52,9 +54,10 @@ public class ColouredNames {
     public void onTooltip(ItemTooltipEvent event) {
         if (!ToggleCommand.customColouredNames || !Utils.inSkyblock) return;
 
-        for (String user : users) {
-            for (int i = 0; i < event.toolTip.size(); i++) {
-                if (StringUtils.stripControlCodes(event.toolTip.get(i)).contains(user)) {
+        for (int i = 0; i < event.toolTip.size(); i++) {
+            String line = StringUtils.stripControlCodes(event.toolTip.get(i));
+            for (String user : users) {
+                if (line.contains(user)) {
                     event.toolTip.set(i, replaceName(event.toolTip.get(i), user, getColourFromName(user)));
                 }
             }
