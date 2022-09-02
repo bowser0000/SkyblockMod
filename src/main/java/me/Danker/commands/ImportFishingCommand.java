@@ -176,7 +176,7 @@ public class ImportFishingCommand extends CommandBase {
 			ConfigHandler.writeIntConfig("fishing", "lordJawbus", FishingTracker.lordJawbuses);
 
 			TrophyFishTracker.fish = TrophyFishTracker.createEmpty();
-			TrophyFishTracker.fish.add("Sulpher Skitter", getTrophyFromAPI(trophyObject, "sulphur_skitter"));
+			TrophyFishTracker.fish.add("Sulphur Skitter", getTrophyFromAPI(trophyObject, "sulphur_skitter"));
 			TrophyFishTracker.fish.add("Obfuscated 1", getTrophyFromAPI(trophyObject, "obfuscated_fish_1"));
 			TrophyFishTracker.fish.add("Steaming-Hot Flounder", getTrophyFromAPI(trophyObject, "steaming_hot_flounder"));
 			TrophyFishTracker.fish.add("Obfuscated 2", getTrophyFromAPI(trophyObject, "obfuscated_fish_2"));

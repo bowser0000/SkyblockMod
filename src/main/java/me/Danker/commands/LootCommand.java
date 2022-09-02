@@ -625,7 +625,7 @@ public class LootCommand extends CommandBase {
 						if (showSession) {
 							player.addChatMessage(new ChatComponentText(EnumChatFormatting.AQUA + "" + EnumChatFormatting.BOLD + "-------------------\n" +
 									EnumChatFormatting.GOLD + EnumChatFormatting.BOLD + " Trophy Fishing Summary (Current Session):\n" +
-									EnumChatFormatting.WHITE + "    Sulpher Skitter " + EnumChatFormatting.DARK_GRAY + "(" + TrophyFishTracker.getSum(TrophyFishTracker.fishSession, "Sulpher Skitter") + ")" + EnumChatFormatting.WHITE + ": " + TrophyFishTracker.getTierCount(TrophyFishTracker.fishSession, "Sulpher Skitter") + "\n" +
+									EnumChatFormatting.WHITE + "    Sulphur Skitter " + EnumChatFormatting.DARK_GRAY + "(" + TrophyFishTracker.getSum(TrophyFishTracker.fishSession, "Sulphur Skitter") + ")" + EnumChatFormatting.WHITE + ": " + TrophyFishTracker.getTierCount(TrophyFishTracker.fishSession, "Sulphur Skitter") + "\n" +
 									EnumChatFormatting.WHITE + "    Obfuscated 1 " + EnumChatFormatting.DARK_GRAY + "(" + TrophyFishTracker.getSum(TrophyFishTracker.fishSession, "Obfuscated 1") + ")" + EnumChatFormatting.WHITE + ": " + TrophyFishTracker.getTierCount(TrophyFishTracker.fishSession, "Obfuscated 1") + "\n" +
 									EnumChatFormatting.WHITE + "    Steaminghot Flounder " + EnumChatFormatting.DARK_GRAY + "(" + TrophyFishTracker.getSum(TrophyFishTracker.fishSession, "Steaming-Hot Flounder") + ")" + EnumChatFormatting.WHITE + ": " + TrophyFishTracker.getTierCount(TrophyFishTracker.fishSession, "Steaming-Hot Flounder") + "\n" +
 									EnumChatFormatting.WHITE + "    Gusher " + EnumChatFormatting.DARK_GRAY + "(" + TrophyFishTracker.getSum(TrophyFishTracker.fishSession, "Gusher") + ")" + EnumChatFormatting.WHITE + ": " + TrophyFishTracker.getTierCount(TrophyFishTracker.fishSession, "Gusher") + "\n" +
@@ -649,7 +649,7 @@ public class LootCommand extends CommandBase {
 
 						player.addChatMessage(new ChatComponentText(EnumChatFormatting.AQUA + "" + EnumChatFormatting.BOLD + "-------------------\n" +
 								EnumChatFormatting.GOLD + EnumChatFormatting.BOLD + " Trophy Fishing Summary:\n" +
-								EnumChatFormatting.WHITE + "    Sulpher Skitter " + EnumChatFormatting.DARK_GRAY + "(" + TrophyFishTracker.getSum(TrophyFishTracker.fish, "Sulpher Skitter") + ")" + EnumChatFormatting.WHITE + ": " + TrophyFishTracker.getTierCount(TrophyFishTracker.fish, "Sulpher Skitter") + "\n" +
+								EnumChatFormatting.WHITE + "    Sulphur Skitter " + EnumChatFormatting.DARK_GRAY + "(" + TrophyFishTracker.getSum(TrophyFishTracker.fish, "Sulphur Skitter") + ")" + EnumChatFormatting.WHITE + ": " + TrophyFishTracker.getTierCount(TrophyFishTracker.fish, "Sulphur Skitter") + "\n" +
 								EnumChatFormatting.WHITE + "    Obfuscated 1 " + EnumChatFormatting.DARK_GRAY + "(" + TrophyFishTracker.getSum(TrophyFishTracker.fish, "Obfuscated 1") + ")" + EnumChatFormatting.WHITE + ": " + TrophyFishTracker.getTierCount(TrophyFishTracker.fish, "Obfuscated 1") + "\n" +
 								EnumChatFormatting.WHITE + "    Steaminghot Flounder " + EnumChatFormatting.DARK_GRAY + "(" + TrophyFishTracker.getSum(TrophyFishTracker.fish, "Steaming-Hot Flounder") + ")" + EnumChatFormatting.WHITE + ": " + TrophyFishTracker.getTierCount(TrophyFishTracker.fish, "Steaming-Hot Flounder") + "\n" +
 								EnumChatFormatting.WHITE + "    Gusher " + EnumChatFormatting.DARK_GRAY + "(" + TrophyFishTracker.getSum(TrophyFishTracker.fish, "Gusher") + ")" + EnumChatFormatting.WHITE + ": " + TrophyFishTracker.getTierCount(TrophyFishTracker.fish, "Gusher") + "\n" +
