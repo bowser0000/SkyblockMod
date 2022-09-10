@@ -302,7 +302,7 @@ public class FishingTracker {
             poisonedWaterWormsSession++;
             ConfigHandler.writeIntConfig("fishing", "poisonedWaterWorm", poisonedWaterWorms);
             increaseSeaCreatures();
-        } else if (message.contains("A flaming worm surfaces from the depths")) {
+        } else if (message.contains("A Flaming Worm surfaces from the depths")) {
             flamingWorms++;
             flamingWormsSession++;
             ConfigHandler.writeIntConfig("fishing", "flamingWorm", flamingWorms);
