@@ -760,6 +760,7 @@ public class ConfigHandler {
 		IceWalkSolver.ICE_WALK_LINE_COLOUR = initInt("colors", "iceWalkLine", 0x40FF40);
 		HighlightCommissions.HIGHLIGHT_COLOUR = initInt("colors", "highlight_colour", 0x51FF51);
 		MinionLastCollected.LAST_COLLECTED_COLOUR = initInt("colors", "lastCollected", 0x55FFFF);
+		LividSolver.LIVID_COLOUR = initInt("colors", "livid", 0x0000FF);
 
 		// Commands
 		if (!hasKey("commands", "reparty")) writeBooleanConfig("commands", "reparty", false);
