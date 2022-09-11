@@ -1,5 +1,6 @@
 package me.Danker.features.puzzlesolvers;
 
+import me.Danker.DankersSkyblockMod;
 import me.Danker.commands.MoveCommand;
 import me.Danker.commands.ScaleCommand;
 import me.Danker.commands.ToggleCommand;
@@ -41,29 +42,31 @@ public class LividSolver {
         if (event.phase != TickEvent.Phase.START) return;
         if (!ToggleCommand.lividSolverToggled) return;
 
-        World world = Minecraft.getMinecraft().theWorld;
-        if (world == null) return;
-        if (Utils.currentFloor == Utils.DungeonFloor.F5 || Utils.currentFloor == Utils.DungeonFloor.M5) {
-            List<String> scoreboard = ScoreboardHandler.getSidebarLines();
-            if (scoreboard.size() == 0) return;
-            String firstLine = ScoreboardHandler.cleanSB(scoreboard.get(scoreboard.size() - 1));
+        if (DankersSkyblockMod.tickAmount % 10 == 0) {
+            World world = Minecraft.getMinecraft().theWorld;
+            if (world == null) return;
+            if (Utils.currentFloor == Utils.DungeonFloor.F5 || Utils.currentFloor == Utils.DungeonFloor.M5) {
+                List<String> scoreboard = ScoreboardHandler.getSidebarLines();
+                if (scoreboard.size() == 0) return;
+                String firstLine = ScoreboardHandler.cleanSB(scoreboard.get(scoreboard.size() - 1));
 
-            if (firstLine.contains("livid")) {
-                if (world.getBlockState(pos).getBlock() == Blocks.wool) {
-                    List<Entity> entities = world.getLoadedEntityList();
-                    int colour = world.getBlockState(pos).getBlock().getDamageValue(world, pos);
-                    String find = getTextFromValue(colour);
+                if (firstLine.contains("livid")) {
+                    if (world.getBlockState(pos).getBlock() == Blocks.wool) {
+                        List<Entity> entities = world.getLoadedEntityList();
+                        int colour = world.getBlockState(pos).getBlock().getDamageValue(world, pos);
+                        String find = getTextFromValue(colour);
 
-                    for (Entity entity : entities) {
-                        if (!(entity instanceof EntityArmorStand) || !entity.hasCustomName()) continue;
-                        String name = entity.getCustomNameTag();
+                        for (Entity entity : entities) {
+                            if (!(entity instanceof EntityArmorStand) || !entity.hasCustomName()) continue;
+                            String name = entity.getCustomNameTag();
 
-                        if (name.contains(find)) {
-                            livid = entity;
-                            return;
+                            if (name.contains(find)) {
+                                livid = entity;
+                                return;
+                            }
                         }
+                        livid = null;
                     }
-                    livid = null;
                 }
             }
         }
