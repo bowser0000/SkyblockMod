@@ -25,6 +25,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 
 public class APIHandler {
+
 	public static JsonObject getResponse(String urlString, boolean hasError) {
 		EntityPlayer player = Minecraft.getMinecraft().thePlayer;
 		
@@ -93,8 +94,7 @@ public class APIHandler {
 
 		return new JsonObject();
 	}
-	
-	// Only used for UUID => Username
+
 	public static JsonArray getArrayResponse(String urlString) {
 		EntityPlayer player = Minecraft.getMinecraft().thePlayer;
 		
@@ -130,6 +130,11 @@ public class APIHandler {
 	public static String getUUID(String username) {
 		JsonObject uuidResponse = getResponse("https://api.mojang.com/users/profiles/minecraft/" + username, false);
 		return uuidResponse.get("id").getAsString();
+	}
+
+	public static String getName(String uuid) {
+		JsonObject nameResponse = getResponse("https://sessionserver.mojang.com/session/minecraft/profile/" + uuid, false);
+		return nameResponse.get("name").getAsString();
 	}
 	
 	public static String getLatestProfileID(String UUID, String key) {
