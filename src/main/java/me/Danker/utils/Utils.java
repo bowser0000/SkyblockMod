@@ -195,7 +195,7 @@ public class Utils {
 		String[] words = string.split("_");
 		
 		for (int i = 0; i < words.length; i++) {
-			if (words[i].length < 2) words[i] = words[i].toUpperCase();
+			if (words[i].length() < 2) words[i] = words[i].toUpperCase();
 			else words[i] = words[i].substring(0, 1).toUpperCase() + words[i].substring(1).toLowerCase();
 		}
 		
