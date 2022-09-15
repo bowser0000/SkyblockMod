@@ -191,10 +191,12 @@ public class Utils {
 	}
 	
 	public static String capitalizeString(String string) {
+		if (string == null) return null;
 		String[] words = string.split("_");
 		
 		for (int i = 0; i < words.length; i++) {
-			words[i] = words[i].substring(0, 1).toUpperCase() + words[i].substring(1).toLowerCase();
+			if (words[i].length() < 2) words[i] = words[i].toUpperCase();
+			else words[i] = words[i].substring(0, 1).toUpperCase() + words[i].substring(1).toLowerCase();
 		}
 		
 		return String.join(" ", words);
