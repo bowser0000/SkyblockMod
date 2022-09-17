@@ -71,18 +71,15 @@ dependencies {
 
 }
 
-
-
 jar {
     manifest.attributes(
 		'Main-Class': 'DefenitlyNotAJoikedInstallerFrame',
     )
 }
 
-
-
-
-
+sourceJar {
+    enabled = false
+}
 
 processResources
 {
