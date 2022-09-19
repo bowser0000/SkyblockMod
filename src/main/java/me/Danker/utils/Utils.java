@@ -483,6 +483,7 @@ public class Utils {
 		}
 
 		for (ItemStack item : itemsToSearch) {
+			if (foundAbility) break;
 			List<String> tooltip = item.getTooltip(player, false);
 
 			for (String line : tooltip) {
