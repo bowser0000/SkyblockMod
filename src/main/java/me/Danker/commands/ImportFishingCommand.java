@@ -6,6 +6,7 @@ import me.Danker.features.loot.FishingTracker;
 import me.Danker.features.loot.TrophyFishTracker;
 import me.Danker.handlers.APIHandler;
 import me.Danker.handlers.ConfigHandler;
+import me.Danker.utils.Utils;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
@@ -176,24 +177,24 @@ public class ImportFishingCommand extends CommandBase {
 			ConfigHandler.writeIntConfig("fishing", "lordJawbus", FishingTracker.lordJawbuses);
 
 			TrophyFishTracker.fish = TrophyFishTracker.createEmpty();
-			TrophyFishTracker.fish.add("Sulphur Skitter", getTrophyFromAPI(trophyObject, "sulphur_skitter"));
-			TrophyFishTracker.fish.add("Obfuscated 1", getTrophyFromAPI(trophyObject, "obfuscated_fish_1"));
-			TrophyFishTracker.fish.add("Steaming-Hot Flounder", getTrophyFromAPI(trophyObject, "steaming_hot_flounder"));
-			TrophyFishTracker.fish.add("Obfuscated 2", getTrophyFromAPI(trophyObject, "obfuscated_fish_2"));
-			TrophyFishTracker.fish.add("Gusher", getTrophyFromAPI(trophyObject, "gusher"));
-			TrophyFishTracker.fish.add("Blobfish", getTrophyFromAPI(trophyObject, "blobfish"));
-			TrophyFishTracker.fish.add("Slugfish", getTrophyFromAPI(trophyObject, "slugfish"));
-			TrophyFishTracker.fish.add("Obfuscated 3", getTrophyFromAPI(trophyObject, "obfuscated_fish_3"));
-			TrophyFishTracker.fish.add("Flyfish", getTrophyFromAPI(trophyObject, "flyfish"));
-			TrophyFishTracker.fish.add("Lavahorse", getTrophyFromAPI(trophyObject, "lava_horse"));
-			TrophyFishTracker.fish.add("Mana Ray", getTrophyFromAPI(trophyObject, "mana_ray"));
-			TrophyFishTracker.fish.add("Volcanic Stonefish", getTrophyFromAPI(trophyObject, "volcanic_stonefish"));
-			TrophyFishTracker.fish.add("Vanille", getTrophyFromAPI(trophyObject, "vanille"));
-			TrophyFishTracker.fish.add("Skeleton Fish", getTrophyFromAPI(trophyObject, "skeleton_fish"));
-			TrophyFishTracker.fish.add("Moldfin", getTrophyFromAPI(trophyObject, "moldfin"));
-			TrophyFishTracker.fish.add("Soul Fish", getTrophyFromAPI(trophyObject, "soul_fish"));
-			TrophyFishTracker.fish.add("Karate Fish", getTrophyFromAPI(trophyObject, "karate_fish"));
-			TrophyFishTracker.fish.add("Golden Fish", getTrophyFromAPI(trophyObject, "golden_fish"));
+			TrophyFishTracker.fish.add("Sulphur Skitter", Utils.getTrophyFromAPI(trophyObject, "sulphur_skitter"));
+			TrophyFishTracker.fish.add("Obfuscated 1", Utils.getTrophyFromAPI(trophyObject, "obfuscated_fish_1"));
+			TrophyFishTracker.fish.add("Steaming-Hot Flounder", Utils.getTrophyFromAPI(trophyObject, "steaming_hot_flounder"));
+			TrophyFishTracker.fish.add("Obfuscated 2", Utils.getTrophyFromAPI(trophyObject, "obfuscated_fish_2"));
+			TrophyFishTracker.fish.add("Gusher", Utils.getTrophyFromAPI(trophyObject, "gusher"));
+			TrophyFishTracker.fish.add("Blobfish", Utils.getTrophyFromAPI(trophyObject, "blobfish"));
+			TrophyFishTracker.fish.add("Slugfish", Utils.getTrophyFromAPI(trophyObject, "slugfish"));
+			TrophyFishTracker.fish.add("Obfuscated 3", Utils.getTrophyFromAPI(trophyObject, "obfuscated_fish_3"));
+			TrophyFishTracker.fish.add("Flyfish", Utils.getTrophyFromAPI(trophyObject, "flyfish"));
+			TrophyFishTracker.fish.add("Lavahorse", Utils.getTrophyFromAPI(trophyObject, "lava_horse"));
+			TrophyFishTracker.fish.add("Mana Ray", Utils.getTrophyFromAPI(trophyObject, "mana_ray"));
+			TrophyFishTracker.fish.add("Volcanic Stonefish", Utils.getTrophyFromAPI(trophyObject, "volcanic_stonefish"));
+			TrophyFishTracker.fish.add("Vanille", Utils.getTrophyFromAPI(trophyObject, "vanille"));
+			TrophyFishTracker.fish.add("Skeleton Fish", Utils.getTrophyFromAPI(trophyObject, "skeleton_fish"));
+			TrophyFishTracker.fish.add("Moldfin", Utils.getTrophyFromAPI(trophyObject, "moldfin"));
+			TrophyFishTracker.fish.add("Soul Fish", Utils.getTrophyFromAPI(trophyObject, "soul_fish"));
+			TrophyFishTracker.fish.add("Karate Fish", Utils.getTrophyFromAPI(trophyObject, "karate_fish"));
+			TrophyFishTracker.fish.add("Golden Fish", Utils.getTrophyFromAPI(trophyObject, "golden_fish"));
 			TrophyFishTracker.save();
 
 			player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Fishing stats imported."));
@@ -205,17 +206,6 @@ public class ImportFishingCommand extends CommandBase {
 		if (obj.has(key)) sc = obj.get(key).getAsInt();
 		FishingTracker.seaCreatures += sc;
 		return sc;
-	}
-
-	static JsonObject getTrophyFromAPI(JsonObject obj, String name) {
-		JsonObject tiers = new JsonObject();
-
-		tiers.addProperty("BRONZE", obj.has(name + "_bronze") ? obj.get(name + "_bronze").getAsInt() : 0);
-		tiers.addProperty("SILVER", obj.has(name + "_silver") ? obj.get(name + "_silver").getAsInt() : 0);
-		tiers.addProperty("GOLD", obj.has(name + "_gold") ? obj.get(name + "_gold").getAsInt() : 0);
-		tiers.addProperty("DIAMOND", obj.has(name + "_diamond") ? obj.get(name + "_diamond").getAsInt() : 0);
-
-		return tiers;
 	}
 
 }

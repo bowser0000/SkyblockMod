@@ -550,6 +550,17 @@ public class Utils {
 		return extraAttributes.getString("id");
 	}
 
+	public static JsonObject getTrophyFromAPI(JsonObject obj, String name) {
+		JsonObject tiers = new JsonObject();
+
+		tiers.addProperty("BRONZE", obj.has(name + "_bronze") ? obj.get(name + "_bronze").getAsInt() : 0);
+		tiers.addProperty("SILVER", obj.has(name + "_silver") ? obj.get(name + "_silver").getAsInt() : 0);
+		tiers.addProperty("GOLD", obj.has(name + "_gold") ? obj.get(name + "_gold").getAsInt() : 0);
+		tiers.addProperty("DIAMOND", obj.has(name + "_diamond") ? obj.get(name + "_diamond").getAsInt() : 0);
+
+		return tiers;
+	}
+
 	public enum DungeonFloor {
 		NONE,
 		E0,

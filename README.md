@@ -117,6 +117,7 @@ Discord Server: https://discord.gg/QsEkNQS
 - /reloaddsmrepo - Reloads Danker's Skyblock Mod repository.
 - /dsmfarmlength <min coords> <max coords> - Sets coords to be used for end of farm alert.
 - /hotmof [player] - Uses API to find total powder and HotM tree of a person. If no name is provided, it checks yours.
+- /trophyfish [player] - Uses API to find trophy fish stats of a person. If no name is provided, it checks yours.
 </details>
 
 <details>
