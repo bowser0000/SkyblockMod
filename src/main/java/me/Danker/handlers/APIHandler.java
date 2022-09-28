@@ -156,23 +156,16 @@ public class APIHandler {
 		
 		// Loop through profiles to find latest
 		System.out.println("Looping through profiles...");
-		String latestProfile = "";
-		long latestSave = 0;
 		JsonArray profilesArray = profilesResponse.get("profiles").getAsJsonArray();
 		
 		for (JsonElement profile : profilesArray) {
 			JsonObject profileJSON = profile.getAsJsonObject();
-			long profileLastSave = 1;
-			if (profileJSON.get("members").getAsJsonObject().get(UUID).getAsJsonObject().has("last_save")) {
-				profileLastSave = profileJSON.get("members").getAsJsonObject().get(UUID).getAsJsonObject().get("last_save").getAsLong();
-			}
-			
-			if (profileLastSave > latestSave) {
-				latestProfile = profileJSON.get("profile_id").getAsString();
-				latestSave = profileLastSave;
+
+			if (profileJSON.get("selected").getAsBoolean()) {
+				return profileJSON.get("profile_id").getAsString();
 			}
 		}
 		
-		return latestProfile;
+		return null;
 	}
 }
