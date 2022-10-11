@@ -212,17 +212,16 @@ public class PlayerCommand extends CommandBase {
             }
 
             // Weight
-            System.out.println("Fetching weight from Senither API...");
-            String weightURL = "https://hypixel-api.senither.com/v1/profiles/" + uuid + "/weight?key=" + key;
+            System.out.println("Fetching weight from SkyShiiyu API...");
+            String weightURL = "https://sky.shiiyu.moe/api/v2/profile/" + username;
             JsonObject weightResponse = APIHandler.getResponse(weightURL, true);
-            if (weightResponse.get("status").getAsInt() != 200) {
-                String reason = weightResponse.get("reason").getAsString();
+            if (weightResponse.has("error")) {
+                String reason = weightResponse.get("error").getAsString();
                 player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Failed with reason: " + reason));
                 return;
             }
 
-            double weight = weightResponse.get("data").getAsJsonObject().get("weight").getAsDouble();
-            double overflow = weightResponse.get("data").getAsJsonObject().get("weight_overflow").getAsDouble();
+            double weight = weightResponse.get("profiles").getAsJsonObject().get(latestProfile).getAsJsonObject().get("data").getAsJsonObject().get("weight").getAsJsonObject().get("senither").getAsJsonObject().get("overall").getAsDouble();
 
             NumberFormat nf = NumberFormat.getIntegerInstance(Locale.US);
             NumberFormat nfd = NumberFormat.getNumberInstance(Locale.US);
@@ -248,9 +247,7 @@ public class PlayerCommand extends CommandBase {
                                                         DankersSkyblockMod.TYPE_COLOUR + " Purse: " + EnumChatFormatting.GOLD + nf.format(purseCoins) + "\n" +
                                                         DankersSkyblockMod.TYPE_COLOUR + " Total: " + EnumChatFormatting.GOLD + nf.format(bankCoins + purseCoins) + "\n\n" +
                                                         EnumChatFormatting.AQUA + " " + username + "'s Weight:\n" +
-                                                        DankersSkyblockMod.TYPE_COLOUR + " Total Weight: " + DankersSkyblockMod.VALUE_COLOUR + nfd.format(weight + overflow) + "\n" +
-                                                        DankersSkyblockMod.TYPE_COLOUR + " Weight: " + DankersSkyblockMod.VALUE_COLOUR + nfd.format(weight) + "\n" +
-                                                        DankersSkyblockMod.TYPE_COLOUR + " Overflow: " + DankersSkyblockMod.VALUE_COLOUR + nfd.format(overflow) + "\n" +
+                                                        DankersSkyblockMod.TYPE_COLOUR + " Total Weight: " + DankersSkyblockMod.VALUE_COLOUR + nfd.format(weight) + "\n" +
                                                         DankersSkyblockMod.DELIMITER_COLOUR + " " + EnumChatFormatting.BOLD + "-------------------"));
         }).start();
     }

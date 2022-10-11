@@ -96,44 +96,89 @@ public class WeightCommand extends CommandBase {
             }
 
             if (arg1.length < 2) {
-                System.out.println("Fetching weight from Senither API...");
-                String weightURL = "https://hypixel-api.senither.com/v1/profiles/" + uuid + "/weight?key=" + key;
+                System.out.println("Fetching weight from SkyShiiyu API...");
+                String weightURL = "https://sky.shiiyu.moe/api/v2/profile/" + username;
                 JsonObject weightResponse = APIHandler.getResponse(weightURL, true);
-                if (weightResponse.get("status").getAsInt() != 200) {
-                    String reason = weightResponse.get("reason").getAsString();
-                    player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Failed with reason: " + reason));
-                    return;
-                }
-
-                JsonObject data = weightResponse.get("data").getAsJsonObject();
-                double weight = data.get("weight").getAsDouble();
-                double overflow = data.get("weight_overflow").getAsDouble();
-                double skillWeight = data.get("skills").getAsJsonObject().get("weight").getAsDouble();
-                double skillOverflow = data.get("skills").getAsJsonObject().get("weight_overflow").getAsDouble();
-                double slayerWeight = data.get("slayers").getAsJsonObject().get("weight").getAsDouble();
-                double slayerOverflow = data.get("slayers").getAsJsonObject().get("weight_overflow").getAsDouble();
-                double dungeonWeight = data.get("dungeons").getAsJsonObject().get("weight").getAsDouble();
-                double dungeonOverflow = data.get("dungeons").getAsJsonObject().get("weight_overflow").getAsDouble();
-
-                NumberFormat nf = NumberFormat.getNumberInstance(Locale.US);
-                player.addChatMessage(new ChatComponentText(DankersSkyblockMod.DELIMITER_COLOUR + "" + EnumChatFormatting.BOLD + "-------------------\n" +
-                        EnumChatFormatting.AQUA + " " + username + "'s Weight:\n" +
-                        DankersSkyblockMod.TYPE_COLOUR + " Total Weight: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(weight + overflow) + " (" + nf.format(weight) + " + " + nf.format(overflow) + ")\n" +
-                        DankersSkyblockMod.TYPE_COLOUR + " Skill Weight: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(skillWeight + skillOverflow) + " (" + nf.format(skillWeight) + " + " + nf.format(skillOverflow) + ")\n" +
-                        DankersSkyblockMod.TYPE_COLOUR + " Slayers Weight: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(slayerWeight + slayerOverflow) + " (" + nf.format(slayerWeight) + " + " + nf.format(slayerOverflow) + ")\n" +
-                        DankersSkyblockMod.TYPE_COLOUR + " Dungeons Weight: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(dungeonWeight + dungeonOverflow) + " (" + nf.format(dungeonWeight) + " + " + nf.format(dungeonOverflow) + ")\n" +
-                        DankersSkyblockMod.DELIMITER_COLOUR + " " + EnumChatFormatting.BOLD + "-------------------"));
-            } else if (arg1[1].equalsIgnoreCase("lily")) {
-                System.out.println("Fetching weight from Lily API...");
-                String weightURL = "https://lily.antonio32a.com/" + uuid + "?key=" + key;
-                JsonObject weightResponse = APIHandler.getResponse(weightURL, true);
-                if (!weightResponse.get("success").getAsBoolean()) {
+                if (weightResponse.has("error")) {
                     String reason = weightResponse.get("error").getAsString();
                     player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Failed with reason: " + reason));
                     return;
                 }
 
-                JsonObject data = weightResponse.get("data").getAsJsonObject();
+                String latestProfile = APIHandler.getLatestProfileID(uuid, key);
+                if (latestProfile == null) return;
+
+                JsonObject data = weightResponse.get("profiles").getAsJsonObject().get(latestProfile).getAsJsonObject().get("data").getAsJsonObject().get("weight").getAsJsonObject().get("senither").getAsJsonObject();
+
+                double weight = data.get("overall").getAsDouble();
+
+                double skillWeight = data.get("skill").getAsJsonObject().get("total").getAsDouble();
+                double farmingWeight = data.get("skill").getAsJsonObject().get("skills").getAsJsonObject().get("farming").getAsDouble();
+                double miningWeight = data.get("skill").getAsJsonObject().get("skills").getAsJsonObject().get("mining").getAsDouble();
+                double combatWeight = data.get("skill").getAsJsonObject().get("skills").getAsJsonObject().get("combat").getAsDouble();
+                double foragingWeight = data.get("skill").getAsJsonObject().get("skills").getAsJsonObject().get("foraging").getAsDouble();
+                double fishingWeight = data.get("skill").getAsJsonObject().get("skills").getAsJsonObject().get("fishing").getAsDouble();
+                double enchantingWeight = data.get("skill").getAsJsonObject().get("skills").getAsJsonObject().get("enchanting").getAsDouble();
+                double alchemyWeight = data.get("skill").getAsJsonObject().get("skills").getAsJsonObject().get("alchemy").getAsDouble();
+                double tamingWeight = data.get("skill").getAsJsonObject().get("skills").getAsJsonObject().get("taming").getAsDouble();
+
+                double slayerWeight = data.get("slayer").getAsJsonObject().get("total").getAsDouble();
+                double zombieWeight = data.get("slayer").getAsJsonObject().get("slayers").getAsJsonObject().get("zombie").getAsDouble();
+                double spiderWeight = data.get("slayer").getAsJsonObject().get("slayers").getAsJsonObject().get("spider").getAsDouble();
+                double wolfWeight = data.get("slayer").getAsJsonObject().get("slayers").getAsJsonObject().get("wolf").getAsDouble();
+                double endermanWeight = data.get("slayer").getAsJsonObject().get("slayers").getAsJsonObject().get("enderman").getAsDouble();
+                double blazeWeight = data.get("slayer").getAsJsonObject().get("slayers").getAsJsonObject().get("blaze").getAsDouble();
+
+                double dungeonWeight = data.get("dungeon").getAsJsonObject().get("total").getAsDouble();
+                double cataWeight = data.get("dungeon").getAsJsonObject().get("dungeons").getAsJsonObject().get("catacombs").getAsJsonObject().get("weight").getAsDouble();
+                double healerWeight = data.get("dungeon").getAsJsonObject().get("classes").getAsJsonObject().get("healer").getAsJsonObject().get("weight").getAsDouble();
+                double mageWeight = data.get("dungeon").getAsJsonObject().get("classes").getAsJsonObject().get("mage").getAsJsonObject().get("weight").getAsDouble();
+                double berserkWeight = data.get("dungeon").getAsJsonObject().get("classes").getAsJsonObject().get("berserk").getAsJsonObject().get("weight").getAsDouble();
+                double archerWeight = data.get("dungeon").getAsJsonObject().get("classes").getAsJsonObject().get("archer").getAsJsonObject().get("weight").getAsDouble();
+                double tankWeight = data.get("dungeon").getAsJsonObject().get("classes").getAsJsonObject().get("tank").getAsJsonObject().get("weight").getAsDouble();
+
+                NumberFormat nf = NumberFormat.getNumberInstance(Locale.US);
+                player.addChatMessage(new ChatComponentText(DankersSkyblockMod.DELIMITER_COLOUR + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+                        EnumChatFormatting.AQUA + " " + username + "'s Weight:\n" +
+                        DankersSkyblockMod.TYPE_COLOUR + " Total Weight: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(weight) + "\n\n" +
+                        DankersSkyblockMod.TYPE_COLOUR + " Skill Weight: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(skillWeight) + "\n" +
+                        DankersSkyblockMod.TYPE_COLOUR + "   Farming Weight: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(farmingWeight) + "\n" +
+                        DankersSkyblockMod.TYPE_COLOUR + "   Mining Weight: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(miningWeight) + "\n" +
+                        DankersSkyblockMod.TYPE_COLOUR + "   Combat Weight: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(combatWeight) + "\n" +
+                        DankersSkyblockMod.TYPE_COLOUR + "   Foraging Weight: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(foragingWeight) + "\n" +
+                        DankersSkyblockMod.TYPE_COLOUR + "   Fishing Weight: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(fishingWeight) + "\n" +
+                        DankersSkyblockMod.TYPE_COLOUR + "   Enchanting Weight: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(enchantingWeight) + "\n" +
+                        DankersSkyblockMod.TYPE_COLOUR + "   Alchemy Weight: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(alchemyWeight) + "\n" +
+                        DankersSkyblockMod.TYPE_COLOUR + "   Taming Weight: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(tamingWeight) + "\n\n" +
+                        DankersSkyblockMod.TYPE_COLOUR + " Slayers Weight: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(slayerWeight) + "\n" +
+                        DankersSkyblockMod.TYPE_COLOUR + "   Zombie Weight: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(zombieWeight) + "\n" +
+                        DankersSkyblockMod.TYPE_COLOUR + "   Spider Weight: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(spiderWeight) + "\n" +
+                        DankersSkyblockMod.TYPE_COLOUR + "   Wolf Weight: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(wolfWeight) + "\n" +
+                        DankersSkyblockMod.TYPE_COLOUR + "   Enderman Weight: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(endermanWeight) + "\n" +
+                        DankersSkyblockMod.TYPE_COLOUR + "   Blaze Weight: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(blazeWeight) + "\n\n" +
+                        DankersSkyblockMod.TYPE_COLOUR + " Dungeons Weight: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(dungeonWeight) + "\n" +
+                        DankersSkyblockMod.TYPE_COLOUR + "   Catacombs XP Weight: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(cataWeight) + "\n" +
+                        DankersSkyblockMod.TYPE_COLOUR + "   Healer Weight: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(healerWeight) + "\n" +
+                        DankersSkyblockMod.TYPE_COLOUR + "   Mage Weight: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(mageWeight) + "\n" +
+                        DankersSkyblockMod.TYPE_COLOUR + "   Berserk Weight: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(berserkWeight) + "\n" +
+                        DankersSkyblockMod.TYPE_COLOUR + "   Archer Weight: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(archerWeight) + "\n" +
+                        DankersSkyblockMod.TYPE_COLOUR + "   Tank Weight: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(tankWeight) + "\n" +
+                        DankersSkyblockMod.DELIMITER_COLOUR + " " + EnumChatFormatting.BOLD + "-------------------"));
+            } else if (arg1[1].equalsIgnoreCase("lily")) {
+                System.out.println("Fetching weight from SkyShiiyu API...");
+                String weightURL = "https://sky.shiiyu.moe/api/v2/profile/" + username;
+                JsonObject weightResponse = APIHandler.getResponse(weightURL, true);
+                if (weightResponse.has("error")) {
+                    String reason = weightResponse.get("error").getAsString();
+                    player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Failed with reason: " + reason));
+                    return;
+                }
+
+                String latestProfile = APIHandler.getLatestProfileID(uuid, key);
+                if (latestProfile == null) return;
+
+                JsonObject data = weightResponse.get("profiles").getAsJsonObject().get(latestProfile).getAsJsonObject().get("data").getAsJsonObject().get("weight").getAsJsonObject().get("lily").getAsJsonObject();
+
                 double weight = data.get("total").getAsDouble();
                 double skillWeight = data.get("skill").getAsJsonObject().get("base").getAsDouble();
                 double skillOverflow = data.get("skill").getAsJsonObject().get("overflow").getAsDouble();
