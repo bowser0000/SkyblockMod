@@ -152,7 +152,7 @@ public class EditLocationsGui extends GuiScreen {
 		if (!ToggleCommand.onlyEditEnabled || SkillTracker.showSkillTracker) this.buttonList.add(skillTracker);
 		if (!ToggleCommand.onlyEditEnabled || ToggleCommand.waterToggled) this.buttonList.add(waterAnswer);
 		if (!ToggleCommand.onlyEditEnabled || ToggleCommand.bonzoTimerToggled) this.buttonList.add(bonzoTimer);
-		if (!ToggleCommand.onlyEditEnabled || LootDisplay.display.equals("off")) this.buttonList.add(display);
+		if (!ToggleCommand.onlyEditEnabled || !LootDisplay.display.equals("off")) this.buttonList.add(display);
 		if (!ToggleCommand.onlyEditEnabled || ToggleCommand.skill50DisplayToggled) this.buttonList.add(skill50);
 		if (!ToggleCommand.onlyEditEnabled || ToggleCommand.golemAlertToggled) this.buttonList.add(golemTimer);
 		if (!ToggleCommand.onlyEditEnabled || ToggleCommand.teammatesInRadius) this.buttonList.add(teammatesInRadius);
@@ -168,26 +168,32 @@ public class EditLocationsGui extends GuiScreen {
 		this.drawDefaultBackground();
 		mouseMoved(mouseX, mouseY);
 
-		double cakeTimerScale = ScaleCommand.cakeTimerScale;
-		double cakeTimerScaleReset = Math.pow(cakeTimerScale, -1);
-		GL11.glScaled(cakeTimerScale, cakeTimerScale, cakeTimerScale);
-		mc.getTextureManager().bindTexture(CakeTimer.CAKE_ICON);
-		Gui.drawModalRectWithCustomSizedTexture(MoveCommand.cakeTimerXY[0], MoveCommand.cakeTimerXY[1], 0, 0, 16, 16, 16, 16);
-		GL11.glScaled(cakeTimerScaleReset, cakeTimerScaleReset, cakeTimerScaleReset);
+		if (!ToggleCommand.onlyEditEnabled || ToggleCommand.cakeTimerToggled) {
+			double cakeTimerScale = ScaleCommand.cakeTimerScale;
+			double cakeTimerScaleReset = Math.pow(cakeTimerScale, -1);
+			GL11.glScaled(cakeTimerScale, cakeTimerScale, cakeTimerScale);
+			mc.getTextureManager().bindTexture(CakeTimer.CAKE_ICON);
+			Gui.drawModalRectWithCustomSizedTexture(MoveCommand.cakeTimerXY[0], MoveCommand.cakeTimerXY[1], 0, 0, 16, 16, 16, 16);
+			GL11.glScaled(cakeTimerScaleReset, cakeTimerScaleReset, cakeTimerScaleReset);
+		}
 
-		double bonzoTimerScale = ScaleCommand.bonzoTimerScale;
-		double bonzoTimerScaleReset = Math.pow(bonzoTimerScale, -1);
-		GL11.glScaled(bonzoTimerScale, bonzoTimerScale, bonzoTimerScale);
-		mc.getTextureManager().bindTexture(BonzoMaskTimer.BONZO_ICON);
-		Gui.drawModalRectWithCustomSizedTexture(MoveCommand.bonzoTimerXY[0], MoveCommand.bonzoTimerXY[1], 0, 0, 16, 16, 16, 16);
-		GL11.glScaled(bonzoTimerScaleReset, bonzoTimerScaleReset, bonzoTimerScaleReset);
+		if (!ToggleCommand.onlyEditEnabled || ToggleCommand.bonzoTimerToggled) {
+			double bonzoTimerScale = ScaleCommand.bonzoTimerScale;
+			double bonzoTimerScaleReset = Math.pow(bonzoTimerScale, -1);
+			GL11.glScaled(bonzoTimerScale, bonzoTimerScale, bonzoTimerScale);
+			mc.getTextureManager().bindTexture(BonzoMaskTimer.BONZO_ICON);
+			Gui.drawModalRectWithCustomSizedTexture(MoveCommand.bonzoTimerXY[0], MoveCommand.bonzoTimerXY[1], 0, 0, 16, 16, 16, 16);
+			GL11.glScaled(bonzoTimerScaleReset, bonzoTimerScaleReset, bonzoTimerScaleReset);
+		}
 
-		double golemTimerScale = ScaleCommand.golemTimerScale;
-		double golemTimerScaleReset = Math.pow(golemTimerScale, -1);
-		GL11.glScaled(golemTimerScale, golemTimerScale, golemTimerScale);
-		mc.getTextureManager().bindTexture(GolemSpawningAlert.GOLEM_ICON);
-		Gui.drawModalRectWithCustomSizedTexture(MoveCommand.golemTimerXY[0], MoveCommand.golemTimerXY[1], 0, 0, 16, 16, 16, 16);
-		GL11.glScaled(golemTimerScaleReset, golemTimerScaleReset, golemTimerScaleReset);
+		if (!ToggleCommand.onlyEditEnabled || ToggleCommand.golemAlertToggled) {
+			double golemTimerScale = ScaleCommand.golemTimerScale;
+			double golemTimerScaleReset = Math.pow(golemTimerScale, -1);
+			GL11.glScaled(golemTimerScale, golemTimerScale, golemTimerScale);
+			mc.getTextureManager().bindTexture(GolemSpawningAlert.GOLEM_ICON);
+			Gui.drawModalRectWithCustomSizedTexture(MoveCommand.golemTimerXY[0], MoveCommand.golemTimerXY[1], 0, 0, 16, 16, 16, 16);
+			GL11.glScaled(golemTimerScaleReset, golemTimerScaleReset, golemTimerScaleReset);
+		}
 
 		super.drawScreen(mouseX, mouseY, partialTicks);
 	}
