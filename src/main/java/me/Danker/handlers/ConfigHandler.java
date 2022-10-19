@@ -292,6 +292,7 @@ public class ConfigHandler {
 		ToggleCommand.showTotalMagmafish = initBoolean("toggles", "ShowTotalMagmafish", false);
 		ToggleCommand.bazaarTimeToFill = initBoolean("toggles", "BazaarTimeToFill", false);
 		ToggleCommand.onlyEditEnabled = initBoolean("toggles", "OnlyEditEnabled", true);
+		ToggleCommand.crimsonMinibossTimer = initBoolean("toggles", "CrimsonMinibossTimer", false);
 		// Chat Messages
 		ToggleCommand.sceptreMessages = initBoolean("toggles", "SceptreMessages", true);
 		ToggleCommand.midasStaffMessages = initBoolean("toggles", "MidasStaffMessages", true);
@@ -688,6 +689,8 @@ public class ConfigHandler {
 		MoveCommand.dungeonScoreXY[1] = initInt("locations", "dungeonScoreY", 150);
 		MoveCommand.firePillarXY[0] = initInt("locations", "firePillarX", 200);
 		MoveCommand.firePillarXY[1] = initInt("locations", "firePillarY", 200);
+		MoveCommand.minibossTimerXY[0] = initInt("locations", "minibossTimerX", 100);
+		MoveCommand.minibossTimerXY[1] = initInt("locations", "minibossTimerY", 100);
 
 		// Scales
 		ScaleCommand.coordsScale = initDouble("scales", "coordsScale", 1);
@@ -705,6 +708,7 @@ public class ConfigHandler {
 		ScaleCommand.abilityCooldownsScale = initDouble("scales", "abilityCooldownsScale", 1);
 		ScaleCommand.dungeonScoreScale = initDouble("scales", "dungeonScoreScale", 1);
 		ScaleCommand.firePillarScale = initDouble("scales", "firePillarScale", 1);
+		ScaleCommand.minibossTimerScale = initDouble("scales", "minibossTimerScale", 1);
 
 		// Skills
 		DankersSkyblockMod.farmingLevel = initInt("skills", "farming", -1);
@@ -761,6 +765,8 @@ public class ConfigHandler {
 		HighlightCommissions.HIGHLIGHT_COLOUR = initInt("colors", "highlight_colour", 0x51FF51);
 		MinionLastCollected.LAST_COLLECTED_COLOUR = initInt("colors", "lastCollected", 0x55FFFF);
 		LividSolver.LIVID_COLOUR = initInt("colors", "livid", 0x0000FF);
+		CrimsonMinibossTimer.TIMER_COLOUR = initString("colors", "minibossTimer", EnumChatFormatting.GOLD.toString());
+		CrimsonMinibossTimer.UNKNOWN_COLOUR = initString("colors", "minibossUnknown", EnumChatFormatting.RED.toString());
 
 		// Commands
 		if (!hasKey("commands", "reparty")) writeBooleanConfig("commands", "reparty", false);

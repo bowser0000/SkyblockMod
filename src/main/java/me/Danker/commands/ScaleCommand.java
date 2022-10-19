@@ -28,6 +28,7 @@ public class ScaleCommand extends CommandBase {
 	public static double abilityCooldownsScale;
 	public static double dungeonScoreScale;
 	public static double firePillarScale;
+	public static double minibossTimerScale;
 	
 	@Override
 	public String getCommandName() {
@@ -37,7 +38,7 @@ public class ScaleCommand extends CommandBase {
 	@Override
 	public String getCommandUsage(ICommandSender arg0) {
 		return "/" + getCommandName() + " <coords/display/dungeontimer/skill50/lividhp/caketimer/skilltracker/wateranswer/" +
-										"bonzotimer/golemtimer/teammatesinradius/gianthp/abilitycooldown/dungeonscore/firepillar> <size (0.1 - 10)>";
+										"bonzotimer/golemtimer/teammatesinradius/gianthp/abilitycooldown/dungeonscore/firepillar/minibosstimer> <size (0.1 - 10)>";
 	}
 
 	public static String usage(ICommandSender arg0) {
@@ -54,7 +55,7 @@ public class ScaleCommand extends CommandBase {
 		if (args.length == 1) {
 			return getListOfStringsMatchingLastWord(args, "coords", "display", "dungeontimer", "skill50", "lividhp", "caketimer",
 														  "skilltracker", "wateranswer", "bonzotimer", "golemtimer", "teammatesinradius",
-														  "gianthp", "abilitycooldowns", "dungeonscore", "firepillar");
+														  "gianthp", "abilitycooldowns", "dungeonscore", "firepillar", "minibosstimer");
 		}
 		return null;
 	}
@@ -149,6 +150,11 @@ public class ScaleCommand extends CommandBase {
 				firePillarScale = scaleAmount;
 				ConfigHandler.writeDoubleConfig("scales", "firePillarScale", firePillarScale);
 				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Fire pillar has been scaled to " + DankersSkyblockMod.SECONDARY_COLOUR + firePillarScale + "x"));
+				break;
+			case "minibosstimer":
+				minibossTimerScale = scaleAmount;
+				ConfigHandler.writeDoubleConfig("scales", "minibossTimerScale", minibossTimerScale);
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Miniboss timer has been scaled to " + DankersSkyblockMod.SECONDARY_COLOUR + minibossTimerScale + "x"));
 				break;
 			default:
 				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Usage: " + getCommandUsage(arg0)));

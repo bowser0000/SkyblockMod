@@ -70,6 +70,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 	public static boolean showTotalMagmafish;
 	public static boolean bazaarTimeToFill;
 	public static boolean onlyEditEnabled;
+	public static boolean crimsonMinibossTimer;
 	// Chat Messages
 	public static boolean sceptreMessages;
 	public static boolean midasStaffMessages;

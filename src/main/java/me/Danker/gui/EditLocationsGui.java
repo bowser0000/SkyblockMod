@@ -36,6 +36,7 @@ public class EditLocationsGui extends GuiScreen {
 	private LocationButton abilityCooldown;
 	private LocationButton dungeonScore;
 	private LocationButton firePillar;
+	private LocationButton minibossTimer;
 	
 	@Override
 	public boolean doesGuiPauseGame() {
@@ -121,6 +122,12 @@ public class EditLocationsGui extends GuiScreen {
 								  EnumChatFormatting.GOLD + "5\n" +
 								  EnumChatFormatting.GOLD + "305 " + EnumChatFormatting.GRAY + "(" + EnumChatFormatting.GOLD + "S+" + EnumChatFormatting.GRAY + ")";
 
+		String minibossTimerText = EnumChatFormatting.GRAY + "Bladesoul: " + CrimsonMinibossTimer.TIMER_COLOUR + "0m24s" + "\n" +
+								   EnumChatFormatting.RED + "Barbarian Duke: " + CrimsonMinibossTimer.TIMER_COLOUR + "1m27s" + "\n" +
+								   EnumChatFormatting.DARK_PURPLE + "Mage Outlaw: " + CrimsonMinibossTimer.TIMER_COLOUR + "2m0s" + "\n" +
+								   EnumChatFormatting.GOLD + "Ashfang: " + CrimsonMinibossTimer.UNKNOWN_COLOUR + "?" + "\n" +
+								   EnumChatFormatting.DARK_RED + "Magma Boss: " + CrimsonMinibossTimer.UNKNOWN_COLOUR + "?";
+
 		display = new LocationButton(MoveCommand.displayXY[0], MoveCommand.displayXY[1], ScaleCommand.displayScale, displayText, displayNums, 110);
 		dungeonTimer = new LocationButton(MoveCommand.dungeonTimerXY[0], MoveCommand.dungeonTimerXY[1], ScaleCommand.dungeonTimerScale, dungeonTimerText, dungeonTimerNums, 80);
 		coords = new LocationButton(MoveCommand.coordsXY[0], MoveCommand.coordsXY[1], ScaleCommand.coordsScale, NoF3Coords.COORDS_COLOUR + "74 / 14 / -26 (141.1 / 6.7)");
@@ -136,6 +143,7 @@ public class EditLocationsGui extends GuiScreen {
 		abilityCooldown = new LocationButton(MoveCommand.abilityCooldownsXY[0], MoveCommand.abilityCooldownsXY[1], ScaleCommand.abilityCooldownsScale, abilityCooldownText);
 		dungeonScore = new LocationButton(MoveCommand.dungeonScoreXY[0], MoveCommand.dungeonScoreXY[1], ScaleCommand.dungeonScoreScale, dungeonScoreText, dungeonScoreNums, 80);
 		firePillar = new LocationButton(MoveCommand.firePillarXY[0], MoveCommand.firePillarXY[1], ScaleCommand.firePillarScale, EnumChatFormatting.GOLD + "3s " + EnumChatFormatting.RED + "8 hits");
+		minibossTimer = new LocationButton(MoveCommand.minibossTimerXY[0], MoveCommand.minibossTimerXY[1], ScaleCommand.minibossTimerScale, minibossTimerText);
 
 		if (!ToggleCommand.onlyEditEnabled || ToggleCommand.coordsToggled) this.buttonList.add(coords);
 		if (!ToggleCommand.onlyEditEnabled || ToggleCommand.dungeonTimerToggled) this.buttonList.add(dungeonTimer);
@@ -152,13 +160,14 @@ public class EditLocationsGui extends GuiScreen {
 		if (!ToggleCommand.onlyEditEnabled || ToggleCommand.abilityCooldowns) this.buttonList.add(abilityCooldown);
 		if (!ToggleCommand.onlyEditEnabled || ToggleCommand.dungeonScore) this.buttonList.add(dungeonScore);
 		if (!ToggleCommand.onlyEditEnabled || ToggleCommand.firePillar) this.buttonList.add(firePillar);
+		if (!ToggleCommand.onlyEditEnabled || ToggleCommand.crimsonMinibossTimer) this.buttonList.add(minibossTimer);
 	}
 	
 	@Override
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
 		this.drawDefaultBackground();
 		mouseMoved(mouseX, mouseY);
-		
+
 		double cakeTimerScale = ScaleCommand.cakeTimerScale;
 		double cakeTimerScaleReset = Math.pow(cakeTimerScale, -1);
 		GL11.glScaled(cakeTimerScale, cakeTimerScale, cakeTimerScale);
@@ -278,6 +287,12 @@ public class EditLocationsGui extends GuiScreen {
 					MoveCommand.firePillarXY[1] += yMoved;
 					firePillar.xPosition = MoveCommand.firePillarXY[0];
 					firePillar.yPosition = MoveCommand.firePillarXY[1];
+				case "minibossTimer":
+					MoveCommand.minibossTimerXY[0] += xMoved;
+					MoveCommand.minibossTimerXY[1] += yMoved;
+					minibossTimer.xPosition = MoveCommand.minibossTimerXY[0];
+					minibossTimer.yPosition = MoveCommand.minibossTimerXY[1];
+					break;
 			}
 			this.buttonList.clear();
 			initGui();
@@ -320,6 +335,8 @@ public class EditLocationsGui extends GuiScreen {
 				moving = "dungeonScore";
 			} else if (button == firePillar) {
 				moving = "firePillar";
+			} else if (button == minibossTimer) {
+				moving = "minibossTimer";
 			}
 		}
 	}
@@ -358,6 +375,8 @@ public class EditLocationsGui extends GuiScreen {
 		ConfigHandler.writeIntConfig("locations", "dungeonScoreY", MoveCommand.dungeonScoreXY[1]);
 		ConfigHandler.writeIntConfig("locations", "firePillarX", MoveCommand.firePillarXY[0]);
 		ConfigHandler.writeIntConfig("locations", "firePillarY", MoveCommand.firePillarXY[1]);
+		ConfigHandler.writeIntConfig("locations", "minibossTimerX", MoveCommand.minibossTimerXY[0]);
+		ConfigHandler.writeIntConfig("locations", "minibossTimerY", MoveCommand.minibossTimerXY[1]);
 	}
 	
 }

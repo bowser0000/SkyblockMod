@@ -98,6 +98,7 @@ public class DankerGui extends GuiScreen {
 	private GuiButton showTotalMagmafish;
 	private GuiButton bazaarTimeToFill;
 	private GuiButton onlyEditEnabled;
+	private GuiButton crimsonMinibossTimer;
 	// Chat Messages
 	private GuiButton sceptreMessages;
 	private GuiButton midasStaffMessages;
@@ -200,6 +201,7 @@ public class DankerGui extends GuiScreen {
 		showTrophyCompletion = new FeatureButton("Show Trophy Fish Completion: " + Utils.getColouredBoolean(ToggleCommand.showTrophyCompletion), "Show completion instead of count in trophy fish tracker display.");
 		showTotalMagmafish = new FeatureButton("Show Total Fillet Magmafish: " + Utils.getColouredBoolean(ToggleCommand.showTotalMagmafish), "Show total Magmafish you would get if you filleted all the trophy fish in your inventory.");
 		bazaarTimeToFill = new FeatureButton("Show Time to Fill Bazaar Order: " + Utils.getColouredBoolean(ToggleCommand.bazaarTimeToFill), "Shows an estimated amount of time it would take for a bazaar order to be filled.\nAssumes you are not over/undercut.\nOnly works when moving through menus. Doesn't work when clicking items as shortcut.");
+		crimsonMinibossTimer = new FeatureButton("Crimson Isle Miniboss Timer: " + Utils.getColouredBoolean(ToggleCommand.crimsonMinibossTimer), "Shows the time until a Crimson Isle miniboss respawns.");
 
 		allButtons.clear();
 		allButtons.add(changeDisplay);
@@ -268,6 +270,7 @@ public class DankerGui extends GuiScreen {
 		allButtons.add(showTrophyCompletion);
 		allButtons.add(showTotalMagmafish);
 		allButtons.add(bazaarTimeToFill);
+		allButtons.add(crimsonMinibossTimer);
 
 		search.setText(initSearchText);
 		search.setVisible(true);
@@ -593,6 +596,10 @@ public class DankerGui extends GuiScreen {
 			ToggleCommand.onlyEditEnabled = !ToggleCommand.onlyEditEnabled;
 			ConfigHandler.writeBooleanConfig("toggles", "OnlyEditEnabled", ToggleCommand.onlyEditEnabled);
 			onlyEditEnabled.displayString = "Only Edit Enabled: " + Utils.getColouredBoolean(ToggleCommand.onlyEditEnabled);
+		} else if (button == crimsonMinibossTimer) {
+			ToggleCommand.crimsonMinibossTimer = !ToggleCommand.crimsonMinibossTimer;
+			ConfigHandler.writeBooleanConfig("toggles", "CrimsonIsleMusic", ToggleCommand.crimsonMinibossTimer);
+			crimsonMinibossTimer.displayString = "Crimson Isle Miniboss Timer: " + Utils.getColouredBoolean(ToggleCommand.crimsonMinibossTimer);
 		}
 	}
 

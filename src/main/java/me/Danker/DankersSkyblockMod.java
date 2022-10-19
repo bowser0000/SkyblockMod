@@ -121,6 +121,7 @@ public class DankersSkyblockMod {
         MinecraftForge.EVENT_BUS.register(new ClickInOrderSolver());
         MinecraftForge.EVENT_BUS.register(new ColouredNames());
         MinecraftForge.EVENT_BUS.register(new CreeperSolver());
+        MinecraftForge.EVENT_BUS.register(new CrimsonMinibossTimer());
         MinecraftForge.EVENT_BUS.register(new CrystalHollowWaypoints());
         MinecraftForge.EVENT_BUS.register(new CustomMusic());
         MinecraftForge.EVENT_BUS.register(new DungeonScore());
