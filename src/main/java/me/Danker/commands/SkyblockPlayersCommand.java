@@ -78,6 +78,7 @@ public class SkyblockPlayersCommand extends CommandBase {
 			int crystalHollows = 0; // crystal_hollows
 			int spidersDen = 0; // combat_1
 			int crimsonIsle = 0; // crimson_isle
+			int kuudra = 0; // instanced
 			int end = 0; // combat_3
 			int dungeonsHub = 0; // dungeon_hub
 			int dungeons = 0; // dungeon
@@ -116,6 +117,9 @@ public class SkyblockPlayersCommand extends CommandBase {
 				if (skyblockPlayers.has("crimson_isle")) {
 					crimsonIsle = skyblockPlayers.get("crimson_isle").getAsInt();
 				}
+				if (skyblockPlayers.has("instanced")) {
+					kuudra = skyblockPlayers.get("instanced").getAsInt();
+				}
 				if (skyblockPlayers.has("combat_3")) {
 					end = skyblockPlayers.get("combat_3").getAsInt();
 				}
@@ -147,12 +151,13 @@ public class SkyblockPlayersCommand extends CommandBase {
 														DankersSkyblockMod.TYPE_COLOUR + " Crystal Hollows: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(crystalHollows) + " / " + Utils.getPercentage(crystalHollows, skyblockTotalPlayers) + "%\n" +
 														DankersSkyblockMod.TYPE_COLOUR + " Spider's Den: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(spidersDen) + " / " + Utils.getPercentage(spidersDen, skyblockTotalPlayers) + "%\n" +
 														DankersSkyblockMod.TYPE_COLOUR + " Crimson Isle: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(crimsonIsle) + " / " + Utils.getPercentage(crimsonIsle, skyblockTotalPlayers) + "%\n" +
+														DankersSkyblockMod.TYPE_COLOUR + " Kuudra: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(kuudra) + " / " + Utils.getPercentage(kuudra, skyblockTotalPlayers) + "%\n" +
 														DankersSkyblockMod.TYPE_COLOUR + " The End: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(end) + " / " + Utils.getPercentage(end, skyblockTotalPlayers) + "%\n" +
 														DankersSkyblockMod.TYPE_COLOUR + " Dungeons Hub: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(dungeonsHub) + " / " + Utils.getPercentage(dungeonsHub, skyblockTotalPlayers) + "%\n" +
 														DankersSkyblockMod.TYPE_COLOUR + " Dungeons: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(dungeons) + " / " + Utils.getPercentage(dungeons, skyblockTotalPlayers) + "%\n" +
 														DankersSkyblockMod.TYPE_COLOUR + " Dark Auction: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(darkAuction) + " / " + Utils.getPercentage(darkAuction, skyblockTotalPlayers) + "%\n" +
 														DankersSkyblockMod.TYPE_COLOUR + " Jerry's Workshop: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(jerry) + " / " + Utils.getPercentage(jerry, skyblockTotalPlayers) + "%\n" +
-														DankersSkyblockMod.DELIMITER_COLOUR + EnumChatFormatting.BOLD + " -------------------"));
+														DankersSkyblockMod.DELIMITER_COLOUR + EnumChatFormatting.BOLD + "-------------------"));
 		}).start();
 	}
 
