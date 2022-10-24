@@ -63,7 +63,6 @@ public class LobbyBankCommand extends CommandBase {
                     if (player.getGameProfile().getName().startsWith("!")) continue;
                     // Manually get latest profile to use reduced requests on extra achievement API
                     String UUID = player.getGameProfile().getId().toString().replaceAll("-", "");
-                    long biggestLastSave = 0;
                     int profileIndex = -1;
                     Thread.sleep(600);
                     JsonObject profileResponse = APIHandler.getResponse("https://api.hypixel.net/skyblock/profiles?uuid=" + UUID + "&key=" + key, true);
@@ -77,26 +76,23 @@ public class LobbyBankCommand extends CommandBase {
                     JsonArray profiles = profileResponse.get("profiles").getAsJsonArray();
                     for (int i = 0; i < profiles.size(); i++) {
                         JsonObject profile = profiles.get(i).getAsJsonObject();
-                        if (!profile.get("members").getAsJsonObject().get(UUID).getAsJsonObject().has("last_save"))
-                            continue;
-                        if (profile.get("members").getAsJsonObject().get(UUID).getAsJsonObject().get("last_save").getAsLong() > biggestLastSave) {
-                            biggestLastSave = profile.get("members").getAsJsonObject().get(UUID).getAsJsonObject().get("last_save").getAsLong();
+                        if (profile.get("selected").getAsBoolean()) {
                             profileIndex = i;
+                            break;
                         }
                     }
-                    if (profileIndex == -1 || biggestLastSave == 0) continue;
+                    if (profileIndex == -1) continue;
 
                     JsonObject latestProfile = profiles.get(profileIndex).getAsJsonObject().get("members").getAsJsonObject().get(UUID).getAsJsonObject();
                     boolean hasBanking = profiles.get(profileIndex).getAsJsonObject().has("banking");
 
-                    // Get SA
                     double coin_purse;
                     // Add bank to lobby banks
                     // Put bank in HashMap
 
                     if (latestProfile.has("coin_purse")) {
                         coin_purse = latestProfile.get("coin_purse").getAsDouble();
-                        if (hasBanking == true) {
+                        if (hasBanking) {
                             coin_purse += profiles.get(profileIndex).getAsJsonObject().get("banking").getAsJsonObject().get("balance").getAsDouble();
 
                         }
@@ -107,7 +103,7 @@ public class LobbyBankCommand extends CommandBase {
                     }
                 }
 
-                // I have no idea how this works, or even what :: does but this sorts the skill averages
+                // Sort coins
                 Map<String, Double> sortedBankList = unsortedBankList.entrySet().stream()
                         .sorted(Map.Entry.<String, Double>comparingByValue().reversed())
                         .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue,
@@ -120,14 +116,14 @@ public class LobbyBankCommand extends CommandBase {
                     top3 += "\n " + EnumChatFormatting.AQUA + sortedBankListKeys[i] + ": " + DankersSkyblockMod.SKILL_AVERAGE_COLOUR + EnumChatFormatting.BOLD + nf.format(Math.round(sortedBankList.get(sortedBankListKeys[i])));
                 }
 
-                // Get lobby sa
+                // Get lobby bank
                 double lobbyBank = 0;
-                for (Double playerSkills : lobbyBanks) {
-                    lobbyBank += playerSkills;
+                for (Double playerBanks : lobbyBanks) {
+                    lobbyBank += playerBanks;
                 }
                 lobbyBank = (double) Math.round((lobbyBank / lobbyBanks.size()) * 100) / 100;
 
-                // Finally say skill lobby avg and highest SA users
+                // Finally say bank lobby avg and highest bank users
                 playerSP.addChatMessage(new ChatComponentText(DankersSkyblockMod.DELIMITER_COLOUR + "" + EnumChatFormatting.BOLD + "-------------------\n" +
                         DankersSkyblockMod.TYPE_COLOUR + " Lobby Bank Average: " + DankersSkyblockMod.SKILL_AVERAGE_COLOUR + EnumChatFormatting.BOLD + nf.format(Math.round(lobbyBank)) + "\n" +
                         DankersSkyblockMod.TYPE_COLOUR + " Highest Bank Averages:" + top3 + "\n" +
@@ -135,9 +131,9 @@ public class LobbyBankCommand extends CommandBase {
 
 
             } catch (InterruptedException ex) {
-                System.out.println("Current bank average list: " + unsortedBankList.toString());
+                System.out.println("Current bank average list: " + unsortedBankList);
                 Thread.currentThread().interrupt();
-                System.out.println("Interrupted /lobbyskills thread.");
+                System.out.println("Interrupted /lobbybank thread.");
             }
 
         }).start();

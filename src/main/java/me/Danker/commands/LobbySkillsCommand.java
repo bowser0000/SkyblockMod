@@ -79,13 +79,12 @@ public class LobbySkillsCommand extends CommandBase {
 					JsonArray profiles = profileResponse.get("profiles").getAsJsonArray();
 					for (int i = 0; i < profiles.size(); i++) {
 						JsonObject profile = profiles.get(i).getAsJsonObject();
-						if (!profile.get("members").getAsJsonObject().get(UUID).getAsJsonObject().has("last_save")) continue;
-						if (profile.get("members").getAsJsonObject().get(UUID).getAsJsonObject().get("last_save").getAsLong() > biggestLastSave) {
-							biggestLastSave = profile.get("members").getAsJsonObject().get(UUID).getAsJsonObject().get("last_save").getAsLong();
+						if (profile.get("selected").getAsBoolean()) {
 							profileIndex = i;
+							break;
 						}
 					}
-					if (profileIndex == -1 || biggestLastSave == 0) continue;
+					if (profileIndex == -1) continue;
 					JsonObject latestProfile = profiles.get(profileIndex).getAsJsonObject().get("members").getAsJsonObject().get(UUID).getAsJsonObject();
 					
 					// Get SA
@@ -175,7 +174,7 @@ public class LobbySkillsCommand extends CommandBase {
 					lobbySkills.add(skillAvg); // Add SA to lobby skills
 				}
 				
-				// I have no idea how this works, or even what :: does but this sorts the skill averages
+				// Sort skill average
 				Map<String, Double> sortedSAList = unsortedSAList.entrySet().stream()
 												   .sorted(Entry.<String, Double>comparingByValue().reversed())
 												   .collect(Collectors.toMap(Entry::getKey, Entry::getValue,
@@ -200,7 +199,7 @@ public class LobbySkillsCommand extends CommandBase {
 															  DankersSkyblockMod.TYPE_COLOUR + " Highest Skill Averages:" + top3 + "\n" +
 															  DankersSkyblockMod.DELIMITER_COLOUR + "" + EnumChatFormatting.BOLD + " -------------------"));
 			} catch (InterruptedException ex) {
-				System.out.println("Current skill average list: " + unsortedSAList.toString());
+				System.out.println("Current skill average list: " + unsortedSAList);
 				Thread.currentThread().interrupt();
 				System.out.println("Interrupted /lobbyskills thread.");
 			}
