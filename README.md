@@ -80,6 +80,7 @@ Discord Server: https://discord.gg/QsEkNQS
 - Show amount of Magmafish if trophy fish are filleted
 - Show estimated time until bazaar order is filled
 - Show timer until Crimson Isle minibosses respawn
+- Automatically announce Vanquishers in chat
 </details>
 
 <details>
@@ -119,6 +120,7 @@ Discord Server: https://discord.gg/QsEkNQS
 - /dsmfarmlength <min coords> <max coords> - Sets coords to be used for end of farm alert.
 - /hotmof [player] - Uses API to find total powder and HotM tree of a person. If no name is provided, it checks yours.
 - /trophyfish [player] - Uses API to find trophy fish stats of a person. If no name is provided, it checks yours.
+- /stoplobby - Stops currently running /lobbyskills or /lobbybank command.
 </details>
 
 <details>

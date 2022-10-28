@@ -236,6 +236,7 @@ public class DankersSkyblockMod {
         ClientCommandHandler.instance.registerCommand(new SkillTrackerCommand());
         ClientCommandHandler.instance.registerCommand(new SkyblockPlayersCommand());
         ClientCommandHandler.instance.registerCommand(new SlayerCommand());
+        ClientCommandHandler.instance.registerCommand(new StopLobbyCommand());
         ClientCommandHandler.instance.registerCommand(new ToggleCommand());
         ClientCommandHandler.instance.registerCommand(new TrophyFishCommand());
         ClientCommandHandler.instance.registerCommand(new WeightCommand());

@@ -21,6 +21,8 @@ import java.util.stream.Collectors;
 
 public class LobbyBankCommand extends CommandBase {
 
+    public static Thread mainThread = null;
+
     @Override
     public String getCommandName() {
         return "lobbybank";
@@ -52,7 +54,7 @@ public class LobbyBankCommand extends CommandBase {
             return;
         }
 
-        new Thread(() -> {
+        mainThread = new Thread(() -> {
             try {
                 // Create deep copy of players to prevent passing reference and ConcurrentModificationException
                 Collection<NetworkPlayerInfo> players = new ArrayList<>(Minecraft.getMinecraft().getNetHandler().getPlayerInfoMap());
@@ -136,6 +138,7 @@ public class LobbyBankCommand extends CommandBase {
                 System.out.println("Interrupted /lobbybank thread.");
             }
 
-        }).start();
+        });
+        mainThread.start();
     }
 }

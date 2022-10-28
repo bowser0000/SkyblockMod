@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 
 public class LobbySkillsCommand extends CommandBase {
 	
-	Thread mainThread = null;
+	public static Thread mainThread = null;
 	
 	@Override
 	public String getCommandName() {
