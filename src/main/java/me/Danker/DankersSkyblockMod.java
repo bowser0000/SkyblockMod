@@ -102,6 +102,7 @@ public class DankersSkyblockMod {
         MinecraftForge.EVENT_BUS.register(this);
         MinecraftForge.EVENT_BUS.register(new AbilityCooldowns());
         MinecraftForge.EVENT_BUS.register(new Alerts());
+        MinecraftForge.EVENT_BUS.register(new AnnounceVanquishers());
         MinecraftForge.EVENT_BUS.register(new ArachneESP());
         MinecraftForge.EVENT_BUS.register(new ArrowTerminalSolver());
         MinecraftForge.EVENT_BUS.register(new AutoAcceptReparty());

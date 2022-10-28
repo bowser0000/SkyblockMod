@@ -99,6 +99,7 @@ public class DankerGui extends GuiScreen {
 	private GuiButton bazaarTimeToFill;
 	private GuiButton onlyEditEnabled;
 	private GuiButton crimsonMinibossTimer;
+	private GuiButton announceVanqs;
 	// Chat Messages
 	private GuiButton sceptreMessages;
 	private GuiButton midasStaffMessages;
@@ -202,6 +203,7 @@ public class DankerGui extends GuiScreen {
 		showTotalMagmafish = new FeatureButton("Show Total Fillet Magmafish: " + Utils.getColouredBoolean(ToggleCommand.showTotalMagmafish), "Show total Magmafish you would get if you filleted all the trophy fish in your inventory.");
 		bazaarTimeToFill = new FeatureButton("Show Time to Fill Bazaar Order: " + Utils.getColouredBoolean(ToggleCommand.bazaarTimeToFill), "Shows an estimated amount of time it would take for a bazaar order to be filled.\nAssumes you are not over/undercut.\nOnly works when moving through menus. Doesn't work when clicking items as shortcut.");
 		crimsonMinibossTimer = new FeatureButton("Crimson Isle Miniboss Timer: " + Utils.getColouredBoolean(ToggleCommand.crimsonMinibossTimer), "Shows the time until a Crimson Isle miniboss respawns.");
+		announceVanqs = new FeatureButton("Announce Vanquishers: " + Utils.getColouredBoolean(ToggleCommand.announceVanqs), "Announces when and at what coordinates your Vanquisher spawns in your selected chat.");
 
 		allButtons.clear();
 		allButtons.add(changeDisplay);
@@ -271,6 +273,7 @@ public class DankerGui extends GuiScreen {
 		allButtons.add(showTotalMagmafish);
 		allButtons.add(bazaarTimeToFill);
 		allButtons.add(crimsonMinibossTimer);
+		allButtons.add(announceVanqs);
 
 		search.setText(initSearchText);
 		search.setVisible(true);
@@ -600,6 +603,10 @@ public class DankerGui extends GuiScreen {
 			ToggleCommand.crimsonMinibossTimer = !ToggleCommand.crimsonMinibossTimer;
 			ConfigHandler.writeBooleanConfig("toggles", "CrimsonIsleMusic", ToggleCommand.crimsonMinibossTimer);
 			crimsonMinibossTimer.displayString = "Crimson Isle Miniboss Timer: " + Utils.getColouredBoolean(ToggleCommand.crimsonMinibossTimer);
+		} else if (button == announceVanqs) {
+			ToggleCommand.announceVanqs = !ToggleCommand.announceVanqs;
+			ConfigHandler.writeBooleanConfig("toggles", "AnnounceVanqs", ToggleCommand.announceVanqs);
+			announceVanqs.displayString = "Announce Vanquishers: " + Utils.getColouredBoolean(ToggleCommand.announceVanqs);
 		}
 	}
 

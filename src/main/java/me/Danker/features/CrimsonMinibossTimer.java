@@ -7,7 +7,6 @@ import me.Danker.events.RenderOverlayEvent;
 import me.Danker.handlers.TextRenderer;
 import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;
-import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StringUtils;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
