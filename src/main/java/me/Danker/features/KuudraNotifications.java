@@ -41,7 +41,7 @@ public class KuudraNotifications {
             if (packet.getMessage() == null) return;
 
             String message = packet.getMessage().getUnformattedText();
-            if (message.contains("DROPSHIPS INCOMING")) {
+            if (message.endsWith(" INCOMING")) {
                 new Thread(() -> {
                     try {
                         Thread.sleep(45000);
