@@ -12,6 +12,8 @@ Discord Server: https://discord.gg/QsEkNQS
   - Pet colors does not color slots
   - Catacombs F7 terminal solvers do not color slots
   - Enchanting solvers do not color slots
+- Old tab display
+  - Many features rely on using the location found in the new tab display
 </details>
 
 <details>
@@ -81,6 +83,7 @@ Discord Server: https://discord.gg/QsEkNQS
 - Show estimated time until bazaar order is filled
 - Show timer until Crimson Isle minibosses respawn
 - Automatically announce Vanquishers in chat
+- Kuudra notifications (stun/ballista/cloak)
 </details>
 
 <details>

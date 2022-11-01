@@ -72,6 +72,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 	public static boolean onlyEditEnabled;
 	public static boolean crimsonMinibossTimer;
 	public static boolean announceVanqs;
+	public static boolean kuudraNotifications;
 	// Chat Messages
 	public static boolean sceptreMessages;
 	public static boolean midasStaffMessages;

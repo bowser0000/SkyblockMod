@@ -144,6 +144,7 @@ public class DankersSkyblockMod {
         MinecraftForge.EVENT_BUS.register(new HighlightCommissions());
         MinecraftForge.EVENT_BUS.register(new HighlightSkeletonMasters());
         MinecraftForge.EVENT_BUS.register(new IceWalkSolver());
+        MinecraftForge.EVENT_BUS.register(new KuudraNotifications());
         MinecraftForge.EVENT_BUS.register(new LividSolver());
         MinecraftForge.EVENT_BUS.register(new LowHealthNotifications());
         MinecraftForge.EVENT_BUS.register(new MinionLastCollected());

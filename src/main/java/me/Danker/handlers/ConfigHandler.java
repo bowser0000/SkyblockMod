@@ -294,6 +294,7 @@ public class ConfigHandler {
 		ToggleCommand.onlyEditEnabled = initBoolean("toggles", "OnlyEditEnabled", true);
 		ToggleCommand.crimsonMinibossTimer = initBoolean("toggles", "CrimsonMinibossTimer", false);
 		ToggleCommand.announceVanqs = initBoolean("toggles", "AnnounceVanqs", false);
+		ToggleCommand.kuudraNotifications = initBoolean("toggles", "KuudraNotifications", false);
 		// Chat Messages
 		ToggleCommand.sceptreMessages = initBoolean("toggles", "SceptreMessages", true);
 		ToggleCommand.midasStaffMessages = initBoolean("toggles", "MidasStaffMessages", true);
