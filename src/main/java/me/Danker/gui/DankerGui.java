@@ -604,7 +604,7 @@ public class DankerGui extends GuiScreen {
 			onlyEditEnabled.displayString = "Only Edit Enabled: " + Utils.getColouredBoolean(ToggleCommand.onlyEditEnabled);
 		} else if (button == crimsonMinibossTimer) {
 			ToggleCommand.crimsonMinibossTimer = !ToggleCommand.crimsonMinibossTimer;
-			ConfigHandler.writeBooleanConfig("toggles", "CrimsonIsleMusic", ToggleCommand.crimsonMinibossTimer);
+			ConfigHandler.writeBooleanConfig("toggles", "CrimsonMinibossTimer", ToggleCommand.crimsonMinibossTimer);
 			crimsonMinibossTimer.displayString = "Crimson Isle Miniboss Timer: " + Utils.getColouredBoolean(ToggleCommand.crimsonMinibossTimer);
 		} else if (button == announceVanqs) {
 			ToggleCommand.announceVanqs = !ToggleCommand.announceVanqs;
