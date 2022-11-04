@@ -43,6 +43,7 @@ public class DankerGui extends GuiScreen {
 	private GuiButton puzzleSolvers;
 	private GuiButton experimentationTableSolvers;
 	private GuiButton skillTracker;
+	private GuiButton powderTracker;
 	private GuiButton customMusic;
 	private GuiButton crystalHollowWaypoints;
 	private GuiButton alerts;
@@ -142,6 +143,7 @@ public class DankerGui extends GuiScreen {
 		puzzleSolvers = new GuiButton(0, 0, 0, "Toggle Dungeons Puzzle Solvers");
 		experimentationTableSolvers = new GuiButton(0, 0, 0, "Toggle Experimentation Table Solvers");
 		skillTracker = new GuiButton(0, 0, 0, "Toggle Skill XP/Hour Tracking");
+		powderTracker = new GuiButton(0, 0, 0, "Toggle Powder/Hour Tracking");
 		customMusic = new GuiButton(0, 0, 0, "Custom Music");
 		crystalHollowWaypoints = new GuiButton(0, 0, 0, "Crystal Hollows Waypoints");
 		alerts = new GuiButton(0, 0, 0, "Alerts");
@@ -213,6 +215,7 @@ public class DankerGui extends GuiScreen {
 		allButtons.add(puzzleSolvers);
 		allButtons.add(experimentationTableSolvers);
 		allButtons.add(skillTracker);
+		allButtons.add(powderTracker);
 		allButtons.add(customMusic);
 		allButtons.add(crystalHollowWaypoints);
 		allButtons.add(alerts);
@@ -366,6 +369,8 @@ public class DankerGui extends GuiScreen {
 			mc.displayGuiScreen(new ExperimentsGui());
 		} else if (button == skillTracker) {
 			mc.displayGuiScreen(new SkillTrackerGui());
+		} else if (button == powderTracker) {
+			mc.displayGuiScreen(new PowderTrackerGui());
 		} else if (button == customMusic) {
 			mc.displayGuiScreen(new CustomMusicGui(1));
 		} else if (button == crystalHollowWaypoints) {

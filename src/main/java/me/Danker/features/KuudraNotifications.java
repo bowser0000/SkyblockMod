@@ -2,7 +2,6 @@ package me.Danker.features;
 
 import me.Danker.commands.ToggleCommand;
 import me.Danker.events.PacketReadEvent;
-import me.Danker.handlers.ScoreboardHandler;
 import me.Danker.utils.Utils;
 import net.minecraft.network.play.server.S45PacketTitle;
 import net.minecraft.util.EnumChatFormatting;

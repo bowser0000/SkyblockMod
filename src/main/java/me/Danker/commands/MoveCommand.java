@@ -29,6 +29,7 @@ public class MoveCommand extends CommandBase {
 	public static int[] dungeonScoreXY = {0, 0};
 	public static int[] firePillarXY = {0, 0};
 	public static int[] minibossTimerXY = {0, 0};
+	public static int[] powderTrackerXY = {0, 0};
 
 	@Override
 	public String getCommandName() {
@@ -39,7 +40,7 @@ public class MoveCommand extends CommandBase {
 	public String getCommandUsage(ICommandSender arg0) {
 		return "/" + getCommandName() + " <coords/display/dungeontimer/skill50/lividhp/caketimer/skilltracker/" +
 										"wateranswer/bonzotimer/golemtimer/teammatesinradius/gianthp/" +
-										"abilitycooldowns/dungeonscore/firepillar/minibosstimer> <x> <y>";
+										"abilitycooldowns/dungeonscore/firepillar/minibosstimer/powdertracker> <x> <y>";
 	}
 
 	public static String usage(ICommandSender arg0) {
@@ -56,7 +57,8 @@ public class MoveCommand extends CommandBase {
 		if (args.length == 1) {
 			return getListOfStringsMatchingLastWord(args, "coords", "display", "dungeontimer", "skill50", "lividhp", "caketimer",
 														  "skilltracker", "wateranswer", "bonzotimer", "golemtimer", "teammatesinradius",
-														  "gianthp", "abilitycooldowns", "dungeonscore", "firepillar", "minibosstimer");
+														  "gianthp", "abilitycooldowns", "dungeonscore", "firepillar", "minibosstimer",
+														  "powdertracker");
 		}
 		return null;
 	}
@@ -182,6 +184,13 @@ public class MoveCommand extends CommandBase {
 				ConfigHandler.writeIntConfig("locations", "minibossTimerX", minibossTimerXY[0]);
 				ConfigHandler.writeIntConfig("locations", "minibossTimerY", minibossTimerXY[1]);
 				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Miniboss timer has been moved to " + DankersSkyblockMod.SECONDARY_COLOUR + arg1[1] + ", " + arg1[2]));
+				break;
+			case "powdertracker":
+				powderTrackerXY[0] = Integer.parseInt(arg1[1]);
+				powderTrackerXY[1] = Integer.parseInt(arg1[2]);
+				ConfigHandler.writeIntConfig("locations", "powderTrackerX", powderTrackerXY[0]);
+				ConfigHandler.writeIntConfig("locations", "powderTrackerY", powderTrackerXY[1]);
+				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Powder tracker been moved to " + DankersSkyblockMod.SECONDARY_COLOUR + arg1[1] + ", " + arg1[2]));
 				break;
 			default:
 				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Usage: " + getCommandUsage(arg0)));

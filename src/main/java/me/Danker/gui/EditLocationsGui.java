@@ -37,6 +37,7 @@ public class EditLocationsGui extends GuiScreen {
 	private LocationButton dungeonScore;
 	private LocationButton firePillar;
 	private LocationButton minibossTimer;
+	private LocationButton powderTracker;
 	
 	@Override
 	public boolean doesGuiPauseGame() {
@@ -128,6 +129,12 @@ public class EditLocationsGui extends GuiScreen {
 								   EnumChatFormatting.GOLD + "Ashfang: " + CrimsonMinibossTimer.UNKNOWN_COLOUR + "?" + "\n" +
 								   EnumChatFormatting.DARK_RED + "Magma Boss: " + CrimsonMinibossTimer.UNKNOWN_COLOUR + "?";
 
+		String powderTrackerText = EnumChatFormatting.DARK_GREEN + "Mithril Gained: 74,264\n" +
+								   EnumChatFormatting.DARK_GREEN + "Mithril Per Hour: 107,326\n" +
+								   EnumChatFormatting.LIGHT_PURPLE + "Gemstone Gained: 101,299\n" +
+								   EnumChatFormatting.LIGHT_PURPLE + "Gemstone Per Hour: 146,397\n" +
+								   PowderTracker.POWDER_TRACKER_COLOUR + "Time Elapsed: " + Utils.getTimeBetween(0, 2491);
+
 		display = new LocationButton(MoveCommand.displayXY[0], MoveCommand.displayXY[1], ScaleCommand.displayScale, displayText, displayNums, 110);
 		dungeonTimer = new LocationButton(MoveCommand.dungeonTimerXY[0], MoveCommand.dungeonTimerXY[1], ScaleCommand.dungeonTimerScale, dungeonTimerText, dungeonTimerNums, 80);
 		coords = new LocationButton(MoveCommand.coordsXY[0], MoveCommand.coordsXY[1], ScaleCommand.coordsScale, NoF3Coords.COORDS_COLOUR + "74 / 14 / -26 (141.1 / 6.7)");
@@ -144,6 +151,7 @@ public class EditLocationsGui extends GuiScreen {
 		dungeonScore = new LocationButton(MoveCommand.dungeonScoreXY[0], MoveCommand.dungeonScoreXY[1], ScaleCommand.dungeonScoreScale, dungeonScoreText, dungeonScoreNums, 80);
 		firePillar = new LocationButton(MoveCommand.firePillarXY[0], MoveCommand.firePillarXY[1], ScaleCommand.firePillarScale, EnumChatFormatting.GOLD + "3s " + EnumChatFormatting.RED + "8 hits");
 		minibossTimer = new LocationButton(MoveCommand.minibossTimerXY[0], MoveCommand.minibossTimerXY[1], ScaleCommand.minibossTimerScale, minibossTimerText);
+		powderTracker = new LocationButton(MoveCommand.powderTrackerXY[0], MoveCommand.powderTrackerXY[1], ScaleCommand.powderTrackerScale, powderTrackerText);
 
 		if (!ToggleCommand.onlyEditEnabled || ToggleCommand.coordsToggled) this.buttonList.add(coords);
 		if (!ToggleCommand.onlyEditEnabled || ToggleCommand.dungeonTimerToggled) this.buttonList.add(dungeonTimer);
@@ -161,6 +169,7 @@ public class EditLocationsGui extends GuiScreen {
 		if (!ToggleCommand.onlyEditEnabled || ToggleCommand.dungeonScore) this.buttonList.add(dungeonScore);
 		if (!ToggleCommand.onlyEditEnabled || ToggleCommand.firePillar) this.buttonList.add(firePillar);
 		if (!ToggleCommand.onlyEditEnabled || ToggleCommand.crimsonMinibossTimer) this.buttonList.add(minibossTimer);
+		if (!ToggleCommand.onlyEditEnabled || PowderTracker.showPowderTracker) this.buttonList.add(powderTracker);
 	}
 	
 	@Override
@@ -299,6 +308,12 @@ public class EditLocationsGui extends GuiScreen {
 					minibossTimer.xPosition = MoveCommand.minibossTimerXY[0];
 					minibossTimer.yPosition = MoveCommand.minibossTimerXY[1];
 					break;
+				case "powderTracker":
+					MoveCommand.powderTrackerXY[0] += xMoved;
+					MoveCommand.powderTrackerXY[1] += yMoved;
+					powderTracker.xPosition = MoveCommand.powderTrackerXY[0];
+					powderTracker.yPosition = MoveCommand.powderTrackerXY[1];
+					break;
 			}
 			this.buttonList.clear();
 			initGui();
@@ -343,6 +358,8 @@ public class EditLocationsGui extends GuiScreen {
 				moving = "firePillar";
 			} else if (button == minibossTimer) {
 				moving = "minibossTimer";
+			} else if (button == powderTracker) {
+				moving = "powderTracker";
 			}
 		}
 	}
@@ -383,6 +400,8 @@ public class EditLocationsGui extends GuiScreen {
 		ConfigHandler.writeIntConfig("locations", "firePillarY", MoveCommand.firePillarXY[1]);
 		ConfigHandler.writeIntConfig("locations", "minibossTimerX", MoveCommand.minibossTimerXY[0]);
 		ConfigHandler.writeIntConfig("locations", "minibossTimerY", MoveCommand.minibossTimerXY[1]);
+		ConfigHandler.writeIntConfig("locations", "powderTrackerX", MoveCommand.powderTrackerXY[0]);
+		ConfigHandler.writeIntConfig("locations", "powderTrackerY", MoveCommand.powderTrackerXY[1]);
 	}
 	
 }

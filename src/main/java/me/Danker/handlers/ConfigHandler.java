@@ -653,6 +653,7 @@ public class ConfigHandler {
 		Skill50Display.SKILL_TIME = initInt("misc", "skill50Time", 3) * 20;
 		CakeTimer.cakeTime = initDouble("misc", "cakeTime", 0);
 		SkillTracker.showSkillTracker = initBoolean("misc", "showSkillTracker", false);
+		PowderTracker.showPowderTracker = initBoolean("misc", "showPowderTracker", false);
 		DankersSkyblockMod.firstLaunch = initBoolean("misc", "firstLaunch", true);
 		EndOfFarmAlert.min = initDouble("misc", "farmMin", -78.5);
 		EndOfFarmAlert.max = initDouble("misc", "farmMax", 79.5);
@@ -693,6 +694,8 @@ public class ConfigHandler {
 		MoveCommand.firePillarXY[1] = initInt("locations", "firePillarY", 200);
 		MoveCommand.minibossTimerXY[0] = initInt("locations", "minibossTimerX", 100);
 		MoveCommand.minibossTimerXY[1] = initInt("locations", "minibossTimerY", 100);
+		MoveCommand.powderTrackerXY[0] = initInt("locations", "powderTrackerX", 100);
+		MoveCommand.powderTrackerXY[1] = initInt("locations", "powderTrackerY", 100);
 
 		// Scales
 		ScaleCommand.coordsScale = initDouble("scales", "coordsScale", 1);
@@ -711,6 +714,7 @@ public class ConfigHandler {
 		ScaleCommand.dungeonScoreScale = initDouble("scales", "dungeonScoreScale", 1);
 		ScaleCommand.firePillarScale = initDouble("scales", "firePillarScale", 1);
 		ScaleCommand.minibossTimerScale = initDouble("scales", "minibossTimerScale", 1);
+		ScaleCommand.powderTrackerScale = initDouble("scales", "powderTrackerScale", 1);
 
 		// Skills
 		DankersSkyblockMod.farmingLevel = initInt("skills", "farming", -1);
@@ -769,6 +773,7 @@ public class ConfigHandler {
 		LividSolver.LIVID_COLOUR = initInt("colors", "livid", 0x0000FF);
 		CrimsonMinibossTimer.TIMER_COLOUR = initString("colors", "minibossTimer", EnumChatFormatting.GOLD.toString());
 		CrimsonMinibossTimer.UNKNOWN_COLOUR = initString("colors", "minibossUnknown", EnumChatFormatting.RED.toString());
+		PowderTracker.POWDER_TRACKER_COLOUR = initString("colors", "powderTracker", EnumChatFormatting.AQUA.toString());
 
 		// Commands
 		if (!hasKey("commands", "reparty")) writeBooleanConfig("commands", "reparty", false);

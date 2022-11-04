@@ -69,7 +69,7 @@ public class DankersSkyblockMod {
     public static String titleText = "";
     public static int tickAmount = 1;
     public static int repoTickAmount = 1;
-    public static KeyBinding[] keyBindings = new KeyBinding[4];
+    public static KeyBinding[] keyBindings = new KeyBinding[5];
     public static boolean usingLabymod = false;
     public static boolean usingOAM = false;
     static boolean OAMWarning = false;
@@ -152,6 +152,7 @@ public class DankersSkyblockMod {
         MinecraftForge.EVENT_BUS.register(new NoF3Coords());
         MinecraftForge.EVENT_BUS.register(new NotifySlayerSlain());
         MinecraftForge.EVENT_BUS.register(new PetColours());
+        MinecraftForge.EVENT_BUS.register(new PowderTracker());
         MinecraftForge.EVENT_BUS.register(new Reparty());
         MinecraftForge.EVENT_BUS.register(new SameColourSolver());
         MinecraftForge.EVENT_BUS.register(new SelectAllColourSolver());
@@ -195,6 +196,7 @@ public class DankersSkyblockMod {
         keyBindings[1] = new KeyBinding("Regular Ability", Keyboard.KEY_NUMPAD4, "Danker's Skyblock Mod");
         keyBindings[2] = new KeyBinding("Start/Stop Skill Tracker", Keyboard.KEY_NUMPAD5, "Danker's Skyblock Mod");
         keyBindings[3] = new KeyBinding("Create Waypoint", Keyboard.KEY_NUMPAD6, "Danker's Skyblock Mod");
+        keyBindings[4] = new KeyBinding("Start/Stop Powder Tracker", Keyboard.KEY_NUMPAD8, "Danker's Skyblock Mod");
 
         for (KeyBinding keyBinding : keyBindings) {
             ClientRegistry.registerKeyBinding(keyBinding);
@@ -228,6 +230,7 @@ public class DankersSkyblockMod {
         ClientCommandHandler.instance.registerCommand(new MoveCommand());
         ClientCommandHandler.instance.registerCommand(new PetsCommand());
         ClientCommandHandler.instance.registerCommand(new PlayerCommand());
+        ClientCommandHandler.instance.registerCommand(new PowderTrackerCommand());
         ClientCommandHandler.instance.registerCommand(new ReloadConfigCommand());
         ClientCommandHandler.instance.registerCommand(new ReloadRepoCommand());
         ClientCommandHandler.instance.registerCommand(new ResetLootCommand());
