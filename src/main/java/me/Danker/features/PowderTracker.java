@@ -36,6 +36,7 @@ public class PowderTracker {
 
         if (DankersSkyblockMod.tickAmount % 20 == 0) {
             if (Utils.tabLocation.equals("Dwarven Mines") || Utils.tabLocation.equals("Crystal Hollows")) {
+                if (Minecraft.getMinecraft().getNetHandler() == null) return;
                 Collection<NetworkPlayerInfo> players = Minecraft.getMinecraft().getNetHandler().getPlayerInfoMap();
                 for (NetworkPlayerInfo player : players) {
                     if (player == null || player.getDisplayName() == null) continue;
