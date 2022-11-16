@@ -43,6 +43,7 @@ public class DankerGui extends GuiScreen {
 	private GuiButton puzzleSolvers;
 	private GuiButton experimentationTableSolvers;
 	private GuiButton skillTracker;
+	private GuiButton powderTracker;
 	private GuiButton customMusic;
 	private GuiButton crystalHollowWaypoints;
 	private GuiButton alerts;
@@ -96,6 +97,11 @@ public class DankerGui extends GuiScreen {
 	private GuiButton minionLastCollected;
 	private GuiButton showTrophyCompletion;
 	private GuiButton showTotalMagmafish;
+	private GuiButton bazaarTimeToFill;
+	private GuiButton onlyEditEnabled;
+	private GuiButton crimsonMinibossTimer;
+	private GuiButton announceVanqs;
+	private GuiButton kuudraNotifications;
 	// Chat Messages
 	private GuiButton sceptreMessages;
 	private GuiButton midasStaffMessages;
@@ -137,11 +143,13 @@ public class DankerGui extends GuiScreen {
 		puzzleSolvers = new GuiButton(0, 0, 0, "Toggle Dungeons Puzzle Solvers");
 		experimentationTableSolvers = new GuiButton(0, 0, 0, "Toggle Experimentation Table Solvers");
 		skillTracker = new GuiButton(0, 0, 0, "Toggle Skill XP/Hour Tracking");
+		powderTracker = new GuiButton(0, 0, 0, "Toggle Powder/Hour Tracking");
 		customMusic = new GuiButton(0, 0, 0, "Custom Music");
 		crystalHollowWaypoints = new GuiButton(0, 0, 0, "Crystal Hollows Waypoints");
 		alerts = new GuiButton(0, 0, 0, "Alerts");
 		aliases = new GuiButton(0, 0, 0, "Aliases");
 		outlineText = new FeatureButton("Outline Displayed Text: " + Utils.getColouredBoolean(ToggleCommand.outlineTextToggled), "Adds bold outline to on-screen text.");
+		onlyEditEnabled = new FeatureButton("Only Edit Enabled: " + Utils.getColouredBoolean(ToggleCommand.onlyEditEnabled), "Only shows enabled features in Edit Locations menu.");
 		pickBlock = new FeatureButton("Auto-Swap to Pick Block: " + Utils.getColouredBoolean(ToggleCommand.swapToPickBlockToggled), "Automatically changes left clicks to middle clicks.\nHelpful when lagging.");
 		coords = new FeatureButton("Coordinate/Angle Display: " + Utils.getColouredBoolean(ToggleCommand.coordsToggled), "Displays coordinates and angle.");
 		chatMaddox = new FeatureButton("Click On-Screen to Open Maddox: " + Utils.getColouredBoolean(ToggleCommand.chatMaddoxToggled), "Open chat then click anywhere after calling Maddox to open the menu.");
@@ -196,6 +204,10 @@ public class DankerGui extends GuiScreen {
 		minionLastCollected = new FeatureButton("Show When Minion Last Collected: " + Utils.getColouredBoolean(ToggleCommand.minionLastCollected), "Displays when a minion was last collected over the minion.");
 		showTrophyCompletion = new FeatureButton("Show Trophy Fish Completion: " + Utils.getColouredBoolean(ToggleCommand.showTrophyCompletion), "Show completion instead of count in trophy fish tracker display.");
 		showTotalMagmafish = new FeatureButton("Show Total Fillet Magmafish: " + Utils.getColouredBoolean(ToggleCommand.showTotalMagmafish), "Show total Magmafish you would get if you filleted all the trophy fish in your inventory.");
+		bazaarTimeToFill = new FeatureButton("Show Time to Fill Bazaar Order: " + Utils.getColouredBoolean(ToggleCommand.bazaarTimeToFill), "Shows an estimated amount of time it would take for a bazaar order to be filled.\nAssumes you are not over/undercut.\nOnly works when moving through menus. Doesn't work when clicking items as shortcut.");
+		crimsonMinibossTimer = new FeatureButton("Crimson Isle Miniboss Timer: " + Utils.getColouredBoolean(ToggleCommand.crimsonMinibossTimer), "Shows the time until a Crimson Isle miniboss respawns.");
+		announceVanqs = new FeatureButton("Announce Vanquishers: " + Utils.getColouredBoolean(ToggleCommand.announceVanqs), "Announces when and at what coordinates your Vanquisher spawns in your selected chat.");
+		kuudraNotifications = new FeatureButton("Kuudra Notifications: " + Utils.getColouredBoolean(ToggleCommand.kuudraNotifications), "Alerts when to cloak for dropships, when Kuudra is stunned and when Ballista is fully charged.");
 
 		allButtons.clear();
 		allButtons.add(changeDisplay);
@@ -203,11 +215,13 @@ public class DankerGui extends GuiScreen {
 		allButtons.add(puzzleSolvers);
 		allButtons.add(experimentationTableSolvers);
 		allButtons.add(skillTracker);
+		allButtons.add(powderTracker);
 		allButtons.add(customMusic);
 		allButtons.add(crystalHollowWaypoints);
 		allButtons.add(alerts);
 		allButtons.add(aliases);
 		allButtons.add(outlineText);
+		allButtons.add(onlyEditEnabled);
 		allButtons.add(pickBlock);
 		allButtons.add(coords);
 		allButtons.add(chatMaddox);
@@ -262,6 +276,10 @@ public class DankerGui extends GuiScreen {
 		allButtons.add(minionLastCollected);
 		allButtons.add(showTrophyCompletion);
 		allButtons.add(showTotalMagmafish);
+		allButtons.add(bazaarTimeToFill);
+		allButtons.add(crimsonMinibossTimer);
+		allButtons.add(announceVanqs);
+		allButtons.add(kuudraNotifications);
 
 		search.setText(initSearchText);
 		search.setVisible(true);
@@ -351,6 +369,8 @@ public class DankerGui extends GuiScreen {
 			mc.displayGuiScreen(new ExperimentsGui());
 		} else if (button == skillTracker) {
 			mc.displayGuiScreen(new SkillTrackerGui());
+		} else if (button == powderTracker) {
+			mc.displayGuiScreen(new PowderTrackerGui());
 		} else if (button == customMusic) {
 			mc.displayGuiScreen(new CustomMusicGui(1));
 		} else if (button == crystalHollowWaypoints) {
@@ -579,6 +599,26 @@ public class DankerGui extends GuiScreen {
 			ToggleCommand.showTotalMagmafish = !ToggleCommand.showTotalMagmafish;
 			ConfigHandler.writeBooleanConfig("toggles", "ShowTotalMagmafish", ToggleCommand.showTotalMagmafish);
 			showTotalMagmafish.displayString = "Show Total Fillet Magmafish: " + Utils.getColouredBoolean(ToggleCommand.showTotalMagmafish);
+		} else if (button == bazaarTimeToFill) {
+			ToggleCommand.bazaarTimeToFill = !ToggleCommand.bazaarTimeToFill;
+			ConfigHandler.writeBooleanConfig("toggles", "BazaarTimeToFill", ToggleCommand.bazaarTimeToFill);
+			bazaarTimeToFill.displayString = "Show Time to Fill Bazaar Order: " + Utils.getColouredBoolean(ToggleCommand.bazaarTimeToFill);
+		} else if (button == onlyEditEnabled) {
+			ToggleCommand.onlyEditEnabled = !ToggleCommand.onlyEditEnabled;
+			ConfigHandler.writeBooleanConfig("toggles", "OnlyEditEnabled", ToggleCommand.onlyEditEnabled);
+			onlyEditEnabled.displayString = "Only Edit Enabled: " + Utils.getColouredBoolean(ToggleCommand.onlyEditEnabled);
+		} else if (button == crimsonMinibossTimer) {
+			ToggleCommand.crimsonMinibossTimer = !ToggleCommand.crimsonMinibossTimer;
+			ConfigHandler.writeBooleanConfig("toggles", "CrimsonMinibossTimer", ToggleCommand.crimsonMinibossTimer);
+			crimsonMinibossTimer.displayString = "Crimson Isle Miniboss Timer: " + Utils.getColouredBoolean(ToggleCommand.crimsonMinibossTimer);
+		} else if (button == announceVanqs) {
+			ToggleCommand.announceVanqs = !ToggleCommand.announceVanqs;
+			ConfigHandler.writeBooleanConfig("toggles", "AnnounceVanqs", ToggleCommand.announceVanqs);
+			announceVanqs.displayString = "Announce Vanquishers: " + Utils.getColouredBoolean(ToggleCommand.announceVanqs);
+		} else if (button == kuudraNotifications) {
+			ToggleCommand.kuudraNotifications = !ToggleCommand.kuudraNotifications;
+			ConfigHandler.writeBooleanConfig("toggles", "KuudraNotifications", ToggleCommand.kuudraNotifications);
+			kuudraNotifications.displayString = "Kuudra Notifications: " + Utils.getColouredBoolean(ToggleCommand.kuudraNotifications);
 		}
 	}
 

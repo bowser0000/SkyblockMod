@@ -294,7 +294,7 @@ public class LootDisplay {
                             EnumChatFormatting.DARK_PURPLE + ZombieTracker.beheadedsSession + "\n" +
                             EnumChatFormatting.RED + ZombieTracker.revCatasSession + "\n" +
                             EnumChatFormatting.DARK_GREEN + ZombieTracker.snakesSession + "\n" +
-                            EnumChatFormatting.GOLD + ZombieTracker.scythes + "\n" +
+                            EnumChatFormatting.GOLD + ZombieTracker.scythesSession + "\n" +
                             EnumChatFormatting.RED + ZombieTracker.shardsSession + "\n" +
                             EnumChatFormatting.RED + ZombieTracker.wardenHeartsSession + "\n" +
                             EnumChatFormatting.AQUA + timeBetween + "\n" +
@@ -947,7 +947,7 @@ public class LootDisplay {
                             EnumChatFormatting.AQUA + bossesBetween;
                     break;
                 case "fishing_trophy":
-                    dropsText = EnumChatFormatting.WHITE + "Sulpher Skitter:\n" +
+                    dropsText = EnumChatFormatting.WHITE + "Sulphur Skitter:\n" +
                             EnumChatFormatting.WHITE + "Obfuscated 1:\n" +
                             EnumChatFormatting.WHITE + "Steaminghot Flounder:\n" +
                             EnumChatFormatting.WHITE + "Gusher:\n" +
@@ -965,7 +965,7 @@ public class LootDisplay {
                             EnumChatFormatting.DARK_PURPLE + "Soul Fish:\n" +
                             EnumChatFormatting.DARK_PURPLE + "Karate Fish:\n" +
                             EnumChatFormatting.GOLD + "Golden Fish:";
-                    if (!ToggleCommand.showTrophyCompletion) countText = EnumChatFormatting.WHITE + TrophyFishTracker.getTierCount(TrophyFishTracker.fish, "Sulpher Skitter") + "\n" +
+                    if (!ToggleCommand.showTrophyCompletion) countText = EnumChatFormatting.WHITE + TrophyFishTracker.getTierCount(TrophyFishTracker.fish, "Sulphur Skitter") + "\n" +
                             EnumChatFormatting.WHITE + TrophyFishTracker.getTierCount(TrophyFishTracker.fish, "Obfuscated 1") + "\n" +
                             EnumChatFormatting.WHITE + TrophyFishTracker.getTierCount(TrophyFishTracker.fish, "Steaming-Hot Flounder") + "\n" +
                             EnumChatFormatting.WHITE + TrophyFishTracker.getTierCount(TrophyFishTracker.fish, "Gusher") + "\n" +
@@ -985,7 +985,7 @@ public class LootDisplay {
                             EnumChatFormatting.GOLD + TrophyFishTracker.getTierCount(TrophyFishTracker.fish, "Golden Fish");
 
                     if (ToggleCommand.showTrophyCompletion) {
-                        TrophyFishTracker.drawCompletion(TrophyFishTracker.fish, "Sulpher Skitter", (int) (MoveCommand.displayXY[0] + (110 * ScaleCommand.displayScale)), MoveCommand.displayXY[1], ScaleCommand.displayScale);
+                        TrophyFishTracker.drawCompletion(TrophyFishTracker.fish, "Sulphur Skitter", (int) (MoveCommand.displayXY[0] + (110 * ScaleCommand.displayScale)), MoveCommand.displayXY[1], ScaleCommand.displayScale);
                         TrophyFishTracker.drawCompletion(TrophyFishTracker.fish, "Obfuscated 1", (int) (MoveCommand.displayXY[0] + (110 * ScaleCommand.displayScale)), (int) (MoveCommand.displayXY[1] + (mc.fontRendererObj.FONT_HEIGHT * ScaleCommand.displayScale)), ScaleCommand.displayScale);
                         TrophyFishTracker.drawCompletion(TrophyFishTracker.fish, "Steaming-Hot Flounder", (int) (MoveCommand.displayXY[0] + (110 * ScaleCommand.displayScale)), (int) (MoveCommand.displayXY[1] + (2 * mc.fontRendererObj.FONT_HEIGHT * ScaleCommand.displayScale)), ScaleCommand.displayScale);
                         TrophyFishTracker.drawCompletion(TrophyFishTracker.fish, "Gusher", (int) (MoveCommand.displayXY[0] + (110 * ScaleCommand.displayScale)), (int) (MoveCommand.displayXY[1] + (3 * mc.fontRendererObj.FONT_HEIGHT * ScaleCommand.displayScale)), ScaleCommand.displayScale);
@@ -1006,7 +1006,7 @@ public class LootDisplay {
                     }
                     break;
                 case "fishing_trophy_session":
-                    dropsText = EnumChatFormatting.WHITE + "Sulpher Skitter:\n" +
+                    dropsText = EnumChatFormatting.WHITE + "Sulphur Skitter:\n" +
                             EnumChatFormatting.WHITE + "Obfuscated 1:\n" +
                             EnumChatFormatting.WHITE + "Steaminghot Flounder:\n" +
                             EnumChatFormatting.WHITE + "Gusher:\n" +
@@ -1024,7 +1024,7 @@ public class LootDisplay {
                             EnumChatFormatting.DARK_PURPLE + "Soul Fish:\n" +
                             EnumChatFormatting.DARK_PURPLE + "Karate Fish:\n" +
                             EnumChatFormatting.GOLD + "Golden Fish:";
-                    if (!ToggleCommand.showTrophyCompletion) countText = EnumChatFormatting.WHITE + TrophyFishTracker.getTierCount(TrophyFishTracker.fishSession, "Sulpher Skitter") + "\n" +
+                    if (!ToggleCommand.showTrophyCompletion) countText = EnumChatFormatting.WHITE + TrophyFishTracker.getTierCount(TrophyFishTracker.fishSession, "Sulphur Skitter") + "\n" +
                             EnumChatFormatting.WHITE + TrophyFishTracker.getTierCount(TrophyFishTracker.fishSession, "Obfuscated 1") + "\n" +
                             EnumChatFormatting.WHITE + TrophyFishTracker.getTierCount(TrophyFishTracker.fishSession, "Steaming-Hot Flounder") + "\n" +
                             EnumChatFormatting.WHITE + TrophyFishTracker.getTierCount(TrophyFishTracker.fishSession, "Gusher") + "\n" +
@@ -1044,7 +1044,7 @@ public class LootDisplay {
                             EnumChatFormatting.GOLD + TrophyFishTracker.getTierCount(TrophyFishTracker.fishSession, "Golden Fish");
 
                     if (ToggleCommand.showTrophyCompletion) {
-                        TrophyFishTracker.drawCompletion(TrophyFishTracker.fishSession, "Sulpher Skitter", (int) (MoveCommand.displayXY[0] + (110 * ScaleCommand.displayScale)), MoveCommand.displayXY[1], ScaleCommand.displayScale);
+                        TrophyFishTracker.drawCompletion(TrophyFishTracker.fishSession, "Sulphur Skitter", (int) (MoveCommand.displayXY[0] + (110 * ScaleCommand.displayScale)), MoveCommand.displayXY[1], ScaleCommand.displayScale);
                         TrophyFishTracker.drawCompletion(TrophyFishTracker.fishSession, "Obfuscated 1", (int) (MoveCommand.displayXY[0] + (110 * ScaleCommand.displayScale)), (int) (MoveCommand.displayXY[1] + (mc.fontRendererObj.FONT_HEIGHT * ScaleCommand.displayScale)), ScaleCommand.displayScale);
                         TrophyFishTracker.drawCompletion(TrophyFishTracker.fishSession, "Steaming-Hot Flounder", (int) (MoveCommand.displayXY[0] + (110 * ScaleCommand.displayScale)), (int) (MoveCommand.displayXY[1] + (2 * mc.fontRendererObj.FONT_HEIGHT * ScaleCommand.displayScale)), ScaleCommand.displayScale);
                         TrophyFishTracker.drawCompletion(TrophyFishTracker.fishSession, "Gusher", (int) (MoveCommand.displayXY[0] + (110 * ScaleCommand.displayScale)), (int) (MoveCommand.displayXY[1] + (3 * mc.fontRendererObj.FONT_HEIGHT * ScaleCommand.displayScale)), ScaleCommand.displayScale);

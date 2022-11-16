@@ -6,6 +6,7 @@ import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagString;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
@@ -56,11 +57,23 @@ public class GemstonesLore {
                             char last = gem.charAt(gem.length() - 1);
                             if (!Character.isDigit(last)) continue;
 
-                            String gemstone = "  " + Utils.capitalizeString(gems.getString(gem)) + " ";
-                            if (gem.startsWith("UNIVERSAL_") || gem.startsWith("MINING_") || gem.startsWith("COMBAT_") || gem.startsWith("DEFENSIVE_")) {
-                                gemstone += Utils.capitalizeString(gems.getString(gem + "_gem"));
-                            } else {
-                                gemstone += Utils.capitalizeString(gem.substring(0, gem.indexOf("_")));
+                            String gemstone = "  ";
+
+                            if (gems.getTag(gem) instanceof NBTTagString) {
+                                gemstone += Utils.capitalizeString(gems.getString(gem)) + " ";
+                                if (gem.startsWith("UNIVERSAL_") || gem.startsWith("MINING_") || gem.startsWith("COMBAT_") || gem.startsWith("DEFENSIVE_")) {
+                                    gemstone += Utils.capitalizeString(gems.getString(gem + "_gem"));
+                                } else {
+                                    gemstone += Utils.capitalizeString(gem.substring(0, gem.indexOf("_")));
+                                }
+                            } else if (gems.getTag(gem) instanceof NBTTagCompound) {
+                                String gemQuality = gems.getCompoundTag(gem).getString("quality");
+                                gemstone += Utils.capitalizeString(gemQuality) + " ";
+                                if (gem.startsWith("UNIVERSAL_") || gem.startsWith("MINING_") || gem.startsWith("COMBAT_") || gem.startsWith("DEFENSIVE_")) {
+                                    gemstone += Utils.capitalizeString(gems.getString(gem + "_gem"));
+                                } else {
+                                    gemstone += Utils.capitalizeString(gem.substring(0, gem.indexOf("_")));
+                                }
                             }
 
                             for (String colour : gemstoneColours.keySet()) {

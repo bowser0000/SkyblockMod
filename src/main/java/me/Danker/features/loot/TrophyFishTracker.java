@@ -22,7 +22,7 @@ public class TrophyFishTracker {
 
     public static JsonObject fish = new JsonObject();
     public static JsonObject fishSession = new JsonObject();
-    public static Pattern fishPattern = Pattern.compile("TROPHY FISH! You caught a (?<fish>.*) (?<tier>.*).");
+    public static Pattern fishPattern = Pattern.compile("TROPHY FISH! You caught an? (?<fish>.*) (?<tier>.*).");
     public static String configFile;
 
     public static JsonObject createEmpty() {
@@ -34,7 +34,7 @@ public class TrophyFishTracker {
         tiers.addProperty("GOLD", 0);
         tiers.addProperty("DIAMOND", 0);
 
-        fish.add("Sulpher Skitter", Utils.deepCopy(tiers));
+        fish.add("Sulphur Skitter", Utils.deepCopy(tiers));
         fish.add("Obfuscated 1", Utils.deepCopy(tiers));
         fish.add("Steaming-Hot Flounder", Utils.deepCopy(tiers));
         fish.add("Obfuscated 2", Utils.deepCopy(tiers));
@@ -63,7 +63,7 @@ public class TrophyFishTracker {
 
     @SubscribeEvent
     public void postConfigInit(PostConfigInitEvent event) {
-        if (fish.entrySet().isEmpty()) fish = createEmpty();
+        if (fish.entrySet().isEmpty() || fish.has("Sulpher Skitter")) fish = createEmpty();
         fishSession = createEmpty();
         save();
     }

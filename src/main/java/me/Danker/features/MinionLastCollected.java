@@ -58,7 +58,7 @@ public class MinionLastCollected {
             String inventoryName = event.inventoryName;
             ItemStack item = event.item;
             if (inventoryName.contains(" Minion ") && item != null && lastMinion != null) {
-                if (item.getDisplayName().contains("Collect All")) {
+                if (item.getDisplayName().contains("Collect All") || item.getDisplayName().contains("Hopper")) {
                     getMinionFromPos(lastMinion).collectNow();
                     save();
                 } else if (item.getDisplayName().contains("Pickup Minion")) {

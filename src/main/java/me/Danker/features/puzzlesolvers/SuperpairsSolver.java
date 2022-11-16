@@ -45,6 +45,7 @@ public class SuperpairsSolver {
                 if (Item.getIdFromItem(item.getItem()) != 95) return;
                 if (item.getDisplayName().contains("Click any button") || item.getDisplayName().contains("Click a second button") || item.getDisplayName().contains("Next button is instantly rewarded") || item.getDisplayName().contains("Stained Glass")) {
                     Slot slot = ((GuiChest) mc.currentScreen).getSlotUnderMouse();
+                    if (slot == null) return;
                     ItemStack itemStack = experimentTableSlots[slot.getSlotIndex()];
                     if (itemStack == null) return;
                     String itemName = itemStack.getDisplayName();

@@ -26,10 +26,10 @@ public class FilletMagmafish {
 
     @SubscribeEvent
     public void init(ModInitEvent event) {
-        fillet.put("SULPHER_SKITTER_BRONZE", 40);
-        fillet.put("SULPHER_SKITTER_SILVER", 60);
-        fillet.put("SULPHER_SKITTER_GOLD", 80);
-        fillet.put("SULPHER_SKITTER_DIAMOND", 120);
+        fillet.put("SULPHUR_SKITTER_BRONZE", 40);
+        fillet.put("SULPHUR_SKITTER_SILVER", 60);
+        fillet.put("SULPHUR_SKITTER_GOLD", 80);
+        fillet.put("SULPHUR_SKITTER_DIAMOND", 120);
         fillet.put("OBFUSCATED_FISH_1_BRONZE", 16);
         fillet.put("OBFUSCATED_FISH_1_SILVER", 24);
         fillet.put("OBFUSCATED_FISH_1_GOLD", 32);

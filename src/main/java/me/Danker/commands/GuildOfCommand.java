@@ -101,10 +101,7 @@ public class GuildOfCommand extends CommandBase {
 					if (memberRank.equals("GUILDMASTER") || memberRank.equals("Guild Master")) {
 						// Get username from UUID
 						String gmUUID = memberObject.get("uuid").getAsString();
-						String gmNameURL = "https://api.mojang.com/user/profiles/" + gmUUID + "/names";
-						JsonArray gmNameResponse = APIHandler.getArrayResponse(gmNameURL);
-						
-						guildMaster = gmNameResponse.get(gmNameResponse.size() - 1).getAsJsonObject().get("name").getAsString();
+						guildMaster = APIHandler.getName(gmUUID);
 						break;
 					}
 				}

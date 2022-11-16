@@ -30,6 +30,7 @@ public class ChatAliases {
 
             for (Alias alias : aliases) {
                 if (!alias.toggled) continue;
+                if (!alias.allowInCommand && message.charAt(0) == '/') continue;
                 message = message.replace(alias.text, alias.alias);
             }
 
@@ -54,15 +55,21 @@ public class ChatAliases {
         public String text;
         public String alias;
         public boolean toggled;
+        public boolean allowInCommand;
 
-        public Alias(String text, String alias, boolean toggled) {
+        public Alias(String text, String alias, boolean toggled, boolean allowInCommand) {
             this.text = text;
             this.alias = alias;
             this.toggled = toggled;
+            this.allowInCommand = allowInCommand;
         }
 
         public void toggle() {
             toggled = !toggled;
+        }
+
+        public void toggleInCommand() {
+            allowInCommand = !allowInCommand;
         }
 
     }

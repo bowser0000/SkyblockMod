@@ -212,7 +212,7 @@ public class CustomMusic {
 
     @SubscribeEvent
     public void onSound(PlaySoundEvent event) {
-        if (cancelNotes && event.name.startsWith("note.")) {
+        if (ToggleCommand.disableHypixelMusic && cancelNotes && event.name.startsWith("note.")) {
             event.result = null;
         }
     }

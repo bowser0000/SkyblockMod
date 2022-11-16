@@ -63,13 +63,13 @@ import java.util.Map;
 @Mod(modid = DankersSkyblockMod.MODID, version = DankersSkyblockMod.VERSION, clientSideOnly = true)
 public class DankersSkyblockMod {
     public static final String MODID = "Danker's Skyblock Mod";
-    public static final String VERSION = "1.8.7";
+    public static final String VERSION = "1.9";
     public static int titleTimer = -1;
     public static boolean showTitle = false;
     public static String titleText = "";
     public static int tickAmount = 1;
     public static int repoTickAmount = 1;
-    public static KeyBinding[] keyBindings = new KeyBinding[4];
+    public static KeyBinding[] keyBindings = new KeyBinding[5];
     public static boolean usingLabymod = false;
     public static boolean usingOAM = false;
     static boolean OAMWarning = false;
@@ -102,12 +102,14 @@ public class DankersSkyblockMod {
         MinecraftForge.EVENT_BUS.register(this);
         MinecraftForge.EVENT_BUS.register(new AbilityCooldowns());
         MinecraftForge.EVENT_BUS.register(new Alerts());
+        MinecraftForge.EVENT_BUS.register(new AnnounceVanquishers());
         MinecraftForge.EVENT_BUS.register(new ArachneESP());
         MinecraftForge.EVENT_BUS.register(new ArrowTerminalSolver());
         MinecraftForge.EVENT_BUS.register(new AutoAcceptReparty());
         MinecraftForge.EVENT_BUS.register(new AutoDisplay());
         MinecraftForge.EVENT_BUS.register(new AutoJoinSkyblock());
         MinecraftForge.EVENT_BUS.register(new AutoSwapToPickBlock());
+        MinecraftForge.EVENT_BUS.register(new BazaarTimeToFill());
         MinecraftForge.EVENT_BUS.register(new BlazeSolver());
         MinecraftForge.EVENT_BUS.register(new BlockPlacingFlowers());
         MinecraftForge.EVENT_BUS.register(new BlockWrongSlayer());
@@ -120,6 +122,7 @@ public class DankersSkyblockMod {
         MinecraftForge.EVENT_BUS.register(new ClickInOrderSolver());
         MinecraftForge.EVENT_BUS.register(new ColouredNames());
         MinecraftForge.EVENT_BUS.register(new CreeperSolver());
+        MinecraftForge.EVENT_BUS.register(new CrimsonMinibossTimer());
         MinecraftForge.EVENT_BUS.register(new CrystalHollowWaypoints());
         MinecraftForge.EVENT_BUS.register(new CustomMusic());
         MinecraftForge.EVENT_BUS.register(new DungeonScore());
@@ -141,6 +144,7 @@ public class DankersSkyblockMod {
         MinecraftForge.EVENT_BUS.register(new HighlightCommissions());
         MinecraftForge.EVENT_BUS.register(new HighlightSkeletonMasters());
         MinecraftForge.EVENT_BUS.register(new IceWalkSolver());
+        MinecraftForge.EVENT_BUS.register(new KuudraNotifications());
         MinecraftForge.EVENT_BUS.register(new LividSolver());
         MinecraftForge.EVENT_BUS.register(new LowHealthNotifications());
         MinecraftForge.EVENT_BUS.register(new MinionLastCollected());
@@ -148,6 +152,7 @@ public class DankersSkyblockMod {
         MinecraftForge.EVENT_BUS.register(new NoF3Coords());
         MinecraftForge.EVENT_BUS.register(new NotifySlayerSlain());
         MinecraftForge.EVENT_BUS.register(new PetColours());
+        MinecraftForge.EVENT_BUS.register(new PowderTracker());
         MinecraftForge.EVENT_BUS.register(new Reparty());
         MinecraftForge.EVENT_BUS.register(new SameColourSolver());
         MinecraftForge.EVENT_BUS.register(new SelectAllColourSolver());
@@ -191,6 +196,7 @@ public class DankersSkyblockMod {
         keyBindings[1] = new KeyBinding("Regular Ability", Keyboard.KEY_NUMPAD4, "Danker's Skyblock Mod");
         keyBindings[2] = new KeyBinding("Start/Stop Skill Tracker", Keyboard.KEY_NUMPAD5, "Danker's Skyblock Mod");
         keyBindings[3] = new KeyBinding("Create Waypoint", Keyboard.KEY_NUMPAD6, "Danker's Skyblock Mod");
+        keyBindings[4] = new KeyBinding("Start/Stop Powder Tracker", Keyboard.KEY_NUMPAD8, "Danker's Skyblock Mod");
 
         for (KeyBinding keyBinding : keyBindings) {
             ClientRegistry.registerKeyBinding(keyBinding);
@@ -224,6 +230,7 @@ public class DankersSkyblockMod {
         ClientCommandHandler.instance.registerCommand(new MoveCommand());
         ClientCommandHandler.instance.registerCommand(new PetsCommand());
         ClientCommandHandler.instance.registerCommand(new PlayerCommand());
+        ClientCommandHandler.instance.registerCommand(new PowderTrackerCommand());
         ClientCommandHandler.instance.registerCommand(new ReloadConfigCommand());
         ClientCommandHandler.instance.registerCommand(new ReloadRepoCommand());
         ClientCommandHandler.instance.registerCommand(new ResetLootCommand());
@@ -233,7 +240,9 @@ public class DankersSkyblockMod {
         ClientCommandHandler.instance.registerCommand(new SkillTrackerCommand());
         ClientCommandHandler.instance.registerCommand(new SkyblockPlayersCommand());
         ClientCommandHandler.instance.registerCommand(new SlayerCommand());
+        ClientCommandHandler.instance.registerCommand(new StopLobbyCommand());
         ClientCommandHandler.instance.registerCommand(new ToggleCommand());
+        ClientCommandHandler.instance.registerCommand(new TrophyFishCommand());
         ClientCommandHandler.instance.registerCommand(new WeightCommand());
 
         warpCommandHandler = new WarpCommandHandler();

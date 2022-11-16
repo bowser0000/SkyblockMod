@@ -191,10 +191,12 @@ public class Utils {
 	}
 	
 	public static String capitalizeString(String string) {
+		if (string == null) return null;
 		String[] words = string.split("_");
 		
 		for (int i = 0; i < words.length; i++) {
-			words[i] = words[i].substring(0, 1).toUpperCase() + words[i].substring(1).toLowerCase();
+			if (words[i].length() < 2) words[i] = words[i].toUpperCase();
+			else words[i] = words[i].substring(0, 1).toUpperCase() + words[i].substring(1).toLowerCase();
 		}
 		
 		return String.join(" ", words);
@@ -481,6 +483,7 @@ public class Utils {
 		}
 
 		for (ItemStack item : itemsToSearch) {
+			if (foundAbility) break;
 			List<String> tooltip = item.getTooltip(player, false);
 
 			for (String line : tooltip) {
@@ -545,6 +548,17 @@ public class Utils {
 		if (extraAttributes == null || !extraAttributes.hasKey("id", 8)) return null;
 
 		return extraAttributes.getString("id");
+	}
+
+	public static JsonObject getTrophyFromAPI(JsonObject obj, String name) {
+		JsonObject tiers = new JsonObject();
+
+		tiers.addProperty("BRONZE", obj.has(name + "_bronze") ? obj.get(name + "_bronze").getAsInt() : 0);
+		tiers.addProperty("SILVER", obj.has(name + "_silver") ? obj.get(name + "_silver").getAsInt() : 0);
+		tiers.addProperty("GOLD", obj.has(name + "_gold") ? obj.get(name + "_gold").getAsInt() : 0);
+		tiers.addProperty("DIAMOND", obj.has(name + "_diamond") ? obj.get(name + "_diamond").getAsInt() : 0);
+
+		return tiers;
 	}
 
 	public enum DungeonFloor {

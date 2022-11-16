@@ -23,7 +23,7 @@ public class SkillTrackerCommand extends CommandBase {
 
 	@Override
 	public String getCommandUsage(ICommandSender arg0) {
-		return "/" + getCommandName() + " <start/stop/reset>";
+		return "/" + getCommandName() + " <start/stop/reset/show/hide>";
 	}
 
 	public static String usage(ICommandSender arg0) {

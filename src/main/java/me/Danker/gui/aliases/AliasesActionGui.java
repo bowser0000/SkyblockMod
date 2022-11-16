@@ -15,6 +15,7 @@ public class AliasesActionGui extends GuiScreen {
 
     private GuiButton goBack;
     private GuiButton toggle;
+    private GuiButton allowInCommand;
     private GuiButton edit;
     private GuiButton delete;
 
@@ -39,10 +40,12 @@ public class AliasesActionGui extends GuiScreen {
 
         goBack = new GuiButton(0, 2, height - 30, 100, 20, "Go Back");
         toggle = new GuiButton(0, width / 2 - 100, (int) (height * 0.1), "Enabled: " + Utils.getColouredBoolean(alias.toggled));
-        edit = new GuiButton(0, width / 2 - 100, (int) (height * 0.2), "Edit >");
+        allowInCommand = new GuiButton(0, width / 2 - 100, (int) (height * 0.2), "Allow in Command: " + Utils.getColouredBoolean(alias.allowInCommand));
+        edit = new GuiButton(0, width / 2 - 100, (int) (height * 0.3), "Edit >");
         delete = new GuiButton(0, width / 2 - 100, (int) (height * 0.8), EnumChatFormatting.RED + "Delete Alias");
 
         this.buttonList.add(toggle);
+        this.buttonList.add(allowInCommand);
         this.buttonList.add(edit);
         this.buttonList.add(delete);
         this.buttonList.add(goBack);
@@ -66,6 +69,9 @@ public class AliasesActionGui extends GuiScreen {
         } else if (button == toggle) {
             alias.toggle();
             toggle.displayString = "Enabled: " + Utils.getColouredBoolean(alias.toggled);
+        } else if (button == allowInCommand) {
+            alias.toggleInCommand();
+            allowInCommand.displayString = "Allow in Command: " + Utils.getColouredBoolean(alias.allowInCommand);
         } else if (button == edit) {
             mc.displayGuiScreen(new AliasesAddGui(alias, id));
         } else if (button == delete) {

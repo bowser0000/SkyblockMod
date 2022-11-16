@@ -12,6 +12,8 @@ Discord Server: https://discord.gg/QsEkNQS
   - Pet colors does not color slots
   - Catacombs F7 terminal solvers do not color slots
   - Enchanting solvers do not color slots
+- Old tab display
+  - Many features rely on using the location found in the new tab display
 </details>
 
 <details>
@@ -78,6 +80,11 @@ Discord Server: https://discord.gg/QsEkNQS
 - Thunder/Lord Jawbus spawn alerts
 - Show when minion was last collected
 - Show amount of Magmafish if trophy fish are filleted
+- Show estimated time until bazaar order is filled
+- Show timer until Crimson Isle minibosses respawn
+- Automatically announce Vanquishers in chat
+- Kuudra notifications (stun/ballista/cloak)
+- Powder/hour tracker
 </details>
 
 <details>
@@ -92,8 +99,8 @@ Discord Server: https://discord.gg/QsEkNQS
 - /loot <zombie/spider/wolf/enderman/blaze/fishing/catacombs/mythological/> [winter/festival/spooky/ch/lava/trophy/f(1-7)/mm/session] - Returns loot received from slayer quests or fishing stats. /loot fishing winter returns winter sea creatures instead.
 - /display <zombie/spider/wolf/enderman/blaze/fishing/catacombs/mythological/ghosts/auto/off> [winter/festival/spooky/ch/lava/trophy/f(1-7)/mm/session] - Text display for trackers. /display fishing winter displays winter sea creatures instead. /display auto automatically displays the loot for the slayer quest you have active.
 - /resetloot <zombie/spider/wolf/enderman/blaze/fishing/catacombs/mythological/confirm/cancel> -  - Resets loot for trackers. /resetloot confirm confirms the reset.
-- /move <coords/display/dungeontimer/skill50/lividhp/caketimer/skilltracker/wateranswer/bonzotimer/golemtimer/teammatesinradius/gianthp/abilitycooldowns/dungeonscore/firepillar> <x> <y> - Moves text display to specified X and Y coordinates.
-- /scale <coords/display/dungeontimer/skill50/lividhp/caketimer/skilltracker/wateranswer/bonzotimer/golemtimer/teammatesinradius/gianthp/abilitycooldowns/dungeonscore/firepillar> <scale (0.1 - 10)> - Scales text display to a specified multipler between 0.1x and 10x.
+- /move <coords/display/dungeontimer/skill50/lividhp/caketimer/skilltracker/wateranswer/bonzotimer/golemtimer/teammatesinradius/gianthp/abilitycooldowns/dungeonscore/firepillar/minibosstimer/powdertracker> <x> <y> - Moves text display to specified X and Y coordinates.
+- /scale <coords/display/dungeontimer/skill50/lividhp/caketimer/skilltracker/wateranswer/bonzotimer/golemtimer/teammatesinradius/gianthp/abilitycooldowns/dungeonscore/firepillar/minibosstimer/powdertracker> <scale (0.1 - 10)> - Scales text display to a specified multipler between 0.1x and 10x.
 - /slayer [player] - Uses API to get slayer xp of a person. If no name is provided, it checks yours.
 - /skill [player] - Uses API to get skill levels of a person. If no name is provided, it checks yours.
 - /lobbyskills - Uses API to find the average skills of the lobby, as well the three players with the highest skill average.
@@ -106,7 +113,7 @@ Discord Server: https://discord.gg/QsEkNQS
 - /importfishing - Imports your fishing stats from your latest profile to your fishing tracker using the API.
 - /sbplayers - Uses API to find how many players are on each Skyblock island.
 - /onlyslayer <zombie/spider/wolf/enderman/blaze> <1/2/3/4/5>
-- /skilltracker <start/stop/reset> - Text display for skill xp/hour.
+- /skilltracker <start/stop/reset/show/hide> - Text display for skill xp/hour.
 - /reparty - Disbands and reparties all members in the party
 - /fairysouls - Check the fairysouls of a player
 - /lobbybank - Uses API to find the average bank total of the lobby, as well the three players with the highest total money in the bank (and purse).
@@ -116,6 +123,9 @@ Discord Server: https://discord.gg/QsEkNQS
 - /reloaddsmrepo - Reloads Danker's Skyblock Mod repository.
 - /dsmfarmlength <min coords> <max coords> - Sets coords to be used for end of farm alert.
 - /hotmof [player] - Uses API to find total powder and HotM tree of a person. If no name is provided, it checks yours.
+- /trophyfish [player] - Uses API to find trophy fish stats of a person. If no name is provided, it checks yours.
+- /stoplobby - Stops currently running /lobbyskills or /lobbybank command.
+- /powdertracker <start/stop/reset/show/hide> - Text display for powder/hour.
 </details>
 
 <details>
@@ -125,6 +135,8 @@ Discord Server: https://discord.gg/QsEkNQS
 - Open Maddox menu - M by default.
 - Regular Ability - Numpad 4 by default.
 - Start/Stop Skill Tracker - Numpad 5 by default.
+- Create Waypoint - Numpad 6 by default.
+- Start/Stop Powder Tracker - Numpad 8 by default.
 </details>
 
 <details>

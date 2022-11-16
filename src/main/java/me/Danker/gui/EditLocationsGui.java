@@ -3,7 +3,9 @@ package me.Danker.gui;
 import me.Danker.DankersSkyblockMod;
 import me.Danker.commands.MoveCommand;
 import me.Danker.commands.ScaleCommand;
+import me.Danker.commands.ToggleCommand;
 import me.Danker.features.*;
+import me.Danker.features.loot.LootDisplay;
 import me.Danker.gui.buttons.LocationButton;
 import me.Danker.handlers.ConfigHandler;
 import me.Danker.utils.Utils;
@@ -34,6 +36,8 @@ public class EditLocationsGui extends GuiScreen {
 	private LocationButton abilityCooldown;
 	private LocationButton dungeonScore;
 	private LocationButton firePillar;
+	private LocationButton minibossTimer;
+	private LocationButton powderTracker;
 	
 	@Override
 	public boolean doesGuiPauseGame() {
@@ -119,6 +123,18 @@ public class EditLocationsGui extends GuiScreen {
 								  EnumChatFormatting.GOLD + "5\n" +
 								  EnumChatFormatting.GOLD + "305 " + EnumChatFormatting.GRAY + "(" + EnumChatFormatting.GOLD + "S+" + EnumChatFormatting.GRAY + ")";
 
+		String minibossTimerText = EnumChatFormatting.GRAY + "Bladesoul: " + CrimsonMinibossTimer.TIMER_COLOUR + "0m24s" + "\n" +
+								   EnumChatFormatting.RED + "Barbarian Duke: " + CrimsonMinibossTimer.TIMER_COLOUR + "1m27s" + "\n" +
+								   EnumChatFormatting.DARK_PURPLE + "Mage Outlaw: " + CrimsonMinibossTimer.TIMER_COLOUR + "2m0s" + "\n" +
+								   EnumChatFormatting.GOLD + "Ashfang: " + CrimsonMinibossTimer.UNKNOWN_COLOUR + "?" + "\n" +
+								   EnumChatFormatting.DARK_RED + "Magma Boss: " + CrimsonMinibossTimer.UNKNOWN_COLOUR + "?";
+
+		String powderTrackerText = EnumChatFormatting.DARK_GREEN + "Mithril Gained: 74,264\n" +
+								   EnumChatFormatting.DARK_GREEN + "Mithril Per Hour: 107,326\n" +
+								   EnumChatFormatting.LIGHT_PURPLE + "Gemstone Gained: 101,299\n" +
+								   EnumChatFormatting.LIGHT_PURPLE + "Gemstone Per Hour: 146,397\n" +
+								   PowderTracker.POWDER_TRACKER_COLOUR + "Time Elapsed: " + Utils.getTimeBetween(0, 2491);
+
 		display = new LocationButton(MoveCommand.displayXY[0], MoveCommand.displayXY[1], ScaleCommand.displayScale, displayText, displayNums, 110);
 		dungeonTimer = new LocationButton(MoveCommand.dungeonTimerXY[0], MoveCommand.dungeonTimerXY[1], ScaleCommand.dungeonTimerScale, dungeonTimerText, dungeonTimerNums, 80);
 		coords = new LocationButton(MoveCommand.coordsXY[0], MoveCommand.coordsXY[1], ScaleCommand.coordsScale, NoF3Coords.COORDS_COLOUR + "74 / 14 / -26 (141.1 / 6.7)");
@@ -134,49 +150,59 @@ public class EditLocationsGui extends GuiScreen {
 		abilityCooldown = new LocationButton(MoveCommand.abilityCooldownsXY[0], MoveCommand.abilityCooldownsXY[1], ScaleCommand.abilityCooldownsScale, abilityCooldownText);
 		dungeonScore = new LocationButton(MoveCommand.dungeonScoreXY[0], MoveCommand.dungeonScoreXY[1], ScaleCommand.dungeonScoreScale, dungeonScoreText, dungeonScoreNums, 80);
 		firePillar = new LocationButton(MoveCommand.firePillarXY[0], MoveCommand.firePillarXY[1], ScaleCommand.firePillarScale, EnumChatFormatting.GOLD + "3s " + EnumChatFormatting.RED + "8 hits");
+		minibossTimer = new LocationButton(MoveCommand.minibossTimerXY[0], MoveCommand.minibossTimerXY[1], ScaleCommand.minibossTimerScale, minibossTimerText);
+		powderTracker = new LocationButton(MoveCommand.powderTrackerXY[0], MoveCommand.powderTrackerXY[1], ScaleCommand.powderTrackerScale, powderTrackerText);
 
-		this.buttonList.add(coords);
-		this.buttonList.add(dungeonTimer);
-		this.buttonList.add(lividHP);
-		this.buttonList.add(cakeTimer);
-		this.buttonList.add(skillTracker);
-		this.buttonList.add(waterAnswer);
-		this.buttonList.add(bonzoTimer);
-		this.buttonList.add(display);
-		this.buttonList.add(skill50);
-		this.buttonList.add(golemTimer);
-		this.buttonList.add(teammatesInRadius);
-		this.buttonList.add(giantHP);
-		this.buttonList.add(abilityCooldown);
-		this.buttonList.add(dungeonScore);
-		this.buttonList.add(firePillar);
+		if (!ToggleCommand.onlyEditEnabled || ToggleCommand.coordsToggled) this.buttonList.add(coords);
+		if (!ToggleCommand.onlyEditEnabled || ToggleCommand.dungeonTimerToggled) this.buttonList.add(dungeonTimer);
+		if (!ToggleCommand.onlyEditEnabled || ToggleCommand.lividSolverToggled) this.buttonList.add(lividHP);
+		if (!ToggleCommand.onlyEditEnabled || ToggleCommand.cakeTimerToggled) this.buttonList.add(cakeTimer);
+		if (!ToggleCommand.onlyEditEnabled || SkillTracker.showSkillTracker) this.buttonList.add(skillTracker);
+		if (!ToggleCommand.onlyEditEnabled || ToggleCommand.waterToggled) this.buttonList.add(waterAnswer);
+		if (!ToggleCommand.onlyEditEnabled || ToggleCommand.bonzoTimerToggled) this.buttonList.add(bonzoTimer);
+		if (!ToggleCommand.onlyEditEnabled || !LootDisplay.display.equals("off")) this.buttonList.add(display);
+		if (!ToggleCommand.onlyEditEnabled || ToggleCommand.skill50DisplayToggled) this.buttonList.add(skill50);
+		if (!ToggleCommand.onlyEditEnabled || ToggleCommand.golemAlertToggled) this.buttonList.add(golemTimer);
+		if (!ToggleCommand.onlyEditEnabled || ToggleCommand.teammatesInRadius) this.buttonList.add(teammatesInRadius);
+		if (!ToggleCommand.onlyEditEnabled || ToggleCommand.giantHP) this.buttonList.add(giantHP);
+		if (!ToggleCommand.onlyEditEnabled || ToggleCommand.abilityCooldowns) this.buttonList.add(abilityCooldown);
+		if (!ToggleCommand.onlyEditEnabled || ToggleCommand.dungeonScore) this.buttonList.add(dungeonScore);
+		if (!ToggleCommand.onlyEditEnabled || ToggleCommand.firePillar) this.buttonList.add(firePillar);
+		if (!ToggleCommand.onlyEditEnabled || ToggleCommand.crimsonMinibossTimer) this.buttonList.add(minibossTimer);
+		if (!ToggleCommand.onlyEditEnabled || PowderTracker.showPowderTracker) this.buttonList.add(powderTracker);
 	}
 	
 	@Override
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
 		this.drawDefaultBackground();
 		mouseMoved(mouseX, mouseY);
-		
-		double cakeTimerScale = ScaleCommand.cakeTimerScale;
-		double cakeTimerScaleReset = Math.pow(cakeTimerScale, -1);
-		GL11.glScaled(cakeTimerScale, cakeTimerScale, cakeTimerScale);
-		mc.getTextureManager().bindTexture(CakeTimer.CAKE_ICON);
-		Gui.drawModalRectWithCustomSizedTexture(MoveCommand.cakeTimerXY[0], MoveCommand.cakeTimerXY[1], 0, 0, 16, 16, 16, 16);
-		GL11.glScaled(cakeTimerScaleReset, cakeTimerScaleReset, cakeTimerScaleReset);
 
-		double bonzoTimerScale = ScaleCommand.bonzoTimerScale;
-		double bonzoTimerScaleReset = Math.pow(bonzoTimerScale, -1);
-		GL11.glScaled(bonzoTimerScale, bonzoTimerScale, bonzoTimerScale);
-		mc.getTextureManager().bindTexture(BonzoMaskTimer.BONZO_ICON);
-		Gui.drawModalRectWithCustomSizedTexture(MoveCommand.bonzoTimerXY[0], MoveCommand.bonzoTimerXY[1], 0, 0, 16, 16, 16, 16);
-		GL11.glScaled(bonzoTimerScaleReset, bonzoTimerScaleReset, bonzoTimerScaleReset);
+		if (!ToggleCommand.onlyEditEnabled || ToggleCommand.cakeTimerToggled) {
+			double cakeTimerScale = ScaleCommand.cakeTimerScale;
+			double cakeTimerScaleReset = Math.pow(cakeTimerScale, -1);
+			GL11.glScaled(cakeTimerScale, cakeTimerScale, cakeTimerScale);
+			mc.getTextureManager().bindTexture(CakeTimer.CAKE_ICON);
+			Gui.drawModalRectWithCustomSizedTexture(MoveCommand.cakeTimerXY[0], MoveCommand.cakeTimerXY[1], 0, 0, 16, 16, 16, 16);
+			GL11.glScaled(cakeTimerScaleReset, cakeTimerScaleReset, cakeTimerScaleReset);
+		}
 
-		double golemTimerScale = ScaleCommand.golemTimerScale;
-		double golemTimerScaleReset = Math.pow(golemTimerScale, -1);
-		GL11.glScaled(golemTimerScale, golemTimerScale, golemTimerScale);
-		mc.getTextureManager().bindTexture(GolemSpawningAlert.GOLEM_ICON);
-		Gui.drawModalRectWithCustomSizedTexture(MoveCommand.golemTimerXY[0], MoveCommand.golemTimerXY[1], 0, 0, 16, 16, 16, 16);
-		GL11.glScaled(golemTimerScaleReset, golemTimerScaleReset, golemTimerScaleReset);
+		if (!ToggleCommand.onlyEditEnabled || ToggleCommand.bonzoTimerToggled) {
+			double bonzoTimerScale = ScaleCommand.bonzoTimerScale;
+			double bonzoTimerScaleReset = Math.pow(bonzoTimerScale, -1);
+			GL11.glScaled(bonzoTimerScale, bonzoTimerScale, bonzoTimerScale);
+			mc.getTextureManager().bindTexture(BonzoMaskTimer.BONZO_ICON);
+			Gui.drawModalRectWithCustomSizedTexture(MoveCommand.bonzoTimerXY[0], MoveCommand.bonzoTimerXY[1], 0, 0, 16, 16, 16, 16);
+			GL11.glScaled(bonzoTimerScaleReset, bonzoTimerScaleReset, bonzoTimerScaleReset);
+		}
+
+		if (!ToggleCommand.onlyEditEnabled || ToggleCommand.golemAlertToggled) {
+			double golemTimerScale = ScaleCommand.golemTimerScale;
+			double golemTimerScaleReset = Math.pow(golemTimerScale, -1);
+			GL11.glScaled(golemTimerScale, golemTimerScale, golemTimerScale);
+			mc.getTextureManager().bindTexture(GolemSpawningAlert.GOLEM_ICON);
+			Gui.drawModalRectWithCustomSizedTexture(MoveCommand.golemTimerXY[0], MoveCommand.golemTimerXY[1], 0, 0, 16, 16, 16, 16);
+			GL11.glScaled(golemTimerScaleReset, golemTimerScaleReset, golemTimerScaleReset);
+		}
 
 		super.drawScreen(mouseX, mouseY, partialTicks);
 	}
@@ -276,6 +302,18 @@ public class EditLocationsGui extends GuiScreen {
 					MoveCommand.firePillarXY[1] += yMoved;
 					firePillar.xPosition = MoveCommand.firePillarXY[0];
 					firePillar.yPosition = MoveCommand.firePillarXY[1];
+				case "minibossTimer":
+					MoveCommand.minibossTimerXY[0] += xMoved;
+					MoveCommand.minibossTimerXY[1] += yMoved;
+					minibossTimer.xPosition = MoveCommand.minibossTimerXY[0];
+					minibossTimer.yPosition = MoveCommand.minibossTimerXY[1];
+					break;
+				case "powderTracker":
+					MoveCommand.powderTrackerXY[0] += xMoved;
+					MoveCommand.powderTrackerXY[1] += yMoved;
+					powderTracker.xPosition = MoveCommand.powderTrackerXY[0];
+					powderTracker.yPosition = MoveCommand.powderTrackerXY[1];
+					break;
 			}
 			this.buttonList.clear();
 			initGui();
@@ -318,6 +356,10 @@ public class EditLocationsGui extends GuiScreen {
 				moving = "dungeonScore";
 			} else if (button == firePillar) {
 				moving = "firePillar";
+			} else if (button == minibossTimer) {
+				moving = "minibossTimer";
+			} else if (button == powderTracker) {
+				moving = "powderTracker";
 			}
 		}
 	}
@@ -356,6 +398,10 @@ public class EditLocationsGui extends GuiScreen {
 		ConfigHandler.writeIntConfig("locations", "dungeonScoreY", MoveCommand.dungeonScoreXY[1]);
 		ConfigHandler.writeIntConfig("locations", "firePillarX", MoveCommand.firePillarXY[0]);
 		ConfigHandler.writeIntConfig("locations", "firePillarY", MoveCommand.firePillarXY[1]);
+		ConfigHandler.writeIntConfig("locations", "minibossTimerX", MoveCommand.minibossTimerXY[0]);
+		ConfigHandler.writeIntConfig("locations", "minibossTimerY", MoveCommand.minibossTimerXY[1]);
+		ConfigHandler.writeIntConfig("locations", "powderTrackerX", MoveCommand.powderTrackerXY[0]);
+		ConfigHandler.writeIntConfig("locations", "powderTrackerY", MoveCommand.powderTrackerXY[1]);
 	}
 	
 }

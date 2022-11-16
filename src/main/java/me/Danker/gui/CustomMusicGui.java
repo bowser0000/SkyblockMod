@@ -2,21 +2,28 @@ package me.Danker.gui;
 
 import me.Danker.commands.ToggleCommand;
 import me.Danker.features.CustomMusic;
+import me.Danker.gui.buttons.FeatureButton;
 import me.Danker.handlers.ConfigHandler;
+import me.Danker.utils.RenderUtils;
 import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class CustomMusicGui extends GuiScreen {
 
-    private int page;
+    private final int page;
+    private final List<GuiButton> allButtons = new ArrayList<>();
 
     private GuiButton goBack;
     private GuiButton backPage;
     private GuiButton nextPage;
 
+    private FeatureButton disableHypixelMusic;
     private GuiButton dungeonBossMusic;
     private GuiButton bloodRoomMusic;
     private GuiButton dungeonMusic;
@@ -54,49 +61,56 @@ public class CustomMusicGui extends GuiScreen {
         backPage = new GuiButton(0, width / 2 - 100, (int) (height * 0.8), 80, 20, "< Back");
         nextPage = new GuiButton(0, width / 2 + 20, (int) (height * 0.8), 80, 20, "Next >");
 
-        dungeonMusic = new GuiButton(0, width / 2 - 100, (int) (height * 0.1), "Custom Dungeon Music: " + Utils.getColouredBoolean(ToggleCommand.dungeonMusic));
-        bloodRoomMusic = new GuiButton(0, width / 2 - 100, (int) (height * 0.2), "Custom Blood Room Music: " + Utils.getColouredBoolean(ToggleCommand.bloodRoomMusic));
-        dungeonBossMusic = new GuiButton(0, width / 2 - 100, (int) (height * 0.3), "Custom Dungeon Boss Music: " + Utils.getColouredBoolean(ToggleCommand.dungeonBossMusic));
-        hubMusic = new GuiButton(0, width / 2 - 100, (int) (height * 0.4), "Custom Hub Music: " + Utils.getColouredBoolean(ToggleCommand.hubMusic));
-        islandMusic = new GuiButton(0, width / 2 - 100, (int) (height * 0.5), "Custom Island Music: " + Utils.getColouredBoolean(ToggleCommand.islandMusic));
-        dungeonHubMusic = new GuiButton(0, width / 2 - 100, (int) (height * 0.6), "Custom Dungeon Hub Music: " + Utils.getColouredBoolean(ToggleCommand.dungeonHubMusic));
-        farmingIslandsMusic = new GuiButton(0, width / 2 - 100, (int) (height * 0.7), "Custom Farming Islands Music: " + Utils.getColouredBoolean(ToggleCommand.farmingIslandsMusic));
-        goldMineMusic = new GuiButton(0, width / 2 - 100, (int) (height * 0.1), "Custom Gold Mine Music: " + Utils.getColouredBoolean(ToggleCommand.goldMineMusic));
-        deepCavernsMusic = new GuiButton(0, width / 2 - 100, (int) (height * 0.2), "Custom Deep Caverns Music: " + Utils.getColouredBoolean(ToggleCommand.deepCavernsMusic));
-        dwarvenMinesMusic = new GuiButton(0, width / 2 - 100, (int) (height * 0.3), "Custom Dwarven Mines Music: " + Utils.getColouredBoolean(ToggleCommand.dwarvenMinesMusic));
-        crystalHollowsMusic = new GuiButton(0, width / 2 - 100, (int) (height * 0.4), "Custom Crystal Hollows Music: " + Utils.getColouredBoolean(ToggleCommand.crystalHollowsMusic));
-        spidersDenMusic = new GuiButton(0, width / 2 - 100, (int) (height * 0.5), "Custom Spider's Den Music: " + Utils.getColouredBoolean(ToggleCommand.spidersDenMusic));
-        crimsonIsleMusic = new GuiButton(0, width / 2 - 100, (int) (height * 0.6), "Custom Crimson Isle Music: " + Utils.getColouredBoolean(ToggleCommand.crimsonIsleMusic));
-        endMusic = new GuiButton(0, width / 2 - 100, (int) (height * 0.7), "Custom End Music: " + Utils.getColouredBoolean(ToggleCommand.endMusic));
-        parkMusic = new GuiButton(0, width / 2 - 100, (int) (height * 0.1), "Custom Park Music: " + Utils.getColouredBoolean(ToggleCommand.parkMusic));
+        disableHypixelMusic = new FeatureButton("Disable Hypixel Music: " + Utils.getColouredBoolean(ToggleCommand.disableHypixelMusic), "Disable the noteblock music Hypixel plays in certain areas when custom music is playing.\nThis can be turned off manually in Skyblock Menu -> Settings -> Personal -> Sounds -> Play Music");
+        dungeonMusic = new GuiButton(0, 0, 0, "Custom Dungeon Music: " + Utils.getColouredBoolean(ToggleCommand.dungeonMusic));
+        bloodRoomMusic = new GuiButton(0, 0, 0, "Custom Blood Room Music: " + Utils.getColouredBoolean(ToggleCommand.bloodRoomMusic));
+        dungeonBossMusic = new GuiButton(0, 0, 0, "Custom Dungeon Boss Music: " + Utils.getColouredBoolean(ToggleCommand.dungeonBossMusic));
+        hubMusic = new GuiButton(0, 0, 0, "Custom Hub Music: " + Utils.getColouredBoolean(ToggleCommand.hubMusic));
+        islandMusic = new GuiButton(0, 0, 0, "Custom Island Music: " + Utils.getColouredBoolean(ToggleCommand.islandMusic));
+        dungeonHubMusic = new GuiButton(0, 0, 0, "Custom Dungeon Hub Music: " + Utils.getColouredBoolean(ToggleCommand.dungeonHubMusic));
+        farmingIslandsMusic = new GuiButton(0, 0, 0, "Custom Farming Islands Music: " + Utils.getColouredBoolean(ToggleCommand.farmingIslandsMusic));
+        goldMineMusic = new GuiButton(0, 0, 0, "Custom Gold Mine Music: " + Utils.getColouredBoolean(ToggleCommand.goldMineMusic));
+        deepCavernsMusic = new GuiButton(0, 0, 0, "Custom Deep Caverns Music: " + Utils.getColouredBoolean(ToggleCommand.deepCavernsMusic));
+        dwarvenMinesMusic = new GuiButton(0, 0, 0, "Custom Dwarven Mines Music: " + Utils.getColouredBoolean(ToggleCommand.dwarvenMinesMusic));
+        crystalHollowsMusic = new GuiButton(0, 0, 0, "Custom Crystal Hollows Music: " + Utils.getColouredBoolean(ToggleCommand.crystalHollowsMusic));
+        spidersDenMusic = new GuiButton(0, 0, 0, "Custom Spider's Den Music: " + Utils.getColouredBoolean(ToggleCommand.spidersDenMusic));
+        crimsonIsleMusic = new GuiButton(0, 0, 0, "Custom Crimson Isle Music: " + Utils.getColouredBoolean(ToggleCommand.crimsonIsleMusic));
+        endMusic = new GuiButton(0, 0, 0, "Custom End Music: " + Utils.getColouredBoolean(ToggleCommand.endMusic));
+        parkMusic = new GuiButton(0, 0, 0, "Custom Park Music: " + Utils.getColouredBoolean(ToggleCommand.parkMusic));
 
-        switch (page) {
-            case 1:
-                this.buttonList.add(dungeonMusic);
-                this.buttonList.add(bloodRoomMusic);
-                this.buttonList.add(dungeonBossMusic);
-                this.buttonList.add(hubMusic);
-                this.buttonList.add(islandMusic);
-                this.buttonList.add(dungeonHubMusic);
-                this.buttonList.add(farmingIslandsMusic);
-                this.buttonList.add(nextPage);
-                break;
-            case 2:
-                this.buttonList.add(goldMineMusic);
-                this.buttonList.add(deepCavernsMusic);
-                this.buttonList.add(dwarvenMinesMusic);
-                this.buttonList.add(crystalHollowsMusic);
-                this.buttonList.add(spidersDenMusic);
-                this.buttonList.add(crimsonIsleMusic);
-                this.buttonList.add(endMusic);
-                this.buttonList.add(nextPage);
-                this.buttonList.add(backPage);
-                break;
-            case 3:
-                this.buttonList.add(parkMusic);
-                this.buttonList.add(backPage);
-                break;
+        allButtons.clear();
+        allButtons.add(disableHypixelMusic);
+        allButtons.add(dungeonMusic);
+        allButtons.add(bloodRoomMusic);
+        allButtons.add(dungeonBossMusic);
+        allButtons.add(hubMusic);
+        allButtons.add(islandMusic);
+        allButtons.add(dungeonHubMusic);
+        allButtons.add(farmingIslandsMusic);
+        allButtons.add(goldMineMusic);
+        allButtons.add(deepCavernsMusic);
+        allButtons.add(dwarvenMinesMusic);
+        allButtons.add(crystalHollowsMusic);
+        allButtons.add(spidersDenMusic);
+        allButtons.add(crimsonIsleMusic);
+        allButtons.add(endMusic);
+        allButtons.add(parkMusic);
+
+        reInit();
+    }
+
+    public void reInit() {
+        this.buttonList.clear();
+
+        for (int i = (page - 1) * 7, iteration = 0; iteration < 7 && i < allButtons.size(); i++, iteration++) {
+            GuiButton button = allButtons.get(i);
+            button.xPosition = width / 2 - 100;
+            button.yPosition = (int) (height * (0.1 * (iteration + 1)));
+            this.buttonList.add(button);
         }
+
+        if (page > 1) this.buttonList.add(backPage);
+        if (page < Math.ceil(allButtons.size() / 7D)) this.buttonList.add(nextPage);
 
         this.buttonList.add(goBack);
     }
@@ -105,6 +119,16 @@ public class CustomMusicGui extends GuiScreen {
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
         this.drawDefaultBackground();
         super.drawScreen(mouseX, mouseY, partialTicks);
+
+        String pageText = "Page: " + page + "/" + (int) Math.ceil(allButtons.size() / 7D);
+        RenderUtils.drawCenteredText(pageText, width, 10, 1D);
+
+        for (GuiButton button : this.buttonList) {
+            if (button instanceof FeatureButton && button.isMouseOver()) {
+                FeatureButton feature = (FeatureButton) button;
+                drawHoveringText(feature.hoverText, mouseX - 5, mouseY);
+            }
+        }
     }
 
     @Override
@@ -190,6 +214,10 @@ public class CustomMusicGui extends GuiScreen {
             CustomMusic.park.stop();
             ConfigHandler.writeBooleanConfig("toggles", "ParkMusic", ToggleCommand.parkMusic);
             parkMusic.displayString = "Custom Park Music: " + Utils.getColouredBoolean(ToggleCommand.parkMusic);
+        } else if (button == disableHypixelMusic) {
+            ToggleCommand.disableHypixelMusic = !ToggleCommand.disableHypixelMusic;
+            ConfigHandler.writeBooleanConfig("toggles", "DisableHypixelMusic", ToggleCommand.disableHypixelMusic);
+            disableHypixelMusic.displayString = "Disable Hypixel Music: " + Utils.getColouredBoolean(ToggleCommand.disableHypixelMusic);
         }
     }
 

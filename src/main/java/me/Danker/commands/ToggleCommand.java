@@ -68,6 +68,11 @@ public class ToggleCommand extends CommandBase implements ICommand {
 	public static boolean minionLastCollected;
 	public static boolean showTrophyCompletion;
 	public static boolean showTotalMagmafish;
+	public static boolean bazaarTimeToFill;
+	public static boolean onlyEditEnabled;
+	public static boolean crimsonMinibossTimer;
+	public static boolean announceVanqs;
+	public static boolean kuudraNotifications;
 	// Chat Messages
 	public static boolean sceptreMessages;
 	public static boolean midasStaffMessages;
@@ -102,6 +107,7 @@ public class ToggleCommand extends CommandBase implements ICommand {
 	public static boolean hideTooltipsInExperimentAddonsToggled;
 	public static boolean melodyTooltips;
 	// Custom Music
+	public static boolean disableHypixelMusic;
 	public static boolean dungeonBossMusic;
 	public static boolean bloodRoomMusic;
 	public static boolean dungeonMusic;

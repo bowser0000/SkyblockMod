@@ -25,6 +25,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 
 public class APIHandler {
+
 	public static JsonObject getResponse(String urlString, boolean hasError) {
 		EntityPlayer player = Minecraft.getMinecraft().thePlayer;
 		
@@ -93,8 +94,7 @@ public class APIHandler {
 
 		return new JsonObject();
 	}
-	
-	// Only used for UUID => Username
+
 	public static JsonArray getArrayResponse(String urlString) {
 		EntityPlayer player = Minecraft.getMinecraft().thePlayer;
 		
@@ -131,6 +131,11 @@ public class APIHandler {
 		JsonObject uuidResponse = getResponse("https://api.mojang.com/users/profiles/minecraft/" + username, false);
 		return uuidResponse.get("id").getAsString();
 	}
+
+	public static String getName(String uuid) {
+		JsonObject nameResponse = getResponse("https://sessionserver.mojang.com/session/minecraft/profile/" + uuid, false);
+		return nameResponse.get("name").getAsString();
+	}
 	
 	public static String getLatestProfileID(String UUID, String key) {
 		EntityPlayer player = Minecraft.getMinecraft().thePlayer;
@@ -151,23 +156,16 @@ public class APIHandler {
 		
 		// Loop through profiles to find latest
 		System.out.println("Looping through profiles...");
-		String latestProfile = "";
-		long latestSave = 0;
 		JsonArray profilesArray = profilesResponse.get("profiles").getAsJsonArray();
 		
 		for (JsonElement profile : profilesArray) {
 			JsonObject profileJSON = profile.getAsJsonObject();
-			long profileLastSave = 1;
-			if (profileJSON.get("members").getAsJsonObject().get(UUID).getAsJsonObject().has("last_save")) {
-				profileLastSave = profileJSON.get("members").getAsJsonObject().get(UUID).getAsJsonObject().get("last_save").getAsLong();
-			}
-			
-			if (profileLastSave > latestSave) {
-				latestProfile = profileJSON.get("profile_id").getAsString();
-				latestSave = profileLastSave;
+
+			if (profileJSON.get("selected").getAsBoolean()) {
+				return profileJSON.get("profile_id").getAsString();
 			}
 		}
 		
-		return latestProfile;
+		return null;
 	}
 }
