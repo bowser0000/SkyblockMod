@@ -59,7 +59,7 @@ public class SkillTracker {
         String[] actionBarSections = event.message.getUnformattedText().split(" {3,}");
 
         for (String section : actionBarSections) {
-            if (section.contains("+") && section.contains("(") && section.contains(")") && !section.contains("Runecrafting") && !section.contains("Carpentry") && !section.contains("HOTM") && !section.contains("Collections")) {
+            if (section.contains("+") && section.contains("(") && section.contains(")") && !section.contains("Runecrafting") && !section.contains("Carpentry")) {
                 if (ToggleCommand.autoSkillTrackerToggled && System.currentTimeMillis() / 1000 - timeSinceGained <= 2) {
                     if (skillStopwatch.isStarted() && skillStopwatch.isSuspended()) {
                         skillStopwatch.resume();
@@ -74,7 +74,13 @@ public class SkillTracker {
 
                 if (section.contains("/")) {
                     int limit = section.contains("Farming") || section.contains("Enchanting") || section.contains("Mining") || section.contains("Combat") ? 60 : 50;
-                    double currentXP = Double.parseDouble(section.substring(section.indexOf("(") + 1, section.indexOf("/")).replace(",", ""));
+                    double currentXP;
+                    try {
+                        currentXP = Double.parseDouble(section.substring(section.indexOf("(") + 1, section.indexOf("/")).replace(",", ""));
+                    } catch (NumberFormatException ex) {
+                        ex.printStackTrace();
+                        return;
+                    }
 
                     int xpToLevelUp;
                     String nextLevelXpString = section.substring(section.indexOf("/") + 1, section.indexOf(")")).replaceAll(",", "");
