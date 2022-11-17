@@ -59,7 +59,7 @@ public class SkillTracker {
         String[] actionBarSections = event.message.getUnformattedText().split(" {3,}");
 
         for (String section : actionBarSections) {
-            if (section.contains("+") && section.contains("(") && section.contains(")") && !section.contains("Runecrafting") && !section.contains("Carpentry") && !section.contains("HOTM")) {
+            if (section.contains("+") && section.contains("(") && section.contains(")") && !section.contains("Runecrafting") && !section.contains("Carpentry") && !section.contains("HOTM") && !section.contains("Collections")) {
                 if (ToggleCommand.autoSkillTrackerToggled && System.currentTimeMillis() / 1000 - timeSinceGained <= 2) {
                     if (skillStopwatch.isStarted() && skillStopwatch.isSuspended()) {
                         skillStopwatch.resume();
