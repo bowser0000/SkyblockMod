@@ -6,6 +6,7 @@ import me.Danker.commands.ToggleCommand;
 import me.Danker.events.RenderOverlayEvent;
 import me.Danker.handlers.ConfigHandler;
 import me.Danker.handlers.TextRenderer;
+import me.Danker.utils.RenderUtils;
 import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
@@ -45,17 +46,17 @@ public class CakeTimer {
 
             double timeNow = System.currentTimeMillis() / 1000;
             mc.getTextureManager().bindTexture(CAKE_ICON);
-            Gui.drawModalRectWithCustomSizedTexture(MoveCommand.cakeTimerXY[0], MoveCommand.cakeTimerXY[1], 0, 0, 16, 16, 16, 16);
+            RenderUtils.drawModalRectWithCustomSizedTexture(MoveCommand.cakeTimerXY[0] / scale, MoveCommand.cakeTimerXY[1] / scale, 0, 0, 16, 16, 16, 16);
 
+            GL11.glScaled(scaleReset, scaleReset, scaleReset);
             String cakeText;
             if (cakeTime - timeNow < 0) {
                 cakeText = EnumChatFormatting.RED + "NONE";
             } else {
                 cakeText = CAKE_COLOUR + Utils.getTimeBetween(timeNow, cakeTime);
             }
-            new TextRenderer(mc, cakeText, MoveCommand.cakeTimerXY[0] + 20, MoveCommand.cakeTimerXY[1] + 5, 1);
 
-            GL11.glScaled(scaleReset, scaleReset, scaleReset);
+            new TextRenderer(mc, cakeText, MoveCommand.cakeTimerXY[0] + 20 * scale, MoveCommand.cakeTimerXY[1] + 5 * scale, scale);
         }
     }
 
