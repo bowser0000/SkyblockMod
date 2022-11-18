@@ -302,6 +302,7 @@ public class EditLocationsGui extends GuiScreen {
 					MoveCommand.firePillarXY[1] += yMoved;
 					firePillar.xPosition = MoveCommand.firePillarXY[0];
 					firePillar.yPosition = MoveCommand.firePillarXY[1];
+					break;
 				case "minibossTimer":
 					MoveCommand.minibossTimerXY[0] += xMoved;
 					MoveCommand.minibossTimerXY[1] += yMoved;
