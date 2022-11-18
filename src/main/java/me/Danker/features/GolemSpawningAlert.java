@@ -5,6 +5,7 @@ import me.Danker.commands.ScaleCommand;
 import me.Danker.commands.ToggleCommand;
 import me.Danker.events.RenderOverlayEvent;
 import me.Danker.handlers.TextRenderer;
+import me.Danker.utils.RenderUtils;
 import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
@@ -46,12 +47,12 @@ public class GolemSpawningAlert {
 
             double timeNow = System.currentTimeMillis() / 1000;
             mc.getTextureManager().bindTexture(GOLEM_ICON);
-            Gui.drawModalRectWithCustomSizedTexture(MoveCommand.golemTimerXY[0], MoveCommand.golemTimerXY[1], 0, 0, 16, 16, 16, 16);
-
-            String golemText = GOLEM_COLOUR + Utils.getTimeBetween(timeNow, golemTime);
-            new TextRenderer(mc, golemText, MoveCommand.golemTimerXY[0] + 20, MoveCommand.golemTimerXY[1] + 5, 1);
 
             GL11.glScaled(scaleReset, scaleReset, scaleReset);
+            RenderUtils.drawModalRectWithCustomSizedTexture(MoveCommand.golemTimerXY[0] / scale, MoveCommand.golemTimerXY[1] / scale, 0, 0, 16, 16, 16, 16);
+
+            String golemText = GOLEM_COLOUR + Utils.getTimeBetween(timeNow, golemTime);
+            new TextRenderer(mc, golemText, MoveCommand.golemTimerXY[0] + 20 * scale, MoveCommand.golemTimerXY[1] + 5 * scale, scale);
         }
     }
 
