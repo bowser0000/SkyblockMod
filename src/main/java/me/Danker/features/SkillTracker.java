@@ -20,6 +20,7 @@ import net.minecraftforge.fml.common.gameevent.InputEvent;
 import org.apache.commons.lang3.time.StopWatch;
 
 import java.text.NumberFormat;
+import java.text.ParseException;
 import java.util.Locale;
 
 public class SkillTracker {
@@ -51,9 +52,10 @@ public class SkillTracker {
     static double xpLeft = 0;
     static double timeSinceGained = 0;
     public static String SKILL_TRACKER_COLOUR;
+    static final NumberFormat nf = NumberFormat.getInstance(Locale.US);
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
-    public void onChat(ClientChatReceivedEvent event) {
+    public void onChat(ClientChatReceivedEvent event) throws ParseException {
         if (!Utils.inSkyblock || event.type != 2) return;
 
         String[] actionBarSections = event.message.getUnformattedText().split(" {3,}");
@@ -76,7 +78,7 @@ public class SkillTracker {
                     int limit = section.contains("Farming") || section.contains("Enchanting") || section.contains("Mining") || section.contains("Combat") ? 60 : 50;
                     double currentXP;
                     try {
-                        currentXP = Double.parseDouble(section.substring(section.indexOf("(") + 1, section.indexOf("/")).replace(",", ""));
+                        currentXP = nf.parse(section.substring(section.indexOf("(") + 1, section.indexOf("/")).replace(",", "")).doubleValue();
                     } catch (NumberFormatException ex) {
                         ex.printStackTrace();
                         return;
@@ -85,9 +87,9 @@ public class SkillTracker {
                     int xpToLevelUp;
                     String nextLevelXpString = section.substring(section.indexOf("/") + 1, section.indexOf(")")).replaceAll(",", "");
                     if (nextLevelXpString.contains("k")) {
-                        xpToLevelUp = (int) (Double.parseDouble(nextLevelXpString.substring(0, nextLevelXpString.indexOf("k"))) * 1000);
+                        xpToLevelUp = (int) (nf.parse(nextLevelXpString.substring(0, nextLevelXpString.indexOf("k"))).doubleValue() * 1000);
                     } else {
-                        xpToLevelUp = Integer.parseInt(nextLevelXpString);
+                        xpToLevelUp = nf.parse(nextLevelXpString).intValue();
                     }
 
                     xpLeft = xpToLevelUp - currentXP;
@@ -117,7 +119,7 @@ public class SkillTracker {
                         level = DankersSkyblockMod.carpentryLevel;
                     }
 
-                    totalXP = Utils.getTotalXpEarned(level, Double.parseDouble(section.substring(section.indexOf("(") + 1, section.indexOf("%"))));
+                    totalXP = Utils.getTotalXpEarned(level, nf.parse(section.substring(section.indexOf("(") + 1, section.indexOf("%"))).doubleValue());
                     xpLeft = Utils.getTotalXpEarned(level + 1, 0) - totalXP;
                 }
 
