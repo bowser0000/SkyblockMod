@@ -48,8 +48,8 @@ public class GolemSpawningAlert {
             double timeNow = System.currentTimeMillis() / 1000;
             mc.getTextureManager().bindTexture(GOLEM_ICON);
 
-            GL11.glScaled(scaleReset, scaleReset, scaleReset);
             RenderUtils.drawModalRectWithCustomSizedTexture(MoveCommand.golemTimerXY[0] / scale, MoveCommand.golemTimerXY[1] / scale, 0, 0, 16, 16, 16, 16);
+            GL11.glScaled(scaleReset, scaleReset, scaleReset);
 
             String golemText = GOLEM_COLOUR + Utils.getTimeBetween(timeNow, golemTime);
             new TextRenderer(mc, golemText, MoveCommand.golemTimerXY[0] + 20 * scale, MoveCommand.golemTimerXY[1] + 5 * scale, scale);
