@@ -8,6 +8,7 @@ import me.Danker.features.*;
 import me.Danker.features.loot.LootDisplay;
 import me.Danker.gui.buttons.LocationButton;
 import me.Danker.handlers.ConfigHandler;
+import me.Danker.utils.RenderUtils;
 import me.Danker.utils.Utils;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiButton;
@@ -140,11 +141,11 @@ public class EditLocationsGui extends GuiScreen {
 		coords = new LocationButton(MoveCommand.coordsXY[0], MoveCommand.coordsXY[1], ScaleCommand.coordsScale, NoF3Coords.COORDS_COLOUR + "74 / 14 / -26 (141.1 / 6.7)");
 		skill50 = new LocationButton(MoveCommand.skill50XY[0], MoveCommand.skill50XY[1], ScaleCommand.skill50Scale, Skill50Display.SKILL_50_COLOUR + "+3.5 Farming (28,882,117.7/55,172,425) 52.34%");
 		lividHP = new LocationButton(MoveCommand.lividHpXY[0], MoveCommand.lividHpXY[1], ScaleCommand.lividHpScale, EnumChatFormatting.WHITE + "﴾ Livid " + EnumChatFormatting.YELLOW + "6.9M" + EnumChatFormatting.RED + "❤ " + EnumChatFormatting.WHITE + "﴿");
-		cakeTimer = new LocationButton(MoveCommand.cakeTimerXY[0], MoveCommand.cakeTimerXY[1] + 5, ScaleCommand.cakeTimerScale, CakeTimer.CAKE_COLOUR + "     11h16m");
+		cakeTimer = new LocationButton(MoveCommand.cakeTimerXY[0], (int) (MoveCommand.cakeTimerXY[1] + 5 * ScaleCommand.cakeTimerScale), ScaleCommand.cakeTimerScale, CakeTimer.CAKE_COLOUR + "     11h16m");
 		skillTracker = new LocationButton(MoveCommand.skillTrackerXY[0], MoveCommand.skillTrackerXY[1], ScaleCommand.skillTrackerScale, skillTrackerText);
 		waterAnswer = new LocationButton(MoveCommand.waterAnswerXY[0], MoveCommand.waterAnswerXY[1], ScaleCommand.waterAnswerScale, waterAnswerText);
-		bonzoTimer = new LocationButton(MoveCommand.bonzoTimerXY[0], MoveCommand.bonzoTimerXY[1] + 5, ScaleCommand.bonzoTimerScale, BonzoMaskTimer.BONZO_COLOR + "     3m30s");
-		golemTimer = new LocationButton(MoveCommand.golemTimerXY[0], MoveCommand.golemTimerXY[1] + 5, ScaleCommand.golemTimerScale, GolemSpawningAlert.GOLEM_COLOUR + "     20s");
+		bonzoTimer = new LocationButton(MoveCommand.bonzoTimerXY[0], (int) (MoveCommand.bonzoTimerXY[1] + 5 * ScaleCommand.bonzoTimerScale), ScaleCommand.bonzoTimerScale, BonzoMaskTimer.BONZO_COLOR + "     3m30s");
+		golemTimer = new LocationButton(MoveCommand.golemTimerXY[0], (int) (MoveCommand.golemTimerXY[1] + 5 * ScaleCommand.golemTimerScale), ScaleCommand.golemTimerScale, GolemSpawningAlert.GOLEM_COLOUR + "     20s");
 		teammatesInRadius = new LocationButton(MoveCommand.teammatesInRadiusXY[0], MoveCommand.teammatesInRadiusXY[1], ScaleCommand.teammatesInRadiusScale, teammatesInRadiusText);
 		giantHP = new LocationButton(MoveCommand.giantHPXY[0], MoveCommand.giantHPXY[1], ScaleCommand.giantHPScale, giantHPText);
 		abilityCooldown = new LocationButton(MoveCommand.abilityCooldownsXY[0], MoveCommand.abilityCooldownsXY[1], ScaleCommand.abilityCooldownsScale, abilityCooldownText);
@@ -182,7 +183,7 @@ public class EditLocationsGui extends GuiScreen {
 			double cakeTimerScaleReset = Math.pow(cakeTimerScale, -1);
 			GL11.glScaled(cakeTimerScale, cakeTimerScale, cakeTimerScale);
 			mc.getTextureManager().bindTexture(CakeTimer.CAKE_ICON);
-			Gui.drawModalRectWithCustomSizedTexture(MoveCommand.cakeTimerXY[0], MoveCommand.cakeTimerXY[1], 0, 0, 16, 16, 16, 16);
+			RenderUtils.drawModalRectWithCustomSizedTexture(MoveCommand.cakeTimerXY[0] / cakeTimerScale, MoveCommand.cakeTimerXY[1] / cakeTimerScale, 0, 0, 16, 16, 16, 16);
 			GL11.glScaled(cakeTimerScaleReset, cakeTimerScaleReset, cakeTimerScaleReset);
 		}
 
@@ -191,7 +192,7 @@ public class EditLocationsGui extends GuiScreen {
 			double bonzoTimerScaleReset = Math.pow(bonzoTimerScale, -1);
 			GL11.glScaled(bonzoTimerScale, bonzoTimerScale, bonzoTimerScale);
 			mc.getTextureManager().bindTexture(BonzoMaskTimer.BONZO_ICON);
-			Gui.drawModalRectWithCustomSizedTexture(MoveCommand.bonzoTimerXY[0], MoveCommand.bonzoTimerXY[1], 0, 0, 16, 16, 16, 16);
+			RenderUtils.drawModalRectWithCustomSizedTexture(MoveCommand.bonzoTimerXY[0] / bonzoTimerScale, MoveCommand.bonzoTimerXY[1] / bonzoTimerScale, 0, 0, 16, 16, 16, 16);
 			GL11.glScaled(bonzoTimerScaleReset, bonzoTimerScaleReset, bonzoTimerScaleReset);
 		}
 
@@ -200,7 +201,7 @@ public class EditLocationsGui extends GuiScreen {
 			double golemTimerScaleReset = Math.pow(golemTimerScale, -1);
 			GL11.glScaled(golemTimerScale, golemTimerScale, golemTimerScale);
 			mc.getTextureManager().bindTexture(GolemSpawningAlert.GOLEM_ICON);
-			Gui.drawModalRectWithCustomSizedTexture(MoveCommand.golemTimerXY[0], MoveCommand.golemTimerXY[1], 0, 0, 16, 16, 16, 16);
+			RenderUtils.drawModalRectWithCustomSizedTexture(MoveCommand.golemTimerXY[0] / golemTimerScale, MoveCommand.golemTimerXY[1] / golemTimerScale, 0, 0, 16, 16, 16, 16);
 			GL11.glScaled(golemTimerScaleReset, golemTimerScaleReset, golemTimerScaleReset);
 		}
 
@@ -302,6 +303,7 @@ public class EditLocationsGui extends GuiScreen {
 					MoveCommand.firePillarXY[1] += yMoved;
 					firePillar.xPosition = MoveCommand.firePillarXY[0];
 					firePillar.yPosition = MoveCommand.firePillarXY[1];
+					break;
 				case "minibossTimer":
 					MoveCommand.minibossTimerXY[0] += xMoved;
 					MoveCommand.minibossTimerXY[1] += yMoved;

@@ -52,7 +52,7 @@ public class LocationButton extends GuiButton {
 	@Override
 	public void drawButton(Minecraft mc, int mouseX, int mouseY) {
 		drawRect(x - 2, y - 2, x + width, y + height, 0x40D3D3D3);
-		if (text2 != null) new TextRenderer(mc, text2, (int) (x + (text2Offset * scale)), y, scale);
+		if (text2 != null) new TextRenderer(mc, text2, (x + (text2Offset * scale)), y, scale);
 		new TextRenderer(mc, text, x, y, scale);
 	}
 	

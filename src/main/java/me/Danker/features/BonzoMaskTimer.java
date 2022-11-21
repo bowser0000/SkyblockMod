@@ -5,6 +5,7 @@ import me.Danker.commands.ScaleCommand;
 import me.Danker.commands.ToggleCommand;
 import me.Danker.events.RenderOverlayEvent;
 import me.Danker.handlers.TextRenderer;
+import me.Danker.utils.RenderUtils;
 import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -69,17 +70,17 @@ public class BonzoMaskTimer {
 
                 double timeNow = System.currentTimeMillis() / 1000;
                 mc.getTextureManager().bindTexture(BONZO_ICON);
-                Gui.drawModalRectWithCustomSizedTexture(MoveCommand.bonzoTimerXY[0], MoveCommand.bonzoTimerXY[1], 0, 0, 16, 16, 16, 16);
+                RenderUtils.drawModalRectWithCustomSizedTexture(MoveCommand.bonzoTimerXY[0] / scale, MoveCommand.bonzoTimerXY[1] / scale, 0, 0, 16, 16, 16, 16);
 
+                GL11.glScaled(scaleReset, scaleReset, scaleReset);
                 String bonzoText;
                 if (nextBonzoUse - timeNow < 0) {
                     bonzoText = EnumChatFormatting.GREEN + "READY";
                 } else {
                     bonzoText = BONZO_COLOR + Utils.getTimeBetween(timeNow, nextBonzoUse);
                 }
-                new TextRenderer(mc, bonzoText, MoveCommand.bonzoTimerXY[0] + 20, MoveCommand.bonzoTimerXY[1] + 5, 1);
 
-                GL11.glScaled(scaleReset, scaleReset, scaleReset);
+                new TextRenderer(mc, bonzoText, MoveCommand.bonzoTimerXY[0] + 20 * scale, MoveCommand.bonzoTimerXY[1] + 5 * scale, scale);
             }
         }
     }
