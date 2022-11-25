@@ -1,6 +1,6 @@
 package me.Danker.commands;
 
-import me.Danker.DankersSkyblockMod;
+import me.Danker.config.ModConfig;
 import me.Danker.handlers.ConfigHandler;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
@@ -68,13 +68,13 @@ public class ScaleCommand extends CommandBase {
 		final EntityPlayer player = (EntityPlayer) arg0;
 		
 		if (arg1.length < 2) {
-			player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Usage: " + getCommandUsage(arg0)));
+			player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "Usage: " + getCommandUsage(arg0)));
 			return;
 		}
 		
 		double scaleAmount = Math.floor(Double.parseDouble(arg1[1]) * 100.0) / 100.0;
 		if (scaleAmount < 0.1 || scaleAmount > 10.0) {
-			player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Scale multipler can only be between 0.1x and 10x."));
+			player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "Scale multipler can only be between 0.1x and 10x."));
 			return;
 		}
 		
@@ -82,90 +82,90 @@ public class ScaleCommand extends CommandBase {
 			case "coords":
 				coordsScale = scaleAmount;
 				ConfigHandler.writeDoubleConfig("scales", "coordsScale", coordsScale);
-				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Coords have been scaled to " + DankersSkyblockMod.SECONDARY_COLOUR + coordsScale + "x"));
+				player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Coords have been scaled to " + ModConfig.getColour(ModConfig.secondaryColour) + coordsScale + "x"));
 				break;
 			case "display":
 				displayScale = scaleAmount;
 				ConfigHandler.writeDoubleConfig("scales", "displayScale", displayScale);
-				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Display has been scaled to " + DankersSkyblockMod.SECONDARY_COLOUR + displayScale + "x"));
+				player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Display has been scaled to " + ModConfig.getColour(ModConfig.secondaryColour) + displayScale + "x"));
 				break;
 			case "dungeontimer":
 				dungeonTimerScale = scaleAmount;
 				ConfigHandler.writeDoubleConfig("scales", "dungeonTimerScale", dungeonTimerScale);
-				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Dungeon timer has been scaled to " + DankersSkyblockMod.SECONDARY_COLOUR + dungeonTimerScale + "x"));
+				player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Dungeon timer has been scaled to " + ModConfig.getColour(ModConfig.secondaryColour) + dungeonTimerScale + "x"));
 				break;
 			case "skill50":
 				skill50Scale = scaleAmount;
 				ConfigHandler.writeDoubleConfig("scales", "skill50Scale", skill50Scale);
-				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Skill 50 display has been scaled to " + DankersSkyblockMod.SECONDARY_COLOUR + skill50Scale + "x"));
+				player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Skill 50 display has been scaled to " + ModConfig.getColour(ModConfig.secondaryColour) + skill50Scale + "x"));
 				break;
 			case "lividhp":
 				lividHpScale = scaleAmount;
 				ConfigHandler.writeDoubleConfig("scales", "lividHpScale", lividHpScale);
-				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Livid HP has been scaled to " + DankersSkyblockMod.SECONDARY_COLOUR + lividHpScale + "x"));
+				player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Livid HP has been scaled to " + ModConfig.getColour(ModConfig.secondaryColour) + lividHpScale + "x"));
 				break;
 			case "caketimer":
 				cakeTimerScale = scaleAmount;
 				ConfigHandler.writeDoubleConfig("scales", "cakeTimerScale", cakeTimerScale);
-				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Cake timer has been scaled to " + DankersSkyblockMod.SECONDARY_COLOUR + cakeTimerScale + "x"));
+				player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Cake timer has been scaled to " + ModConfig.getColour(ModConfig.secondaryColour) + cakeTimerScale + "x"));
 				break;
 			case "skilltracker":
 				skillTrackerScale = scaleAmount;
 				ConfigHandler.writeDoubleConfig("scales", "skillTrackerScale", skillTrackerScale);
-				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Skill tracker has been scaled to " + DankersSkyblockMod.SECONDARY_COLOUR + skillTrackerScale + "x"));
+				player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Skill tracker has been scaled to " + ModConfig.getColour(ModConfig.secondaryColour) + skillTrackerScale + "x"));
 				break;
 			case "wateranswer":
 				waterAnswerScale = scaleAmount;
 				ConfigHandler.writeDoubleConfig("scales", "waterAnswerScale", waterAnswerScale);
-				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Water solver answer has been scaled to " + DankersSkyblockMod.SECONDARY_COLOUR + waterAnswerScale + "x"));
+				player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Water solver answer has been scaled to " + ModConfig.getColour(ModConfig.secondaryColour) + waterAnswerScale + "x"));
 				break;
 			case "bonzotimer":
 				bonzoTimerScale = scaleAmount;
 				ConfigHandler.writeDoubleConfig("scales", "bonzoTimerScale", bonzoTimerScale);
-				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Bonzo's Mask timer has been scaled to " + DankersSkyblockMod.SECONDARY_COLOUR + bonzoTimerScale + "x"));
+				player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Bonzo's Mask timer has been scaled to " + ModConfig.getColour(ModConfig.secondaryColour) + bonzoTimerScale + "x"));
 				break;
 			case "golemtimer":
 				golemTimerScale = scaleAmount;
 				ConfigHandler.writeDoubleConfig("scales", "golemTimerScale", golemTimerScale);
-				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Golem timer has been scaled to " + DankersSkyblockMod.SECONDARY_COLOUR + golemTimerScale + "x"));
+				player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Golem timer has been scaled to " + ModConfig.getColour(ModConfig.secondaryColour) + golemTimerScale + "x"));
 				break;
 			case "teammatesinradius":
 				teammatesInRadiusScale = scaleAmount;
 				ConfigHandler.writeDoubleConfig("scales", "teammatesInRadiusScale", teammatesInRadiusScale);
-				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Teammates in radius has been scaled to " + DankersSkyblockMod.SECONDARY_COLOUR + teammatesInRadiusScale + "x"));
+				player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Teammates in radius has been scaled to " + ModConfig.getColour(ModConfig.secondaryColour) + teammatesInRadiusScale + "x"));
 				break;
 			case "gianthp":
 				giantHPScale = scaleAmount;
 				ConfigHandler.writeDoubleConfig("scales", "giantHPScale", giantHPScale);
-				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Giant hp has been scaled to " + DankersSkyblockMod.SECONDARY_COLOUR + giantHPScale + "x"));
+				player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Giant hp has been scaled to " + ModConfig.getColour(ModConfig.secondaryColour) + giantHPScale + "x"));
 				break;
 			case "abilitycooldowns":
 				abilityCooldownsScale = scaleAmount;
 				ConfigHandler.writeDoubleConfig("scales", "abilityCooldownsScale", abilityCooldownsScale);
-				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Ability cooldowns has been scaled to " + DankersSkyblockMod.SECONDARY_COLOUR + abilityCooldownsScale + "x"));
+				player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Ability cooldowns has been scaled to " + ModConfig.getColour(ModConfig.secondaryColour) + abilityCooldownsScale + "x"));
 				break;
 			case "dungeonscore":
 				dungeonScoreScale = scaleAmount;
 				ConfigHandler.writeDoubleConfig("scales", "dungeonScoreScale", dungeonScoreScale);
-				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Dungeon score has been scaled to " + DankersSkyblockMod.SECONDARY_COLOUR + dungeonScoreScale + "x"));
+				player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Dungeon score has been scaled to " + ModConfig.getColour(ModConfig.secondaryColour) + dungeonScoreScale + "x"));
 				break;
 			case "firepillar":
 				firePillarScale = scaleAmount;
 				ConfigHandler.writeDoubleConfig("scales", "firePillarScale", firePillarScale);
-				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Fire pillar has been scaled to " + DankersSkyblockMod.SECONDARY_COLOUR + firePillarScale + "x"));
+				player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Fire pillar has been scaled to " + ModConfig.getColour(ModConfig.secondaryColour) + firePillarScale + "x"));
 				break;
 			case "minibosstimer":
 				minibossTimerScale = scaleAmount;
 				ConfigHandler.writeDoubleConfig("scales", "minibossTimerScale", minibossTimerScale);
-				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Miniboss timer has been scaled to " + DankersSkyblockMod.SECONDARY_COLOUR + minibossTimerScale + "x"));
+				player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Miniboss timer has been scaled to " + ModConfig.getColour(ModConfig.secondaryColour) + minibossTimerScale + "x"));
 				break;
 			case "powdertracker":
 				powderTrackerScale = scaleAmount;
 				ConfigHandler.writeDoubleConfig("scales", "powderTrackerScale", powderTrackerScale);
-				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Powder tracker has been scaled to " + DankersSkyblockMod.SECONDARY_COLOUR + powderTrackerScale + "x"));
+				player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Powder tracker has been scaled to " + ModConfig.getColour(ModConfig.secondaryColour) + powderTrackerScale + "x"));
 				break;
 			default:
-				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Usage: " + getCommandUsage(arg0)));
+				player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "Usage: " + getCommandUsage(arg0)));
 		}	
 	}
 

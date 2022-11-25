@@ -1,6 +1,6 @@
 package me.Danker.features;
 
-import me.Danker.commands.ToggleCommand;
+import me.Danker.config.ModConfig;
 import me.Danker.utils.RenderUtils;
 import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;
@@ -23,7 +23,6 @@ public class ArachneESP {
 
     static Entity arachne = null;
     static boolean arachneActive = true;
-    public static int ARACHANE_COLOUR;
 
     @SubscribeEvent
     public void onWorldChange(WorldEvent.Load event) {
@@ -55,9 +54,9 @@ public class ArachneESP {
     public void onWorldRender(RenderWorldLastEvent event) {
         if (!Utils.inSkyblock) return;
         if (arachne != null) {
-            if (arachneActive && ToggleCommand.highlightArachne) {
+            if (arachneActive && ModConfig.highlightArachne) {
                 AxisAlignedBB aabb = new AxisAlignedBB(arachne.posX - 0.75, arachne.posY - 1, arachne.posZ - 0.75, arachne.posX + 0.75, arachne.posY, arachne.posZ + 0.75);
-                RenderUtils.draw3DBox(aabb, ARACHANE_COLOUR, event.partialTicks);
+                RenderUtils.draw3DBox(aabb, ModConfig.arachneBoxColour.getRGB(), event.partialTicks);
             }
         }
     }

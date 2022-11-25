@@ -1,6 +1,6 @@
 package me.Danker.features.loot;
 
-import me.Danker.commands.ToggleCommand;
+import me.Danker.config.ModConfig;
 import me.Danker.handlers.ConfigHandler;
 import me.Danker.utils.Utils;
 import net.minecraft.util.EnumChatFormatting;
@@ -105,31 +105,31 @@ public class ZombieTracker {
             beheadeds++;
             beheadedsSession++;
             ConfigHandler.writeIntConfig("zombie", "beheaded", beheadeds);
-            if (ToggleCommand.rngesusAlerts) Utils.createTitle(EnumChatFormatting.DARK_PURPLE + "BEHEADED HORROR!", 3);
+            if (ModConfig.rngesusAlerts) Utils.createTitle(EnumChatFormatting.DARK_PURPLE + "BEHEADED HORROR!", 3);
         } else if (message.contains("CRAZY RARE DROP!  (") && message.contains(" Snake Rune I)")) {
             rng = true;
             snakes++;
             snakesSession++;
             ConfigHandler.writeIntConfig("zombie", "snake", snakes);
-            if (ToggleCommand.rngesusAlerts) Utils.createTitle(EnumChatFormatting.DARK_GREEN + "SNAKE RUNE!", 3);
+            if (ModConfig.rngesusAlerts) Utils.createTitle(EnumChatFormatting.DARK_GREEN + "SNAKE RUNE!", 3);
         } else if (message.contains("CRAZY RARE DROP!  (Scythe Blade)")) {
             rng = true;
             scythes++;
             scythesSession++;
             ConfigHandler.writeIntConfig("zombie", "scythe", scythes);
-            if (ToggleCommand.rngesusAlerts) Utils.createTitle(EnumChatFormatting.GOLD + "SCYTHE BLADE!", 5);
+            if (ModConfig.rngesusAlerts) Utils.createTitle(EnumChatFormatting.GOLD + "SCYTHE BLADE!", 5);
         } else if (message.contains("CRAZY RARE DROP!  (Shard of the Shredded)")) {
             rng = true;
             shards++;
             shardsSession++;
             ConfigHandler.writeIntConfig("zombie", "shard", shards);
-            if (ToggleCommand.rngesusAlerts) Utils.createTitle(EnumChatFormatting.RED + "SHARD OF THE SHREDDED!", 5);
+            if (ModConfig.rngesusAlerts) Utils.createTitle(EnumChatFormatting.RED + "SHARD OF THE SHREDDED!", 5);
         } else if (message.contains("INSANE DROP!  (Warden Heart)") || message.contains("CRAZY RARE DROP!  (Warden Heart)")) {
             rng = true;
             wardenHearts++;
             wardenHeartsSession++;
             ConfigHandler.writeIntConfig("zombie", "heart", wardenHearts);
-            if (ToggleCommand.rngesusAlerts) Utils.createTitle(EnumChatFormatting.RED + "WARDEN HEART!", 5);
+            if (ModConfig.rngesusAlerts) Utils.createTitle(EnumChatFormatting.RED + "WARDEN HEART!", 5);
         }
 
         if (rng) {

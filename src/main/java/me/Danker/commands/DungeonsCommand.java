@@ -1,9 +1,8 @@
 package me.Danker.commands;
 
 import com.google.gson.JsonObject;
-import me.Danker.DankersSkyblockMod;
+import me.Danker.config.ModConfig;
 import me.Danker.handlers.APIHandler;
-import me.Danker.handlers.ConfigHandler;
 import me.Danker.utils.Utils;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
@@ -55,9 +54,9 @@ public class DungeonsCommand extends CommandBase {
 			EntityPlayer player = (EntityPlayer) arg0;
 			
 			// Check key
-			String key = ConfigHandler.getString("api", "APIKey");
+			String key = ModConfig.apiKey;
 			if (key.equals("")) {
-				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "API key not set. Use /setkey."));
+				player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "API key not set. Use /setkey."));
 				return;
 			}
 			
@@ -67,10 +66,10 @@ public class DungeonsCommand extends CommandBase {
 			if (arg1.length == 0) {
 				username = player.getName();
 				uuid = player.getUniqueID().toString().replaceAll("[\\-]", "");
-				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Checking dungeon stats of " + DankersSkyblockMod.SECONDARY_COLOUR + username));
+				player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Checking dungeon stats of " + ModConfig.getColour(ModConfig.secondaryColour) + username));
 			} else {
 				username = arg1[0];
-				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Checking dungeon stats of " + DankersSkyblockMod.SECONDARY_COLOUR + username));
+				player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Checking dungeon stats of " + ModConfig.getColour(ModConfig.secondaryColour) + username));
 				uuid = APIHandler.getUUID(username);
 			}
 			
@@ -83,7 +82,7 @@ public class DungeonsCommand extends CommandBase {
 			JsonObject profileResponse = APIHandler.getResponse(profileURL, true);
 			if (!profileResponse.get("success").getAsBoolean()) {
 				String reason = profileResponse.get("cause").getAsString();
-				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Failed with reason: " + reason));
+				player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "Failed with reason: " + reason));
 				return;
 			}
 
@@ -92,14 +91,14 @@ public class DungeonsCommand extends CommandBase {
 			JsonObject playerResponse = APIHandler.getResponse(playerURL, true);
 			if (!playerResponse.get("success").getAsBoolean()) {
 				String reason = playerResponse.get("cause").getAsString();
-				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Failed with reason: " + reason));
+				player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "Failed with reason: " + reason));
 				return;
 			}
 			
 			System.out.println("Fetching dungeon stats...");
 			JsonObject dungeonsObject = profileResponse.get("profile").getAsJsonObject().get("members").getAsJsonObject().get(uuid).getAsJsonObject().get("dungeons").getAsJsonObject();
 			if (!dungeonsObject.get("dungeon_types").getAsJsonObject().get("catacombs").getAsJsonObject().has("experience")) {
-				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "This player has not played dungeons."));
+				player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "This player has not played dungeons."));
 				return;
 			}
 
@@ -128,7 +127,7 @@ public class DungeonsCommand extends CommandBase {
 				completionMasterObj = catacombsMasterObject.get("tier_completions").getAsJsonObject();
 			}
 
-			String delimiter = DankersSkyblockMod.DELIMITER_COLOUR + "" + EnumChatFormatting.BOLD + "-------------------";
+			String delimiter = EnumChatFormatting.BOLD + ModConfig.getColour(ModConfig.delimiterColour) + "" + EnumChatFormatting.BOLD + "-------------------";
 
 			ChatComponentText classLevels = new ChatComponentText(EnumChatFormatting.GOLD + " Selected Class: " + selectedClass + "\n\n" +
 																  EnumChatFormatting.RED + " Catacombs Level: " + catacombs + "\n" +

@@ -1,7 +1,7 @@
 package me.Danker.features;
 
 import me.Danker.DankersSkyblockMod;
-import me.Danker.commands.ToggleCommand;
+import me.Danker.config.ModConfig;
 import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
@@ -26,7 +26,7 @@ public class FishingSpawnAlerts {
 
         World world = Minecraft.getMinecraft().theWorld;
         if (DankersSkyblockMod.tickAmount % 10 == 0) {
-            if (ToggleCommand.fishingAlert && Utils.tabLocation.equals("Crimson Isle") && world != null) {
+            if (ModConfig.fishingAlert && Utils.tabLocation.equals("Crimson Isle") && world != null) {
                 boolean thunder = false;
                 boolean jawbus = false;
                 List<Entity> entities = world.getLoadedEntityList();

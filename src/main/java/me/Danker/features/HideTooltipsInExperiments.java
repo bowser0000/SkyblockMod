@@ -1,6 +1,6 @@
 package me.Danker.features;
 
-import me.Danker.commands.ToggleCommand;
+import me.Danker.config.ModConfig;
 import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -26,10 +26,10 @@ public class HideTooltipsInExperiments {
             IInventory inv = chest.getLowerChestInventory();
             String chestName = inv.getDisplayName().getUnformattedText();
 
-            if (ToggleCommand.hideTooltipsInExperimentAddonsToggled && (chestName.startsWith("Ultrasequencer (") || chestName.startsWith("Chronomatron ("))) {
+            if (ModConfig.hideTooltipsInExperimentAddons && (chestName.startsWith("Ultrasequencer (") || chestName.startsWith("Chronomatron ("))) {
                 event.toolTip.clear();
             }
-            if (ToggleCommand.melodyTooltips && chestName.startsWith("Harp")) {
+            if (ModConfig.melodyTooltips && chestName.startsWith("Harp")) {
                 event.toolTip.clear();
             }
         }

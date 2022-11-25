@@ -1,6 +1,6 @@
 package me.Danker.commands;
 
-import me.Danker.DankersSkyblockMod;
+import me.Danker.config.ModConfig;
 import me.Danker.handlers.ConfigHandler;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
@@ -33,7 +33,7 @@ public class ReloadConfigCommand extends CommandBase {
 	public void processCommand(ICommandSender arg0, String[] arg1) throws CommandException {
 		final EntityPlayer player = (EntityPlayer)arg0;
 		ConfigHandler.reloadConfig();
-		player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Reloaded config."));
+		player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Reloaded config."));
 	}
 
 }

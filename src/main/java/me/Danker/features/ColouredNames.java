@@ -1,7 +1,7 @@
 package me.Danker.features;
 
 import me.Danker.DankersSkyblockMod;
-import me.Danker.commands.ToggleCommand;
+import me.Danker.config.ModConfig;
 import me.Danker.events.PacketReadEvent;
 import me.Danker.utils.Utils;
 import net.minecraft.entity.Entity;
@@ -39,7 +39,7 @@ public class ColouredNames {
 
     @SubscribeEvent
     public void onChat(ClientChatReceivedEvent event) {
-        if (!ToggleCommand.customColouredNames || !Utils.inSkyblock) return;
+        if (!ModConfig.customColouredNames || !Utils.inSkyblock) return;
         if (event.type == 2) return;
 
         String text = event.message.getFormattedText();
@@ -52,7 +52,7 @@ public class ColouredNames {
 
     @SubscribeEvent
     public void onTooltip(ItemTooltipEvent event) {
-        if (!ToggleCommand.customColouredNames || !Utils.inSkyblock) return;
+        if (!ModConfig.customColouredNames || !Utils.inSkyblock) return;
 
         for (int i = 0; i < event.toolTip.size(); i++) {
             String line = StringUtils.stripControlCodes(event.toolTip.get(i));
@@ -66,7 +66,7 @@ public class ColouredNames {
 
     @SubscribeEvent
     public void onRenderNametag(PlayerEvent.NameFormat event) {
-        if (!ToggleCommand.customColouredNames || !Utils.inSkyblock) return;
+        if (!ModConfig.customColouredNames || !Utils.inSkyblock) return;
 
         if (users.contains(event.username)) {
             event.displayname = replaceName(event.displayname, event.username, getColourFromName(event.username));
@@ -75,7 +75,7 @@ public class ColouredNames {
 
     @SubscribeEvent(priority = EventPriority.LOW)
     public void onRenderLiving(RenderLivingEvent.Specials.Pre<EntityLivingBase> event) {
-        if (!ToggleCommand.customColouredNames || !ToggleCommand.customNametags || !Utils.inSkyblock) return;
+        if (!ModConfig.customColouredNames || !ModConfig.customNametags || !Utils.inSkyblock) return;
 
         Entity entity = event.entity;
         if (entity instanceof EntityArmorStand && !entity.isDead && entity.hasCustomName()) {
@@ -102,7 +102,7 @@ public class ColouredNames {
 
     @SubscribeEvent
     public void onPacketRead(PacketReadEvent event) {
-        if (!ToggleCommand.customColouredNames || !Utils.inSkyblock) return;
+        if (!ModConfig.customColouredNames || !Utils.inSkyblock) return;
 
         if (event.packet instanceof S45PacketTitle) {
             S45PacketTitle packet = (S45PacketTitle) event.packet;

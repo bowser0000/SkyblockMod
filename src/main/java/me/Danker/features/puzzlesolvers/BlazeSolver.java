@@ -1,7 +1,7 @@
 package me.Danker.features.puzzlesolvers;
 
 import me.Danker.DankersSkyblockMod;
-import me.Danker.commands.ToggleCommand;
+import me.Danker.config.ModConfig;
 import me.Danker.utils.RenderUtils;
 import me.Danker.utils.Utils;
 import net.minecraft.block.Block;
@@ -24,8 +24,6 @@ public class BlazeSolver {
     static Entity lowestBlaze = null;
     static boolean higherToLower = false;
     static boolean foundChest = false;
-    public static int LOWEST_BLAZE_COLOUR;
-    public static int HIGHEST_BLAZE_COLOUR;
 
     @SubscribeEvent
     public void onWorldChange(WorldEvent.Load event) {
@@ -44,7 +42,7 @@ public class BlazeSolver {
         World world = mc.theWorld;
 
         if (DankersSkyblockMod.tickAmount % 4 == 0) {
-            if (ToggleCommand.blazeToggled && Utils.inDungeons && world != null && player != null) {
+            if (ModConfig.blaze && Utils.inDungeons && world != null && player != null) {
 
                 List<Entity> entities = world.getLoadedEntityList();
                 int highestHealth = 0;
@@ -81,11 +79,11 @@ public class BlazeSolver {
                                 if (blockbelow == Blocks.stone) {
                                     higherToLower = false;
                                     foundChest = true;
-                                    player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Chest located. Sorting from lowest to highest."));
+                                    player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Chest located. Sorting from lowest to highest."));
                                 } else if (blockbelow == Blocks.air) {
                                     higherToLower = true;
                                     foundChest = true;
-                                    player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Chest located. Sorting from highest to lowest."));
+                                    player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Chest located. Sorting from highest to lowest."));
                                 } else {
                                     return;
                                 }
@@ -99,32 +97,32 @@ public class BlazeSolver {
 
     @SubscribeEvent
     public void onWorldRender(RenderWorldLastEvent event) {
-        if (ToggleCommand.blazeToggled && Utils.inDungeons) {
+        if (ModConfig.blaze && Utils.inDungeons) {
             if (foundChest) {
                 if (lowestBlaze != null && !higherToLower) {
                     BlockPos stringPos = new BlockPos(lowestBlaze.posX, lowestBlaze.posY + 1, lowestBlaze.posZ);
-                    RenderUtils.draw3DString(stringPos, EnumChatFormatting.BOLD + "Shoot me!", LOWEST_BLAZE_COLOUR, event.partialTicks);
+                    RenderUtils.draw3DString(stringPos, EnumChatFormatting.BOLD + "Shoot me!", ModConfig.lowestBlazeColour.getRGB(), event.partialTicks);
                     AxisAlignedBB aabb = new AxisAlignedBB(lowestBlaze.posX - 0.5, lowestBlaze.posY - 2, lowestBlaze.posZ - 0.5, lowestBlaze.posX + 0.5, lowestBlaze.posY, lowestBlaze.posZ + 0.5);
-                    RenderUtils.draw3DBox(aabb, LOWEST_BLAZE_COLOUR, event.partialTicks);
+                    RenderUtils.draw3DBox(aabb, ModConfig.lowestBlazeColour.getRGB(), event.partialTicks);
                 }
                 if (highestBlaze != null && higherToLower) {
                     BlockPos stringPos = new BlockPos(highestBlaze.posX, highestBlaze.posY + 1, highestBlaze.posZ);
-                    RenderUtils.draw3DString(stringPos, EnumChatFormatting.BOLD + "Shoot me!", LOWEST_BLAZE_COLOUR, event.partialTicks);
+                    RenderUtils.draw3DString(stringPos, EnumChatFormatting.BOLD + "Shoot me!", ModConfig.lowestBlazeColour.getRGB(), event.partialTicks);
                     AxisAlignedBB aabb = new AxisAlignedBB(highestBlaze.posX - 0.5, highestBlaze.posY - 2, highestBlaze.posZ - 0.5, highestBlaze.posX + 0.5, highestBlaze.posY, highestBlaze.posZ + 0.5);
-                    RenderUtils.draw3DBox(aabb, LOWEST_BLAZE_COLOUR, event.partialTicks);
+                    RenderUtils.draw3DBox(aabb, ModConfig.lowestBlazeColour.getRGB(), event.partialTicks);
                 }
             } else {
                 if (lowestBlaze != null) {
                     BlockPos stringPos = new BlockPos(lowestBlaze.posX, lowestBlaze.posY + 1, lowestBlaze.posZ);
-                    RenderUtils.draw3DString(stringPos, EnumChatFormatting.BOLD + "Smallest", LOWEST_BLAZE_COLOUR, event.partialTicks);
+                    RenderUtils.draw3DString(stringPos, EnumChatFormatting.BOLD + "Smallest", ModConfig.lowestBlazeColour.getRGB(), event.partialTicks);
                     AxisAlignedBB aabb = new AxisAlignedBB(lowestBlaze.posX - 0.5, lowestBlaze.posY - 2, lowestBlaze.posZ - 0.5, lowestBlaze.posX + 0.5, lowestBlaze.posY, lowestBlaze.posZ + 0.5);
-                    RenderUtils.draw3DBox(aabb, LOWEST_BLAZE_COLOUR, event.partialTicks);
+                    RenderUtils.draw3DBox(aabb, ModConfig.lowestBlazeColour.getRGB(), event.partialTicks);
                 }
                 if (highestBlaze != null) {
                     BlockPos stringPos = new BlockPos(highestBlaze.posX, highestBlaze.posY + 1, highestBlaze.posZ);
-                    RenderUtils.draw3DString(stringPos, EnumChatFormatting.BOLD + "Biggest", HIGHEST_BLAZE_COLOUR, event.partialTicks);
+                    RenderUtils.draw3DString(stringPos, EnumChatFormatting.BOLD + "Biggest", ModConfig.highestBlazeColour.getRGB(), event.partialTicks);
                     AxisAlignedBB aabb = new AxisAlignedBB(highestBlaze.posX - 0.5, highestBlaze.posY - 2, highestBlaze.posZ - 0.5, highestBlaze.posX + 0.5, highestBlaze.posY, highestBlaze.posZ + 0.5);
-                    RenderUtils.draw3DBox(aabb, HIGHEST_BLAZE_COLOUR, event.partialTicks);
+                    RenderUtils.draw3DBox(aabb, ModConfig.highestBlazeColour.getRGB(), event.partialTicks);
                 }
             }
         }

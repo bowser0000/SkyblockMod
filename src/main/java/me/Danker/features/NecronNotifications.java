@@ -1,6 +1,6 @@
 package me.Danker.features;
 
-import me.Danker.commands.ToggleCommand;
+import me.Danker.config.ModConfig;
 import me.Danker.utils.Utils;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -24,7 +24,7 @@ public class NecronNotifications {
 
         if (!Utils.inDungeons) return;
 
-        if (ToggleCommand.necronNotificationsToggled) {
+        if (ModConfig.necronNotifications) {
             Minecraft mc = Minecraft.getMinecraft();
             World world = mc.theWorld;
 

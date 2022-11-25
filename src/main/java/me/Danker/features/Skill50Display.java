@@ -3,7 +3,7 @@ package me.Danker.features;
 import me.Danker.DankersSkyblockMod;
 import me.Danker.commands.MoveCommand;
 import me.Danker.commands.ScaleCommand;
-import me.Danker.commands.ToggleCommand;
+import me.Danker.config.ModConfig;
 import me.Danker.events.RenderOverlayEvent;
 import me.Danker.handlers.TextRenderer;
 import me.Danker.utils.Utils;
@@ -19,11 +19,9 @@ import java.util.Locale;
 
 public class Skill50Display {
 
-    public static int SKILL_TIME;
     public static int skillTimer = -1;
     public static boolean showSkill = false;
     public static String skillText = "";
-    public static String SKILL_50_COLOUR;
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void onChat(ClientChatReceivedEvent event) {
@@ -32,7 +30,7 @@ public class Skill50Display {
         String[] actionBarSections = event.message.getUnformattedText().split(" {3,}");
 
         for (String section : actionBarSections) {
-            if (ToggleCommand.skill50DisplayToggled && section.contains("+") && section.contains("(") && section.contains(")") && !section.contains("Runecrafting")) {
+            if (ModConfig.maxSkillDisplay && section.contains("+") && section.contains("(") && section.contains(")") && !section.contains("Runecrafting")) {
                 if (section.contains("/")) {
                     String xpGained = section.substring(section.indexOf("+"), section.indexOf("(") - 1);
                     double currentXp = Double.parseDouble(section.substring(section.indexOf("(") + 1, section.indexOf("/")).replace(",", ""));
@@ -58,9 +56,9 @@ public class Skill50Display {
                     double percentage = Math.floor(((currentXp + previousXp) / totalXp) * 10000D) / 100D;
 
                     NumberFormat nf = NumberFormat.getNumberInstance(Locale.US);
-                    skillTimer = SKILL_TIME;
+                    skillTimer = ModConfig.maxSkillTime * 20;
                     showSkill = true;
-                    skillText = SKILL_50_COLOUR + xpGained + " (" + nf.format(currentXp + previousXp) + "/" + nf.format(totalXp) + ") " + percentage + "%";
+                    skillText = ModConfig.getColour(ModConfig.maxSkillDisplayColour) + xpGained + " (" + nf.format(currentXp + previousXp) + "/" + nf.format(totalXp) + ") " + percentage + "%";
                 } else {
                     if (!Utils.skillsInitialized()) {
                         return;
@@ -92,9 +90,9 @@ public class Skill50Display {
                     double percentageTo50 = Math.floor((currentXp / totalXp) * 10000D) / 100D;
 
                     NumberFormat nf = NumberFormat.getNumberInstance(Locale.US);
-                    skillTimer = SKILL_TIME;
+                    skillTimer = ModConfig.maxSkillTime * 20;
                     showSkill = true;
-                    skillText = SKILL_50_COLOUR + xpGained + " (" + nf.format(currentXp) + "/" + nf.format(totalXp) + ") " + percentageTo50 + "%";
+                    skillText = ModConfig.getColour(ModConfig.maxSkillDisplayColour) + xpGained + " (" + nf.format(currentXp) + "/" + nf.format(totalXp) + ") " + percentageTo50 + "%";
                 }
             }
         }
@@ -114,7 +112,7 @@ public class Skill50Display {
 
     @SubscribeEvent
     public void renderPlayerInfo(RenderOverlayEvent event) {
-        if (ToggleCommand.skill50DisplayToggled && !Utils.skillsInitialized() && Utils.inSkyblock) {
+        if (ModConfig.maxSkillDisplay && !Utils.skillsInitialized() && Utils.inSkyblock) {
             new TextRenderer(Minecraft.getMinecraft(), EnumChatFormatting.RED + "Please open the skill menu to use skill features. (/skills)", MoveCommand.skill50XY[0], MoveCommand.skill50XY[1], ScaleCommand.skill50Scale);
             return;
         }

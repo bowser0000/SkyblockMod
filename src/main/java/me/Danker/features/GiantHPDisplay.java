@@ -3,7 +3,7 @@ package me.Danker.features;
 import me.Danker.DankersSkyblockMod;
 import me.Danker.commands.MoveCommand;
 import me.Danker.commands.ScaleCommand;
-import me.Danker.commands.ToggleCommand;
+import me.Danker.config.ModConfig;
 import me.Danker.events.RenderOverlayEvent;
 import me.Danker.handlers.ScoreboardHandler;
 import me.Danker.handlers.TextRenderer;
@@ -30,7 +30,7 @@ public class GiantHPDisplay {
 
         World world = Minecraft.getMinecraft().theWorld;
         if (DankersSkyblockMod.tickAmount % 20 == 0) {
-            if (ToggleCommand.giantHP && Utils.inDungeons && world != null) {
+            if (ModConfig.giantHP && Utils.inDungeons && world != null) {
                 giants.clear();
                 List<String> scoreboard = ScoreboardHandler.getSidebarLines();
                 String firstLine = ScoreboardHandler.cleanSB(scoreboard.get(scoreboard.size() - 1));
@@ -59,7 +59,7 @@ public class GiantHPDisplay {
 
     @SubscribeEvent
     public void renderPlayerInfo(RenderOverlayEvent event) {
-        if (ToggleCommand.giantHP && Utils.inDungeons && giants.size() > 0) {
+        if (ModConfig.giantHP && Utils.inDungeons && giants.size() > 0) {
             StringBuilder sb = new StringBuilder();
 
             for (Entity giant : giants) {

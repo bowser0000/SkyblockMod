@@ -1,6 +1,6 @@
 package me.Danker.commands;
 
-import me.Danker.DankersSkyblockMod;
+import me.Danker.config.ModConfig;
 import me.Danker.features.loot.*;
 import me.Danker.utils.Utils;
 import net.minecraft.command.CommandBase;
@@ -55,7 +55,7 @@ public class LootCommand extends CommandBase {
 		final EntityPlayer player = (EntityPlayer) arg0;
 		
 		if (arg1.length == 0) {
-			player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Usage: " + getCommandUsage(arg0)));
+			player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "Usage: " + getCommandUsage(arg0)));
 			return;
 		}
 
@@ -80,7 +80,7 @@ public class LootCommand extends CommandBase {
 					} else {
 						bossesBetween = nf.format(WolfTracker.bossesSession);
 					}
-					if (ToggleCommand.slayerCountTotal) {
+					if (ModConfig.slayerCountTotal) {
 						drop20 = nf.format(WolfTracker.wheelsSession);
 					} else {
 						drop20 = nf.format(WolfTracker.wheelsDropsSession) + " times";
@@ -114,7 +114,7 @@ public class LootCommand extends CommandBase {
 				} else {
 					bossesBetween = nf.format(WolfTracker.bosses);
 				}
-				if (ToggleCommand.slayerCountTotal) {
+				if (ModConfig.slayerCountTotal) {
 					drop20 = nf.format(WolfTracker.wheels);
 				} else {
 					drop20 = nf.format(WolfTracker.wheelsDrops) + " times";
@@ -148,7 +148,7 @@ public class LootCommand extends CommandBase {
 					} else {
 						bossesBetween = nf.format(SpiderTracker.bossesSession);
 					}
-					if (ToggleCommand.slayerCountTotal) {
+					if (ModConfig.slayerCountTotal) {
 						drop20 = nf.format(SpiderTracker.TAPSession);
 					} else {
 						drop20 = nf.format(SpiderTracker.TAPDropsSession) + " times";
@@ -181,7 +181,7 @@ public class LootCommand extends CommandBase {
 				} else {
 					bossesBetween = nf.format(SpiderTracker.bosses);
 				}
-				if (ToggleCommand.slayerCountTotal) {
+				if (ModConfig.slayerCountTotal) {
 					drop20 = nf.format(SpiderTracker.TAP);
 				} else {
 					drop20 = nf.format(SpiderTracker.TAPDrops) + " times";
@@ -214,7 +214,7 @@ public class LootCommand extends CommandBase {
 					} else {
 						bossesBetween = nf.format(ZombieTracker.bossesSession);
 					}
-					if (ToggleCommand.slayerCountTotal) {
+					if (ModConfig.slayerCountTotal) {
 						drop20 = nf.format(ZombieTracker.foulFleshSession);
 					} else {
 						drop20 = nf.format(ZombieTracker.foulFleshDropsSession) + " times";
@@ -252,7 +252,7 @@ public class LootCommand extends CommandBase {
 				} else {
 					bossesBetween = nf.format(ZombieTracker.bosses);
 				}
-				if (ToggleCommand.slayerCountTotal) {
+				if (ModConfig.slayerCountTotal) {
 					drop20 = nf.format(ZombieTracker.foulFlesh);
 				} else {
 					drop20 = nf.format(ZombieTracker.foulFleshDrops) + " times";
@@ -290,7 +290,7 @@ public class LootCommand extends CommandBase {
 					} else {
 						bossesBetween = nf.format(EndermanTracker.bossesSession);
 					}
-					if (ToggleCommand.slayerCountTotal) {
+					if (ModConfig.slayerCountTotal) {
 						drop20 = nf.format(EndermanTracker.TAPSession);
 					} else {
 						drop20 = nf.format(EndermanTracker.TAPDropsSession) + " times";
@@ -334,7 +334,7 @@ public class LootCommand extends CommandBase {
 				} else {
 					bossesBetween = nf.format(EndermanTracker.bosses);
 				}
-				if (ToggleCommand.slayerCountTotal) {
+				if (ModConfig.slayerCountTotal) {
 					drop20 = nf.format(EndermanTracker.TAP);
 				} else {
 					drop20 = nf.format(EndermanTracker.TAPDrops) + " times";
@@ -777,7 +777,7 @@ public class LootCommand extends CommandBase {
 				break;
 			case "catacombs":
 				if (arg1.length == 1) {
-					player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Usage: /loot catacombs <f1/f2/f3/f4/f5/f6/f7>"));
+					player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "Usage: /loot catacombs <f1/f2/f3/f4/f5/f6/f7>"));
 					return;
 				}
 				switch (arg1[1].toLowerCase()) {
@@ -1086,11 +1086,11 @@ public class LootCommand extends CommandBase {
 																	EnumChatFormatting.DARK_RED + EnumChatFormatting.BOLD + " -------------------"));
 						break;
 					default:
-						player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Usage: /loot catacombs <f1/f2/f3/f4/f5/f6/f7/mm>"));
+						player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "Usage: /loot catacombs <f1/f2/f3/f4/f5/f6/f7/mm>"));
 				}
 				break;
 			default:
-				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Usage: " + getCommandUsage(arg0)));
+				player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "Usage: " + getCommandUsage(arg0)));
 		}
 	}
 

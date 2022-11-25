@@ -1,6 +1,6 @@
 package me.Danker.commands;
 
-import me.Danker.DankersSkyblockMod;
+import me.Danker.config.ModConfig;
 import me.Danker.features.PowderTracker;
 import me.Danker.handlers.ConfigHandler;
 import net.minecraft.command.CommandBase;
@@ -46,7 +46,7 @@ public class PowderTrackerCommand extends CommandBase {
         EntityPlayer player = (EntityPlayer) arg0;
 
         if (arg1.length < 1) {
-            player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Usage: " + getCommandUsage(arg0)));
+            player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "Usage: " + getCommandUsage(arg0)));
             return;
         }
 
@@ -58,32 +58,32 @@ public class PowderTrackerCommand extends CommandBase {
                 } else if (!PowderTracker.powderStopwatch.isStarted()) {
                     PowderTracker.powderStopwatch.start();
                 }
-                player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Powder tracker started."));
+                player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Powder tracker started."));
                 break;
             case "pause":
             case "stop":
                 if (PowderTracker.powderStopwatch.isStarted() && !PowderTracker.powderStopwatch.isSuspended()) {
                     PowderTracker.powderStopwatch.suspend();
                 } else {
-                    player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Powder tracker paused."));
+                    player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Powder tracker paused."));
                 }
                 break;
             case "reset":
                 PowderTracker.reset();
-                player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Powder tracker reset."));
+                player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Powder tracker reset."));
                 break;
             case "hide":
-                PowderTracker.showPowderTracker = false;
+                ModConfig.showPowderTracker = false;
                 ConfigHandler.writeBooleanConfig("misc", "showPowderTracker", false);
-                player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Powder tracker hidden."));
+                player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Powder tracker hidden."));
                 break;
             case "show":
-                PowderTracker.showPowderTracker = true;
+                ModConfig.showPowderTracker = true;
                 ConfigHandler.writeBooleanConfig("misc", "showPowderTracker", true);
-                player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Powder tracker shown."));
+                player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Powder tracker shown."));
                 break;
             default:
-                player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Usage: " + getCommandUsage(arg0)));
+                player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "Usage: " + getCommandUsage(arg0)));
         }
     }
 

@@ -3,7 +3,7 @@ package me.Danker.features;
 import me.Danker.DankersSkyblockMod;
 import me.Danker.commands.MoveCommand;
 import me.Danker.commands.ScaleCommand;
-import me.Danker.commands.ToggleCommand;
+import me.Danker.config.ModConfig;
 import me.Danker.events.RenderOverlayEvent;
 import me.Danker.handlers.TextRenderer;
 import me.Danker.utils.Utils;
@@ -26,7 +26,6 @@ import java.util.Locale;
 public class SkillTracker {
 
     static String lastSkill = "Farming";
-    public static boolean showSkillTracker;
     public static StopWatch skillStopwatch = new StopWatch();
     static double farmingXP = 0;
     public static double farmingXPGained = 0;
@@ -51,7 +50,6 @@ public class SkillTracker {
     static boolean ignoreAlchemy = false;
     static double xpLeft = 0;
     static double timeSinceGained = 0;
-    public static String SKILL_TRACKER_COLOUR;
     static final NumberFormat nf = NumberFormat.getInstance(Locale.US);
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
@@ -62,7 +60,7 @@ public class SkillTracker {
 
         for (String section : actionBarSections) {
             if (section.contains("+") && section.contains("(") && section.contains(")") && !section.contains("Runecrafting") && !section.contains("Carpentry") && !section.contains("SkyBlock XP")) {
-                if (ToggleCommand.autoSkillTrackerToggled && System.currentTimeMillis() / 1000 - timeSinceGained <= 2) {
+                if (ModConfig.autoSkillTracker && System.currentTimeMillis() / 1000 - timeSinceGained <= 2) {
                     if (skillStopwatch.isStarted() && skillStopwatch.isSuspended()) {
                         skillStopwatch.resume();
                     } else if (!skillStopwatch.isStarted()) {
@@ -232,7 +230,7 @@ public class SkillTracker {
 
     @SubscribeEvent
     public void renderPlayerInfo(RenderOverlayEvent event) {
-        if (showSkillTracker && Utils.inSkyblock) {
+        if (ModConfig.showSkillTracker && Utils.inSkyblock) {
             if (!Utils.skillsInitialized()) {
                 new TextRenderer(Minecraft.getMinecraft(), EnumChatFormatting.RED + "Please open the skill menu to use skill features. (/skills)", MoveCommand.skillTrackerXY[0], MoveCommand.skillTrackerXY[1], ScaleCommand.skillTrackerScale);
                 return;
@@ -266,12 +264,12 @@ public class SkillTracker {
                     System.err.println("Unknown skill in rendering.");
             }
             xpPerHour = (int) Math.round(xpToShow / ((skillStopwatch.getTime() + 1) / 3600000d));
-            String skillTrackerText = SKILL_TRACKER_COLOUR + lastSkill + " XP Earned: " + NumberFormat.getNumberInstance(Locale.US).format(xpToShow) + "\n" +
-                    SKILL_TRACKER_COLOUR + "Time Elapsed: " + Utils.getTimeBetween(0, skillStopwatch.getTime() / 1000d) + "\n" +
-                    SKILL_TRACKER_COLOUR + "XP Per Hour: " + NumberFormat.getIntegerInstance(Locale.US).format(xpPerHour);
+            String skillTrackerText = ModConfig.getColour(ModConfig.skillTrackerColour) + lastSkill + " XP Earned: " + NumberFormat.getNumberInstance(Locale.US).format(xpToShow) + "\n" +
+                    ModConfig.getColour(ModConfig.skillTrackerColour) + "Time Elapsed: " + Utils.getTimeBetween(0, skillStopwatch.getTime() / 1000d) + "\n" +
+                    ModConfig.getColour(ModConfig.skillTrackerColour) + "XP Per Hour: " + NumberFormat.getIntegerInstance(Locale.US).format(xpPerHour);
             if (xpLeft >= 0) {
                 String time = xpPerHour == 0 ? "Never" : Utils.getTimeBetween(0, xpLeft / (xpPerHour / 3600D));
-                skillTrackerText += "\n" + SKILL_TRACKER_COLOUR + "Time Until Next Level: " + time;
+                skillTrackerText += "\n" + ModConfig.getColour(ModConfig.skillTrackerColour) + "Time Until Next Level: " + time;
             }
             if (!skillStopwatch.isStarted() || skillStopwatch.isSuspended()) {
                 skillTrackerText += "\n" + EnumChatFormatting.RED + "PAUSED";
@@ -289,20 +287,20 @@ public class SkillTracker {
         if (DankersSkyblockMod.keyBindings[2].isPressed()) {
             if (skillStopwatch.isStarted() && skillStopwatch.isSuspended()) {
                 skillStopwatch.resume();
-                player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Skill tracker started."));
+                player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Skill tracker started."));
             } else if (!skillStopwatch.isStarted()) {
                 skillStopwatch.start();
-                player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Skill tracker started."));
+                player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Skill tracker started."));
             } else if (skillStopwatch.isStarted() && !skillStopwatch.isSuspended()) {
                 skillStopwatch.suspend();
-                player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Skill tracker paused."));
+                player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Skill tracker paused."));
             }
         }
     }
 
     @SubscribeEvent
     public void onGuiOpen(GuiOpenEvent event) {
-        if (event.gui instanceof GuiChest && ToggleCommand.autoSkillTrackerToggled && skillStopwatch.isStarted() && !skillStopwatch.isSuspended()) {
+        if (event.gui instanceof GuiChest && ModConfig.autoSkillTracker && skillStopwatch.isStarted() && !skillStopwatch.isSuspended()) {
             skillStopwatch.suspend();
         }
     }

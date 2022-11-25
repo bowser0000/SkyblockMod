@@ -1,10 +1,10 @@
 [
 {
-  "modid": "Danker's Skyblock Mod",
-  "name": "Danker's Skyblock Mod",
+  "modid": "${id}",
+  "name": "${name}",
   "description": "QOL changes that enhances your Hypixel Skyblock experience.",
   "version": "${version}",
-  "mcversion": "${mcversion}",
+  "mcversion": "${mcVersionStr}",
   "url": "https://github.com/bowser0000/SkyblockMod",
   "authorList": ["Danker"]
 }

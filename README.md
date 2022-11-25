@@ -93,9 +93,6 @@ Discord Server: https://discord.gg/QsEkNQS
 ## Commands
 - /dhelp - Returns this message in-game.
 - /dsm - Opens the GUI for Danker's Skyblock Mod.
-- /toggle <too many to list> - Toggles features. /toggle list returns values of every toggle.
-- /setkey <key> - Sets API key.
-- /getkey - Returns key set with /setkey and copies it to your clipboard.
 - /loot <zombie/spider/wolf/enderman/blaze/fishing/catacombs/mythological/> [winter/festival/spooky/ch/lava/trophy/f(1-7)/mm/session] - Returns loot received from slayer quests or fishing stats. /loot fishing winter returns winter sea creatures instead.
 - /display <zombie/spider/wolf/enderman/blaze/fishing/catacombs/mythological/ghosts/auto/off> [winter/festival/spooky/ch/lava/trophy/f(1-7)/mm/session] - Text display for trackers. /display fishing winter displays winter sea creatures instead. /display auto automatically displays the loot for the slayer quest you have active.
 - /resetloot <zombie/spider/wolf/enderman/blaze/fishing/catacombs/mythological/confirm/cancel> -  - Resets loot for trackers. /resetloot confirm confirms the reset.
@@ -112,20 +109,15 @@ Discord Server: https://discord.gg/QsEkNQS
 - /weight [player] [lily/farming] - Uses API to get weight of a person. If no name is provided, it checks yours. Adding lily uses lily's weight. Adding farming uses Kaeso's farming weight.
 - /importfishing - Imports your fishing stats from your latest profile to your fishing tracker using the API.
 - /sbplayers - Uses API to find how many players are on each Skyblock island.
-- /onlyslayer <zombie/spider/wolf/enderman/blaze> <1/2/3/4/5>
-- /skilltracker <start/stop/reset/show/hide> - Text display for skill xp/hour.
 - /reparty - Disbands and reparties all members in the party
 - /fairysouls - Check the fairysouls of a player
 - /lobbybank - Uses API to find the average bank total of the lobby, as well the three players with the highest total money in the bank (and purse).
-- /dsmmusic <stop/reload/volume> [dungeonboss/bloodroom/dungeon/p2/p3/p4/p5/hub/island/dungeonhub/farmingislands/goldmine/deepcaverns/dwarvenmines/crystalhollows/spidersden/crimsonisle/end/park] [1-100] - Stops, reloads or changes the volume of custom music.
 - /player [player] - Uses API to find skills, slayers, coins and weight of a player.
 - /reloadconfig - Reloads Danker's Skyblock Mod config.
 - /reloaddsmrepo - Reloads Danker's Skyblock Mod repository.
-- /dsmfarmlength <min coords> <max coords> - Sets coords to be used for end of farm alert.
 - /hotmof [player] - Uses API to find total powder and HotM tree of a person. If no name is provided, it checks yours.
 - /trophyfish [player] - Uses API to find trophy fish stats of a person. If no name is provided, it checks yours.
 - /stoplobby - Stops currently running /lobbyskills or /lobbybank command.
-- /powdertracker <start/stop/reset/show/hide> - Text display for powder/hour.
 </details>
 
 <details>

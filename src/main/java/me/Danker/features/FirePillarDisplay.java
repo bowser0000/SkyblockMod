@@ -3,7 +3,7 @@ package me.Danker.features;
 import me.Danker.DankersSkyblockMod;
 import me.Danker.commands.MoveCommand;
 import me.Danker.commands.ScaleCommand;
-import me.Danker.commands.ToggleCommand;
+import me.Danker.config.ModConfig;
 import me.Danker.events.RenderOverlayEvent;
 import me.Danker.handlers.TextRenderer;
 import me.Danker.utils.Utils;
@@ -27,7 +27,7 @@ public class FirePillarDisplay {
         World world = Minecraft.getMinecraft().theWorld;
         if (DankersSkyblockMod.tickAmount % 20 == 0) {
             pillar = null;
-            if (ToggleCommand.firePillar && world != null && Utils.tabLocation.equals("Crimson Isle") && Utils.isInScoreboard("Slay the boss!")) {
+            if (ModConfig.firePillar && world != null && Utils.tabLocation.equals("Crimson Isle") && Utils.isInScoreboard("Slay the boss!")) {
                 List<Entity> entities = world.getLoadedEntityList();
 
                 for (Entity entity : entities) {
@@ -43,7 +43,7 @@ public class FirePillarDisplay {
 
     @SubscribeEvent
     public void renderPlayerInfo(RenderOverlayEvent event) {
-        if (ToggleCommand.firePillar && pillar != null) {
+        if (ModConfig.firePillar && pillar != null) {
             new TextRenderer(Minecraft.getMinecraft(), Utils.removeBold(pillar.getName()), MoveCommand.firePillarXY[0], MoveCommand.firePillarXY[1], ScaleCommand.firePillarScale);
         }
     }

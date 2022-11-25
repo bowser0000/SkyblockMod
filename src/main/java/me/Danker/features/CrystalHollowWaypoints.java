@@ -1,7 +1,7 @@
 package me.Danker.features;
 
 import me.Danker.DankersSkyblockMod;
-import me.Danker.commands.ToggleCommand;
+import me.Danker.config.ModConfig;
 import me.Danker.gui.crystalhollowwaypoints.CrystalHollowAddWaypointGui;
 import me.Danker.handlers.ScoreboardHandler;
 import me.Danker.utils.RenderUtils;
@@ -25,6 +25,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class CrystalHollowWaypoints {
+
+    public static boolean toggled;
+    public static boolean autoWaypoints;
+    public static boolean autoPlayerWaypoints;
 
     public static List<Waypoint> waypoints = new ArrayList<>();
     public static Pattern skytilsPattern = Pattern.compile("(?<name>.*?): (?<x>\\d{1,3}) (?<y>\\d{1,3}) (?<z>\\d{1,3})");
@@ -50,7 +54,7 @@ public class CrystalHollowWaypoints {
         World world = mc.theWorld;
 
         if (DankersSkyblockMod.tickAmount % 20 == 0) {
-            if (ToggleCommand.crystalAutoWaypoints && Utils.tabLocation.equals("Crystal Hollows") && world != null) {
+            if (autoWaypoints && Utils.tabLocation.equals("Crystal Hollows") && world != null) {
                 boolean found = false;
                 List<String> scoreboard = ScoreboardHandler.getSidebarLines();
 
@@ -107,9 +111,9 @@ public class CrystalHollowWaypoints {
                     }
                 }
 
-                if (found && ToggleCommand.crystalHollowWaypoints) {
+                if (found && toggled) {
                     Waypoint latest = waypoints.get(waypoints.size() - 1);
-                    player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Added " + latest.location + " @ " + latest.getPos()));
+                    player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Added " + latest.location + " @ " + latest.getPos()));
                 }
             }
         }
@@ -126,12 +130,12 @@ public class CrystalHollowWaypoints {
         $SBECHWP:Mines of Divan@-673,117,426
         $SBECHWP:Khazad-dûm@-292,63,281\nFairy Grotto@-216,110,400\njungle temple@-525,110,395\nJungle Temple@-493,101,425\nMines of Divan@-673,117,426
         */
-        if (ToggleCommand.crystalHollowWaypoints && Utils.tabLocation.equals("Crystal Hollows")) {
+        if (toggled && Utils.tabLocation.equals("Crystal Hollows")) {
             if (!message.contains(player.getName())) {
                 if (message.contains(": $DSMCHWP:") || message.contains(": $SBECHWP:")) {
                     String waypoints = message.substring(message.lastIndexOf(":") + 1);
 
-                    if (ToggleCommand.crystalAutoPlayerWaypoints) {
+                    if (autoPlayerWaypoints) {
                         addDSMWaypoints(waypoints, true);
                         return;
                     }
@@ -145,7 +149,7 @@ public class CrystalHollowWaypoints {
                         } catch (InterruptedException ex) {
                             ex.printStackTrace();
                         }
-                        player.addChatMessage(new ChatComponentText("\n" + DankersSkyblockMod.MAIN_COLOUR + "DSM/SBE Crystal Hollows waypoints found. Click to add.\n").appendSibling(add));
+                        player.addChatMessage(new ChatComponentText("\n" + ModConfig.getColour(ModConfig.mainColour) + "DSM/SBE Crystal Hollows waypoints found. Click to add.\n").appendSibling(add));
                     }).start();
                 } else if (message.indexOf(":") != message.lastIndexOf(":")) {
                     String text = message.substring(message.indexOf(":") + 2);
@@ -157,7 +161,7 @@ public class CrystalHollowWaypoints {
                         String y = matcher.group("y");
                         String z = matcher.group("z");
 
-                        if (ToggleCommand.crystalAutoPlayerWaypoints) {
+                        if (autoPlayerWaypoints) {
                             addWaypoint(name, x, y, z);
                             return;
                         }
@@ -171,7 +175,7 @@ public class CrystalHollowWaypoints {
                             } catch (InterruptedException ex) {
                                 ex.printStackTrace();
                             }
-                            player.addChatMessage(new ChatComponentText("\n" + DankersSkyblockMod.MAIN_COLOUR + "Skytils Crystal Hollows waypoints found. Click to add.\n").appendSibling(add));
+                            player.addChatMessage(new ChatComponentText("\n" + ModConfig.getColour(ModConfig.mainColour) + "Skytils Crystal Hollows waypoints found. Click to add.\n").appendSibling(add));
                         }).start();
                     }
                 }
@@ -193,7 +197,7 @@ public class CrystalHollowWaypoints {
 
     @SubscribeEvent
     public void onWorldRender(RenderWorldLastEvent event) {
-        if (ToggleCommand.crystalHollowWaypoints && Utils.tabLocation.equals("Crystal Hollows")) {
+        if (toggled && Utils.tabLocation.equals("Crystal Hollows")) {
             for (Waypoint waypoint : waypoints) {
                 if (waypoint.toggled) RenderUtils.draw3DWaypointString(waypoint, event.partialTicks);
             }
@@ -250,7 +254,7 @@ public class CrystalHollowWaypoints {
         BlockPos pos = new BlockPos(Integer.parseInt(x), Integer.parseInt(y), Integer.parseInt(z));
         Waypoint waypoint = new Waypoint(name, pos);
         waypoints.add(waypoint);
-        Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Added " + waypoint.location + " @ " + waypoint.getPos()));
+        Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Added " + waypoint.location + " @ " + waypoint.getPos()));
     }
 
     public static void addDSMWaypoints(String list, boolean auto) {
@@ -276,7 +280,7 @@ public class CrystalHollowWaypoints {
             }
 
             waypoints.add(newWaypoint);
-            Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Added " + newWaypoint.location + " @ " + newWaypoint.getPos()));
+            Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Added " + newWaypoint.location + " @ " + newWaypoint.getPos()));
         }
     }
 

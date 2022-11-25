@@ -1,6 +1,6 @@
 package me.Danker.features.puzzlesolvers;
 
-import me.Danker.commands.ToggleCommand;
+import me.Danker.config.ModConfig;
 import me.Danker.events.PacketWriteEvent;
 import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;
@@ -21,7 +21,7 @@ public class ArrowTerminalSolver {
         Minecraft mc = Minecraft.getMinecraft();
         if (mc.thePlayer != event.entityPlayer) return;
 
-        if (ToggleCommand.itemFrameOnSeaLanternsToggled && Utils.inDungeons && event.target instanceof EntityItemFrame) {
+        if (ModConfig.itemFrameOnSeaLanterns && Utils.inDungeons && event.target instanceof EntityItemFrame) {
             EntityItemFrame itemFrame = (EntityItemFrame) event.target;
             ItemStack item = itemFrame.getDisplayedItem();
             if (item == null || item.getItem() != Items.arrow) return;
@@ -34,7 +34,7 @@ public class ArrowTerminalSolver {
 
     @SubscribeEvent
     public void onPacket(PacketWriteEvent event) {
-        if (ToggleCommand.itemFrameOnSeaLanternsToggled && Utils.inDungeons && event.packet instanceof C02PacketUseEntity) {
+        if (ModConfig.itemFrameOnSeaLanterns && Utils.inDungeons && event.packet instanceof C02PacketUseEntity) {
             Minecraft mc = Minecraft.getMinecraft();
             C02PacketUseEntity packet = (C02PacketUseEntity) event.packet;
             Entity entityHit = packet.getEntityFromWorld(mc.theWorld);

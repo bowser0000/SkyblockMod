@@ -2,14 +2,13 @@ package me.Danker.features;
 
 import me.Danker.commands.MoveCommand;
 import me.Danker.commands.ScaleCommand;
-import me.Danker.commands.ToggleCommand;
+import me.Danker.config.ModConfig;
 import me.Danker.events.RenderOverlayEvent;
 import me.Danker.handlers.TextRenderer;
 import me.Danker.utils.RenderUtils;
 import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
-import net.minecraft.client.gui.Gui;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
@@ -23,7 +22,6 @@ import org.lwjgl.opengl.GL11;
 public class BonzoMaskTimer {
 
     public static double nextBonzoUse = 0;
-    public static String BONZO_COLOR;
     public static final ResourceLocation BONZO_ICON = new ResourceLocation("dsm", "icons/bonzo.png");
 
     @SubscribeEvent
@@ -38,7 +36,7 @@ public class BonzoMaskTimer {
         if (!Utils.inDungeons) return;
         if (message.contains(":")) return;
 
-        if (ToggleCommand.bonzoTimerToggled && message.contains("Bonzo's Mask") && message.contains("saved your life!")) {
+        if (ModConfig.bonzoTimer && message.contains("Bonzo's Mask") && message.contains("saved your life!")) {
             double usedTime = System.currentTimeMillis() / 1000;
             Minecraft mc = Minecraft.getMinecraft();
             EntityPlayerSP player = mc.thePlayer;
@@ -59,7 +57,7 @@ public class BonzoMaskTimer {
 
     @SubscribeEvent
     public void renderPlayerInfo(RenderOverlayEvent event) {
-        if (ToggleCommand.bonzoTimerToggled && Utils.inDungeons) {
+        if (ModConfig.bonzoTimer && Utils.inDungeons) {
             Minecraft mc = Minecraft.getMinecraft();
             ItemStack helmetSlot = mc.thePlayer.getCurrentArmor(3);
             if ((helmetSlot != null && helmetSlot.getDisplayName().contains("Bonzo's Mask")) || nextBonzoUse > 0) {
@@ -77,7 +75,7 @@ public class BonzoMaskTimer {
                 if (nextBonzoUse - timeNow < 0) {
                     bonzoText = EnumChatFormatting.GREEN + "READY";
                 } else {
-                    bonzoText = BONZO_COLOR + Utils.getTimeBetween(timeNow, nextBonzoUse);
+                    bonzoText = ModConfig.getColour(ModConfig.bonzoTimerColour) + Utils.getTimeBetween(timeNow, nextBonzoUse);
                 }
 
                 new TextRenderer(mc, bonzoText, MoveCommand.bonzoTimerXY[0] + 20 * scale, MoveCommand.bonzoTimerXY[1] + 5 * scale, scale);

@@ -1,16 +1,16 @@
 package me.Danker.gui;
 
-import me.Danker.DankersSkyblockMod;
 import me.Danker.commands.MoveCommand;
 import me.Danker.commands.ScaleCommand;
-import me.Danker.commands.ToggleCommand;
-import me.Danker.features.*;
-import me.Danker.features.loot.LootDisplay;
+import me.Danker.config.ModConfig;
+import me.Danker.features.AutoDisplay;
+import me.Danker.features.BonzoMaskTimer;
+import me.Danker.features.CakeTimer;
+import me.Danker.features.GolemSpawningAlert;
 import me.Danker.gui.buttons.LocationButton;
 import me.Danker.handlers.ConfigHandler;
 import me.Danker.utils.RenderUtils;
 import me.Danker.utils.Utils;
-import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.EnumChatFormatting;
@@ -85,11 +85,11 @@ public class EditLocationsGui extends GuiScreen {
 							      EnumChatFormatting.YELLOW + 2 + "\n" +
 							      EnumChatFormatting.YELLOW + 1;
 		
-		String skillTrackerText = SkillTracker.SKILL_TRACKER_COLOUR + "Farming XP Earned: 462,425.3\n" +
-								  SkillTracker.SKILL_TRACKER_COLOUR + "Time Elapsed: " + Utils.getTimeBetween(0, 3602) + "\n" +
-								  SkillTracker.SKILL_TRACKER_COLOUR + "XP Per Hour: 462,168";
+		String skillTrackerText = ModConfig.getColour(ModConfig.skillTrackerColour) + "Farming XP Earned: 462,425.3\n" +
+								  ModConfig.getColour(ModConfig.skillTrackerColour) + "Time Elapsed: " + Utils.getTimeBetween(0, 3602) + "\n" +
+								  ModConfig.getColour(ModConfig.skillTrackerColour) + "XP Per Hour: 462,168";
 
-		String waterAnswerText = DankersSkyblockMod.MAIN_COLOUR + "The following levers must be down:\n" +
+		String waterAnswerText = ModConfig.getColour(ModConfig.mainColour) + "The following levers must be down:\n" +
 								 EnumChatFormatting.DARK_PURPLE + "Purple: " + EnumChatFormatting.WHITE + "Quartz, " + EnumChatFormatting.YELLOW + "Gold, " + EnumChatFormatting.GREEN + "Emerald, " + EnumChatFormatting.RED + "Clay\n" +
 								 EnumChatFormatting.GOLD + "Orange: " + EnumChatFormatting.YELLOW + "Gold, " + EnumChatFormatting.DARK_GRAY + "Coal\n" +
 								 EnumChatFormatting.BLUE + "Blue: " + EnumChatFormatting.WHITE + "Quartz, " + EnumChatFormatting.YELLOW + "Gold, " + EnumChatFormatting.DARK_GRAY + "Coal, " + EnumChatFormatting.GREEN + "Emerald, " + EnumChatFormatting.RED + "Clay\n" +
@@ -124,28 +124,28 @@ public class EditLocationsGui extends GuiScreen {
 								  EnumChatFormatting.GOLD + "5\n" +
 								  EnumChatFormatting.GOLD + "305 " + EnumChatFormatting.GRAY + "(" + EnumChatFormatting.GOLD + "S+" + EnumChatFormatting.GRAY + ")";
 
-		String minibossTimerText = EnumChatFormatting.GRAY + "Bladesoul: " + CrimsonMinibossTimer.TIMER_COLOUR + "0m24s" + "\n" +
-								   EnumChatFormatting.RED + "Barbarian Duke: " + CrimsonMinibossTimer.TIMER_COLOUR + "1m27s" + "\n" +
-								   EnumChatFormatting.DARK_PURPLE + "Mage Outlaw: " + CrimsonMinibossTimer.TIMER_COLOUR + "2m0s" + "\n" +
-								   EnumChatFormatting.GOLD + "Ashfang: " + CrimsonMinibossTimer.UNKNOWN_COLOUR + "?" + "\n" +
-								   EnumChatFormatting.DARK_RED + "Magma Boss: " + CrimsonMinibossTimer.UNKNOWN_COLOUR + "?";
+		String minibossTimerText = EnumChatFormatting.GRAY + "Bladesoul: " + ModConfig.getColour(ModConfig.minibossTimerColour) + "0m24s" + "\n" +
+								   EnumChatFormatting.RED + "Barbarian Duke: " + ModConfig.getColour(ModConfig.minibossTimerColour) + "1m27s" + "\n" +
+								   EnumChatFormatting.DARK_PURPLE + "Mage Outlaw: " + ModConfig.getColour(ModConfig.minibossTimerColour) + "2m0s" + "\n" +
+								   EnumChatFormatting.GOLD + "Ashfang: " + ModConfig.getColour(ModConfig.minibossTimerUnknownColour) + "?" + "\n" +
+								   EnumChatFormatting.DARK_RED + "Magma Boss: " + ModConfig.getColour(ModConfig.minibossTimerUnknownColour) + "?";
 
 		String powderTrackerText = EnumChatFormatting.DARK_GREEN + "Mithril Gained: 74,264\n" +
 								   EnumChatFormatting.DARK_GREEN + "Mithril Per Hour: 107,326\n" +
 								   EnumChatFormatting.LIGHT_PURPLE + "Gemstone Gained: 101,299\n" +
 								   EnumChatFormatting.LIGHT_PURPLE + "Gemstone Per Hour: 146,397\n" +
-								   PowderTracker.POWDER_TRACKER_COLOUR + "Time Elapsed: " + Utils.getTimeBetween(0, 2491);
+								   ModConfig.getColour(ModConfig.powderTrackerColour) + "Time Elapsed: " + Utils.getTimeBetween(0, 2491);
 
 		display = new LocationButton(MoveCommand.displayXY[0], MoveCommand.displayXY[1], ScaleCommand.displayScale, displayText, displayNums, 110);
 		dungeonTimer = new LocationButton(MoveCommand.dungeonTimerXY[0], MoveCommand.dungeonTimerXY[1], ScaleCommand.dungeonTimerScale, dungeonTimerText, dungeonTimerNums, 80);
-		coords = new LocationButton(MoveCommand.coordsXY[0], MoveCommand.coordsXY[1], ScaleCommand.coordsScale, NoF3Coords.COORDS_COLOUR + "74 / 14 / -26 (141.1 / 6.7)");
-		skill50 = new LocationButton(MoveCommand.skill50XY[0], MoveCommand.skill50XY[1], ScaleCommand.skill50Scale, Skill50Display.SKILL_50_COLOUR + "+3.5 Farming (28,882,117.7/55,172,425) 52.34%");
+		coords = new LocationButton(MoveCommand.coordsXY[0], MoveCommand.coordsXY[1], ScaleCommand.coordsScale, ModConfig.getColour(ModConfig.coordsColour) + "74 / 14 / -26 (141.1 / 6.7)");
+		skill50 = new LocationButton(MoveCommand.skill50XY[0], MoveCommand.skill50XY[1], ScaleCommand.skill50Scale, ModConfig.getColour(ModConfig.maxSkillDisplayColour) + "+3.5 Farming (28,882,117.7/55,172,425) 52.34%");
 		lividHP = new LocationButton(MoveCommand.lividHpXY[0], MoveCommand.lividHpXY[1], ScaleCommand.lividHpScale, EnumChatFormatting.WHITE + "﴾ Livid " + EnumChatFormatting.YELLOW + "6.9M" + EnumChatFormatting.RED + "❤ " + EnumChatFormatting.WHITE + "﴿");
-		cakeTimer = new LocationButton(MoveCommand.cakeTimerXY[0], (int) (MoveCommand.cakeTimerXY[1] + 5 * ScaleCommand.cakeTimerScale), ScaleCommand.cakeTimerScale, CakeTimer.CAKE_COLOUR + "     11h16m");
+		cakeTimer = new LocationButton(MoveCommand.cakeTimerXY[0], (int) (MoveCommand.cakeTimerXY[1] + 5 * ScaleCommand.cakeTimerScale), ScaleCommand.cakeTimerScale, ModConfig.getColour(ModConfig.cakeColour) + "     11h16m");
 		skillTracker = new LocationButton(MoveCommand.skillTrackerXY[0], MoveCommand.skillTrackerXY[1], ScaleCommand.skillTrackerScale, skillTrackerText);
 		waterAnswer = new LocationButton(MoveCommand.waterAnswerXY[0], MoveCommand.waterAnswerXY[1], ScaleCommand.waterAnswerScale, waterAnswerText);
-		bonzoTimer = new LocationButton(MoveCommand.bonzoTimerXY[0], (int) (MoveCommand.bonzoTimerXY[1] + 5 * ScaleCommand.bonzoTimerScale), ScaleCommand.bonzoTimerScale, BonzoMaskTimer.BONZO_COLOR + "     3m30s");
-		golemTimer = new LocationButton(MoveCommand.golemTimerXY[0], (int) (MoveCommand.golemTimerXY[1] + 5 * ScaleCommand.golemTimerScale), ScaleCommand.golemTimerScale, GolemSpawningAlert.GOLEM_COLOUR + "     20s");
+		bonzoTimer = new LocationButton(MoveCommand.bonzoTimerXY[0], (int) (MoveCommand.bonzoTimerXY[1] + 5 * ScaleCommand.bonzoTimerScale), ScaleCommand.bonzoTimerScale, ModConfig.getColour(ModConfig.bonzoTimerColour) + "     3m30s");
+		golemTimer = new LocationButton(MoveCommand.golemTimerXY[0], (int) (MoveCommand.golemTimerXY[1] + 5 * ScaleCommand.golemTimerScale), ScaleCommand.golemTimerScale, ModConfig.getColour(ModConfig.golemAlertColour) + "     20s");
 		teammatesInRadius = new LocationButton(MoveCommand.teammatesInRadiusXY[0], MoveCommand.teammatesInRadiusXY[1], ScaleCommand.teammatesInRadiusScale, teammatesInRadiusText);
 		giantHP = new LocationButton(MoveCommand.giantHPXY[0], MoveCommand.giantHPXY[1], ScaleCommand.giantHPScale, giantHPText);
 		abilityCooldown = new LocationButton(MoveCommand.abilityCooldownsXY[0], MoveCommand.abilityCooldownsXY[1], ScaleCommand.abilityCooldownsScale, abilityCooldownText);
@@ -154,23 +154,23 @@ public class EditLocationsGui extends GuiScreen {
 		minibossTimer = new LocationButton(MoveCommand.minibossTimerXY[0], MoveCommand.minibossTimerXY[1], ScaleCommand.minibossTimerScale, minibossTimerText);
 		powderTracker = new LocationButton(MoveCommand.powderTrackerXY[0], MoveCommand.powderTrackerXY[1], ScaleCommand.powderTrackerScale, powderTrackerText);
 
-		if (!ToggleCommand.onlyEditEnabled || ToggleCommand.coordsToggled) this.buttonList.add(coords);
-		if (!ToggleCommand.onlyEditEnabled || ToggleCommand.dungeonTimerToggled) this.buttonList.add(dungeonTimer);
-		if (!ToggleCommand.onlyEditEnabled || ToggleCommand.lividSolverToggled) this.buttonList.add(lividHP);
-		if (!ToggleCommand.onlyEditEnabled || ToggleCommand.cakeTimerToggled) this.buttonList.add(cakeTimer);
-		if (!ToggleCommand.onlyEditEnabled || SkillTracker.showSkillTracker) this.buttonList.add(skillTracker);
-		if (!ToggleCommand.onlyEditEnabled || ToggleCommand.waterToggled) this.buttonList.add(waterAnswer);
-		if (!ToggleCommand.onlyEditEnabled || ToggleCommand.bonzoTimerToggled) this.buttonList.add(bonzoTimer);
-		if (!ToggleCommand.onlyEditEnabled || !LootDisplay.display.equals("off")) this.buttonList.add(display);
-		if (!ToggleCommand.onlyEditEnabled || ToggleCommand.skill50DisplayToggled) this.buttonList.add(skill50);
-		if (!ToggleCommand.onlyEditEnabled || ToggleCommand.golemAlertToggled) this.buttonList.add(golemTimer);
-		if (!ToggleCommand.onlyEditEnabled || ToggleCommand.teammatesInRadius) this.buttonList.add(teammatesInRadius);
-		if (!ToggleCommand.onlyEditEnabled || ToggleCommand.giantHP) this.buttonList.add(giantHP);
-		if (!ToggleCommand.onlyEditEnabled || ToggleCommand.abilityCooldowns) this.buttonList.add(abilityCooldown);
-		if (!ToggleCommand.onlyEditEnabled || ToggleCommand.dungeonScore) this.buttonList.add(dungeonScore);
-		if (!ToggleCommand.onlyEditEnabled || ToggleCommand.firePillar) this.buttonList.add(firePillar);
-		if (!ToggleCommand.onlyEditEnabled || ToggleCommand.crimsonMinibossTimer) this.buttonList.add(minibossTimer);
-		if (!ToggleCommand.onlyEditEnabled || PowderTracker.showPowderTracker) this.buttonList.add(powderTracker);
+		if (!ModConfig.onlyEditEnabled || ModConfig.coords) this.buttonList.add(coords);
+		if (!ModConfig.onlyEditEnabled || ModConfig.dungeonTimer) this.buttonList.add(dungeonTimer);
+		if (!ModConfig.onlyEditEnabled || ModConfig.lividSolver) this.buttonList.add(lividHP);
+		if (!ModConfig.onlyEditEnabled || ModConfig.cakeTimer) this.buttonList.add(cakeTimer);
+		if (!ModConfig.onlyEditEnabled || ModConfig.showSkillTracker) this.buttonList.add(skillTracker);
+		if (!ModConfig.onlyEditEnabled || ModConfig.water) this.buttonList.add(waterAnswer);
+		if (!ModConfig.onlyEditEnabled || ModConfig.bonzoTimer) this.buttonList.add(bonzoTimer);
+		if (!ModConfig.onlyEditEnabled || (!ModConfig.getDisplay().equals("Off") && !AutoDisplay.display.equals("Off"))) this.buttonList.add(display);
+		if (!ModConfig.onlyEditEnabled || ModConfig.maxSkillDisplay) this.buttonList.add(skill50);
+		if (!ModConfig.onlyEditEnabled || ModConfig.golemAlerts) this.buttonList.add(golemTimer);
+		if (!ModConfig.onlyEditEnabled || ModConfig.teammatesInRadius) this.buttonList.add(teammatesInRadius);
+		if (!ModConfig.onlyEditEnabled || ModConfig.giantHP) this.buttonList.add(giantHP);
+		if (!ModConfig.onlyEditEnabled || ModConfig.abilityCooldowns) this.buttonList.add(abilityCooldown);
+		if (!ModConfig.onlyEditEnabled || ModConfig.dungeonScore) this.buttonList.add(dungeonScore);
+		if (!ModConfig.onlyEditEnabled || ModConfig.firePillar) this.buttonList.add(firePillar);
+		if (!ModConfig.onlyEditEnabled || ModConfig.crimsonMinibossTimer) this.buttonList.add(minibossTimer);
+		if (!ModConfig.onlyEditEnabled || ModConfig.showPowderTracker) this.buttonList.add(powderTracker);
 	}
 	
 	@Override
@@ -178,7 +178,7 @@ public class EditLocationsGui extends GuiScreen {
 		this.drawDefaultBackground();
 		mouseMoved(mouseX, mouseY);
 
-		if (!ToggleCommand.onlyEditEnabled || ToggleCommand.cakeTimerToggled) {
+		if (!ModConfig.onlyEditEnabled || ModConfig.cakeTimer) {
 			double cakeTimerScale = ScaleCommand.cakeTimerScale;
 			double cakeTimerScaleReset = Math.pow(cakeTimerScale, -1);
 			GL11.glScaled(cakeTimerScale, cakeTimerScale, cakeTimerScale);
@@ -187,7 +187,7 @@ public class EditLocationsGui extends GuiScreen {
 			GL11.glScaled(cakeTimerScaleReset, cakeTimerScaleReset, cakeTimerScaleReset);
 		}
 
-		if (!ToggleCommand.onlyEditEnabled || ToggleCommand.bonzoTimerToggled) {
+		if (!ModConfig.onlyEditEnabled || ModConfig.bonzoTimer) {
 			double bonzoTimerScale = ScaleCommand.bonzoTimerScale;
 			double bonzoTimerScaleReset = Math.pow(bonzoTimerScale, -1);
 			GL11.glScaled(bonzoTimerScale, bonzoTimerScale, bonzoTimerScale);
@@ -196,7 +196,7 @@ public class EditLocationsGui extends GuiScreen {
 			GL11.glScaled(bonzoTimerScaleReset, bonzoTimerScaleReset, bonzoTimerScaleReset);
 		}
 
-		if (!ToggleCommand.onlyEditEnabled || ToggleCommand.golemAlertToggled) {
+		if (!ModConfig.onlyEditEnabled || ModConfig.golemAlerts) {
 			double golemTimerScale = ScaleCommand.golemTimerScale;
 			double golemTimerScaleReset = Math.pow(golemTimerScale, -1);
 			GL11.glScaled(golemTimerScale, golemTimerScale, golemTimerScale);

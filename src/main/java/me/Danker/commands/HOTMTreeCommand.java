@@ -4,6 +4,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import me.Danker.DankersSkyblockMod;
+import me.Danker.config.ModConfig;
 import me.Danker.containers.GuiChestDynamic;
 import me.Danker.handlers.APIHandler;
 import me.Danker.utils.Utils;
@@ -52,7 +53,7 @@ public class HOTMTreeCommand extends CommandBase {
         new Thread(() -> {
             EntityPlayer player = (EntityPlayer) arg0;
 
-            player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Checking HotM tree of " + DankersSkyblockMod.SECONDARY_COLOUR + arg1[0]));
+            player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Checking HotM tree of " + ModConfig.getColour(ModConfig.secondaryColour) + arg1[0]));
 
             System.out.println("Fetching profile...");
             String profileURL = "https://sky.shiiyu.moe/api/v2/profile/" + arg1[0];

@@ -1,6 +1,6 @@
 package me.Danker.features.loot;
 
-import me.Danker.commands.ToggleCommand;
+import me.Danker.config.ModConfig;
 import me.Danker.handlers.ConfigHandler;
 import me.Danker.utils.Utils;
 import net.minecraft.util.EnumChatFormatting;
@@ -82,19 +82,19 @@ public class SpiderTracker {
             swatters++;
             swattersSession++;
             ConfigHandler.writeIntConfig("spider", "swatter", swatters);
-            if (ToggleCommand.rngesusAlerts) Utils.createTitle(EnumChatFormatting.LIGHT_PURPLE + "FLY SWATTER!", 3);
+            if (ModConfig.rngesusAlerts) Utils.createTitle(EnumChatFormatting.LIGHT_PURPLE + "FLY SWATTER!", 3);
         } else if (message.contains("CRAZY RARE DROP!  (Tarantula Talisman")) {
             rng = true;
             talismans++;
             talismansSession++;
             ConfigHandler.writeIntConfig("spider", "talisman", talismans);
-            if (ToggleCommand.rngesusAlerts) Utils.createTitle(EnumChatFormatting.DARK_PURPLE + "TARANTULA TALISMAN!", 3);
+            if (ModConfig.rngesusAlerts) Utils.createTitle(EnumChatFormatting.DARK_PURPLE + "TARANTULA TALISMAN!", 3);
         } else if (message.contains("CRAZY RARE DROP!  (Digested Mosquito)")) {
             rng = true;
             mosquitos++;
             mosquitosSession++;
             ConfigHandler.writeIntConfig("spider", "mosquito", mosquitos);
-            if (ToggleCommand.rngesusAlerts) Utils.createTitle(EnumChatFormatting.GOLD + "DIGESTED MOSQUITO!", 5);
+            if (ModConfig.rngesusAlerts) Utils.createTitle(EnumChatFormatting.GOLD + "DIGESTED MOSQUITO!", 5);
         }
 
         if (rng) {

@@ -3,7 +3,7 @@ package me.Danker.features;
 import me.Danker.DankersSkyblockMod;
 import me.Danker.commands.MoveCommand;
 import me.Danker.commands.ScaleCommand;
-import me.Danker.commands.ToggleCommand;
+import me.Danker.config.ModConfig;
 import me.Danker.events.RenderOverlayEvent;
 import me.Danker.handlers.TextRenderer;
 import me.Danker.utils.Utils;
@@ -33,7 +33,7 @@ public class DungeonScore {
     public void onChat(ClientChatReceivedEvent event) {
         String message = StringUtils.stripControlCodes(event.message.getUnformattedText());
 
-        if (!ToggleCommand.dungeonScore || !Utils.inDungeons) return;
+        if (!ModConfig.dungeonScore || !Utils.inDungeons) return;
 
         if (message.contains("PUZZLE FAIL! ") || message.contains("chose the wrong answer! I shall never forget this moment")) {
             failedPuzzles++;
@@ -50,7 +50,7 @@ public class DungeonScore {
     public void onTick(TickEvent.ClientTickEvent event) {
         if (event.phase != TickEvent.Phase.START) return;
 
-        if (!ToggleCommand.dungeonScore || !Utils.inDungeons) return;
+        if (!ModConfig.dungeonScore || !Utils.inDungeons) return;
 
         if (DankersSkyblockMod.tickAmount % 20 == 0) {
             int missingPuzzles = 0;
@@ -150,7 +150,7 @@ public class DungeonScore {
 
     @SubscribeEvent
     public void renderPlayerInfo(RenderOverlayEvent event) {
-        if (ToggleCommand.dungeonScore && Utils.inDungeons) {
+        if (ModConfig.dungeonScore && Utils.inDungeons) {
             Minecraft mc = Minecraft.getMinecraft();
 
             int totalScore = skillScore + exploreScore + timeScore + bonusScore;

@@ -2,9 +2,8 @@ package me.Danker.commands;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import me.Danker.DankersSkyblockMod;
+import me.Danker.config.ModConfig;
 import me.Danker.handlers.APIHandler;
-import me.Danker.handlers.ConfigHandler;
 import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.network.NetworkPlayerInfo;
@@ -48,9 +47,9 @@ public class LobbyBankCommand extends CommandBase {
         Map<String, Double> unsortedBankList = new HashMap<>();
         ArrayList<Double> lobbyBanks = new ArrayList<>();
         // Check key
-        String key = ConfigHandler.getString("api", "APIKey");
+        String key = ModConfig.apiKey;
         if (key.equals("")) {
-            playerSP.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "API key not set. Use /setkey."));
+            playerSP.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "API key not set. Use /setkey."));
             return;
         }
 
@@ -58,7 +57,7 @@ public class LobbyBankCommand extends CommandBase {
             try {
                 // Create deep copy of players to prevent passing reference and ConcurrentModificationException
                 Collection<NetworkPlayerInfo> players = new ArrayList<>(Minecraft.getMinecraft().getNetHandler().getPlayerInfoMap());
-                playerSP.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Checking bank of lobby. Estimated time: " + (int) (Utils.getMatchingPlayers("").size() * 1.2 + 1) + " seconds."));
+                playerSP.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Checking bank of lobby. Estimated time: " + (int) (Utils.getMatchingPlayers("").size() * 1.2 + 1) + " seconds."));
                 // Send request every .6 seconds, leaving room for another 20 requests per minute
 
                 for (final NetworkPlayerInfo player : players) {
@@ -115,7 +114,7 @@ public class LobbyBankCommand extends CommandBase {
                 String top3 = "";
                 NumberFormat nf = NumberFormat.getIntegerInstance(Locale.US);
                 for (int i = 0; i < 3 && i < sortedBankListKeys.length; i++) {
-                    top3 += "\n " + EnumChatFormatting.AQUA + sortedBankListKeys[i] + ": " + DankersSkyblockMod.SKILL_AVERAGE_COLOUR + EnumChatFormatting.BOLD + nf.format(Math.round(sortedBankList.get(sortedBankListKeys[i])));
+                    top3 += "\n " + EnumChatFormatting.AQUA + sortedBankListKeys[i] + ": " + ModConfig.getColour(ModConfig.skillAverageColour) + EnumChatFormatting.BOLD + nf.format(Math.round(sortedBankList.get(sortedBankListKeys[i])));
                 }
 
                 // Get lobby bank
@@ -126,10 +125,10 @@ public class LobbyBankCommand extends CommandBase {
                 lobbyBank = (double) Math.round((lobbyBank / lobbyBanks.size()) * 100) / 100;
 
                 // Finally say bank lobby avg and highest bank users
-                playerSP.addChatMessage(new ChatComponentText(DankersSkyblockMod.DELIMITER_COLOUR + "" + EnumChatFormatting.BOLD + "-------------------\n" +
-                        DankersSkyblockMod.TYPE_COLOUR + " Lobby Bank Average: " + DankersSkyblockMod.SKILL_AVERAGE_COLOUR + EnumChatFormatting.BOLD + nf.format(Math.round(lobbyBank)) + "\n" +
-                        DankersSkyblockMod.TYPE_COLOUR + " Highest Bank Averages:" + top3 + "\n" +
-                        DankersSkyblockMod.DELIMITER_COLOUR + "" + EnumChatFormatting.BOLD + " -------------------"));
+                playerSP.addChatMessage(new ChatComponentText(EnumChatFormatting.BOLD + ModConfig.getColour(ModConfig.delimiterColour) + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+                        ModConfig.getColour(ModConfig.typeColour) + " Lobby Bank Average: " + ModConfig.getColour(ModConfig.skillAverageColour) + EnumChatFormatting.BOLD + nf.format(Math.round(lobbyBank)) + "\n" +
+                        ModConfig.getColour(ModConfig.typeColour) + " Highest Bank Averages:" + top3 + "\n" +
+                        EnumChatFormatting.BOLD + ModConfig.getColour(ModConfig.delimiterColour) + "" + EnumChatFormatting.BOLD + " -------------------"));
 
 
             } catch (InterruptedException ex) {

@@ -2,7 +2,7 @@ package me.Danker.features;
 
 import me.Danker.commands.MoveCommand;
 import me.Danker.commands.ScaleCommand;
-import me.Danker.commands.ToggleCommand;
+import me.Danker.config.ModConfig;
 import me.Danker.events.RenderOverlayEvent;
 import me.Danker.handlers.TextRenderer;
 import me.Danker.utils.Utils;
@@ -20,8 +20,6 @@ public class CrimsonMinibossTimer {
     static double outlaw;
     static double magma;
     static double ashfang;
-    public static String TIMER_COLOUR;
-    public static String UNKNOWN_COLOUR;
 
     @SubscribeEvent
     public void onWorldChange(WorldEvent.Load event) {
@@ -38,7 +36,7 @@ public class CrimsonMinibossTimer {
 
         if (message.contains(":")) return;
 
-        if (ToggleCommand.crimsonMinibossTimer && Utils.tabLocation.equals("Crimson Isle")) {
+        if (ModConfig.crimsonMinibossTimer && Utils.tabLocation.equals("Crimson Isle")) {
             if (message.contains("BLADESOUL DOWN!")) {
                 bladesoul = System.currentTimeMillis() / 1000 + 120;
             } else if (message.contains("BARBARIAN DUKE X DOWN!")) {
@@ -55,7 +53,7 @@ public class CrimsonMinibossTimer {
 
     @SubscribeEvent
     public void renderPlayerInfo(RenderOverlayEvent event) {
-        if (ToggleCommand.crimsonMinibossTimer && Utils.tabLocation.equals("Crimson Isle")) {
+        if (ModConfig.crimsonMinibossTimer && Utils.tabLocation.equals("Crimson Isle")) {
             double timeNow = System.currentTimeMillis() / 1000;
 
             String timerText = EnumChatFormatting.GRAY + "Bladesoul: " + getTime(timeNow, bladesoul) + "\n" +
@@ -69,11 +67,11 @@ public class CrimsonMinibossTimer {
     }
 
     static String getTime(double timeNow, double bossTime) {
-        if (timeNow == bossTime) Minecraft.getMinecraft().thePlayer.playSound(Utils.TITLE_SOUND, 1, (float) 0.5);
+        if (timeNow == bossTime) Minecraft.getMinecraft().thePlayer.playSound(ModConfig.alertNoise, 1, (float) 0.5);
         if (timeNow < bossTime) {
-            return TIMER_COLOUR + Utils.getTimeBetween(timeNow, bossTime);
+            return ModConfig.getColour(ModConfig.minibossTimerColour) + Utils.getTimeBetween(timeNow, bossTime);
         }
-        return UNKNOWN_COLOUR + "?";
+        return ModConfig.getColour(ModConfig.minibossTimerUnknownColour) + "?";
     }
 
 }

@@ -1,7 +1,7 @@
 package me.Danker.features;
 
 import me.Danker.DankersSkyblockMod;
-import me.Danker.commands.ToggleCommand;
+import me.Danker.config.ModConfig;
 import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -37,7 +37,7 @@ public class FasterMaddoxCalling {
                     lastMaddoxTime = System.currentTimeMillis() / 1000;
                 }
             }
-            if (ToggleCommand.chatMaddoxToggled) Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Open chat then click anywhere on-screen to open Maddox"));
+            if (ModConfig.chatMaddox) Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Open chat then click anywhere on-screen to open Maddox"));
         }
     }
 
@@ -45,7 +45,7 @@ public class FasterMaddoxCalling {
     public void onMouseInputPost(GuiScreenEvent.MouseInputEvent.Post event) {
         if (!Utils.inSkyblock) return;
         if (Mouse.getEventButton() == 0 && event.gui instanceof GuiChat) {
-            if (ToggleCommand.chatMaddoxToggled && System.currentTimeMillis() / 1000 - lastMaddoxTime < 10) {
+            if (ModConfig.chatMaddox && System.currentTimeMillis() / 1000 - lastMaddoxTime < 10) {
                 Minecraft.getMinecraft().thePlayer.sendChatMessage(lastMaddoxCommand);
             }
         }

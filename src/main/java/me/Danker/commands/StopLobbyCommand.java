@@ -1,6 +1,6 @@
 package me.Danker.commands;
 
-import me.Danker.DankersSkyblockMod;
+import me.Danker.config.ModConfig;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
@@ -41,11 +41,11 @@ public class StopLobbyCommand extends CommandBase {
         EntityPlayer player = (EntityPlayer) sender;
         if (LobbySkillsCommand.mainThread != null && LobbySkillsCommand.mainThread.isAlive()) {
             LobbySkillsCommand.mainThread.interrupt();
-            player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Stopped running /lobbyskills. See logs for progress."));
+            player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Stopped running /lobbyskills. See logs for progress."));
         }
         if (LobbyBankCommand.mainThread != null && LobbyBankCommand.mainThread.isAlive()) {
             LobbyBankCommand.mainThread.interrupt();
-            player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Stopped running /lobbybank. See logs for progress."));
+            player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Stopped running /lobbybank. See logs for progress."));
         }
     }
 

@@ -3,7 +3,7 @@ package me.Danker.features;
 import me.Danker.DankersSkyblockMod;
 import me.Danker.commands.MoveCommand;
 import me.Danker.commands.ScaleCommand;
-import me.Danker.commands.ToggleCommand;
+import me.Danker.config.ModConfig;
 import me.Danker.events.RenderOverlayEvent;
 import me.Danker.handlers.TextRenderer;
 import me.Danker.utils.Utils;
@@ -31,7 +31,7 @@ public class TetherDisplay {
         EntityPlayer player = mc.thePlayer;
         World world = mc.theWorld;
         if (DankersSkyblockMod.tickAmount % 10 == 0) {
-            if (ToggleCommand.teammatesInRadius && Utils.inDungeons && player != null && world != null) {
+            if (ModConfig.teammatesInRadius && Utils.inDungeons && player != null && world != null) {
                 playersInRadius.clear();
                 List<EntityPlayer> teammates = world.getEntitiesWithinAABB(EntityOtherPlayerMP.class, new AxisAlignedBB(player.posX - 30, player.posY - 30, player.posZ - 30, player.posX + 30, player.posY + 30, player.posZ + 30));
 
@@ -46,7 +46,7 @@ public class TetherDisplay {
 
     @SubscribeEvent
     public void renderPlayerInfo(RenderOverlayEvent event) {
-        if (ToggleCommand.teammatesInRadius && Utils.inDungeons) {
+        if (ModConfig.teammatesInRadius && Utils.inDungeons) {
             String teammates;
             if (playersInRadius.size() > 0) {
                 teammates = String.join("\n", playersInRadius);

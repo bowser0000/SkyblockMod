@@ -1,7 +1,7 @@
 package me.Danker.commands;
 
 import com.google.gson.JsonObject;
-import me.Danker.DankersSkyblockMod;
+import me.Danker.config.ModConfig;
 import me.Danker.features.loot.FishingTracker;
 import me.Danker.features.loot.TrophyFishTracker;
 import me.Danker.handlers.APIHandler;
@@ -41,13 +41,13 @@ public class ImportFishingCommand extends CommandBase {
 			EntityPlayer player = (EntityPlayer) arg0;
 
 			// Check key
-			String key = ConfigHandler.getString("api", "APIKey");
+			String key = ModConfig.apiKey;
 			if (key.equals("")) {
-				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "API key not set. Use /setkey."));
+				player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "API key not set. Use /setkey."));
 				return;
 			}
 
-			player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Importing your fishing stats..."));
+			player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Importing your fishing stats..."));
 
 			// Get UUID for Hypixel API requests
 			String uuid = player.getUniqueID().toString().replaceAll("[\\-]", "");
@@ -60,7 +60,7 @@ public class ImportFishingCommand extends CommandBase {
 			JsonObject profileResponse = APIHandler.getResponse(profileURL, true);
 			if (!profileResponse.get("success").getAsBoolean()) {
 				String reason = profileResponse.get("cause").getAsString();
-				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Failed with reason: " + reason));
+				player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "Failed with reason: " + reason));
 				return;
 			}
 
@@ -197,7 +197,7 @@ public class ImportFishingCommand extends CommandBase {
 			TrophyFishTracker.fish.add("Golden Fish", Utils.getTrophyFromAPI(trophyObject, "golden_fish"));
 			TrophyFishTracker.save();
 
-			player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Fishing stats imported."));
+			player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Fishing stats imported."));
 		}).start();
 	}
 

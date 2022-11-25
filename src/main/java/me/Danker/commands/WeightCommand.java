@@ -4,8 +4,8 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import me.Danker.DankersSkyblockMod;
+import me.Danker.config.ModConfig;
 import me.Danker.handlers.APIHandler;
-import me.Danker.handlers.ConfigHandler;
 import me.Danker.utils.Utils;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
@@ -76,9 +76,9 @@ public class WeightCommand extends CommandBase {
             EntityPlayer player = (EntityPlayer) arg0;
 
             // Check key
-            String key = ConfigHandler.getString("api", "APIKey");
+            String key = ModConfig.apiKey;
             if (key.equals("")) {
-                player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "API key not set. Use /setkey."));
+                player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "API key not set. Use /setkey."));
                 return;
             }
 
@@ -88,10 +88,10 @@ public class WeightCommand extends CommandBase {
             if (arg1.length == 0) {
                 username = player.getName();
                 uuid = player.getUniqueID().toString().replaceAll("[\\-]", "");
-                player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Checking weight of " + DankersSkyblockMod.SECONDARY_COLOUR + username));
+                player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Checking weight of " + ModConfig.getColour(ModConfig.secondaryColour) + username));
             } else {
                 username = arg1[0];
-                player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Checking weight of " + DankersSkyblockMod.SECONDARY_COLOUR + username));
+                player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Checking weight of " + ModConfig.getColour(ModConfig.secondaryColour) + username));
                 uuid = APIHandler.getUUID(username);
             }
 
@@ -101,7 +101,7 @@ public class WeightCommand extends CommandBase {
                 JsonObject weightResponse = APIHandler.getResponse(weightURL, true);
                 if (weightResponse.has("error")) {
                     String reason = weightResponse.get("error").getAsString();
-                    player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Failed with reason: " + reason));
+                    player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "Failed with reason: " + reason));
                     return;
                 }
 
@@ -138,39 +138,39 @@ public class WeightCommand extends CommandBase {
                 double tankWeight = data.get("dungeon").getAsJsonObject().get("classes").getAsJsonObject().get("tank").getAsJsonObject().get("weight").getAsDouble();
 
                 NumberFormat nf = NumberFormat.getNumberInstance(Locale.US);
-                player.addChatMessage(new ChatComponentText(DankersSkyblockMod.DELIMITER_COLOUR + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+                player.addChatMessage(new ChatComponentText(EnumChatFormatting.BOLD + ModConfig.getColour(ModConfig.delimiterColour) + "" + EnumChatFormatting.BOLD + "-------------------\n" +
                         EnumChatFormatting.AQUA + " " + username + "'s Weight:\n" +
-                        DankersSkyblockMod.TYPE_COLOUR + " Total Weight: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(weight) + "\n\n" +
-                        DankersSkyblockMod.TYPE_COLOUR + " Skill Weight: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(skillWeight) + "\n" +
-                        DankersSkyblockMod.TYPE_COLOUR + "   Farming Weight: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(farmingWeight) + "\n" +
-                        DankersSkyblockMod.TYPE_COLOUR + "   Mining Weight: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(miningWeight) + "\n" +
-                        DankersSkyblockMod.TYPE_COLOUR + "   Combat Weight: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(combatWeight) + "\n" +
-                        DankersSkyblockMod.TYPE_COLOUR + "   Foraging Weight: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(foragingWeight) + "\n" +
-                        DankersSkyblockMod.TYPE_COLOUR + "   Fishing Weight: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(fishingWeight) + "\n" +
-                        DankersSkyblockMod.TYPE_COLOUR + "   Enchanting Weight: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(enchantingWeight) + "\n" +
-                        DankersSkyblockMod.TYPE_COLOUR + "   Alchemy Weight: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(alchemyWeight) + "\n" +
-                        DankersSkyblockMod.TYPE_COLOUR + "   Taming Weight: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(tamingWeight) + "\n\n" +
-                        DankersSkyblockMod.TYPE_COLOUR + " Slayers Weight: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(slayerWeight) + "\n" +
-                        DankersSkyblockMod.TYPE_COLOUR + "   Zombie Weight: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(zombieWeight) + "\n" +
-                        DankersSkyblockMod.TYPE_COLOUR + "   Spider Weight: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(spiderWeight) + "\n" +
-                        DankersSkyblockMod.TYPE_COLOUR + "   Wolf Weight: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(wolfWeight) + "\n" +
-                        DankersSkyblockMod.TYPE_COLOUR + "   Enderman Weight: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(endermanWeight) + "\n" +
-                        DankersSkyblockMod.TYPE_COLOUR + "   Blaze Weight: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(blazeWeight) + "\n\n" +
-                        DankersSkyblockMod.TYPE_COLOUR + " Dungeons Weight: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(dungeonWeight) + "\n" +
-                        DankersSkyblockMod.TYPE_COLOUR + "   Catacombs XP Weight: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(cataWeight) + "\n" +
-                        DankersSkyblockMod.TYPE_COLOUR + "   Healer Weight: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(healerWeight) + "\n" +
-                        DankersSkyblockMod.TYPE_COLOUR + "   Mage Weight: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(mageWeight) + "\n" +
-                        DankersSkyblockMod.TYPE_COLOUR + "   Berserk Weight: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(berserkWeight) + "\n" +
-                        DankersSkyblockMod.TYPE_COLOUR + "   Archer Weight: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(archerWeight) + "\n" +
-                        DankersSkyblockMod.TYPE_COLOUR + "   Tank Weight: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(tankWeight) + "\n" +
-                        DankersSkyblockMod.DELIMITER_COLOUR + " " + EnumChatFormatting.BOLD + "-------------------"));
+                        ModConfig.getColour(ModConfig.typeColour) + " Total Weight: " + ModConfig.getColour(ModConfig.valueColour) + nf.format(weight) + "\n\n" +
+                        ModConfig.getColour(ModConfig.typeColour) + " Skill Weight: " + ModConfig.getColour(ModConfig.valueColour) + nf.format(skillWeight) + "\n" +
+                        ModConfig.getColour(ModConfig.typeColour) + "   Farming Weight: " + ModConfig.getColour(ModConfig.valueColour) + nf.format(farmingWeight) + "\n" +
+                        ModConfig.getColour(ModConfig.typeColour) + "   Mining Weight: " + ModConfig.getColour(ModConfig.valueColour) + nf.format(miningWeight) + "\n" +
+                        ModConfig.getColour(ModConfig.typeColour) + "   Combat Weight: " + ModConfig.getColour(ModConfig.valueColour) + nf.format(combatWeight) + "\n" +
+                        ModConfig.getColour(ModConfig.typeColour) + "   Foraging Weight: " + ModConfig.getColour(ModConfig.valueColour) + nf.format(foragingWeight) + "\n" +
+                        ModConfig.getColour(ModConfig.typeColour) + "   Fishing Weight: " + ModConfig.getColour(ModConfig.valueColour) + nf.format(fishingWeight) + "\n" +
+                        ModConfig.getColour(ModConfig.typeColour) + "   Enchanting Weight: " + ModConfig.getColour(ModConfig.valueColour) + nf.format(enchantingWeight) + "\n" +
+                        ModConfig.getColour(ModConfig.typeColour) + "   Alchemy Weight: " + ModConfig.getColour(ModConfig.valueColour) + nf.format(alchemyWeight) + "\n" +
+                        ModConfig.getColour(ModConfig.typeColour) + "   Taming Weight: " + ModConfig.getColour(ModConfig.valueColour) + nf.format(tamingWeight) + "\n\n" +
+                        ModConfig.getColour(ModConfig.typeColour) + " Slayers Weight: " + ModConfig.getColour(ModConfig.valueColour) + nf.format(slayerWeight) + "\n" +
+                        ModConfig.getColour(ModConfig.typeColour) + "   Zombie Weight: " + ModConfig.getColour(ModConfig.valueColour) + nf.format(zombieWeight) + "\n" +
+                        ModConfig.getColour(ModConfig.typeColour) + "   Spider Weight: " + ModConfig.getColour(ModConfig.valueColour) + nf.format(spiderWeight) + "\n" +
+                        ModConfig.getColour(ModConfig.typeColour) + "   Wolf Weight: " + ModConfig.getColour(ModConfig.valueColour) + nf.format(wolfWeight) + "\n" +
+                        ModConfig.getColour(ModConfig.typeColour) + "   Enderman Weight: " + ModConfig.getColour(ModConfig.valueColour) + nf.format(endermanWeight) + "\n" +
+                        ModConfig.getColour(ModConfig.typeColour) + "   Blaze Weight: " + ModConfig.getColour(ModConfig.valueColour) + nf.format(blazeWeight) + "\n\n" +
+                        ModConfig.getColour(ModConfig.typeColour) + " Dungeons Weight: " + ModConfig.getColour(ModConfig.valueColour) + nf.format(dungeonWeight) + "\n" +
+                        ModConfig.getColour(ModConfig.typeColour) + "   Catacombs XP Weight: " + ModConfig.getColour(ModConfig.valueColour) + nf.format(cataWeight) + "\n" +
+                        ModConfig.getColour(ModConfig.typeColour) + "   Healer Weight: " + ModConfig.getColour(ModConfig.valueColour) + nf.format(healerWeight) + "\n" +
+                        ModConfig.getColour(ModConfig.typeColour) + "   Mage Weight: " + ModConfig.getColour(ModConfig.valueColour) + nf.format(mageWeight) + "\n" +
+                        ModConfig.getColour(ModConfig.typeColour) + "   Berserk Weight: " + ModConfig.getColour(ModConfig.valueColour) + nf.format(berserkWeight) + "\n" +
+                        ModConfig.getColour(ModConfig.typeColour) + "   Archer Weight: " + ModConfig.getColour(ModConfig.valueColour) + nf.format(archerWeight) + "\n" +
+                        ModConfig.getColour(ModConfig.typeColour) + "   Tank Weight: " + ModConfig.getColour(ModConfig.valueColour) + nf.format(tankWeight) + "\n" +
+                        EnumChatFormatting.BOLD + ModConfig.getColour(ModConfig.delimiterColour) + " " + EnumChatFormatting.BOLD + "-------------------"));
             } else if (arg1[1].equalsIgnoreCase("lily")) {
                 System.out.println("Fetching weight from SkyShiiyu API...");
                 String weightURL = "https://sky.shiiyu.moe/api/v2/profile/" + username;
                 JsonObject weightResponse = APIHandler.getResponse(weightURL, true);
                 if (weightResponse.has("error")) {
                     String reason = weightResponse.get("error").getAsString();
-                    player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Failed with reason: " + reason));
+                    player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "Failed with reason: " + reason));
                     return;
                 }
 
@@ -188,15 +188,15 @@ public class WeightCommand extends CommandBase {
                 double catacombsMasterWeight = data.get("catacombs").getAsJsonObject().get("completion").getAsJsonObject().get("master").getAsDouble();
 
                 NumberFormat nf = NumberFormat.getNumberInstance(Locale.US);
-                player.addChatMessage(new ChatComponentText(DankersSkyblockMod.DELIMITER_COLOUR + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+                player.addChatMessage(new ChatComponentText(EnumChatFormatting.BOLD + ModConfig.getColour(ModConfig.delimiterColour) + "" + EnumChatFormatting.BOLD + "-------------------\n" +
                         EnumChatFormatting.AQUA + " " + username + "'s Weight (Lily):\n" +
-                        DankersSkyblockMod.TYPE_COLOUR + " Total Weight: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(weight) + "\n" +
-                        DankersSkyblockMod.TYPE_COLOUR + " Skill Weight: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(skillWeight + skillOverflow) + " (" + nf.format(skillWeight) + " + " + nf.format(skillOverflow) + ")\n" +
-                        DankersSkyblockMod.TYPE_COLOUR + " Slayers Weight: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(slayerWeight) + "\n" +
-                        DankersSkyblockMod.TYPE_COLOUR + " Catacombs XP Weight: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(catacombsXPWeight) + "\n" +
-                        DankersSkyblockMod.TYPE_COLOUR + " Catacombs Completion Weight: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(catacombsBaseWeight) + "\n" +
-                        DankersSkyblockMod.TYPE_COLOUR + " Catacombs Master Completion Weight: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(catacombsMasterWeight) + "\n" +
-                        DankersSkyblockMod.DELIMITER_COLOUR + " " + EnumChatFormatting.BOLD + "-------------------"));
+                        ModConfig.getColour(ModConfig.typeColour) + " Total Weight: " + ModConfig.getColour(ModConfig.valueColour) + nf.format(weight) + "\n" +
+                        ModConfig.getColour(ModConfig.typeColour) + " Skill Weight: " + ModConfig.getColour(ModConfig.valueColour) + nf.format(skillWeight + skillOverflow) + " (" + nf.format(skillWeight) + " + " + nf.format(skillOverflow) + ")\n" +
+                        ModConfig.getColour(ModConfig.typeColour) + " Slayers Weight: " + ModConfig.getColour(ModConfig.valueColour) + nf.format(slayerWeight) + "\n" +
+                        ModConfig.getColour(ModConfig.typeColour) + " Catacombs XP Weight: " + ModConfig.getColour(ModConfig.valueColour) + nf.format(catacombsXPWeight) + "\n" +
+                        ModConfig.getColour(ModConfig.typeColour) + " Catacombs Completion Weight: " + ModConfig.getColour(ModConfig.valueColour) + nf.format(catacombsBaseWeight) + "\n" +
+                        ModConfig.getColour(ModConfig.typeColour) + " Catacombs Master Completion Weight: " + ModConfig.getColour(ModConfig.valueColour) + nf.format(catacombsMasterWeight) + "\n" +
+                        EnumChatFormatting.BOLD + ModConfig.getColour(ModConfig.delimiterColour) + " " + EnumChatFormatting.BOLD + "-------------------"));
             } else if (arg1[1].equalsIgnoreCase("farming")) {
                 String latestProfile = APIHandler.getLatestProfileID(uuid, key);
                 if (latestProfile == null) return;
@@ -206,14 +206,14 @@ public class WeightCommand extends CommandBase {
                 JsonObject profileResponse = APIHandler.getResponse(profileURL, true);
                 if (!profileResponse.get("success").getAsBoolean()) {
                     String reason = profileResponse.get("cause").getAsString();
-                    player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Failed with reason: " + reason));
+                    player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "Failed with reason: " + reason));
                     return;
                 }
 
                 JsonObject userObject = profileResponse.get("profile").getAsJsonObject().get("members").getAsJsonObject().get(uuid).getAsJsonObject();
 
                 if (!userObject.has("collection")) {
-                    player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + username + " does not have collection API on."));
+                    player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + username + " does not have collection API on."));
                     return;
                 }
 
@@ -291,18 +291,18 @@ public class WeightCommand extends CommandBase {
                 double bonusWeight = farmingBonus + anitaBonus + medalBonus + minionBonus;
 
                 NumberFormat nf = NumberFormat.getNumberInstance(Locale.US);
-                player.addChatMessage(new ChatComponentText(DankersSkyblockMod.DELIMITER_COLOUR + EnumChatFormatting.BOLD + "-------------------\n" +
+                player.addChatMessage(new ChatComponentText(EnumChatFormatting.BOLD + ModConfig.getColour(ModConfig.delimiterColour) + EnumChatFormatting.BOLD + "-------------------\n" +
                         EnumChatFormatting.AQUA + username + "'s Weight (Farming):\n" +
-                        DankersSkyblockMod.TYPE_COLOUR + "Total Weight: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(mainWeight + bonusWeight) + "\n" +
-                        DankersSkyblockMod.TYPE_COLOUR + "Collection Weight: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(mainWeight) + "\n" +
-                        DankersSkyblockMod.TYPE_COLOUR + "Bonus Weight: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(bonusWeight) + "\n" +
-                        DankersSkyblockMod.TYPE_COLOUR + "Farming XP Weight: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(farmingBonus) + "\n" +
-                        DankersSkyblockMod.TYPE_COLOUR + "Anita Bonus Weight: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(anitaBonus) + "\n" +
-                        DankersSkyblockMod.TYPE_COLOUR + "Gold Medal Weight: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(medalBonus) + "\n" +
-                        DankersSkyblockMod.TYPE_COLOUR + "Minion Weight: " + DankersSkyblockMod.VALUE_COLOUR + nf.format(minionBonus) + "\n" +
-                        DankersSkyblockMod.DELIMITER_COLOUR + EnumChatFormatting.BOLD + "-------------------"));
+                        ModConfig.getColour(ModConfig.typeColour) + "Total Weight: " + ModConfig.getColour(ModConfig.valueColour) + nf.format(mainWeight + bonusWeight) + "\n" +
+                        ModConfig.getColour(ModConfig.typeColour) + "Collection Weight: " + ModConfig.getColour(ModConfig.valueColour) + nf.format(mainWeight) + "\n" +
+                        ModConfig.getColour(ModConfig.typeColour) + "Bonus Weight: " + ModConfig.getColour(ModConfig.valueColour) + nf.format(bonusWeight) + "\n" +
+                        ModConfig.getColour(ModConfig.typeColour) + "Farming XP Weight: " + ModConfig.getColour(ModConfig.valueColour) + nf.format(farmingBonus) + "\n" +
+                        ModConfig.getColour(ModConfig.typeColour) + "Anita Bonus Weight: " + ModConfig.getColour(ModConfig.valueColour) + nf.format(anitaBonus) + "\n" +
+                        ModConfig.getColour(ModConfig.typeColour) + "Gold Medal Weight: " + ModConfig.getColour(ModConfig.valueColour) + nf.format(medalBonus) + "\n" +
+                        ModConfig.getColour(ModConfig.typeColour) + "Minion Weight: " + ModConfig.getColour(ModConfig.valueColour) + nf.format(minionBonus) + "\n" +
+                        EnumChatFormatting.BOLD + ModConfig.getColour(ModConfig.delimiterColour) + EnumChatFormatting.BOLD + "-------------------"));
             } else {
-                player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Usage: " + getCommandUsage(arg0)));
+                player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "Usage: " + getCommandUsage(arg0)));
             }
         }).start();
     }

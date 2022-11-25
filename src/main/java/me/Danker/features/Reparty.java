@@ -1,7 +1,7 @@
 package me.Danker.features;
 
-import me.Danker.DankersSkyblockMod;
 import me.Danker.commands.RepartyCommand;
+import me.Danker.config.ModConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.util.ChatComponentText;
@@ -46,10 +46,10 @@ public class Reparty {
                 Matcher members = members_pattern.matcher(message);
 
                 if (party_start.matches() && Integer.parseInt(party_start.group(1)) == 1) {
-                    player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "You cannot reparty yourself."));
+                    player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "You cannot reparty yourself."));
                     RepartyCommand.partyThread.interrupt();
                 } else if (leader.matches() && !(leader.group(1).equals(player.getName()))) {
-                    player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "You are not party leader."));
+                    player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "You are not party leader."));
                     RepartyCommand.partyThread.interrupt();
                 } else {
                     while (members.find()) {

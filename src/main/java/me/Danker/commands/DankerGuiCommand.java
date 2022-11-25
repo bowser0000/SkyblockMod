@@ -1,9 +1,7 @@
 package me.Danker.commands;
 
 import me.Danker.DankersSkyblockMod;
-import me.Danker.features.EndOfFarmAlert;
-import me.Danker.features.SkillTracker;
-import me.Danker.features.loot.LootDisplay;
+import me.Danker.config.ModConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.ResourcePackRepository;
 import net.minecraft.command.CommandBase;
@@ -65,10 +63,10 @@ public class DankerGuiCommand extends CommandBase {
 			debug.append("[dungeonscore][").append(MoveCommand.dungeonScoreXY[0]).append(", ").append(MoveCommand.dungeonScoreXY[1]).append("]\n");
 			debug.append("[firepillar][").append(MoveCommand.firePillarXY[0]).append(", ").append(MoveCommand.firePillarXY[1]).append("]\n");
 			debug.append("# Other Settings\n");
-			debug.append("[Current Display][").append(LootDisplay.display).append("]\n");
-			debug.append("[Auto Display][").append(LootDisplay.auto).append("]\n");
-			debug.append("[Skill Tracker Visible][").append(SkillTracker.showSkillTracker).append("]\n");
-			debug.append("[Farm Length][").append(EndOfFarmAlert.min).append(" to ").append(EndOfFarmAlert.max).append("]\n");
+			debug.append("[Current Display][").append(ModConfig.getDisplay()).append("]\n");
+			debug.append("[Auto Display][").append(ModConfig.autoDisplay).append("]\n");
+			debug.append("[Skill Tracker Visible][").append(ModConfig.showSkillTracker).append("]\n");
+			debug.append("[Farm Length][").append(ModConfig.farmMinCoords).append(" to ").append(ModConfig.farmMaxCoords).append("]\n");
 			debug.append("# Problematic Mods\n");
 			debug.append("[LabyMod][").append(DankersSkyblockMod.usingLabymod).append("]\n");
 			debug.append("[OAM][").append(DankersSkyblockMod.usingOAM).append("]\n");
@@ -83,11 +81,11 @@ public class DankerGuiCommand extends CommandBase {
 			debug.append("```");
 			StringSelection clipboard = new StringSelection(debug.toString());
 			Toolkit.getDefaultToolkit().getSystemClipboard().setContents(clipboard, clipboard);
-			Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Debug stats copied to clipboard."));
+			Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Debug stats copied to clipboard."));
 			return;
 		}
 
-		DankersSkyblockMod.guiToOpen = "dankergui1";
+		DankersSkyblockMod.config.openGui();
 	}
 
 }

@@ -1,6 +1,6 @@
 package me.Danker.features.puzzlesolvers;
 
-import me.Danker.commands.ToggleCommand;
+import me.Danker.config.ModConfig;
 import me.Danker.events.GuiChestBackgroundDrawnEvent;
 import me.Danker.utils.RenderUtils;
 import me.Danker.utils.Utils;
@@ -24,7 +24,7 @@ public class SelectAllColourSolver {
     @SubscribeEvent
     public void onGuiRender(GuiChestBackgroundDrawnEvent event) {
         String displayName = event.displayName;
-        if (ToggleCommand.selectAllToggled && Utils.inDungeons && displayName.startsWith("Select all the")) {
+        if (ModConfig.selectAll && Utils.inDungeons && displayName.startsWith("Select all the")) {
             String colour;
             List<String> colourParts = new ArrayList<>();
             Matcher colourMatcher = selectAllTerminalPattern.matcher(displayName);
@@ -46,7 +46,7 @@ public class SelectAllColourSolver {
                         (terminalColorNeeded.equals("BLACK") && itemName.equals("INK SACK")) ||
                         (terminalColorNeeded.equals("BLUE") && itemName.equals("LAPIS LAZULI")) ||
                         (terminalColorNeeded.equals("BROWN") && itemName.equals("COCOA BEAN"))) {
-                    RenderUtils.drawOnSlot(event.chestSize, slot.xDisplayPosition, slot.yDisplayPosition, 0xBF40FF40);
+                    RenderUtils.drawOnSlot(event.chestSize, slot.xDisplayPosition, slot.yDisplayPosition, ModConfig.selectAllColour.getRGB());
                 }
             }
         }

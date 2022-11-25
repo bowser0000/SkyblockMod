@@ -2,13 +2,12 @@ package me.Danker.features;
 
 import me.Danker.commands.MoveCommand;
 import me.Danker.commands.ScaleCommand;
-import me.Danker.commands.ToggleCommand;
+import me.Danker.config.ModConfig;
 import me.Danker.events.RenderOverlayEvent;
 import me.Danker.handlers.TextRenderer;
 import me.Danker.utils.RenderUtils;
 import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.Gui;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StringUtils;
@@ -20,7 +19,6 @@ public class GolemSpawningAlert {
 
     double golemTime = 0;
     public static final ResourceLocation GOLEM_ICON = new ResourceLocation("dsm", "icons/golem.png");
-    public static String GOLEM_COLOUR;
 
     @SubscribeEvent
     public void onChat(ClientChatReceivedEvent event) {
@@ -29,7 +27,7 @@ public class GolemSpawningAlert {
         if (!Utils.inSkyblock) return;
         if (message.contains(":")) return;
 
-        if (ToggleCommand.golemAlertToggled) {
+        if (ModConfig.golemAlerts) {
             if (message.contains("The ground begins to shake as an Endstone Protector rises from below!")) {
                 golemTime = System.currentTimeMillis() / 1000 + 20;
                 Utils.createTitle(EnumChatFormatting.RED + "GOLEM SPAWNING!", 3);
@@ -39,7 +37,7 @@ public class GolemSpawningAlert {
 
     @SubscribeEvent
     public void renderPlayerInfo(RenderOverlayEvent event) {
-        if (ToggleCommand.golemAlertToggled && Utils.inSkyblock && golemTime > System.currentTimeMillis() / 1000) {
+        if (ModConfig.golemAlerts && Utils.inSkyblock && golemTime > System.currentTimeMillis() / 1000) {
             Minecraft mc = Minecraft.getMinecraft();
             double scale = ScaleCommand.golemTimerScale;
             double scaleReset = Math.pow(scale, -1);
@@ -51,7 +49,7 @@ public class GolemSpawningAlert {
             RenderUtils.drawModalRectWithCustomSizedTexture(MoveCommand.golemTimerXY[0] / scale, MoveCommand.golemTimerXY[1] / scale, 0, 0, 16, 16, 16, 16);
             GL11.glScaled(scaleReset, scaleReset, scaleReset);
 
-            String golemText = GOLEM_COLOUR + Utils.getTimeBetween(timeNow, golemTime);
+            String golemText = ModConfig.getColour(ModConfig.golemAlertColour) + Utils.getTimeBetween(timeNow, golemTime);
             new TextRenderer(mc, golemText, MoveCommand.golemTimerXY[0] + 20 * scale, MoveCommand.golemTimerXY[1] + 5 * scale, scale);
         }
     }

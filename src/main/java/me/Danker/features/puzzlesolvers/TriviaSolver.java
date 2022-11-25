@@ -4,7 +4,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import me.Danker.DankersSkyblockMod;
-import me.Danker.commands.ToggleCommand;
+import me.Danker.config.ModConfig;
 import me.Danker.events.ModInitEvent;
 import me.Danker.utils.Utils;
 import net.minecraft.util.ChatComponentText;
@@ -25,7 +25,6 @@ public class TriviaSolver {
     static Map<String, String[]> triviaSolutions = new HashMap<>();
     static String[] triviaAnswers = null;
     static JsonArray triviaAnswersJson = null;
-    public static String TRIVIA_WRONG_ANSWER_COLOUR;
 
     @SubscribeEvent
     public void init(ModInitEvent event) {
@@ -75,7 +74,7 @@ public class TriviaSolver {
         if (!Utils.inDungeons) return;
         if (event.type == 2) return;
 
-        if (ToggleCommand.oruoToggled) {
+        if (ModConfig.oruo) {
             if (DankersSkyblockMod.data != null && DankersSkyblockMod.data.has("trivia")) {
                 if (message.contains("What SkyBlock year is it?")) {
                     double currentTime = System.currentTimeMillis() / 1000L;
@@ -112,7 +111,7 @@ public class TriviaSolver {
                     if (!isSolution) {
                         char letter = message.charAt(5);
                         String option = message.substring(6);
-                        event.message = new ChatComponentText("     " + EnumChatFormatting.GOLD + letter + TRIVIA_WRONG_ANSWER_COLOUR + option);
+                        event.message = new ChatComponentText("     " + EnumChatFormatting.GOLD + letter + ModConfig.getColour(ModConfig.triviaWrongAnswerColour) + option);
                     }
                 }
             } else {
@@ -144,7 +143,7 @@ public class TriviaSolver {
                     if (!isSolution) {
                         char letter = message.charAt(5);
                         String option = message.substring(6);
-                        event.message = new ChatComponentText("     " + EnumChatFormatting.GOLD + letter + TRIVIA_WRONG_ANSWER_COLOUR + option);
+                        event.message = new ChatComponentText("     " + EnumChatFormatting.GOLD + letter + ModConfig.getColour(ModConfig.triviaWrongAnswerColour) + option);
                     }
                 }
             }

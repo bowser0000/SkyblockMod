@@ -3,7 +3,7 @@ package me.Danker.features.puzzlesolvers;
 import me.Danker.DankersSkyblockMod;
 import me.Danker.commands.MoveCommand;
 import me.Danker.commands.ScaleCommand;
-import me.Danker.commands.ToggleCommand;
+import me.Danker.config.ModConfig;
 import me.Danker.events.RenderOverlayEvent;
 import me.Danker.handlers.TextRenderer;
 import me.Danker.utils.Utils;
@@ -31,7 +31,7 @@ public class WaterSolver {
         EntityPlayerSP player = mc.thePlayer;
         World world = mc.theWorld;
         if (DankersSkyblockMod.tickAmount % 20 == 0) {
-            if (ToggleCommand.waterToggled && Utils.inDungeons && world != null && player != null) {
+            if (ModConfig.water && Utils.inDungeons && world != null && player != null) {
                 // multi thread block checking
                 new Thread(() -> {
                     prevInWaterRoom = inWaterRoom;
@@ -128,10 +128,10 @@ public class WaterSolver {
                                                 red = EnumChatFormatting.YELLOW + "Gold, " + EnumChatFormatting.AQUA + "Diamond, " + EnumChatFormatting.GREEN + "Emerald, " + EnumChatFormatting.RED + "Clay";
                                                 break;
                                             default:
-                                                purple = orange = blue = green = red = DankersSkyblockMod.ERROR_COLOUR + "Error detecting water puzzle variant.";
+                                                purple = orange = blue = green = red = ModConfig.getColour(ModConfig.errorColour) + "Error detecting water puzzle variant.";
                                                 break;
                                         }
-                                        waterAnswers = DankersSkyblockMod.MAIN_COLOUR + "The following levers must be down:\n" +
+                                        waterAnswers = ModConfig.getColour(ModConfig.mainColour) + "The following levers must be down:\n" +
                                                 EnumChatFormatting.DARK_PURPLE + "Purple: " + purple + "\n" +
                                                 EnumChatFormatting.GOLD + "Orange: " + orange + "\n" +
                                                 EnumChatFormatting.BLUE + "Blue: " + blue + "\n" +
@@ -154,7 +154,7 @@ public class WaterSolver {
 
     @SubscribeEvent
     public void renderPlayerInfo(RenderOverlayEvent event) {
-        if (ToggleCommand.waterToggled && Utils.inDungeons && waterAnswers != null) {
+        if (ModConfig.water && Utils.inDungeons && waterAnswers != null) {
             new TextRenderer(Minecraft.getMinecraft(), waterAnswers, MoveCommand.waterAnswerXY[0], MoveCommand.waterAnswerXY[1], ScaleCommand.waterAnswerScale);
         }
     }

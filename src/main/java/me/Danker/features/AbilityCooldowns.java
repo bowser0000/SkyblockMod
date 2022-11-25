@@ -2,7 +2,7 @@ package me.Danker.features;
 
 import me.Danker.commands.MoveCommand;
 import me.Danker.commands.ScaleCommand;
-import me.Danker.commands.ToggleCommand;
+import me.Danker.config.ModConfig;
 import me.Danker.events.RenderOverlayEvent;
 import me.Danker.handlers.TextRenderer;
 import me.Danker.utils.Utils;
@@ -30,7 +30,7 @@ public class AbilityCooldowns {
 
     @SubscribeEvent(priority = EventPriority.LOW)
     public void onChat(ClientChatReceivedEvent event) {
-        if (!Utils.inSkyblock || !ToggleCommand.abilityCooldowns) return;
+        if (!Utils.inSkyblock || !ModConfig.abilityCooldowns) return;
 
         if (event.type == 2) {
             String[] actionBarSections = StringUtils.stripControlCodes(event.message.getUnformattedText()).split(" {3,}");
@@ -57,7 +57,7 @@ public class AbilityCooldowns {
 
     @SubscribeEvent
     public void renderPlayerInfo(RenderOverlayEvent event) {
-        if (ToggleCommand.abilityCooldowns && Utils.inSkyblock) {
+        if (ModConfig.abilityCooldowns && Utils.inSkyblock) {
             StringBuilder sb = new StringBuilder();
 
             for (int i = cooldowns.size() - 1; i >= 0; i--) {
@@ -87,7 +87,7 @@ public class AbilityCooldowns {
             List<Slot> invSlots = ((GuiChest) mc.currentScreen).inventorySlots.inventorySlots;
             String chestName = chest.getLowerChestInventory().getDisplayName().getUnformattedText().trim();
 
-            if (ToggleCommand.abilityCooldowns && Utils.inDungeons && chestName.startsWith("Catacombs - ")) {
+            if (ModConfig.abilityCooldowns && Utils.inDungeons && chestName.startsWith("Catacombs - ")) {
                 ItemStack mage = invSlots.get(30).getStack();
                 if (mage == null || mage.getDisplayName() == null) return;
                 if (mage.isItemEnchanted()) {

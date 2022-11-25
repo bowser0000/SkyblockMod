@@ -1,9 +1,8 @@
 package me.Danker.commands;
 
 import com.google.gson.JsonObject;
-import me.Danker.DankersSkyblockMod;
+import me.Danker.config.ModConfig;
 import me.Danker.handlers.APIHandler;
-import me.Danker.handlers.ConfigHandler;
 import me.Danker.utils.Utils;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
@@ -57,9 +56,9 @@ public class SkillsCommand extends CommandBase {
 			EntityPlayer player = (EntityPlayer) arg0;
 			
 			// Check key
-			String key = ConfigHandler.getString("api", "APIKey");
+			String key = ModConfig.apiKey;
 			if (key.equals("")) {
-				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "API key not set. Use /setkey."));
+				player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "API key not set. Use /setkey."));
 				return;
 			}
 			
@@ -69,10 +68,10 @@ public class SkillsCommand extends CommandBase {
 			if (arg1.length == 0) {
 				username = player.getName();
 				uuid = player.getUniqueID().toString().replaceAll("[\\-]", "");
-				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Checking skills of " + DankersSkyblockMod.SECONDARY_COLOUR + username));
+				player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Checking skills of " + ModConfig.getColour(ModConfig.secondaryColour) + username));
 			} else {
 				username = arg1[0];
-				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Checking skills of " + DankersSkyblockMod.SECONDARY_COLOUR + username));
+				player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Checking skills of " + ModConfig.getColour(ModConfig.secondaryColour) + username));
 				uuid = APIHandler.getUUID(username);
 			}
 			
@@ -85,21 +84,21 @@ public class SkillsCommand extends CommandBase {
 			JsonObject profileResponse = APIHandler.getResponse(profileURL, true);
 			if (!profileResponse.get("success").getAsBoolean()) {
 				String reason = profileResponse.get("cause").getAsString();
-				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Failed with reason: " + reason));
+				player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "Failed with reason: " + reason));
 				return;
 			}
 			
 			System.out.println("Fetching skills...");
 			JsonObject userObject = profileResponse.get("profile").getAsJsonObject().get("members").getAsJsonObject().get(uuid).getAsJsonObject();
 
-			ChatComponentText farmingLevelText = new ChatComponentText(DankersSkyblockMod.TYPE_COLOUR + " Farming: ");
-			ChatComponentText miningLevelText = new ChatComponentText(DankersSkyblockMod.TYPE_COLOUR + " Mining: ");
-			ChatComponentText combatLevelText = new ChatComponentText(DankersSkyblockMod.TYPE_COLOUR + " Combat: ");
-			ChatComponentText foragingLevelText = new ChatComponentText(DankersSkyblockMod.TYPE_COLOUR + " Foraging: ");
-			ChatComponentText fishingLevelText = new ChatComponentText(DankersSkyblockMod.TYPE_COLOUR + " Fishing: ");
-			ChatComponentText enchantingLevelText = new ChatComponentText(DankersSkyblockMod.TYPE_COLOUR + " Enchanting: ");
-			ChatComponentText alchemyLevelText = new ChatComponentText(DankersSkyblockMod.TYPE_COLOUR + " Alchemy: ");
-			ChatComponentText tamingLevelText = new ChatComponentText(DankersSkyblockMod.TYPE_COLOUR + " Taming: ");
+			ChatComponentText farmingLevelText = new ChatComponentText(ModConfig.getColour(ModConfig.typeColour) + " Farming: ");
+			ChatComponentText miningLevelText = new ChatComponentText(ModConfig.getColour(ModConfig.typeColour) + " Mining: ");
+			ChatComponentText combatLevelText = new ChatComponentText(ModConfig.getColour(ModConfig.typeColour) + " Combat: ");
+			ChatComponentText foragingLevelText = new ChatComponentText(ModConfig.getColour(ModConfig.typeColour) + " Foraging: ");
+			ChatComponentText fishingLevelText = new ChatComponentText(ModConfig.getColour(ModConfig.typeColour) + " Fishing: ");
+			ChatComponentText enchantingLevelText = new ChatComponentText(ModConfig.getColour(ModConfig.typeColour) + " Enchanting: ");
+			ChatComponentText alchemyLevelText = new ChatComponentText(ModConfig.getColour(ModConfig.typeColour) + " Alchemy: ");
+			ChatComponentText tamingLevelText = new ChatComponentText(ModConfig.getColour(ModConfig.typeColour) + " Taming: ");
 			ChatComponentText newLine = new ChatComponentText("\n");
 
 			double farmingLevel = 0;
@@ -169,7 +168,7 @@ public class SkillsCommand extends CommandBase {
 				
 				if (!playerObject.get("success").getAsBoolean()) {
 					String reason = profileResponse.get("cause").getAsString();
-					player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Failed with reason: " + reason));
+					player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "Failed with reason: " + reason));
 					return;
 				}
 				
@@ -208,20 +207,20 @@ public class SkillsCommand extends CommandBase {
 				}
 			}
 
-			farmingLevelText.appendSibling(new ChatComponentText(DankersSkyblockMod.VALUE_COLOUR + EnumChatFormatting.BOLD + farmingLevel));
-			miningLevelText.appendSibling(new ChatComponentText(DankersSkyblockMod.VALUE_COLOUR + EnumChatFormatting.BOLD + miningLevel));
-			combatLevelText.appendSibling(new ChatComponentText(DankersSkyblockMod.VALUE_COLOUR + EnumChatFormatting.BOLD + combatLevel));
-			foragingLevelText.appendSibling(new ChatComponentText(DankersSkyblockMod.VALUE_COLOUR + EnumChatFormatting.BOLD + foragingLevel));
-			fishingLevelText.appendSibling(new ChatComponentText(DankersSkyblockMod.VALUE_COLOUR + EnumChatFormatting.BOLD + fishingLevel));
-			enchantingLevelText.appendSibling(new ChatComponentText(DankersSkyblockMod.VALUE_COLOUR + EnumChatFormatting.BOLD + enchantingLevel));
-			alchemyLevelText.appendSibling(new ChatComponentText(DankersSkyblockMod.VALUE_COLOUR + EnumChatFormatting.BOLD + alchemyLevel));
-			tamingLevelText.appendSibling(new ChatComponentText(DankersSkyblockMod.VALUE_COLOUR + EnumChatFormatting.BOLD + tamingLevel));
+			farmingLevelText.appendSibling(new ChatComponentText(ModConfig.getColour(ModConfig.valueColour) + EnumChatFormatting.BOLD + farmingLevel));
+			miningLevelText.appendSibling(new ChatComponentText(ModConfig.getColour(ModConfig.valueColour) + EnumChatFormatting.BOLD + miningLevel));
+			combatLevelText.appendSibling(new ChatComponentText(ModConfig.getColour(ModConfig.valueColour) + EnumChatFormatting.BOLD + combatLevel));
+			foragingLevelText.appendSibling(new ChatComponentText(ModConfig.getColour(ModConfig.valueColour) + EnumChatFormatting.BOLD + foragingLevel));
+			fishingLevelText.appendSibling(new ChatComponentText(ModConfig.getColour(ModConfig.valueColour) + EnumChatFormatting.BOLD + fishingLevel));
+			enchantingLevelText.appendSibling(new ChatComponentText(ModConfig.getColour(ModConfig.valueColour) + EnumChatFormatting.BOLD + enchantingLevel));
+			alchemyLevelText.appendSibling(new ChatComponentText(ModConfig.getColour(ModConfig.valueColour) + EnumChatFormatting.BOLD + alchemyLevel));
+			tamingLevelText.appendSibling(new ChatComponentText(ModConfig.getColour(ModConfig.valueColour) + EnumChatFormatting.BOLD + tamingLevel));
 
 			double skillAvg = (farmingLevel + miningLevel + combatLevel + foragingLevel + fishingLevel + enchantingLevel + alchemyLevel + tamingLevel) / 8;
 			skillAvg = (double) Math.round(skillAvg * 100) / 100;
 			double trueAvg = (Math.floor(farmingLevel) + Math.floor(miningLevel) + Math.floor(combatLevel) + Math.floor(foragingLevel) + Math.floor(fishingLevel) + Math.floor(enchantingLevel) + Math.floor(alchemyLevel) + Math.floor(tamingLevel)) / 8;
 			
-			player.addChatMessage(new ChatComponentText(DankersSkyblockMod.DELIMITER_COLOUR + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+			player.addChatMessage(new ChatComponentText(EnumChatFormatting.BOLD + ModConfig.getColour(ModConfig.delimiterColour) + "" + EnumChatFormatting.BOLD + "-------------------\n" +
 														EnumChatFormatting.AQUA + " " + username + "'s Skills:\n")
 														.appendSibling(farmingLevelText).appendSibling(newLine)
 														.appendSibling(miningLevelText).appendSibling(newLine)
@@ -232,9 +231,9 @@ public class SkillsCommand extends CommandBase {
 														.appendSibling(alchemyLevelText).appendSibling(newLine)
 														.appendSibling(tamingLevelText).appendSibling(newLine)
 														.appendSibling(new ChatComponentText(
-														EnumChatFormatting.AQUA + " Average Skill Level: " + DankersSkyblockMod.SKILL_AVERAGE_COLOUR + EnumChatFormatting.BOLD + skillAvg + "\n" +
-														EnumChatFormatting.AQUA + " True Average Skill Level: " + DankersSkyblockMod.SKILL_AVERAGE_COLOUR + EnumChatFormatting.BOLD + trueAvg + "\n" +
-														DankersSkyblockMod.DELIMITER_COLOUR + " " + EnumChatFormatting.BOLD + "-------------------")));
+														EnumChatFormatting.AQUA + " Average Skill Level: " + ModConfig.getColour(ModConfig.skillAverageColour) + EnumChatFormatting.BOLD + skillAvg + "\n" +
+														EnumChatFormatting.AQUA + " True Average Skill Level: " + ModConfig.getColour(ModConfig.skillAverageColour) + EnumChatFormatting.BOLD + trueAvg + "\n" +
+														EnumChatFormatting.BOLD + ModConfig.getColour(ModConfig.delimiterColour) + " " + EnumChatFormatting.BOLD + "-------------------")));
 		}).start();
 	}
 
@@ -246,7 +245,7 @@ public class SkillsCommand extends CommandBase {
 	}
 
 	static ChatStyle appendFormatted(ChatComponentText component, String category, double number) {
-		return appendHover(component, DankersSkyblockMod.TYPE_COLOUR + category + ": " + DankersSkyblockMod.VALUE_COLOUR + EnumChatFormatting.BOLD + nf.format(number));
+		return appendHover(component, ModConfig.getColour(ModConfig.typeColour) + category + ": " + ModConfig.getColour(ModConfig.valueColour) + EnumChatFormatting.BOLD + nf.format(number));
 	}
 
 	static double getOverflowXP(double xp, int limit) {

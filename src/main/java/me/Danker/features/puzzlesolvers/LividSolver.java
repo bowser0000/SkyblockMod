@@ -3,7 +3,7 @@ package me.Danker.features.puzzlesolvers;
 import me.Danker.DankersSkyblockMod;
 import me.Danker.commands.MoveCommand;
 import me.Danker.commands.ScaleCommand;
-import me.Danker.commands.ToggleCommand;
+import me.Danker.config.ModConfig;
 import me.Danker.events.RenderOverlayEvent;
 import me.Danker.handlers.ScoreboardHandler;
 import me.Danker.handlers.TextRenderer;
@@ -30,7 +30,6 @@ public class LividSolver {
 
     static BlockPos pos = new BlockPos(5, 108, 25);
     static Entity livid = null;
-    public static int LIVID_COLOUR;
 
     @SubscribeEvent
     public void onWorldChange(WorldEvent.Load event) {
@@ -40,7 +39,7 @@ public class LividSolver {
     @SubscribeEvent
     public void onTick(TickEvent.ClientTickEvent event) {
         if (event.phase != TickEvent.Phase.START) return;
-        if (!ToggleCommand.lividSolverToggled) return;
+        if (!ModConfig.lividSolver) return;
 
         if (DankersSkyblockMod.tickAmount % 10 == 0) {
             World world = Minecraft.getMinecraft().theWorld;
@@ -74,14 +73,14 @@ public class LividSolver {
 
     @SubscribeEvent
     public void renderPlayerInfo(RenderOverlayEvent event) {
-        if (ToggleCommand.lividSolverToggled && livid != null) {
+        if (ModConfig.lividSolver && livid != null) {
             new TextRenderer(Minecraft.getMinecraft(), livid.getName().replace(EnumChatFormatting.BOLD.toString(), ""), MoveCommand.lividHpXY[0], MoveCommand.lividHpXY[1], ScaleCommand.lividHpScale);
         }
     }
 
     @SubscribeEvent
     public void onRenderEntity(RenderLivingEvent.Pre<EntityLivingBase> event) {
-        if (!ToggleCommand.lividSolverToggled || livid == null) return;
+        if (!ModConfig.lividSolver || livid == null) return;
 
         Entity entity = event.entity;
         if (entity instanceof EntityArmorStand && entity.hasCustomName()) {
@@ -94,9 +93,9 @@ public class LividSolver {
 
     @SubscribeEvent
     public void onWorldRender(RenderWorldLastEvent event) {
-        if (ToggleCommand.lividSolverToggled && livid != null) {
+        if (ModConfig.lividSolver && livid != null) {
             AxisAlignedBB aabb = new AxisAlignedBB(livid.posX - 0.5, livid.posY - 2, livid.posZ - 0.5, livid.posX + 0.5, livid.posY, livid.posZ + 0.5);
-            RenderUtils.draw3DBox(aabb, LIVID_COLOUR, event.partialTicks);
+            RenderUtils.draw3DBox(aabb, ModConfig.lividColour.getRGB(), event.partialTicks);
         }
     }
 

@@ -1,6 +1,6 @@
 package me.Danker.commands;
 
-import me.Danker.DankersSkyblockMod;
+import me.Danker.config.ModConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.GuiNewChat;
@@ -61,20 +61,20 @@ public class RepartyCommand extends CommandBase implements ICommand {
                 try {
                     player.sendChatMessage("/p " + String.join(" ", repartyFailList));
                     String members = String.join(EnumChatFormatting.WHITE + "\n- " + EnumChatFormatting.YELLOW, repartyFailList);
-                    player.addChatMessage(new ChatComponentText(DankersSkyblockMod.DELIMITER_COLOUR + "-----------------------------\n" +
-                            DankersSkyblockMod.MAIN_COLOUR + "Partying:" + EnumChatFormatting.WHITE + "\n- " +
+                    player.addChatMessage(new ChatComponentText(EnumChatFormatting.BOLD + ModConfig.getColour(ModConfig.delimiterColour) + "-----------------------------\n" +
+                            ModConfig.getColour(ModConfig.mainColour) + "Partying:" + EnumChatFormatting.WHITE + "\n- " +
                             EnumChatFormatting.YELLOW + members + "\n" +
-                            DankersSkyblockMod.DELIMITER_COLOUR + "-----------------------------"));
+                            EnumChatFormatting.BOLD + ModConfig.getColour(ModConfig.delimiterColour) + "-----------------------------"));
                     failInviting = true;
                     while (failInviting) {
                         Thread.sleep(10);
                     }
                     if (repartyFailList.size() > 0) {
                         String repartyFails = String.join("\n- " + EnumChatFormatting.RED, repartyFailList);
-                        player.addChatMessage(new ChatComponentText(DankersSkyblockMod.DELIMITER_COLOUR + "-----------------------------\n" +
-                                DankersSkyblockMod.MAIN_COLOUR + "Failed to invite:" + EnumChatFormatting.WHITE + "\n- " +
+                        player.addChatMessage(new ChatComponentText(EnumChatFormatting.BOLD + ModConfig.getColour(ModConfig.delimiterColour) + "-----------------------------\n" +
+                                ModConfig.getColour(ModConfig.mainColour) + "Failed to invite:" + EnumChatFormatting.WHITE + "\n- " +
                                 EnumChatFormatting.RED + repartyFails + "\n" +
-                                DankersSkyblockMod.DELIMITER_COLOUR + "-----------------------------"));
+                                EnumChatFormatting.BOLD + ModConfig.getColour(ModConfig.delimiterColour) + "-----------------------------"));
                     }
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -107,10 +107,10 @@ public class RepartyCommand extends CommandBase implements ICommand {
                     Thread.sleep(10);
                 }
                 String members = String.join(EnumChatFormatting.WHITE + "\n- " + EnumChatFormatting.YELLOW, RepartyCommand.party);
-                player.addChatMessage(new ChatComponentText(DankersSkyblockMod.DELIMITER_COLOUR + "-----------------------------\n" +
-                        DankersSkyblockMod.MAIN_COLOUR + "Repartying:" + EnumChatFormatting.WHITE + "\n- " +
+                player.addChatMessage(new ChatComponentText(EnumChatFormatting.BOLD + ModConfig.getColour(ModConfig.delimiterColour) + "-----------------------------\n" +
+                        ModConfig.getColour(ModConfig.mainColour) + "Repartying:" + EnumChatFormatting.WHITE + "\n- " +
                         EnumChatFormatting.YELLOW + members + "\n" +
-                        DankersSkyblockMod.DELIMITER_COLOUR + "-----------------------------"));
+                        EnumChatFormatting.BOLD + ModConfig.getColour(ModConfig.delimiterColour) + "-----------------------------"));
                 repartyFailList = new ArrayList<>(party);
                 for (String invitee : party) {
                     player.sendChatMessage("/p " + invitee);
@@ -125,10 +125,10 @@ public class RepartyCommand extends CommandBase implements ICommand {
                 }
                 if (repartyFailList.size() > 0) {
                     String repartyFails = String.join("\n- " + EnumChatFormatting.RED, repartyFailList);
-                    player.addChatMessage(new ChatComponentText(DankersSkyblockMod.DELIMITER_COLOUR + "-----------------------------\n" +
-                            DankersSkyblockMod.MAIN_COLOUR + "Failed to invite:" + EnumChatFormatting.WHITE + "\n- " +
+                    player.addChatMessage(new ChatComponentText(EnumChatFormatting.BOLD + ModConfig.getColour(ModConfig.delimiterColour) + "-----------------------------\n" +
+                            ModConfig.getColour(ModConfig.mainColour) + "Failed to invite:" + EnumChatFormatting.WHITE + "\n- " +
                             EnumChatFormatting.RED + repartyFails + "\n" +
-                            DankersSkyblockMod.DELIMITER_COLOUR + "-----------------------------"));
+                            EnumChatFormatting.BOLD + ModConfig.getColour(ModConfig.delimiterColour) + "-----------------------------"));
                 }
             } catch (InterruptedException e) {
                 e.printStackTrace();

@@ -1,6 +1,6 @@
 package me.Danker.features.puzzlesolvers;
 
-import me.Danker.commands.ToggleCommand;
+import me.Danker.config.ModConfig;
 import me.Danker.events.ChestSlotClickedEvent;
 import me.Danker.events.GuiChestBackgroundDrawnEvent;
 import me.Danker.handlers.TextRenderer;
@@ -25,12 +25,10 @@ public class ChronomatronSolver {
     static int lastChronomatronRound = 0;
     static List<String> chronomatronPattern = new ArrayList<>();
     static int chronomatronMouseClicks = 0;
-    public static int CHRONOMATRON_NEXT;
-    public static int CHRONOMATRON_NEXT_TO_NEXT;
 
     @SubscribeEvent
     public void onSlotClick(ChestSlotClickedEvent event) {
-        if (ToggleCommand.chronomatronToggled && event.inventoryName.startsWith("Chronomatron (")) {
+        if (ModConfig.chronomatron && event.inventoryName.startsWith("Chronomatron (")) {
             IInventory inventory = event.inventory;
             ItemStack item = event.item;
 
@@ -57,7 +55,7 @@ public class ChronomatronSolver {
 
     @SubscribeEvent
     public void onGuiRender(GuiChestBackgroundDrawnEvent event) {
-        if (ToggleCommand.chronomatronToggled && event.displayName.startsWith("Chronomatron (")) {
+        if (ModConfig.chronomatron && event.displayName.startsWith("Chronomatron (")) {
             int chestSize = event.chestSize;
             List<Slot> invSlots = event.slots;
             if (invSlots.size() > 48 && invSlots.get(49).getStack() != null) {
@@ -84,9 +82,9 @@ public class ChronomatronSolver {
 
                                 
                             if (glass.getDisplayName().equals(chronomatronPattern.get(chronomatronMouseClicks))) {
-                                RenderUtils.drawOnSlot(chestSize, glassSlot.xDisplayPosition, glassSlot.yDisplayPosition, CHRONOMATRON_NEXT + 0xE5000000);
+                                RenderUtils.drawOnSlot(chestSize, glassSlot.xDisplayPosition, glassSlot.yDisplayPosition, ModConfig.chronomatronNextColour.getRGB());
                             } else if (chronomatronMouseClicks + 1 < chronomatronPattern.size() && glass.getDisplayName().equals(chronomatronPattern.get(chronomatronMouseClicks + 1))) {
-                                RenderUtils.drawOnSlot(chestSize, glassSlot.xDisplayPosition, glassSlot.yDisplayPosition, CHRONOMATRON_NEXT_TO_NEXT + 0XBE000000);
+                                RenderUtils.drawOnSlot(chestSize, glassSlot.xDisplayPosition, glassSlot.yDisplayPosition, ModConfig.chronomatronNextToNextColour.getRGB());
                             }
                             
                         }

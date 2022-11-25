@@ -1,6 +1,6 @@
 package me.Danker.features;
 
-import me.Danker.commands.ToggleCommand;
+import me.Danker.config.ModConfig;
 import me.Danker.handlers.ScoreboardHandler;
 import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;
@@ -27,7 +27,7 @@ public class NotifySlayerSlain {
         if (item == null) return;
 
         if (event.action == PlayerInteractEvent.Action.RIGHT_CLICK_AIR) {
-            if (ToggleCommand.notifySlayerSlainToggled) {
+            if (ModConfig.notifySlayerSlain) {
                 if (ScoreboardHandler.getSidebarLines().stream().anyMatch(x -> ScoreboardHandler.cleanSB(x).contains("Boss slain!"))) {
                     if (ScoreboardHandler.getSidebarLines().stream().anyMatch(x -> {
                         String line = ScoreboardHandler.cleanSB(x);
@@ -58,7 +58,7 @@ public class NotifySlayerSlain {
     public void onArrowNock(ArrowNockEvent event) {
         if (!Utils.inSkyblock || Minecraft.getMinecraft().thePlayer != event.entityPlayer) return;
 
-        if (ToggleCommand.notifySlayerSlainToggled) {
+        if (ModConfig.notifySlayerSlain) {
             if (ScoreboardHandler.getSidebarLines().stream().anyMatch(x -> ScoreboardHandler.cleanSB(x).contains("Boss slain!"))) {
                 if (ScoreboardHandler.getSidebarLines().stream().anyMatch(x -> {
                     String line = ScoreboardHandler.cleanSB(x);
@@ -72,7 +72,7 @@ public class NotifySlayerSlain {
 
     @SubscribeEvent
     public void onAttackingEntity(AttackEntityEvent event) {
-        if (ToggleCommand.notifySlayerSlainToggled && (event.target instanceof EntityZombie || event.target instanceof EntitySpider || event.target instanceof EntityWolf)) {
+        if (ModConfig.notifySlayerSlain && (event.target instanceof EntityZombie || event.target instanceof EntitySpider || event.target instanceof EntityWolf)) {
             List<String> scoreboard = ScoreboardHandler.getSidebarLines();
 
             for (String line : scoreboard) {

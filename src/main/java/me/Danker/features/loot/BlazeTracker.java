@@ -1,6 +1,6 @@
 package me.Danker.features.loot;
 
-import me.Danker.commands.ToggleCommand;
+import me.Danker.config.ModConfig;
 import me.Danker.handlers.ConfigHandler;
 import me.Danker.utils.Utils;
 import net.minecraft.util.EnumChatFormatting;
@@ -143,7 +143,7 @@ public class BlazeTracker {
             fieryBurstRunes++;
             fieryBurstRunesSession++;
             ConfigHandler.writeIntConfig("blaze", "fieryBurstRunes", fieryBurstRunes);
-            if (ToggleCommand.rngesusAlerts) Utils.createTitle(EnumChatFormatting.RED + "FIERY BURST RUNE!", 5);
+            if (ModConfig.rngesusAlerts) Utils.createTitle(EnumChatFormatting.RED + "FIERY BURST RUNE!", 5);
         } else if (message.contains("VERY RARE DROP!  (") && message.contains(" Flawed Opal Gemstone)")) {
             int amount = LootTracker.getAmountfromMessage(message);
             opalGems += amount;
@@ -162,19 +162,19 @@ public class BlazeTracker {
             highClassArchfiendDice++;
             highClassArchfiendDiceSession++;
             ConfigHandler.writeIntConfig("blaze", "highClassArchfiendDice", highClassArchfiendDice);
-            if (ToggleCommand.rngesusAlerts) Utils.createTitle(EnumChatFormatting.GOLD + "HIGH CLASS ARCHFIEND DICE!", 5);
+            if (ModConfig.rngesusAlerts) Utils.createTitle(EnumChatFormatting.GOLD + "HIGH CLASS ARCHFIEND DICE!", 5);
         } else if (message.contains("CRAZY RARE DROP!  (Wilson's Engineering Plans)")) {
             rng = true;
             engineeringPlans++;
             engineeringPlansSession++;
             ConfigHandler.writeIntConfig("blaze", "engineeringPlans", engineeringPlans);
-            if (ToggleCommand.rngesusAlerts) Utils.createTitle(EnumChatFormatting.GOLD + "ENGINEERING PLANS!", 5);
+            if (ModConfig.rngesusAlerts) Utils.createTitle(EnumChatFormatting.GOLD + "ENGINEERING PLANS!", 5);
         } else if (message.contains("CRAZY RARE DROP!  (Subzero Inverter)")) {
             rng = true;
             subzeroInverters++;
             subzeroInvertersSession++;
             ConfigHandler.writeIntConfig("blaze", "subzeroInverters", subzeroInverters);
-            if (ToggleCommand.rngesusAlerts) Utils.createTitle(EnumChatFormatting.GOLD + "SUBZERO INVERTER!", 5);
+            if (ModConfig.rngesusAlerts) Utils.createTitle(EnumChatFormatting.GOLD + "SUBZERO INVERTER!", 5);
         }
 
         if (rng) {

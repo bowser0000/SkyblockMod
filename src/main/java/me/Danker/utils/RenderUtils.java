@@ -294,7 +294,7 @@ public class RenderUtils {
 
     public static void draw3DBox(AxisAlignedBB aabb, int colourInt, float partialTicks) {
         Entity render = Minecraft.getMinecraft().getRenderViewEntity();
-        Color colour = new Color(colourInt);
+        Color colour = new Color(colourInt, true);
 
         double realX = render.lastTickPosX + (render.posX - render.lastTickPosX) * partialTicks;
         double realY = render.lastTickPosY + (render.posY - render.lastTickPosY) * partialTicks;

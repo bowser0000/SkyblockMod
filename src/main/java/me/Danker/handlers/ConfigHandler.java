@@ -4,14 +4,10 @@ import com.google.gson.*;
 import me.Danker.DankersSkyblockMod;
 import me.Danker.commands.MoveCommand;
 import me.Danker.commands.ScaleCommand;
-import me.Danker.commands.ToggleCommand;
 import me.Danker.features.*;
 import me.Danker.features.loot.*;
-import me.Danker.features.puzzlesolvers.*;
-import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
-import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.common.config.ConfigCategory;
 import net.minecraftforge.common.config.Configuration;
 
@@ -235,144 +231,11 @@ public class ConfigHandler {
 		init();
 
 		// Toggles
-		ToggleCommand.gpartyToggled = initBoolean("toggles", "GParty", false);
-		ToggleCommand.coordsToggled = initBoolean("toggles", "Coords", false);
-		ToggleCommand.goldenToggled = initBoolean("toggles", "Golden", false);
-		ToggleCommand.slayerCountTotal = initBoolean("toggles", "SlayerCount", true);
-		ToggleCommand.masterSPlusDisplay = initBoolean("toggles", "MasterSPlusDisplay", true);
-		ToggleCommand.rngesusAlerts = initBoolean("toggles", "RNGesusAlerts", false);
-		ToggleCommand.ghostDisplay = initBoolean("toggles", "GhostDisplay", true);
-		ToggleCommand.dungeonTimerToggled = initBoolean("toggles", "GhostTimer", false);
-		ToggleCommand.splitFishing = initBoolean("toggles", "SplitFishing", true);
-		ToggleCommand.chatMaddoxToggled = initBoolean("toggles", "ChatMaddox", false);
-		ToggleCommand.spiritBearAlerts = initBoolean("toggles", "SpiritBearAlerts", false);
-		ToggleCommand.petColoursToggled = initBoolean("toggles", "PetColors", false);
-		ToggleCommand.golemAlertToggled = initBoolean("toggles", "GolemAlerts", false);
-		ToggleCommand.expertiseLoreToggled = initBoolean("toggles", "ExpertiseLore", false);
-		ToggleCommand.skill50DisplayToggled = initBoolean("toggles", "Skill50Display", false);
-		ToggleCommand.outlineTextToggled = initBoolean("toggles", "OutlineText", false);
-		ToggleCommand.cakeTimerToggled = initBoolean("toggles", "CakeTimer", false);
-		ToggleCommand.melodyTooltips = initBoolean("toggles", "MelodyTooltips", false);
-		ToggleCommand.highlightSlayers = initBoolean("toggles", "HighlightSlayers", false);
-		ToggleCommand.highlightArachne = initBoolean("toggles", "HighlightArachne", false);
-		ToggleCommand.highlightCommissions = initBoolean("toggles", "HighlightCommissions", false);
-		ToggleCommand.highlightSkeletonMasters = initBoolean("toggles", "HighlightSkeletonMasters", false);
-		ToggleCommand.teammatesInRadius = initBoolean("toggles", "TeammatesInRadius", false);
-		ToggleCommand.giantHP = initBoolean("toggles", "GiantHP", false);
-		ToggleCommand.hidePetCandy = initBoolean("toggles", "HidePetCandy", false);
-		ToggleCommand.customColouredNames = initBoolean("toggles", "CustomColouredNames", false);
-		ToggleCommand.customNametags = initBoolean("toggles", "CustomNametags", true);
-		ToggleCommand.endOfFarmAlert = initBoolean("toggles", "EndOfFarmAlert", false);
-		ToggleCommand.gemstoneLore = initBoolean("toggles", "GemstoneLore", false);
-		ToggleCommand.crystalHollowWaypoints = initBoolean("toggles", "CrystalHollowWaypoints", false);
-		ToggleCommand.crystalAutoWaypoints = initBoolean("toggles", "CrystalAutoWaypoints", true); // enabled by default
-		ToggleCommand.crystalAutoPlayerWaypoints = initBoolean("toggles", "CrystalAutoPlayerWaypoints", false);
-		ToggleCommand.autoAcceptReparty = initBoolean("toggles", "AutoAcceptReparty", false);
-		ToggleCommand.abilityCooldowns = initBoolean("toggles", "AbilityCooldowns", false);
-		ToggleCommand.dungeonTimerToggled = initBoolean("toggles", "DungeonTimer", false);
-		ToggleCommand.lowHealthNotifyToggled = initBoolean("toggles", "LowHealthNotify", false);
-		ToggleCommand.lividSolverToggled = initBoolean("toggles", "LividSolver", false);
-		ToggleCommand.stopSalvageStarredToggled = initBoolean("toggles", "StopSalvageStarred", false);
-		ToggleCommand.watcherReadyToggled = initBoolean("toggles", "WatcherReadyMessage", false);
-		ToggleCommand.notifySlayerSlainToggled = initBoolean("toggles", "NotifySlayerSlain", false);
-		ToggleCommand.necronNotificationsToggled = initBoolean("toggles", "NecronNotifications", false);
-		ToggleCommand.bonzoTimerToggled = initBoolean("toggles", "BonzoTimer", false);
-		ToggleCommand.swapToPickBlockToggled = initBoolean("toggles", "PickBlock", false);
-		ToggleCommand.flowerWeaponsToggled = initBoolean("toggles", "FlowerWeapons", false);
-		ToggleCommand.autoSkillTrackerToggled = initBoolean("toggles", "AutoSkillTracker", false);
-		ToggleCommand.alerts = initBoolean("toggles", "Alerts", false);
-		ToggleCommand.dungeonScore = initBoolean("toggles", "DungeonScore", false);
-		ToggleCommand.hideArmour = initBoolean("toggles", "HideArmour", false);
-		ToggleCommand.autoJoinSkyblock = initBoolean("toggles", "AutoJoinSkyblock", false);
-		ToggleCommand.firePillar = initBoolean("toggles", "FirePillar", false);
-		ToggleCommand.aliases = initBoolean("toggles", "Aliases", false);
-		ToggleCommand.fishingAlert = initBoolean("toggles", "FishingAlert", false);
-		ToggleCommand.minionLastCollected = initBoolean("toggles", "MinionLastCollected", false);
-		ToggleCommand.showTrophyCompletion = initBoolean("toggles", "ShowTrophyCompletion", false);
-		ToggleCommand.showTotalMagmafish = initBoolean("toggles", "ShowTotalMagmafish", false);
-		ToggleCommand.bazaarTimeToFill = initBoolean("toggles", "BazaarTimeToFill", false);
-		ToggleCommand.onlyEditEnabled = initBoolean("toggles", "OnlyEditEnabled", true);
-		ToggleCommand.crimsonMinibossTimer = initBoolean("toggles", "CrimsonMinibossTimer", false);
-		ToggleCommand.announceVanqs = initBoolean("toggles", "AnnounceVanqs", false);
-		ToggleCommand.kuudraNotifications = initBoolean("toggles", "KuudraNotifications", false);
-		// Chat Messages
-		ToggleCommand.sceptreMessages = initBoolean("toggles", "SceptreMessages", true);
-		ToggleCommand.midasStaffMessages = initBoolean("toggles", "MidasStaffMessages", true);
-		ToggleCommand.implosionMessages = initBoolean("toggles", "ImplosionMessages", true);
-		ToggleCommand.healMessages = initBoolean("toggles", "HealMessages", true);
-		ToggleCommand.cooldownMessages = initBoolean("toggles", "CooldownMessages", true);
-		ToggleCommand.manaMessages = initBoolean("toggles", "ManaMessages", true);
-		ToggleCommand.killComboMessages = initBoolean("toggles", "KillComboMessages", true);
-		// Puzzle Solvers
-		ToggleCommand.threeManToggled = initBoolean("toggles", "ThreeManPuzzle", false);
-		ToggleCommand.oruoToggled = initBoolean("toggles", "OruoPuzzle", false);
-		ToggleCommand.blazeToggled = initBoolean("toggles", "BlazePuzzle", false);
-		ToggleCommand.creeperToggled = initBoolean("toggles", "CreeperPuzzle", false);
-		ToggleCommand.creeperLinesToggled = initBoolean("toggles", "CreeperLines", true);
-		ToggleCommand.waterToggled = initBoolean("toggles", "WaterPuzzle", false);
-		ToggleCommand.ticTacToeToggled = initBoolean("toggles", "TicTacToePuzzle", false);
-		ToggleCommand.boulderToggled = initBoolean("toggles", "BoulderPuzzle", false);
-		ToggleCommand.silverfishToggled = initBoolean("toggles", "SilverfishPuzzle", false);
-		ToggleCommand.iceWalkToggled = initBoolean("toggles", "IceWalkPuzzle", false);
-		ToggleCommand.startsWithToggled = initBoolean("toggles", "StartsWithTerminal", false);
-		ToggleCommand.selectAllToggled = initBoolean("toggles", "SelectAllTerminal", false);
-		ToggleCommand.clickInOrderToggled = initBoolean("toggles", "ClickInOrderTerminal", false);
-		ToggleCommand.sameColourToggled = initBoolean("toggles", "SameColourTerminal", false);
-		ToggleCommand.blockWrongTerminalClicksToggled = initBoolean("toggles", "BlockWrongTerminalClicks", false);
-		ToggleCommand.itemFrameOnSeaLanternsToggled = initBoolean("toggles", "IgnoreItemFrameOnSeaLanterns", false);
-		// Experiment Solvers
-		ToggleCommand.ultrasequencerToggled = initBoolean("toggles", "UltraSequencer", false);
-		ToggleCommand.chronomatronToggled = initBoolean("toggles", "Chronomatron", false);
-		ToggleCommand.superpairsToggled = initBoolean("toggles", "Superpairs", false);
-		ToggleCommand.hideTooltipsInExperimentAddonsToggled = initBoolean("toggles", "HideTooltipsInExperimentAddons", false);
-		// Custom Music
-		ToggleCommand.disableHypixelMusic = initBoolean("toggles", "DisableHypixelMusic", true);
-		ToggleCommand.dungeonBossMusic = initBoolean("toggles", "DungeonBossMusic", false);
-		ToggleCommand.bloodRoomMusic = initBoolean("toggles", "BloodRoomMusic", false);
-		ToggleCommand.dungeonMusic = initBoolean("toggles", "DungeonMusic", false);
-		ToggleCommand.hubMusic = initBoolean("toggles", "HubMusic", false);
-		ToggleCommand.islandMusic = initBoolean("toggles", "IslandMusic", false);
-		ToggleCommand.dungeonHubMusic = initBoolean("toggles", "DungeonHubMusic", false);
-		ToggleCommand.farmingIslandsMusic = initBoolean("toggles", "FarmingIslandsMusic", false);
-		ToggleCommand.goldMineMusic = initBoolean("toggles", "GoldMineMusic", false);
-		ToggleCommand.deepCavernsMusic = initBoolean("toggles", "DeepCavernsMusic", false);
-		ToggleCommand.dwarvenMinesMusic = initBoolean("toggles", "DwarvenMinesMusic", false);
-		ToggleCommand.crystalHollowsMusic = initBoolean("toggles", "CrystalHollowsMusic", false);
-		ToggleCommand.spidersDenMusic = initBoolean("toggles", "SpidersDenMusic", false);
-		ToggleCommand.crimsonIsleMusic = initBoolean("toggles", "CrimsonIsleMusic", false);
-		ToggleCommand.endMusic = initBoolean("toggles", "Music", false);
-		ToggleCommand.parkMusic = initBoolean("toggles", "Music", false);
-		// Music Volume
-		CustomMusic.dungeonbossVolume = initInt("music", "DungeonBossVolume", 50);
-		CustomMusic.bloodroomVolume = initInt("music", "BloodRoomVolume", 50);
-		CustomMusic.dungeonVolume = initInt("music", "DungeonVolume", 50);
-		CustomMusic.phase2Volume = initInt("music", "Phase2Volume", 50);
-		CustomMusic.phase3Volume = initInt("music", "Phase3Volume", 50);
-		CustomMusic.phase4Volume = initInt("music", "Phase4Volume", 50);
-		CustomMusic.phase5Volume = initInt("music", "Phase5Volume", 50);
-		CustomMusic.hubVolume = initInt("music", "HubVolume", 50);
-		CustomMusic.islandVolume = initInt("music", "IslandVolume", 50);
-		CustomMusic.dungeonHubVolume = initInt("music", "DungeonHubVolume", 50);
-		CustomMusic.farmingIslandsVolume = initInt("music", "FarmingIslandsVolume", 50);
-		CustomMusic.goldMineVolume = initInt("music", "GoldMineVolume", 50);
-		CustomMusic.deepCavernsVolume = initInt("music", "DeepCavernsVolume", 50);
-		CustomMusic.dwarvenMinesVolume = initInt("music", "DwarvenMinesVolume", 50);
-		CustomMusic.crystalHollowsVolume = initInt("music", "CrystalHollowsVolume", 50);
-		CustomMusic.spidersDenVolume = initInt("music", "SpidersDenVolume", 50);
-		CustomMusic.crimsonIsleVolume = initInt("music", "CrimsonIsleVolume", 50);
-		CustomMusic.endVolume = initInt("music", "EndVolume", 50);
-		CustomMusic.parkVolume = initInt("music", "ParkVolume", 50);
-
-		// API
-		if (!hasKey("api", "APIKey")) writeStringConfig("api", "APIKey", "");
-
-		// Block Wrong Slayer
-		if (!hasKey("toggles", "BlockSlayer")) writeStringConfig("toggles", "BlockSlayer", "");
-		String onlySlayer = getString("toggles", "BlockSlayer");
-		if (!onlySlayer.equals("")) {
-			BlockWrongSlayer.onlySlayerName = onlySlayer.substring(0, onlySlayer.lastIndexOf(" "));
-			BlockWrongSlayer.onlySlayerNumber = onlySlayer.substring(onlySlayer.lastIndexOf(" ") + 1);
-		}
+		CrystalHollowWaypoints.toggled = initBoolean("toggles", "CrystalHollowWaypoints", false);
+		CrystalHollowWaypoints.autoWaypoints = initBoolean("toggles", "CrystalAutoWaypoints", true); // enabled by default
+		CrystalHollowWaypoints.autoPlayerWaypoints = initBoolean("toggles", "CrystalAutoPlayerWaypoints", false);
+		Alerts.toggled = initBoolean("toggles", "Alerts", false);
+		ChatAliases.toggled = initBoolean("toggles", "Aliases", false);
 		
 		// Wolf
 		WolfTracker.svens = initInt("wolf", "svens", 0);
@@ -648,16 +511,8 @@ public class ConfigHandler {
 		GhostTracker.bagOfCashs = initInt("ghosts", "bagOfCash", 0);
 
 		// Misc
-		LootDisplay.display = initString("misc", "display", "off");
-		LootDisplay.auto = initBoolean("misc", "autoDisplay", false);
-		Skill50Display.SKILL_TIME = initInt("misc", "skill50Time", 3) * 20;
 		CakeTimer.cakeTime = initDouble("misc", "cakeTime", 0);
-		SkillTracker.showSkillTracker = initBoolean("misc", "showSkillTracker", false);
-		PowderTracker.showPowderTracker = initBoolean("misc", "showPowderTracker", false);
 		DankersSkyblockMod.firstLaunch = initBoolean("misc", "firstLaunch", true);
-		EndOfFarmAlert.min = initDouble("misc", "farmMin", -78.5);
-		EndOfFarmAlert.max = initDouble("misc", "farmMax", 79.5);
-		Utils.TITLE_SOUND = initString("misc", "titleSound", "random.orb");
 
 		// Locations
 		ScaledResolution scaled = new ScaledResolution(Minecraft.getMinecraft());
@@ -725,55 +580,6 @@ public class ConfigHandler {
 		DankersSkyblockMod.enchantingLevel = initInt("skills", "enchanting", -1);
 		DankersSkyblockMod.alchemyLevel = initInt("skills", "alchemy", -1);
 		DankersSkyblockMod.carpentryLevel = initInt("skills", "carpentry", -1);
-
-		// Colours
-		DankersSkyblockMod.MAIN_COLOUR = initString("colors", "main", EnumChatFormatting.GREEN.toString());
-		DankersSkyblockMod.SECONDARY_COLOUR = initString("colors", "secondary", EnumChatFormatting.DARK_GREEN.toString());
-		DankersSkyblockMod.DELIMITER_COLOUR = initString("colors", "delimiter", EnumChatFormatting.AQUA.toString() + EnumChatFormatting.STRIKETHROUGH);
-		DankersSkyblockMod.ERROR_COLOUR = initString("colors", "error", EnumChatFormatting.RED.toString());
-		DankersSkyblockMod.TYPE_COLOUR = initString("colors", "type", EnumChatFormatting.GREEN.toString());
-		DankersSkyblockMod.VALUE_COLOUR = initString("colors", "value", EnumChatFormatting.DARK_GREEN.toString());
-		DankersSkyblockMod.SKILL_AVERAGE_COLOUR = initString("colors", "skillAverage", EnumChatFormatting.GOLD.toString());
-		DankersSkyblockMod.ANSWER_COLOUR = initString("colors", "answer", EnumChatFormatting.DARK_GREEN.toString());
-		Skill50Display.SKILL_50_COLOUR = initString("colors", "skill50Display", EnumChatFormatting.AQUA.toString());
-		NoF3Coords.COORDS_COLOUR = initString("colors", "coordsDisplay", EnumChatFormatting.WHITE.toString());
-		CakeTimer.CAKE_COLOUR = initString("colors", "cakeDisplay", EnumChatFormatting.GOLD.toString());
-		SkillTracker.SKILL_TRACKER_COLOUR = initString("colors", "skillTracker", EnumChatFormatting.AQUA.toString());
-		TriviaSolver.TRIVIA_WRONG_ANSWER_COLOUR = initString("colors", "triviaWrongAnswer", EnumChatFormatting.RED.toString());
-		BonzoMaskTimer.BONZO_COLOR = initString("colors", "bonzoDisplay", EnumChatFormatting.RED.toString());
-		GolemSpawningAlert.GOLEM_COLOUR = initString("colors", "golemDisplay", EnumChatFormatting.GOLD.toString());
-		BlazeSolver.LOWEST_BLAZE_COLOUR = initInt("colors", "blazeLowest", 0xFF0000);
-		BlazeSolver.HIGHEST_BLAZE_COLOUR = initInt("colors", "blazeHighest", 0x40FF40);
-		SlayerESP.SLAYER_COLOUR = initInt("colors", "slayerColor", 0x0000FF);
-		ArachneESP.ARACHANE_COLOUR = initInt("colors", "arachneColor", 0x00FF00);
-		HighlightSkeletonMasters.SKELETON_MASTER_COLOUR = initInt("colors", "skeletonMaster", 0xFF0000);
-		PetColours.PET_1_TO_9 = initInt("colors", "pet1To9", 0x999999); // Grey
-		PetColours.PET_10_TO_19 = initInt("colors", "pet10To19", 0xD62440); // Red
-		PetColours.PET_20_TO_29 = initInt("colors", "pet20To29", 0xEF5230); // Orange
-		PetColours.PET_30_TO_39 = initInt("colors", "pet30To39", 0x113CF2); // Dark Blue
-		PetColours.PET_40_TO_49 = initInt("colors", "pet40To49", 0x0EAC35); // Green
-		PetColours.PET_50_TO_59 = initInt("colors", "pet50To59", 0x008AD8); // Light Blue
-		PetColours.PET_60_TO_69 = initInt("colors", "pet60To69", 0x7E4FC6); // Purple
-		PetColours.PET_70_TO_79 = initInt("colors", "pet70To79", 0xD64FC8); // Pink
-		PetColours.PET_80_TO_89 = initInt("colors", "pet80To89", 0x5C1F35); // idk weird magenta
-		PetColours.PET_90_TO_99 = initInt("colors", "pet90To99", 0x9E794E); // Brown
-		PetColours.PET_100 = initInt("colors", "pet100", 0xF2D249); // Gold
-		UltrasequencerSolver.ULTRASEQUENCER_NEXT = initInt("colors", "ultrasequencerNext", 0x40FF40);
-		UltrasequencerSolver.ULTRASEQUENCER_NEXT_TO_NEXT = initInt("colors", "ultrasequencerNextToNext", 0x40DAE6);
-		ChronomatronSolver.CHRONOMATRON_NEXT = initInt("colors", "chronomatronNext", 0x40FF40);
-		ChronomatronSolver.CHRONOMATRON_NEXT_TO_NEXT = initInt("colors", "chronomatronNextToNext", 0x40DAE6);
-		ClickInOrderSolver.CLICK_IN_ORDER_NEXT = initInt("colors", "clickInOrderNext", 0xFF00DD);
-		ClickInOrderSolver.CLICK_IN_ORDER_NEXT_TO_NEXT = initInt("colors", "clickInOrderNextToNext", 0x0BEFE7);
-		BoulderSolver.BOULDER_COLOUR = initInt("colors", "boulder", 0x197F19);
-		BoulderSolver.BOULDER_ARROW_COLOUR = initInt("colors", "boulderArrow", 0x006000);
-		SilverfishSolver.SILVERFISH_LINE_COLOUR = initInt("colors", "silverfishLine", 0x40FF40);
-		IceWalkSolver.ICE_WALK_LINE_COLOUR = initInt("colors", "iceWalkLine", 0x40FF40);
-		HighlightCommissions.HIGHLIGHT_COLOUR = initInt("colors", "highlight_colour", 0x51FF51);
-		MinionLastCollected.LAST_COLLECTED_COLOUR = initInt("colors", "lastCollected", 0x55FFFF);
-		LividSolver.LIVID_COLOUR = initInt("colors", "livid", 0x0000FF);
-		CrimsonMinibossTimer.TIMER_COLOUR = initString("colors", "minibossTimer", EnumChatFormatting.GOLD.toString());
-		CrimsonMinibossTimer.UNKNOWN_COLOUR = initString("colors", "minibossUnknown", EnumChatFormatting.RED.toString());
-		PowderTracker.POWDER_TRACKER_COLOUR = initString("colors", "powderTracker", EnumChatFormatting.AQUA.toString());
 
 		// Commands
 		if (!hasKey("commands", "reparty")) writeBooleanConfig("commands", "reparty", false);

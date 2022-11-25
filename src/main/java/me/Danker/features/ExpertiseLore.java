@@ -1,6 +1,6 @@
 package me.Danker.features;
 
-import me.Danker.commands.ToggleCommand;
+import me.Danker.config.ModConfig;
 import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
@@ -18,7 +18,7 @@ public class ExpertiseLore {
         if (event.toolTip == null) return;
 
         ItemStack item = event.itemStack;
-        if (ToggleCommand.expertiseLoreToggled) {
+        if (ModConfig.expertiseLore) {
             if (item.hasTagCompound()) {
                 NBTTagCompound tags = item.getSubCompound("ExtraAttributes", false);
                 if (tags != null) {

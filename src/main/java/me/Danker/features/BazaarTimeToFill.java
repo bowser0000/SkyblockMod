@@ -1,7 +1,7 @@
 package me.Danker.features;
 
 import me.Danker.DankersSkyblockMod;
-import me.Danker.commands.ToggleCommand;
+import me.Danker.config.ModConfig;
 import me.Danker.events.ChestSlotClickedEvent;
 import me.Danker.events.GuiChestBackgroundDrawnEvent;
 import me.Danker.utils.RenderUtils;
@@ -27,7 +27,7 @@ public class BazaarTimeToFill {
 
     @SubscribeEvent
     public void onSlotClick(ChestSlotClickedEvent event) {
-        if (!ToggleCommand.bazaarTimeToFill) return;
+        if (!ModConfig.bazaarTimeToFill) return;
 
         if (event.inventoryName.contains(" ➜ ") && event.item != null) {
             if (event.slot.slotNumber - (event.chest.inventorySlots.inventorySlots.size() - 36) >= 0) {
@@ -52,7 +52,7 @@ public class BazaarTimeToFill {
 
     @SubscribeEvent
     public void onTick(TickEvent.ClientTickEvent event) {
-        if (!ToggleCommand.bazaarTimeToFill || !Utils.inSkyblock) return;
+        if (!ModConfig.bazaarTimeToFill || !Utils.inSkyblock) return;
         if (event.phase != TickEvent.Phase.START) return;
         if (DankersSkyblockMod.tickAmount % 10 != 0) return;
 
@@ -92,7 +92,7 @@ public class BazaarTimeToFill {
 
     @SubscribeEvent
     public void onGuiRender(GuiChestBackgroundDrawnEvent event) {
-        if (!ToggleCommand.bazaarTimeToFill) return;
+        if (!ModConfig.bazaarTimeToFill) return;
         if (textToDisplay.length() == 0) return;
 
         ScaledResolution sr = new ScaledResolution(Minecraft.getMinecraft());

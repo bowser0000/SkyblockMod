@@ -1,6 +1,6 @@
 package me.Danker.handlers;
 
-import me.Danker.commands.ToggleCommand;
+import me.Danker.config.ModConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.renderer.GlStateManager;
@@ -13,7 +13,7 @@ public class TextRenderer extends Gui {
 		
 		GL11.glScaled(scale, scale, scale);
 		for (String line : text.split("\n")) {
-			if (ToggleCommand.outlineTextToggled) {
+			if (ModConfig.outlineText) {
 				String noColorLine = StringUtils.stripControlCodes(line);
 				mc.fontRendererObj.drawString(noColorLine, (float) (x / scale - 1), (float) (y / scale), 0x000000, false);
 				mc.fontRendererObj.drawString(noColorLine, (float) (x / scale + 1), (float) (y / scale), 0x000000, false);

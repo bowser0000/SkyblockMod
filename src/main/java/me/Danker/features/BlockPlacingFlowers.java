@@ -1,6 +1,6 @@
 package me.Danker.features;
 
-import me.Danker.commands.ToggleCommand;
+import me.Danker.config.ModConfig;
 import me.Danker.utils.Utils;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
@@ -28,14 +28,14 @@ public class BlockPlacingFlowers {
         ItemStack item = event.entityPlayer.getHeldItem();
         if (item == null) return;
 
-        if (event.action == PlayerInteractEvent.Action.RIGHT_CLICK_BLOCK) {
+        if (ModConfig.flowerWeapons && event.action == PlayerInteractEvent.Action.RIGHT_CLICK_BLOCK) {
             Block block = Minecraft.getMinecraft().theWorld.getBlockState(event.pos).getBlock();
 
             if (flowerPlaceable.contains(block)) {
-                if (ToggleCommand.flowerWeaponsToggled && item.getDisplayName().contains("Flower of Truth")) {
+                if (item.getDisplayName().contains("Flower of Truth")) {
                     event.setCanceled(true);
                 }
-                if (ToggleCommand.flowerWeaponsToggled && item.getDisplayName().contains("Spirit Sceptre")) {
+                if (item.getDisplayName().contains("Spirit Sceptre")) {
                     event.setCanceled(true);
                 }
             }

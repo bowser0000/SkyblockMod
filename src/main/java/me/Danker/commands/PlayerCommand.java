@@ -1,9 +1,8 @@
 package me.Danker.commands;
 
 import com.google.gson.JsonObject;
-import me.Danker.DankersSkyblockMod;
+import me.Danker.config.ModConfig;
 import me.Danker.handlers.APIHandler;
-import me.Danker.handlers.ConfigHandler;
 import me.Danker.utils.Utils;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
@@ -53,9 +52,9 @@ public class PlayerCommand extends CommandBase {
             EntityPlayer player = (EntityPlayer) arg0;
 
             // Check key
-            String key = ConfigHandler.getString("api", "APIKey");
+            String key = ModConfig.apiKey;
             if (key.equals("")) {
-                player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "API key not set. Use /setkey."));
+                player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "API key not set. Use /setkey."));
                 return;
             }
 
@@ -65,10 +64,10 @@ public class PlayerCommand extends CommandBase {
             if (arg1.length == 0) {
                 username = player.getName();
                 uuid = player.getUniqueID().toString().replaceAll("[\\-]", "");
-                player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Checking stats of " + DankersSkyblockMod.SECONDARY_COLOUR + username));
+                player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Checking stats of " + ModConfig.getColour(ModConfig.secondaryColour) + username));
             } else {
                 username = arg1[0];
-                player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Checking stats of " + DankersSkyblockMod.SECONDARY_COLOUR + username));
+                player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Checking stats of " + ModConfig.getColour(ModConfig.secondaryColour) + username));
                 uuid = APIHandler.getUUID(username);
             }
 
@@ -81,7 +80,7 @@ public class PlayerCommand extends CommandBase {
             JsonObject profileResponse = APIHandler.getResponse(profileURL, true);
             if (!profileResponse.get("success").getAsBoolean()) {
                 String reason = profileResponse.get("cause").getAsString();
-                player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Failed with reason: " + reason));
+                player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "Failed with reason: " + reason));
                 return;
             }
 
@@ -140,7 +139,7 @@ public class PlayerCommand extends CommandBase {
 
                 if (!playerObject.get("success").getAsBoolean()) {
                     String reason = profileResponse.get("cause").getAsString();
-                    player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Failed with reason: " + reason));
+                    player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "Failed with reason: " + reason));
                     return;
                 }
 
@@ -217,7 +216,7 @@ public class PlayerCommand extends CommandBase {
             JsonObject weightResponse = APIHandler.getResponse(weightURL, true);
             if (weightResponse.has("error")) {
                 String reason = weightResponse.get("error").getAsString();
-                player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Failed with reason: " + reason));
+                player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "Failed with reason: " + reason));
                 return;
             }
 
@@ -225,30 +224,30 @@ public class PlayerCommand extends CommandBase {
 
             NumberFormat nf = NumberFormat.getIntegerInstance(Locale.US);
             NumberFormat nfd = NumberFormat.getNumberInstance(Locale.US);
-            player.addChatMessage(new ChatComponentText(DankersSkyblockMod.DELIMITER_COLOUR + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+            player.addChatMessage(new ChatComponentText(EnumChatFormatting.BOLD + ModConfig.getColour(ModConfig.delimiterColour) + "" + EnumChatFormatting.BOLD + "-------------------\n" +
                                                         EnumChatFormatting.AQUA + " " + username + "'s Skills:\n" +
-                                                        DankersSkyblockMod.TYPE_COLOUR + " Farming: " + DankersSkyblockMod.VALUE_COLOUR + EnumChatFormatting.BOLD + farmingLevel + "\n" +
-                                                        DankersSkyblockMod.TYPE_COLOUR + " Mining: " + DankersSkyblockMod.VALUE_COLOUR + EnumChatFormatting.BOLD + miningLevel + "\n" +
-                                                        DankersSkyblockMod.TYPE_COLOUR + " Combat: " + DankersSkyblockMod.VALUE_COLOUR + EnumChatFormatting.BOLD + combatLevel + "\n" +
-                                                        DankersSkyblockMod.TYPE_COLOUR + " Foraging: " + DankersSkyblockMod.VALUE_COLOUR + EnumChatFormatting.BOLD + foragingLevel + "\n" +
-                                                        DankersSkyblockMod.TYPE_COLOUR + " Fishing: " + DankersSkyblockMod.VALUE_COLOUR + EnumChatFormatting.BOLD + fishingLevel + "\n" +
-                                                        DankersSkyblockMod.TYPE_COLOUR + " Enchanting: " + DankersSkyblockMod.VALUE_COLOUR + EnumChatFormatting.BOLD + enchantingLevel + "\n" +
-                                                        DankersSkyblockMod.TYPE_COLOUR + " Alchemy: " + DankersSkyblockMod.VALUE_COLOUR + EnumChatFormatting.BOLD + alchemyLevel + "\n" +
-                                                        DankersSkyblockMod.TYPE_COLOUR + " Taming: " + DankersSkyblockMod.VALUE_COLOUR + EnumChatFormatting.BOLD + tamingLevel + "\n" +
-                                                        EnumChatFormatting.AQUA + " Average Skill Level: " + DankersSkyblockMod.SKILL_AVERAGE_COLOUR + EnumChatFormatting.BOLD + skillAvg + "\n" +
-                                                        EnumChatFormatting.AQUA + " True Average Skill Level: " + DankersSkyblockMod.SKILL_AVERAGE_COLOUR + EnumChatFormatting.BOLD + trueAvg + "\n\n" +
+                                                        ModConfig.getColour(ModConfig.typeColour) + " Farming: " + ModConfig.getColour(ModConfig.valueColour) + EnumChatFormatting.BOLD + farmingLevel + "\n" +
+                                                        ModConfig.getColour(ModConfig.typeColour) + " Mining: " + ModConfig.getColour(ModConfig.valueColour) + EnumChatFormatting.BOLD + miningLevel + "\n" +
+                                                        ModConfig.getColour(ModConfig.typeColour) + " Combat: " + ModConfig.getColour(ModConfig.valueColour) + EnumChatFormatting.BOLD + combatLevel + "\n" +
+                                                        ModConfig.getColour(ModConfig.typeColour) + " Foraging: " + ModConfig.getColour(ModConfig.valueColour) + EnumChatFormatting.BOLD + foragingLevel + "\n" +
+                                                        ModConfig.getColour(ModConfig.typeColour) + " Fishing: " + ModConfig.getColour(ModConfig.valueColour) + EnumChatFormatting.BOLD + fishingLevel + "\n" +
+                                                        ModConfig.getColour(ModConfig.typeColour) + " Enchanting: " + ModConfig.getColour(ModConfig.valueColour) + EnumChatFormatting.BOLD + enchantingLevel + "\n" +
+                                                        ModConfig.getColour(ModConfig.typeColour) + " Alchemy: " + ModConfig.getColour(ModConfig.valueColour) + EnumChatFormatting.BOLD + alchemyLevel + "\n" +
+                                                        ModConfig.getColour(ModConfig.typeColour) + " Taming: " + ModConfig.getColour(ModConfig.valueColour) + EnumChatFormatting.BOLD + tamingLevel + "\n" +
+                                                        EnumChatFormatting.AQUA + " Average Skill Level: " + ModConfig.getColour(ModConfig.skillAverageColour) + EnumChatFormatting.BOLD + skillAvg + "\n" +
+                                                        EnumChatFormatting.AQUA + " True Average Skill Level: " + ModConfig.getColour(ModConfig.skillAverageColour) + EnumChatFormatting.BOLD + trueAvg + "\n\n" +
                                                         EnumChatFormatting.AQUA + " " + username + "'s Total Slayer XP: " + EnumChatFormatting.GOLD + EnumChatFormatting.BOLD + nf.format(zombieXP + spiderXP + wolfXP + endermanXP) + "\n" +
-                                                        DankersSkyblockMod.TYPE_COLOUR + " Zombie XP: " + DankersSkyblockMod.VALUE_COLOUR + EnumChatFormatting.BOLD + nf.format(zombieXP) + "\n" +
-                                                        DankersSkyblockMod.TYPE_COLOUR + " Spider XP: " + DankersSkyblockMod.VALUE_COLOUR + EnumChatFormatting.BOLD + nf.format(spiderXP) + "\n" +
-                                                        DankersSkyblockMod.TYPE_COLOUR + " Wolf XP: " + DankersSkyblockMod.VALUE_COLOUR + EnumChatFormatting.BOLD + nf.format(wolfXP) + "\n" +
-                                                        DankersSkyblockMod.TYPE_COLOUR + " Enderman XP: " + DankersSkyblockMod.VALUE_COLOUR + EnumChatFormatting.BOLD + nf.format(endermanXP) + "\n\n" +
+                                                        ModConfig.getColour(ModConfig.typeColour) + " Zombie XP: " + ModConfig.getColour(ModConfig.valueColour) + EnumChatFormatting.BOLD + nf.format(zombieXP) + "\n" +
+                                                        ModConfig.getColour(ModConfig.typeColour) + " Spider XP: " + ModConfig.getColour(ModConfig.valueColour) + EnumChatFormatting.BOLD + nf.format(spiderXP) + "\n" +
+                                                        ModConfig.getColour(ModConfig.typeColour) + " Wolf XP: " + ModConfig.getColour(ModConfig.valueColour) + EnumChatFormatting.BOLD + nf.format(wolfXP) + "\n" +
+                                                        ModConfig.getColour(ModConfig.typeColour) + " Enderman XP: " + ModConfig.getColour(ModConfig.valueColour) + EnumChatFormatting.BOLD + nf.format(endermanXP) + "\n\n" +
                                                         EnumChatFormatting.AQUA + " " + username + "'s Coins:\n" +
-                                                        DankersSkyblockMod.TYPE_COLOUR + " Bank: " + (bankCoins == 0 ? EnumChatFormatting.RED + "Bank API disabled." : EnumChatFormatting.GOLD + nf.format(bankCoins)) + "\n" +
-                                                        DankersSkyblockMod.TYPE_COLOUR + " Purse: " + EnumChatFormatting.GOLD + nf.format(purseCoins) + "\n" +
-                                                        DankersSkyblockMod.TYPE_COLOUR + " Total: " + EnumChatFormatting.GOLD + nf.format(bankCoins + purseCoins) + "\n\n" +
+                                                        ModConfig.getColour(ModConfig.typeColour) + " Bank: " + (bankCoins == 0 ? EnumChatFormatting.RED + "Bank API disabled." : EnumChatFormatting.GOLD + nf.format(bankCoins)) + "\n" +
+                                                        ModConfig.getColour(ModConfig.typeColour) + " Purse: " + EnumChatFormatting.GOLD + nf.format(purseCoins) + "\n" +
+                                                        ModConfig.getColour(ModConfig.typeColour) + " Total: " + EnumChatFormatting.GOLD + nf.format(bankCoins + purseCoins) + "\n\n" +
                                                         EnumChatFormatting.AQUA + " " + username + "'s Weight:\n" +
-                                                        DankersSkyblockMod.TYPE_COLOUR + " Total Weight: " + DankersSkyblockMod.VALUE_COLOUR + nfd.format(weight) + "\n" +
-                                                        DankersSkyblockMod.DELIMITER_COLOUR + " " + EnumChatFormatting.BOLD + "-------------------"));
+                                                        ModConfig.getColour(ModConfig.typeColour) + " Total Weight: " + ModConfig.getColour(ModConfig.valueColour) + nfd.format(weight) + "\n" +
+                                                        EnumChatFormatting.BOLD + ModConfig.getColour(ModConfig.delimiterColour) + " " + EnumChatFormatting.BOLD + "-------------------"));
         }).start();
     }
 

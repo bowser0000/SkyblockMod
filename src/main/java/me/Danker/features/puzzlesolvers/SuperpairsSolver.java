@@ -1,6 +1,6 @@
 package me.Danker.features.puzzlesolvers;
 
-import me.Danker.commands.ToggleCommand;
+import me.Danker.config.ModConfig;
 import me.Danker.events.GuiChestBackgroundDrawnEvent;
 import me.Danker.utils.RenderUtils;
 import me.Danker.utils.Utils;
@@ -41,7 +41,7 @@ public class SuperpairsSolver {
             IInventory inv = chest.getLowerChestInventory();
             String chestName = inv.getDisplayName().getUnformattedText();
 
-            if (ToggleCommand.superpairsToggled && chestName.contains("Superpairs (")) {
+            if (ModConfig.superpairs && chestName.contains("Superpairs (")) {
                 if (Item.getIdFromItem(item.getItem()) != 95) return;
                 if (item.getDisplayName().contains("Click any button") || item.getDisplayName().contains("Click a second button") || item.getDisplayName().contains("Next button is instantly rewarded") || item.getDisplayName().contains("Stained Glass")) {
                     Slot slot = ((GuiChest) mc.currentScreen).getSlotUnderMouse();
@@ -77,7 +77,7 @@ public class SuperpairsSolver {
             List<Slot> invSlots = ((GuiChest) mc.currentScreen).inventorySlots.inventorySlots;
             String chestName = chest.getLowerChestInventory().getDisplayName().getUnformattedText().trim();
 
-            if (ToggleCommand.superpairsToggled && chestName.startsWith("Superpairs (")) {
+            if (ModConfig.superpairs && chestName.startsWith("Superpairs (")) {
                 for (int i = 0; i < 53; i++) {
                     ItemStack itemStack = invSlots.get(i).getStack();
                     if (itemStack == null) continue;
@@ -99,7 +99,7 @@ public class SuperpairsSolver {
 
     @SubscribeEvent
     public void onGuiRender(GuiChestBackgroundDrawnEvent event) {
-        if (ToggleCommand.superpairsToggled && event.displayName.contains("Superpairs (")) {
+        if (ModConfig.superpairs && event.displayName.contains("Superpairs (")) {
             HashMap<String, HashSet<Integer>> matches = new HashMap<>();
             for (int i = 0; i < 53; i++) {
                 ItemStack itemStack = experimentTableSlots[i];

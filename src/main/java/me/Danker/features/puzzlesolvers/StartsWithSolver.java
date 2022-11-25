@@ -1,6 +1,6 @@
 package me.Danker.features.puzzlesolvers;
 
-import me.Danker.commands.ToggleCommand;
+import me.Danker.config.ModConfig;
 import me.Danker.events.GuiChestBackgroundDrawnEvent;
 import me.Danker.utils.RenderUtils;
 import me.Danker.utils.Utils;
@@ -15,7 +15,7 @@ public class StartsWithSolver {
     @SubscribeEvent
     public void onGuiRender(GuiChestBackgroundDrawnEvent event) {
         String displayName = event.displayName;
-        if (ToggleCommand.startsWithToggled && Utils.inDungeons && displayName.startsWith("What starts with:")) {
+        if (ModConfig.startsWith && Utils.inDungeons && displayName.startsWith("What starts with:")) {
             char letter = displayName.charAt(displayName.indexOf("'") + 1);
             for (Slot slot : event.slots) {
                 if (slot.inventory == Minecraft.getMinecraft().thePlayer.inventory) continue;
@@ -23,7 +23,7 @@ public class StartsWithSolver {
                 if (item == null) continue;
                 if (item.isItemEnchanted()) continue;
                 if (StringUtils.stripControlCodes(item.getDisplayName()).charAt(0) == letter) {
-                    RenderUtils.drawOnSlot(event.chestSize, slot.xDisplayPosition, slot.yDisplayPosition, 0xBF40FF40);
+                    RenderUtils.drawOnSlot(event.chestSize, slot.xDisplayPosition, slot.yDisplayPosition, ModConfig.startsWithColour.getRGB());
                 }
             }
         }

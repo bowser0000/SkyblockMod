@@ -1,9 +1,8 @@
 package me.Danker.commands;
 
 import com.google.gson.JsonObject;
-import me.Danker.DankersSkyblockMod;
+import me.Danker.config.ModConfig;
 import me.Danker.handlers.APIHandler;
-import me.Danker.handlers.ConfigHandler;
 import me.Danker.utils.Utils;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
@@ -54,7 +53,7 @@ public class HOTMCommand extends CommandBase {
             EntityPlayer player = (EntityPlayer) arg0;
 
             // Check key
-            String key = ConfigHandler.getString("api", "APIKey");
+            String key = ModConfig.apiKey;
             if (key.equals("")) {
                 player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "API key not set. Use /setkey."));
                 return;
@@ -66,10 +65,10 @@ public class HOTMCommand extends CommandBase {
             if (arg1.length == 0) {
                 username = player.getName();
                 uuid = player.getUniqueID().toString().replaceAll("[\\-]", "");
-                player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Checking HotM of " + DankersSkyblockMod.SECONDARY_COLOUR + username));
+                player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Checking HotM of " + ModConfig.getColour(ModConfig.secondaryColour) + username));
             } else {
                 username = arg1[0];
-                player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Checking HotM of " + DankersSkyblockMod.SECONDARY_COLOUR + username));
+                player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Checking HotM of " + ModConfig.getColour(ModConfig.secondaryColour) + username));
                 uuid = APIHandler.getUUID(username);
             }
 
@@ -110,13 +109,13 @@ public class HOTMCommand extends CommandBase {
             tree.setChatStyle(tree.getChatStyle().setChatClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/hotmtree " + username + " " + latestProfile)));
 
             NumberFormat nf = NumberFormat.getIntegerInstance(Locale.US);
-            player.addChatMessage(new ChatComponentText(DankersSkyblockMod.DELIMITER_COLOUR + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+            player.addChatMessage(new ChatComponentText(EnumChatFormatting.BOLD + ModConfig.getColour(ModConfig.delimiterColour) + "" + EnumChatFormatting.BOLD + "-------------------\n" +
                                                         EnumChatFormatting.AQUA + username + "'s HotM:\n" +
-                                                        DankersSkyblockMod.TYPE_COLOUR + "Mithril Powder: " + EnumChatFormatting.DARK_GREEN + nf.format(mithril) + "\n" +
-                                                        DankersSkyblockMod.TYPE_COLOUR + "Gemstone Powder: " + EnumChatFormatting.LIGHT_PURPLE + nf.format(gemstone) + "\n" +
-                                                        DankersSkyblockMod.TYPE_COLOUR + "Pickaxe Ability: " + DankersSkyblockMod.VALUE_COLOUR + ability + "\n" +
-                                                        DankersSkyblockMod.TYPE_COLOUR + "HotM Tree: ").appendSibling(tree)
-                                                        .appendSibling(new ChatComponentText("\n" + DankersSkyblockMod.DELIMITER_COLOUR + EnumChatFormatting.BOLD + "-------------------")));
+                                                        ModConfig.getColour(ModConfig.typeColour) + "Mithril Powder: " + EnumChatFormatting.DARK_GREEN + nf.format(mithril) + "\n" +
+                                                        ModConfig.getColour(ModConfig.typeColour) + "Gemstone Powder: " + EnumChatFormatting.LIGHT_PURPLE + nf.format(gemstone) + "\n" +
+                                                        ModConfig.getColour(ModConfig.typeColour) + "Pickaxe Ability: " + ModConfig.getColour(ModConfig.valueColour) + ability + "\n" +
+                                                        ModConfig.getColour(ModConfig.typeColour) + "HotM Tree: ").appendSibling(tree)
+                                                        .appendSibling(new ChatComponentText("\n" + EnumChatFormatting.BOLD + ModConfig.getColour(ModConfig.delimiterColour) + EnumChatFormatting.BOLD + "-------------------")));
         }).start();
     }
 

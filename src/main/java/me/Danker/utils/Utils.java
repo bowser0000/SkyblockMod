@@ -3,6 +3,7 @@ package me.Danker.utils;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import me.Danker.DankersSkyblockMod;
+import me.Danker.config.ModConfig;
 import me.Danker.features.ColouredNames;
 import me.Danker.features.GoldenEnchants;
 import me.Danker.handlers.APIHandler;
@@ -54,7 +55,6 @@ public class Utils {
 		put('D', 500);
 		put('M', 1000);
 	}};
-	public static String TITLE_SOUND;
 	
     public static int getItems(String item) {
     	Minecraft mc = Minecraft.getMinecraft();
@@ -102,7 +102,7 @@ public class Utils {
 	}
 	
 	public static void createTitle(String text, int seconds) {
-		Minecraft.getMinecraft().thePlayer.playSound(TITLE_SOUND, 1, (float) 0.5);
+		Minecraft.getMinecraft().thePlayer.playSound(ModConfig.alertNoise, 1, (float) 0.5);
 		DankersSkyblockMod.titleTimer = seconds * 20;
 		DankersSkyblockMod.showTitle = true;
 		DankersSkyblockMod.titleText = text;

@@ -1,6 +1,6 @@
 package me.Danker.features;
 
-import me.Danker.commands.ToggleCommand;
+import me.Danker.config.ModConfig;
 import me.Danker.events.ModInitEvent;
 import me.Danker.utils.RenderUtils;
 import me.Danker.utils.Utils;
@@ -102,7 +102,7 @@ public class FilletMagmafish {
 
     @SubscribeEvent
     public void onGuiOpen(GuiOpenEvent event) {
-        if (!ToggleCommand.showTotalMagmafish || !Utils.inSkyblock) return;
+        if (!ModConfig.showTotalMagmafish || !Utils.inSkyblock) return;
 
         if (event.gui instanceof GuiInventory) {
             ItemStack[] inv = Minecraft.getMinecraft().thePlayer.inventory.mainInventory;
@@ -122,7 +122,7 @@ public class FilletMagmafish {
 
     @SubscribeEvent
     public void onGuiScreenRender(GuiScreenEvent.BackgroundDrawnEvent event) {
-        if (!ToggleCommand.showTotalMagmafish || !Utils.inSkyblock) return;
+        if (!ModConfig.showTotalMagmafish || !Utils.inSkyblock) return;
 
         if (event.gui instanceof GuiInventory) {
             if (total == 0) return;

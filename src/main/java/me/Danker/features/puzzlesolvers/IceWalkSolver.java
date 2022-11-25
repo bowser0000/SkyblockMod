@@ -1,7 +1,7 @@
 package me.Danker.features.puzzlesolvers;
 
 import me.Danker.DankersSkyblockMod;
-import me.Danker.commands.ToggleCommand;
+import me.Danker.config.ModConfig;
 import me.Danker.utils.IceWalkUtils;
 import me.Danker.utils.RenderUtils;
 import me.Danker.utils.Utils;
@@ -31,7 +31,6 @@ public class IceWalkSolver {
     static List<IceWalkUtils.Point> threeByThreeRoute = new ArrayList<>();
     static List<IceWalkUtils.Point> fiveByFiveRoute = new ArrayList<>();
     static List<IceWalkUtils.Point> sevenBySevenRoute = new ArrayList<>();
-    public static int ICE_WALK_LINE_COLOUR;
 
     @SubscribeEvent
     public void onWorldChange(WorldEvent.Load event) {
@@ -46,7 +45,7 @@ public class IceWalkSolver {
         EntityPlayerSP player = mc.thePlayer;
         World world = mc.theWorld;
         if (DankersSkyblockMod.tickAmount % 20 == 0) {
-            if (ToggleCommand.iceWalkToggled && Utils.inDungeons && world != null && player != null) {
+            if (ModConfig.iceWalk && Utils.inDungeons && world != null && player != null) {
                 // multi thread block checking
                 new Thread(() -> {
                     boolean foundRoom = false;
@@ -190,7 +189,7 @@ public class IceWalkSolver {
 
     @SubscribeEvent
     public void onWorldRender(RenderWorldLastEvent event) {
-        if (ToggleCommand.iceWalkToggled && Utils.inDungeons && chest != null) {
+        if (ModConfig.iceWalk && Utils.inDungeons && chest != null) {
             if (threeByThreeRoute != null && threeByThreeRoute.size() > 1) {
                 for (int i = 0; i < threeByThreeRoute.size() - 1; i++) {
                     Vec3 pos1;
@@ -215,7 +214,7 @@ public class IceWalkSolver {
                         default:
                             return;
                     }
-                    RenderUtils.draw3DLine(pos1, pos2, ICE_WALK_LINE_COLOUR, 5, true, event.partialTicks);
+                    RenderUtils.draw3DLine(pos1, pos2, ModConfig.iceWalkLineColour.getRGB(), 5, true, event.partialTicks);
                 }
             }
 
@@ -243,7 +242,7 @@ public class IceWalkSolver {
                         default:
                             return;
                     }
-                    RenderUtils.draw3DLine(pos1, pos2, ICE_WALK_LINE_COLOUR, 5, true, event.partialTicks);
+                    RenderUtils.draw3DLine(pos1, pos2, ModConfig.iceWalkLineColour.getRGB(), 5, true, event.partialTicks);
                 }
             }
 
@@ -271,7 +270,7 @@ public class IceWalkSolver {
                         default:
                             return;
                     }
-                    RenderUtils.draw3DLine(pos1, pos2, ICE_WALK_LINE_COLOUR, 5, true, event.partialTicks);
+                    RenderUtils.draw3DLine(pos1, pos2, ModConfig.iceWalkLineColour.getRGB(), 5, true, event.partialTicks);
                 }
             }
         }

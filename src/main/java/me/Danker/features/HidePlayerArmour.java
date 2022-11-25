@@ -1,6 +1,6 @@
 package me.Danker.features;
 
-import me.Danker.commands.ToggleCommand;
+import me.Danker.config.ModConfig;
 import me.Danker.utils.Utils;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -17,7 +17,7 @@ public class HidePlayerArmour {
 
     @SubscribeEvent
     public void onRenderLivingPre(RenderLivingEvent.Pre<EntityLivingBase> event) {
-        if (ToggleCommand.hideArmour && Utils.inSkyblock) {
+        if (ModConfig.hideArmour && Utils.inSkyblock) {
             if (event.entity instanceof EntityPlayer) {
                 EntityPlayer player = (EntityPlayer) event.entity;
 
@@ -35,7 +35,7 @@ public class HidePlayerArmour {
 
     @SubscribeEvent
     public void onRenderLivingPost(RenderLivingEvent.Post<EntityLivingBase> event) {
-        if (ToggleCommand.hideArmour && Utils.inSkyblock) {
+        if (ModConfig.hideArmour && Utils.inSkyblock) {
             if (event.entity instanceof EntityPlayer) {
                 EntityPlayer player = (EntityPlayer) event.entity;
 

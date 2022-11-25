@@ -1,8 +1,7 @@
 package me.Danker.commands;
 
 import me.Danker.DankersSkyblockMod;
-import me.Danker.features.loot.LootDisplay;
-import me.Danker.handlers.ConfigHandler;
+import me.Danker.config.ModConfig;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
@@ -52,214 +51,122 @@ public class DisplayCommand extends CommandBase {
 		final EntityPlayer player = (EntityPlayer) arg0;
 		
 		if (arg1.length == 0) {
-			player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Usage: " + getCommandUsage(arg0)));
+			player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "Usage: " + getCommandUsage(arg0)));
 			return;
 		}
-		
-		boolean showSession = arg1[arg1.length - 1].equalsIgnoreCase("session");
 
+		String display = "Off";
 		switch (arg1[0].toLowerCase()) {
 		case "wolf":
-			if (showSession) {
-				LootDisplay.display = "wolf_session";
-			} else {
-				LootDisplay.display = "wolf";
-			}
+			display = "Wolf Slayer";
 			break;
 		case "spider":
-			if (showSession) {
-				LootDisplay.display = "spider_session";
-			} else {
-				LootDisplay.display = "spider";
-			}
+			display = "Spider Slayer";
 			break;
 		case "zombie":
-			if (showSession) {
-				LootDisplay.display = "zombie_session";
-			} else {
-				LootDisplay.display = "zombie";
-			}
+			display = "Zombie Slayer";
 			break;
 		case "enderman":
-			if (showSession) {
-				LootDisplay.display = "enderman_session";
-			} else {
-				LootDisplay.display = "enderman";
-			}
+			display = "Enderman Slayer";
 			break;
 		case "blaze":
-			if (showSession) {
-				LootDisplay.display = "blaze_session";
-			} else {
-				LootDisplay.display = "blaze";
-			}
+			display = "Blaze Slayer";
 			break;
 		case "fishing":
 			if (arg1.length > 1) {
 				switch (arg1[1].toLowerCase()) {
 					case "winter":
-						if (showSession) {
-							LootDisplay.display = "fishing_winter_session";
-						} else {
-							LootDisplay.display = "fishing_winter";
-						}
+						display = "Winter Fishing";
 						break;
 					case "festival":
-						if (showSession) {
-							LootDisplay.display = "fishing_festival_session";
-						} else {
-							LootDisplay.display = "fishing_festival";
-						}
+						display = "Fishing Festival";
 						break;
 					case "spooky":
-						if (showSession) {
-							LootDisplay.display = "fishing_spooky_session";
-						} else {
-							LootDisplay.display = "fishing_spooky";
-						}
+						display = "Spooky Fishing";
 						break;
 					case "ch":
-						if (showSession) {
-							LootDisplay.display = "fishing_ch_session";
-						} else {
-							LootDisplay.display = "fishing_ch";
-						}
+						display = "Crystal Hollows Fishing";
 						break;
 					case "lava":
-						if (showSession) {
-							LootDisplay.display = "fishing_lava_session";
-						} else {
-							LootDisplay.display = "fishing_lava";
-						}
+						display = "Lava Fishing";
 						break;
 					case "trophy":
-						if (showSession) {
-							LootDisplay.display = "fishing_trophy_session";
-						} else {
-							LootDisplay.display = "fishing_trophy";
-						}
+						display = "Trophy Fishing";
 						break;
 					default:
-						if (showSession) {
-							LootDisplay.display = "fishing_session";
-						} else {
-							LootDisplay.display = "fishing";
-						}
+						display = "Fishing";
 				}
 			} else {
-				if (showSession) {
-					LootDisplay.display = "fishing_session";
-				} else {
-					LootDisplay.display = "fishing";
-				}
+				display = "Fishing";
 			}
 			break;
 		case "mythological":
-			if (showSession) {
-				LootDisplay.display = "mythological_session";
-			} else {
-				LootDisplay.display = "mythological";
-			}
+			display = "Mythological";
 			break;
 		case "catacombs":
 			if (arg1.length == 1) {
-				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Usage: /display catacombs <f1/f2/f3/f4f5/f6/f7>"));
+				player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "Usage: /display catacombs <f1/f2/f3/f4f5/f6/f7>"));
 				return;
 			}
 			
 			switch (arg1[1].toLowerCase()) {
 				case "f1":
 				case "floor1":
-					if (showSession) {
-						LootDisplay.display = "catacombs_floor_one_session";
-					} else {
-						LootDisplay.display = "catacombs_floor_one";
-					}
+					display = "Floor 1";
 					break;
 				case "f2":
 				case "floor2":
-					if (showSession) {
-						LootDisplay.display = "catacombs_floor_two_session";
-					} else {
-						LootDisplay.display = "catacombs_floor_two";
-					}
+					display = "Floor 2";
 					break;
 				case "f3":
 				case "floor3":
-					if (showSession) {
-						LootDisplay.display = "catacombs_floor_three_session";
-					} else {
-						LootDisplay.display = "catacombs_floor_three";
-					}
+					display = "Floor 3";
 					break;
 				case "f4":
 				case "floor4":
-					if (showSession) {
-						LootDisplay.display = "catacombs_floor_four_session";
-					} else {
-						LootDisplay.display = "catacombs_floor_four";
-					}
+					display = "Floor 4";
 					break;
 				case "f5":
 				case "floor5":
-					if (showSession) {
-						LootDisplay.display = "catacombs_floor_five_session";
-					} else {
-						LootDisplay.display = "catacombs_floor_five";
-					}
+					display = "Floor 5";
 					break;
 				case "f6":
 				case "floor6":
-					if (showSession) {
-						LootDisplay.display = "catacombs_floor_six_session";
-					} else {
-						LootDisplay.display = "catacombs_floor_six";
-					}
+					display = "Floor 6";
 					break;
 				case "f7":
 				case "floor7":
-					if (showSession) {
-						LootDisplay.display = "catacombs_floor_seven_session";
-					} else {
-						LootDisplay.display = "catacombs_floor_seven";
-					}
+					display = "Floor 7";
 					break;
 				case "mm":
 				case "master":
-					if (showSession) {
-						LootDisplay.display = "catacombs_master_session";
-					} else {
-						LootDisplay.display = "catacombs_master";
-					}
+					display = "Master Mode";
 				default:
-					player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Usage: /display catacombs <f1/f2/f3/f4/f5/f6/f7/mm>"));
+					player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "Usage: /display catacombs <f1/f2/f3/f4/f5/f6/f7/mm>"));
 					return;
 			}
 			break;
 		case "ghost":
-			if (showSession) {
-				LootDisplay.display = "ghost_session";
-			} else {
-				LootDisplay.display = "ghost";
-			}
+			display = "Ghost";
 			break;
 		case "auto":
-			LootDisplay.auto = true;
-			player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Display set to " + DankersSkyblockMod.SECONDARY_COLOUR + "auto" + DankersSkyblockMod.MAIN_COLOUR + "."));
-			ConfigHandler.writeBooleanConfig("misc", "autoDisplay", true);
+			ModConfig.autoDisplay = true;
+			DankersSkyblockMod.config.save();
+			player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Display set to " + ModConfig.getColour(ModConfig.secondaryColour) + "auto" + ModConfig.getColour(ModConfig.mainColour) + "."));
 			return;
 		case "off":
-			LootDisplay.display = "off";
+			display = "Off";
 			break;
 		default:
-			player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Usage: " + getCommandUsage(arg0)));
+			player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "Usage: " + getCommandUsage(arg0)));
 			return;
 		}
 
-		LootDisplay.auto = false;
-		player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Display set to " + DankersSkyblockMod.SECONDARY_COLOUR + LootDisplay.display + DankersSkyblockMod.MAIN_COLOUR + "."));
-		ConfigHandler.writeBooleanConfig("misc", "autoDisplay", false);
-		ConfigHandler.writeStringConfig("misc", "display", LootDisplay.display);
+		ModConfig.display = ModConfig.toDisplay(display);
+		ModConfig.sessionDisplay = arg1[arg1.length - 1].equalsIgnoreCase("session");
+		ModConfig.autoDisplay = false;
+		DankersSkyblockMod.config.save();
+		player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Display set to " + ModConfig.getColour(ModConfig.secondaryColour) + display + ModConfig.getColour(ModConfig.mainColour) + "."));
 	}
 
 }

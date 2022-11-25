@@ -1,6 +1,6 @@
 package me.Danker.commands;
 
-import me.Danker.DankersSkyblockMod;
+import me.Danker.config.ModConfig;
 import me.Danker.features.SkillTracker;
 import me.Danker.handlers.ConfigHandler;
 import net.minecraft.command.CommandBase;
@@ -50,7 +50,7 @@ public class SkillTrackerCommand extends CommandBase {
 			EntityPlayer player = (EntityPlayer) arg0;
 			
 			if (arg1.length < 1) {
-				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Usage: " + getCommandUsage(arg0)));
+				player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "Usage: " + getCommandUsage(arg0)));
 				return;
 			}
 			
@@ -65,14 +65,14 @@ public class SkillTrackerCommand extends CommandBase {
 						} else if (!SkillTracker.skillStopwatch.isStarted()) {
 							SkillTracker.skillStopwatch.start();
 						}
-						player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Skill tracker started."));
+						player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Skill tracker started."));
 						break;
 					case "pause":
 					case "stop":
 						if (SkillTracker.skillStopwatch.isStarted() && !SkillTracker.skillStopwatch.isSuspended()) {
 							SkillTracker.skillStopwatch.suspend();
 						} else {
-							player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Skill tracker paused."));
+							player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Skill tracker paused."));
 						}
 						break;
 					case "reset":
@@ -84,20 +84,20 @@ public class SkillTrackerCommand extends CommandBase {
 						SkillTracker.fishingXPGained = 0;
 						SkillTracker.enchantingXPGained = 0;
 						SkillTracker.alchemyXPGained = 0;
-						player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Skill tracker reset."));
+						player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Skill tracker reset."));
 						break;
 					case "hide":
-						SkillTracker.showSkillTracker = false;
+						ModConfig.showSkillTracker = false;
 						ConfigHandler.writeBooleanConfig("misc", "showSkillTracker", false);
-						player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Skill tracker hidden."));
+						player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Skill tracker hidden."));
 						break;
 					case "show":
-						SkillTracker.showSkillTracker = true;
+						ModConfig.showSkillTracker = true;
 						ConfigHandler.writeBooleanConfig("misc", "showSkillTracker", true);
-						player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Skill tracker shown."));
+						player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Skill tracker shown."));
 						break;
 					default:
-						player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Usage: " + getCommandUsage(arg0)));
+						player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "Usage: " + getCommandUsage(arg0)));
 				}
 			} catch (InterruptedException e) {
                 e.printStackTrace();

@@ -3,11 +3,14 @@ package me.Danker;
 import com.google.gson.JsonObject;
 import me.Danker.commands.*;
 import me.Danker.commands.warp.WarpCommandHandler;
+import me.Danker.config.ModConfig;
 import me.Danker.events.*;
 import me.Danker.features.*;
 import me.Danker.features.loot.*;
 import me.Danker.features.puzzlesolvers.*;
-import me.Danker.gui.*;
+import me.Danker.gui.EditLocationsGui;
+import me.Danker.gui.WarningGui;
+import me.Danker.gui.WarningGuiRedirect;
 import me.Danker.handlers.ConfigHandler;
 import me.Danker.handlers.PacketHandler;
 import me.Danker.utils.RenderUtils;
@@ -62,8 +65,10 @@ import java.util.Map;
 
 @Mod(modid = DankersSkyblockMod.MODID, version = DankersSkyblockMod.VERSION, clientSideOnly = true)
 public class DankersSkyblockMod {
-    public static final String MODID = "Danker's Skyblock Mod";
-    public static final String VERSION = "2.0-beta1";
+    public static final String MODID = "@ID@";
+    public static final String VERSION = "@VER@";
+    public static ModConfig config;
+
     public static int titleTimer = -1;
     public static boolean showTitle = false;
     public static String titleText = "";
@@ -87,15 +92,6 @@ public class DankersSkyblockMod {
     public static int enchantingLevel;
     public static int alchemyLevel;
     public static int carpentryLevel;
-    
-    public static String MAIN_COLOUR;
-    public static String SECONDARY_COLOUR;
-    public static String ERROR_COLOUR;
-    public static String DELIMITER_COLOUR;
-    public static String TYPE_COLOUR;
-    public static String VALUE_COLOUR;
-    public static String SKILL_AVERAGE_COLOUR;
-    public static String ANSWER_COLOUR;
 
     @EventHandler
     public void init(FMLInitializationEvent event) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
@@ -190,6 +186,7 @@ public class DankersSkyblockMod {
         
         MinecraftForge.EVENT_BUS.post(new ModInitEvent(configDirectory));
         ConfigHandler.reloadConfig();
+        config = new ModConfig();
         MinecraftForge.EVENT_BUS.post(new PostConfigInitEvent(configDirectory));
 
         keyBindings[0] = new KeyBinding("Open Maddox Menu", Keyboard.KEY_M, "Danker's Skyblock Mod");
@@ -209,16 +206,12 @@ public class DankersSkyblockMod {
     public void preInit(final FMLPreInitializationEvent event) {
         ClientCommandHandler.instance.registerCommand(new ArmourCommand());
         ClientCommandHandler.instance.registerCommand(new BankCommand());
-        ClientCommandHandler.instance.registerCommand(new BlockSlayerCommand());
         ClientCommandHandler.instance.registerCommand(new CrystalHollowWaypointCommand());
-        ClientCommandHandler.instance.registerCommand(new CustomMusicCommand());
         ClientCommandHandler.instance.registerCommand(new DankerGuiCommand());
         ClientCommandHandler.instance.registerCommand(new DHelpCommand());
         ClientCommandHandler.instance.registerCommand(new DisplayCommand());
         ClientCommandHandler.instance.registerCommand(new DungeonsCommand());
         ClientCommandHandler.instance.registerCommand(new FairySoulsCommand());
-        ClientCommandHandler.instance.registerCommand(new FarmLengthCommand());
-        ClientCommandHandler.instance.registerCommand(new GetkeyCommand());
         ClientCommandHandler.instance.registerCommand(new GuildOfCommand());
         ClientCommandHandler.instance.registerCommand(new HOTMCommand());
         ClientCommandHandler.instance.registerCommand(new HOTMTreeCommand());
@@ -235,13 +228,11 @@ public class DankersSkyblockMod {
         ClientCommandHandler.instance.registerCommand(new ReloadRepoCommand());
         ClientCommandHandler.instance.registerCommand(new ResetLootCommand());
         ClientCommandHandler.instance.registerCommand(new ScaleCommand());
-        ClientCommandHandler.instance.registerCommand(new SetkeyCommand());
         ClientCommandHandler.instance.registerCommand(new SkillsCommand());
         ClientCommandHandler.instance.registerCommand(new SkillTrackerCommand());
         ClientCommandHandler.instance.registerCommand(new SkyblockPlayersCommand());
         ClientCommandHandler.instance.registerCommand(new SlayerCommand());
         ClientCommandHandler.instance.registerCommand(new StopLobbyCommand());
-        ClientCommandHandler.instance.registerCommand(new ToggleCommand());
         ClientCommandHandler.instance.registerCommand(new TrophyFishCommand());
         ClientCommandHandler.instance.registerCommand(new WeightCommand());
 
@@ -324,8 +315,9 @@ public class DankersSkyblockMod {
 
         if (message.startsWith("Your new API key is ") && Utils.isOnHypixel()) {
             String apiKey = event.message.getSiblings().get(0).getChatStyle().getChatClickEvent().getValue();
-            ConfigHandler.writeStringConfig("api", "APIKey", apiKey);
-            Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Set API key to " + DankersSkyblockMod.SECONDARY_COLOUR + apiKey));
+            ModConfig.apiKey = apiKey;
+            config.save();
+            Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Set API key to " + ModConfig.getColour(ModConfig.secondaryColour) + apiKey));
         } else if (Utils.inSkyblock && !message.contains(":") && message.contains("  SKILL LEVEL UP ")) {
             // Handle skill level ups
             String skill = message.substring(message.indexOf("UP") + 3, message.lastIndexOf(" "));
@@ -449,21 +441,13 @@ public class DankersSkyblockMod {
     public void onRenderTick(TickEvent.RenderTickEvent event) {
         if (guiToOpen != null) {
             Minecraft mc = Minecraft.getMinecraft();
-            if (guiToOpen.startsWith("dankergui")) {
-                int page = Character.getNumericValue(guiToOpen.charAt(guiToOpen.length() - 1));
-                mc.displayGuiScreen(new DankerGui(page, ""));
-            } else {
-                switch (guiToOpen) {
-                    case "displaygui":
-                        mc.displayGuiScreen(new DisplayGui());
-                        break;
-                    case "inventory":
-                        mc.displayGuiScreen(InventoryCommand.chest);
-                        break;
-                    case "hotminventory":
-                        mc.displayGuiScreen(HOTMTreeCommand.chest);
-                        break;
-                }
+            switch (guiToOpen) {
+                case "inventory":
+                    mc.displayGuiScreen(InventoryCommand.chest);
+                    break;
+                case "hotminventory":
+                    mc.displayGuiScreen(HOTMTreeCommand.chest);
+                    break;
             }
             guiToOpen = null;
         }

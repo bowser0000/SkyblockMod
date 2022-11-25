@@ -1,6 +1,6 @@
 package me.Danker.features;
 
-import me.Danker.DankersSkyblockMod;
+import me.Danker.config.ModConfig;
 import me.Danker.events.ChestSlotClickedEvent;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
@@ -9,19 +9,34 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class BlockWrongSlayer {
 
-    public static String onlySlayerName = "";
-    public static String onlySlayerNumber = "";
+    static String[] names = {
+        "Revenant Horror",
+        "Tarantula Broodfather",
+        "Sven Packmaster",
+        "Voidgloom Seraph",
+        "Inferno Demonlord"
+    };
+    static String[] tiers = {
+        "I",
+        "II",
+        "III",
+        "IV",
+        "V"
+    };
 
     @SubscribeEvent
     public void onSlotClick(ChestSlotClickedEvent event) {
         String inventoryName = event.inventoryName;
         ItemStack item = event.item;
-        if (!onlySlayerName.equals("") && item != null) {
+        if (ModConfig.blockSlayer && item != null) {
+            String name = names[ModConfig.slayerName];
+            String tier = tiers[ModConfig.slayerNumber];
+
             if (inventoryName.equals("Slayer")) {
                 if (!item.getDisplayName().contains("Revenant Horror") && !item.getDisplayName().contains("Tarantula Broodfather") && !item.getDisplayName().contains("Sven Packmaster"))
                     return;
-                if (!item.getDisplayName().contains(onlySlayerName)) {
-                    Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Danker's Skyblock Mod has stopped you from starting this quest (Set to " + onlySlayerName + " " + onlySlayerNumber + ")"));
+                if (!item.getDisplayName().contains(name)) {
+                    Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "Danker's Skyblock Mod has stopped you from starting this quest (Set to " + name + " " + tier + ")"));
                     Minecraft.getMinecraft().thePlayer.playSound("note.bass", 1, (float) 0.5);
                     event.setCanceled(true);
                 }
@@ -29,8 +44,8 @@ public class BlockWrongSlayer {
                 if (item.getDisplayName().contains("Revenant Horror") || item.getDisplayName().contains("Tarantula Broodfather") || item.getDisplayName().contains("Sven Packmaster") || item.getDisplayName().contains("Voidgloom Seraph")) {
                     // Only check number as they passed the above check
                     String slayerNumber = item.getDisplayName().substring(item.getDisplayName().lastIndexOf(" ") + 1);
-                    if (!slayerNumber.equals(onlySlayerNumber)) {
-                        Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Danker's Skyblock Mod has stopped you from starting this quest (Set to " + onlySlayerName + " " + onlySlayerNumber + ")"));
+                    if (!slayerNumber.equals(tier)) {
+                        Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "Danker's Skyblock Mod has stopped you from starting this quest (Set to " + name + " " + tier + ")"));
                         Minecraft.getMinecraft().thePlayer.playSound("note.bass", 1, (float) 0.5);
                         event.setCanceled(true);
                     }

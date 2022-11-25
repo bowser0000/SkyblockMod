@@ -1,6 +1,6 @@
 package me.Danker.features;
 
-import me.Danker.commands.ToggleCommand;
+import me.Danker.config.ModConfig;
 import me.Danker.events.ModInitEvent;
 import me.Danker.utils.Utils;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
@@ -60,7 +60,7 @@ public class GoldenEnchants {
         if (!Utils.inSkyblock) return;
         if (event.toolTip == null) return;
 
-        if (ToggleCommand.goldenToggled) {
+        if (ModConfig.golden) {
             for (int i = 0; i < event.toolTip.size(); i++) {
                 event.toolTip.set(i, Utils.returnGoldenEnchants(event.toolTip.get(i)));
             }

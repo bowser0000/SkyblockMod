@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import me.Danker.DankersSkyblockMod;
+import me.Danker.config.ModConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ChatComponentText;
@@ -59,13 +59,13 @@ public class APIHandler {
 						return gson.fromJson(error, JsonObject.class);
 					}
 				} else if (urlString.startsWith("https://api.mojang.com/users/profiles/minecraft/") && conn.getResponseCode() == 204) {
-					player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Failed with reason: Player does not exist."));
+					player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "Failed with reason: Player does not exist."));
 				} else {
-					player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Request failed. HTTP Error Code: " + conn.getResponseCode()));
+					player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "Request failed. HTTP Error Code: " + conn.getResponseCode()));
 				}
 			}
 		} catch (IOException ex) {
-			player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "An error has occured. See logs for more details."));
+			player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "An error has occured. See logs for more details."));
 			ex.printStackTrace();
 		}
 
@@ -86,7 +86,7 @@ public class APIHandler {
 
 			return new Gson().fromJson(EntityUtils.toString(response.getEntity(), "UTF-8"), JsonObject.class);
 		} catch (Exception ex) {
-			player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "An error has occured. See logs for more details."));
+			player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "An error has occured. See logs for more details."));
 			ex.printStackTrace();
 		} finally {
 			httpClient.close();
@@ -117,10 +117,10 @@ public class APIHandler {
 
 				return gson.fromJson(response.toString(), JsonArray.class);
 			} else {
-				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Request failed. HTTP Error Code: " + conn.getResponseCode()));
+				player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "Request failed. HTTP Error Code: " + conn.getResponseCode()));
 			}
 		} catch (IOException ex) {
-			player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "An error has occured. See logs for more details."));
+			player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "An error has occured. See logs for more details."));
 			ex.printStackTrace();
 		}
 
@@ -146,11 +146,11 @@ public class APIHandler {
 		JsonObject profilesResponse = getResponse("https://api.hypixel.net/skyblock/profiles?uuid=" + UUID + "&key=" + key, true);
 		if (!profilesResponse.get("success").getAsBoolean()) {
 			String reason = profilesResponse.get("cause").getAsString();
-			player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Failed with reason: " + reason));
+			player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "Failed with reason: " + reason));
 			return null;
 		}
 		if (profilesResponse.get("profiles").isJsonNull()) {
-			player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "This player doesn't appear to have played SkyBlock."));
+			player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "This player doesn't appear to have played SkyBlock."));
 			return null;
 		}
 		

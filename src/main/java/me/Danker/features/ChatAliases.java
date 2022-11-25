@@ -14,6 +14,8 @@ import java.util.List;
 
 public class ChatAliases {
 
+    public static boolean toggled;
+
     public static List<Alias> aliases = new ArrayList<>();
     public static String configFile;
 
@@ -24,19 +26,21 @@ public class ChatAliases {
 
     @SubscribeEvent
     public void onPacketWrite(PacketWriteEvent event) {
-        if (event.packet instanceof C01PacketChatMessage) {
-            C01PacketChatMessage packet = (C01PacketChatMessage) event.packet;
-            String message = packet.getMessage();
+        if (toggled) {
+            if (event.packet instanceof C01PacketChatMessage) {
+                C01PacketChatMessage packet = (C01PacketChatMessage) event.packet;
+                String message = packet.getMessage();
 
-            for (Alias alias : aliases) {
-                if (!alias.toggled) continue;
-                if (!alias.allowInCommand && message.charAt(0) == '/') continue;
-                message = message.replace(alias.text, alias.alias);
-            }
+                for (Alias alias : aliases) {
+                    if (!alias.toggled) continue;
+                    if (!alias.allowInCommand && message.charAt(0) == '/') continue;
+                    message = message.replace(alias.text, alias.alias);
+                }
 
-            if (!packet.getMessage().equals(message)) {
-                event.setCanceled(true);
-                Minecraft.getMinecraft().thePlayer.sendQueue.addToSendQueue(new C01PacketChatMessage(message));
+                if (!packet.getMessage().equals(message)) {
+                    event.setCanceled(true);
+                    Minecraft.getMinecraft().thePlayer.sendQueue.addToSendQueue(new C01PacketChatMessage(message));
+                }
             }
         }
     }

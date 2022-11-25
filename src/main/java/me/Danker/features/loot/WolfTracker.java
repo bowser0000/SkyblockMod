@@ -1,6 +1,6 @@
 package me.Danker.features.loot;
 
-import me.Danker.commands.ToggleCommand;
+import me.Danker.config.ModConfig;
 import me.Danker.handlers.ConfigHandler;
 import me.Danker.utils.Utils;
 import net.minecraft.util.EnumChatFormatting;
@@ -84,25 +84,25 @@ public class WolfTracker {
             eggs++;
             eggsSession++;
             ConfigHandler.writeIntConfig("wolf", "egg", eggs);
-            if (ToggleCommand.rngesusAlerts) Utils.createTitle(EnumChatFormatting.DARK_RED + "RED CLAW EGG!", 3);
+            if (ModConfig.rngesusAlerts) Utils.createTitle(EnumChatFormatting.DARK_RED + "RED CLAW EGG!", 3);
         } else if (message.contains("CRAZY RARE DROP!  (") && message.contains(" Couture Rune I)")) {
             rng = true;
             coutures++;
             couturesSession++;
             ConfigHandler.writeIntConfig("wolf", "couture", coutures);
-            if (ToggleCommand.rngesusAlerts) Utils.createTitle(EnumChatFormatting.GOLD + "COUTURE RUNE!", 3);
+            if (ModConfig.rngesusAlerts) Utils.createTitle(EnumChatFormatting.GOLD + "COUTURE RUNE!", 3);
         } else if (message.contains("CRAZY RARE DROP!  (Grizzly Bait)") || message.contains("CRAZY RARE DROP! (Rename Me)")) { // How did Skyblock devs even manage to make this item Rename Me
             rng = true;
             baits++;
             baitsSession++;
             ConfigHandler.writeIntConfig("wolf", "bait", baits);
-            if (ToggleCommand.rngesusAlerts) Utils.createTitle(EnumChatFormatting.AQUA + "GRIZZLY BAIT!", 3);
+            if (ModConfig.rngesusAlerts) Utils.createTitle(EnumChatFormatting.AQUA + "GRIZZLY BAIT!", 3);
         } else if (message.contains("CRAZY RARE DROP!  (Overflux Capacitor)")) {
             rng = true;
             fluxes++;
             fluxesSession++;
             ConfigHandler.writeIntConfig("wolf", "flux", fluxes);
-            if (ToggleCommand.rngesusAlerts) Utils.createTitle(EnumChatFormatting.DARK_PURPLE + "OVERFLUX CAPACITOR!", 5);
+            if (ModConfig.rngesusAlerts) Utils.createTitle(EnumChatFormatting.DARK_PURPLE + "OVERFLUX CAPACITOR!", 5);
         }
 
         if (rng) {

@@ -1,6 +1,6 @@
 package me.Danker.features;
 
-import me.Danker.commands.ToggleCommand;
+import me.Danker.config.ModConfig;
 import me.Danker.events.PacketReadEvent;
 import me.Danker.utils.Utils;
 import net.minecraft.network.play.server.S45PacketTitle;
@@ -17,7 +17,7 @@ public class KuudraNotifications {
 
         if (!Utils.tabLocation.equals("Instanced")) return; // May need to be changed in future to Kuudra's Hollow in scoreboard
 
-        if (ToggleCommand.kuudraNotifications) {
+        if (ModConfig.kuudraNotifications) {
             if (message.startsWith("[NPC] Elle: That looks like it hurt!")) {
                 Utils.createTitle(EnumChatFormatting.RED + "KUUDRA STUNNED!", 2);
             }
@@ -32,7 +32,7 @@ public class KuudraNotifications {
 
     @SubscribeEvent
     public void onPacketRead(PacketReadEvent event) {
-        if (!ToggleCommand.kuudraNotifications || !Utils.tabLocation.equals("Instanced")) return;
+        if (!ModConfig.kuudraNotifications || !Utils.tabLocation.equals("Instanced")) return;
 
         if (event.packet instanceof S45PacketTitle) {
             S45PacketTitle packet = (S45PacketTitle) event.packet;

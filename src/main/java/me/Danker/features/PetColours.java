@@ -1,6 +1,6 @@
 package me.Danker.features;
 
-import me.Danker.commands.ToggleCommand;
+import me.Danker.config.ModConfig;
 import me.Danker.events.GuiChestBackgroundDrawnEvent;
 import me.Danker.utils.RenderUtils;
 import net.minecraft.inventory.Slot;
@@ -13,21 +13,10 @@ import java.util.regex.Pattern;
 public class PetColours {
 
     static Pattern petPattern = Pattern.compile("\\[Lvl [\\d]{1,3}]");
-    public static int PET_1_TO_9;
-    public static int PET_10_TO_19;
-    public static int PET_20_TO_29;
-    public static int PET_30_TO_39;
-    public static int PET_40_TO_49;
-    public static int PET_50_TO_59;
-    public static int PET_60_TO_69;
-    public static int PET_70_TO_79;
-    public static int PET_80_TO_89;
-    public static int PET_90_TO_99;
-    public static int PET_100;
 
     @SubscribeEvent
     public void onGuiRender(GuiChestBackgroundDrawnEvent event) {
-        if (ToggleCommand.petColoursToggled) {
+        if (ModConfig.petColours) {
             for (Slot slot : event.slots) {
                 ItemStack item = slot.getStack();
                 if (item == null) continue;
@@ -38,29 +27,29 @@ public class PetColours {
                     int colour;
                     int petLevel = Integer.parseInt(item.getDisplayName().substring(item.getDisplayName().indexOf(" ") + 1, item.getDisplayName().indexOf("]")));
                     if (petLevel == 100 || petLevel == 200) {
-                        colour = PET_100;
+                        colour = ModConfig.pet100Colour.getRGB();
                     } else if ((petLevel < 100 && petLevel >= 90) || petLevel >= 190) {
-                        colour = PET_90_TO_99;
+                        colour = ModConfig.pet90To99Colour.getRGB();
                     } else if ((petLevel < 100 && petLevel >= 80) || petLevel >= 180) {
-                        colour = PET_80_TO_89;
+                        colour = ModConfig.pet80To89Colour.getRGB();
                     } else if ((petLevel < 100 && petLevel >= 70) || petLevel >= 170) {
-                        colour = PET_70_TO_79;
+                        colour = ModConfig.pet70To79Colour.getRGB();
                     } else if ((petLevel < 100 && petLevel >= 60) || petLevel >= 160) {
-                        colour = PET_60_TO_69;
+                        colour = ModConfig.pet60To69Colour.getRGB();
                     } else if ((petLevel < 100 && petLevel >= 50) || petLevel >= 150) {
-                        colour = PET_50_TO_59;
+                        colour = ModConfig.pet50To59Colour.getRGB();
                     } else if ((petLevel < 100 && petLevel >= 40) || petLevel >= 140) {
-                        colour = PET_40_TO_49;
+                        colour = ModConfig.pet40To49Colour.getRGB();
                     } else if ((petLevel < 100 && petLevel >= 30) || petLevel >= 130) {
-                        colour = PET_30_TO_39;
+                        colour = ModConfig.pet30To39Colour.getRGB();
                     } else if ((petLevel < 100 && petLevel >= 20) || petLevel >= 120) {
-                        colour = PET_20_TO_29;
+                        colour = ModConfig.pet20To29Colour.getRGB();
                     } else if ((petLevel < 100 && petLevel >= 10) || petLevel >= 110) {
-                        colour = PET_10_TO_19;
+                        colour = ModConfig.pet10To19Colour.getRGB();
                     } else {
-                        colour = PET_1_TO_9;
+                        colour = ModConfig.pet1To9Colour.getRGB();
                     }
-                    RenderUtils.drawOnSlot(event.chestSize, slot.xDisplayPosition, slot.yDisplayPosition, colour + 0xBF000000);
+                    RenderUtils.drawOnSlot(event.chestSize, slot.xDisplayPosition, slot.yDisplayPosition, colour);
                 }
             }
         }

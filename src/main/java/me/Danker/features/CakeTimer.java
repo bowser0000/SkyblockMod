@@ -2,14 +2,13 @@ package me.Danker.features;
 
 import me.Danker.commands.MoveCommand;
 import me.Danker.commands.ScaleCommand;
-import me.Danker.commands.ToggleCommand;
+import me.Danker.config.ModConfig;
 import me.Danker.events.RenderOverlayEvent;
 import me.Danker.handlers.ConfigHandler;
 import me.Danker.handlers.TextRenderer;
 import me.Danker.utils.RenderUtils;
 import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.Gui;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StringUtils;
@@ -21,7 +20,6 @@ public class CakeTimer {
 
     public static double cakeTime;
     public static final ResourceLocation CAKE_ICON = new ResourceLocation("dsm", "icons/cake.png");
-    public static String CAKE_COLOUR;
 
     @SubscribeEvent
     public void onChat(ClientChatReceivedEvent event) {
@@ -38,7 +36,7 @@ public class CakeTimer {
 
     @SubscribeEvent
     public void renderPlayerInfo(RenderOverlayEvent event) {
-        if (ToggleCommand.cakeTimerToggled && Utils.inSkyblock) {
+        if (ModConfig.cakeTimer && Utils.inSkyblock) {
             Minecraft mc = Minecraft.getMinecraft();
             double scale = ScaleCommand.cakeTimerScale;
             double scaleReset = Math.pow(scale, -1);
@@ -53,7 +51,7 @@ public class CakeTimer {
             if (cakeTime - timeNow < 0) {
                 cakeText = EnumChatFormatting.RED + "NONE";
             } else {
-                cakeText = CAKE_COLOUR + Utils.getTimeBetween(timeNow, cakeTime);
+                cakeText = ModConfig.getColour(ModConfig.cakeColour) + Utils.getTimeBetween(timeNow, cakeTime);
             }
 
             new TextRenderer(mc, cakeText, MoveCommand.cakeTimerXY[0] + 20 * scale, MoveCommand.cakeTimerXY[1] + 5 * scale, scale);

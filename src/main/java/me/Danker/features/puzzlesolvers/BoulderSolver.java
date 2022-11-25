@@ -1,7 +1,7 @@
 package me.Danker.features.puzzlesolvers;
 
 import me.Danker.DankersSkyblockMod;
-import me.Danker.commands.ToggleCommand;
+import me.Danker.config.ModConfig;
 import me.Danker.utils.BoulderUtils;
 import me.Danker.utils.RenderUtils;
 import me.Danker.utils.Utils;
@@ -31,8 +31,6 @@ public class BoulderSolver {
     static String boulderRoomDirection = null;
     public static List<int[]> route = new ArrayList<>();
     static int currentStep = 0;
-    public static int BOULDER_COLOUR;
-    public static int BOULDER_ARROW_COLOUR;
 
     @SubscribeEvent
     public void onWorldChange(WorldEvent.Load event) {
@@ -47,7 +45,7 @@ public class BoulderSolver {
         EntityPlayerSP player = mc.thePlayer;
         World world = mc.theWorld;
         if (DankersSkyblockMod.tickAmount % 20 == 0) {
-            if (ToggleCommand.boulderToggled && Utils.inDungeons && world != null && player != null) {
+            if (ModConfig.boulder && Utils.inDungeons && world != null && player != null) {
                 // multi thread block checking
                 new Thread(() -> {
                     prevInBoulderRoom = inBoulderRoom;
@@ -110,7 +108,7 @@ public class BoulderSolver {
                                 chest = westChest;
                                 board = BoulderUtils.flipVertically(board);
                             } else {
-                                player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Could not determine orientation of boulder room."));
+                                player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "Could not determine orientation of boulder room."));
                                 return;
                             }
                             board = BoulderUtils.removeFirstRow(board);
@@ -122,7 +120,7 @@ public class BoulderSolver {
                             long endTime = System.currentTimeMillis();
                             System.out.println("Time elapsed: " + (endTime - startTime) + "ms, " + BoulderUtils.iterations + " iterations.");
                             if (length == 10) {
-                                player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "No solution to puzzle found, most likely puzzle failed."));
+                                player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "No solution to puzzle found, most likely puzzle failed."));
                             } else {
                                 System.out.println("Solved " + boulderRoomDirection + " facing boulder room in " + length + " steps. Path:");
                                 for (int[] block : route) {
@@ -142,11 +140,11 @@ public class BoulderSolver {
 
     @SubscribeEvent
     public void onWorldRender(RenderWorldLastEvent event) {
-        if (ToggleCommand.boulderToggled && Utils.inDungeons && route.size() > 0 && currentStep < route.size() && chest != null) {
+        if (ModConfig.boulder && Utils.inDungeons && route.size() > 0 && currentStep < route.size() && chest != null) {
             int[] currentBlockArray = route.get(currentStep);
             AxisAlignedBB currentBoulder = BoulderUtils.getBoulder(currentBlockArray[0], currentBlockArray[1], chest, boulderRoomDirection);
             if (currentBoulder == null) return;
-            RenderUtils.drawFilled3DBox(currentBoulder, BOULDER_COLOUR, true, false, event.partialTicks);
+            RenderUtils.drawFilled3DBox(currentBoulder, ModConfig.boulderColour.getRGB(), true, false, event.partialTicks);
             char direction;
             switch (currentBlockArray[2]) {
                 case 1:
@@ -164,13 +162,13 @@ public class BoulderSolver {
                 default:
                     return;
             }
-            BoulderUtils.drawArrow(currentBoulder, boulderRoomDirection, direction, 0xFF000000 + BOULDER_ARROW_COLOUR, event.partialTicks);
+            BoulderUtils.drawArrow(currentBoulder, boulderRoomDirection, direction, ModConfig.boulderArrowColour.getRGB(), event.partialTicks);
         }
     }
 
     @SubscribeEvent
     public void onInteract(PlayerInteractEvent event) {
-        if (Minecraft.getMinecraft().thePlayer != event.entityPlayer || !inBoulderRoom || !ToggleCommand.boulderToggled) return;
+        if (Minecraft.getMinecraft().thePlayer != event.entityPlayer || !inBoulderRoom || !ModConfig.boulder) return;
 
         if (event.action == PlayerInteractEvent.Action.RIGHT_CLICK_BLOCK) {
             Block block = Minecraft.getMinecraft().theWorld.getBlockState(event.pos).getBlock();

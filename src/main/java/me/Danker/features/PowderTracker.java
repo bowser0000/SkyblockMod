@@ -3,6 +3,7 @@ package me.Danker.features;
 import me.Danker.DankersSkyblockMod;
 import me.Danker.commands.MoveCommand;
 import me.Danker.commands.ScaleCommand;
+import me.Danker.config.ModConfig;
 import me.Danker.events.RenderOverlayEvent;
 import me.Danker.handlers.TextRenderer;
 import me.Danker.utils.Utils;
@@ -23,12 +24,10 @@ import java.util.Locale;
 public class PowderTracker {
 
     public static StopWatch powderStopwatch = new StopWatch();
-    public static boolean showPowderTracker;
     static int lastMithril = -1;
     static int mithrilGained = 0;
     static int lastGemstone = -1;
     static int gemstoneGained = 0;
-    public static String POWDER_TRACKER_COLOUR;
 
     @SubscribeEvent
     public void onTick(TickEvent.ClientTickEvent event) {
@@ -57,7 +56,7 @@ public class PowderTracker {
 
     @SubscribeEvent
     public void renderPlayerInfo(RenderOverlayEvent event) {
-        if (showPowderTracker && Utils.inSkyblock) {
+        if (ModConfig.showPowderTracker && Utils.inSkyblock) {
             int mithrilPerHour = (int) Math.round(mithrilGained / ((powderStopwatch.getTime() + 1) / 3600000d));
             int gemstonePerHour = (int) Math.round(gemstoneGained / ((powderStopwatch.getTime() + 1) / 3600000d));
 
@@ -66,7 +65,7 @@ public class PowderTracker {
                     EnumChatFormatting.DARK_GREEN + "Mithril Per Hour: " + nf.format(mithrilPerHour) + "\n" +
                     EnumChatFormatting.LIGHT_PURPLE + "Gemstone Gained: " + nf.format(gemstoneGained) + "\n" +
                     EnumChatFormatting.LIGHT_PURPLE + "Gemstone Per Hour: " + nf.format(gemstonePerHour) + "\n" +
-                    POWDER_TRACKER_COLOUR + "Time Elapsed: " + Utils.getTimeBetween(0, powderStopwatch.getTime() / 1000d);
+                    ModConfig.getColour(ModConfig.powderTrackerColour) + "Time Elapsed: " + Utils.getTimeBetween(0, powderStopwatch.getTime() / 1000d);
             if (!powderStopwatch.isStarted() || powderStopwatch.isSuspended()) {
                 powderTrackerText += "\n" + EnumChatFormatting.RED + "PAUSED";
             }
@@ -83,13 +82,13 @@ public class PowderTracker {
         if (DankersSkyblockMod.keyBindings[4].isPressed()) {
             if (powderStopwatch.isStarted() && powderStopwatch.isSuspended()) {
                 powderStopwatch.resume();
-                player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Powder tracker started."));
+                player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Powder tracker started."));
             } else if (!powderStopwatch.isStarted()) {
                 powderStopwatch.start();
-                player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Powder tracker started."));
+                player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Powder tracker started."));
             } else if (powderStopwatch.isStarted() && !powderStopwatch.isSuspended()) {
                 powderStopwatch.suspend();
-                player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Powder tracker paused."));
+                player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Powder tracker paused."));
             }
         }
     }
