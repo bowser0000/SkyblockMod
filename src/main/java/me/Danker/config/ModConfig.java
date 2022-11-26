@@ -1381,18 +1381,6 @@ public class ModConfig extends Config {
     Runnable alerts = () -> mc.displayGuiScreen(new AlertsGui(1));
 
     @CfgName(
-        name = "RNGesusAlerts",
-        category = "toggles"
-    )
-    @Switch(
-        name = "Slayer RNGesus Alerts",
-        description = "Alerts when an RNGesus item is dropped.",
-        category = "Alerts",
-            subcategory = "General"
-    )
-    public static boolean rngesusAlerts = false;
-
-    @CfgName(
             name = "GolemAlerts",
             category = "toggles"
     )
@@ -1413,12 +1401,25 @@ public class ModConfig extends Config {
     public static int golemAlertColour = 6;
 
     @CfgName(
+            name = "RNGesusAlerts",
+            category = "toggles"
+    )
+    @Switch(
+            name = "Slayer RNGesus Alerts",
+            description = "Alerts when an RNGesus item is dropped.",
+            category = "Alerts",
+            subcategory = "General"
+    )
+    public static boolean rngesusAlerts = false;
+
+    @CfgName(
             name = "EndOfFarmAlert",
             category = "toggles"
     )
     @Switch(
             name = "Alert When Reaching End of Farm",
             description = "Alerts when you go past coords set with /dsmfarmlength.",
+            size = OptionSize.DUAL,
             category = "Alerts",
             subcategory = "General"
     )
