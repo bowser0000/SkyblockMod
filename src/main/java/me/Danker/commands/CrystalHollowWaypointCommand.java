@@ -30,7 +30,7 @@ public class CrystalHollowWaypointCommand extends CommandBase {
 
         if (arg1.length > 4 && arg1[0].equals("st")) {
             String name = String.join(" ", Arrays.copyOfRange(arg1, 4, arg1.length));
-            CrystalHollowWaypoints.addWaypoint(name, arg1[1], arg1[2], arg1[3]);
+            CrystalHollowWaypoints.addWaypoint(name, arg1[1], arg1[2], arg1[3], false);
         } else {
             CrystalHollowWaypoints.addDSMWaypoints(String.join(" ", arg1), false);
         }

@@ -162,7 +162,7 @@ public class CrystalHollowWaypoints {
                         String z = matcher.group("z");
 
                         if (autoPlayerWaypoints) {
-                            addWaypoint(name, x, y, z);
+                            addWaypoint(name, x, y, z, true);
                             return;
                         }
 
@@ -250,7 +250,15 @@ public class CrystalHollowWaypoints {
 
     }
 
-    public static void addWaypoint(String name, String x, String y, String z) {
+    public static void addWaypoint(String name, String x, String y, String z, boolean auto) {
+        if (auto) {
+            for (Waypoint existing : waypoints) {
+                if (existing.location.equals(name)) {
+                    return;
+                }
+            }
+        }
+
         BlockPos pos = new BlockPos(Integer.parseInt(x), Integer.parseInt(y), Integer.parseInt(z));
         Waypoint waypoint = new Waypoint(name, pos);
         waypoints.add(waypoint);
