@@ -19,7 +19,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.client.gui.inventory.GuiChest;
-import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.command.ICommand;
 import net.minecraft.event.ClickEvent;
 import net.minecraft.event.ClickEvent.Action;
@@ -41,7 +40,6 @@ import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
-import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -49,11 +47,9 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.InputEvent.KeyInputEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.common.network.FMLNetworkEvent.ClientConnectedToServerEvent;
-import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
 import javax.sound.sampled.LineUnavailableException;
@@ -74,7 +70,6 @@ public class DankersSkyblockMod {
     public static String titleText = "";
     public static int tickAmount = 1;
     public static int repoTickAmount = 1;
-    public static KeyBinding[] keyBindings = new KeyBinding[5];
     public static boolean usingLabymod = false;
     public static boolean usingOAM = false;
     static boolean OAMWarning = false;
@@ -188,16 +183,6 @@ public class DankersSkyblockMod {
         ConfigHandler.reloadConfig();
         config = new ModConfig();
         MinecraftForge.EVENT_BUS.post(new PostConfigInitEvent(configDirectory));
-
-        keyBindings[0] = new KeyBinding("Open Maddox Menu", Keyboard.KEY_M, "Danker's Skyblock Mod");
-        keyBindings[1] = new KeyBinding("Regular Ability", Keyboard.KEY_NUMPAD4, "Danker's Skyblock Mod");
-        keyBindings[2] = new KeyBinding("Start/Stop Skill Tracker", Keyboard.KEY_NUMPAD5, "Danker's Skyblock Mod");
-        keyBindings[3] = new KeyBinding("Create Waypoint", Keyboard.KEY_NUMPAD6, "Danker's Skyblock Mod");
-        keyBindings[4] = new KeyBinding("Start/Stop Powder Tracker", Keyboard.KEY_NUMPAD8, "Danker's Skyblock Mod");
-
-        for (KeyBinding keyBinding : keyBindings) {
-            ClientRegistry.registerKeyBinding(keyBinding);
-        }
 
         new Thread(Utils::refreshRepo).start();
     }
@@ -454,12 +439,6 @@ public class DankersSkyblockMod {
     }
 
     @SubscribeEvent
-    public void onKey(KeyInputEvent event) {
-        if (!Utils.inDungeons) return;
-        if (keyBindings[1].isPressed()) Minecraft.getMinecraft().thePlayer.dropOneItem(true);
-    }
-
-    @SubscribeEvent
     public void onGuiMouseInputPre(GuiScreenEvent.MouseInputEvent.Pre event) {
         if (Mouse.getEventButton() != 0 && Mouse.getEventButton() != 1 && Mouse.getEventButton() != 2)
             return; // Left click, middle click or right click
@@ -508,6 +487,13 @@ public class DankersSkyblockMod {
     public void onServerConnect(ClientConnectedToServerEvent event) {
         event.manager.channel().pipeline().addBefore("packet_handler", "danker_packet_handler", new PacketHandler());
         System.out.println("Added packet handler to channel pipeline.");
+    }
+
+    // misc feature ig
+
+    public static void onAbilityKey() {
+        if (!Utils.inDungeons) return;
+        Minecraft.getMinecraft().thePlayer.dropOneItem(true);
     }
 
 }

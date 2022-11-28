@@ -16,7 +16,6 @@ import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.InputEvent;
 import org.apache.commons.lang3.time.StopWatch;
 
 import java.text.NumberFormat;
@@ -279,22 +278,19 @@ public class SkillTracker {
         }
     }
 
-    @SubscribeEvent
-    public void onKey(InputEvent.KeyInputEvent event) {
+    public static void onKey() {
         if (!Utils.inSkyblock) return;
 
         EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
-        if (DankersSkyblockMod.keyBindings[2].isPressed()) {
-            if (skillStopwatch.isStarted() && skillStopwatch.isSuspended()) {
-                skillStopwatch.resume();
-                player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Skill tracker started."));
-            } else if (!skillStopwatch.isStarted()) {
-                skillStopwatch.start();
-                player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Skill tracker started."));
-            } else if (skillStopwatch.isStarted() && !skillStopwatch.isSuspended()) {
-                skillStopwatch.suspend();
-                player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Skill tracker paused."));
-            }
+        if (skillStopwatch.isStarted() && skillStopwatch.isSuspended()) {
+            skillStopwatch.resume();
+            player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Skill tracker started."));
+        } else if (!skillStopwatch.isStarted()) {
+            skillStopwatch.start();
+            player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Skill tracker started."));
+        } else if (skillStopwatch.isStarted() && !skillStopwatch.isSuspended()) {
+            skillStopwatch.suspend();
+            player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Skill tracker paused."));
         }
     }
 

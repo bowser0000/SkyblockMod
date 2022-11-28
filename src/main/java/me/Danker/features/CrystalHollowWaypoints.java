@@ -16,7 +16,6 @@ import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.InputEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 import java.util.ArrayList;
@@ -183,16 +182,13 @@ public class CrystalHollowWaypoints {
         }
     }
 
-    @SubscribeEvent
-    public void onKey(InputEvent.KeyInputEvent event) {
+    public static void onKey() {
         if (!Utils.tabLocation.equals("Crystal Hollows")) return;
 
-        if (DankersSkyblockMod.keyBindings[3].isPressed()) {
-            Minecraft mc = Minecraft.getMinecraft();
-            EntityPlayer player = mc.thePlayer;
+        Minecraft mc = Minecraft.getMinecraft();
+        EntityPlayer player = mc.thePlayer;
 
-            mc.displayGuiScreen(new CrystalHollowAddWaypointGui((int) player.posX, (int) player.posY, (int) player.posZ));
-        }
+        mc.displayGuiScreen(new CrystalHollowAddWaypointGui((int) player.posX, (int) player.posY, (int) player.posZ));
     }
 
     @SubscribeEvent

@@ -13,7 +13,6 @@ import net.minecraft.client.network.NetworkPlayerInfo;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.InputEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import org.apache.commons.lang3.time.StopWatch;
 
@@ -74,22 +73,19 @@ public class PowderTracker {
         }
     }
 
-    @SubscribeEvent
-    public void onKey(InputEvent.KeyInputEvent event) {
+    public static void onKey() {
         if (!Utils.inSkyblock) return;
 
         EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
-        if (DankersSkyblockMod.keyBindings[4].isPressed()) {
-            if (powderStopwatch.isStarted() && powderStopwatch.isSuspended()) {
-                powderStopwatch.resume();
-                player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Powder tracker started."));
-            } else if (!powderStopwatch.isStarted()) {
-                powderStopwatch.start();
-                player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Powder tracker started."));
-            } else if (powderStopwatch.isStarted() && !powderStopwatch.isSuspended()) {
-                powderStopwatch.suspend();
-                player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Powder tracker paused."));
-            }
+        if (powderStopwatch.isStarted() && powderStopwatch.isSuspended()) {
+            powderStopwatch.resume();
+            player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Powder tracker started."));
+        } else if (!powderStopwatch.isStarted()) {
+            powderStopwatch.start();
+            player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Powder tracker started."));
+        } else if (powderStopwatch.isStarted() && !powderStopwatch.isSuspended()) {
+            powderStopwatch.suspend();
+            player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Powder tracker paused."));
         }
     }
 

@@ -5,16 +5,16 @@ import cc.polyfrost.oneconfig.config.Config;
 import cc.polyfrost.oneconfig.config.annotations.Number;
 import cc.polyfrost.oneconfig.config.annotations.*;
 import cc.polyfrost.oneconfig.config.core.OneColor;
+import cc.polyfrost.oneconfig.config.core.OneKeyBind;
 import cc.polyfrost.oneconfig.config.data.InfoType;
 import cc.polyfrost.oneconfig.config.data.Mod;
 import cc.polyfrost.oneconfig.config.data.ModType;
 import cc.polyfrost.oneconfig.config.data.OptionSize;
 import cc.polyfrost.oneconfig.config.migration.CfgMigrator;
 import cc.polyfrost.oneconfig.config.migration.CfgName;
+import cc.polyfrost.oneconfig.libs.universal.UKeyboard;
 import me.Danker.DankersSkyblockMod;
-import me.Danker.features.CustomMusic;
-import me.Danker.features.PowderTracker;
-import me.Danker.features.SkillTracker;
+import me.Danker.features.*;
 import me.Danker.gui.EditLocationsGui;
 import me.Danker.gui.alerts.AlertsGui;
 import me.Danker.gui.aliases.AliasesGui;
@@ -35,6 +35,13 @@ public class ModConfig extends Config {
     public ModConfig() {
         super(new Mod("Danker's Skyblock Mod", ModType.SKYBLOCK, "/assets/dsm/icons/icon.png", new CfgMigrator("./config/Danker's Skyblock Mod.cfg")), "dsmconfig.json");
         initialize();
+
+        registerKeyBind(maddoxKey, FasterMaddoxCalling::onKey);
+        registerKeyBind(abilityKey, DankersSkyblockMod::onAbilityKey);
+        registerKeyBind(waypointKey, CrystalHollowWaypoints::onKey);
+        registerKeyBind(skillTrackerKey, SkillTracker::onKey);
+        registerKeyBind(powderTrackerKey, PowderTracker::onKey);
+
         addDependency("customNametags", () -> customColouredNames);
         addDependency("creeperLines", () -> creeper);
         addDependency("display", () -> !autoDisplay);
@@ -92,8 +99,6 @@ public class ModConfig extends Config {
         slayers
         hide tooltips
         custom name colors
-    dungeons
-        general
     puzzle solvers
         dungeons
         terminals
@@ -128,6 +133,10 @@ public class ModConfig extends Config {
         text
         pet highlight colors
     keybinds
+        general
+        dungeons
+        waypoints
+        trackers
     */
 
     // General
@@ -286,6 +295,18 @@ public class ModConfig extends Config {
     public static boolean golden = false;
 
     @CfgName(
+            name = "AutoAcceptReparty",
+            category = "toggles"
+    )
+    @Switch(
+            name = "Auto Accept Reparty",
+            description = "Automatically rejoins parties when disbanded and invited.",
+            category = "General",
+            subcategory = "Dungeons"
+    )
+    public static boolean autoAcceptReparty = false;
+
+    @CfgName(
             name = "ChatMaddox",
             category = "toggles"
     )
@@ -309,11 +330,11 @@ public class ModConfig extends Config {
     @Dropdown(
             name = "Slayer Boss",
             options = {
-                "Revenant Horror",
-                "Tarantula Broodfather",
-                "Sven Packmaster",
-                "Voidgloom Seraph",
-                "Inferno Demonlord"
+                    "Revenant Horror",
+                    "Tarantula Broodfather",
+                    "Sven Packmaster",
+                    "Voidgloom Seraph",
+                    "Inferno Demonlord"
             },
             category = "General",
             subcategory = "Slayers"
@@ -381,20 +402,6 @@ public class ModConfig extends Config {
             subcategory = "Custom Name Colors"
     )
     public static boolean customNametags = true;
-
-    // Dungeons
-
-    @CfgName(
-            name = "AutoAcceptReparty",
-            category = "toggles"
-    )
-    @Switch(
-            name = "Auto Accept Reparty",
-            description = "Automatically rejoins parties when disbanded and invited.",
-            category = "Dungeons",
-            subcategory = "General"
-    )
-    public static boolean autoAcceptReparty = false;
 
     // Puzzle Solvers
 
@@ -693,7 +700,7 @@ public class ModConfig extends Config {
     public static boolean itemFrameOnSeaLanterns = false;
 
     @CfgName(
-        name = "UltraSequencer",
+            name = "UltraSequencer",
             category = "toggles"
     )
     @Switch(
@@ -795,29 +802,29 @@ public class ModConfig extends Config {
     @Dropdown(
             name = "Loot Display",
             options = {
-                "Off",
-                "Zombie Slayer",
-                "Spider Slayer",
-                "Wolf Slayer",
-                "Enderman Slayer",
-                "Blaze Slayer",
-                "Fishing",
-                "Winter Fishing",
-                "Fishing Festival",
-                "Spooky Fishing",
-                "Crystal Hollows Fishing",
-                "Lava Fishing",
-                "Trophy Fishing",
-                "Floor 1",
-                "Floor 2",
-                "Floor 3",
-                "Floor 4",
-                "Floor 5",
-                "Floor 6",
-                "Floor 7",
-                "Master Mode",
-                "Mythological",
-                "Ghost"
+                    "Off",
+                    "Zombie Slayer",
+                    "Spider Slayer",
+                    "Wolf Slayer",
+                    "Enderman Slayer",
+                    "Blaze Slayer",
+                    "Fishing",
+                    "Winter Fishing",
+                    "Fishing Festival",
+                    "Spooky Fishing",
+                    "Crystal Hollows Fishing",
+                    "Lava Fishing",
+                    "Trophy Fishing",
+                    "Floor 1",
+                    "Floor 2",
+                    "Floor 3",
+                    "Floor 4",
+                    "Floor 5",
+                    "Floor 6",
+                    "Floor 7",
+                    "Master Mode",
+                    "Mythological",
+                    "Ghost"
             }, // update String[] displays as well
             category = "Display",
             subcategory = "Loot Tracker"
@@ -845,38 +852,38 @@ public class ModConfig extends Config {
     public static boolean sessionDisplay = false;
 
     @CfgName(
-        name = "SlayerCount",
-        category = "toggles"
+            name = "SlayerCount",
+            category = "toggles"
     )
     @Switch(
-        name = "Count Total 20% Drops",
-        description = "Counts times dropped instead of amount dropped.\nE.x. Hamster Wheels: 40 -> Hamster Wheels: 10 times.",
-        category = "Display",
-        subcategory = "Loot Tracker"
+            name = "Count Total 20% Drops",
+            description = "Counts times dropped instead of amount dropped.\nE.x. Hamster Wheels: 40 -> Hamster Wheels: 10 times.",
+            category = "Display",
+            subcategory = "Loot Tracker"
     )
     public static boolean slayerCountTotal = false;
 
     @CfgName(
-        name = "MasterSPlusDisplay",
-        category = "toggles"
+            name = "MasterSPlusDisplay",
+            category = "toggles"
     )
     @DualOption(
-        name = "Master Mode Runs Shown",
-        left = "S Runs",
-        right = "S+ Runs",
-        category = "Display",
+            name = "Master Mode Runs Shown",
+            left = "S Runs",
+            right = "S+ Runs",
+            category = "Display",
             subcategory = "Loot Tracker"
     )
     public static boolean masterSRunsDisplay = false;
 
     @CfgName(
-        name = "SplitFishing",
-        category = "toggles"
+            name = "SplitFishing",
+            category = "toggles"
     )
     @Switch(
-        name = "Split Fishing Display",
-        description = "Splits fishing display in half to save vertical space.",
-        category = "Display",
+            name = "Split Fishing Display",
+            description = "Splits fishing display in half to save vertical space.",
+            category = "Display",
             subcategory = "Loot Tracker"
     )
     public static boolean splitFishing = true;
@@ -1430,11 +1437,11 @@ public class ModConfig extends Config {
             category = "misc"
     )
     @Number(
-        name = "Minimum Coords",
-        description = "When your coords go below this number, the alert will sound.",
-        min = -200F, max = 200F,
-        category = "Alerts",
-        subcategory = "General"
+            name = "Minimum Coords",
+            description = "When your coords go below this number, the alert will sound.",
+            min = -200F, max = 200F,
+            category = "Alerts",
+            subcategory = "General"
     )
     public static float farmMinCoords = -78.5F;
 
@@ -2218,5 +2225,42 @@ public class ModConfig extends Config {
             subcategory = "Pet Highlight Colors"
     )
     public static OneColor pet100Colour = new OneColor(242, 210, 73, 191); // Gold
+
+    // Keybinds
+
+    @KeyBind(
+            name = "Open Maddox Menu",
+            category = "Keybinds",
+            subcategory = "General"
+    )
+    public static OneKeyBind maddoxKey = new OneKeyBind(UKeyboard.KEY_M);
+
+    @KeyBind(
+            name = "Regular Ability",
+            category = "Keybinds",
+            subcategory = "Dungeons"
+    )
+    public static OneKeyBind abilityKey = new OneKeyBind(UKeyboard.KEY_NUMPAD4);
+
+    @KeyBind(
+            name = "Create Waypoint",
+            category = "Keybinds",
+            subcategory = "Waypoints"
+    )
+    public static OneKeyBind waypointKey = new OneKeyBind(UKeyboard.KEY_NUMPAD6);
+
+    @KeyBind(
+            name = "Start/Stop Skill Tracker",
+            category = "Keybinds",
+            subcategory = "Trackers"
+    )
+    public static OneKeyBind skillTrackerKey = new OneKeyBind(UKeyboard.KEY_NUMPAD5);
+
+    @KeyBind(
+            name = "Start/Stop Powder Tracker",
+            category = "Keybinds",
+            subcategory = "Trackers"
+    )
+    public static OneKeyBind powderTrackerKey = new OneKeyBind(UKeyboard.KEY_NUMPAD8);
 
 }
