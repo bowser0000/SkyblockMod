@@ -138,7 +138,7 @@ public class WeightCommand extends CommandBase {
                 double tankWeight = data.get("dungeon").getAsJsonObject().get("classes").getAsJsonObject().get("tank").getAsJsonObject().get("weight").getAsDouble();
 
                 NumberFormat nf = NumberFormat.getNumberInstance(Locale.US);
-                player.addChatMessage(new ChatComponentText(EnumChatFormatting.BOLD + ModConfig.getColour(ModConfig.delimiterColour) + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+                player.addChatMessage(new ChatComponentText(ModConfig.getDelimiter() + "\n" +
                         EnumChatFormatting.AQUA + " " + username + "'s Weight:\n" +
                         ModConfig.getColour(ModConfig.typeColour) + " Total Weight: " + ModConfig.getColour(ModConfig.valueColour) + nf.format(weight) + "\n\n" +
                         ModConfig.getColour(ModConfig.typeColour) + " Skill Weight: " + ModConfig.getColour(ModConfig.valueColour) + nf.format(skillWeight) + "\n" +
@@ -163,7 +163,7 @@ public class WeightCommand extends CommandBase {
                         ModConfig.getColour(ModConfig.typeColour) + "   Berserk Weight: " + ModConfig.getColour(ModConfig.valueColour) + nf.format(berserkWeight) + "\n" +
                         ModConfig.getColour(ModConfig.typeColour) + "   Archer Weight: " + ModConfig.getColour(ModConfig.valueColour) + nf.format(archerWeight) + "\n" +
                         ModConfig.getColour(ModConfig.typeColour) + "   Tank Weight: " + ModConfig.getColour(ModConfig.valueColour) + nf.format(tankWeight) + "\n" +
-                        EnumChatFormatting.BOLD + ModConfig.getColour(ModConfig.delimiterColour) + " " + EnumChatFormatting.BOLD + "-------------------"));
+                        ModConfig.getDelimiter()));
             } else if (arg1[1].equalsIgnoreCase("lily")) {
                 System.out.println("Fetching weight from SkyShiiyu API...");
                 String weightURL = "https://sky.shiiyu.moe/api/v2/profile/" + username;
@@ -188,7 +188,7 @@ public class WeightCommand extends CommandBase {
                 double catacombsMasterWeight = data.get("catacombs").getAsJsonObject().get("completion").getAsJsonObject().get("master").getAsDouble();
 
                 NumberFormat nf = NumberFormat.getNumberInstance(Locale.US);
-                player.addChatMessage(new ChatComponentText(EnumChatFormatting.BOLD + ModConfig.getColour(ModConfig.delimiterColour) + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+                player.addChatMessage(new ChatComponentText(ModConfig.getDelimiter() + "\n" +
                         EnumChatFormatting.AQUA + " " + username + "'s Weight (Lily):\n" +
                         ModConfig.getColour(ModConfig.typeColour) + " Total Weight: " + ModConfig.getColour(ModConfig.valueColour) + nf.format(weight) + "\n" +
                         ModConfig.getColour(ModConfig.typeColour) + " Skill Weight: " + ModConfig.getColour(ModConfig.valueColour) + nf.format(skillWeight + skillOverflow) + " (" + nf.format(skillWeight) + " + " + nf.format(skillOverflow) + ")\n" +
@@ -196,7 +196,7 @@ public class WeightCommand extends CommandBase {
                         ModConfig.getColour(ModConfig.typeColour) + " Catacombs XP Weight: " + ModConfig.getColour(ModConfig.valueColour) + nf.format(catacombsXPWeight) + "\n" +
                         ModConfig.getColour(ModConfig.typeColour) + " Catacombs Completion Weight: " + ModConfig.getColour(ModConfig.valueColour) + nf.format(catacombsBaseWeight) + "\n" +
                         ModConfig.getColour(ModConfig.typeColour) + " Catacombs Master Completion Weight: " + ModConfig.getColour(ModConfig.valueColour) + nf.format(catacombsMasterWeight) + "\n" +
-                        EnumChatFormatting.BOLD + ModConfig.getColour(ModConfig.delimiterColour) + " " + EnumChatFormatting.BOLD + "-------------------"));
+                        ModConfig.getDelimiter()));
             } else if (arg1[1].equalsIgnoreCase("farming")) {
                 String latestProfile = APIHandler.getLatestProfileID(uuid, key);
                 if (latestProfile == null) return;
@@ -291,7 +291,7 @@ public class WeightCommand extends CommandBase {
                 double bonusWeight = farmingBonus + anitaBonus + medalBonus + minionBonus;
 
                 NumberFormat nf = NumberFormat.getNumberInstance(Locale.US);
-                player.addChatMessage(new ChatComponentText(EnumChatFormatting.BOLD + ModConfig.getColour(ModConfig.delimiterColour) + EnumChatFormatting.BOLD + "-------------------\n" +
+                player.addChatMessage(new ChatComponentText(ModConfig.getDelimiter() + "\n" +
                         EnumChatFormatting.AQUA + username + "'s Weight (Farming):\n" +
                         ModConfig.getColour(ModConfig.typeColour) + "Total Weight: " + ModConfig.getColour(ModConfig.valueColour) + nf.format(mainWeight + bonusWeight) + "\n" +
                         ModConfig.getColour(ModConfig.typeColour) + "Collection Weight: " + ModConfig.getColour(ModConfig.valueColour) + nf.format(mainWeight) + "\n" +
@@ -300,7 +300,7 @@ public class WeightCommand extends CommandBase {
                         ModConfig.getColour(ModConfig.typeColour) + "Anita Bonus Weight: " + ModConfig.getColour(ModConfig.valueColour) + nf.format(anitaBonus) + "\n" +
                         ModConfig.getColour(ModConfig.typeColour) + "Gold Medal Weight: " + ModConfig.getColour(ModConfig.valueColour) + nf.format(medalBonus) + "\n" +
                         ModConfig.getColour(ModConfig.typeColour) + "Minion Weight: " + ModConfig.getColour(ModConfig.valueColour) + nf.format(minionBonus) + "\n" +
-                        EnumChatFormatting.BOLD + ModConfig.getColour(ModConfig.delimiterColour) + EnumChatFormatting.BOLD + "-------------------"));
+                        ModConfig.getDelimiter()));
             } else {
                 player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "Usage: " + getCommandUsage(arg0)));
             }

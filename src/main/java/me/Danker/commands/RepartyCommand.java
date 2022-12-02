@@ -61,20 +61,20 @@ public class RepartyCommand extends CommandBase implements ICommand {
                 try {
                     player.sendChatMessage("/p " + String.join(" ", repartyFailList));
                     String members = String.join(EnumChatFormatting.WHITE + "\n- " + EnumChatFormatting.YELLOW, repartyFailList);
-                    player.addChatMessage(new ChatComponentText(EnumChatFormatting.BOLD + ModConfig.getColour(ModConfig.delimiterColour) + "-----------------------------\n" +
+                    player.addChatMessage(new ChatComponentText(ModConfig.getDelimiter() + "\n" +
                             ModConfig.getColour(ModConfig.mainColour) + "Partying:" + EnumChatFormatting.WHITE + "\n- " +
                             EnumChatFormatting.YELLOW + members + "\n" +
-                            EnumChatFormatting.BOLD + ModConfig.getColour(ModConfig.delimiterColour) + "-----------------------------"));
+                            ModConfig.getDelimiter()));
                     failInviting = true;
                     while (failInviting) {
                         Thread.sleep(10);
                     }
                     if (repartyFailList.size() > 0) {
                         String repartyFails = String.join("\n- " + EnumChatFormatting.RED, repartyFailList);
-                        player.addChatMessage(new ChatComponentText(EnumChatFormatting.BOLD + ModConfig.getColour(ModConfig.delimiterColour) + "-----------------------------\n" +
+                        player.addChatMessage(new ChatComponentText(ModConfig.getDelimiter() + "\n" +
                                 ModConfig.getColour(ModConfig.mainColour) + "Failed to invite:" + EnumChatFormatting.WHITE + "\n- " +
                                 EnumChatFormatting.RED + repartyFails + "\n" +
-                                EnumChatFormatting.BOLD + ModConfig.getColour(ModConfig.delimiterColour) + "-----------------------------"));
+                                ModConfig.getDelimiter()));
                     }
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -107,10 +107,10 @@ public class RepartyCommand extends CommandBase implements ICommand {
                     Thread.sleep(10);
                 }
                 String members = String.join(EnumChatFormatting.WHITE + "\n- " + EnumChatFormatting.YELLOW, RepartyCommand.party);
-                player.addChatMessage(new ChatComponentText(EnumChatFormatting.BOLD + ModConfig.getColour(ModConfig.delimiterColour) + "-----------------------------\n" +
+                player.addChatMessage(new ChatComponentText(ModConfig.getDelimiter() + "\n" +
                         ModConfig.getColour(ModConfig.mainColour) + "Repartying:" + EnumChatFormatting.WHITE + "\n- " +
                         EnumChatFormatting.YELLOW + members + "\n" +
-                        EnumChatFormatting.BOLD + ModConfig.getColour(ModConfig.delimiterColour) + "-----------------------------"));
+                        ModConfig.getDelimiter()));
                 repartyFailList = new ArrayList<>(party);
                 for (String invitee : party) {
                     player.sendChatMessage("/p " + invitee);
@@ -125,10 +125,10 @@ public class RepartyCommand extends CommandBase implements ICommand {
                 }
                 if (repartyFailList.size() > 0) {
                     String repartyFails = String.join("\n- " + EnumChatFormatting.RED, repartyFailList);
-                    player.addChatMessage(new ChatComponentText(EnumChatFormatting.BOLD + ModConfig.getColour(ModConfig.delimiterColour) + "-----------------------------\n" +
+                    player.addChatMessage(new ChatComponentText(ModConfig.getDelimiter() + "\n" +
                             ModConfig.getColour(ModConfig.mainColour) + "Failed to invite:" + EnumChatFormatting.WHITE + "\n- " +
                             EnumChatFormatting.RED + repartyFails + "\n" +
-                            EnumChatFormatting.BOLD + ModConfig.getColour(ModConfig.delimiterColour) + "-----------------------------"));
+                            ModConfig.getDelimiter()));
                 }
             } catch (InterruptedException e) {
                 e.printStackTrace();

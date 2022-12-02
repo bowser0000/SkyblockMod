@@ -193,10 +193,10 @@ public class LobbySkillsCommand extends CommandBase {
 				lobbySA = (double) Math.round((lobbySA / lobbySkills.size()) * 100) / 100;
 				
 				// Finally say skill lobby avg and highest SA users
-				playerSP.addChatMessage(new ChatComponentText(EnumChatFormatting.BOLD + ModConfig.getColour(ModConfig.delimiterColour) + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+				playerSP.addChatMessage(new ChatComponentText(ModConfig.getDelimiter() + "\n" +
 															  ModConfig.getColour(ModConfig.typeColour) + " Lobby Skill Average: " + ModConfig.getColour(ModConfig.skillAverageColour) + EnumChatFormatting.BOLD + lobbySA + "\n" +
 															  ModConfig.getColour(ModConfig.typeColour) + " Highest Skill Averages:" + top3 + "\n" +
-															  EnumChatFormatting.BOLD + ModConfig.getColour(ModConfig.delimiterColour) + "" + EnumChatFormatting.BOLD + " -------------------"));
+															  ModConfig.getDelimiter()));
 			} catch (InterruptedException ex) {
 				System.out.println("Current skill average list: " + unsortedSAList);
 				Thread.currentThread().interrupt();

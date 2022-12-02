@@ -100,18 +100,18 @@ public class BankCommand extends CommandBase {
 				double bankCoins = profileResponse.get("profile").getAsJsonObject().get("banking").getAsJsonObject().get("balance").getAsDouble();
 				bankCoins = Math.floor(bankCoins * 100.0) / 100.0;
 				
-				player.addChatMessage(new ChatComponentText(EnumChatFormatting.BOLD + ModConfig.getColour(ModConfig.delimiterColour) + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+				player.addChatMessage(new ChatComponentText(ModConfig.getDelimiter() + "\n" +
 															EnumChatFormatting.AQUA + " " + username + "'s Coins:\n" +
 															ModConfig.getColour(ModConfig.typeColour) + " Bank: " + EnumChatFormatting.GOLD + nf.format(bankCoins) + "\n" +
 															ModConfig.getColour(ModConfig.typeColour) + " Purse: " + EnumChatFormatting.GOLD + nf.format(purseCoins) + "\n" +
 															ModConfig.getColour(ModConfig.typeColour) + " Total: " + EnumChatFormatting.GOLD + nf.format(bankCoins + purseCoins) + "\n" +
-															EnumChatFormatting.BOLD + ModConfig.getColour(ModConfig.delimiterColour) + " " + EnumChatFormatting.BOLD + "-------------------"));
+															ModConfig.getDelimiter()));
 			} else {
-				player.addChatMessage(new ChatComponentText(EnumChatFormatting.BOLD + ModConfig.getColour(ModConfig.delimiterColour) + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+				player.addChatMessage(new ChatComponentText(ModConfig.getDelimiter() + "\n" +
 															EnumChatFormatting.AQUA + " " + username + "'s Coins:\n" +
 															ModConfig.getColour(ModConfig.typeColour) + " Bank: " + EnumChatFormatting.RED + "Bank API disabled.\n" +
 															ModConfig.getColour(ModConfig.typeColour) + " Purse: " + EnumChatFormatting.GOLD + nf.format(purseCoins) + "\n" +
-															EnumChatFormatting.BOLD + ModConfig.getColour(ModConfig.delimiterColour) + " " + EnumChatFormatting.BOLD + "-------------------"));
+															ModConfig.getDelimiter()));
 			}
 		}).start();
 	}

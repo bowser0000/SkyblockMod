@@ -209,7 +209,7 @@ public class PetsCommand extends CommandBase {
 				return -xp;
 			});
 
-			String finalMessage = EnumChatFormatting.BOLD + ModConfig.getColour(ModConfig.delimiterColour) + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+			String finalMessage = ModConfig.getDelimiter() + "\n" +
 					EnumChatFormatting.AQUA + " " + username + "'s Pets (" + pets.size() + "):\n";
 
 			// Loop through pets
@@ -217,7 +217,7 @@ public class PetsCommand extends CommandBase {
 				finalMessage += pet.getStringToAdd();
 			}
 
-			finalMessage += EnumChatFormatting.BOLD + ModConfig.getColour(ModConfig.delimiterColour) + " " + EnumChatFormatting.BOLD + "-------------------";
+			finalMessage += ModConfig.getDelimiter();
 			player.addChatMessage(new ChatComponentText(finalMessage));
 
 		}).start();

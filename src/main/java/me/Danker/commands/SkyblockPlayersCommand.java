@@ -137,7 +137,7 @@ public class SkyblockPlayersCommand extends CommandBase {
 			}
 			
 			NumberFormat nf = NumberFormat.getIntegerInstance(Locale.US);
-			player.addChatMessage(new ChatComponentText(EnumChatFormatting.BOLD + ModConfig.getColour(ModConfig.delimiterColour) + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+			player.addChatMessage(new ChatComponentText(ModConfig.getDelimiter() + "\n" +
 														ModConfig.getColour(ModConfig.typeColour) + " Hypixel: " + ModConfig.getColour(ModConfig.valueColour) + nf.format(totalPlayers) + "\n" +
 														ModConfig.getColour(ModConfig.typeColour) + " Skyblock: " + ModConfig.getColour(ModConfig.valueColour) + nf.format(skyblockTotalPlayers) + " / " + Utils.getPercentage(skyblockTotalPlayers, totalPlayers) + "%\n" +
 														ModConfig.getColour(ModConfig.typeColour) + " Private Island: " + ModConfig.getColour(ModConfig.valueColour) + nf.format(privateIsland) + " / " + Utils.getPercentage(privateIsland, skyblockTotalPlayers) + "%\n" +
@@ -156,7 +156,7 @@ public class SkyblockPlayersCommand extends CommandBase {
 														ModConfig.getColour(ModConfig.typeColour) + " Dungeons: " + ModConfig.getColour(ModConfig.valueColour) + nf.format(dungeons) + " / " + Utils.getPercentage(dungeons, skyblockTotalPlayers) + "%\n" +
 														ModConfig.getColour(ModConfig.typeColour) + " Dark Auction: " + ModConfig.getColour(ModConfig.valueColour) + nf.format(darkAuction) + " / " + Utils.getPercentage(darkAuction, skyblockTotalPlayers) + "%\n" +
 														ModConfig.getColour(ModConfig.typeColour) + " Jerry's Workshop: " + ModConfig.getColour(ModConfig.valueColour) + nf.format(jerry) + " / " + Utils.getPercentage(jerry, skyblockTotalPlayers) + "%\n" +
-														EnumChatFormatting.BOLD + ModConfig.getColour(ModConfig.delimiterColour) + EnumChatFormatting.BOLD + "-------------------"));
+														ModConfig.getDelimiter()));
 		}).start();
 	}
 

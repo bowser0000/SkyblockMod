@@ -220,7 +220,7 @@ public class SkillsCommand extends CommandBase {
 			skillAvg = (double) Math.round(skillAvg * 100) / 100;
 			double trueAvg = (Math.floor(farmingLevel) + Math.floor(miningLevel) + Math.floor(combatLevel) + Math.floor(foragingLevel) + Math.floor(fishingLevel) + Math.floor(enchantingLevel) + Math.floor(alchemyLevel) + Math.floor(tamingLevel)) / 8;
 			
-			player.addChatMessage(new ChatComponentText(EnumChatFormatting.BOLD + ModConfig.getColour(ModConfig.delimiterColour) + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+			player.addChatMessage(new ChatComponentText(ModConfig.getDelimiter() + "\n" +
 														EnumChatFormatting.AQUA + " " + username + "'s Skills:\n")
 														.appendSibling(farmingLevelText).appendSibling(newLine)
 														.appendSibling(miningLevelText).appendSibling(newLine)
@@ -233,7 +233,7 @@ public class SkillsCommand extends CommandBase {
 														.appendSibling(new ChatComponentText(
 														EnumChatFormatting.AQUA + " Average Skill Level: " + ModConfig.getColour(ModConfig.skillAverageColour) + EnumChatFormatting.BOLD + skillAvg + "\n" +
 														EnumChatFormatting.AQUA + " True Average Skill Level: " + ModConfig.getColour(ModConfig.skillAverageColour) + EnumChatFormatting.BOLD + trueAvg + "\n" +
-														EnumChatFormatting.BOLD + ModConfig.getColour(ModConfig.delimiterColour) + " " + EnumChatFormatting.BOLD + "-------------------")));
+														ModConfig.getDelimiter())));
 		}).start();
 	}
 

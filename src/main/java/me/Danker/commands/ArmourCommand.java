@@ -134,13 +134,13 @@ public class ArmourCommand extends CommandBase {
 				}
 				armourStream.close();
 				
-				player.addChatMessage(new ChatComponentText(EnumChatFormatting.BOLD + ModConfig.getColour(ModConfig.delimiterColour) + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+				player.addChatMessage(new ChatComponentText(ModConfig.getDelimiter() + "\n" +
 															EnumChatFormatting.AQUA + " " + username + "'s Armour:\n" +
 															ModConfig.getColour(ModConfig.typeColour) + " Helmet:      " + helmet + "\n" +
 															ModConfig.getColour(ModConfig.typeColour) + " Chestplate: " + chest + "\n" +
 															ModConfig.getColour(ModConfig.typeColour) + " Leggings:   " + legs + "\n" +
 															ModConfig.getColour(ModConfig.typeColour) + " Boots:       " + boots + "\n" +
-															EnumChatFormatting.BOLD + ModConfig.getColour(ModConfig.delimiterColour) + " " + EnumChatFormatting.BOLD + "-------------------"));
+															ModConfig.getDelimiter()));
 			} catch (IOException ex) {
 				player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "An error has occurred while reading inventory data. See logs for more info."));
 				ex.printStackTrace();

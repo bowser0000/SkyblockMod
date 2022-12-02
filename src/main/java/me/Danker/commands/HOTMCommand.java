@@ -109,13 +109,13 @@ public class HOTMCommand extends CommandBase {
             tree.setChatStyle(tree.getChatStyle().setChatClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/hotmtree " + username + " " + latestProfile)));
 
             NumberFormat nf = NumberFormat.getIntegerInstance(Locale.US);
-            player.addChatMessage(new ChatComponentText(EnumChatFormatting.BOLD + ModConfig.getColour(ModConfig.delimiterColour) + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+            player.addChatMessage(new ChatComponentText(ModConfig.getDelimiter() + "\n" +
                                                         EnumChatFormatting.AQUA + username + "'s HotM:\n" +
                                                         ModConfig.getColour(ModConfig.typeColour) + "Mithril Powder: " + EnumChatFormatting.DARK_GREEN + nf.format(mithril) + "\n" +
                                                         ModConfig.getColour(ModConfig.typeColour) + "Gemstone Powder: " + EnumChatFormatting.LIGHT_PURPLE + nf.format(gemstone) + "\n" +
                                                         ModConfig.getColour(ModConfig.typeColour) + "Pickaxe Ability: " + ModConfig.getColour(ModConfig.valueColour) + ability + "\n" +
                                                         ModConfig.getColour(ModConfig.typeColour) + "HotM Tree: ").appendSibling(tree)
-                                                        .appendSibling(new ChatComponentText("\n" + EnumChatFormatting.BOLD + ModConfig.getColour(ModConfig.delimiterColour) + EnumChatFormatting.BOLD + "-------------------")));
+                                                        .appendSibling(new ChatComponentText("\n" + ModConfig.getDelimiter())));
         }).start();
     }
 

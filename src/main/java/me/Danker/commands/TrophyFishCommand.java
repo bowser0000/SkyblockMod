@@ -129,7 +129,7 @@ public class TrophyFishCommand extends CommandBase {
                 }
             }
 
-            player.addChatMessage(new ChatComponentText(EnumChatFormatting.BOLD + ModConfig.getColour(ModConfig.delimiterColour) + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+            player.addChatMessage(new ChatComponentText(ModConfig.getDelimiter() + "\n" +
                     EnumChatFormatting.GOLD + " Trophy Fish Rank: " + tier + "\n" +
                     EnumChatFormatting.WHITE + "  Sulphur Skitter " + EnumChatFormatting.DARK_GRAY + "(" + TrophyFishTracker.getSum(fish, "Sulphur Skitter") + ")" + EnumChatFormatting.WHITE + ": " + TrophyFishTracker.getTierCount(fish, "Sulphur Skitter") + "\n" +
                     EnumChatFormatting.WHITE + "  Obfuscated 1 " + EnumChatFormatting.DARK_GRAY + "(" + TrophyFishTracker.getSum(fish, "Obfuscated 1") + ")" + EnumChatFormatting.WHITE + ": " + TrophyFishTracker.getTierCount(fish, "Obfuscated 1") + "\n" +
@@ -149,7 +149,7 @@ public class TrophyFishCommand extends CommandBase {
                     EnumChatFormatting.DARK_PURPLE + "  Soul Fish " + EnumChatFormatting.DARK_GRAY + "(" + TrophyFishTracker.getSum(fish, "Soul Fish") + ")" + EnumChatFormatting.DARK_PURPLE + ": " + TrophyFishTracker.getTierCount(fish, "Soul Fish") + "\n" +
                     EnumChatFormatting.DARK_PURPLE + "  Karate Fish " + EnumChatFormatting.DARK_GRAY + "(" + TrophyFishTracker.getSum(fish, "Karate Fish") + ")" + EnumChatFormatting.DARK_PURPLE + ": " + TrophyFishTracker.getTierCount(fish, "Karate Fish") + "\n" +
                     EnumChatFormatting.GOLD + "  Golden Fish " + EnumChatFormatting.DARK_GRAY + "(" + TrophyFishTracker.getSum(fish, "Golden Fish") + ")" + EnumChatFormatting.GOLD + ": " + TrophyFishTracker.getTierCount(fish, "Golden Fish") + "\n" +
-                    EnumChatFormatting.BOLD + ModConfig.getColour(ModConfig.delimiterColour) + EnumChatFormatting.BOLD + "-------------------"));
+                    ModConfig.getDelimiter()));
         }).start();
     }
 

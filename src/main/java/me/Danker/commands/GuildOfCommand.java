@@ -106,12 +106,12 @@ public class GuildOfCommand extends CommandBase {
 				}
 			}
 			
-			player.addChatMessage(new ChatComponentText(EnumChatFormatting.BOLD + ModConfig.getColour(ModConfig.delimiterColour) + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+			player.addChatMessage(new ChatComponentText(ModConfig.getDelimiter() + "\n" +
 														EnumChatFormatting.AQUA + " " + username + "'s Guild:\n" +
 														ModConfig.getColour(ModConfig.typeColour) + " Guild: " + ModConfig.getColour(ModConfig.valueColour) + EnumChatFormatting.BOLD + guildName + "\n" +
 														ModConfig.getColour(ModConfig.typeColour) + " Guildmaster: " + ModConfig.getColour(ModConfig.valueColour) + EnumChatFormatting.BOLD + guildMaster + "\n" +
 														ModConfig.getColour(ModConfig.typeColour) + " Members: " + ModConfig.getColour(ModConfig.valueColour) + EnumChatFormatting.BOLD + players + "\n" +
-														EnumChatFormatting.BOLD + ModConfig.getColour(ModConfig.delimiterColour) + " " + EnumChatFormatting.BOLD + "-------------------"));
+														ModConfig.getDelimiter()));
 		}).start();
 	}
 

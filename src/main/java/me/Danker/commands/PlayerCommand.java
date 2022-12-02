@@ -224,7 +224,7 @@ public class PlayerCommand extends CommandBase {
 
             NumberFormat nf = NumberFormat.getIntegerInstance(Locale.US);
             NumberFormat nfd = NumberFormat.getNumberInstance(Locale.US);
-            player.addChatMessage(new ChatComponentText(EnumChatFormatting.BOLD + ModConfig.getColour(ModConfig.delimiterColour) + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+            player.addChatMessage(new ChatComponentText(ModConfig.getDelimiter() + "\n" +
                                                         EnumChatFormatting.AQUA + " " + username + "'s Skills:\n" +
                                                         ModConfig.getColour(ModConfig.typeColour) + " Farming: " + ModConfig.getColour(ModConfig.valueColour) + EnumChatFormatting.BOLD + farmingLevel + "\n" +
                                                         ModConfig.getColour(ModConfig.typeColour) + " Mining: " + ModConfig.getColour(ModConfig.valueColour) + EnumChatFormatting.BOLD + miningLevel + "\n" +
@@ -247,7 +247,7 @@ public class PlayerCommand extends CommandBase {
                                                         ModConfig.getColour(ModConfig.typeColour) + " Total: " + EnumChatFormatting.GOLD + nf.format(bankCoins + purseCoins) + "\n\n" +
                                                         EnumChatFormatting.AQUA + " " + username + "'s Weight:\n" +
                                                         ModConfig.getColour(ModConfig.typeColour) + " Total Weight: " + ModConfig.getColour(ModConfig.valueColour) + nfd.format(weight) + "\n" +
-                                                        EnumChatFormatting.BOLD + ModConfig.getColour(ModConfig.delimiterColour) + " " + EnumChatFormatting.BOLD + "-------------------"));
+                                                        ModConfig.getDelimiter()));
         }).start();
     }
 

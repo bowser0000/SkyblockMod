@@ -127,8 +127,6 @@ public class DungeonsCommand extends CommandBase {
 				completionMasterObj = catacombsMasterObject.get("tier_completions").getAsJsonObject();
 			}
 
-			String delimiter = EnumChatFormatting.BOLD + ModConfig.getColour(ModConfig.delimiterColour) + "" + EnumChatFormatting.BOLD + "-------------------";
-
 			ChatComponentText classLevels = new ChatComponentText(EnumChatFormatting.GOLD + " Selected Class: " + selectedClass + "\n\n" +
 																  EnumChatFormatting.RED + " Catacombs Level: " + catacombs + "\n" +
 																  EnumChatFormatting.RED + " Class Average: " + classAverage + "\n\n" +
@@ -170,12 +168,12 @@ public class DungeonsCommand extends CommandBase {
 			completions.setChatStyle(completions.getChatStyle().setChatHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ChatComponentText(completionsHoverString.toString()))));
 
 			player.addChatMessage(
-					new ChatComponentText(delimiter)
+					new ChatComponentText(ModConfig.getDelimiter())
 					.appendText("\n")
 					.appendSibling(classLevels)
 					.appendSibling(completions)
 					.appendText("\n")
-					.appendSibling(new ChatComponentText(delimiter)));
+					.appendSibling(new ChatComponentText(ModConfig.getDelimiter())));
 		}).start();
 	}
 }

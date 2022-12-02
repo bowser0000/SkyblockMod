@@ -125,10 +125,10 @@ public class LobbyBankCommand extends CommandBase {
                 lobbyBank = (double) Math.round((lobbyBank / lobbyBanks.size()) * 100) / 100;
 
                 // Finally say bank lobby avg and highest bank users
-                playerSP.addChatMessage(new ChatComponentText(EnumChatFormatting.BOLD + ModConfig.getColour(ModConfig.delimiterColour) + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+                playerSP.addChatMessage(new ChatComponentText(ModConfig.getDelimiter() + "\n" +
                         ModConfig.getColour(ModConfig.typeColour) + " Lobby Bank Average: " + ModConfig.getColour(ModConfig.skillAverageColour) + EnumChatFormatting.BOLD + nf.format(Math.round(lobbyBank)) + "\n" +
                         ModConfig.getColour(ModConfig.typeColour) + " Highest Bank Averages:" + top3 + "\n" +
-                        EnumChatFormatting.BOLD + ModConfig.getColour(ModConfig.delimiterColour) + "" + EnumChatFormatting.BOLD + " -------------------"));
+                        ModConfig.getDelimiter()));
 
 
             } catch (InterruptedException ex) {

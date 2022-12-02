@@ -21,6 +21,7 @@ import me.Danker.gui.aliases.AliasesGui;
 import me.Danker.gui.crystalhollowwaypoints.CrystalHollowWaypointsGui;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.EnumChatFormatting;
 import org.apache.commons.lang3.time.StopWatch;
 
 import java.util.Arrays;
@@ -82,6 +83,10 @@ public class ModConfig extends Config {
 
     public static String getColour(int index) {
         return "§" + Integer.toHexString(index);
+    }
+
+    public static String getDelimiter() {
+        return getColour(delimiterColour) + EnumChatFormatting.STRIKETHROUGH + "-----------------------------";
     }
 
     public static String getDisplay() {
@@ -2089,7 +2094,7 @@ public class ModConfig extends Config {
 
     @Dropdown(
             name = "Delimiter Text Color",
-            description = "Color of the line shown above and below command outputs. Bold is automatically added.",
+            description = "Color of the line shown above and below command outputs. Strike-through is automatically added.",
             options = {"Black", "Dark Blue", "Dark Green", "Dark Aqua", "Dark Red", "Dark Purple", "Gold", "Gray", "Dark Gray", "Blue", "Green", "Aqua", "Red", "Light Purple", "Yellow", "White"},
             category = "Colors",
             subcategory = "Text"
