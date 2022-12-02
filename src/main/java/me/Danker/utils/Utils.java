@@ -3,11 +3,11 @@ package me.Danker.utils;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import me.Danker.DankersSkyblockMod;
+import me.Danker.config.CfgConfig;
 import me.Danker.config.ModConfig;
 import me.Danker.features.ColouredNames;
 import me.Danker.features.GoldenEnchants;
 import me.Danker.handlers.APIHandler;
-import me.Danker.handlers.ConfigHandler;
 import me.Danker.handlers.ScoreboardHandler;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
@@ -451,7 +451,7 @@ public class Utils {
 			}
 		}
 
-		ConfigHandler.writeIntConfig("skills", configValue, level);
+		CfgConfig.writeIntConfig("skills", configValue, level);
 		return level;
 	}
 

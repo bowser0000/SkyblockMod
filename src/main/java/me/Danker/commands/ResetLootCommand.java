@@ -1,5 +1,6 @@
 package me.Danker.commands;
 
+import me.Danker.config.CfgConfig;
 import me.Danker.config.ModConfig;
 import me.Danker.features.loot.*;
 import me.Danker.handlers.ConfigHandler;
@@ -141,7 +142,7 @@ public class ResetLootCommand extends CommandBase {
 		ZombieTracker.scythesSession = 0;
 		ZombieTracker.timeSession = -1;
 		ZombieTracker.bossesSession = -1;
-		ConfigHandler.deleteCategory("zombie");
+		CfgConfig.deleteCategory("zombie");
 		ConfigHandler.reloadConfig();
 	}
 	
@@ -158,7 +159,7 @@ public class ResetLootCommand extends CommandBase {
 		SpiderTracker.mosquitosSession = 0;
 		SpiderTracker.timeSession = -1;
 		SpiderTracker.bossesSession = -1;
-		ConfigHandler.deleteCategory("spider");
+		CfgConfig.deleteCategory("spider");
 		ConfigHandler.reloadConfig();
 	}
 	
@@ -176,7 +177,7 @@ public class ResetLootCommand extends CommandBase {
 		WolfTracker.fluxesSession = 0;
 		WolfTracker.timeSession = -1;
 		WolfTracker.bossesSession = -1;
-		ConfigHandler.deleteCategory("wolf");
+		CfgConfig.deleteCategory("wolf");
 		ConfigHandler.reloadConfig();
 	}
 
@@ -204,7 +205,7 @@ public class ResetLootCommand extends CommandBase {
 		EndermanTracker.enderBooksSession = 0;
 		EndermanTracker.timeSession = -1;
 		EndermanTracker.bossesSession = -1;
-		ConfigHandler.deleteCategory("enderman");
+		CfgConfig.deleteCategory("enderman");
 		ConfigHandler.reloadConfig();
 	}
 
@@ -233,7 +234,7 @@ public class ResetLootCommand extends CommandBase {
 		BlazeTracker.subzeroInvertersSession = 0;
 		BlazeTracker.timeSession = 0;
 		BlazeTracker.bossesSession = 0;
-		ConfigHandler.deleteCategory("blaze");
+		CfgConfig.deleteCategory("blaze");
 		ConfigHandler.reloadConfig();
 	}
 	
@@ -261,9 +262,11 @@ public class ResetLootCommand extends CommandBase {
 		FishingTracker.frozenStevesSession = 0;
 		FishingTracker.frostyTheSnowmansSession = 0;
 		FishingTracker.grinchesSession = 0;
+		FishingTracker.nutcrackersSession = 0;
 		FishingTracker.yetisSession = 0;
-		FishingTracker.yetiTimeSession = -1;
-		FishingTracker.yetiSCsSession = -1;
+		FishingTracker.reindrakesSession = 0;
+		FishingTracker.reindrakeTimeSession = -1;
+		FishingTracker.reindrakeSCsSession = -1;
 		FishingTracker.nurseSharksSession = 0;
 		FishingTracker.blueSharksSession = 0;
 		FishingTracker.tigerSharksSession = 0;
@@ -291,7 +294,7 @@ public class ResetLootCommand extends CommandBase {
 		FishingTracker.lordJawbusesSession = 0;
 		FishingTracker.jawbusTimeSession = -1;
 		FishingTracker.jawbusSCsSession = -1;
-		ConfigHandler.deleteCategory("fishing");
+		CfgConfig.deleteCategory("fishing");
 		ConfigHandler.reloadConfig();
 
 		TrophyFishTracker.fish = TrophyFishTracker.createEmpty();
@@ -310,7 +313,7 @@ public class ResetLootCommand extends CommandBase {
 		MythologicalTracker.gaiaConstructsSession = 0;
 		MythologicalTracker.minosChampionsSession = 0;
 		MythologicalTracker.minosInquisitorsSession = 0;
-		ConfigHandler.deleteCategory("mythological");
+		CfgConfig.deleteCategory("mythological");
 		ConfigHandler.reloadConfig();
 	}
 	
@@ -401,7 +404,7 @@ public class ResetLootCommand extends CommandBase {
 		CatacombsTracker.masterRerollsSession = 0;
 		CatacombsTracker.masterCoinsSpentSession = 0;
 		CatacombsTracker.masterTimeSpentSession = 0;
-		ConfigHandler.deleteCategory("catacombs");
+		CfgConfig.deleteCategory("catacombs");
 		ConfigHandler.reloadConfig();
 	}
 

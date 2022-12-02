@@ -1,7 +1,7 @@
 package me.Danker.features.loot;
 
+import me.Danker.config.CfgConfig;
 import me.Danker.config.ModConfig;
-import me.Danker.handlers.ConfigHandler;
 import me.Danker.utils.Utils;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StringUtils;
@@ -77,97 +77,97 @@ public class EndermanTracker {
             if (bossesSession != -1) {
                 bossesSession++;
             }
-            ConfigHandler.writeIntConfig("enderman", "voidglooms", voidglooms);
-            ConfigHandler.writeIntConfig("enderman", "bossRNG", bosses);
+            CfgConfig.writeIntConfig("enderman", "voidglooms", voidglooms);
+            CfgConfig.writeIntConfig("enderman", "bossRNG", bosses);
         } else if (message.contains("RARE DROP! (") && message.contains("Twilight Arrow Poison)")) {
             int amount = LootTracker.getAmountfromMessage(message);
             TAP += amount;
             TAPSession += amount;
             TAPDrops++;
             TAPDropsSession++;
-            ConfigHandler.writeIntConfig("enderman", "tap", TAP);
-            ConfigHandler.writeIntConfig("enderman", "tapDrops", TAPDrops);
+            CfgConfig.writeIntConfig("enderman", "tap", TAP);
+            CfgConfig.writeIntConfig("enderman", "tapDrops", TAPDrops);
         } else if (message.contains("VERY RARE DROP!  (") && message.contains(" Endersnake Rune I)")) {
             endersnakes++;
             endersnakesSession++;
-            ConfigHandler.writeIntConfig("enderman", "endersnakes", endersnakes);
+            CfgConfig.writeIntConfig("enderman", "endersnakes", endersnakes);
         } else if (message.contains("VERY RARE DROP!  (Summoning Eye)")) {
             summoningEyes++;
             summoningEyesSession++;
-            ConfigHandler.writeIntConfig("enderman", "summoningEyes", summoningEyes);
+            CfgConfig.writeIntConfig("enderman", "summoningEyes", summoningEyes);
         } else if (message.contains("VERY RARE DROP!  (Mana Steal I)")) {
             manaBooks++;
             manaBooksSession++;
-            ConfigHandler.writeIntConfig("enderman", "manaBooks", manaBooks);
+            CfgConfig.writeIntConfig("enderman", "manaBooks", manaBooks);
         } else if (message.contains("VERY RARE DROP!  (Transmission Tuner)")) {
             tuners++;
             tunersSession++;
-            ConfigHandler.writeIntConfig("enderman", "tuners", tuners);
+            CfgConfig.writeIntConfig("enderman", "tuners", tuners);
         } else if (message.contains("VERY RARE DROP!  (Null Atom)")) {
             atoms++;
             atomsSession++;
-            ConfigHandler.writeIntConfig("enderman", "atoms", atoms);
+            CfgConfig.writeIntConfig("enderman", "atoms", atoms);
         } else if (message.contains("VERY RARE DROP!  (Hazmat Enderman)")) {
             hazmats++;
             hazmatsSession++;
-            ConfigHandler.writeIntConfig("enderman", "hazmats", hazmats);
+            CfgConfig.writeIntConfig("enderman", "hazmats", hazmats);
         } else if (message.contains("CRAZY RARE DROP!  (Pocket Espresso Machine)")) {
             rng = true;
             espressoMachines++;
             espressoMachinesSession++;
-            ConfigHandler.writeIntConfig("enderman", "espressoMachines", espressoMachines);
+            CfgConfig.writeIntConfig("enderman", "espressoMachines", espressoMachines);
             if (ModConfig.rngesusAlerts) Utils.createTitle(EnumChatFormatting.AQUA + "POCKET ESPRESSO MACHINE!", 3);
         } else if (message.contains("VERY RARE DROP!  (Smarty Pants I)")) {
             smartyBooks++;
             smartyBooksSession++;
-            ConfigHandler.writeIntConfig("enderman", "smartyBooks", smartyBooks);
+            CfgConfig.writeIntConfig("enderman", "smartyBooks", smartyBooks);
         } else if (message.contains("VERY RARE DROP!  (") && message.contains(" End Rune I)")) {
             endRunes++;
             endRunesSession++;
-            ConfigHandler.writeIntConfig("enderman", "endRunes", endRunes);
+            CfgConfig.writeIntConfig("enderman", "endRunes", endRunes);
         } else if (message.contains("CRAZY RARE DROP!  (Handy Blood Chalice)")) {
             rng = true;
             chalices++;
             chalicesSession++;
-            ConfigHandler.writeIntConfig("enderman", "chalices", chalices);
+            CfgConfig.writeIntConfig("enderman", "chalices", chalices);
             if (ModConfig.rngesusAlerts) Utils.createTitle(EnumChatFormatting.RED + "HANDY BLOOD CHALICE!", 3);
         } else if (message.contains("VERY RARE DROP!  (Sinful Dice)")) {
             dice++;
             diceSession++;
-            ConfigHandler.writeIntConfig("enderman", "dice", dice);
+            CfgConfig.writeIntConfig("enderman", "dice", dice);
         } else if (message.contains("CRAZY RARE DROP!  (Exceedingly Rare Ender Artifact Upgrader)")) {
             rng = true;
             artifacts++;
             artifactsSession++;
-            ConfigHandler.writeIntConfig("enderman", "artifacts", artifacts);
+            CfgConfig.writeIntConfig("enderman", "artifacts", artifacts);
             if (ModConfig.rngesusAlerts) Utils.createTitle(EnumChatFormatting.DARK_PURPLE + "ENDER ARTIFACT UPGRADER!", 3);
         } else if (message.contains("CRAZY RARE DROP!  (Void Conqueror Enderman Skin)")) {
             rng = true;
             skins++;
             skinsSession++;
-            ConfigHandler.writeIntConfig("enderman", "skins", skins);
+            CfgConfig.writeIntConfig("enderman", "skins", skins);
             if (ModConfig.rngesusAlerts) Utils.createTitle(EnumChatFormatting.DARK_PURPLE + "ENDERMAN SKIN!", 3);
         } else if (message.contains("VERY RARE DROP!  (Etherwarp Merger)")) {
             mergers++;
             mergersSession++;
-            ConfigHandler.writeIntConfig("enderman", "mergers", mergers);
+            CfgConfig.writeIntConfig("enderman", "mergers", mergers);
         } else if (message.contains("CRAZY RARE DROP!  (Judgement Core)")) {
             rng = true;
             cores++;
             coresSession++;
-            ConfigHandler.writeIntConfig("enderman", "cores", cores);
+            CfgConfig.writeIntConfig("enderman", "cores", cores);
             if (ModConfig.rngesusAlerts) Utils.createTitle(EnumChatFormatting.GOLD + "JUDGEMENT CORE!", 5);
         } else if (message.contains("CRAZY RARE DROP!  (") && message.contains(" Enchant Rune I)")) {
             rng = true;
             enchantRunes++;
             enchantRunesSession++;
-            ConfigHandler.writeIntConfig("enderman", "enchantRunes", enchantRunes);
+            CfgConfig.writeIntConfig("enderman", "enchantRunes", enchantRunes);
             if (ModConfig.rngesusAlerts) Utils.createTitle(EnumChatFormatting.GRAY + "ENCHANT RUNE!", 3);
         } else if (message.contains("INSANE DROP!  (Ender Slayer VII)") || message.contains("CRAZY RARE DROP!  (Ender Slayer VII)")) {
             rng = true;
             enderBooks++;
             enderBooksSession++;
-            ConfigHandler.writeIntConfig("enderman", "enderBooks", enderBooks);
+            CfgConfig.writeIntConfig("enderman", "enderBooks", enderBooks);
             if (ModConfig.rngesusAlerts) Utils.createTitle(EnumChatFormatting.RED + "ENDER SLAYER VII!", 3);
         }
 
@@ -176,8 +176,8 @@ public class EndermanTracker {
             bosses = 0;
             timeSession = System.currentTimeMillis() / 1000;
             bossesSession = 0;
-            ConfigHandler.writeDoubleConfig("enderman", "timeRNG", time);
-            ConfigHandler.writeIntConfig("enderman", "bossRNG", 0);
+            CfgConfig.writeDoubleConfig("enderman", "timeRNG", time);
+            CfgConfig.writeIntConfig("enderman", "bossRNG", 0);
         }
     }
 

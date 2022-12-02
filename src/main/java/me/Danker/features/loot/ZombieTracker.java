@@ -1,7 +1,7 @@
 package me.Danker.features.loot;
 
+import me.Danker.config.CfgConfig;
 import me.Danker.config.ModConfig;
-import me.Danker.handlers.ConfigHandler;
 import me.Danker.utils.Utils;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StringUtils;
@@ -65,70 +65,70 @@ public class ZombieTracker {
             if (bossesSession != 1) {
                 bossesSession++;
             }
-            ConfigHandler.writeIntConfig("zombie", "revs", revs);
-            ConfigHandler.writeIntConfig("zombie", "bossRNG", bosses);
+            CfgConfig.writeIntConfig("zombie", "revs", revs);
+            CfgConfig.writeIntConfig("zombie", "bossRNG", bosses);
         } else if (message.contains("RARE DROP! (") && message.contains("Revenant Viscera)")) {
             int amount = LootTracker.getAmountfromMessage(message);
             revViscera += amount;
             revVisceraSession += amount;
-            ConfigHandler.writeIntConfig("zombie", "revViscera", revViscera);
+            CfgConfig.writeIntConfig("zombie", "revViscera", revViscera);
         } else if (message.contains("RARE DROP! (") && message.contains("Foul Flesh)")) {
             int amount = LootTracker.getAmountfromMessage(message);
             foulFlesh += amount;
             foulFleshSession += amount;
             foulFleshDrops++;
             foulFleshDropsSession++;
-            ConfigHandler.writeIntConfig("zombie", "foulFlesh", foulFlesh);
-            ConfigHandler.writeIntConfig("zombie", "foulFleshDrops", foulFleshDrops);
+            CfgConfig.writeIntConfig("zombie", "foulFlesh", foulFlesh);
+            CfgConfig.writeIntConfig("zombie", "foulFleshDrops", foulFleshDrops);
         } else if (message.contains("VERY RARE DROP!  (Revenant Catalyst)")) {
             revCatas++;
             revCatasSession++;
-            ConfigHandler.writeIntConfig("zombie", "revCatalyst", revCatas);
+            CfgConfig.writeIntConfig("zombie", "revCatalyst", revCatas);
         } else if (message.contains("VERY RARE DROP!  (") && message.contains(" Pestilence Rune I)")) {
             pestilences++;
             pestilencesSession++;
-            ConfigHandler.writeIntConfig("zombie", "pestilence", pestilences);
+            CfgConfig.writeIntConfig("zombie", "pestilence", pestilences);
         } else if (message.contains("VERY RARE DROP!  (Smite VI)")) {
             books++;
             booksSession++;
-            ConfigHandler.writeIntConfig("zombie", "book", books);
+            CfgConfig.writeIntConfig("zombie", "book", books);
         } else if (message.contains("VERY RARE DROP!  (Smite VII)")) {
             booksT7++;
             booksT7Session++;
-            ConfigHandler.writeIntConfig("zombie", "bookT7", booksT7);
+            CfgConfig.writeIntConfig("zombie", "bookT7", booksT7);
         } else if (message.contains("VERY RARE DROP!  (Undead Catalyst)")) {
             undeadCatas++;
             undeadCatasSession++;
-            ConfigHandler.writeIntConfig("zombie", "undeadCatalyst", undeadCatas);
+            CfgConfig.writeIntConfig("zombie", "undeadCatalyst", undeadCatas);
         } else if (message.contains("CRAZY RARE DROP!  (Beheaded Horror)")) {
             rng = true;
             beheadeds++;
             beheadedsSession++;
-            ConfigHandler.writeIntConfig("zombie", "beheaded", beheadeds);
+            CfgConfig.writeIntConfig("zombie", "beheaded", beheadeds);
             if (ModConfig.rngesusAlerts) Utils.createTitle(EnumChatFormatting.DARK_PURPLE + "BEHEADED HORROR!", 3);
         } else if (message.contains("CRAZY RARE DROP!  (") && message.contains(" Snake Rune I)")) {
             rng = true;
             snakes++;
             snakesSession++;
-            ConfigHandler.writeIntConfig("zombie", "snake", snakes);
+            CfgConfig.writeIntConfig("zombie", "snake", snakes);
             if (ModConfig.rngesusAlerts) Utils.createTitle(EnumChatFormatting.DARK_GREEN + "SNAKE RUNE!", 3);
         } else if (message.contains("CRAZY RARE DROP!  (Scythe Blade)")) {
             rng = true;
             scythes++;
             scythesSession++;
-            ConfigHandler.writeIntConfig("zombie", "scythe", scythes);
+            CfgConfig.writeIntConfig("zombie", "scythe", scythes);
             if (ModConfig.rngesusAlerts) Utils.createTitle(EnumChatFormatting.GOLD + "SCYTHE BLADE!", 5);
         } else if (message.contains("CRAZY RARE DROP!  (Shard of the Shredded)")) {
             rng = true;
             shards++;
             shardsSession++;
-            ConfigHandler.writeIntConfig("zombie", "shard", shards);
+            CfgConfig.writeIntConfig("zombie", "shard", shards);
             if (ModConfig.rngesusAlerts) Utils.createTitle(EnumChatFormatting.RED + "SHARD OF THE SHREDDED!", 5);
         } else if (message.contains("INSANE DROP!  (Warden Heart)") || message.contains("CRAZY RARE DROP!  (Warden Heart)")) {
             rng = true;
             wardenHearts++;
             wardenHeartsSession++;
-            ConfigHandler.writeIntConfig("zombie", "heart", wardenHearts);
+            CfgConfig.writeIntConfig("zombie", "heart", wardenHearts);
             if (ModConfig.rngesusAlerts) Utils.createTitle(EnumChatFormatting.RED + "WARDEN HEART!", 5);
         }
 
@@ -137,8 +137,8 @@ public class ZombieTracker {
             bosses = 0;
             timeSession = System.currentTimeMillis() / 1000;
             bossesSession = 0;
-            ConfigHandler.writeDoubleConfig("zombie", "timeRNG", time);
-            ConfigHandler.writeIntConfig("zombie", "bossRNG", 0);
+            CfgConfig.writeDoubleConfig("zombie", "timeRNG", time);
+            CfgConfig.writeIntConfig("zombie", "bossRNG", 0);
         }
     }
 

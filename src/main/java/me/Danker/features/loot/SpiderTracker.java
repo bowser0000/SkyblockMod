@@ -1,7 +1,7 @@
 package me.Danker.features.loot;
 
+import me.Danker.config.CfgConfig;
 import me.Danker.config.ModConfig;
-import me.Danker.handlers.ConfigHandler;
 import me.Danker.utils.Utils;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StringUtils;
@@ -55,45 +55,45 @@ public class SpiderTracker {
             if (bossesSession != -1) {
                 bossesSession++;
             }
-            ConfigHandler.writeIntConfig("spider", "tarantulas", tarantulas);
-            ConfigHandler.writeIntConfig("spider", "bossRNG", bosses);
+            CfgConfig.writeIntConfig("spider", "tarantulas", tarantulas);
+            CfgConfig.writeIntConfig("spider", "bossRNG", bosses);
         } else if (message.contains("RARE DROP! (") && message.contains("Toxic Arrow Poison)")) {
             int amount = LootTracker.getAmountfromMessage(message);
             TAP += amount;
             TAPSession += amount;
             TAPDrops++;
             TAPDropsSession++;
-            ConfigHandler.writeIntConfig("spider", "tap", TAP);
-            ConfigHandler.writeIntConfig("spider", "tapDrops", TAPDrops);
+            CfgConfig.writeIntConfig("spider", "tap", TAP);
+            CfgConfig.writeIntConfig("spider", "tapDrops", TAPDrops);
         } else if (message.contains("VERY RARE DROP!  (") && message.contains(" Bite Rune I)")) {
             bites++;
             bitesSession++;
-            ConfigHandler.writeIntConfig("spider", "bite", bites);
+            CfgConfig.writeIntConfig("spider", "bite", bites);
         } else if (message.contains("VERY RARE DROP!  (Bane of Arthropods VI)")) {
             books++;
             booksSession++;
-            ConfigHandler.writeIntConfig("spider", "book", books);
+            CfgConfig.writeIntConfig("spider", "book", books);
         } else if (message.contains("VERY RARE DROP!  (Spider Catalyst)")) {
             catalysts++;
             catalystsSession++;
-            ConfigHandler.writeIntConfig("spider", "catalyst", catalysts);
+            CfgConfig.writeIntConfig("spider", "catalyst", catalysts);
         } else if (message.contains("CRAZY RARE DROP!  (Fly Swatter)")) {
             rng = true;
             swatters++;
             swattersSession++;
-            ConfigHandler.writeIntConfig("spider", "swatter", swatters);
+            CfgConfig.writeIntConfig("spider", "swatter", swatters);
             if (ModConfig.rngesusAlerts) Utils.createTitle(EnumChatFormatting.LIGHT_PURPLE + "FLY SWATTER!", 3);
         } else if (message.contains("CRAZY RARE DROP!  (Tarantula Talisman")) {
             rng = true;
             talismans++;
             talismansSession++;
-            ConfigHandler.writeIntConfig("spider", "talisman", talismans);
+            CfgConfig.writeIntConfig("spider", "talisman", talismans);
             if (ModConfig.rngesusAlerts) Utils.createTitle(EnumChatFormatting.DARK_PURPLE + "TARANTULA TALISMAN!", 3);
         } else if (message.contains("CRAZY RARE DROP!  (Digested Mosquito)")) {
             rng = true;
             mosquitos++;
             mosquitosSession++;
-            ConfigHandler.writeIntConfig("spider", "mosquito", mosquitos);
+            CfgConfig.writeIntConfig("spider", "mosquito", mosquitos);
             if (ModConfig.rngesusAlerts) Utils.createTitle(EnumChatFormatting.GOLD + "DIGESTED MOSQUITO!", 5);
         }
 
@@ -102,8 +102,8 @@ public class SpiderTracker {
             bosses = 0;
             timeSession = System.currentTimeMillis() / 1000;
             bossesSession = 0;
-            ConfigHandler.writeDoubleConfig("spider", "timeRNG", time);
-            ConfigHandler.writeIntConfig("spider", "bossRNG", 0);
+            CfgConfig.writeDoubleConfig("spider", "timeRNG", time);
+            CfgConfig.writeIntConfig("spider", "bossRNG", 0);
         }
     }
 

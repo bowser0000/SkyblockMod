@@ -3,6 +3,7 @@ package me.Danker;
 import com.google.gson.JsonObject;
 import me.Danker.commands.*;
 import me.Danker.commands.warp.WarpCommandHandler;
+import me.Danker.config.CfgConfig;
 import me.Danker.config.ModConfig;
 import me.Danker.events.*;
 import me.Danker.features.*;
@@ -180,8 +181,8 @@ public class DankersSkyblockMod {
         MinecraftForge.EVENT_BUS.register(new ZombieTracker());
         
         MinecraftForge.EVENT_BUS.post(new ModInitEvent(configDirectory));
-        ConfigHandler.reloadConfig();
         config = new ModConfig();
+        ConfigHandler.reloadConfig();
         MinecraftForge.EVENT_BUS.post(new PostConfigInitEvent(configDirectory));
 
         new Thread(Utils::refreshRepo).start();
@@ -242,7 +243,7 @@ public class DankersSkyblockMod {
     	
         if (!ClientCommandHandler.instance.getCommands().containsKey("reparty")) {
             ClientCommandHandler.instance.registerCommand(new RepartyCommand());
-        } else if (ConfigHandler.getBoolean("commands", "reparty")) {
+        } else if (CfgConfig.getBoolean("commands", "reparty")) {
             for (Map.Entry<String, ICommand> entry : ClientCommandHandler.instance.getCommands().entrySet()) {
                 if (entry.getKey().equals("reparty") || entry.getKey().equals("rp")) {
                     entry.setValue(new RepartyCommand());
@@ -264,7 +265,7 @@ public class DankersSkyblockMod {
     public void onJoin(EntityJoinWorldEvent event) {
         if (firstLaunch) {
             firstLaunch = false;
-            ConfigHandler.writeBooleanConfig("misc", "firstLaunch", false);
+            CfgConfig.writeBooleanConfig("misc", "firstLaunch", false);
 
             IChatComponent chatComponent = new ChatComponentText(
                     EnumChatFormatting.GOLD + "Thank you for downloading Danker's Skyblock Mod.\n" +
@@ -337,7 +338,7 @@ public class DankersSkyblockMod {
                     System.err.println("Unknown skill leveled up.");
             }
 
-            ConfigHandler.writeIntConfig("skills", skill.toLowerCase(Locale.US), level);
+            CfgConfig.writeIntConfig("skills", skill.toLowerCase(Locale.US), level);
         }
     }
 

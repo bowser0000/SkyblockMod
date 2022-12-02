@@ -1,9 +1,9 @@
 package me.Danker.gui.aliases;
 
 import me.Danker.DankersSkyblockMod;
+import me.Danker.config.CfgConfig;
 import me.Danker.features.ChatAliases;
 import me.Danker.gui.buttons.FeatureButton;
-import me.Danker.handlers.ConfigHandler;
 import me.Danker.utils.RenderUtils;
 import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;
@@ -97,7 +97,7 @@ public class AliasesGui extends GuiScreen {
             mc.displayGuiScreen(new AliasesAddGui());
         } else if (button == aliases) {
             ChatAliases.toggled = !ChatAliases.toggled;
-            ConfigHandler.writeBooleanConfig("toggles", "Aliases", ChatAliases.toggled);
+            CfgConfig.writeBooleanConfig("toggles", "Aliases", ChatAliases.toggled);
             aliases.displayString = "Aliases: " + Utils.getColouredBoolean(ChatAliases.toggled);
         } else {
             mc.displayGuiScreen(new AliasesActionGui(button.id));

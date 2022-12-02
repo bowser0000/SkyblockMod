@@ -677,15 +677,15 @@ public class LootDisplay {
                     break;
                 case "Winter Fishing":
                     if (!ModConfig.sessionDisplay) {
-                        if (FishingTracker.yetiTime == -1) {
+                        if (FishingTracker.reindrakeTime == -1) {
                             timeBetween = "Never";
                         } else {
-                            timeBetween = Utils.getTimeBetween(FishingTracker.yetiTime, timeNow);
+                            timeBetween = Utils.getTimeBetween(FishingTracker.reindrakeTime, timeNow);
                         }
-                        if (FishingTracker.yetiSCs == -1) {
+                        if (FishingTracker.reindrakeSCs == -1) {
                             bossesBetween = "Never";
                         } else {
-                            bossesBetween = nf.format(FishingTracker.yetiSCs);
+                            bossesBetween = nf.format(FishingTracker.reindrakeSCs);
                         }
 
                         dropsText = EnumChatFormatting.AQUA + "Creatures Caught:\n" +
@@ -695,9 +695,11 @@ public class LootDisplay {
                                 EnumChatFormatting.AQUA + "Frozen Steves:\n" +
                                 EnumChatFormatting.WHITE + "Snowmans:\n" +
                                 EnumChatFormatting.DARK_GREEN + "Grinches:\n" +
+                                EnumChatFormatting.RED + "Nutcrackers:\n" +
                                 EnumChatFormatting.GOLD + "Yetis:\n" +
-                                EnumChatFormatting.AQUA + "Time Since Yeti:\n" +
-                                EnumChatFormatting.AQUA + "Creatures Since Yeti:";
+                                EnumChatFormatting.GOLD + "Reindrakes:\n" +
+                                EnumChatFormatting.AQUA + "Time Since Reindrake:\n" +
+                                EnumChatFormatting.AQUA + "SC Since Reindrake:";
                         countText = EnumChatFormatting.AQUA + nf.format(FishingTracker.seaCreatures) + "\n" +
                                 EnumChatFormatting.AQUA + nf.format(FishingTracker.fishingMilestone) + "\n" +
                                 EnumChatFormatting.GOLD + nf.format(FishingTracker.goodCatches) + "\n" +
@@ -705,19 +707,21 @@ public class LootDisplay {
                                 EnumChatFormatting.AQUA + nf.format(FishingTracker.frozenSteves) + "\n" +
                                 EnumChatFormatting.WHITE + nf.format(FishingTracker.frostyTheSnowmans) + "\n" +
                                 EnumChatFormatting.DARK_GREEN + nf.format(FishingTracker.grinches) + "\n" +
+                                EnumChatFormatting.RED + nf.format(FishingTracker.nutcrackers) + "\n" +
                                 EnumChatFormatting.GOLD + nf.format(FishingTracker.yetis) + "\n" +
+                                EnumChatFormatting.GOLD + nf.format(FishingTracker.reindrakes) + "\n" +
                                 EnumChatFormatting.AQUA + timeBetween + "\n" +
                                 EnumChatFormatting.AQUA + bossesBetween;
                     } else {
-                        if (FishingTracker.yetiTimeSession == -1) {
+                        if (FishingTracker.reindrakeTimeSession == -1) {
                             timeBetween = "Never";
                         } else {
-                            timeBetween = Utils.getTimeBetween(FishingTracker.yetiTimeSession, timeNow);
+                            timeBetween = Utils.getTimeBetween(FishingTracker.reindrakeTimeSession, timeNow);
                         }
-                        if (FishingTracker.yetiSCsSession == -1) {
+                        if (FishingTracker.reindrakeSCsSession == -1) {
                             bossesBetween = "Never";
                         } else {
-                            bossesBetween = nf.format(FishingTracker.yetiSCsSession);
+                            bossesBetween = nf.format(FishingTracker.reindrakeSCsSession);
                         }
 
                         dropsText = EnumChatFormatting.AQUA + "Creatures Caught:\n" +
@@ -727,9 +731,11 @@ public class LootDisplay {
                                 EnumChatFormatting.AQUA + "Frozen Steves:\n" +
                                 EnumChatFormatting.WHITE + "Snowmans:\n" +
                                 EnumChatFormatting.DARK_GREEN + "Grinches:\n" +
+                                EnumChatFormatting.RED + "Nutcrackers:\n" +
                                 EnumChatFormatting.GOLD + "Yetis:\n" +
-                                EnumChatFormatting.AQUA + "Time Since Yeti:\n" +
-                                EnumChatFormatting.AQUA + "Creatures Since Yeti:";
+                                EnumChatFormatting.GOLD + "Reindrakes:\n" +
+                                EnumChatFormatting.AQUA + "Time Since Reindrake:\n" +
+                                EnumChatFormatting.AQUA + "SC Since Reindrake:";
                         countText = EnumChatFormatting.AQUA + nf.format(FishingTracker.seaCreaturesSession) + "\n" +
                                 EnumChatFormatting.AQUA + nf.format(FishingTracker.fishingMilestoneSession) + "\n" +
                                 EnumChatFormatting.GOLD + nf.format(FishingTracker.goodCatchesSession) + "\n" +
@@ -737,7 +743,9 @@ public class LootDisplay {
                                 EnumChatFormatting.AQUA + nf.format(FishingTracker.frozenStevesSession) + "\n" +
                                 EnumChatFormatting.WHITE + nf.format(FishingTracker.frostyTheSnowmansSession) + "\n" +
                                 EnumChatFormatting.DARK_GREEN + nf.format(FishingTracker.grinchesSession) + "\n" +
+                                EnumChatFormatting.RED + nf.format(FishingTracker.nutcrackersSession) + "\n" +
                                 EnumChatFormatting.GOLD + nf.format(FishingTracker.yetisSession) + "\n" +
+                                EnumChatFormatting.GOLD + nf.format(FishingTracker.reindrakesSession) + "\n" +
                                 EnumChatFormatting.AQUA + timeBetween + "\n" +
                                 EnumChatFormatting.AQUA + bossesBetween;
                     }

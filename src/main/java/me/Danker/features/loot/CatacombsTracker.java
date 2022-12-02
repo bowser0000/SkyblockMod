@@ -1,7 +1,7 @@
 package me.Danker.features.loot;
 
+import me.Danker.config.CfgConfig;
 import me.Danker.events.ChestSlotClickedEvent;
-import me.Danker.handlers.ConfigHandler;
 import me.Danker.handlers.ScoreboardHandler;
 import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;
@@ -227,93 +227,93 @@ public class CatacombsTracker {
                     case F1:
                         f1SPlus++;
                         f1SPlusSession++;
-                        ConfigHandler.writeIntConfig("catacombs", "floorOneSPlus", f1SPlus);
+                        CfgConfig.writeIntConfig("catacombs", "floorOneSPlus", f1SPlus);
                         break;
                     case F2:
                         f2SPlus++;
                         f2SPlusSession++;
-                        ConfigHandler.writeIntConfig("catacombs", "floorTwoSPlus", f2SPlus);
+                        CfgConfig.writeIntConfig("catacombs", "floorTwoSPlus", f2SPlus);
                         break;
                     case F3:
                         f3SPlus++;
                         f3SPlusSession++;
-                        ConfigHandler.writeIntConfig("catacombs", "floorThreeSPlus", f3SPlus);
+                        CfgConfig.writeIntConfig("catacombs", "floorThreeSPlus", f3SPlus);
                         break;
                     case F4:
                         f4SPlus++;
                         f4SPlusSession++;
-                        ConfigHandler.writeIntConfig("catacombs", "floorFourSPlus", f4SPlus);
+                        CfgConfig.writeIntConfig("catacombs", "floorFourSPlus", f4SPlus);
                         break;
                     case F5:
                         f5SPlus++;
                         f5SPlusSession++;
-                        ConfigHandler.writeIntConfig("catacombs", "floorFiveSPlus", f5SPlus);
+                        CfgConfig.writeIntConfig("catacombs", "floorFiveSPlus", f5SPlus);
                         break;
                     case F6:
                         f6SPlus++;
                         f6SPlusSession++;
-                        ConfigHandler.writeIntConfig("catacombs", "floorSixSPlus", f6SPlus);
+                        CfgConfig.writeIntConfig("catacombs", "floorSixSPlus", f6SPlus);
                         break;
                     case F7:
                         f7SPlus++;
                         f7SPlusSession++;
-                        ConfigHandler.writeIntConfig("catacombs", "floorSevenSPlus", f7SPlus);
+                        CfgConfig.writeIntConfig("catacombs", "floorSevenSPlus", f7SPlus);
                         break;
                     case M1:
                         m1S++;
                         m1SPlus++;
                         m1SSession++;
                         m1SPlusSession++;
-                        ConfigHandler.writeIntConfig("catacombs", "masterOneS", m1S);
-                        ConfigHandler.writeIntConfig("catacombs", "masterOneSPlus", m1SPlus);
+                        CfgConfig.writeIntConfig("catacombs", "masterOneS", m1S);
+                        CfgConfig.writeIntConfig("catacombs", "masterOneSPlus", m1SPlus);
                         break;
                     case M2:
                         m2S++;
                         m2SPlus++;
                         m2SSession++;
                         m2SPlusSession++;
-                        ConfigHandler.writeIntConfig("catacombs", "masterTwoS", m2S);
-                        ConfigHandler.writeIntConfig("catacombs", "masterTwoSPlus", m2SPlus);
+                        CfgConfig.writeIntConfig("catacombs", "masterTwoS", m2S);
+                        CfgConfig.writeIntConfig("catacombs", "masterTwoSPlus", m2SPlus);
                         break;
                     case M3:
                         m3S++;
                         m3SPlus++;
                         m3SSession++;
                         m3SPlusSession++;
-                        ConfigHandler.writeIntConfig("catacombs", "masterThreeS", m3S);
-                        ConfigHandler.writeIntConfig("catacombs", "masterThreeSPlus", m3SPlus);
+                        CfgConfig.writeIntConfig("catacombs", "masterThreeS", m3S);
+                        CfgConfig.writeIntConfig("catacombs", "masterThreeSPlus", m3SPlus);
                         break;
                     case M4:
                         m4S++;
                         m4SPlus++;
                         m4SSession++;
                         m4SPlusSession++;
-                        ConfigHandler.writeIntConfig("catacombs", "masterFourS", m4S);
-                        ConfigHandler.writeIntConfig("catacombs", "masterFourSPlus", m4SPlus);
+                        CfgConfig.writeIntConfig("catacombs", "masterFourS", m4S);
+                        CfgConfig.writeIntConfig("catacombs", "masterFourSPlus", m4SPlus);
                         break;
                     case M5:
                         m5S++;
                         m5SPlus++;
                         m5SSession++;
                         m5SPlusSession++;
-                        ConfigHandler.writeIntConfig("catacombs", "masterFiveS", m5S);
-                        ConfigHandler.writeIntConfig("catacombs", "masterFiveSPlus", m5SPlus);
+                        CfgConfig.writeIntConfig("catacombs", "masterFiveS", m5S);
+                        CfgConfig.writeIntConfig("catacombs", "masterFiveSPlus", m5SPlus);
                         break;
                     case M6:
                         m6S++;
                         m6SPlus++;
                         m6SSession++;
                         m6SPlusSession++;
-                        ConfigHandler.writeIntConfig("catacombs", "masterSixS", m6S);
-                        ConfigHandler.writeIntConfig("catacombs", "masterSixSPlus", m6SPlus);
+                        CfgConfig.writeIntConfig("catacombs", "masterSixS", m6S);
+                        CfgConfig.writeIntConfig("catacombs", "masterSixSPlus", m6SPlus);
                         break;
                     case M7:
                         m7S++;
                         m7SPlus++;
                         m7SSession++;
                         m7SPlusSession++;
-                        ConfigHandler.writeIntConfig("catacombs", "masterSevenS", m7S);
-                        ConfigHandler.writeIntConfig("catacombs", "masterSevenSPlus", m7SPlus);
+                        CfgConfig.writeIntConfig("catacombs", "masterSevenS", m7S);
+                        CfgConfig.writeIntConfig("catacombs", "masterSevenSPlus", m7SPlus);
                         break;
                 }
             } else if (message.contains("(S)")) {
@@ -321,37 +321,37 @@ public class CatacombsTracker {
                     case M1:
                         m1S++;
                         m1SSession++;
-                        ConfigHandler.writeIntConfig("catacombs", "masterOneS", m1S);
+                        CfgConfig.writeIntConfig("catacombs", "masterOneS", m1S);
                         break;
                     case M2:
                         m2S++;
                         m2SSession++;
-                        ConfigHandler.writeIntConfig("catacombs", "masterTwoS", m2S);
+                        CfgConfig.writeIntConfig("catacombs", "masterTwoS", m2S);
                         break;
                     case M3:
                         m3S++;
                         m3SSession++;
-                        ConfigHandler.writeIntConfig("catacombs", "masterThreeS", m3S);
+                        CfgConfig.writeIntConfig("catacombs", "masterThreeS", m3S);
                         break;
                     case M4:
                         m4S++;
                         m4SSession++;
-                        ConfigHandler.writeIntConfig("catacombs", "masterFourS", m4S);
+                        CfgConfig.writeIntConfig("catacombs", "masterFourS", m4S);
                         break;
                     case M5:
                         m5S++;
                         m5SSession++;
-                        ConfigHandler.writeIntConfig("catacombs", "masterFiveS", m5S);
+                        CfgConfig.writeIntConfig("catacombs", "masterFiveS", m5S);
                         break;
                     case M6:
                         m6S++;
                         m6SSession++;
-                        ConfigHandler.writeIntConfig("catacombs", "masterSixS", m6S);
+                        CfgConfig.writeIntConfig("catacombs", "masterSixS", m6S);
                         break;
                     case M7:
                         m7S++;
                         m7SSession++;
-                        ConfigHandler.writeIntConfig("catacombs", "masterSevenS", m7S);
+                        CfgConfig.writeIntConfig("catacombs", "masterSevenS", m7S);
                         break;
                 }
             }
@@ -363,203 +363,203 @@ public class CatacombsTracker {
             if (message.contains("Recombobulator 3000")) {
                 recombobulators++;
                 recombobulatorsSession++;
-                ConfigHandler.writeIntConfig("catacombs", "recombobulator", recombobulators);
+                CfgConfig.writeIntConfig("catacombs", "recombobulator", recombobulators);
             } else if (message.contains("Fuming Potato Book")) {
                 fumingPotatoBooks++;
                 fumingPotatoBooksSession++;
-                ConfigHandler.writeIntConfig("catacombs", "fumingBooks", fumingPotatoBooks);
+                CfgConfig.writeIntConfig("catacombs", "fumingBooks", fumingPotatoBooks);
             } else if (message.contains("Bonzo's Staff")) { // F1
                 bonzoStaffs++;
                 bonzoStaffsSession++;
-                ConfigHandler.writeIntConfig("catacombs", "bonzoStaff", bonzoStaffs);
+                CfgConfig.writeIntConfig("catacombs", "bonzoStaff", bonzoStaffs);
             } else if (message.contains("Scarf's Studies")) { // F2
                 scarfStudies++;
                 scarfStudiesSession++;
-                ConfigHandler.writeIntConfig("catacombs", "scarfStudies", scarfStudies);
+                CfgConfig.writeIntConfig("catacombs", "scarfStudies", scarfStudies);
             } else if (message.contains("Adaptive Helmet")) { // F3
                 adaptiveHelms++;
                 adaptiveHelmsSession++;
-                ConfigHandler.writeIntConfig("catacombs", "adaptiveHelm", adaptiveHelms);
+                CfgConfig.writeIntConfig("catacombs", "adaptiveHelm", adaptiveHelms);
             } else if (message.contains("Adaptive Chestplate")) {
                 adaptiveChests++;
                 adaptiveChestsSession++;
-                ConfigHandler.writeIntConfig("catacombs", "adaptiveChest", adaptiveChests);
+                CfgConfig.writeIntConfig("catacombs", "adaptiveChest", adaptiveChests);
             } else if (message.contains("Adaptive Leggings")) {
                 adaptiveLegs++;
                 adaptiveLegsSession++;
-                ConfigHandler.writeIntConfig("catacombs", "adaptiveLegging", adaptiveLegs);
+                CfgConfig.writeIntConfig("catacombs", "adaptiveLegging", adaptiveLegs);
             } else if (message.contains("Adaptive Boots")) {
                 adaptiveBoots++;
                 adaptiveBootsSession++;
-                ConfigHandler.writeIntConfig("catacombs", "adaptiveBoot", adaptiveBoots);
+                CfgConfig.writeIntConfig("catacombs", "adaptiveBoot", adaptiveBoots);
             } else if (message.contains("Adaptive Blade")) {
                 adaptiveSwords++;
                 adaptiveSwordsSession++;
-                ConfigHandler.writeIntConfig("catacombs", "adaptiveSword", adaptiveSwords);
+                CfgConfig.writeIntConfig("catacombs", "adaptiveSword", adaptiveSwords);
             } else if (message.contains("Spirit Wing")) { // F4
                 spiritWings++;
                 spiritWingsSession++;
-                ConfigHandler.writeIntConfig("catacombs", "spiritWing", spiritWings);
+                CfgConfig.writeIntConfig("catacombs", "spiritWing", spiritWings);
             } else if (message.contains("Spirit Bone")) {
                 spiritBones++;
                 spiritBonesSession++;
-                ConfigHandler.writeIntConfig("catacombs", "spiritBone", spiritBones);
+                CfgConfig.writeIntConfig("catacombs", "spiritBone", spiritBones);
             } else if (message.contains("Spirit Boots")) {
                 spiritBoots++;
                 spiritBootsSession++;
-                ConfigHandler.writeIntConfig("catacombs", "spiritBoot", spiritBoots);
+                CfgConfig.writeIntConfig("catacombs", "spiritBoot", spiritBoots);
             } else if (message.contains("[Lvl 1] Spirit")) {
                 String formattedMessage = event.message.getFormattedText();
                 // Unicode colour code messes up here, just gonna remove the symbols
                 if (formattedMessage.contains("5Spirit")) {
                     epicSpiritPets++;
                     epicSpiritPetsSession++;
-                    ConfigHandler.writeIntConfig("catacombs", "spiritPetEpic", epicSpiritPets);
+                    CfgConfig.writeIntConfig("catacombs", "spiritPetEpic", epicSpiritPets);
                 } else if (formattedMessage.contains("6Spirit")) {
                     legSpiritPets++;
                     legSpiritPetsSession++;
-                    ConfigHandler.writeIntConfig("catacombs", "spiritPetLeg", legSpiritPets);
+                    CfgConfig.writeIntConfig("catacombs", "spiritPetLeg", legSpiritPets);
                 }
             } else if (message.contains("Spirit Sword")) {
                 spiritSwords++;
                 spiritSwordsSession++;
-                ConfigHandler.writeIntConfig("catacombs", "spiritSword", spiritSwords);
+                CfgConfig.writeIntConfig("catacombs", "spiritSword", spiritSwords);
             } else if (message.contains("Spirit Bow")) {
                 spiritBows++;
                 spiritBowsSession++;
-                ConfigHandler.writeIntConfig("catacombs", "spiritBow", spiritBows);
+                CfgConfig.writeIntConfig("catacombs", "spiritBow", spiritBows);
             } else if (message.contains("Warped Stone")) { // F5
                 warpedStones++;
                 warpedStonesSession++;
-                ConfigHandler.writeIntConfig("catacombs", "warpedStone", warpedStones);
+                CfgConfig.writeIntConfig("catacombs", "warpedStone", warpedStones);
             } else if (message.contains("Shadow Assassin Helmet")) {
                 shadowAssHelms++;
                 shadowAssHelmsSession++;
-                ConfigHandler.writeIntConfig("catacombs", "shadowAssassinHelm", shadowAssHelms);
+                CfgConfig.writeIntConfig("catacombs", "shadowAssassinHelm", shadowAssHelms);
             } else if (message.contains("Shadow Assassin Chestplate")) {
                 shadowAssChests++;
                 shadowAssChestsSession++;
-                ConfigHandler.writeIntConfig("catacombs", "shadowAssassinChest", shadowAssChests);
+                CfgConfig.writeIntConfig("catacombs", "shadowAssassinChest", shadowAssChests);
             } else if (message.contains("Shadow Assassin Leggings")) {
                 shadowAssLegs++;
                 shadowAssLegsSession++;
-                ConfigHandler.writeIntConfig("catacombs", "shadowAssassinLegging", shadowAssLegs);
+                CfgConfig.writeIntConfig("catacombs", "shadowAssassinLegging", shadowAssLegs);
             } else if (message.contains("Shadow Assassin Boots")) {
                 shadowAssBoots++;
                 shadowAssBootsSession++;
-                ConfigHandler.writeIntConfig("catacombs", "shadowAssassinBoot", shadowAssBoots);
+                CfgConfig.writeIntConfig("catacombs", "shadowAssassinBoot", shadowAssBoots);
             } else if (message.contains("Livid Dagger")) {
                 lividDaggers++;
                 lividDaggersSession++;
-                ConfigHandler.writeIntConfig("catacombs", "lividDagger", lividDaggers);
+                CfgConfig.writeIntConfig("catacombs", "lividDagger", lividDaggers);
             } else if (message.contains("Shadow Fury")) {
                 shadowFurys++;
                 shadowFurysSession++;
-                ConfigHandler.writeIntConfig("catacombs", "shadowFury", shadowFurys);
+                CfgConfig.writeIntConfig("catacombs", "shadowFury", shadowFurys);
             } else if (message.contains("Ancient Rose")) { // F6
                 ancientRoses++;
                 ancientRosesSession++;
-                ConfigHandler.writeIntConfig("catacombs", "ancientRose", ancientRoses);
+                CfgConfig.writeIntConfig("catacombs", "ancientRose", ancientRoses);
             } else if (message.contains("Precursor Eye")) {
                 precursorEyes++;
                 precursorEyesSession++;
-                ConfigHandler.writeIntConfig("catacombs", "precursorEye", precursorEyes);
+                CfgConfig.writeIntConfig("catacombs", "precursorEye", precursorEyes);
             } else if (message.contains("Giant's Sword")) {
                 giantsSwords++;
                 giantsSwordsSession++;
-                ConfigHandler.writeIntConfig("catacombs", "giantsSword", giantsSwords);
+                CfgConfig.writeIntConfig("catacombs", "giantsSword", giantsSwords);
             } else if (message.contains("Necromancer Lord Helmet")) {
                 necroLordHelms++;
                 necroLordHelmsSession++;
-                ConfigHandler.writeIntConfig("catacombs", "necroLordHelm", necroLordHelms);
+                CfgConfig.writeIntConfig("catacombs", "necroLordHelm", necroLordHelms);
             } else if (message.contains("Necromancer Lord Chestplate")) {
                 necroLordChests++;
                 necroLordChestsSession++;
-                ConfigHandler.writeIntConfig("catacombs", "necroLordChest", necroLordChests);
+                CfgConfig.writeIntConfig("catacombs", "necroLordChest", necroLordChests);
             } else if (message.contains("Necromancer Lord Leggings")) {
                 necroLordLegs++;
                 necroLordLegsSession++;
-                ConfigHandler.writeIntConfig("catacombs", "necroLordLegging", necroLordLegs);
+                CfgConfig.writeIntConfig("catacombs", "necroLordLegging", necroLordLegs);
             } else if (message.contains("Necromancer Lord Boots")) {
                 necroLordBoots++;
                 necroLordBootsSession++;
-                ConfigHandler.writeIntConfig("catacombs", "necroLordBoot", necroLordBoots);
+                CfgConfig.writeIntConfig("catacombs", "necroLordBoot", necroLordBoots);
             } else if (message.contains("Necromancer Sword")) {
                 necroSwords++;
                 necroSwordsSession++;
-                ConfigHandler.writeIntConfig("catacombs", "necroSword", necroSwords);
+                CfgConfig.writeIntConfig("catacombs", "necroSword", necroSwords);
             } else if (message.contains("Wither Blood")) { // F7
                 witherBloods++;
                 witherBloodsSession++;
-                ConfigHandler.writeIntConfig("catacombs", "witherBlood", witherBloods);
+                CfgConfig.writeIntConfig("catacombs", "witherBlood", witherBloods);
             } else if (message.contains("Wither Cloak")) {
                 witherCloaks++;
                 witherCloaksSession++;
-                ConfigHandler.writeIntConfig("catacombs", "witherCloak", witherCloaks);
+                CfgConfig.writeIntConfig("catacombs", "witherCloak", witherCloaks);
             } else if (message.contains("Implosion")) {
                 implosions++;
                 implosionsSession++;
-                ConfigHandler.writeIntConfig("catacombs", "implosion", implosions);
+                CfgConfig.writeIntConfig("catacombs", "implosion", implosions);
             } else if (message.contains("Wither Shield")) {
                 witherShields++;
                 witherShieldsSession++;
-                ConfigHandler.writeIntConfig("catacombs", "witherShield", witherShields);
+                CfgConfig.writeIntConfig("catacombs", "witherShield", witherShields);
             } else if (message.contains("Shadow Warp")) {
                 shadowWarps++;
                 shadowWarpsSession++;
-                ConfigHandler.writeIntConfig("catacombs", "shadowWarp", shadowWarps);
+                CfgConfig.writeIntConfig("catacombs", "shadowWarp", shadowWarps);
             } else if (message.contains("Necron's Handle")) {
                 necronsHandles++;
                 necronsHandlesSession++;
-                ConfigHandler.writeIntConfig("catacombs", "necronsHandle", necronsHandles);
+                CfgConfig.writeIntConfig("catacombs", "necronsHandle", necronsHandles);
             } else if (message.contains("Auto Recombobulator")) {
                 autoRecombs++;
                 autoRecombsSession++;
-                ConfigHandler.writeIntConfig("catacombs", "autoRecomb", autoRecombs);
+                CfgConfig.writeIntConfig("catacombs", "autoRecomb", autoRecombs);
             } else if (message.contains("Wither Helmet")) {
                 witherHelms++;
                 witherHelmsSession++;
-                ConfigHandler.writeIntConfig("catacombs", "witherHelm", witherHelms);
+                CfgConfig.writeIntConfig("catacombs", "witherHelm", witherHelms);
             } else if (message.contains("Wither Chestplate")) {
                 witherChests++;
                 witherChestsSession++;
-                ConfigHandler.writeIntConfig("catacombs", "witherChest", witherChests);
+                CfgConfig.writeIntConfig("catacombs", "witherChest", witherChests);
             } else if (message.contains("Wither Leggings")) {
                 witherLegs++;
                 witherLegsSession++;
-                ConfigHandler.writeIntConfig("catacombs", "witherLegging", witherLegs);
+                CfgConfig.writeIntConfig("catacombs", "witherLegging", witherLegs);
             } else if (message.contains("Wither Boots")) {
                 witherBoots++;
                 witherBootsSession++;
-                ConfigHandler.writeIntConfig("catacombs", "witherBoot", witherBoots);
+                CfgConfig.writeIntConfig("catacombs", "witherBoot", witherBoots);
             } else if (message.contains("First Master Star")) {
                 firstStars++;
                 firstStarsSession++;
-                ConfigHandler.writeIntConfig("catacombs", "firstStar", firstStars);
+                CfgConfig.writeIntConfig("catacombs", "firstStar", firstStars);
             } else if (message.contains("Second Master Star")) {
                 secondStars++;
                 secondStarsSession++;
-                ConfigHandler.writeIntConfig("catacombs", "secondStar", secondStars);
+                CfgConfig.writeIntConfig("catacombs", "secondStar", secondStars);
             } else if (message.contains("Third Master Star")) {
                 thirdStars++;
                 thirdStarsSession++;
-                ConfigHandler.writeIntConfig("catacombs", "thirdStar", thirdStars);
+                CfgConfig.writeIntConfig("catacombs", "thirdStar", thirdStars);
             } else if (message.contains("Fourth Master Star")) {
                 fourthStars++;
                 fourthStarsSession++;
-                ConfigHandler.writeIntConfig("catacombs", "fourthStar", fourthStars);
+                CfgConfig.writeIntConfig("catacombs", "fourthStar", fourthStars);
             } else if (message.contains("Fifth Master Star")) {
                 fifthStars++;
                 fifthStarsSession++;
-                ConfigHandler.writeIntConfig("catacombs", "fifthStar", fifthStars);
+                CfgConfig.writeIntConfig("catacombs", "fifthStar", fifthStars);
             } else if (message.contains("Dark Claymore")) {
                 darkClaymores++;
                 darkClaymoresSession++;
-                ConfigHandler.writeIntConfig("catacombs", "darkClaymore", darkClaymores);
+                CfgConfig.writeIntConfig("catacombs", "darkClaymore", darkClaymores);
             } else if (message.contains("Necron Dye")) {
                 necronDyes++;
                 necronDyesSession++;
-                ConfigHandler.writeIntConfig("catacombs", "necronDye", necronDyes);
+                CfgConfig.writeIntConfig("catacombs", "necronDye", necronDyes);
             }
         }
 
@@ -580,37 +580,37 @@ public class CatacombsTracker {
                         case F1:
                             f1TimeSpent = Math.floor(f1TimeSpent + timeToAdd);
                             f1TimeSpentSession = Math.floor(f1TimeSpentSession + timeToAdd);
-                            ConfigHandler.writeDoubleConfig("catacombs", "floorOneTime", f1TimeSpent);
+                            CfgConfig.writeDoubleConfig("catacombs", "floorOneTime", f1TimeSpent);
                             break;
                         case F2:
                             f2TimeSpent = Math.floor(f2TimeSpent + timeToAdd);
                             f2TimeSpentSession = Math.floor(f2TimeSpentSession + timeToAdd);
-                            ConfigHandler.writeDoubleConfig("catacombs", "floorTwoTime", f2TimeSpent);
+                            CfgConfig.writeDoubleConfig("catacombs", "floorTwoTime", f2TimeSpent);
                             break;
                         case F3:
                             f3TimeSpent = Math.floor(f3TimeSpent + timeToAdd);
                             f3TimeSpentSession = Math.floor(f3TimeSpentSession + timeToAdd);
-                            ConfigHandler.writeDoubleConfig("catacombs", "floorThreeTime", f3TimeSpent);
+                            CfgConfig.writeDoubleConfig("catacombs", "floorThreeTime", f3TimeSpent);
                             break;
                         case F4:
                             f4TimeSpent = Math.floor(f4TimeSpent + timeToAdd);
                             f4TimeSpentSession = Math.floor(f4TimeSpentSession + timeToAdd);
-                            ConfigHandler.writeDoubleConfig("catacombs", "floorFourTime", f4TimeSpent);
+                            CfgConfig.writeDoubleConfig("catacombs", "floorFourTime", f4TimeSpent);
                             break;
                         case F5:
                             f5TimeSpent = Math.floor(f5TimeSpent + timeToAdd);
                             f5TimeSpentSession = Math.floor(f5TimeSpentSession + timeToAdd);
-                            ConfigHandler.writeDoubleConfig("catacombs", "floorFiveTime", f5TimeSpent);
+                            CfgConfig.writeDoubleConfig("catacombs", "floorFiveTime", f5TimeSpent);
                             break;
                         case F6:
                             f6TimeSpent = Math.floor(f6TimeSpent + timeToAdd);
                             f6TimeSpentSession = Math.floor(f6TimeSpentSession + timeToAdd);
-                            ConfigHandler.writeDoubleConfig("catacombs", "floorSixTime", f6TimeSpent);
+                            CfgConfig.writeDoubleConfig("catacombs", "floorSixTime", f6TimeSpent);
                             break;
                         case F7:
                             f7TimeSpent = Math.floor(f7TimeSpent + timeToAdd);
                             f7TimeSpentSession = Math.floor(f7TimeSpentSession + timeToAdd);
-                            ConfigHandler.writeDoubleConfig("catacombs", "floorSevenTime", f7TimeSpent);
+                            CfgConfig.writeDoubleConfig("catacombs", "floorSevenTime", f7TimeSpent);
                             break;
                         case M1:
                         case M2:
@@ -621,7 +621,7 @@ public class CatacombsTracker {
                         case M7:
                             masterTimeSpent = Math.floor(masterTimeSpent + timeToAdd);
                             masterTimeSpentSession = Math.floor(masterTimeSpentSession + timeToAdd);
-                            ConfigHandler.writeDoubleConfig("catacombs", "masterTime", masterTimeSpent);
+                            CfgConfig.writeDoubleConfig("catacombs", "masterTime", masterTimeSpent);
                             break;
                     }
                 }
@@ -647,37 +647,37 @@ public class CatacombsTracker {
                             case F1:
                                 f1CoinsSpent += coinsSpent;
                                 f1CoinsSpentSession += coinsSpent;
-                                ConfigHandler.writeDoubleConfig("catacombs", "floorOneCoins", f1CoinsSpent);
+                                CfgConfig.writeDoubleConfig("catacombs", "floorOneCoins", f1CoinsSpent);
                                 break;
                             case F2:
                                 f2CoinsSpent += coinsSpent;
                                 f2CoinsSpentSession += coinsSpent;
-                                ConfigHandler.writeDoubleConfig("catacombs", "floorTwoCoins", f2CoinsSpent);
+                                CfgConfig.writeDoubleConfig("catacombs", "floorTwoCoins", f2CoinsSpent);
                                 break;
                             case F3:
                                 f3CoinsSpent += coinsSpent;
                                 f3CoinsSpentSession += coinsSpent;
-                                ConfigHandler.writeDoubleConfig("catacombs", "floorThreeCoins", f3CoinsSpent);
+                                CfgConfig.writeDoubleConfig("catacombs", "floorThreeCoins", f3CoinsSpent);
                                 break;
                             case F4:
                                 f4CoinsSpent += coinsSpent;
                                 f4CoinsSpentSession += coinsSpent;
-                                ConfigHandler.writeDoubleConfig("catacombs", "floorFourCoins", f4CoinsSpent);
+                                CfgConfig.writeDoubleConfig("catacombs", "floorFourCoins", f4CoinsSpent);
                                 break;
                             case F5:
                                 f5CoinsSpent += coinsSpent;
                                 f5CoinsSpentSession += coinsSpent;
-                                ConfigHandler.writeDoubleConfig("catacombs", "floorFiveCoins", f5CoinsSpent);
+                                CfgConfig.writeDoubleConfig("catacombs", "floorFiveCoins", f5CoinsSpent);
                                 break;
                             case F6:
                                 f6CoinsSpent += coinsSpent;
                                 f6CoinsSpentSession += coinsSpent;
-                                ConfigHandler.writeDoubleConfig("catacombs", "floorSixCoins", f6CoinsSpent);
+                                CfgConfig.writeDoubleConfig("catacombs", "floorSixCoins", f6CoinsSpent);
                                 break;
                             case F7:
                                 f7CoinsSpent += coinsSpent;
                                 f7CoinsSpentSession += coinsSpent;
-                                ConfigHandler.writeDoubleConfig("catacombs", "floorSevenCoins", f7CoinsSpent);
+                                CfgConfig.writeDoubleConfig("catacombs", "floorSevenCoins", f7CoinsSpent);
                                 break;
                             case M1:
                             case M2:
@@ -688,7 +688,7 @@ public class CatacombsTracker {
                             case M7:
                                 masterCoinsSpent += coinsSpent;
                                 masterCoinsSpentSession += coinsSpent;
-                                ConfigHandler.writeDoubleConfig("catacombs", "masterCoins", masterCoinsSpent);
+                                CfgConfig.writeDoubleConfig("catacombs", "masterCoins", masterCoinsSpent);
                                 break;
                         }
                         break;
@@ -699,12 +699,12 @@ public class CatacombsTracker {
                     case F6:
                         f6Rerolls++;
                         f6RerollsSession++;
-                        ConfigHandler.writeIntConfig("catacombs", "floorSixRerolls", f6Rerolls);
+                        CfgConfig.writeIntConfig("catacombs", "floorSixRerolls", f6Rerolls);
                         break;
                     case F7:
                         f7Rerolls++;
                         f7RerollsSession++;
-                        ConfigHandler.writeIntConfig("catacombs", "floorSevenRerolls", f7Rerolls);
+                        CfgConfig.writeIntConfig("catacombs", "floorSevenRerolls", f7Rerolls);
                         break;
                     case M1:
                     case M2:
@@ -715,7 +715,7 @@ public class CatacombsTracker {
                     case M7:
                         masterRerolls++;
                         masterRerollsSession++;
-                        ConfigHandler.writeIntConfig("catacombs", "masterRerolls", masterRerolls);
+                        CfgConfig.writeIntConfig("catacombs", "masterRerolls", masterRerolls);
                         break;
                 }
             }

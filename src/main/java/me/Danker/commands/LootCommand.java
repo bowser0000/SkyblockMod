@@ -452,15 +452,15 @@ public class LootCommand extends CommandBase {
 				if (arg1.length > 1) {
 					if (arg1[1].equalsIgnoreCase("winter")) {
 						if (showSession) {
-							if (FishingTracker.yetiTimeSession == -1) {
+							if (FishingTracker.reindrakeTimeSession == -1) {
 								timeBetween = "Never";
 							} else {
-								timeBetween = Utils.getTimeBetween(FishingTracker.yetiTimeSession, timeNow);
+								timeBetween = Utils.getTimeBetween(FishingTracker.reindrakeTimeSession, timeNow);
 							}
-							if (FishingTracker.yetiSCsSession == -1) {
+							if (FishingTracker.reindrakeSCsSession == -1) {
 								bossesBetween = "Never";
 							} else {
-								bossesBetween = nf.format(FishingTracker.yetiSCsSession);
+								bossesBetween = nf.format(FishingTracker.reindrakeSCsSession);
 							}
 
 							player.addChatMessage(new ChatComponentText(EnumChatFormatting.AQUA + "" + EnumChatFormatting.BOLD + "-------------------\n" +
@@ -468,22 +468,24 @@ public class LootCommand extends CommandBase {
 																		EnumChatFormatting.AQUA + "    Frozen Steves: " + nf.format(FishingTracker.frozenStevesSession) + "\n" +
 																		EnumChatFormatting.WHITE + "    Snowmans: " + nf.format(FishingTracker.frostyTheSnowmansSession) + "\n" +
 																		EnumChatFormatting.DARK_GREEN + "    Grinches: " + nf.format(FishingTracker.grinchesSession) + "\n" +
+																		EnumChatFormatting.RED + "    Nutcrackers: " + nf.format(FishingTracker.nutcrackersSession) + "\n" +
 																		EnumChatFormatting.GOLD + "    Yetis: " + nf.format(FishingTracker.yetisSession) + "\n" +
-																		EnumChatFormatting.AQUA + "    Time Since Yeti: " + timeBetween + "\n" +
-																		EnumChatFormatting.AQUA + "    Creatures Since Yeti: " + bossesBetween + "\n" +
+																		EnumChatFormatting.GOLD + "    Reindrakes: " + nf.format(FishingTracker.reindrakesSession) + "\n" +
+																		EnumChatFormatting.AQUA + "    Time Since Reindrake: " + timeBetween + "\n" +
+																		EnumChatFormatting.AQUA + "    Creatures Since Reindrake: " + bossesBetween + "\n" +
 																		EnumChatFormatting.AQUA + EnumChatFormatting.BOLD + " -------------------"));
 							return;
 						}
 
-						if (FishingTracker.yetiTime == -1) {
+						if (FishingTracker.reindrakeTime == -1) {
 							timeBetween = "Never";
 						} else {
-							timeBetween = Utils.getTimeBetween(FishingTracker.yetiTime, timeNow);
+							timeBetween = Utils.getTimeBetween(FishingTracker.reindrakeTime, timeNow);
 						}
-						if (FishingTracker.yetiSCs == -1) {
+						if (FishingTracker.reindrakeSCs == -1) {
 							bossesBetween = "Never";
 						} else {
-							bossesBetween = nf.format(FishingTracker.yetiSCs);
+							bossesBetween = nf.format(FishingTracker.reindrakeSCs);
 						}
 
 						player.addChatMessage(new ChatComponentText(EnumChatFormatting.AQUA + "" + EnumChatFormatting.BOLD + "-------------------\n" +
@@ -491,9 +493,11 @@ public class LootCommand extends CommandBase {
 																	EnumChatFormatting.AQUA + "    Frozen Steves: " + nf.format(FishingTracker.frozenSteves) + "\n" +
 																	EnumChatFormatting.WHITE + "    Snowmans: " + nf.format(FishingTracker.frostyTheSnowmans) + "\n" +
 																	EnumChatFormatting.DARK_GREEN + "    Grinches: " + nf.format(FishingTracker.grinches) + "\n" +
+																	EnumChatFormatting.RED + "    Nutcrackers: " + nf.format(FishingTracker.nutcrackers) + "\n" +
 																	EnumChatFormatting.GOLD + "    Yetis: " + nf.format(FishingTracker.yetis) + "\n" +
-																	EnumChatFormatting.AQUA + "    Time Since Yeti: " + timeBetween + "\n" +
-																	EnumChatFormatting.AQUA + "    Creatures Since Yeti: " + bossesBetween + "\n" +
+																	EnumChatFormatting.GOLD + "    Reindrakes: " + nf.format(FishingTracker.reindrakes) + "\n" +
+																	EnumChatFormatting.AQUA + "    Time Since Reindrake: " + timeBetween + "\n" +
+																	EnumChatFormatting.AQUA + "    Creatures Since Reindrake: " + bossesBetween + "\n" +
 																	EnumChatFormatting.AQUA + EnumChatFormatting.BOLD + " -------------------"));
 						return;
 					} else if (arg1[1].equalsIgnoreCase("festival")) {

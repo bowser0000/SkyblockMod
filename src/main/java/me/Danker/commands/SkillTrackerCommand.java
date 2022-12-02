@@ -1,8 +1,8 @@
 package me.Danker.commands;
 
+import me.Danker.config.CfgConfig;
 import me.Danker.config.ModConfig;
 import me.Danker.features.SkillTracker;
-import me.Danker.handlers.ConfigHandler;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
@@ -88,12 +88,12 @@ public class SkillTrackerCommand extends CommandBase {
 						break;
 					case "hide":
 						ModConfig.showSkillTracker = false;
-						ConfigHandler.writeBooleanConfig("misc", "showSkillTracker", false);
+						CfgConfig.writeBooleanConfig("misc", "showSkillTracker", false);
 						player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Skill tracker hidden."));
 						break;
 					case "show":
 						ModConfig.showSkillTracker = true;
-						ConfigHandler.writeBooleanConfig("misc", "showSkillTracker", true);
+						CfgConfig.writeBooleanConfig("misc", "showSkillTracker", true);
 						player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Skill tracker shown."));
 						break;
 					default:

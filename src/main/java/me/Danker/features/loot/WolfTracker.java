@@ -1,7 +1,7 @@
 package me.Danker.features.loot;
 
+import me.Danker.config.CfgConfig;
 import me.Danker.config.ModConfig;
-import me.Danker.handlers.ConfigHandler;
 import me.Danker.utils.Utils;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StringUtils;
@@ -57,51 +57,51 @@ public class WolfTracker {
             if (bossesSession != -1) {
                 bossesSession++;
             }
-            ConfigHandler.writeIntConfig("wolf", "svens", svens);
-            ConfigHandler.writeIntConfig("wolf", "bossRNG", bosses);
+            CfgConfig.writeIntConfig("wolf", "svens", svens);
+            CfgConfig.writeIntConfig("wolf", "bossRNG", bosses);
         } else if (message.contains("RARE DROP! (") && message.contains("Hamster Wheel)")) {
             int amount = LootTracker.getAmountfromMessage(message);
             wheels += amount;
             wheelsSession += amount;
             wheelsDrops++;
             wheelsDropsSession++;
-            ConfigHandler.writeIntConfig("wolf", "wheel", wheels);
-            ConfigHandler.writeIntConfig("wolf", "wheelDrops", wheelsDrops);
+            CfgConfig.writeIntConfig("wolf", "wheel", wheels);
+            CfgConfig.writeIntConfig("wolf", "wheelDrops", wheelsDrops);
         } else if (message.contains("VERY RARE DROP!  (") && message.contains(" Spirit Rune I)")) { // Removing the unicode here *should* fix rune drops not counting
             spirits++;
             spiritsSession++;
-            ConfigHandler.writeIntConfig("wolf", "spirit", spirits);
+            CfgConfig.writeIntConfig("wolf", "spirit", spirits);
         } else if (message.contains("VERY RARE DROP!  (Critical VI)")) {
             books++;
             booksSession++;
-            ConfigHandler.writeIntConfig("wolf", "book", books);
+            CfgConfig.writeIntConfig("wolf", "book", books);
         } else if (message.contains("VERY RARE DROP!  (Furball)")) {
             furballs++;
             furballsSession++;
-            ConfigHandler.writeIntConfig("wolf", "furball", furballs);
+            CfgConfig.writeIntConfig("wolf", "furball", furballs);
         } else if (message.contains("CRAZY RARE DROP!  (Red Claw Egg)")) {
             rng = true;
             eggs++;
             eggsSession++;
-            ConfigHandler.writeIntConfig("wolf", "egg", eggs);
+            CfgConfig.writeIntConfig("wolf", "egg", eggs);
             if (ModConfig.rngesusAlerts) Utils.createTitle(EnumChatFormatting.DARK_RED + "RED CLAW EGG!", 3);
         } else if (message.contains("CRAZY RARE DROP!  (") && message.contains(" Couture Rune I)")) {
             rng = true;
             coutures++;
             couturesSession++;
-            ConfigHandler.writeIntConfig("wolf", "couture", coutures);
+            CfgConfig.writeIntConfig("wolf", "couture", coutures);
             if (ModConfig.rngesusAlerts) Utils.createTitle(EnumChatFormatting.GOLD + "COUTURE RUNE!", 3);
         } else if (message.contains("CRAZY RARE DROP!  (Grizzly Bait)") || message.contains("CRAZY RARE DROP! (Rename Me)")) { // How did Skyblock devs even manage to make this item Rename Me
             rng = true;
             baits++;
             baitsSession++;
-            ConfigHandler.writeIntConfig("wolf", "bait", baits);
+            CfgConfig.writeIntConfig("wolf", "bait", baits);
             if (ModConfig.rngesusAlerts) Utils.createTitle(EnumChatFormatting.AQUA + "GRIZZLY BAIT!", 3);
         } else if (message.contains("CRAZY RARE DROP!  (Overflux Capacitor)")) {
             rng = true;
             fluxes++;
             fluxesSession++;
-            ConfigHandler.writeIntConfig("wolf", "flux", fluxes);
+            CfgConfig.writeIntConfig("wolf", "flux", fluxes);
             if (ModConfig.rngesusAlerts) Utils.createTitle(EnumChatFormatting.DARK_PURPLE + "OVERFLUX CAPACITOR!", 5);
         }
 
@@ -110,8 +110,8 @@ public class WolfTracker {
             bosses = 0;
             timeSession = System.currentTimeMillis() / 1000;
             bossesSession = 0;
-            ConfigHandler.writeDoubleConfig("wolf", "timeRNG", time);
-            ConfigHandler.writeIntConfig("wolf", "bossRNG", 0);
+            CfgConfig.writeDoubleConfig("wolf", "timeRNG", time);
+            CfgConfig.writeIntConfig("wolf", "bossRNG", 0);
         }
     }
 

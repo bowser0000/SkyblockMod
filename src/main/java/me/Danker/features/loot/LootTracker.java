@@ -1,7 +1,7 @@
 package me.Danker.features.loot;
 
+import me.Danker.config.CfgConfig;
 import me.Danker.events.PacketReadEvent;
-import me.Danker.handlers.ConfigHandler;
 import me.Danker.utils.Utils;
 import net.minecraft.network.play.server.S29PacketSoundEffect;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -45,11 +45,11 @@ public class LootTracker {
                         EndermanTracker.nullSpheresSession += itemNullSphere;
                         BlazeTracker.derelictAshesSession += itemDerelictAshe;
 
-                        ConfigHandler.writeIntConfig("wolf", "teeth", WolfTracker.teeth);
-                        ConfigHandler.writeIntConfig("spider", "web", SpiderTracker.webs);
-                        ConfigHandler.writeIntConfig("zombie", "revFlesh", ZombieTracker.revFlesh);
-                        ConfigHandler.writeIntConfig("enderman", "nullSpheres", EndermanTracker.nullSpheres);
-                        ConfigHandler.writeIntConfig("blaze", "derelictAshe", BlazeTracker.derelictAshes);
+                        CfgConfig.writeIntConfig("wolf", "teeth", WolfTracker.teeth);
+                        CfgConfig.writeIntConfig("spider", "web", SpiderTracker.webs);
+                        CfgConfig.writeIntConfig("zombie", "revFlesh", ZombieTracker.revFlesh);
+                        CfgConfig.writeIntConfig("enderman", "nullSpheres", EndermanTracker.nullSpheres);
+                        CfgConfig.writeIntConfig("blaze", "derelictAshe", BlazeTracker.derelictAshes);
                     }
                 }
             }

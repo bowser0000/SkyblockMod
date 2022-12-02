@@ -1,9 +1,9 @@
 package me.Danker.gui.alerts;
 
 import me.Danker.DankersSkyblockMod;
+import me.Danker.config.CfgConfig;
 import me.Danker.features.Alerts;
 import me.Danker.gui.buttons.FeatureButton;
-import me.Danker.handlers.ConfigHandler;
 import me.Danker.utils.RenderUtils;
 import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;
@@ -92,7 +92,7 @@ public class AlertsGui extends GuiScreen {
             mc.displayGuiScreen(new AlertAddGui());
         } else if (button == alerts) {
             Alerts.toggled = !Alerts.toggled;
-            ConfigHandler.writeBooleanConfig("toggles", "Alerts", Alerts.toggled);
+            CfgConfig.writeBooleanConfig("toggles", "Alerts", Alerts.toggled);
             alerts.displayString = "Alerts: " + Utils.getColouredBoolean(Alerts.toggled);
         } else {
             mc.displayGuiScreen(new AlertActionGui(button.id));

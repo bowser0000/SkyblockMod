@@ -2,9 +2,9 @@ package me.Danker.features;
 
 import me.Danker.commands.MoveCommand;
 import me.Danker.commands.ScaleCommand;
+import me.Danker.config.CfgConfig;
 import me.Danker.config.ModConfig;
 import me.Danker.events.RenderOverlayEvent;
-import me.Danker.handlers.ConfigHandler;
 import me.Danker.handlers.TextRenderer;
 import me.Danker.utils.RenderUtils;
 import me.Danker.utils.Utils;
@@ -30,7 +30,7 @@ public class CakeTimer {
 
         if (message.contains("Yum! You gain +") && message.contains(" for 48 hours!")) {
             cakeTime = System.currentTimeMillis() / 1000 + 172800; // Add 48 hours
-            ConfigHandler.writeDoubleConfig("misc", "cakeTime", cakeTime);
+            CfgConfig.writeDoubleConfig("misc", "cakeTime", cakeTime);
         }
     }
 

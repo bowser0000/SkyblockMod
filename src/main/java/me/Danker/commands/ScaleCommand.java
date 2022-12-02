@@ -1,7 +1,7 @@
 package me.Danker.commands;
 
+import me.Danker.config.CfgConfig;
 import me.Danker.config.ModConfig;
-import me.Danker.handlers.ConfigHandler;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
@@ -81,87 +81,87 @@ public class ScaleCommand extends CommandBase {
 		switch (arg1[0].toLowerCase()) {
 			case "coords":
 				coordsScale = scaleAmount;
-				ConfigHandler.writeDoubleConfig("scales", "coordsScale", coordsScale);
+				CfgConfig.writeDoubleConfig("scales", "coordsScale", coordsScale);
 				player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Coords have been scaled to " + ModConfig.getColour(ModConfig.secondaryColour) + coordsScale + "x"));
 				break;
 			case "display":
 				displayScale = scaleAmount;
-				ConfigHandler.writeDoubleConfig("scales", "displayScale", displayScale);
+				CfgConfig.writeDoubleConfig("scales", "displayScale", displayScale);
 				player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Display has been scaled to " + ModConfig.getColour(ModConfig.secondaryColour) + displayScale + "x"));
 				break;
 			case "dungeontimer":
 				dungeonTimerScale = scaleAmount;
-				ConfigHandler.writeDoubleConfig("scales", "dungeonTimerScale", dungeonTimerScale);
+				CfgConfig.writeDoubleConfig("scales", "dungeonTimerScale", dungeonTimerScale);
 				player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Dungeon timer has been scaled to " + ModConfig.getColour(ModConfig.secondaryColour) + dungeonTimerScale + "x"));
 				break;
 			case "skill50":
 				skill50Scale = scaleAmount;
-				ConfigHandler.writeDoubleConfig("scales", "skill50Scale", skill50Scale);
+				CfgConfig.writeDoubleConfig("scales", "skill50Scale", skill50Scale);
 				player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Skill 50 display has been scaled to " + ModConfig.getColour(ModConfig.secondaryColour) + skill50Scale + "x"));
 				break;
 			case "lividhp":
 				lividHpScale = scaleAmount;
-				ConfigHandler.writeDoubleConfig("scales", "lividHpScale", lividHpScale);
+				CfgConfig.writeDoubleConfig("scales", "lividHpScale", lividHpScale);
 				player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Livid HP has been scaled to " + ModConfig.getColour(ModConfig.secondaryColour) + lividHpScale + "x"));
 				break;
 			case "caketimer":
 				cakeTimerScale = scaleAmount;
-				ConfigHandler.writeDoubleConfig("scales", "cakeTimerScale", cakeTimerScale);
+				CfgConfig.writeDoubleConfig("scales", "cakeTimerScale", cakeTimerScale);
 				player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Cake timer has been scaled to " + ModConfig.getColour(ModConfig.secondaryColour) + cakeTimerScale + "x"));
 				break;
 			case "skilltracker":
 				skillTrackerScale = scaleAmount;
-				ConfigHandler.writeDoubleConfig("scales", "skillTrackerScale", skillTrackerScale);
+				CfgConfig.writeDoubleConfig("scales", "skillTrackerScale", skillTrackerScale);
 				player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Skill tracker has been scaled to " + ModConfig.getColour(ModConfig.secondaryColour) + skillTrackerScale + "x"));
 				break;
 			case "wateranswer":
 				waterAnswerScale = scaleAmount;
-				ConfigHandler.writeDoubleConfig("scales", "waterAnswerScale", waterAnswerScale);
+				CfgConfig.writeDoubleConfig("scales", "waterAnswerScale", waterAnswerScale);
 				player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Water solver answer has been scaled to " + ModConfig.getColour(ModConfig.secondaryColour) + waterAnswerScale + "x"));
 				break;
 			case "bonzotimer":
 				bonzoTimerScale = scaleAmount;
-				ConfigHandler.writeDoubleConfig("scales", "bonzoTimerScale", bonzoTimerScale);
+				CfgConfig.writeDoubleConfig("scales", "bonzoTimerScale", bonzoTimerScale);
 				player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Bonzo's Mask timer has been scaled to " + ModConfig.getColour(ModConfig.secondaryColour) + bonzoTimerScale + "x"));
 				break;
 			case "golemtimer":
 				golemTimerScale = scaleAmount;
-				ConfigHandler.writeDoubleConfig("scales", "golemTimerScale", golemTimerScale);
+				CfgConfig.writeDoubleConfig("scales", "golemTimerScale", golemTimerScale);
 				player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Golem timer has been scaled to " + ModConfig.getColour(ModConfig.secondaryColour) + golemTimerScale + "x"));
 				break;
 			case "teammatesinradius":
 				teammatesInRadiusScale = scaleAmount;
-				ConfigHandler.writeDoubleConfig("scales", "teammatesInRadiusScale", teammatesInRadiusScale);
+				CfgConfig.writeDoubleConfig("scales", "teammatesInRadiusScale", teammatesInRadiusScale);
 				player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Teammates in radius has been scaled to " + ModConfig.getColour(ModConfig.secondaryColour) + teammatesInRadiusScale + "x"));
 				break;
 			case "gianthp":
 				giantHPScale = scaleAmount;
-				ConfigHandler.writeDoubleConfig("scales", "giantHPScale", giantHPScale);
+				CfgConfig.writeDoubleConfig("scales", "giantHPScale", giantHPScale);
 				player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Giant hp has been scaled to " + ModConfig.getColour(ModConfig.secondaryColour) + giantHPScale + "x"));
 				break;
 			case "abilitycooldowns":
 				abilityCooldownsScale = scaleAmount;
-				ConfigHandler.writeDoubleConfig("scales", "abilityCooldownsScale", abilityCooldownsScale);
+				CfgConfig.writeDoubleConfig("scales", "abilityCooldownsScale", abilityCooldownsScale);
 				player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Ability cooldowns has been scaled to " + ModConfig.getColour(ModConfig.secondaryColour) + abilityCooldownsScale + "x"));
 				break;
 			case "dungeonscore":
 				dungeonScoreScale = scaleAmount;
-				ConfigHandler.writeDoubleConfig("scales", "dungeonScoreScale", dungeonScoreScale);
+				CfgConfig.writeDoubleConfig("scales", "dungeonScoreScale", dungeonScoreScale);
 				player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Dungeon score has been scaled to " + ModConfig.getColour(ModConfig.secondaryColour) + dungeonScoreScale + "x"));
 				break;
 			case "firepillar":
 				firePillarScale = scaleAmount;
-				ConfigHandler.writeDoubleConfig("scales", "firePillarScale", firePillarScale);
+				CfgConfig.writeDoubleConfig("scales", "firePillarScale", firePillarScale);
 				player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Fire pillar has been scaled to " + ModConfig.getColour(ModConfig.secondaryColour) + firePillarScale + "x"));
 				break;
 			case "minibosstimer":
 				minibossTimerScale = scaleAmount;
-				ConfigHandler.writeDoubleConfig("scales", "minibossTimerScale", minibossTimerScale);
+				CfgConfig.writeDoubleConfig("scales", "minibossTimerScale", minibossTimerScale);
 				player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Miniboss timer has been scaled to " + ModConfig.getColour(ModConfig.secondaryColour) + minibossTimerScale + "x"));
 				break;
 			case "powdertracker":
 				powderTrackerScale = scaleAmount;
-				ConfigHandler.writeDoubleConfig("scales", "powderTrackerScale", powderTrackerScale);
+				CfgConfig.writeDoubleConfig("scales", "powderTrackerScale", powderTrackerScale);
 				player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Powder tracker has been scaled to " + ModConfig.getColour(ModConfig.secondaryColour) + powderTrackerScale + "x"));
 				break;
 			default:

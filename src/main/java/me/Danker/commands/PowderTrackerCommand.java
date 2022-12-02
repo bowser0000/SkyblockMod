@@ -1,8 +1,8 @@
 package me.Danker.commands;
 
+import me.Danker.config.CfgConfig;
 import me.Danker.config.ModConfig;
 import me.Danker.features.PowderTracker;
-import me.Danker.handlers.ConfigHandler;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
@@ -74,12 +74,12 @@ public class PowderTrackerCommand extends CommandBase {
                 break;
             case "hide":
                 ModConfig.showPowderTracker = false;
-                ConfigHandler.writeBooleanConfig("misc", "showPowderTracker", false);
+                CfgConfig.writeBooleanConfig("misc", "showPowderTracker", false);
                 player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Powder tracker hidden."));
                 break;
             case "show":
                 ModConfig.showPowderTracker = true;
-                ConfigHandler.writeBooleanConfig("misc", "showPowderTracker", true);
+                CfgConfig.writeBooleanConfig("misc", "showPowderTracker", true);
                 player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Powder tracker shown."));
                 break;
             default:

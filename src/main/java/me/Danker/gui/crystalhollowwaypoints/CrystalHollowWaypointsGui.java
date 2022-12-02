@@ -1,9 +1,9 @@
 package me.Danker.gui.crystalhollowwaypoints;
 
 import me.Danker.DankersSkyblockMod;
+import me.Danker.config.CfgConfig;
 import me.Danker.features.CrystalHollowWaypoints;
 import me.Danker.gui.buttons.FeatureButton;
-import me.Danker.handlers.ConfigHandler;
 import me.Danker.utils.RenderUtils;
 import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;
@@ -131,15 +131,15 @@ public class CrystalHollowWaypointsGui extends GuiScreen {
             mc.displayGuiScreen(new CrystalHollowAddWaypointGui());
         } else if (button == crystalHollowWaypoints) {
             CrystalHollowWaypoints.toggled = !CrystalHollowWaypoints.toggled;
-            ConfigHandler.writeBooleanConfig("toggles", "CrystalHollowWaypoints", CrystalHollowWaypoints.toggled);
+            CfgConfig.writeBooleanConfig("toggles", "CrystalHollowWaypoints", CrystalHollowWaypoints.toggled);
             crystalHollowWaypoints.displayString = "Crystal Hollows Waypoints: " + Utils.getColouredBoolean(CrystalHollowWaypoints.toggled);
         } else if (button == crystalAutoWaypoints) {
             CrystalHollowWaypoints.autoWaypoints = !CrystalHollowWaypoints.autoWaypoints;
-            ConfigHandler.writeBooleanConfig("toggles", "CrystalAutoWaypoints", CrystalHollowWaypoints.autoWaypoints);
+            CfgConfig.writeBooleanConfig("toggles", "CrystalAutoWaypoints", CrystalHollowWaypoints.autoWaypoints);
             crystalAutoWaypoints.displayString = "Auto Waypoints: " + Utils.getColouredBoolean(CrystalHollowWaypoints.autoWaypoints);
         } else if (button == crystalAutoPlayerWaypoints) {
             CrystalHollowWaypoints.autoPlayerWaypoints = !CrystalHollowWaypoints.autoPlayerWaypoints;
-            ConfigHandler.writeBooleanConfig("toggles", "CrystalAutoPlayerWaypoints", CrystalHollowWaypoints.autoPlayerWaypoints);
+            CfgConfig.writeBooleanConfig("toggles", "CrystalAutoPlayerWaypoints", CrystalHollowWaypoints.autoPlayerWaypoints);
             crystalAutoPlayerWaypoints.displayString = "Auto Add Player Waypoints: " + Utils.getColouredBoolean(CrystalHollowWaypoints.autoPlayerWaypoints);
         } else {
             mc.displayGuiScreen(new CrystalHollowWaypointActionGui(button.id));
