@@ -250,7 +250,7 @@ public class FishingTracker {
             yetisSession++;
             CfgConfig.writeIntConfig("fishing", "yeti", yetis);
             increaseSeaCreatures();
-        } else if (message.contains("A Reindrake was summoned from the depths")) {
+        } else if (message.contains("A Reindrake forms from the depths")) {
             reindrakes++;
             reindrakeTime = System.currentTimeMillis() / 1000;
             reindrakeSCs = 0;
