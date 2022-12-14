@@ -427,4 +427,29 @@ public class RenderUtils {
         tessellator.draw();
     }
 
+    public static int getWidthFromText(String text) {
+        if (text == null) return 0;
+
+        FontRenderer fr = Minecraft.getMinecraft().fontRendererObj;
+        String[] splitText = text.split("\n");
+
+        int width = 0;
+        for (String line : splitText) {
+            int stringLength = fr.getStringWidth(line);
+            if (stringLength > width) {
+                width = stringLength;
+            }
+        }
+
+        return width;
+    }
+
+    public static int getHeightFromText(String text) {
+        if (text == null) return 0;
+
+        FontRenderer fr = Minecraft.getMinecraft().fontRendererObj;
+        String[] splitText = text.split("\n");
+        return splitText.length * fr.FONT_HEIGHT;
+    }
+
 }

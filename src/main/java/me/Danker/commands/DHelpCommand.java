@@ -37,8 +37,6 @@ public class DHelpCommand extends CommandBase {
 													EnumChatFormatting.GOLD + LootCommand.usage(arg0) + EnumChatFormatting.AQUA + " - Returns loot received from slayer quests or fishing stats. /loot fishing winter returns winter sea creatures instead.\n" +
 													EnumChatFormatting.GOLD + DisplayCommand.usage(arg0) + EnumChatFormatting.AQUA + " - Text display for trackers. /display fishing winter displays winter sea creatures instead. /display auto automatically displays the loot for the slayer quest you have active.\n" +
 													EnumChatFormatting.GOLD + ResetLootCommand.usage(arg0) + EnumChatFormatting.AQUA + " - Resets loot for trackers. /resetloot confirm confirms the reset.\n" +
-													EnumChatFormatting.GOLD + MoveCommand.usage(arg0) + EnumChatFormatting.AQUA + " - Moves text display to specified X and Y coordinates.\n" +
-													EnumChatFormatting.GOLD + ScaleCommand.usage(arg0) + EnumChatFormatting.AQUA + " - Scales text display to a specified multipler between 0.1x and 10x.\n" +
 													EnumChatFormatting.GOLD + SlayerCommand.usage(arg0) + EnumChatFormatting.AQUA + " - Uses API to get slayer xp of a person. If no name is provided, it checks yours.\n" +
 													EnumChatFormatting.GOLD + SkillsCommand.usage(arg0) + EnumChatFormatting.AQUA + " - Uses API to get skill levels of a person. If no name is provided, it checks yours.\n" +
 													EnumChatFormatting.GOLD + LobbySkillsCommand.usage(arg0) + EnumChatFormatting.AQUA + " - Uses API to find the average skills of the lobby, as well the three players with the highest skill average.\n" +

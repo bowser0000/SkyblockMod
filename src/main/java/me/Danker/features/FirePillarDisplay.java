@@ -1,14 +1,16 @@
 package me.Danker.features;
 
+import cc.polyfrost.oneconfig.config.annotations.Exclude;
+import cc.polyfrost.oneconfig.hud.Hud;
+import cc.polyfrost.oneconfig.libs.universal.UMatrixStack;
 import me.Danker.DankersSkyblockMod;
-import me.Danker.commands.MoveCommand;
-import me.Danker.commands.ScaleCommand;
 import me.Danker.config.ModConfig;
-import me.Danker.events.RenderOverlayEvent;
 import me.Danker.handlers.TextRenderer;
+import me.Danker.utils.RenderUtils;
 import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StringUtils;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -27,7 +29,7 @@ public class FirePillarDisplay {
         World world = Minecraft.getMinecraft().theWorld;
         if (DankersSkyblockMod.tickAmount % 20 == 0) {
             pillar = null;
-            if (ModConfig.firePillar && world != null && Utils.tabLocation.equals("Crimson Isle") && Utils.isInScoreboard("Slay the boss!")) {
+            if (ModConfig.firePillarHud.isEnabled() && world != null && Utils.tabLocation.equals("Crimson Isle") && Utils.isInScoreboard("Slay the boss!")) {
                 List<Entity> entities = world.getLoadedEntityList();
 
                 for (Entity entity : entities) {
@@ -41,11 +43,38 @@ public class FirePillarDisplay {
         }
     }
 
-    @SubscribeEvent
-    public void renderPlayerInfo(RenderOverlayEvent event) {
-        if (ModConfig.firePillar && pillar != null) {
-            new TextRenderer(Minecraft.getMinecraft(), Utils.removeBold(pillar.getName()), MoveCommand.firePillarXY[0], MoveCommand.firePillarXY[1], ScaleCommand.firePillarScale);
+    public static class FirePillarHud extends Hud {
+
+        @Exclude
+        String exampleText = EnumChatFormatting.GOLD + "3s " + EnumChatFormatting.RED + "8 hits";
+
+        @Override
+        protected void draw(UMatrixStack matrices, float x, float y, float scale, boolean example) {
+            if (example) {
+                new TextRenderer(Minecraft.getMinecraft(), exampleText, x, y, scale);
+                return;
+            }
+
+            if (enabled && pillar != null) {
+                new TextRenderer(Minecraft.getMinecraft(), getText(), x, y, scale);
+            }
         }
+
+        @Override
+        protected float getWidth(float scale, boolean example) {
+            return RenderUtils.getWidthFromText(example ? exampleText : getText()) * scale;
+        }
+
+        @Override
+        protected float getHeight(float scale, boolean example) {
+            return RenderUtils.getHeightFromText(example ? exampleText : getText()) * scale;
+        }
+
+        String getText() {
+            if (pillar != null) return Utils.removeBold(pillar.getName());
+            return "";
+        }
+
     }
 
 }

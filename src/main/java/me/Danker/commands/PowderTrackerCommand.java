@@ -1,6 +1,5 @@
 package me.Danker.commands;
 
-import me.Danker.config.CfgConfig;
 import me.Danker.config.ModConfig;
 import me.Danker.features.PowderTracker;
 import net.minecraft.command.CommandBase;
@@ -21,7 +20,7 @@ public class PowderTrackerCommand extends CommandBase {
 
     @Override
     public String getCommandUsage(ICommandSender arg0) {
-        return "/" + getCommandName() + " <start/stop/reset/show/hide>";
+        return "/" + getCommandName() + " <start/stop/reset>";
     }
 
     public static String usage(ICommandSender arg0) {
@@ -36,7 +35,7 @@ public class PowderTrackerCommand extends CommandBase {
     @Override
     public List<String> addTabCompletionOptions(ICommandSender sender, String[] args, BlockPos pos) {
         if (args.length == 1) {
-            return getListOfStringsMatchingLastWord(args, "start", "resume", "pause", "stop", "reset", "hide", "show");
+            return getListOfStringsMatchingLastWord(args, "start", "resume", "pause", "stop", "reset");
         }
         return null;
     }
@@ -71,16 +70,6 @@ public class PowderTrackerCommand extends CommandBase {
             case "reset":
                 PowderTracker.reset();
                 player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Powder tracker reset."));
-                break;
-            case "hide":
-                ModConfig.showPowderTracker = false;
-                CfgConfig.writeBooleanConfig("misc", "showPowderTracker", false);
-                player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Powder tracker hidden."));
-                break;
-            case "show":
-                ModConfig.showPowderTracker = true;
-                CfgConfig.writeBooleanConfig("misc", "showPowderTracker", true);
-                player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Powder tracker shown."));
                 break;
             default:
                 player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "Usage: " + getCommandUsage(arg0)));

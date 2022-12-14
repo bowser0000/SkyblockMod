@@ -1,7 +1,9 @@
 package me.Danker.features;
 
-import me.Danker.commands.MoveCommand;
-import me.Danker.commands.ScaleCommand;
+import cc.polyfrost.oneconfig.config.annotations.Dropdown;
+import cc.polyfrost.oneconfig.config.annotations.Exclude;
+import cc.polyfrost.oneconfig.hud.Hud;
+import cc.polyfrost.oneconfig.libs.universal.UMatrixStack;
 import me.Danker.config.CfgConfig;
 import me.Danker.config.ModConfig;
 import me.Danker.events.RenderOverlayEvent;
@@ -34,28 +36,69 @@ public class CakeTimer {
         }
     }
 
-    @SubscribeEvent
-    public void renderPlayerInfo(RenderOverlayEvent event) {
-        if (ModConfig.cakeTimer && Utils.inSkyblock) {
-            Minecraft mc = Minecraft.getMinecraft();
-            double scale = ScaleCommand.cakeTimerScale;
-            double scaleReset = Math.pow(scale, -1);
-            GL11.glScaled(scale, scale, scale);
+    public static class CakeTimerHud extends Hud {
 
-            double timeNow = System.currentTimeMillis() / 1000;
-            mc.getTextureManager().bindTexture(CAKE_ICON);
-            RenderUtils.drawModalRectWithCustomSizedTexture(MoveCommand.cakeTimerXY[0] / scale, MoveCommand.cakeTimerXY[1] / scale, 0, 0, 16, 16, 16, 16);
+        @Exclude
+        String exampleText = ModConfig.getColour(cakeColour) + "11h16m";
 
-            GL11.glScaled(scaleReset, scaleReset, scaleReset);
-            String cakeText;
-            if (cakeTime - timeNow < 0) {
-                cakeText = EnumChatFormatting.RED + "NONE";
-            } else {
-                cakeText = ModConfig.getColour(ModConfig.cakeColour) + Utils.getTimeBetween(timeNow, cakeTime);
+        @Dropdown(
+                name = "Cake Text Color",
+                options = {"Black", "Dark Blue", "Dark Green", "Dark Aqua", "Dark Red", "Dark Purple", "Gold", "Gray", "Dark Gray", "Blue", "Green", "Aqua", "Red", "Light Purple", "Yellow", "White"}
+        )
+        public static int cakeColour = 6;
+
+        @Override
+        protected void draw(UMatrixStack matrices, float x, float y, float scale, boolean example) {
+            if (example) {
+                Minecraft mc = Minecraft.getMinecraft();
+                double scaleReset = Math.pow(scale, -1);
+                GL11.glScaled(scale, scale, scale);
+
+                mc.getTextureManager().bindTexture(CAKE_ICON);
+                RenderUtils.drawModalRectWithCustomSizedTexture(x / scale, y / scale, 0, 0, 16, 16, 16, 16);
+
+                GL11.glScaled(scaleReset, scaleReset, scaleReset);
+                new TextRenderer(mc, exampleText, x + 20 * scale, y + 5 * scale, scale);
+                return;
             }
 
-            new TextRenderer(mc, cakeText, MoveCommand.cakeTimerXY[0] + 20 * scale, MoveCommand.cakeTimerXY[1] + 5 * scale, scale);
+            if (enabled && Utils.inSkyblock) {
+                Minecraft mc = Minecraft.getMinecraft();
+                double scaleReset = Math.pow(scale, -1);
+                GL11.glScaled(scale, scale, scale);
+
+                mc.getTextureManager().bindTexture(CAKE_ICON);
+                RenderUtils.drawModalRectWithCustomSizedTexture(x / scale, y / scale, 0, 0, 16, 16, 16, 16);
+
+                GL11.glScaled(scaleReset, scaleReset, scaleReset);
+                new TextRenderer(mc, getText(), x + 20 * scale, y + 5 * scale, scale);
+            }
         }
+
+        @Override
+        protected float getWidth(float scale, boolean example) {
+            return (RenderUtils.getWidthFromText(example ? exampleText : getText()) + 20 * scale) * scale;
+        }
+
+        @Override
+        protected float getHeight(float scale, boolean example) {
+            return (RenderUtils.getHeightFromText(example ? exampleText : getText()) + 5 * scale) * scale;
+        }
+
+        String getText() {
+            double timeNow = System.currentTimeMillis() / 1000;
+            if (cakeTime - timeNow < 0) {
+                return EnumChatFormatting.RED + "NONE";
+            } else {
+                return ModConfig.getColour(cakeColour) + Utils.getTimeBetween(timeNow, cakeTime);
+            }
+        }
+
+    }
+
+    @SubscribeEvent
+    public void renderPlayerInfo(RenderOverlayEvent event) {
+
     }
 
 }

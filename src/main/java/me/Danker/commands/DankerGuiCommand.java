@@ -2,6 +2,7 @@ package me.Danker.commands;
 
 import me.Danker.DankersSkyblockMod;
 import me.Danker.config.ModConfig;
+import me.Danker.features.loot.LootDisplay;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.ResourcePackRepository;
 import net.minecraft.command.CommandBase;
@@ -46,26 +47,10 @@ public class DankerGuiCommand extends CommandBase {
 		if (arg1.length > 0 && arg1[0].equalsIgnoreCase("debug")) {
 			StringBuilder debug = new StringBuilder();
 			debug.append("```md\n");
-			debug.append("# Locations\n");
-			debug.append("[coords][").append(MoveCommand.coordsXY[0]).append(", ").append(MoveCommand.coordsXY[1]).append("]\n");
-			debug.append("[display][").append(MoveCommand.displayXY[0]).append(", ").append(MoveCommand.displayXY[1]).append("]\n");
-			debug.append("[dungeontimer][").append(MoveCommand.dungeonTimerXY[0]).append(", ").append(MoveCommand.dungeonTimerXY[1]).append("]\n");
-			debug.append("[skill50][").append(MoveCommand.skill50XY[0]).append(", ").append(MoveCommand.skill50XY[1]).append("]\n");
-			debug.append("[lividhp][").append(MoveCommand.lividHpXY[0]).append(", ").append(MoveCommand.lividHpXY[1]).append("]\n");
-			debug.append("[caketimer][").append(MoveCommand.cakeTimerXY[0]).append(", ").append(MoveCommand.cakeTimerXY[1]).append("]\n");
-			debug.append("[skilltracker][").append(MoveCommand.skillTrackerXY[0]).append(", ").append(MoveCommand.skillTrackerXY[1]).append("]\n");
-			debug.append("[wateranswer][").append(MoveCommand.waterAnswerXY[0]).append(", ").append(MoveCommand.waterAnswerXY[1]).append("]\n");
-			debug.append("[bonzotimer][").append(MoveCommand.bonzoTimerXY[0]).append(", ").append(MoveCommand.bonzoTimerXY[1]).append("]\n");
-			debug.append("[golemtimer][").append(MoveCommand.golemTimerXY[0]).append(", ").append(MoveCommand.golemTimerXY[1]).append("]\n");
-			debug.append("[teammatesinradius][").append(MoveCommand.teammatesInRadiusXY[0]).append(", ").append(MoveCommand.teammatesInRadiusXY[1]).append("]\n");
-			debug.append("[gianthp][").append(MoveCommand.giantHPXY[0]).append(", ").append(MoveCommand.giantHPXY[1]).append("]\n");
-			debug.append("[abilitycooldowns][").append(MoveCommand.abilityCooldownsXY[0]).append(", ").append(MoveCommand.abilityCooldownsXY[1]).append("]\n");
-			debug.append("[dungeonscore][").append(MoveCommand.dungeonScoreXY[0]).append(", ").append(MoveCommand.dungeonScoreXY[1]).append("]\n");
-			debug.append("[firepillar][").append(MoveCommand.firePillarXY[0]).append(", ").append(MoveCommand.firePillarXY[1]).append("]\n");
 			debug.append("# Other Settings\n");
 			debug.append("[Current Display][").append(ModConfig.getDisplay()).append("]\n");
-			debug.append("[Auto Display][").append(ModConfig.autoDisplay).append("]\n");
-			debug.append("[Skill Tracker Visible][").append(ModConfig.showSkillTracker).append("]\n");
+			debug.append("[Auto Display][").append(LootDisplay.autoDisplay).append("]\n");
+			debug.append("[Skill Tracker Visible][").append(ModConfig.skillTrackerHud.isEnabled()).append("]\n");
 			debug.append("[Farm Length][").append(ModConfig.farmMinCoords).append(" to ").append(ModConfig.farmMaxCoords).append("]\n");
 			debug.append("# Problematic Mods\n");
 			debug.append("[LabyMod][").append(DankersSkyblockMod.usingLabymod).append("]\n");

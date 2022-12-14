@@ -1,10 +1,11 @@
 package me.Danker.features;
 
-import me.Danker.commands.MoveCommand;
-import me.Danker.commands.ScaleCommand;
+import cc.polyfrost.oneconfig.config.annotations.Exclude;
+import cc.polyfrost.oneconfig.hud.Hud;
+import cc.polyfrost.oneconfig.libs.universal.UMatrixStack;
 import me.Danker.config.ModConfig;
-import me.Danker.events.RenderOverlayEvent;
 import me.Danker.handlers.TextRenderer;
+import me.Danker.utils.RenderUtils;
 import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -25,12 +26,12 @@ import java.util.List;
 
 public class AbilityCooldowns {
 
-    static List<Ability> cooldowns = new ArrayList<>();
+    public static List<Ability> cooldowns = new ArrayList<>();
     static double mageReduction = 0D;
 
     @SubscribeEvent(priority = EventPriority.LOW)
     public void onChat(ClientChatReceivedEvent event) {
-        if (!Utils.inSkyblock || !ModConfig.abilityCooldowns) return;
+        if (!Utils.inSkyblock || !ModConfig.abilityCooldownHud.isEnabled()) return;
 
         if (event.type == 2) {
             String[] actionBarSections = StringUtils.stripControlCodes(event.message.getUnformattedText()).split(" {3,}");
@@ -56,26 +57,6 @@ public class AbilityCooldowns {
     }
 
     @SubscribeEvent
-    public void renderPlayerInfo(RenderOverlayEvent event) {
-        if (ModConfig.abilityCooldowns && Utils.inSkyblock) {
-            StringBuilder sb = new StringBuilder();
-
-            for (int i = cooldowns.size() - 1; i >= 0; i--) {
-                Ability ability = cooldowns.get(i);
-
-                if (ability.getCooldown() <= 0) {
-                    cooldowns.remove(i);
-                    continue;
-                }
-
-                sb.insert(0, ability.getTimer() + "\n");
-            }
-
-            new TextRenderer(Minecraft.getMinecraft(), sb.toString(), MoveCommand.abilityCooldownsXY[0], MoveCommand.abilityCooldownsXY[1], ScaleCommand.abilityCooldownsScale);
-        }
-    }
-
-    @SubscribeEvent
     public void onTick(TickEvent.ClientTickEvent event) {
         if (event.phase != TickEvent.Phase.START) return;
 
@@ -87,7 +68,7 @@ public class AbilityCooldowns {
             List<Slot> invSlots = ((GuiChest) mc.currentScreen).inventorySlots.inventorySlots;
             String chestName = chest.getLowerChestInventory().getDisplayName().getUnformattedText().trim();
 
-            if (ModConfig.abilityCooldowns && Utils.inDungeons && chestName.startsWith("Catacombs - ")) {
+            if (ModConfig.abilityCooldownHud.isEnabled() && Utils.inDungeons && chestName.startsWith("Catacombs - ")) {
                 ItemStack mage = invSlots.get(30).getStack();
                 if (mage == null || mage.getDisplayName() == null) return;
                 if (mage.isItemEnchanted()) {
@@ -117,11 +98,59 @@ public class AbilityCooldowns {
         }
 
         public String getTimer() {
-            return EnumChatFormatting.GREEN + ability + ": " + EnumChatFormatting.YELLOW + getCooldown() + "s";
+            return EnumChatFormatting.GREEN + ability + ": " + EnumChatFormatting.YELLOW + String.format("%.3f", getCooldown()) + "s";
         }
 
         public double getCooldown() {
             return (cooldown - System.currentTimeMillis()) / 1000D;
+        }
+
+    }
+
+    public static class AbilityCooldownHud extends Hud {
+
+        @Exclude
+        String exampleText = EnumChatFormatting.GREEN + "Spirit Glide: " + EnumChatFormatting.YELLOW + "32.734s\n" +
+                EnumChatFormatting.GREEN + "Parley: " + EnumChatFormatting.YELLOW + "2.652s\n" +
+                EnumChatFormatting.GREEN + "Ice Spray: " + EnumChatFormatting.YELLOW + "1.429s";
+
+        @Override
+        protected void preRender(boolean example) {
+            if (enabled && Utils.inSkyblock) {
+                cooldowns.removeIf(ability -> (ability.getCooldown() <= 0));
+            }
+        }
+
+        @Override
+        protected void draw(UMatrixStack matrices, float x, float y, float scale, boolean example) {
+            if (example) {
+                new TextRenderer(Minecraft.getMinecraft(), exampleText, x, y, scale);
+                return;
+            }
+
+            if (enabled && Utils.inSkyblock && cooldowns.size() > 0) {
+                new TextRenderer(Minecraft.getMinecraft(), getText(), x, y, scale);
+            }
+        }
+
+        @Override
+        protected float getWidth(float scale, boolean example) {
+            return RenderUtils.getWidthFromText(example ? exampleText : getText()) * scale;
+        }
+
+        @Override
+        protected float getHeight(float scale, boolean example) {
+            return RenderUtils.getHeightFromText(example ? exampleText : getText()) * scale;
+        }
+
+        String getText() {
+            StringBuilder sb = new StringBuilder();
+
+            for (Ability ability : cooldowns) {
+                sb.append(ability.getTimer()).append("\n");
+            }
+
+            return sb.toString();
         }
 
     }

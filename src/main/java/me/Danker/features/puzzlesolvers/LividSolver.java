@@ -1,8 +1,11 @@
 package me.Danker.features.puzzlesolvers;
 
+import cc.polyfrost.oneconfig.config.annotations.Color;
+import cc.polyfrost.oneconfig.config.annotations.Exclude;
+import cc.polyfrost.oneconfig.config.core.OneColor;
+import cc.polyfrost.oneconfig.hud.Hud;
+import cc.polyfrost.oneconfig.libs.universal.UMatrixStack;
 import me.Danker.DankersSkyblockMod;
-import me.Danker.commands.MoveCommand;
-import me.Danker.commands.ScaleCommand;
 import me.Danker.config.ModConfig;
 import me.Danker.events.RenderOverlayEvent;
 import me.Danker.handlers.ScoreboardHandler;
@@ -39,7 +42,7 @@ public class LividSolver {
     @SubscribeEvent
     public void onTick(TickEvent.ClientTickEvent event) {
         if (event.phase != TickEvent.Phase.START) return;
-        if (!ModConfig.lividSolver) return;
+        if (!ModConfig.lividSolverHud.isEnabled()) return;
 
         if (DankersSkyblockMod.tickAmount % 10 == 0) {
             World world = Minecraft.getMinecraft().theWorld;
@@ -72,15 +75,8 @@ public class LividSolver {
     }
 
     @SubscribeEvent
-    public void renderPlayerInfo(RenderOverlayEvent event) {
-        if (ModConfig.lividSolver && livid != null) {
-            new TextRenderer(Minecraft.getMinecraft(), livid.getName().replace(EnumChatFormatting.BOLD.toString(), ""), MoveCommand.lividHpXY[0], MoveCommand.lividHpXY[1], ScaleCommand.lividHpScale);
-        }
-    }
-
-    @SubscribeEvent
     public void onRenderEntity(RenderLivingEvent.Pre<EntityLivingBase> event) {
-        if (!ModConfig.lividSolver || livid == null) return;
+        if (!ModConfig.lividSolverHud.isEnabled() || livid == null) return;
 
         Entity entity = event.entity;
         if (entity instanceof EntityArmorStand && entity.hasCustomName()) {
@@ -93,9 +89,9 @@ public class LividSolver {
 
     @SubscribeEvent
     public void onWorldRender(RenderWorldLastEvent event) {
-        if (ModConfig.lividSolver && livid != null) {
+        if (ModConfig.lividSolverHud.isEnabled() && livid != null) {
             AxisAlignedBB aabb = new AxisAlignedBB(livid.posX - 0.5, livid.posY - 2, livid.posZ - 0.5, livid.posX + 0.5, livid.posY, livid.posZ + 0.5);
-            RenderUtils.draw3DBox(aabb, ModConfig.lividColour.getRGB(), event.partialTicks);
+            RenderUtils.draw3DBox(aabb, LividSolverHud.lividColour.getRGB(), event.partialTicks);
         }
     }
 
@@ -131,6 +127,52 @@ public class LividSolver {
                 break;
         }
         return colour + EnumChatFormatting.BOLD + "Livid";
+    }
+
+    public static class LividSolverHud extends Hud {
+
+        @Exclude
+        String exampleText = EnumChatFormatting.WHITE + "﴾ Livid " + EnumChatFormatting.YELLOW + "6.9M" + EnumChatFormatting.RED + "❤ " + EnumChatFormatting.WHITE + "﴿";
+
+        @Color(
+                name = "Correct Livid Box Color",
+                category = "Puzzle Solvers",
+                subcategory = "Dungeons"
+        )
+        public static OneColor lividColour = new OneColor(0, 0, 255);
+
+        @Override
+        protected void draw(UMatrixStack matrices, float x, float y, float scale, boolean example) {
+            if (example) {
+                new TextRenderer(Minecraft.getMinecraft(), exampleText, x, y, scale);
+                return;
+            }
+
+            if (ModConfig.lividSolverHud.isEnabled() && livid != null) {
+                new TextRenderer(Minecraft.getMinecraft(), getText(), x, y, scale);
+            }
+        }
+
+        @Override
+        protected float getWidth(float scale, boolean example) {
+            return RenderUtils.getWidthFromText(example ? exampleText : getText()) * scale;
+        }
+
+        @Override
+        protected float getHeight(float scale, boolean example) {
+            return RenderUtils.getHeightFromText(example ? exampleText : getText()) * scale;
+        }
+
+        String getText() {
+            if (livid != null) return livid.getName().replace(EnumChatFormatting.BOLD.toString(), "");
+            return "";
+        }
+
+    }
+
+    @SubscribeEvent
+    public void renderPlayerInfo(RenderOverlayEvent event) {
+
     }
 
 }

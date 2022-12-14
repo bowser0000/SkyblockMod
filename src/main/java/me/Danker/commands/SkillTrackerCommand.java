@@ -1,6 +1,5 @@
 package me.Danker.commands;
 
-import me.Danker.config.CfgConfig;
 import me.Danker.config.ModConfig;
 import me.Danker.features.SkillTracker;
 import net.minecraft.command.CommandBase;
@@ -38,7 +37,7 @@ public class SkillTrackerCommand extends CommandBase {
 	@Override
 	public List<String> addTabCompletionOptions(ICommandSender sender, String[] args, BlockPos pos) {
 		if (args.length == 1) {
-			return getListOfStringsMatchingLastWord(args, "start", "resume", "pause", "stop", "reset", "hide", "show");
+			return getListOfStringsMatchingLastWord(args, "start", "resume", "pause", "stop", "reset");
 		}
 		return null;
 	}
@@ -85,16 +84,6 @@ public class SkillTrackerCommand extends CommandBase {
 						SkillTracker.enchantingXPGained = 0;
 						SkillTracker.alchemyXPGained = 0;
 						player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Skill tracker reset."));
-						break;
-					case "hide":
-						ModConfig.showSkillTracker = false;
-						CfgConfig.writeBooleanConfig("misc", "showSkillTracker", false);
-						player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Skill tracker hidden."));
-						break;
-					case "show":
-						ModConfig.showSkillTracker = true;
-						CfgConfig.writeBooleanConfig("misc", "showSkillTracker", true);
-						player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Skill tracker shown."));
 						break;
 					default:
 						player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "Usage: " + getCommandUsage(arg0)));

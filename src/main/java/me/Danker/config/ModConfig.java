@@ -15,23 +15,22 @@ import cc.polyfrost.oneconfig.config.migration.CfgName;
 import cc.polyfrost.oneconfig.libs.universal.UKeyboard;
 import me.Danker.DankersSkyblockMod;
 import me.Danker.features.*;
-import me.Danker.gui.EditLocationsGui;
+import me.Danker.features.loot.LootDisplay;
+import me.Danker.features.puzzlesolvers.LividSolver;
+import me.Danker.features.puzzlesolvers.WaterSolver;
 import me.Danker.gui.alerts.AlertsGui;
 import me.Danker.gui.aliases.AliasesGui;
 import me.Danker.gui.crystalhollowwaypoints.CrystalHollowWaypointsGui;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
-import org.apache.commons.lang3.time.StopWatch;
 
 import java.util.Arrays;
 
 public class ModConfig extends Config {
 
-    @Exclude
-    Minecraft mc = Minecraft.getMinecraft();
-    @Exclude
-    static String[] displays = {"Off", "Zombie Slayer", "Spider Slayer", "Wolf Slayer", "Enderman Slayer", "Blaze Slayer", "Fishing", "Winter Fishing", "Fishing Festival", "Spooky Fishing", "Crystal Hollows Fishing", "Lava Fishing", "Trophy Fishing", "Floor 1", "Floor 2", "Floor 3", "Floor 4", "Floor 5", "Floor 6", "Floor 7", "Master Mode", "Mythological", "Ghost"};
+    @Exclude Minecraft mc = Minecraft.getMinecraft();
+    @Exclude static String[] displays = {"Off", "Zombie Slayer", "Spider Slayer", "Wolf Slayer", "Enderman Slayer", "Blaze Slayer", "Fishing", "Winter Fishing", "Fishing Festival", "Spooky Fishing", "Crystal Hollows Fishing", "Lava Fishing", "Trophy Fishing", "Floor 1", "Floor 2", "Floor 3", "Floor 4", "Floor 5", "Floor 6", "Floor 7", "Master Mode", "Mythological", "Ghost"};
 
     public ModConfig() {
         super(new Mod("Danker's Skyblock Mod", ModType.SKYBLOCK, "/assets/dsm/icons/icon.png", new CfgMigrator("./config/Danker's Skyblock Mod.cfg")), "dsmconfig.json");
@@ -45,7 +44,6 @@ public class ModConfig extends Config {
 
         addDependency("customNametags", () -> customColouredNames);
         addDependency("creeperLines", () -> creeper);
-        addDependency("display", () -> !autoDisplay);
         addDependency("lowestBlazeColour", () -> blaze);
         addDependency("highestBlazeColour", () -> blaze);
         addDependency("slayerBoxColour", () -> highlightSlayers);
@@ -67,16 +65,7 @@ public class ModConfig extends Config {
         addDependency("iceWalkLineColour", () -> iceWalk);
         addDependency("commissionColour", () -> highlightCommissions);
         addDependency("lastCollectedColour", () -> minionLastCollected);
-        addDependency("lividColour", () -> lividSolver);
-        addDependency("skill50Time", () -> maxSkillDisplay);
         addDependency("ticTacToeColour", () -> ticTacToe);
-        addDependency("maxSkillDisplayColour", () -> maxSkillDisplay);
-        addDependency("coordsColour", () -> coords);
-        addDependency("cakeColour", () -> cakeTimer);
-        addDependency("bonzoTimerColour", () -> bonzoTimer);
-        addDependency("golemAlertColour", () -> golemAlerts);
-        addDependency("minibossTimerColour", () -> crimsonMinibossTimer);
-        addDependency("minibossTimerUnknownColour", () -> crimsonMinibossTimer);
         addDependency("startsWithColour", () -> startsWith);
         addDependency("selectAllColour", () -> selectAll);
     }
@@ -90,7 +79,7 @@ public class ModConfig extends Config {
     }
 
     public static String getDisplay() {
-        return displays[display];
+        return displays[LootDisplay.display];
     }
 
     public static int toDisplay(String value) {
@@ -109,12 +98,12 @@ public class ModConfig extends Config {
         terminals
         experiments
     display
-        edit locations
         options
         general
-        loot tracker
         dungeons
+        misc.
     trackers
+        loot tracker
         skill tracker
         powder tracker
     highlights
@@ -410,24 +399,12 @@ public class ModConfig extends Config {
 
     // Puzzle Solvers
 
-    @CfgName(
-            name = "LividSolver",
-            category = "toggles"
-    )
-    @Switch(
+    @HUD(
             name = "Find Correct Livid",
-            description = "Shows health and color of correct Livid.",
             category = "Puzzle Solvers",
             subcategory = "Dungeons"
     )
-    public static boolean lividSolver = false;
-
-    @Color(
-            name = "Correct Livid Box Color",
-            category = "Puzzle Solvers",
-            subcategory = "Dungeons"
-    )
-    public static OneColor lividColour = new OneColor(0, 0, 255);
+    public static LividSolver.LividSolverHud lividSolverHud = new LividSolver.LividSolverHud();
 
     @CfgName(
             name = "ThreeManPuzzle",
@@ -506,18 +483,12 @@ public class ModConfig extends Config {
     )
     public static boolean creeperLines = true;
 
-    @CfgName(
-            name = "WaterPuzzle",
-            category = "toggles"
-    )
-    @Switch(
+    @HUD(
             name = "Water Solver",
-            description = "Solves the water flow puzzle in dungeons.",
-            size = OptionSize.DUAL,
             category = "Puzzle Solvers",
             subcategory = "Dungeons"
     )
-    public static boolean water = false;
+    public static WaterSolver.WaterSolverHud waterSolverHud = new WaterSolver.WaterSolverHud();
 
     @CfgName(
             name = "TicTacToePuzzle",
@@ -772,26 +743,6 @@ public class ModConfig extends Config {
 
     // Display
 
-    @Button(
-            name = "Edit Locations",
-            text = "Click",
-            category = "Display",
-            subcategory = "Edit Locations"
-    )
-    Runnable editLocations = () -> mc.displayGuiScreen(new EditLocationsGui());
-
-    @CfgName(
-            name = "OnlyEditEnabled",
-            category = "toggles"
-    )
-    @Switch(
-            name = "Only Edit Enabled",
-            description = "Only shows enabled features in Edit Locations menu.",
-            category = "Display",
-            subcategory = "Edit Locations"
-    )
-    public static boolean onlyEditEnabled = true;
-
     @CfgName(
             name = "OutlineText",
             category = "toggles"
@@ -804,200 +755,89 @@ public class ModConfig extends Config {
     )
     public static boolean outlineText = false;
 
-    @Dropdown(
-            name = "Loot Display",
-            options = {
-                    "Off",
-                    "Zombie Slayer",
-                    "Spider Slayer",
-                    "Wolf Slayer",
-                    "Enderman Slayer",
-                    "Blaze Slayer",
-                    "Fishing",
-                    "Winter Fishing",
-                    "Fishing Festival",
-                    "Spooky Fishing",
-                    "Crystal Hollows Fishing",
-                    "Lava Fishing",
-                    "Trophy Fishing",
-                    "Floor 1",
-                    "Floor 2",
-                    "Floor 3",
-                    "Floor 4",
-                    "Floor 5",
-                    "Floor 6",
-                    "Floor 7",
-                    "Master Mode",
-                    "Mythological",
-                    "Ghost"
-            }, // update String[] displays as well
-            category = "Display",
-            subcategory = "Loot Tracker"
-    )
-    public static int display = 0;
-
-    @CfgName(
-            name = "autoDisplay",
-            category = "misc"
-    )
-    @Switch(
-            name = "Auto Display",
-            description = "Automatically switches display depending on what you're doing.",
-            category = "Display",
-            subcategory = "Loot Tracker"
-    )
-    public static boolean autoDisplay = false;
-
-    @Switch(
-            name = "Current Session Only",
-            description = "Only shows loot earned in the current Minecraft session.",
-            category = "Display",
-            subcategory = "Loot Tracker"
-    )
-    public static boolean sessionDisplay = false;
-
-    @CfgName(
-            name = "SlayerCount",
-            category = "toggles"
-    )
-    @Switch(
-            name = "Count Total 20% Drops",
-            description = "Counts times dropped instead of amount dropped.\nE.x. Hamster Wheels: 40 -> Hamster Wheels: 10 times.",
-            category = "Display",
-            subcategory = "Loot Tracker"
-    )
-    public static boolean slayerCountTotal = false;
-
-    @CfgName(
-            name = "MasterSPlusDisplay",
-            category = "toggles"
-    )
-    @DualOption(
-            name = "Master Mode Runs Shown",
-            left = "S Runs",
-            right = "S+ Runs",
-            category = "Display",
-            subcategory = "Loot Tracker"
-    )
-    public static boolean masterSRunsDisplay = false;
-
-    @CfgName(
-            name = "SplitFishing",
-            category = "toggles"
-    )
-    @Switch(
-            name = "Split Fishing Display",
-            description = "Splits fishing display in half to save vertical space.",
-            category = "Display",
-            subcategory = "Loot Tracker"
-    )
-    public static boolean splitFishing = true;
-
-    @CfgName(
-            name = "ShowTrophyCompletion",
-            category = "toggles"
-    )
-    @Switch(
-            name = "Show Trophy Fish Completion",
-            description = "Show completion instead of count in trophy fish tracker display.",
-            category = "Display",
-            subcategory = "Loot Tracker"
-    )
-    public static boolean showTrophyCompletion = false;
-
-    @CfgName(
-            name = "Coords",
-            category = "toggles"
-    )
-    @Switch(
+    @HUD(
             name = "Coordinate/Angle Display",
-            description = "Displays coordinates and angle.",
             category = "Display",
             subcategory = "General"
     )
-    public static boolean coords = false;
+    public static NoF3Coords coordsHud = new NoF3Coords();
 
-    @Dropdown(
-            name = "Coordinate/Angle Color",
-            options = {"Black", "Dark Blue", "Dark Green", "Dark Aqua", "Dark Red", "Dark Purple", "Gold", "Gray", "Dark Gray", "Blue", "Green", "Aqua", "Red", "Light Purple", "Yellow", "White"},
-            category = "Display",
-            subcategory = "General"
-    )
-    public static int coordsColour = 15;
-
-    @CfgName(
-            name = "Skill50Display",
-            category = "toggles"
-    )
-    @Switch(
+    @HUD(
             name = "Display Progress to Max Skill Level",
-            description = "Display total progress to max skill level.",
-            size = OptionSize.DUAL,
             category = "Display",
             subcategory = "General"
     )
-    public static boolean maxSkillDisplay = false;
+    public static Skill50Display.MaxSkillHud maxSkillHud = new Skill50Display.MaxSkillHud();
 
-    @Dropdown(
-            name = "Progress to Max Skill Text Color",
-            options = {"Black", "Dark Blue", "Dark Green", "Dark Aqua", "Dark Red", "Dark Purple", "Gold", "Gray", "Dark Gray", "Blue", "Green", "Aqua", "Red", "Light Purple", "Yellow", "White"},
-            category = "Display",
-            subcategory = "General"
-    )
-    public static int maxSkillDisplayColour = 11;
-
-    @Number(
-            name = "Length to Display Progress (seconds)",
-            description = "The amount of time to display progress to max skill level in seconds.",
-            min = 1, max = 3600,
-            category = "Display",
-            subcategory = "General"
-    )
-    public static int maxSkillTime = 3;
-
-    @CfgName(
-            name = "CakeTimer",
-            category = "toggles"
-    )
-    @Switch(
+    @HUD(
             name = "Cake Timer",
-            description = "Displays time until century cake buffs run out.",
             category = "Display",
             subcategory = "General"
     )
-    public static boolean cakeTimer = false;
+    public static CakeTimer.CakeTimerHud cakeTimerHud = new CakeTimer.CakeTimerHud();
 
-    @Dropdown(
-            name = "Cake Text Color",
-            options = {"Black", "Dark Blue", "Dark Green", "Dark Aqua", "Dark Red", "Dark Purple", "Gold", "Gray", "Dark Gray", "Blue", "Green", "Aqua", "Red", "Light Purple", "Yellow", "White"},
-            category = "Display",
-            subcategory = "General"
-    )
-    public static int cakeColour = 6;
-
-    @CfgName(
-            name = "AbilityCooldowns",
-            category = "toggles"
-    )
-    @Switch(
+    @HUD(
             name = "Ability Cooldowns",
-            description = "Displays ability cooldowns.",
             category = "Display",
             subcategory = "General"
     )
-    public static boolean abilityCooldowns = false;
+    public static AbilityCooldowns.AbilityCooldownHud abilityCooldownHud = new AbilityCooldowns.AbilityCooldownHud();
 
-    @CfgName(
-            name = "FirePillar",
-            category = "toggles"
-    )
-    @Switch(
+    @HUD(
             name = "Fire Pillar Display",
-            description = "Displays blaze fire pillar text on screen",
             category = "Display",
             subcategory = "General"
     )
-    public static boolean firePillar = false;
+    public static FirePillarDisplay.FirePillarHud firePillarHud = new FirePillarDisplay.FirePillarHud();
+
+    @HUD(
+            name = "Crimson Isle Miniboss Timer",
+            category = "Display",
+            subcategory = "General"
+    )
+    public static CrimsonMinibossTimer.MinibossTimerHud minibossTimerHud = new CrimsonMinibossTimer.MinibossTimerHud();
+
+    @HUD(
+            name = "Golem Spawn Timer",
+            category = "Display",
+            subcategory = "General"
+    )
+    public static GolemSpawningAlert.GolemTimerHud golemTimerHud = new GolemSpawningAlert.GolemTimerHud();
+
+    @HUD(
+            name = "Bonzo's Mask Timer",
+            category = "Display",
+            subcategory = "Dungeons"
+    )
+    public static BonzoMaskTimer.BonzoTimerHud bonzoTimerHud = new BonzoMaskTimer.BonzoTimerHud();
+
+    @HUD(
+            name = "Display Players in 30 Block Radius",
+            category = "Display",
+            subcategory = "Dungeons"
+    )
+    public static TetherDisplay.TetherDisplayHud tetherHud = new TetherDisplay.TetherDisplayHud();
+
+    @HUD(
+            name = "Display Giant HP",
+            category = "Display",
+            subcategory = "Dungeons"
+    )
+    public static GiantHPDisplay.GiantHPHud giantHPHud = new GiantHPDisplay.GiantHPHud();
+
+    @HUD(
+            name = "Display Dungeon Timers",
+            category = "Display",
+            subcategory = "Dungeons"
+    )
+    public static DungeonTimer.DungeonTimerHud dungeonTimerHud = new DungeonTimer.DungeonTimerHud();
+
+    @HUD(
+            name = "Dungeon Score Display",
+            category = "Display",
+            subcategory = "Dungeons"
+    )
+    public static DungeonScore.DungeonScoreHud dungeonScoreHud = new DungeonScore.DungeonScoreHud();
 
     @CfgName(
             name = "MinionLastCollected",
@@ -1007,14 +847,14 @@ public class ModConfig extends Config {
             name = "Show When Minion Last Collected",
             description = "Displays when a minion was last collected over the minion.",
             category = "Display",
-            subcategory = "General"
+            subcategory = "Misc."
     )
     public static boolean minionLastCollected = false;
 
     @Color(
             name = "Minion Last Collected Color",
             category = "Display",
-            subcategory = "General"
+            subcategory = "Misc."
     )
     public static OneColor lastCollectedColour = new OneColor(85, 255, 255);
 
@@ -1026,7 +866,7 @@ public class ModConfig extends Config {
             name = "Show Total Fillet Magmafish",
             description = "Show total Magmafish you would get if you filleted all the trophy fish in your inventory.",
             category = "Display",
-            subcategory = "General"
+            subcategory = "Misc."
     )
     public static boolean showTotalMagmafish = false;
 
@@ -1038,239 +878,29 @@ public class ModConfig extends Config {
             name = "Show Time to Fill Bazaar Order",
             description = "Shows an estimated amount of time it would take for a bazaar order to be filled.\nAssumes you are not over/undercut.\nOnly works when moving through menus. Doesn't work when clicking items as shortcut.",
             category = "Display",
-            subcategory = "General"
+            subcategory = "Misc."
     )
     public static boolean bazaarTimeToFill = false;
 
-    @CfgName(
-            name = "CrimsonMinibossTimer",
-            category = "toggles"
-    )
-    @Switch(
-            name = "Crimson Isle Miniboss Timer",
-            description = "Shows the time until a Crimson Isle miniboss respawns.",
-            size = OptionSize.DUAL,
-            category = "Display",
-            subcategory = "General"
-    )
-    public static boolean crimsonMinibossTimer = false;
-
-    @Dropdown(
-            name = "Miniboss Timer Text Color",
-            options = {"Black", "Dark Blue", "Dark Green", "Dark Aqua", "Dark Red", "Dark Purple", "Gold", "Gray", "Dark Gray", "Blue", "Green", "Aqua", "Red", "Light Purple", "Yellow", "White"},
-            category = "Display",
-            subcategory = "General"
-    )
-    public static int minibossTimerColour = 6;
-
-    @Dropdown(
-            name = "Miniboss Unknown Text Color",
-            options = {"Black", "Dark Blue", "Dark Green", "Dark Aqua", "Dark Red", "Dark Purple", "Gold", "Gray", "Dark Gray", "Blue", "Green", "Aqua", "Red", "Light Purple", "Yellow", "White"},
-            category = "Display",
-            subcategory = "General"
-    )
-    public static int minibossTimerUnknownColour = 12;
-
-    @CfgName(
-            name = "BonzoTimer",
-            category = "toggles"
-    )
-    @Switch(
-            name = "Bonzo's Mask Timer",
-            description = "Displays cooldown of Bonzo Mask ability.",
-            category = "Display",
-            subcategory = "Dungeons"
-    )
-    public static boolean bonzoTimer = false;
-
-    @Dropdown(
-            name = "Bonzo Timer Text Color",
-            options = {"Black", "Dark Blue", "Dark Green", "Dark Aqua", "Dark Red", "Dark Purple", "Gold", "Gray", "Dark Gray", "Blue", "Green", "Aqua", "Red", "Light Purple", "Yellow", "White"},
-            category = "Display",
-            subcategory = "Dungeons"
-    )
-    public static int bonzoTimerColour = 12;
-
-    @CfgName(
-            name = "TeammatesInRadius",
-            category = "toggles"
-    )
-    @Switch(
-            name = "Display Players in 30 Block Radius",
-            description = "Displays dungeon teammates in 30 block radius for tether and diversion.",
-            category = "Display",
-            subcategory = "Dungeons"
-    )
-    public static boolean teammatesInRadius = false;
-
-    @CfgName(
-            name = "GiantHP",
-            category = "toggles"
-    )
-    @Switch(
-            name = "Display Giant HP",
-            description = "Displays health of Sadan's giants during F6 bossfight and F7 blood room.",
-            category = "Display",
-            subcategory = "Dungeons"
-    )
-    public static boolean giantHP = false;
-
-    @CfgName(
-            name = "DungeonTimer",
-            category = "toggles"
-    )
-    @Switch(
-            name = "Display Dungeon Timers",
-            description = "Displays timing of certain dungeon objectives and other information.",
-            category = "Display",
-            subcategory = "Dungeons"
-    )
-    public static boolean dungeonTimer = false;
-
-    @CfgName(
-            name = "DungeonScore",
-            category = "toggles"
-    )
-    @Switch(
-            name = "Dungeon Score Display",
-            description = "Displays an estimated dungeon score with secrets.",
-            category = "Display",
-            subcategory = "Dungeons"
-    )
-    public static boolean dungeonScore = false;
-
     // Trackers
 
-    @CfgName(
-            name = "showSkillTracker",
-            category = "misc"
+    @HUD(
+            name = "Loot Display",
+            category = "Trackers"
     )
-    @DualOption(
-            name = "Display Skill Tracker",
-            left = "Hidden",
-            right = "Shown",
-            category = "Trackers",
-            subcategory = "Skill Tracker"
-    )
-    public static boolean showSkillTracker = false;
+    public static LootDisplay lootDisplayHud = new LootDisplay();
 
-    @Button(
-            name = "Start Skill Tracker",
-            text = "Start",
-            category = "Trackers",
-            subcategory = "Skill Tracker"
+    @HUD(
+            name = "Skill Tracker",
+            category = "Trackers"
     )
-    Runnable startSkillTracker = () -> {
-        if (SkillTracker.skillStopwatch.isStarted() && SkillTracker.skillStopwatch.isSuspended()) {
-            SkillTracker.skillStopwatch.resume();
-        } else if (!SkillTracker.skillStopwatch.isStarted()) {
-            SkillTracker.skillStopwatch.start();
-        }
-    };
+    public static SkillTracker.SkillTrackerHud skillTrackerHud = new SkillTracker.SkillTrackerHud();
 
-    @Button(
-            name = "Stop Skill Tracker",
-            text = "Stop",
-            category = "Trackers",
-            subcategory = "Skill Tracker"
+    @HUD(
+            name = "Powder Tracker",
+            category = "Trackers"
     )
-    Runnable stopSkillTracker = () -> {
-        if (SkillTracker.skillStopwatch.isStarted() && !SkillTracker.skillStopwatch.isSuspended()) {
-            SkillTracker.skillStopwatch.suspend();
-        }
-    };
-
-    @CfgName(
-            name = "AutoSkillTracker",
-            category = "toggles"
-    )
-    @Switch(
-            name = "Auto Start/Stop Skill Tracker",
-            description = "Automatically pauses skill tracker when opening a gui.",
-            category = "Trackers",
-            subcategory = "Skill Tracker"
-    )
-    public static boolean autoSkillTracker = false;
-
-    @Dropdown(
-            name = "Skill Tracker Text Color",
-            options = {"Black", "Dark Blue", "Dark Green", "Dark Aqua", "Dark Red", "Dark Purple", "Gold", "Gray", "Dark Gray", "Blue", "Green", "Aqua", "Red", "Light Purple", "Yellow", "White"},
-            category = "Trackers",
-            subcategory = "Skill Tracker"
-    )
-    public static int skillTrackerColour = 11;
-
-    @Button(
-            name = "Reset Skill Tracker",
-            text = "Reset",
-            category = "Trackers",
-            subcategory = "Skill Tracker"
-    )
-    Runnable resetSkillTracker = () -> {
-        SkillTracker.skillStopwatch = new StopWatch();
-        SkillTracker.farmingXPGained = 0;
-        SkillTracker.miningXPGained = 0;
-        SkillTracker.combatXPGained = 0;
-        SkillTracker.foragingXPGained = 0;
-        SkillTracker.fishingXPGained = 0;
-        SkillTracker.enchantingXPGained = 0;
-        SkillTracker.alchemyXPGained = 0;
-    };
-
-    @CfgName(
-            name = "showPowderTracker",
-            category = "misc"
-    )
-    @DualOption(
-            name = "Display Powder Tracker",
-            left = "Hidden",
-            right = "Shown",
-            category = "Trackers",
-            subcategory = "Powder Tracker"
-    )
-    public static boolean showPowderTracker = false;
-
-    @Button(
-            name = "Start Powder Tracker",
-            text = "Start",
-            category = "Trackers",
-            subcategory = "Powder Tracker"
-    )
-    Runnable startPowderTracker = () -> {
-        if (PowderTracker.powderStopwatch.isStarted() && PowderTracker.powderStopwatch.isSuspended()) {
-            PowderTracker.powderStopwatch.resume();
-        } else if (!PowderTracker.powderStopwatch.isStarted()) {
-            PowderTracker.powderStopwatch.start();
-        }
-    };
-
-    @Button(
-            name = "Stop Powder Tracker",
-            text = "Stop",
-            category = "Trackers",
-            subcategory = "Powder Tracker"
-    )
-    Runnable stopPowderTracker = () -> {
-        if (PowderTracker.powderStopwatch.isStarted() && !PowderTracker.powderStopwatch.isSuspended()) {
-            PowderTracker.powderStopwatch.suspend();
-        }
-    };
-
-    @Dropdown(
-            name = "Powder Tracker Text Color",
-            options = {"Black", "Dark Blue", "Dark Green", "Dark Aqua", "Dark Red", "Dark Purple", "Gold", "Gray", "Dark Gray", "Blue", "Green", "Aqua", "Red", "Light Purple", "Yellow", "White"},
-            category = "Trackers",
-            subcategory = "Powder Tracker"
-    )
-    public static int powderTrackerColour = 11;
-
-    @Button(
-            name = "Reset Powder Tracker",
-            text = "Reset",
-            category = "Trackers",
-            subcategory = "Powder Tracker"
-    )
-    Runnable resetPowderTracker = PowderTracker::reset;
+    public static PowderTracker.PowderTrackerHud powderTrackerHud = new PowderTracker.PowderTrackerHud();
 
     // Highlights
 
@@ -1403,14 +1033,6 @@ public class ModConfig extends Config {
             subcategory = "General"
     )
     public static boolean golemAlerts = false;
-
-    @Dropdown(
-            name = "Golem Timer Text Color",
-            options = {"Black", "Dark Blue", "Dark Green", "Dark Aqua", "Dark Red", "Dark Purple", "Gold", "Gray", "Dark Gray", "Blue", "Green", "Aqua", "Red", "Light Purple", "Yellow", "White"},
-            category = "Alerts",
-            subcategory = "General"
-    )
-    public static int golemAlertColour = 6;
 
     @CfgName(
             name = "RNGesusAlerts",

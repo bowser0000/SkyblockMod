@@ -1,7 +1,7 @@
 package me.Danker.features;
 
 import me.Danker.DankersSkyblockMod;
-import me.Danker.config.ModConfig;
+import me.Danker.features.loot.LootDisplay;
 import me.Danker.handlers.ScoreboardHandler;
 import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;
@@ -26,7 +26,7 @@ public class AutoDisplay {
         World world = mc.theWorld;
         EntityPlayerSP player = mc.thePlayer;
         if (DankersSkyblockMod.tickAmount % 20 == 0) {
-            if (ModConfig.autoDisplay && world != null && player != null) {
+            if (LootDisplay.autoDisplay && world != null && player != null) {
                 List<String> scoreboard = ScoreboardHandler.getSidebarLines();
                 boolean found = false;
                 for (String s : scoreboard) {

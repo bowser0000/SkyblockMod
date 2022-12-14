@@ -9,7 +9,6 @@ import me.Danker.events.*;
 import me.Danker.features.*;
 import me.Danker.features.loot.*;
 import me.Danker.features.puzzlesolvers.*;
-import me.Danker.gui.EditLocationsGui;
 import me.Danker.gui.WarningGui;
 import me.Danker.gui.WarningGuiRedirect;
 import me.Danker.handlers.ConfigHandler;
@@ -206,14 +205,12 @@ public class DankersSkyblockMod {
         ClientCommandHandler.instance.registerCommand(new LobbyBankCommand());
         ClientCommandHandler.instance.registerCommand(new LobbySkillsCommand());
         ClientCommandHandler.instance.registerCommand(new LootCommand());
-        ClientCommandHandler.instance.registerCommand(new MoveCommand());
         ClientCommandHandler.instance.registerCommand(new PetsCommand());
         ClientCommandHandler.instance.registerCommand(new PlayerCommand());
         ClientCommandHandler.instance.registerCommand(new PowderTrackerCommand());
         ClientCommandHandler.instance.registerCommand(new ReloadConfigCommand());
         ClientCommandHandler.instance.registerCommand(new ReloadRepoCommand());
         ClientCommandHandler.instance.registerCommand(new ResetLootCommand());
-        ClientCommandHandler.instance.registerCommand(new ScaleCommand());
         ClientCommandHandler.instance.registerCommand(new SkillsCommand());
         ClientCommandHandler.instance.registerCommand(new SkillTrackerCommand());
         ClientCommandHandler.instance.registerCommand(new SkyblockPlayersCommand());
@@ -347,7 +344,6 @@ public class DankersSkyblockMod {
         if (usingLabymod && !(Minecraft.getMinecraft().ingameGUI instanceof GuiIngameForge)) return;
         if (event.type != RenderGameOverlayEvent.ElementType.EXPERIENCE && event.type != RenderGameOverlayEvent.ElementType.JUMPBAR)
             return;
-        if (Minecraft.getMinecraft().currentScreen instanceof EditLocationsGui) return;
         MinecraftForge.EVENT_BUS.post(new RenderOverlayEvent());
     }
 
@@ -356,7 +352,6 @@ public class DankersSkyblockMod {
     public void renderPlayerInfoLabyMod(final RenderGameOverlayEvent event) {
         if (!usingLabymod) return;
         if (event.type != null) return;
-        if (Minecraft.getMinecraft().currentScreen instanceof EditLocationsGui) return;
         MinecraftForge.EVENT_BUS.post(new RenderOverlayEvent());
     }
 

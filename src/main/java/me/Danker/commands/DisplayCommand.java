@@ -2,6 +2,7 @@ package me.Danker.commands;
 
 import me.Danker.DankersSkyblockMod;
 import me.Danker.config.ModConfig;
+import me.Danker.features.loot.LootDisplay;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
@@ -150,7 +151,7 @@ public class DisplayCommand extends CommandBase {
 			display = "Ghost";
 			break;
 		case "auto":
-			ModConfig.autoDisplay = true;
+			LootDisplay.autoDisplay = true;
 			DankersSkyblockMod.config.save();
 			player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Display set to " + ModConfig.getColour(ModConfig.secondaryColour) + "auto" + ModConfig.getColour(ModConfig.mainColour) + "."));
 			return;
@@ -162,9 +163,9 @@ public class DisplayCommand extends CommandBase {
 			return;
 		}
 
-		ModConfig.display = ModConfig.toDisplay(display);
-		ModConfig.sessionDisplay = arg1[arg1.length - 1].equalsIgnoreCase("session");
-		ModConfig.autoDisplay = false;
+		LootDisplay.display = ModConfig.toDisplay(display);
+		LootDisplay.sessionDisplay = arg1[arg1.length - 1].equalsIgnoreCase("session");
+		LootDisplay.autoDisplay = false;
 		DankersSkyblockMod.config.save();
 		player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Display set to " + ModConfig.getColour(ModConfig.secondaryColour) + display + ModConfig.getColour(ModConfig.mainColour) + "."));
 	}

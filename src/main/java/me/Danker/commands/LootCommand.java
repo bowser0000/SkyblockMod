@@ -80,7 +80,7 @@ public class LootCommand extends CommandBase {
 					} else {
 						bossesBetween = nf.format(WolfTracker.bossesSession);
 					}
-					if (ModConfig.slayerCountTotal) {
+					if (LootDisplay.slayerCountTotal) {
 						drop20 = nf.format(WolfTracker.wheelsSession);
 					} else {
 						drop20 = nf.format(WolfTracker.wheelsDropsSession) + " times";
@@ -114,7 +114,7 @@ public class LootCommand extends CommandBase {
 				} else {
 					bossesBetween = nf.format(WolfTracker.bosses);
 				}
-				if (ModConfig.slayerCountTotal) {
+				if (LootDisplay.slayerCountTotal) {
 					drop20 = nf.format(WolfTracker.wheels);
 				} else {
 					drop20 = nf.format(WolfTracker.wheelsDrops) + " times";
@@ -148,7 +148,7 @@ public class LootCommand extends CommandBase {
 					} else {
 						bossesBetween = nf.format(SpiderTracker.bossesSession);
 					}
-					if (ModConfig.slayerCountTotal) {
+					if (LootDisplay.slayerCountTotal) {
 						drop20 = nf.format(SpiderTracker.TAPSession);
 					} else {
 						drop20 = nf.format(SpiderTracker.TAPDropsSession) + " times";
@@ -181,7 +181,7 @@ public class LootCommand extends CommandBase {
 				} else {
 					bossesBetween = nf.format(SpiderTracker.bosses);
 				}
-				if (ModConfig.slayerCountTotal) {
+				if (LootDisplay.slayerCountTotal) {
 					drop20 = nf.format(SpiderTracker.TAP);
 				} else {
 					drop20 = nf.format(SpiderTracker.TAPDrops) + " times";
@@ -214,7 +214,7 @@ public class LootCommand extends CommandBase {
 					} else {
 						bossesBetween = nf.format(ZombieTracker.bossesSession);
 					}
-					if (ModConfig.slayerCountTotal) {
+					if (LootDisplay.slayerCountTotal) {
 						drop20 = nf.format(ZombieTracker.foulFleshSession);
 					} else {
 						drop20 = nf.format(ZombieTracker.foulFleshDropsSession) + " times";
@@ -252,7 +252,7 @@ public class LootCommand extends CommandBase {
 				} else {
 					bossesBetween = nf.format(ZombieTracker.bosses);
 				}
-				if (ModConfig.slayerCountTotal) {
+				if (LootDisplay.slayerCountTotal) {
 					drop20 = nf.format(ZombieTracker.foulFlesh);
 				} else {
 					drop20 = nf.format(ZombieTracker.foulFleshDrops) + " times";
@@ -290,7 +290,7 @@ public class LootCommand extends CommandBase {
 					} else {
 						bossesBetween = nf.format(EndermanTracker.bossesSession);
 					}
-					if (ModConfig.slayerCountTotal) {
+					if (LootDisplay.slayerCountTotal) {
 						drop20 = nf.format(EndermanTracker.TAPSession);
 					} else {
 						drop20 = nf.format(EndermanTracker.TAPDropsSession) + " times";
@@ -334,7 +334,7 @@ public class LootCommand extends CommandBase {
 				} else {
 					bossesBetween = nf.format(EndermanTracker.bosses);
 				}
-				if (ModConfig.slayerCountTotal) {
+				if (LootDisplay.slayerCountTotal) {
 					drop20 = nf.format(EndermanTracker.TAP);
 				} else {
 					drop20 = nf.format(EndermanTracker.TAPDrops) + " times";

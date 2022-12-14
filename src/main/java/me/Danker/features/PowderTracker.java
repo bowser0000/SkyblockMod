@@ -1,11 +1,14 @@
 package me.Danker.features;
 
+import cc.polyfrost.oneconfig.config.annotations.Button;
+import cc.polyfrost.oneconfig.config.annotations.Dropdown;
+import cc.polyfrost.oneconfig.config.annotations.Exclude;
+import cc.polyfrost.oneconfig.hud.Hud;
+import cc.polyfrost.oneconfig.libs.universal.UMatrixStack;
 import me.Danker.DankersSkyblockMod;
-import me.Danker.commands.MoveCommand;
-import me.Danker.commands.ScaleCommand;
 import me.Danker.config.ModConfig;
-import me.Danker.events.RenderOverlayEvent;
 import me.Danker.handlers.TextRenderer;
+import me.Danker.utils.RenderUtils;
 import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -53,26 +56,6 @@ public class PowderTracker {
         }
     }
 
-    @SubscribeEvent
-    public void renderPlayerInfo(RenderOverlayEvent event) {
-        if (ModConfig.showPowderTracker && Utils.inSkyblock) {
-            int mithrilPerHour = (int) Math.round(mithrilGained / ((powderStopwatch.getTime() + 1) / 3600000d));
-            int gemstonePerHour = (int) Math.round(gemstoneGained / ((powderStopwatch.getTime() + 1) / 3600000d));
-
-            NumberFormat nf = NumberFormat.getIntegerInstance(Locale.US);
-            String powderTrackerText = EnumChatFormatting.DARK_GREEN + "Mithril Gained: " + nf.format(mithrilGained) + "\n" +
-                    EnumChatFormatting.DARK_GREEN + "Mithril Per Hour: " + nf.format(mithrilPerHour) + "\n" +
-                    EnumChatFormatting.LIGHT_PURPLE + "Gemstone Gained: " + nf.format(gemstoneGained) + "\n" +
-                    EnumChatFormatting.LIGHT_PURPLE + "Gemstone Per Hour: " + nf.format(gemstonePerHour) + "\n" +
-                    ModConfig.getColour(ModConfig.powderTrackerColour) + "Time Elapsed: " + Utils.getTimeBetween(0, powderStopwatch.getTime() / 1000d);
-            if (!powderStopwatch.isStarted() || powderStopwatch.isSuspended()) {
-                powderTrackerText += "\n" + EnumChatFormatting.RED + "PAUSED";
-            }
-
-            new TextRenderer(Minecraft.getMinecraft(), powderTrackerText, MoveCommand.powderTrackerXY[0], MoveCommand.powderTrackerXY[1], ScaleCommand.powderTrackerScale);
-        }
-    }
-
     public static void onKey() {
         if (!Utils.inSkyblock) return;
 
@@ -95,6 +78,98 @@ public class PowderTracker {
         mithrilGained = 0;
         lastGemstone = -1;
         gemstoneGained = 0;
+    }
+
+    public static class PowderTrackerHud extends Hud {
+
+        @Exclude
+        String exampleText = EnumChatFormatting.DARK_GREEN + "Mithril Gained: 74,264\n" +
+                             EnumChatFormatting.DARK_GREEN + "Mithril Per Hour: 107,326\n" +
+                             EnumChatFormatting.LIGHT_PURPLE + "Gemstone Gained: 101,299\n" +
+                             EnumChatFormatting.LIGHT_PURPLE + "Gemstone Per Hour: 146,397\n" +
+                             ModConfig.getColour(powderTrackerColour) + "Time Elapsed: " + Utils.getTimeBetween(0, 2491);
+
+        @Button(
+                name = "Start Powder Tracker",
+                text = "Start",
+                category = "Trackers",
+                subcategory = "Powder Tracker"
+        )
+        Runnable startPowderTracker = () -> {
+            if (PowderTracker.powderStopwatch.isStarted() && PowderTracker.powderStopwatch.isSuspended()) {
+                PowderTracker.powderStopwatch.resume();
+            } else if (!PowderTracker.powderStopwatch.isStarted()) {
+                PowderTracker.powderStopwatch.start();
+            }
+        };
+
+        @Button(
+                name = "Stop Powder Tracker",
+                text = "Stop",
+                category = "Trackers",
+                subcategory = "Powder Tracker"
+        )
+        Runnable stopPowderTracker = () -> {
+            if (PowderTracker.powderStopwatch.isStarted() && !PowderTracker.powderStopwatch.isSuspended()) {
+                PowderTracker.powderStopwatch.suspend();
+            }
+        };
+
+        @Dropdown(
+                name = "Powder Tracker Text Color",
+                options = {"Black", "Dark Blue", "Dark Green", "Dark Aqua", "Dark Red", "Dark Purple", "Gold", "Gray", "Dark Gray", "Blue", "Green", "Aqua", "Red", "Light Purple", "Yellow", "White"},
+                category = "Trackers",
+                subcategory = "Powder Tracker"
+        )
+        public static int powderTrackerColour = 11;
+
+        @Button(
+                name = "Reset Powder Tracker",
+                text = "Reset",
+                category = "Trackers",
+                subcategory = "Powder Tracker"
+        )
+        Runnable resetPowderTracker = PowderTracker::reset;
+
+        @Override
+        protected void draw(UMatrixStack matrices, float x, float y, float scale, boolean example) {
+            if (example) {
+                new TextRenderer(Minecraft.getMinecraft(), exampleText, x, y, scale);
+                return;
+            }
+
+            if (enabled && Utils.inSkyblock) {
+                new TextRenderer(Minecraft.getMinecraft(), getText(), x, y, scale);
+            }
+        }
+
+        @Override
+        protected float getWidth(float scale, boolean example) {
+            return RenderUtils.getWidthFromText(example ? exampleText : getText()) * scale;
+        }
+
+        @Override
+        protected float getHeight(float scale, boolean example) {
+            return RenderUtils.getHeightFromText(example ? exampleText : getText()) * scale;
+        }
+
+        String getText() {
+            int mithrilPerHour = (int) Math.round(mithrilGained / ((powderStopwatch.getTime() + 1) / 3600000d));
+            int gemstonePerHour = (int) Math.round(gemstoneGained / ((powderStopwatch.getTime() + 1) / 3600000d));
+
+            NumberFormat nf = NumberFormat.getIntegerInstance(Locale.US);
+            String powderTrackerText = EnumChatFormatting.DARK_GREEN + "Mithril Gained: " + nf.format(mithrilGained) + "\n" +
+                                       EnumChatFormatting.DARK_GREEN + "Mithril Per Hour: " + nf.format(mithrilPerHour) + "\n" +
+                                       EnumChatFormatting.LIGHT_PURPLE + "Gemstone Gained: " + nf.format(gemstoneGained) + "\n" +
+                                       EnumChatFormatting.LIGHT_PURPLE + "Gemstone Per Hour: " + nf.format(gemstonePerHour) + "\n" +
+                                       ModConfig.getColour(powderTrackerColour) + "Time Elapsed: " + Utils.getTimeBetween(0, powderStopwatch.getTime() / 1000d);
+            if (!powderStopwatch.isStarted() || powderStopwatch.isSuspended()) {
+                powderTrackerText += "\n" + EnumChatFormatting.RED + "PAUSED";
+            }
+
+            return powderTrackerText;
+        }
+
     }
 
 }

@@ -1,10 +1,12 @@
 package me.Danker.features;
 
-import me.Danker.commands.MoveCommand;
-import me.Danker.commands.ScaleCommand;
+import cc.polyfrost.oneconfig.config.annotations.Dropdown;
+import cc.polyfrost.oneconfig.config.annotations.Exclude;
+import cc.polyfrost.oneconfig.hud.Hud;
+import cc.polyfrost.oneconfig.libs.universal.UMatrixStack;
 import me.Danker.config.ModConfig;
-import me.Danker.events.RenderOverlayEvent;
 import me.Danker.handlers.TextRenderer;
+import me.Danker.utils.RenderUtils;
 import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.EnumChatFormatting;
@@ -36,7 +38,7 @@ public class CrimsonMinibossTimer {
 
         if (message.contains(":")) return;
 
-        if (ModConfig.crimsonMinibossTimer && Utils.tabLocation.equals("Crimson Isle")) {
+        if (ModConfig.minibossTimerHud.isEnabled() && Utils.tabLocation.equals("Crimson Isle")) {
             if (message.contains("BLADESOUL DOWN!")) {
                 bladesoul = System.currentTimeMillis() / 1000 + 120;
             } else if (message.contains("BARBARIAN DUKE X DOWN!")) {
@@ -51,27 +53,66 @@ public class CrimsonMinibossTimer {
         }
     }
 
-    @SubscribeEvent
-    public void renderPlayerInfo(RenderOverlayEvent event) {
-        if (ModConfig.crimsonMinibossTimer && Utils.tabLocation.equals("Crimson Isle")) {
+    public static class MinibossTimerHud extends Hud {
+
+        @Exclude
+        String exampleText = EnumChatFormatting.GRAY + "Bladesoul: " + ModConfig.getColour(minibossTimerColour) + "0m24s" + "\n" +
+                             EnumChatFormatting.RED + "Barbarian Duke: " + ModConfig.getColour(minibossTimerColour) + "1m27s" + "\n" +
+                             EnumChatFormatting.DARK_PURPLE + "Mage Outlaw: " + ModConfig.getColour(minibossTimerColour) + "2m0s" + "\n" +
+                             EnumChatFormatting.GOLD + "Ashfang: " + ModConfig.getColour(minibossTimerUnknownColour) + "?" + "\n" +
+                             EnumChatFormatting.DARK_RED + "Magma Boss: " + ModConfig.getColour(minibossTimerUnknownColour) + "?";
+
+        @Dropdown(
+                name = "Miniboss Timer Text Color",
+                options = {"Black", "Dark Blue", "Dark Green", "Dark Aqua", "Dark Red", "Dark Purple", "Gold", "Gray", "Dark Gray", "Blue", "Green", "Aqua", "Red", "Light Purple", "Yellow", "White"}
+        )
+        public static int minibossTimerColour = 6;
+
+        @Dropdown(
+                name = "Miniboss Unknown Text Color",
+                options = {"Black", "Dark Blue", "Dark Green", "Dark Aqua", "Dark Red", "Dark Purple", "Gold", "Gray", "Dark Gray", "Blue", "Green", "Aqua", "Red", "Light Purple", "Yellow", "White"}
+        )
+        public static int minibossTimerUnknownColour = 12;
+
+        @Override
+        protected void draw(UMatrixStack matrices, float x, float y, float scale, boolean example) {
+            if (example) {
+                new TextRenderer(Minecraft.getMinecraft(), exampleText, x, y, scale);
+                return;
+            }
+
+            if (enabled && Utils.tabLocation.equals("Crimson Isle")) {
+                new TextRenderer(Minecraft.getMinecraft(), getText(), x, y, scale);
+            }
+        }
+
+        @Override
+        protected float getWidth(float scale, boolean example) {
+            return RenderUtils.getWidthFromText(example ? exampleText : getText()) * scale;
+        }
+
+        @Override
+        protected float getHeight(float scale, boolean example) {
+            return RenderUtils.getHeightFromText(example ? exampleText : getText()) * scale;
+        }
+
+        String getText() {
             double timeNow = System.currentTimeMillis() / 1000;
-
-            String timerText = EnumChatFormatting.GRAY + "Bladesoul: " + getTime(timeNow, bladesoul) + "\n" +
-                               EnumChatFormatting.RED + "Barbarian Duke: " + getTime(timeNow, duke) + "\n" +
-                               EnumChatFormatting.DARK_PURPLE + "Mage Outlaw: " + getTime(timeNow, outlaw) + "\n" +
-                               EnumChatFormatting.GOLD + "Ashfang: " + getTime(timeNow, ashfang) + "\n" +
-                               EnumChatFormatting.DARK_RED + "Magma Boss: " + getTime(timeNow, magma);
-
-            new TextRenderer(Minecraft.getMinecraft(), timerText, MoveCommand.minibossTimerXY[0], MoveCommand.minibossTimerXY[1], ScaleCommand.minibossTimerScale);
+            return EnumChatFormatting.GRAY + "Bladesoul: " + getTime(timeNow, bladesoul) + "\n" +
+                   EnumChatFormatting.RED + "Barbarian Duke: " + getTime(timeNow, duke) + "\n" +
+                   EnumChatFormatting.DARK_PURPLE + "Mage Outlaw: " + getTime(timeNow, outlaw) + "\n" +
+                   EnumChatFormatting.GOLD + "Ashfang: " + getTime(timeNow, ashfang) + "\n" +
+                   EnumChatFormatting.DARK_RED + "Magma Boss: " + getTime(timeNow, magma);
         }
-    }
 
-    static String getTime(double timeNow, double bossTime) {
-        if (timeNow == bossTime) Minecraft.getMinecraft().thePlayer.playSound(ModConfig.alertNoise, 1, (float) 0.5);
-        if (timeNow < bossTime) {
-            return ModConfig.getColour(ModConfig.minibossTimerColour) + Utils.getTimeBetween(timeNow, bossTime);
+        String getTime(double timeNow, double bossTime) {
+            if (timeNow == bossTime) Minecraft.getMinecraft().thePlayer.playSound(ModConfig.alertNoise, 1, (float) 0.5);
+            if (timeNow < bossTime) {
+                return ModConfig.getColour(minibossTimerColour) + Utils.getTimeBetween(timeNow, bossTime);
+            }
+            return ModConfig.getColour(minibossTimerUnknownColour) + "?";
         }
-        return ModConfig.getColour(ModConfig.minibossTimerUnknownColour) + "?";
+
     }
 
 }

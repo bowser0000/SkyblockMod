@@ -1,15 +1,11 @@
 package me.Danker.config;
 
 import me.Danker.DankersSkyblockMod;
-import me.Danker.commands.MoveCommand;
-import me.Danker.commands.ScaleCommand;
 import me.Danker.features.Alerts;
 import me.Danker.features.CakeTimer;
 import me.Danker.features.ChatAliases;
 import me.Danker.features.CrystalHollowWaypoints;
 import me.Danker.features.loot.*;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.ScaledResolution;
 import net.minecraftforge.common.config.ConfigCategory;
 import net.minecraftforge.common.config.Configuration;
 
@@ -474,63 +470,6 @@ public class CfgConfig {
 		// Misc
 		CakeTimer.cakeTime = initDouble("misc", "cakeTime", 0);
 		DankersSkyblockMod.firstLaunch = initBoolean("misc", "firstLaunch", true);
-
-		// Locations
-		ScaledResolution scaled = new ScaledResolution(Minecraft.getMinecraft());
-		int height = scaled.getScaledHeight();
-		MoveCommand.coordsXY[0] = initInt("locations", "coordsX", 5);
-		MoveCommand.coordsXY[1] = initInt("locations", "coordsY", height - 25);
-		MoveCommand.displayXY[0] = initInt("locations", "displayX", 80);
-		MoveCommand.displayXY[1] = initInt("locations", "displayY", 5);
-		MoveCommand.dungeonTimerXY[0] = initInt("locations", "dungeonTimerX", 5);
-		MoveCommand.dungeonTimerXY[1] = initInt("locations", "dungeonTimerY", 5);
-		MoveCommand.skill50XY[0] = initInt("locations", "skill50X", 40);
-		MoveCommand.skill50XY[1] = initInt("locations", "skill50Y", 10);
-		MoveCommand.lividHpXY[0] = initInt("locations", "lividHpX", 40);
-		MoveCommand.lividHpXY[1] = initInt("locations", "lividHpY", 20);
-		MoveCommand.cakeTimerXY[0] = initInt("locations", "cakeTimerX", 40);
-		MoveCommand.cakeTimerXY[1] = initInt("locations", "cakeTimerY", 30);
-		MoveCommand.skillTrackerXY[0] = initInt("locations", "skillTrackerX", 40);
-		MoveCommand.skillTrackerXY[1] = initInt("locations", "skillTrackerY", 50);
-		MoveCommand.waterAnswerXY[0] = initInt("locations", "waterAnswerX", 100);
-		MoveCommand.waterAnswerXY[1] = initInt("locations", "waterAnswerY", 100);
-		MoveCommand.bonzoTimerXY[0] = initInt("locations", "bonzoTimerX", 40);
-		MoveCommand.bonzoTimerXY[1] = initInt("locations", "bonzoTimerY", 80);
-		MoveCommand.golemTimerXY[0] = initInt("locations", "golemTimerX", 100);
-		MoveCommand.golemTimerXY[1] = initInt("locations", "golemTimerY", 30);
-		MoveCommand.teammatesInRadiusXY[0] = initInt("locations", "teammatesInRadiusX", 80);
-		MoveCommand.teammatesInRadiusXY[1] = initInt("locations", "teammatesInRadiusY", 100);
-		MoveCommand.giantHPXY[0] = initInt("locations", "giantHPX", 80);
-		MoveCommand.giantHPXY[1] = initInt("locations", "giantHPY", 150);
-		MoveCommand.abilityCooldownsXY[0] = initInt("locations", "abilityCooldownsX", 120);
-		MoveCommand.abilityCooldownsXY[1] = initInt("locations", "abilityCooldownsY", 150);
-		MoveCommand.dungeonScoreXY[0] = initInt("locations", "dungeonScoreX", 150);
-		MoveCommand.dungeonScoreXY[1] = initInt("locations", "dungeonScoreY", 150);
-		MoveCommand.firePillarXY[0] = initInt("locations", "firePillarX", 200);
-		MoveCommand.firePillarXY[1] = initInt("locations", "firePillarY", 200);
-		MoveCommand.minibossTimerXY[0] = initInt("locations", "minibossTimerX", 100);
-		MoveCommand.minibossTimerXY[1] = initInt("locations", "minibossTimerY", 100);
-		MoveCommand.powderTrackerXY[0] = initInt("locations", "powderTrackerX", 100);
-		MoveCommand.powderTrackerXY[1] = initInt("locations", "powderTrackerY", 100);
-
-		// Scales
-		ScaleCommand.coordsScale = initDouble("scales", "coordsScale", 1);
-		ScaleCommand.displayScale = initDouble("scales", "displayScale", 1);
-		ScaleCommand.dungeonTimerScale = initDouble("scales", "dungeonTimerScale", 1);
-		ScaleCommand.skill50Scale = initDouble("scales", "skill50Scale", 1);
-		ScaleCommand.lividHpScale = initDouble("scales", "lividHpScale", 1);
-		ScaleCommand.cakeTimerScale = initDouble("scales", "cakeTimerScale", 1);
-		ScaleCommand.skillTrackerScale = initDouble("scales", "skillTrackerScale", 1);
-		ScaleCommand.waterAnswerScale = initDouble("scales", "waterAnswerScale", 1);
-		ScaleCommand.bonzoTimerScale = initDouble("scales", "bonzoTimerScale", 1);
-		ScaleCommand.golemTimerScale = initDouble("scales", "golemTimerScale", 1);
-		ScaleCommand.teammatesInRadiusScale = initDouble("scales", "teammatesInRadiusScale", 1);
-		ScaleCommand.giantHPScale = initDouble("scales", "giantHPScale", 1);
-		ScaleCommand.abilityCooldownsScale = initDouble("scales", "abilityCooldownsScale", 1);
-		ScaleCommand.dungeonScoreScale = initDouble("scales", "dungeonScoreScale", 1);
-		ScaleCommand.firePillarScale = initDouble("scales", "firePillarScale", 1);
-		ScaleCommand.minibossTimerScale = initDouble("scales", "minibossTimerScale", 1);
-		ScaleCommand.powderTrackerScale = initDouble("scales", "powderTrackerScale", 1);
 
 		// Skills
 		DankersSkyblockMod.farmingLevel = initInt("skills", "farming", -1);

@@ -1,10 +1,10 @@
 package me.Danker.features;
 
-import me.Danker.commands.MoveCommand;
-import me.Danker.commands.ScaleCommand;
-import me.Danker.config.ModConfig;
-import me.Danker.events.RenderOverlayEvent;
+import cc.polyfrost.oneconfig.config.annotations.Exclude;
+import cc.polyfrost.oneconfig.hud.Hud;
+import cc.polyfrost.oneconfig.libs.universal.UMatrixStack;
 import me.Danker.handlers.TextRenderer;
+import me.Danker.utils.RenderUtils;
 import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.EnumChatFormatting;
@@ -55,25 +55,63 @@ public class DungeonTimer {
         }
     }
 
-    @SubscribeEvent
-    public void renderPlayerInfo(RenderOverlayEvent event) {
-        if (ModConfig.dungeonTimer && Utils.inDungeons) {
+    public static class DungeonTimerHud extends Hud {
+
+        @Exclude
+        String exampleText = EnumChatFormatting.GRAY + "Wither Doors:\n" +
+                             EnumChatFormatting.DARK_RED + "Blood Open:\n" +
+                             EnumChatFormatting.RED + "Watcher Clear:\n" +
+                             EnumChatFormatting.BLUE + "Boss Clear:\n" +
+                             EnumChatFormatting.YELLOW + "Deaths:\n" +
+                             EnumChatFormatting.YELLOW + "Puzzle Fails:";
+
+        @Exclude
+        String exampleNums = EnumChatFormatting.GRAY + "" + 5 + "\n" +
+                             EnumChatFormatting.DARK_RED + Utils.getTimeBetween(0, 33) + "\n" +
+                             EnumChatFormatting.RED + Utils.getTimeBetween(0, 129) + "\n" +
+                             EnumChatFormatting.BLUE + Utils.getTimeBetween(0, 169) + "\n" +
+                             EnumChatFormatting.YELLOW + 2 + "\n" +
+                             EnumChatFormatting.YELLOW + 1;
+
+        @Override
+        protected void draw(UMatrixStack matrices, float x, float y, float scale, boolean example) {
             Minecraft mc = Minecraft.getMinecraft();
-            String dungeonTimerText = EnumChatFormatting.GRAY + "Wither Doors:\n" +
-                    EnumChatFormatting.DARK_RED + "Blood Open:\n" +
-                    EnumChatFormatting.RED + "Watcher Clear:\n" +
-                    EnumChatFormatting.BLUE + "Boss Clear:\n" +
-                    EnumChatFormatting.YELLOW + "Deaths:\n" +
-                    EnumChatFormatting.YELLOW + "Puzzle Fails:";
-            String dungeonTimers = EnumChatFormatting.GRAY + "" + witherDoors + "\n" +
-                    EnumChatFormatting.DARK_RED + Utils.getTimeBetween(dungeonStartTime, bloodOpenTime) + "\n" +
-                    EnumChatFormatting.RED + Utils.getTimeBetween(dungeonStartTime, watcherClearTime) + "\n" +
-                    EnumChatFormatting.BLUE + Utils.getTimeBetween(dungeonStartTime, bossClearTime) + "\n" +
-                    EnumChatFormatting.YELLOW + dungeonDeaths + "\n" +
-                    EnumChatFormatting.YELLOW + puzzleFails;
-            new TextRenderer(mc, dungeonTimerText, MoveCommand.dungeonTimerXY[0], MoveCommand.dungeonTimerXY[1], ScaleCommand.dungeonTimerScale);
-            new TextRenderer(mc, dungeonTimers, (int) (MoveCommand.dungeonTimerXY[0] + (80 * ScaleCommand.dungeonTimerScale)), MoveCommand.dungeonTimerXY[1], ScaleCommand.dungeonTimerScale);
+
+            if (example) {
+                new TextRenderer(mc, exampleText, x, y, scale);
+                new TextRenderer(mc, exampleNums, (int) (x + (80 * scale)), y, scale);
+                return;
+            }
+
+            if (enabled && Utils.inDungeons) {
+                String dungeonTimerText = EnumChatFormatting.GRAY + "Wither Doors:\n" +
+                                          EnumChatFormatting.DARK_RED + "Blood Open:\n" +
+                                          EnumChatFormatting.RED + "Watcher Clear:\n" +
+                                          EnumChatFormatting.BLUE + "Boss Clear:\n" +
+                                          EnumChatFormatting.YELLOW + "Deaths:\n" +
+                                          EnumChatFormatting.YELLOW + "Puzzle Fails:";
+                String dungeonTimers = EnumChatFormatting.GRAY + "" + witherDoors + "\n" +
+                                       EnumChatFormatting.DARK_RED + Utils.getTimeBetween(dungeonStartTime, bloodOpenTime) + "\n" +
+                                       EnumChatFormatting.RED + Utils.getTimeBetween(dungeonStartTime, watcherClearTime) + "\n" +
+                                       EnumChatFormatting.BLUE + Utils.getTimeBetween(dungeonStartTime, bossClearTime) + "\n" +
+                                       EnumChatFormatting.YELLOW + dungeonDeaths + "\n" +
+                                       EnumChatFormatting.YELLOW + puzzleFails;
+
+                new TextRenderer(mc, dungeonTimerText, x, y, scale);
+                new TextRenderer(mc, dungeonTimers, (int) (x + (80 * scale)), y, scale);
+            }
         }
+
+        @Override
+        protected float getWidth(float scale, boolean example) {
+            return (RenderUtils.getWidthFromText(exampleNums) + 80 * scale) * scale;
+        }
+
+        @Override
+        protected float getHeight(float scale, boolean example) {
+            return RenderUtils.getHeightFromText(exampleNums) * scale;
+        }
+
     }
 
 }
