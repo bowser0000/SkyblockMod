@@ -85,6 +85,7 @@ Discord Server: https://discord.gg/QsEkNQS
 - Automatically announce Vanquishers in chat
 - Kuudra notifications (stun/ballista/cloak)
 - Powder/hour tracker
+- Fix drill animation resetting
 </details>
 
 <details>

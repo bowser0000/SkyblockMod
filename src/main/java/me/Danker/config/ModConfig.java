@@ -288,6 +288,14 @@ public class ModConfig extends Config {
     )
     public static boolean golden = false;
 
+    @Switch(
+            name = "Fix Drill Animation Reset",
+            description = "Fixes drill animation resetting when the fuel updates.",
+            category = "General",
+            subcategory = "General"
+    )
+    public static boolean drillFix = false;
+
     @CfgName(
             name = "AutoAcceptReparty",
             category = "toggles"
