@@ -13,6 +13,12 @@ import cc.polyfrost.oneconfig.config.data.OptionSize;
 import cc.polyfrost.oneconfig.config.migration.CfgMigrator;
 import cc.polyfrost.oneconfig.config.migration.CfgName;
 import cc.polyfrost.oneconfig.libs.universal.UKeyboard;
+import cc.polyfrost.oneconfig.utils.IOUtils;
+import cc.polyfrost.oneconfig.utils.Notifications;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import me.Danker.DankersSkyblockMod;
 import me.Danker.features.*;
 import me.Danker.features.loot.LootDisplay;
@@ -22,9 +28,10 @@ import me.Danker.gui.alerts.AlertsGui;
 import me.Danker.gui.aliases.AliasesGui;
 import me.Danker.gui.crystalhollowwaypoints.CrystalHollowWaypointsGui;
 import net.minecraft.client.Minecraft;
-import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
+import org.apache.commons.codec.binary.Base64;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
 public class ModConfig extends Config {
@@ -68,6 +75,12 @@ public class ModConfig extends Config {
         addDependency("ticTacToeColour", () -> ticTacToe);
         addDependency("startsWithColour", () -> startsWith);
         addDependency("selectAllColour", () -> selectAll);
+        addDependency("autoWaypoints", () -> crystalHollowWaypoints);
+        addDependency("autoPlayerWaypoints", () -> crystalHollowWaypoints);
+        addDependency("autoImportWaypoints", () -> crystalHollowWaypoints);
+        addDependency("permaWaypoints", () -> crystalHollowWaypoints && autoImportWaypoints);
+        addDependency("copyWaypoints", () -> crystalHollowWaypoints);
+        addDependency("importWaypoints", () -> crystalHollowWaypoints);
     }
 
     public static String getColour(int index) {
@@ -1189,13 +1202,126 @@ public class ModConfig extends Config {
 
     // Waypoints
 
+    @CfgName(
+            name = "CrystalHollowWaypoints",
+            category = "toggles"
+    )
+    @Switch(
+            name = "Crystal Hollows Waypoints",
+            description = "Shows waypoints to various places in the Crystal Hollows.",
+            category = "Waypoints",
+            subcategory = "Crystal Hollows"
+    )
+    public static boolean crystalHollowWaypoints = false;
+
     @Button(
             name = "Crystal Hollow Waypoints",
             text = "Click",
             category = "Waypoints",
             subcategory = "Crystal Hollows"
     )
-    Runnable crystalHollowWaypoints = () -> mc.displayGuiScreen(new CrystalHollowWaypointsGui(1));
+    Runnable crystalHollowWaypointsButton = () -> mc.displayGuiScreen(new CrystalHollowWaypointsGui(1));
+
+    @CfgName(
+            name = "CrystalAutoWaypoints",
+            category = "toggles"
+    )
+    @Switch(
+            name = "Auto Waypoints",
+            description = "Automatically creates waypoints when you visit a special place in the Crystal Hollows.",
+            category = "Waypoints",
+            subcategory = "Crystal Hollows"
+    )
+    public static boolean autoWaypoints = true;
+
+    @CfgName(
+            name = "CrystalAutoPlayerWaypoints",
+            category = "toggles"
+    )
+    @Switch(
+            name = "Auto Add Player Waypoints",
+            description = "Automatically adds waypoints sent from players.",
+            category = "Waypoints",
+            subcategory = "Crystal Hollows"
+    )
+    public static boolean autoPlayerWaypoints = false;
+
+    @Switch(
+            name = "Auto Import Waypoints",
+            description = "Automatically import DSM formatted waypoints from the text field when you join a Crystal Hollows lobby.",
+            category = "Waypoints",
+            subcategory = "Crystal Hollows"
+    )
+    public static boolean autoImportWaypoints = true;
+
+    @Text(
+            name = "Import These Waypoints",
+            multiline = true,
+            size = OptionSize.DUAL,
+            category = "Waypoints",
+            subcategory = "Crystal Hollows"
+    )
+    public static String permaWaypoints = "Crystal Nucleus@-512,110,512";
+
+    @Button(
+            name = "Copy Waypoints to Clipboard",
+            text = "Copy",
+            description = "Copies current waypoints to your clipboard in a DSM format.",
+            category = "Waypoints",
+            subcategory = "Crystal Hollows"
+    )
+    Runnable copyWaypoints = () -> {
+        StringBuilder sb = new StringBuilder();
+        for (CrystalHollowWaypoints.Waypoint waypoint : CrystalHollowWaypoints.waypoints) {
+            if (sb.length() > 0) sb.append("\\n");
+            sb.append(waypoint.getFormattedWaypoint());
+        }
+        String waypoints = sb.toString();
+        if (waypoints.length() > 0) {
+            IOUtils.copyStringToClipboard(waypoints);
+            Notifications.INSTANCE.send("Success", "Copied waypoints to clipboard.");
+        }
+    };
+
+    @Button(
+            name = "Import Skytils Waypoints",
+            text = "Import",
+            description = "Imports base64 encoded Skytils waypoints from your clipboard.",
+            category = "Waypoints",
+            subcategory = "Crystal Hollows"
+    )
+    Runnable importWaypoints = () -> {
+        String clipboard = IOUtils.getStringFromClipboard();
+        if (clipboard == null || !Base64.isBase64(clipboard)) {
+            Notifications.INSTANCE.send("Error", "Could not find Skytils waypoints in clipboard.");
+            return;
+        }
+
+        byte[] decoded = Base64.decodeBase64(clipboard);
+        String objectString = new String(decoded, StandardCharsets.UTF_8);
+        JsonObject obj = new Gson().fromJson(objectString, JsonObject.class);
+        JsonArray categories = obj.get("categories").getAsJsonArray();
+
+        for (JsonElement element : categories) {
+            JsonObject inner = element.getAsJsonObject();
+
+            String island = inner.get("island").getAsString();
+            if (!island.equals("crystal_hollows")) return;
+
+            JsonArray waypoints = inner.get("waypoints").getAsJsonArray();
+
+            for (JsonElement waypointElement : waypoints) {
+                JsonObject waypoint = waypointElement.getAsJsonObject();
+
+                String name = waypoint.get("name").getAsString();
+                String x = waypoint.get("x").getAsString();
+                String y = waypoint.get("y").getAsString();
+                String z = waypoint.get("z").getAsString();
+
+                CrystalHollowWaypoints.addWaypoint(name, x, y, z, false);
+            }
+        }
+    };
 
     // Messages
 
@@ -1293,7 +1419,7 @@ public class ModConfig extends Config {
     )
     Runnable reloadMusic = () -> {
         CustomMusic.init(DankersSkyblockMod.configDirectory);
-        mc.thePlayer.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Reloaded custom music."));
+        Notifications.INSTANCE.send("Success", "Reloaded custom music.");
     };
 
     @CfgName(

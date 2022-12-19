@@ -4,7 +4,6 @@ import me.Danker.DankersSkyblockMod;
 import me.Danker.features.Alerts;
 import me.Danker.features.CakeTimer;
 import me.Danker.features.ChatAliases;
-import me.Danker.features.CrystalHollowWaypoints;
 import me.Danker.features.loot.*;
 import net.minecraftforge.common.config.ConfigCategory;
 import net.minecraftforge.common.config.Configuration;
@@ -186,9 +185,6 @@ public class CfgConfig {
 		init();
 
 		// Toggles
-		CrystalHollowWaypoints.toggled = initBoolean("toggles", "CrystalHollowWaypoints", false);
-		CrystalHollowWaypoints.autoWaypoints = initBoolean("toggles", "CrystalAutoWaypoints", true); // enabled by default
-		CrystalHollowWaypoints.autoPlayerWaypoints = initBoolean("toggles", "CrystalAutoPlayerWaypoints", false);
 		Alerts.toggled = initBoolean("toggles", "Alerts", false);
 		ChatAliases.toggled = initBoolean("toggles", "Aliases", false);
 		

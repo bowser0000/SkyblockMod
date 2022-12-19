@@ -1,5 +1,6 @@
 package me.Danker.commands;
 
+import cc.polyfrost.oneconfig.utils.IOUtils;
 import me.Danker.DankersSkyblockMod;
 import me.Danker.config.ModConfig;
 import me.Danker.features.loot.LootDisplay;
@@ -11,8 +12,6 @@ import net.minecraft.command.ICommandSender;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.StringUtils;
 
-import java.awt.*;
-import java.awt.datatransfer.StringSelection;
 import java.util.Collections;
 import java.util.List;
 
@@ -64,8 +63,7 @@ public class DankerGuiCommand extends CommandBase {
 				}
 			}
 			debug.append("```");
-			StringSelection clipboard = new StringSelection(debug.toString());
-			Toolkit.getDefaultToolkit().getSystemClipboard().setContents(clipboard, clipboard);
+			IOUtils.copyStringToClipboard(debug.toString());
 			Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Debug stats copied to clipboard."));
 			return;
 		}

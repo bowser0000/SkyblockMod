@@ -25,13 +25,11 @@ import java.util.regex.Pattern;
 
 public class CrystalHollowWaypoints {
 
-    public static boolean toggled;
-    public static boolean autoWaypoints;
-    public static boolean autoPlayerWaypoints;
-
     public static List<Waypoint> waypoints = new ArrayList<>();
+    public static Pattern dsmPattern = Pattern.compile("(?<name>.*?) @ (?<x>\\d{1,3}) (?<y>\\d{1,3}) (?<z>\\d{1,3})");
     public static Pattern skytilsPattern = Pattern.compile("(?<name>.*?): (?<x>\\d{1,3}) (?<y>\\d{1,3}) (?<z>\\d{1,3})");
 
+    static boolean perma = false;
     static boolean khazad = false;
     static boolean fairy = false;
     static boolean temple = false;
@@ -41,7 +39,6 @@ public class CrystalHollowWaypoints {
     static boolean king = false;
     static boolean queen = false;
     static boolean city = false;
-    static boolean nucleus = false;
     static boolean shop = false;
 
     @SubscribeEvent
@@ -53,13 +50,15 @@ public class CrystalHollowWaypoints {
         World world = mc.theWorld;
 
         if (DankersSkyblockMod.tickAmount % 20 == 0) {
-            if (autoWaypoints && Utils.tabLocation.equals("Crystal Hollows") && world != null) {
+            if (ModConfig.autoWaypoints && Utils.tabLocation.equals("Crystal Hollows") && world != null) {
                 boolean found = false;
                 List<String> scoreboard = ScoreboardHandler.getSidebarLines();
 
-                if (!nucleus) {
-                    nucleus = true;
-                    waypoints.add(new Waypoint("Crystal Nucleus", new BlockPos(512, 110, 512)));
+                if (!perma) {
+                    perma = true;
+                    try {
+                        if (ModConfig.autoImportWaypoints) CrystalHollowWaypoints.addDSMWaypoints(ModConfig.permaWaypoints, false, true);
+                    } catch (ArrayIndexOutOfBoundsException ignored) {}
                 }
 
                 for (String s : scoreboard) {
@@ -110,7 +109,7 @@ public class CrystalHollowWaypoints {
                     }
                 }
 
-                if (found && toggled) {
+                if (found && ModConfig.crystalHollowWaypoints) {
                     Waypoint latest = waypoints.get(waypoints.size() - 1);
                     player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Added " + latest.location + " @ " + latest.getPos()));
                 }
@@ -129,13 +128,13 @@ public class CrystalHollowWaypoints {
         $SBECHWP:Mines of Divan@-673,117,426
         $SBECHWP:Khazad-dûm@-292,63,281\nFairy Grotto@-216,110,400\njungle temple@-525,110,395\nJungle Temple@-493,101,425\nMines of Divan@-673,117,426
         */
-        if (toggled && Utils.tabLocation.equals("Crystal Hollows")) {
+        if (ModConfig.crystalHollowWaypoints && Utils.tabLocation.equals("Crystal Hollows")) {
             if (!message.contains(player.getName())) {
                 if (message.contains(": $DSMCHWP:") || message.contains(": $SBECHWP:")) {
                     String waypoints = message.substring(message.lastIndexOf(":") + 1);
 
-                    if (autoPlayerWaypoints) {
-                        addDSMWaypoints(waypoints, true);
+                    if (ModConfig.autoPlayerWaypoints) {
+                        addDSMWaypoints(waypoints, true, false);
                         return;
                     }
 
@@ -160,7 +159,7 @@ public class CrystalHollowWaypoints {
                         String y = matcher.group("y");
                         String z = matcher.group("z");
 
-                        if (autoPlayerWaypoints) {
+                        if (ModConfig.autoPlayerWaypoints) {
                             addWaypoint(name, x, y, z, true);
                             return;
                         }
@@ -175,6 +174,33 @@ public class CrystalHollowWaypoints {
                                 ex.printStackTrace();
                             }
                             player.addChatMessage(new ChatComponentText("\n" + ModConfig.getColour(ModConfig.mainColour) + "Skytils Crystal Hollows waypoints found. Click to add.\n").appendSibling(add));
+                        }).start();
+                    }
+                } else if (message.contains(" @ ")) {
+                    String text = message.substring(message.indexOf(":") + 2);
+                    Matcher matcher = dsmPattern.matcher(text);
+
+                    if (matcher.matches()) {
+                        String name = matcher.group("name");
+                        String x = matcher.group("x");
+                        String y = matcher.group("y");
+                        String z = matcher.group("z");
+
+                        if (ModConfig.autoPlayerWaypoints) {
+                            addWaypoint(name, x, y, z, true);
+                            return;
+                        }
+
+                        ChatComponentText add = new ChatComponentText(EnumChatFormatting.GREEN + "" + EnumChatFormatting.BOLD + "  [ADD]\n");
+                        add.setChatStyle(add.getChatStyle().setChatClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/dsmaddcrystalhollowwaypoints st " + x + " " + y + " " + z + " " + name)));
+
+                        new Thread(() -> {
+                            try {
+                                Thread.sleep(10);
+                            } catch (InterruptedException ex) {
+                                ex.printStackTrace();
+                            }
+                            player.addChatMessage(new ChatComponentText("\n" + ModConfig.getColour(ModConfig.mainColour) + "DSM Crystal Hollows waypoints found. Click to add.\n").appendSibling(add));
                         }).start();
                     }
                 }
@@ -193,7 +219,7 @@ public class CrystalHollowWaypoints {
 
     @SubscribeEvent
     public void onWorldRender(RenderWorldLastEvent event) {
-        if (toggled && Utils.tabLocation.equals("Crystal Hollows")) {
+        if (ModConfig.crystalHollowWaypoints && Utils.tabLocation.equals("Crystal Hollows")) {
             for (Waypoint waypoint : waypoints) {
                 if (waypoint.toggled) RenderUtils.draw3DWaypointString(waypoint, event.partialTicks);
             }
@@ -203,6 +229,7 @@ public class CrystalHollowWaypoints {
     @SubscribeEvent
     public void onWorldChange(WorldEvent.Load event) {
         waypoints.clear();
+        perma = false;
         khazad = false;
         fairy = false;
         temple = false;
@@ -212,7 +239,6 @@ public class CrystalHollowWaypoints {
         king = false;
         queen = false;
         city = false;
-        nucleus = false;
         shop = false;
     }
 
@@ -261,7 +287,7 @@ public class CrystalHollowWaypoints {
         Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Added " + waypoint.location + " @ " + waypoint.getPos()));
     }
 
-    public static void addDSMWaypoints(String list, boolean auto) {
+    public static void addDSMWaypoints(String list, boolean auto, boolean silent) {
         String[] waypointsList = list.split("\\\\n");
 
         for (String waypoint : waypointsList) {
@@ -284,7 +310,7 @@ public class CrystalHollowWaypoints {
             }
 
             waypoints.add(newWaypoint);
-            Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Added " + newWaypoint.location + " @ " + newWaypoint.getPos()));
+            if (!silent) Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Added " + newWaypoint.location + " @ " + newWaypoint.getPos()));
         }
     }
 
