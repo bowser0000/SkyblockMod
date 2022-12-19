@@ -1,11 +1,8 @@
 package me.Danker.gui.alerts;
 
 import me.Danker.DankersSkyblockMod;
-import me.Danker.config.CfgConfig;
 import me.Danker.features.Alerts;
-import me.Danker.gui.buttons.FeatureButton;
 import me.Danker.utils.RenderUtils;
-import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
@@ -23,7 +20,6 @@ public class AlertsGui extends GuiScreen {
     private GuiButton backPage;
     private GuiButton nextPage;
     private GuiButton add;
-    private GuiButton alerts;
 
     public AlertsGui(int page) {
         this.page = page;
@@ -40,11 +36,9 @@ public class AlertsGui extends GuiScreen {
         goBack = new GuiButton(0, 2, height - 30, 100, 20, "Go Back");
         backPage = new GuiButton(0, width / 2 - 100, (int) (height * 0.8), 80, 20, "< Back");
         nextPage = new GuiButton(0, width / 2 + 20, (int) (height * 0.8), 80, 20, "Next >");
-        alerts = new FeatureButton("Alerts: " + Utils.getColouredBoolean(Alerts.toggled), "Sends custom alert when a message is recieved");
         add = new GuiButton(0, 0, 0, "Add Alert");
 
         allButtons.clear();
-        allButtons.add(alerts);
         allButtons.add(add);
         for (int i = 0; i < Alerts.alerts.size(); i++) {
             Alerts.Alert alert = Alerts.alerts.get(i);
@@ -90,10 +84,6 @@ public class AlertsGui extends GuiScreen {
             mc.displayGuiScreen(new AlertsGui(page - 1));
         } else if (button == add) {
             mc.displayGuiScreen(new AlertAddGui());
-        } else if (button == alerts) {
-            Alerts.toggled = !Alerts.toggled;
-            CfgConfig.writeBooleanConfig("toggles", "Alerts", Alerts.toggled);
-            alerts.displayString = "Alerts: " + Utils.getColouredBoolean(Alerts.toggled);
         } else {
             mc.displayGuiScreen(new AlertActionGui(button.id));
         }

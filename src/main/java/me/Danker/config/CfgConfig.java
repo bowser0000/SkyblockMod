@@ -1,9 +1,7 @@
 package me.Danker.config;
 
 import me.Danker.DankersSkyblockMod;
-import me.Danker.features.Alerts;
 import me.Danker.features.CakeTimer;
-import me.Danker.features.ChatAliases;
 import me.Danker.features.loot.*;
 import net.minecraftforge.common.config.ConfigCategory;
 import net.minecraftforge.common.config.Configuration;
@@ -183,10 +181,6 @@ public class CfgConfig {
 	
 	public static void reloadConfig() {
 		init();
-
-		// Toggles
-		Alerts.toggled = initBoolean("toggles", "Alerts", false);
-		ChatAliases.toggled = initBoolean("toggles", "Aliases", false);
 		
 		// Wolf
 		WolfTracker.svens = initInt("wolf", "svens", 0);

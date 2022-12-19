@@ -1,6 +1,7 @@
 package me.Danker.features;
 
 import com.google.gson.GsonBuilder;
+import me.Danker.config.ModConfig;
 import me.Danker.events.ModInitEvent;
 import me.Danker.events.PacketWriteEvent;
 import net.minecraft.client.Minecraft;
@@ -14,8 +15,6 @@ import java.util.List;
 
 public class ChatAliases {
 
-    public static boolean toggled;
-
     public static List<Alias> aliases = new ArrayList<>();
     public static String configFile;
 
@@ -26,7 +25,7 @@ public class ChatAliases {
 
     @SubscribeEvent
     public void onPacketWrite(PacketWriteEvent event) {
-        if (toggled) {
+        if (ModConfig.aliases) {
             if (event.packet instanceof C01PacketChatMessage) {
                 C01PacketChatMessage packet = (C01PacketChatMessage) event.packet;
                 String message = packet.getMessage();

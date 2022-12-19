@@ -1,6 +1,7 @@
 package me.Danker.features;
 
 import com.google.gson.GsonBuilder;
+import me.Danker.config.ModConfig;
 import me.Danker.events.ModInitEvent;
 import me.Danker.utils.Utils;
 import net.minecraft.util.EnumChatFormatting;
@@ -19,8 +20,6 @@ import java.util.regex.Pattern;
 
 public class Alerts {
 
-    public static boolean toggled;
-
     public static List<Alert> alerts = new ArrayList<>();
     public static HashMap<Alert, Pattern> patterns = new HashMap<>();
     public static String configFile;
@@ -32,7 +31,7 @@ public class Alerts {
 
     @SubscribeEvent
     public void onChat(ClientChatReceivedEvent event) {
-        if (!toggled || event.type == 2) return;
+        if (!ModConfig.alerts || event.type == 2) return;
 
         String message = StringUtils.stripControlCodes(event.message.getUnformattedText());
 

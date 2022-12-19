@@ -1,11 +1,8 @@
 package me.Danker.gui.aliases;
 
 import me.Danker.DankersSkyblockMod;
-import me.Danker.config.CfgConfig;
 import me.Danker.features.ChatAliases;
-import me.Danker.gui.buttons.FeatureButton;
 import me.Danker.utils.RenderUtils;
-import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
@@ -23,7 +20,6 @@ public class AliasesGui extends GuiScreen {
     private GuiButton backPage;
     private GuiButton nextPage;
     private GuiButton add;
-    private GuiButton aliases;
 
     public AliasesGui(int page) {
         this.page = page;
@@ -45,11 +41,9 @@ public class AliasesGui extends GuiScreen {
         goBack = new GuiButton(0, 2, height - 30, 100, 20, "Go Back");
         backPage = new GuiButton(0, width / 2 - 100, (int) (height * 0.8), 80, 20, "< Back");
         nextPage = new GuiButton(0, width / 2 + 20, (int) (height * 0.8), 80, 20, "Next >");
-        aliases = new FeatureButton("Aliases: " + Utils.getColouredBoolean(ChatAliases.toggled), "Replaces text in chat with an alias");
         add = new GuiButton(0, 0, 0, "Add Alias");
 
         allButtons.clear();
-        allButtons.add(aliases);
         allButtons.add(add);
         for (int i = 0; i < ChatAliases.aliases.size(); i++) {
             ChatAliases.Alias alias = ChatAliases.aliases.get(i);
@@ -95,10 +89,6 @@ public class AliasesGui extends GuiScreen {
             mc.displayGuiScreen(new AliasesGui(page - 1));
         } else if (button == add) {
             mc.displayGuiScreen(new AliasesAddGui());
-        } else if (button == aliases) {
-            ChatAliases.toggled = !ChatAliases.toggled;
-            CfgConfig.writeBooleanConfig("toggles", "Aliases", ChatAliases.toggled);
-            aliases.displayString = "Aliases: " + Utils.getColouredBoolean(ChatAliases.toggled);
         } else {
             mc.displayGuiScreen(new AliasesActionGui(button.id));
         }

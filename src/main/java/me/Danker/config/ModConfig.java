@@ -1035,13 +1035,25 @@ public class ModConfig extends Config {
     )
     public static String alertNoise = "random.orb";
 
+    @CfgName(
+            name = "Alerts",
+            category = "toggles"
+    )
+    @Switch(
+            name = "Custom Alerts",
+            description = "Sends custom alert when a message is recieved",
+            category = "Alerts",
+            subcategory = "Custom Alerts"
+    )
+    public static boolean alerts = false;
+
     @Button(
             name = "Custom Alerts",
             text = "Click",
             category = "Alerts",
             subcategory = "Custom Alerts"
     )
-    Runnable alerts = () -> mc.displayGuiScreen(new AlertsGui(1));
+    Runnable alertsButton = () -> mc.displayGuiScreen(new AlertsGui(1));
 
     @CfgName(
             name = "GolemAlerts",
@@ -1192,13 +1204,25 @@ public class ModConfig extends Config {
 
     // Aliases
 
+    @CfgName(
+            name = "Aliases",
+            category = "toggles"
+    )
+    @Switch(
+            name = "Custom Aliases",
+            description = "Replaces text in chat with an alias.",
+            category = "Aliases",
+            subcategory = "Custom Aliases"
+    )
+    public static boolean aliases = false;
+
     @Button(
             name = "Custom Aliases",
             text = "Click",
             category = "Aliases",
             subcategory = "Custom Aliases"
     )
-    Runnable aliases = () -> mc.displayGuiScreen(new AliasesGui(1));
+    Runnable aliasesButton = () -> mc.displayGuiScreen(new AliasesGui(1));
 
     // Waypoints
 
