@@ -86,9 +86,11 @@ public class UltrasequencerSolver {
                             }
                         }
                     }
-                    if (clickInOrderSlots[lastUltraSequencerClicked] != null) {
-                        Slot nextSlot = clickInOrderSlots[lastUltraSequencerClicked];
-                        RenderUtils.drawOnSlot(event.chestSize, nextSlot.xDisplayPosition, nextSlot.yDisplayPosition, ModConfig.ultrasequencerNextColour.getRGB());
+                    if (lastUltraSequencerClicked < clickInOrderSlots.length) {
+                        if (clickInOrderSlots[lastUltraSequencerClicked] != null) {
+                            Slot nextSlot = clickInOrderSlots[lastUltraSequencerClicked];
+                            RenderUtils.drawOnSlot(event.chestSize, nextSlot.xDisplayPosition, nextSlot.yDisplayPosition, ModConfig.ultrasequencerNextColour.getRGB());
+                        }
                     }
                     if (lastUltraSequencerClicked + 1 < clickInOrderSlots.length) {
                         if (clickInOrderSlots[lastUltraSequencerClicked + 1] != null) {
