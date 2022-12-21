@@ -110,8 +110,8 @@ public class AlertAddGui extends GuiScreen {
 
         RenderUtils.drawCenteredText("Mode: " + mode, width, (int) (height * 0.1), 1D);
         RenderUtils.drawCenteredText("Location: " + location, width, (int) (height * 0.15), 1D);
-        new TextRenderer(mc, "Trigger:", width / 2 - 145, (int) (height * 0.42), 1D);
-        new TextRenderer(mc, "Alert Text:", width / 2 - 158, (int) (height * 0.52), 1D);
+        TextRenderer.drawText("Trigger:", width / 2 - 145, (int) (height * 0.42), 1D);
+        TextRenderer.drawText("Alert Text:", width / 2 - 158, (int) (height * 0.52), 1D);
     }
 
     @Override

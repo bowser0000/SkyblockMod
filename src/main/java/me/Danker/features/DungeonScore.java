@@ -183,8 +183,8 @@ public class DungeonScore {
             Minecraft mc = Minecraft.getMinecraft();
 
             if (example) {
-                new TextRenderer(mc, exampleText, x, y, scale);
-                new TextRenderer(mc, exampleNums, (int) (x + (80 * scale)), y, scale);
+                TextRenderer.drawHUDText(exampleText, x, y, scale);
+                TextRenderer.drawHUDText(exampleNums, (int) (x + (80 * scale)), y, scale);
                 return;
             }
 
@@ -217,8 +217,8 @@ public class DungeonScore {
                                EnumChatFormatting.GOLD + timeScore + "\n" +
                                EnumChatFormatting.GOLD + bonusScore + "\n" +
                                EnumChatFormatting.GOLD + totalScore + EnumChatFormatting.GRAY + " (" + total + EnumChatFormatting.GRAY + ")";
-                new TextRenderer(mc, scoreText, x, y, scale);
-                new TextRenderer(mc, score, (int) (x + (80 * scale)), y, scale);
+                TextRenderer.drawHUDText(scoreText, x, y, scale);
+                TextRenderer.drawHUDText(score, (int) (x + (80 * scale)), y, scale);
             }
         }
 

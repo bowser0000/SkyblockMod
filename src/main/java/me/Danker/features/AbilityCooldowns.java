@@ -124,12 +124,12 @@ public class AbilityCooldowns {
         @Override
         protected void draw(UMatrixStack matrices, float x, float y, float scale, boolean example) {
             if (example) {
-                new TextRenderer(Minecraft.getMinecraft(), exampleText, x, y, scale);
+                TextRenderer.drawHUDText(exampleText, x, y, scale);
                 return;
             }
 
             if (enabled && Utils.inSkyblock && cooldowns.size() > 0) {
-                new TextRenderer(Minecraft.getMinecraft(), getText(), x, y, scale);
+                TextRenderer.drawHUDText(getText(), x, y, scale);
             }
         }
 

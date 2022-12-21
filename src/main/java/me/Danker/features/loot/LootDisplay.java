@@ -137,8 +137,8 @@ public class LootDisplay extends Hud {
         Minecraft mc = Minecraft.getMinecraft();
 
         if (example) {
-            new TextRenderer(mc, exampleText, x, y, scale);
-            new TextRenderer(mc, exampleNums, (int) (x + (110 * scale)), y, scale);
+            TextRenderer.drawHUDText(exampleText, x, y, scale);
+            TextRenderer.drawHUDText(exampleNums, (int) (x + (110 * scale)), y, scale);
             return;
         }
 
@@ -730,8 +730,8 @@ public class LootDisplay extends Hud {
                                     EnumChatFormatting.AQUA + bossesBetween;
 
                             if (splitFishing) {
-                                new TextRenderer(mc, dropsTextTwo, (int) (x + (160 * scale)), y, scale);
-                                new TextRenderer(mc, countTextTwo, (int) (x + (270 * scale)), y, scale);
+                                TextRenderer.drawHUDText(dropsTextTwo, (int) (x + (160 * scale)), y, scale);
+                                TextRenderer.drawHUDText(countTextTwo, (int) (x + (270 * scale)), y, scale);
                             } else {
                                 dropsText += "\n" + dropsTextTwo;
                                 countText += "\n" + countTextTwo;
@@ -791,8 +791,8 @@ public class LootDisplay extends Hud {
                                     EnumChatFormatting.AQUA + bossesBetween;
 
                             if (splitFishing) {
-                                new TextRenderer(mc, dropsTextTwo, (int) (x + (160 * scale)), y, scale);
-                                new TextRenderer(mc, countTextTwo, (int) (x + (270 * scale)), y, scale);
+                                TextRenderer.drawHUDText(dropsTextTwo, (int) (x + (160 * scale)), y, scale);
+                                TextRenderer.drawHUDText(countTextTwo, (int) (x + (270 * scale)), y, scale);
                             } else {
                                 dropsText += "\n" + dropsTextTwo;
                                 countText += "\n" + countTextTwo;
@@ -1747,8 +1747,8 @@ public class LootDisplay extends Hud {
                         }
                         break;
                 }
-                new TextRenderer(mc, dropsText, x, y, scale);
-                new TextRenderer(mc, countText, (int) (x + (110 * scale)), y, scale);
+                TextRenderer.drawHUDText(dropsText, x, y, scale);
+                TextRenderer.drawHUDText(countText, (int) (x + (110 * scale)), y, scale);
             }
         }
     }

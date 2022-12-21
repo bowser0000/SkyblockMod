@@ -40,7 +40,7 @@ public class RenderUtils {
 
             int titleX = (int) ((width / 2) - (textLength * scale / 2));
             int titleY = (int) ((height * 0.45) / scale) + (int) (drawHeight * scale);
-            new TextRenderer(mc, title, titleX, titleY, scale);
+            TextRenderer.drawHUDText(title, titleX, titleY, scale);
             drawHeight += mc.fontRendererObj.FONT_HEIGHT;
         }
     }
@@ -410,7 +410,7 @@ public class RenderUtils {
     public static void drawCenteredText(String text, int screenWidth, int height, double scale) {
         Minecraft mc = Minecraft.getMinecraft();
         int textWidth = mc.fontRendererObj.getStringWidth(text);
-        new TextRenderer(mc, text, screenWidth / 2 - textWidth / 2, height, scale);
+        TextRenderer.drawText(text, screenWidth / 2 - textWidth / 2, height, scale);
     }
 
     public static void drawModalRectWithCustomSizedTexture(double x, double y, float u, float v, int width, int height, float textureWidth, float textureHeight)

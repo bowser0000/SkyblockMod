@@ -81,8 +81,8 @@ public class AliasesAddGui extends GuiScreen {
         text.drawTextBox();
         alias.drawTextBox();
 
-        new TextRenderer(mc, "Text:", width / 2 - 135, (int) (height * 0.22), 1D);
-        new TextRenderer(mc, "Alias:", width / 2 - 136, (int) (height * 0.32), 1D);
+        TextRenderer.drawText("Text:", width / 2 - 135, (int) (height * 0.22), 1D);
+        TextRenderer.drawText("Alias:", width / 2 - 136, (int) (height * 0.32), 1D);
     }
 
     @Override

@@ -166,12 +166,12 @@ public class WaterSolver {
         @Override
         protected void draw(UMatrixStack matrices, float x, float y, float scale, boolean example) {
             if (example) {
-                new TextRenderer(Minecraft.getMinecraft(), exampleText, x, y, scale);
+                TextRenderer.drawHUDText(exampleText, x, y, scale);
                 return;
             }
 
             if (enabled && Utils.inDungeons && waterAnswers != null) {
-                new TextRenderer(Minecraft.getMinecraft(), waterAnswers, x, y, scale);
+                TextRenderer.drawHUDText(waterAnswers, x, y, scale);
             }
         }
 

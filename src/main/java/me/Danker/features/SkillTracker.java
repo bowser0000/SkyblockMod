@@ -333,17 +333,17 @@ public class SkillTracker {
             Minecraft mc = Minecraft.getMinecraft();
 
             if (example) {
-                new TextRenderer(mc, exampleText, x, y, scale);
+                TextRenderer.drawHUDText(exampleText, x, y, scale);
                 return;
             }
 
             if (enabled && Utils.inSkyblock) {
                 if (!Utils.skillsInitialized()) {
-                    new TextRenderer(mc, EnumChatFormatting.RED + "Please open the skill menu to use skill features. (/skills)", x, y, scale);
+                    TextRenderer.drawHUDText(EnumChatFormatting.RED + "Please open the skill menu to use skill features. (/skills)", x, y, scale);
                     return;
                 }
 
-                new TextRenderer(mc, getText(), x, y, scale);
+                TextRenderer.drawHUDText(getText(), x, y, scale);
             }
         }
 

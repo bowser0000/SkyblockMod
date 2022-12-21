@@ -10,7 +10,6 @@ import me.Danker.config.ModConfig;
 import me.Danker.handlers.TextRenderer;
 import me.Danker.utils.RenderUtils;
 import me.Danker.utils.Utils;
-import net.minecraft.client.Minecraft;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
@@ -134,18 +133,18 @@ public class Skill50Display {
         @Override
         protected void draw(UMatrixStack matrices, float x, float y, float scale, boolean example) {
             if (example) {
-                new TextRenderer(Minecraft.getMinecraft(), exampleText, x, y, scale);
+                TextRenderer.drawHUDText(exampleText, x, y, scale);
                 return;
             }
 
             if (enabled) {
                 if (!Utils.skillsInitialized() && Utils.inSkyblock) {
-                    new TextRenderer(Minecraft.getMinecraft(), EnumChatFormatting.RED + "Please open the skill menu to use skill features. (/skills)", x, y, scale);
+                    TextRenderer.drawHUDText(EnumChatFormatting.RED + "Please open the skill menu to use skill features. (/skills)", x, y, scale);
                     return;
                 }
 
                 if (showSkill) {
-                    new TextRenderer(Minecraft.getMinecraft(), skillText, x, y, scale);
+                    TextRenderer.drawHUDText(skillText, x, y, scale);
                 }
             }
         }

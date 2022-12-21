@@ -96,7 +96,7 @@ public class ChronomatronSolver {
             Minecraft mc = Minecraft.getMinecraft();
             ScaledResolution sr = new ScaledResolution(mc);
             int guiLeft = (sr.getScaledWidth() - 176) / 2;
-            new TextRenderer(mc, String.join("\n", chronomatronPattern), (int) (guiLeft * 0.8), 10, 1);
+            TextRenderer.drawText(String.join("\n", chronomatronPattern), (int) (guiLeft * 0.8), 10, 1);
         }
     }
 

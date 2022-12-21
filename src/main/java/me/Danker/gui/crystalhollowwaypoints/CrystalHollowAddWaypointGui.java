@@ -84,9 +84,9 @@ public class CrystalHollowAddWaypointGui extends GuiScreen {
         y.drawTextBox();
         z.drawTextBox();
 
-        new TextRenderer(mc, "X:", width / 2 - 85, (int) (height * 0.35), 1D);
-        new TextRenderer(mc, "Y:", width / 2 - 25, (int) (height * 0.35), 1D);
-        new TextRenderer(mc, "Z:", width / 2 + 35, (int) (height * 0.35), 1D);
+        TextRenderer.drawText("X:", width / 2 - 85, (int) (height * 0.35), 1D);
+        TextRenderer.drawText("Y:", width / 2 - 25, (int) (height * 0.35), 1D);
+        TextRenderer.drawText("Z:", width / 2 + 35, (int) (height * 0.35), 1D);
     }
 
     @Override

@@ -81,7 +81,7 @@ public class BonzoMaskTimer {
 
                 GL11.glScaled(scaleReset, scaleReset, scaleReset);
 
-                new TextRenderer(mc, exampleText, x + 20 * scale, y + 5 * scale, scale);
+                TextRenderer.drawHUDText(exampleText, x + 20 * scale, y + 5 * scale, scale);
                 return;
             }
 
@@ -96,7 +96,7 @@ public class BonzoMaskTimer {
 
                     GL11.glScaled(scaleReset, scaleReset, scaleReset);
 
-                    new TextRenderer(mc, getText(), x + 20 * scale, y + 5 * scale, scale);
+                    TextRenderer.drawHUDText(getText(), x + 20 * scale, y + 5 * scale, scale);
                 }
             }
         }

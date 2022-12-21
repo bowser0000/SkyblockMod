@@ -78,8 +78,8 @@ public class DungeonTimer {
             Minecraft mc = Minecraft.getMinecraft();
 
             if (example) {
-                new TextRenderer(mc, exampleText, x, y, scale);
-                new TextRenderer(mc, exampleNums, (int) (x + (80 * scale)), y, scale);
+                TextRenderer.drawHUDText(exampleText, x, y, scale);
+                TextRenderer.drawHUDText(exampleNums, (int) (x + (80 * scale)), y, scale);
                 return;
             }
 
@@ -97,8 +97,8 @@ public class DungeonTimer {
                                        EnumChatFormatting.YELLOW + dungeonDeaths + "\n" +
                                        EnumChatFormatting.YELLOW + puzzleFails;
 
-                new TextRenderer(mc, dungeonTimerText, x, y, scale);
-                new TextRenderer(mc, dungeonTimers, (int) (x + (80 * scale)), y, scale);
+                TextRenderer.drawHUDText(dungeonTimerText, x, y, scale);
+                TextRenderer.drawHUDText(dungeonTimers, (int) (x + (80 * scale)), y, scale);
             }
         }
 
