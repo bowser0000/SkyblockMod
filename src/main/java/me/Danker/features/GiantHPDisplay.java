@@ -5,7 +5,6 @@ import cc.polyfrost.oneconfig.hud.Hud;
 import cc.polyfrost.oneconfig.libs.universal.UMatrixStack;
 import me.Danker.DankersSkyblockMod;
 import me.Danker.config.ModConfig;
-import me.Danker.events.RenderOverlayEvent;
 import me.Danker.handlers.ScoreboardHandler;
 import me.Danker.handlers.TextRenderer;
 import me.Danker.utils.RenderUtils;
@@ -99,11 +98,6 @@ public class GiantHPDisplay {
 
             return sb.toString();
         }
-
-    }
-
-    @SubscribeEvent
-    public void renderPlayerInfo(RenderOverlayEvent event) {
 
     }
 

@@ -7,7 +7,6 @@ import cc.polyfrost.oneconfig.hud.Hud;
 import cc.polyfrost.oneconfig.libs.universal.UMatrixStack;
 import me.Danker.DankersSkyblockMod;
 import me.Danker.config.ModConfig;
-import me.Danker.events.RenderOverlayEvent;
 import me.Danker.handlers.ScoreboardHandler;
 import me.Danker.handlers.TextRenderer;
 import me.Danker.locations.DungeonFloor;
@@ -168,11 +167,6 @@ public class LividSolver {
             if (livid != null) return livid.getName().replace(EnumChatFormatting.BOLD.toString(), "");
             return "";
         }
-
-    }
-
-    @SubscribeEvent
-    public void renderPlayerInfo(RenderOverlayEvent event) {
 
     }
 

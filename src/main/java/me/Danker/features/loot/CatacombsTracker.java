@@ -3,6 +3,7 @@ package me.Danker.features.loot;
 import me.Danker.config.CfgConfig;
 import me.Danker.events.ChestSlotClickedEvent;
 import me.Danker.handlers.ScoreboardHandler;
+import me.Danker.locations.Location;
 import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
@@ -218,7 +219,7 @@ public class CatacombsTracker {
     public void onChat(ClientChatReceivedEvent event) {
         String message = StringUtils.stripControlCodes(event.message.getUnformattedText());
 
-        if (!Utils.isInDungeons()) return;
+        if (Utils.currentLocation != Location.CATACOMBS) return;
         if (event.type == 2) return;
 
         if (message.contains("    Team Score: ")) {
