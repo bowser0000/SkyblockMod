@@ -33,7 +33,7 @@ public class ThreeManSolver {
     public void onChat(ClientChatReceivedEvent event) {
         String message = StringUtils.stripControlCodes(event.message.getUnformattedText());
 
-        if (!Utils.inDungeons) return;
+        if (!Utils.isInDungeons()) return;
 
         if (ModConfig.threeMan && message.startsWith("[NPC]")) {
             if (DankersSkyblockMod.data != null && DankersSkyblockMod.data.has("threeman")) {

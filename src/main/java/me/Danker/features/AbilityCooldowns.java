@@ -50,7 +50,7 @@ public class AbilityCooldowns {
         } else {
             String message = StringUtils.stripControlCodes(event.message.getUnformattedText());
 
-            if (Utils.inDungeons && message.startsWith("[Mage] Cooldown Reduction ")) {
+            if (Utils.isInDungeons() && message.startsWith("[Mage] Cooldown Reduction ")) {
                 mageReduction = Integer.parseInt(message.substring(message.indexOf(">") + 2, message.length() - 1)) / 100D;
             }
         }
@@ -68,7 +68,7 @@ public class AbilityCooldowns {
             List<Slot> invSlots = ((GuiChest) mc.currentScreen).inventorySlots.inventorySlots;
             String chestName = chest.getLowerChestInventory().getDisplayName().getUnformattedText().trim();
 
-            if (ModConfig.abilityCooldownHud.isEnabled() && Utils.inDungeons && chestName.startsWith("Catacombs - ")) {
+            if (ModConfig.abilityCooldownHud.isEnabled() && Utils.isInDungeons() && chestName.startsWith("Catacombs - ")) {
                 ItemStack mage = invSlots.get(30).getStack();
                 if (mage == null || mage.getDisplayName() == null) return;
                 if (mage.isItemEnchanted()) {

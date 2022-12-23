@@ -21,7 +21,7 @@ public class ArrowTerminalSolver {
         Minecraft mc = Minecraft.getMinecraft();
         if (mc.thePlayer != event.entityPlayer) return;
 
-        if (ModConfig.itemFrameOnSeaLanterns && Utils.inDungeons && event.target instanceof EntityItemFrame) {
+        if (ModConfig.itemFrameOnSeaLanterns && Utils.isInDungeons() && event.target instanceof EntityItemFrame) {
             EntityItemFrame itemFrame = (EntityItemFrame) event.target;
             ItemStack item = itemFrame.getDisplayedItem();
             if (item == null || item.getItem() != Items.arrow) return;
@@ -34,7 +34,7 @@ public class ArrowTerminalSolver {
 
     @SubscribeEvent
     public void onPacket(PacketWriteEvent event) {
-        if (ModConfig.itemFrameOnSeaLanterns && Utils.inDungeons && event.packet instanceof C02PacketUseEntity) {
+        if (ModConfig.itemFrameOnSeaLanterns && Utils.isInDungeons() && event.packet instanceof C02PacketUseEntity) {
             Minecraft mc = Minecraft.getMinecraft();
             C02PacketUseEntity packet = (C02PacketUseEntity) event.packet;
             Entity entityHit = packet.getEntityFromWorld(mc.theWorld);

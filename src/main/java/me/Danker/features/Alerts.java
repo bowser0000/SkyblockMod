@@ -44,7 +44,7 @@ public class Alerts {
                     location = Utils.inSkyblock;
                     break;
                 case "Dungeons":
-                    location = Utils.inDungeons;
+                    location = Utils.isInDungeons();
                     break;
                 default:
                     location = true;

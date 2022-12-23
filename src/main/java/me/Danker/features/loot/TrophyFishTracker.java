@@ -4,6 +4,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import me.Danker.events.ModInitEvent;
 import me.Danker.events.PostConfigInitEvent;
+import me.Danker.locations.Location;
 import me.Danker.utils.RenderUtils;
 import me.Danker.utils.Utils;
 import net.minecraft.init.Items;
@@ -73,7 +74,7 @@ public class TrophyFishTracker {
         String message = StringUtils.stripControlCodes(event.message.getUnformattedText());
 
         if (!Utils.inSkyblock) return;
-        if (!Utils.tabLocation.equals("Crimson Isle")) return;
+        if (Utils.currentLocation != Location.CRIMSON_ISLE) return;
         if (event.type == 2) return;
         if (message.contains(":")) return;
 

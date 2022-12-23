@@ -45,7 +45,7 @@ public class BoulderSolver {
         EntityPlayerSP player = mc.thePlayer;
         World world = mc.theWorld;
         if (DankersSkyblockMod.tickAmount % 20 == 0) {
-            if (ModConfig.boulder && Utils.inDungeons && world != null && player != null) {
+            if (ModConfig.boulder && Utils.isInDungeons() && world != null && player != null) {
                 // multi thread block checking
                 new Thread(() -> {
                     prevInBoulderRoom = inBoulderRoom;
@@ -140,7 +140,7 @@ public class BoulderSolver {
 
     @SubscribeEvent
     public void onWorldRender(RenderWorldLastEvent event) {
-        if (ModConfig.boulder && Utils.inDungeons && route.size() > 0 && currentStep < route.size() && chest != null) {
+        if (ModConfig.boulder && Utils.isInDungeons() && route.size() > 0 && currentStep < route.size() && chest != null) {
             int[] currentBlockArray = route.get(currentStep);
             AxisAlignedBB currentBoulder = BoulderUtils.getBoulder(currentBlockArray[0], currentBlockArray[1], chest, boulderRoomDirection);
             if (currentBoulder == null) return;

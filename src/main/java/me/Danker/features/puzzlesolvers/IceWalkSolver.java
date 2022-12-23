@@ -45,7 +45,7 @@ public class IceWalkSolver {
         EntityPlayerSP player = mc.thePlayer;
         World world = mc.theWorld;
         if (DankersSkyblockMod.tickAmount % 20 == 0) {
-            if (ModConfig.iceWalk && Utils.inDungeons && world != null && player != null) {
+            if (ModConfig.iceWalk && Utils.isInDungeons() && world != null && player != null) {
                 // multi thread block checking
                 new Thread(() -> {
                     boolean foundRoom = false;
@@ -189,7 +189,7 @@ public class IceWalkSolver {
 
     @SubscribeEvent
     public void onWorldRender(RenderWorldLastEvent event) {
-        if (ModConfig.iceWalk && Utils.inDungeons && chest != null) {
+        if (ModConfig.iceWalk && Utils.isInDungeons() && chest != null) {
             if (threeByThreeRoute != null && threeByThreeRoute.size() > 1) {
                 for (int i = 0; i < threeByThreeRoute.size() - 1; i++) {
                     Vec3 pos1;

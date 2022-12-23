@@ -3,6 +3,7 @@ package me.Danker.features;
 import me.Danker.DankersSkyblockMod;
 import me.Danker.features.loot.LootDisplay;
 import me.Danker.handlers.ScoreboardHandler;
+import me.Danker.locations.Location;
 import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -49,7 +50,7 @@ public class AutoDisplay {
                     } else if (sCleaned.contains("The Mist")){
                         display = "Ghost";
                         found = true;
-                    } else if (Utils.inDungeons) {
+                    } else if (Utils.isInDungeons()) {
                         switch (Utils.currentFloor) {
                             case F1:
                                 display = "Floor 1";
@@ -96,9 +97,9 @@ public class AutoDisplay {
                         List<String> lore = hotbarItem.getTooltip(player, mc.gameSettings.advancedItemTooltips);
                         for (int j = lore.size() - 1; j >= 0; j--) { // reverse
                             if (lore.get(j).contains("FISHING ROD")) {
-                                if (Utils.tabLocation.equals("Crimson Isle")) {
+                                if (Utils.currentLocation == Location.CRIMSON_ISLE) {
                                     display = "Lava Fishing";
-                                } else if (Utils.tabLocation.equals("Jerry's Workshop")) {
+                                } else if (Utils.currentLocation == Location.JERRY_WORKSHOP) {
                                     display = "Winter Fishing";
                                 } else {
                                     display = "Fishing";

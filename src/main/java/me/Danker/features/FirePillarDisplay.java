@@ -6,6 +6,7 @@ import cc.polyfrost.oneconfig.libs.universal.UMatrixStack;
 import me.Danker.DankersSkyblockMod;
 import me.Danker.config.ModConfig;
 import me.Danker.handlers.TextRenderer;
+import me.Danker.locations.Location;
 import me.Danker.utils.RenderUtils;
 import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;
@@ -29,7 +30,7 @@ public class FirePillarDisplay {
         World world = Minecraft.getMinecraft().theWorld;
         if (DankersSkyblockMod.tickAmount % 20 == 0) {
             pillar = null;
-            if (ModConfig.firePillarHud.isEnabled() && world != null && Utils.tabLocation.equals("Crimson Isle") && Utils.isInScoreboard("Slay the boss!")) {
+            if (ModConfig.firePillarHud.isEnabled() && world != null && Utils.currentLocation == Location.CRIMSON_ISLE && Utils.isInScoreboard("Slay the boss!")) {
                 List<Entity> entities = world.getLoadedEntityList();
 
                 for (Entity entity : entities) {

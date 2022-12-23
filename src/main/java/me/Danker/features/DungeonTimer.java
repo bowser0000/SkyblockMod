@@ -26,7 +26,7 @@ public class DungeonTimer {
     public void onChat(ClientChatReceivedEvent event) {
         String message = StringUtils.stripControlCodes(event.message.getUnformattedText());
 
-        if (!Utils.inDungeons) return;
+        if (!Utils.isInDungeons()) return;
 
         if (message.contains("[BOSS] The Watcher: You have proven yourself. You may pass.")) {
             watcherClearTime = System.currentTimeMillis() / 1000;
@@ -83,7 +83,7 @@ public class DungeonTimer {
                 return;
             }
 
-            if (enabled && Utils.inDungeons) {
+            if (enabled && Utils.isInDungeons()) {
                 String dungeonTimerText = EnumChatFormatting.GRAY + "Wither Doors:\n" +
                                           EnumChatFormatting.DARK_RED + "Blood Open:\n" +
                                           EnumChatFormatting.RED + "Watcher Clear:\n" +

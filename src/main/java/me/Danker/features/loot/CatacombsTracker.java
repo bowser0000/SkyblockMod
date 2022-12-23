@@ -218,7 +218,7 @@ public class CatacombsTracker {
     public void onChat(ClientChatReceivedEvent event) {
         String message = StringUtils.stripControlCodes(event.message.getUnformattedText());
 
-        if (!Utils.inDungeons) return;
+        if (!Utils.isInDungeons()) return;
         if (event.type == 2) return;
 
         if (message.contains("    Team Score: ")) {
@@ -631,7 +631,7 @@ public class CatacombsTracker {
 
     @SubscribeEvent
     public void onSlotClick(ChestSlotClickedEvent event) {
-        if (!Utils.inDungeons) return;
+        if (!Utils.isInDungeons()) return;
 
         ItemStack item = event.item;
 

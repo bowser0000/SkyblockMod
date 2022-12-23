@@ -8,6 +8,7 @@ import cc.polyfrost.oneconfig.libs.universal.UMatrixStack;
 import me.Danker.DankersSkyblockMod;
 import me.Danker.config.ModConfig;
 import me.Danker.handlers.TextRenderer;
+import me.Danker.locations.Location;
 import me.Danker.utils.RenderUtils;
 import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;
@@ -36,7 +37,7 @@ public class PowderTracker {
         if (event.phase != TickEvent.Phase.START) return;
 
         if (DankersSkyblockMod.tickAmount % 20 == 0) {
-            if (Utils.tabLocation.equals("Dwarven Mines") || Utils.tabLocation.equals("Crystal Hollows")) {
+            if (Utils.currentLocation == Location.DWARVEN_MINES || Utils.currentLocation == Location.CRYSTAL_HOLLOWS) {
                 if (Minecraft.getMinecraft().getNetHandler() == null) return;
                 Collection<NetworkPlayerInfo> players = Minecraft.getMinecraft().getNetHandler().getPlayerInfoMap();
                 for (NetworkPlayerInfo player : players) {

@@ -4,6 +4,7 @@ import me.Danker.DankersSkyblockMod;
 import me.Danker.config.ModConfig;
 import me.Danker.gui.crystalhollowwaypoints.CrystalHollowAddWaypointGui;
 import me.Danker.handlers.ScoreboardHandler;
+import me.Danker.locations.Location;
 import me.Danker.utils.RenderUtils;
 import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;
@@ -50,7 +51,7 @@ public class CrystalHollowWaypoints {
         World world = mc.theWorld;
 
         if (DankersSkyblockMod.tickAmount % 20 == 0) {
-            if (ModConfig.autoWaypoints && Utils.tabLocation.equals("Crystal Hollows") && world != null) {
+            if (ModConfig.autoWaypoints && Utils.currentLocation == Location.CRYSTAL_HOLLOWS && world != null) {
                 boolean found = false;
                 List<String> scoreboard = ScoreboardHandler.getSidebarLines();
 
@@ -128,7 +129,7 @@ public class CrystalHollowWaypoints {
         $SBECHWP:Mines of Divan@-673,117,426
         $SBECHWP:Khazad-dûm@-292,63,281\nFairy Grotto@-216,110,400\njungle temple@-525,110,395\nJungle Temple@-493,101,425\nMines of Divan@-673,117,426
         */
-        if (ModConfig.crystalHollowWaypoints && Utils.tabLocation.equals("Crystal Hollows")) {
+        if (ModConfig.crystalHollowWaypoints && Utils.currentLocation == Location.CRYSTAL_HOLLOWS) {
             if (!message.contains(player.getName())) {
                 if (message.contains(": $DSMCHWP:") || message.contains(": $SBECHWP:")) {
                     String waypoints = message.substring(message.lastIndexOf(":") + 1);
@@ -209,7 +210,7 @@ public class CrystalHollowWaypoints {
     }
 
     public static void onKey() {
-        if (!Utils.tabLocation.equals("Crystal Hollows")) return;
+        if (Utils.currentLocation != Location.CRYSTAL_HOLLOWS) return;
 
         Minecraft mc = Minecraft.getMinecraft();
         EntityPlayer player = mc.thePlayer;
@@ -219,7 +220,7 @@ public class CrystalHollowWaypoints {
 
     @SubscribeEvent
     public void onWorldRender(RenderWorldLastEvent event) {
-        if (ModConfig.crystalHollowWaypoints && Utils.tabLocation.equals("Crystal Hollows")) {
+        if (ModConfig.crystalHollowWaypoints && Utils.currentLocation == Location.CRYSTAL_HOLLOWS) {
             for (Waypoint waypoint : waypoints) {
                 if (waypoint.toggled) RenderUtils.draw3DWaypointString(waypoint, event.partialTicks);
             }

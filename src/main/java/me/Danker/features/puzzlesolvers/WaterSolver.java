@@ -32,7 +32,7 @@ public class WaterSolver {
         EntityPlayerSP player = mc.thePlayer;
         World world = mc.theWorld;
         if (DankersSkyblockMod.tickAmount % 20 == 0) {
-            if (ModConfig.waterSolverHud.isEnabled() && Utils.inDungeons && world != null && player != null) {
+            if (ModConfig.waterSolverHud.isEnabled() && Utils.isInDungeons() && world != null && player != null) {
                 // multi thread block checking
                 new Thread(() -> {
                     prevInWaterRoom = inWaterRoom;
@@ -170,7 +170,7 @@ public class WaterSolver {
                 return;
             }
 
-            if (enabled && Utils.inDungeons && waterAnswers != null) {
+            if (enabled && Utils.isInDungeons() && waterAnswers != null) {
                 TextRenderer.drawHUDText(waterAnswers, x, y, scale);
             }
         }

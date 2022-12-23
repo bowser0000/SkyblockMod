@@ -15,7 +15,7 @@ public class StartsWithSolver {
     @SubscribeEvent
     public void onGuiRender(GuiChestBackgroundDrawnEvent event) {
         String displayName = event.displayName;
-        if (ModConfig.startsWith && Utils.inDungeons && displayName.startsWith("What starts with:")) {
+        if (ModConfig.startsWith && Utils.isInDungeons() && displayName.startsWith("What starts with:")) {
             char letter = displayName.charAt(displayName.indexOf("'") + 1);
             for (Slot slot : event.slots) {
                 if (slot.inventory == Minecraft.getMinecraft().thePlayer.inventory) continue;

@@ -71,7 +71,7 @@ public class TriviaSolver {
     public void onChat(ClientChatReceivedEvent event) {
         String message = StringUtils.stripControlCodes(event.message.getUnformattedText());
 
-        if (!Utils.inDungeons) return;
+        if (!Utils.isInDungeons()) return;
         if (event.type == 2) return;
 
         if (ModConfig.oruo) {

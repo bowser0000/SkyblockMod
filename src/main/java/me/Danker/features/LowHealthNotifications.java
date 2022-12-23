@@ -20,7 +20,7 @@ public class LowHealthNotifications {
 
         World world = Minecraft.getMinecraft().theWorld;
         if (DankersSkyblockMod.tickAmount % 2 == 0) {
-            if (ModConfig.lowHealthNotify && Utils.inDungeons && world != null) {
+            if (ModConfig.lowHealthNotify && Utils.isInDungeons() && world != null) {
                 List<String> scoreboard = ScoreboardHandler.getSidebarLines();
                 for (String score : scoreboard) {
                     if (score.endsWith("❤") && score.matches(".* §c\\d.*")) {

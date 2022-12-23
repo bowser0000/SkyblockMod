@@ -32,7 +32,7 @@ public class TetherDisplay {
         EntityPlayer player = mc.thePlayer;
         World world = mc.theWorld;
         if (DankersSkyblockMod.tickAmount % 10 == 0) {
-            if (ModConfig.tetherHud.isEnabled() && Utils.inDungeons && player != null && world != null) {
+            if (ModConfig.tetherHud.isEnabled() && Utils.isInDungeons() && player != null && world != null) {
                 playersInRadius.clear();
                 List<EntityPlayer> teammates = world.getEntitiesWithinAABB(EntityOtherPlayerMP.class, new AxisAlignedBB(player.posX - 30, player.posY - 30, player.posZ - 30, player.posX + 30, player.posY + 30, player.posZ + 30));
 
@@ -61,7 +61,7 @@ public class TetherDisplay {
                 return;
             }
 
-            if (enabled && Utils.inDungeons) {
+            if (enabled && Utils.isInDungeons()) {
                 TextRenderer.drawHUDText(getText(), x, y, scale);
             }
         }

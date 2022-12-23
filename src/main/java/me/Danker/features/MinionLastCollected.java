@@ -5,6 +5,7 @@ import me.Danker.config.ModConfig;
 import me.Danker.events.ChestSlotClickedEvent;
 import me.Danker.events.ModInitEvent;
 import me.Danker.events.PacketWriteEvent;
+import me.Danker.locations.Location;
 import me.Danker.utils.RenderUtils;
 import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;
@@ -53,7 +54,7 @@ public class MinionLastCollected {
 
     @SubscribeEvent
     public void onSlotClick(ChestSlotClickedEvent event) {
-        if (ModConfig.minionLastCollected && Utils.tabLocation.equals("Private Island")) {
+        if (ModConfig.minionLastCollected && Utils.currentLocation == Location.PRIVATE_ISLAND) {
             String inventoryName = event.inventoryName;
             ItemStack item = event.item;
             if (inventoryName.contains(" Minion ") && item != null && lastMinion != null) {
@@ -70,7 +71,7 @@ public class MinionLastCollected {
 
     @SubscribeEvent
     public void onWorldRender(RenderWorldLastEvent event) {
-        if (ModConfig.minionLastCollected && Utils.inSkyblock && Utils.tabLocation.equals("Private Island")) {
+        if (ModConfig.minionLastCollected && Utils.inSkyblock && Utils.currentLocation == Location.PRIVATE_ISLAND) {
             for (Minion minion : minions) {
                 if (!minionExistsAtPos(minion.pos)) continue;
                 RenderUtils.draw3DString(minion.pos.getX() + 0.5, minion.pos.getY() + 2.2, minion.pos.getZ() + 0.5, minion.getTimeCollected(), ModConfig.lastCollectedColour.getRGB(), event.partialTicks);

@@ -65,7 +65,7 @@ public class CustomMusic {
         World world = mc.theWorld;
         if (DankersSkyblockMod.tickAmount % 10 == 0) {
             if (world != null && player != null) {
-                if (Utils.inDungeons) {
+                if (Utils.isInDungeons()) {
                     List<String> scoreboard = ScoreboardHandler.getSidebarLines();
                     if (scoreboard.size() > 2) {
                         String firstLine = ScoreboardHandler.cleanSB(scoreboard.get(scoreboard.size() - 1));
@@ -103,41 +103,41 @@ public class CustomMusic {
                         }
                     }
                 } else {
-                    switch (Utils.tabLocation) {
-                        case "Hub":
+                    switch (Utils.currentLocation) {
+                        case HUB:
                             if (ModConfig.hubMusic) hub.start();
                             break;
-                        case "Private Island":
+                        case PRIVATE_ISLAND:
                             if (ModConfig.islandMusic) island.start();
                             break;
-                        case "Dungeon Hub":
+                        case DUNGEON_HUB:
                             if (ModConfig.dungeonHubMusic) dungeonHub.start();
                             break;
-                        case "The Farming Islands":
+                        case FARMING_ISLANDS:
                             if (ModConfig.farmingIslandsMusic) farmingIslands.start();
                             break;
-                        case "Gold Mine":
+                        case GOLD_MINE:
                             if (ModConfig.goldMineMusic) goldMine.start();
                             break;
-                        case "Deep Caverns":
+                        case DEEP_CAVERNS:
                             if (ModConfig.deepCavernsMusic) deepCaverns.start();
                             break;
-                        case "Dwarven Mines":
+                        case DWARVEN_MINES:
                             if (ModConfig.dwarvenMinesMusic) dwarvenMines.start();
                             break;
-                        case "Crystal Hollows":
+                        case CRYSTAL_HOLLOWS:
                             if (ModConfig.crystalHollowsMusic) crystalHollows.start();
                             break;
-                        case "Spider's Den":
+                        case SPIDERS_DEN:
                             if (ModConfig.spidersDenMusic) spidersDen.start();
                             break;
-                        case "Crimson Isle":
+                        case CRIMSON_ISLE:
                             if (ModConfig.crimsonIsleMusic) crimsonIsle.start();
                             break;
-                        case "The End":
+                        case END:
                             if (ModConfig.endMusic) end.start();
                             break;
-                        case "The Park":
+                        case PARK:
                             if (ModConfig.parkMusic) park.start();
                             break;
                     }
@@ -150,13 +150,13 @@ public class CustomMusic {
     public void onChat(ClientChatReceivedEvent event) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
         String message = StringUtils.stripControlCodes(event.message.getUnformattedText());
 
-        if (ModConfig.dungeonMusic && Utils.inDungeons) {
+        if (ModConfig.dungeonMusic && Utils.isInDungeons()) {
             if (message.contains("[NPC] Mort: Here, I found this map when I first entered the dungeon.")) {
                 dungeon.start();
             }
         }
 
-        if (Utils.inDungeons) {
+        if (Utils.isInDungeons()) {
             if (ModConfig.dungeonBossMusic) {
                 if (phase2.hasSongs() && message.startsWith("[BOSS] Storm: Pathetic Maxor")) {
                     phase2.start();

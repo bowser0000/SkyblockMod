@@ -10,6 +10,7 @@ import me.Danker.config.ModConfig;
 import me.Danker.events.RenderOverlayEvent;
 import me.Danker.handlers.ScoreboardHandler;
 import me.Danker.handlers.TextRenderer;
+import me.Danker.locations.DungeonFloor;
 import me.Danker.utils.RenderUtils;
 import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;
@@ -47,7 +48,7 @@ public class LividSolver {
         if (DankersSkyblockMod.tickAmount % 10 == 0) {
             World world = Minecraft.getMinecraft().theWorld;
             if (world == null) return;
-            if (Utils.currentFloor == Utils.DungeonFloor.F5 || Utils.currentFloor == Utils.DungeonFloor.M5) {
+            if (Utils.currentFloor == DungeonFloor.F5 || Utils.currentFloor == DungeonFloor.M5) {
                 List<String> scoreboard = ScoreboardHandler.getSidebarLines();
                 if (scoreboard.size() == 0) return;
                 String firstLine = ScoreboardHandler.cleanSB(scoreboard.get(scoreboard.size() - 1));

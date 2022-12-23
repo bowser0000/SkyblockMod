@@ -42,7 +42,7 @@ public class BlazeSolver {
         World world = mc.theWorld;
 
         if (DankersSkyblockMod.tickAmount % 4 == 0) {
-            if (ModConfig.blaze && Utils.inDungeons && world != null && player != null) {
+            if (ModConfig.blaze && Utils.isInDungeons() && world != null && player != null) {
 
                 List<Entity> entities = world.getLoadedEntityList();
                 int highestHealth = 0;
@@ -97,7 +97,7 @@ public class BlazeSolver {
 
     @SubscribeEvent
     public void onWorldRender(RenderWorldLastEvent event) {
-        if (ModConfig.blaze && Utils.inDungeons) {
+        if (ModConfig.blaze && Utils.isInDungeons()) {
             if (foundChest) {
                 if (lowestBlaze != null && !higherToLower) {
                     BlockPos stringPos = new BlockPos(lowestBlaze.posX, lowestBlaze.posY + 1, lowestBlaze.posZ);

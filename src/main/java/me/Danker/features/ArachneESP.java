@@ -1,6 +1,7 @@
 package me.Danker.features;
 
 import me.Danker.config.ModConfig;
+import me.Danker.locations.Location;
 import me.Danker.utils.RenderUtils;
 import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;
@@ -32,7 +33,7 @@ public class ArachneESP {
     @SubscribeEvent
     public void onChat(ClientChatReceivedEvent event) {
         if (!Utils.inSkyblock) return;
-        if (!Utils.tabLocation.equals("Spider's Den")) return;
+        if (Utils.currentLocation != Location.SPIDERS_DEN) return;
         String message = StringUtils.stripControlCodes(event.message.getUnformattedText());
         if (message.contains("Something is awakening")){
             arachneActive = true;

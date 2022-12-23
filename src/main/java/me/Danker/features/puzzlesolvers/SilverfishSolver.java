@@ -48,7 +48,7 @@ public class SilverfishSolver {
         World world = mc.theWorld;
         EntityPlayerSP player = mc.thePlayer;
         if (DankersSkyblockMod.tickAmount % 20 == 0) {
-            if (ModConfig.silverfish && Utils.inDungeons && world != null && player != null) {
+            if (ModConfig.silverfish && Utils.isInDungeons() && world != null && player != null) {
                 new Thread(() -> {
                     boolean foundRoom = false;
                     prevInSilverfishRoom = inSilverfishRoom;
@@ -147,7 +147,7 @@ public class SilverfishSolver {
 
     @SubscribeEvent
     public void onWorldRender(RenderWorldLastEvent event) {
-        if (ModConfig.silverfish && Utils.inDungeons && route != null && route.size() > 0 && chest != null) {
+        if (ModConfig.silverfish && Utils.isInDungeons() && route != null && route.size() > 0 && chest != null) {
             for (int i = 0; i < route.size() - 1; i++) {
                 Vec3 pos1 = null;
                 Vec3 pos2 = null;

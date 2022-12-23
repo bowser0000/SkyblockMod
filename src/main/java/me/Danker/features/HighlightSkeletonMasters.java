@@ -20,7 +20,7 @@ public class HighlightSkeletonMasters {
 
     @SubscribeEvent
     public void onRenderEntity(RenderLivingEvent.Pre<EntityLivingBase> event) {
-        if (ModConfig.highlightSkeletonMasters && event.entity instanceof EntitySkeleton && Utils.inDungeons) {
+        if (ModConfig.highlightSkeletonMasters && event.entity instanceof EntitySkeleton && Utils.isInDungeons()) {
             ItemStack helmet = event.entity.getCurrentArmor(3);
             if (helmet != null && helmet.getDisplayName().endsWith("Skeleton Master Helmet")) {
                 skeletonMasters.add(event.entity);

@@ -37,7 +37,7 @@ public class TicTacToeSolver {
         World world = mc.theWorld;
         EntityPlayerSP player = mc.thePlayer;
         if (DankersSkyblockMod.tickAmount % 20 == 0) {
-            if (ModConfig.ticTacToe && Utils.inDungeons && world != null && player != null) {
+            if (ModConfig.ticTacToe && Utils.isInDungeons() && world != null && player != null) {
                 correctTicTacToeButton = null;
                 AxisAlignedBB aabb = new AxisAlignedBB(player.posX - 6, player.posY - 6, player.posZ - 6, player.posX + 6, player.posY + 6, player.posZ + 6);
                 List<EntityItemFrame> itemFrames = world.getEntitiesWithinAABB(EntityItemFrame.class, aabb);

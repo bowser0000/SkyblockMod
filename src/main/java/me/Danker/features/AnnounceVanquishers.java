@@ -1,6 +1,7 @@
 package me.Danker.features;
 
 import me.Danker.config.ModConfig;
+import me.Danker.locations.Location;
 import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -17,7 +18,7 @@ public class AnnounceVanquishers {
 
         if (message.contains(":")) return;
 
-        if (ModConfig.announceVanqs && Utils.tabLocation.equals("Crimson Isle")) {
+        if (ModConfig.announceVanqs && Utils.currentLocation == Location.CRIMSON_ISLE) {
             if (message.contains("A Vanquisher is spawning nearby!")) {
                 Minecraft mc = Minecraft.getMinecraft();
                 EntityPlayerSP player = mc.thePlayer;

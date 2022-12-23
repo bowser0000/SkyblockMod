@@ -6,6 +6,7 @@ import cc.polyfrost.oneconfig.hud.Hud;
 import cc.polyfrost.oneconfig.libs.universal.UMatrixStack;
 import me.Danker.config.ModConfig;
 import me.Danker.handlers.TextRenderer;
+import me.Danker.locations.Location;
 import me.Danker.utils.RenderUtils;
 import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;
@@ -38,7 +39,7 @@ public class CrimsonMinibossTimer {
 
         if (message.contains(":")) return;
 
-        if (ModConfig.minibossTimerHud.isEnabled() && Utils.tabLocation.equals("Crimson Isle")) {
+        if (ModConfig.minibossTimerHud.isEnabled() && Utils.currentLocation == Location.CRIMSON_ISLE) {
             if (message.contains("BLADESOUL DOWN!")) {
                 bladesoul = System.currentTimeMillis() / 1000 + 120;
             } else if (message.contains("BARBARIAN DUKE X DOWN!")) {
@@ -81,7 +82,7 @@ public class CrimsonMinibossTimer {
                 return;
             }
 
-            if (enabled && Utils.tabLocation.equals("Crimson Isle")) {
+            if (enabled && Utils.currentLocation == Location.CRIMSON_ISLE) {
                 TextRenderer.drawHUDText(getText(), x, y, scale);
             }
         }

@@ -24,7 +24,7 @@ public class SelectAllColourSolver {
     @SubscribeEvent
     public void onGuiRender(GuiChestBackgroundDrawnEvent event) {
         String displayName = event.displayName;
-        if (ModConfig.selectAll && Utils.inDungeons && displayName.startsWith("Select all the")) {
+        if (ModConfig.selectAll && Utils.isInDungeons() && displayName.startsWith("Select all the")) {
             String colour;
             List<String> colourParts = new ArrayList<>();
             Matcher colourMatcher = selectAllTerminalPattern.matcher(displayName);

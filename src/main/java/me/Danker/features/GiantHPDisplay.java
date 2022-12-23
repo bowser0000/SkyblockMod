@@ -33,7 +33,7 @@ public class GiantHPDisplay {
 
         World world = Minecraft.getMinecraft().theWorld;
         if (DankersSkyblockMod.tickAmount % 20 == 0) {
-            if (ModConfig.giantHPHud.isEnabled() && Utils.inDungeons && world != null) {
+            if (ModConfig.giantHPHud.isEnabled() && Utils.isInDungeons() && world != null) {
                 giants.clear();
                 List<String> scoreboard = ScoreboardHandler.getSidebarLines();
                 String firstLine = ScoreboardHandler.cleanSB(scoreboard.get(scoreboard.size() - 1));
@@ -75,7 +75,7 @@ public class GiantHPDisplay {
                 return;
             }
 
-            if (enabled && Utils.inDungeons && giants.size() > 0) {
+            if (enabled && Utils.isInDungeons() && giants.size() > 0) {
                 TextRenderer.drawHUDText(getText(), x, y, scale);
             }
         }

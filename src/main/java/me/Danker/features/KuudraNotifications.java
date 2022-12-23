@@ -2,6 +2,7 @@ package me.Danker.features;
 
 import me.Danker.config.ModConfig;
 import me.Danker.events.PacketReadEvent;
+import me.Danker.locations.Location;
 import me.Danker.utils.Utils;
 import net.minecraft.network.play.server.S45PacketTitle;
 import net.minecraft.util.EnumChatFormatting;
@@ -15,7 +16,7 @@ public class KuudraNotifications {
     public void onChat(ClientChatReceivedEvent event) {
         String message = StringUtils.stripControlCodes(event.message.getUnformattedText());
 
-        if (!Utils.tabLocation.equals("Instanced")) return; // May need to be changed in future to Kuudra's Hollow in scoreboard
+        if (Utils.currentLocation != Location.INSTANCED) return;
 
         if (ModConfig.kuudraNotifications) {
             if (message.startsWith("[NPC] Elle: That looks like it hurt!")) {
@@ -32,7 +33,7 @@ public class KuudraNotifications {
 
     @SubscribeEvent
     public void onPacketRead(PacketReadEvent event) {
-        if (!ModConfig.kuudraNotifications || !Utils.tabLocation.equals("Instanced")) return;
+        if (!ModConfig.kuudraNotifications || Utils.currentLocation != Location.INSTANCED) return;
 
         if (event.packet instanceof S45PacketTitle) {
             S45PacketTitle packet = (S45PacketTitle) event.packet;
@@ -44,7 +45,7 @@ public class KuudraNotifications {
                 new Thread(() -> {
                     try {
                         Thread.sleep(45000);
-                        if (Utils.tabLocation.equals("Instanced")) Utils.createTitle(EnumChatFormatting.AQUA + "CLOAK!", 3);
+                        if (Utils.currentLocation == Location.INSTANCED) Utils.createTitle(EnumChatFormatting.AQUA + "CLOAK!", 3);
                     } catch (InterruptedException ex) {
                         ex.printStackTrace();
                     }

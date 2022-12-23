@@ -6,6 +6,7 @@ import cc.polyfrost.oneconfig.libs.universal.UMatrixStack;
 import me.Danker.DankersSkyblockMod;
 import me.Danker.config.ModConfig;
 import me.Danker.handlers.TextRenderer;
+import me.Danker.locations.DungeonFloor;
 import me.Danker.utils.RenderUtils;
 import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;
@@ -45,7 +46,7 @@ public class DungeonScore {
     public void onChat(ClientChatReceivedEvent event) {
         String message = StringUtils.stripControlCodes(event.message.getUnformattedText());
 
-        if (!ModConfig.dungeonScoreHud.isEnabled() || !Utils.inDungeons) return;
+        if (!ModConfig.dungeonScoreHud.isEnabled() || !Utils.isInDungeons()) return;
 
         if (message.contains("PUZZLE FAIL! ") || message.contains("chose the wrong answer! I shall never forget this moment")) {
             failedPuzzles++;
@@ -62,7 +63,7 @@ public class DungeonScore {
     public void onTick(TickEvent.ClientTickEvent event) {
         if (event.phase != TickEvent.Phase.START) return;
 
-        if (!ModConfig.dungeonScoreHud.isEnabled() || !Utils.inDungeons) return;
+        if (!ModConfig.dungeonScoreHud.isEnabled() || !Utils.isInDungeons()) return;
 
         if (DankersSkyblockMod.tickAmount % 20 == 0) {
             int missingPuzzles = 0;
@@ -114,7 +115,7 @@ public class DungeonScore {
                     int seconds = Integer.parseInt(timeText.substring(timeText.indexOf("m") + 1, timeText.indexOf("s")));
                     int time = minutes * 60 + seconds;
 
-                    if (Utils.currentFloor == Utils.DungeonFloor.F2) time -= 120;
+                    if (Utils.currentFloor == DungeonFloor.F2) time -= 120;
 
                     int base;
                     switch (Utils.currentFloor) {
@@ -188,7 +189,7 @@ public class DungeonScore {
                 return;
             }
 
-            if (enabled && Utils.inDungeons) {
+            if (enabled && Utils.isInDungeons()) {
                 int totalScore = skillScore + exploreScore + timeScore + bonusScore;
                 String total;
                 if (totalScore >= 300) {

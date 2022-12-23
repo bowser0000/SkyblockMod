@@ -22,7 +22,7 @@ public class NecronNotifications {
     public void onChat(ClientChatReceivedEvent event) {
         String message = StringUtils.stripControlCodes(event.message.getUnformattedText());
 
-        if (!Utils.inDungeons) return;
+        if (!Utils.isInDungeons()) return;
 
         if (ModConfig.necronNotifications) {
             Minecraft mc = Minecraft.getMinecraft();

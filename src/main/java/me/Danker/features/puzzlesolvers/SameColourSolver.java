@@ -31,7 +31,7 @@ public class SameColourSolver {
 
     @SubscribeEvent(priority = EventPriority.LOW)
     public void onTooltipLow(ItemTooltipEvent event) {
-        if (!ModConfig.sameColour || !Utils.inDungeons) return;
+        if (!ModConfig.sameColour || !Utils.isInDungeons()) return;
         if (event.toolTip == null) return;
 
         Minecraft mc = Minecraft.getMinecraft();
@@ -50,7 +50,7 @@ public class SameColourSolver {
 
     @SubscribeEvent
     public void onTick(TickEvent.ClientTickEvent event) {
-        if (!ModConfig.sameColour || foundColour || !Utils.inDungeons) return;
+        if (!ModConfig.sameColour || foundColour || !Utils.isInDungeons()) return;
         if (event.phase != TickEvent.Phase.START) return;
 
         Minecraft mc = Minecraft.getMinecraft();
@@ -111,7 +111,7 @@ public class SameColourSolver {
 
     @SubscribeEvent
     public void onGuiRender(GuiChestBackgroundDrawnEvent event) {
-        if (!ModConfig.sameColour || !foundColour || !Utils.inDungeons) return;
+        if (!ModConfig.sameColour || !foundColour || !Utils.isInDungeons()) return;
 
         if (event.displayName.equals("Change all to same color!")) {
             int chestSize = event.chestSize;

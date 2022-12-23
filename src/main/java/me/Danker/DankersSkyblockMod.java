@@ -375,9 +375,8 @@ public class DankersSkyblockMod {
             repoTickAmount++;
             if (player != null) {
                 Utils.checkForSkyblock();
-                Utils.checkForDungeons();
-                Utils.checkForDungeonFloor();
                 Utils.checkTabLocation();
+                Utils.checkForDungeonFloor();
             }
 
             tickAmount = 0;
@@ -489,7 +488,7 @@ public class DankersSkyblockMod {
     // misc feature ig
 
     public static void onAbilityKey() {
-        if (!Utils.inDungeons) return;
+        if (!Utils.isInDungeons()) return;
         Minecraft.getMinecraft().thePlayer.dropOneItem(true);
     }
 

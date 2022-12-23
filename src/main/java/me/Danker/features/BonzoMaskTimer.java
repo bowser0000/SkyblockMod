@@ -35,7 +35,7 @@ public class BonzoMaskTimer {
     public void onChat(ClientChatReceivedEvent event) {
         String message = StringUtils.stripControlCodes(event.message.getUnformattedText());
 
-        if (!Utils.inDungeons) return;
+        if (!Utils.isInDungeons()) return;
         if (message.contains(":")) return;
 
         if (ModConfig.bonzoTimerHud.isEnabled() && message.contains("Bonzo's Mask") && message.contains("saved your life!")) {
@@ -85,7 +85,7 @@ public class BonzoMaskTimer {
                 return;
             }
 
-            if (enabled && Utils.inDungeons) {
+            if (enabled && Utils.isInDungeons()) {
                 ItemStack helmetSlot = mc.thePlayer.getCurrentArmor(3);
                 if ((helmetSlot != null && helmetSlot.getDisplayName().contains("Bonzo's Mask")) || nextBonzoUse > 0) {
                     double scaleReset = Math.pow(scale, -1);

@@ -1,6 +1,7 @@
 package me.Danker.features.loot;
 
 import me.Danker.config.CfgConfig;
+import me.Danker.locations.Location;
 import me.Danker.utils.Utils;
 import net.minecraft.util.StringUtils;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
@@ -397,14 +398,14 @@ public class FishingTracker {
 
     public void increaseSeaCreatures() {
         // Only increment Yetis when in Jerry's Workshop
-        if (Utils.isInScoreboard("Jerry's Workshop") || Utils.isInScoreboard("Jerry Pond")) {
+        if (Utils.currentLocation == Location.JERRY_WORKSHOP) {
             if (reindrakeSCs != -1) {
                 reindrakeSCs++;
             }
             if (reindrakeSCsSession != -1) {
                 reindrakeSCsSession++;
             }
-        } else if (Utils.tabLocation.equals("Crimson Isle")) {
+        } else if (Utils.currentLocation == Location.CRIMSON_ISLE) {
             if (jawbusSCs != -1) {
                 jawbusSCs++;
             }

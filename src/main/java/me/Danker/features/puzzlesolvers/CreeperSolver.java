@@ -36,7 +36,7 @@ public class CreeperSolver {
         World world = mc.theWorld;
         EntityPlayerSP player = mc.thePlayer;
         if (DankersSkyblockMod.tickAmount % 20 == 0) {
-            if (ModConfig.creeper && Utils.inDungeons && world != null && player != null) {
+            if (ModConfig.creeper && Utils.isInDungeons() && world != null && player != null) {
                 double x = player.posX;
                 double y = player.posY;
                 double z = player.posZ;

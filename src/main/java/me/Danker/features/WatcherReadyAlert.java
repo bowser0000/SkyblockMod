@@ -14,7 +14,7 @@ public class WatcherReadyAlert {
         String message = StringUtils.stripControlCodes(event.message.getUnformattedText());
 
         if (!ModConfig.watcherReady) return;
-        if (!Utils.inDungeons) return;
+        if (!Utils.isInDungeons()) return;
 
         if (message.contains("[BOSS] The Watcher: That will be enough for now.")) {
             Utils.createTitle(EnumChatFormatting.RED + "WATCHER READY", 2);

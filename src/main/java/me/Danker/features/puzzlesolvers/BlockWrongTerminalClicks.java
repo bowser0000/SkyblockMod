@@ -16,7 +16,7 @@ public class BlockWrongTerminalClicks {
 
     @SubscribeEvent
     public void onSlotClick(ChestSlotClickedEvent event) {
-        if (ModConfig.blockWrongTerminalClicks && Utils.inDungeons) {
+        if (ModConfig.blockWrongTerminalClicks && Utils.isInDungeons()) {
             IInventory inventory = event.inventory;
             String inventoryName = event.inventoryName;
             Slot slot = event.slot;
