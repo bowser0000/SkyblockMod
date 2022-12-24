@@ -1,12 +1,11 @@
 package me.Danker.gui.crystalhollowwaypoints;
 
+import cc.polyfrost.oneconfig.libs.universal.UResolution;
 import me.Danker.DankersSkyblockMod;
 import me.Danker.features.CrystalHollowWaypoints;
 import me.Danker.utils.RenderUtils;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.gui.ScaledResolution;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,9 +33,8 @@ public class CrystalHollowWaypointsGui extends GuiScreen {
     public void initGui() {
         super.initGui();
 
-        ScaledResolution sr = new ScaledResolution(Minecraft.getMinecraft());
-        int height = sr.getScaledHeight();
-        int width = sr.getScaledWidth();
+        int height = UResolution.getScaledHeight();
+        int width = UResolution.getScaledWidth();
 
         goBack = new GuiButton(0, 2, height - 30, 100, 20, "Go Back");
         backPage = new GuiButton(0, width / 2 - 100, (int) (height * 0.8), 80, 20, "< Back");

@@ -1,11 +1,11 @@
 package me.Danker.utils;
 
+import cc.polyfrost.oneconfig.libs.universal.UResolution;
 import me.Danker.features.CrystalHollowWaypoints;
 import me.Danker.handlers.TextRenderer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
-import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
@@ -24,10 +24,9 @@ public class RenderUtils {
 
     public static void drawTitle(String text) {
         Minecraft mc = Minecraft.getMinecraft();
-        ScaledResolution scaledResolution = new ScaledResolution(mc);
 
-        int height = scaledResolution.getScaledHeight();
-        int width = scaledResolution.getScaledWidth();
+        int height = UResolution.getScaledHeight();
+        int width = UResolution.getScaledWidth();
         int drawHeight = 0;
         String[] splitText = text.split("\n");
         for (String title : splitText) {
@@ -46,9 +45,8 @@ public class RenderUtils {
     }
 
     public static void drawOnSlot(int size, int xSlotPos, int ySlotPos, int colour) {
-        ScaledResolution sr = new ScaledResolution(Minecraft.getMinecraft());
-        int guiLeft = (sr.getScaledWidth() - 176) / 2;
-        int guiTop = (sr.getScaledHeight() - 222) / 2;
+        int guiLeft = (UResolution.getScaledWidth() - 176) / 2;
+        int guiTop = (UResolution.getScaledHeight() - 222) / 2;
         int x = guiLeft + xSlotPos;
         int y = guiTop + ySlotPos;
         // Move down when chest isn't 6 rows
@@ -61,9 +59,8 @@ public class RenderUtils {
 
     public static void drawTextOnSlot(int size, int xSlotPos, int ySlotPos, String text) {
         Minecraft mc = Minecraft.getMinecraft();
-        ScaledResolution sr = new ScaledResolution(mc);
-        int guiLeft = (sr.getScaledWidth() - 176) / 2;
-        int guiTop = (sr.getScaledHeight() - 222) / 2;
+        int guiLeft = (UResolution.getScaledWidth() - 176) / 2;
+        int guiTop = (UResolution.getScaledHeight() - 222) / 2;
         int x = guiLeft + xSlotPos;
         int y = guiTop + ySlotPos;
         // Move down when chest isn't 6 rows

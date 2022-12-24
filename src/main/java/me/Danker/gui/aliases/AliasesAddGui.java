@@ -1,12 +1,11 @@
 package me.Danker.gui.aliases;
 
+import cc.polyfrost.oneconfig.libs.universal.UResolution;
 import me.Danker.features.ChatAliases;
 import me.Danker.handlers.TextRenderer;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiTextField;
-import net.minecraft.client.gui.ScaledResolution;
 import net.minecraftforge.fml.client.config.GuiCheckBox;
 
 import java.io.IOException;
@@ -42,9 +41,8 @@ public class AliasesAddGui extends GuiScreen {
     public void initGui() {
         super.initGui();
 
-        ScaledResolution sr = new ScaledResolution(Minecraft.getMinecraft());
-        int height = sr.getScaledHeight();
-        int width = sr.getScaledWidth();
+        int height = UResolution.getScaledHeight();
+        int width = UResolution.getScaledWidth();
 
         cancel = new GuiButton(0, 2, height - 30, 100, 20, "Cancel");
 

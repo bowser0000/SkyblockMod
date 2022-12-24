@@ -1,12 +1,12 @@
 package me.Danker.features.puzzlesolvers;
 
+import cc.polyfrost.oneconfig.libs.universal.UResolution;
 import me.Danker.config.ModConfig;
 import me.Danker.events.ChestSlotClickedEvent;
 import me.Danker.events.GuiChestBackgroundDrawnEvent;
 import me.Danker.handlers.TextRenderer;
 import me.Danker.utils.RenderUtils;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.init.Blocks;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
@@ -94,8 +94,7 @@ public class ChronomatronSolver {
                 }
             }
             Minecraft mc = Minecraft.getMinecraft();
-            ScaledResolution sr = new ScaledResolution(mc);
-            int guiLeft = (sr.getScaledWidth() - 176) / 2;
+            int guiLeft = (UResolution.getScaledWidth() - 176) / 2;
             TextRenderer.drawText(String.join("\n", chronomatronPattern), (int) (guiLeft * 0.8), 10, 1);
         }
     }

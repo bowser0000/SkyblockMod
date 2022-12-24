@@ -1,5 +1,6 @@
 package me.Danker.features;
 
+import cc.polyfrost.oneconfig.libs.universal.UResolution;
 import me.Danker.DankersSkyblockMod;
 import me.Danker.config.ModConfig;
 import me.Danker.events.ChestSlotClickedEvent;
@@ -8,7 +9,6 @@ import me.Danker.utils.RenderUtils;
 import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
-import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.gui.inventory.GuiChest;
 import net.minecraft.inventory.ContainerChest;
 import net.minecraft.inventory.Slot;
@@ -95,9 +95,8 @@ public class BazaarTimeToFill {
         if (!ModConfig.bazaarTimeToFill) return;
         if (textToDisplay.length() == 0) return;
 
-        ScaledResolution sr = new ScaledResolution(Minecraft.getMinecraft());
-        int width = sr.getScaledWidth();
-        int height = (sr.getScaledHeight() - 222) / 2;
+        int width = UResolution.getScaledWidth();
+        int height = (UResolution.getScaledHeight() - 222) / 2;
 
         RenderUtils.drawCenteredText(EnumChatFormatting.BLUE + "Estimated time to fill: " + textToDisplay, width, height, 1D);
     }

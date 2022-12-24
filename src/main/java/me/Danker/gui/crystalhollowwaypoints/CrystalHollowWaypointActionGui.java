@@ -1,5 +1,6 @@
 package me.Danker.gui.crystalhollowwaypoints;
 
+import cc.polyfrost.oneconfig.libs.universal.UResolution;
 import me.Danker.features.CrystalHollowWaypoints;
 import me.Danker.utils.RenderUtils;
 import me.Danker.utils.Utils;
@@ -7,7 +8,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.util.EnumChatFormatting;
 
 public class CrystalHollowWaypointActionGui extends GuiScreen {
@@ -34,9 +34,8 @@ public class CrystalHollowWaypointActionGui extends GuiScreen {
     public void initGui() {
         super.initGui();
 
-        ScaledResolution sr = new ScaledResolution(Minecraft.getMinecraft());
-        int height = sr.getScaledHeight();
-        int width = sr.getScaledWidth();
+        int height = UResolution.getScaledHeight();
+        int width = UResolution.getScaledWidth();
 
         CrystalHollowWaypoints.Waypoint waypoint = CrystalHollowWaypoints.waypoints.get(id);
 

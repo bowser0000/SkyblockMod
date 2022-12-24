@@ -1,12 +1,11 @@
 package me.Danker.gui.aliases;
 
+import cc.polyfrost.oneconfig.libs.universal.UResolution;
 import me.Danker.features.ChatAliases;
 import me.Danker.utils.RenderUtils;
 import me.Danker.utils.Utils;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.util.EnumChatFormatting;
 
 public class AliasesActionGui extends GuiScreen {
@@ -32,9 +31,8 @@ public class AliasesActionGui extends GuiScreen {
     public void initGui() {
         super.initGui();
 
-        ScaledResolution sr = new ScaledResolution(Minecraft.getMinecraft());
-        int height = sr.getScaledHeight();
-        int width = sr.getScaledWidth();
+        int height = UResolution.getScaledHeight();
+        int width = UResolution.getScaledWidth();
 
         ChatAliases.Alias alias = ChatAliases.aliases.get(id);
 
