@@ -428,7 +428,7 @@ public class FishingTracker {
         CfgConfig.writeIntConfig("fishing", "seaCreature", seaCreatures);
         CfgConfig.writeIntConfig("fishing", "milestone", fishingMilestone);
         CfgConfig.writeIntConfig("fishing", "empSC", empSCs);
-        CfgConfig.writeIntConfig("fishing", "yetiSC", reindrakeSCs);
+        CfgConfig.writeIntConfig("fishing", "reindrakeSC", reindrakeSCs);
         CfgConfig.writeIntConfig("fishing", "jawbusSC", jawbusSCs);
     }
 
