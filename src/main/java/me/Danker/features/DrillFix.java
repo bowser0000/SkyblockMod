@@ -21,6 +21,8 @@ public class DrillFix {
             EntityPlayer player = mc.thePlayer;
             boolean isDown = mc.gameSettings.keyBindUseItem.isKeyDown();
 
+            if (player == null || player.inventory == null) return;
+
             if (event.packet instanceof S2FPacketSetSlot) {
                 S2FPacketSetSlot packet = (S2FPacketSetSlot) event.packet;
                 int windowId = packet.func_149175_c();
