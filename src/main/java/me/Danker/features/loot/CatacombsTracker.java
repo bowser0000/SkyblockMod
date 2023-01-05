@@ -219,7 +219,7 @@ public class CatacombsTracker {
     public void onChat(ClientChatReceivedEvent event) {
         String message = StringUtils.stripControlCodes(event.message.getUnformattedText());
 
-        if (Utils.currentLocation != Location.CATACOMBS) return;
+        if (Utils.currentLocation != Location.CATACOMBS && Utils.currentLocation != Location.DUNGEON_HUB) return;
         if (event.type == 2) return;
 
         if (message.contains("    Team Score: ")) {
