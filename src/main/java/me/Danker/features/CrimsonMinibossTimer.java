@@ -2,6 +2,7 @@ package me.Danker.features;
 
 import cc.polyfrost.oneconfig.config.annotations.Dropdown;
 import cc.polyfrost.oneconfig.config.annotations.Exclude;
+import cc.polyfrost.oneconfig.config.annotations.Switch;
 import cc.polyfrost.oneconfig.hud.Hud;
 import cc.polyfrost.oneconfig.libs.universal.UMatrixStack;
 import me.Danker.config.ModConfig;
@@ -56,6 +57,12 @@ public class CrimsonMinibossTimer {
 
     public static class MinibossTimerHud extends Hud {
 
+        @Switch(
+                name = "Miniboss Spawn Soon Alert",
+                description = "Makes an alert noise when a miniboss is about to spawn soon."
+        )
+        public static boolean alert = true;
+
         @Exclude
         String exampleText = EnumChatFormatting.GRAY + "Bladesoul: " + ModConfig.getColour(minibossTimerColour) + "0m24s" + "\n" +
                              EnumChatFormatting.RED + "Barbarian Duke: " + ModConfig.getColour(minibossTimerColour) + "1m27s" + "\n" +
@@ -107,7 +114,7 @@ public class CrimsonMinibossTimer {
         }
 
         String getTime(double timeNow, double bossTime) {
-            if (timeNow == bossTime) Minecraft.getMinecraft().thePlayer.playSound(ModConfig.alertNoise, 1, (float) 0.5);
+            if (alert && timeNow == bossTime) Minecraft.getMinecraft().thePlayer.playSound(ModConfig.alertNoise, 1, (float) 0.5);
             if (timeNow < bossTime) {
                 return ModConfig.getColour(minibossTimerColour) + Utils.getTimeBetween(timeNow, bossTime);
             }
