@@ -159,15 +159,8 @@ public class ModConfig extends Config {
             category = "General",
             subcategory = "API"
     )
+    @HypixelKey
     public static String apiKey = "";
-
-    @Button(
-            name = "Generate New API Key",
-            text = "Click",
-            category = "General",
-            subcategory = "API"
-    )
-    Runnable newKey = () -> mc.thePlayer.sendChatMessage("/api new");
 
     @CfgName(
             name = "ExpertiseLore",
