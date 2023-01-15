@@ -81,6 +81,9 @@ public class ModConfig extends Config {
         addDependency("permaWaypoints", () -> crystalHollowWaypoints && autoImportWaypoints);
         addDependency("copyWaypoints", () -> crystalHollowWaypoints);
         addDependency("importWaypoints", () -> crystalHollowWaypoints);
+        addDependency("triviaWrongAnswerColour", () -> oruo);
+        addDependency("threeManAnswerColour", () -> threeMan);
+        addDependency("highlightOrdersColour", () -> highlightOrders);
     }
 
     public static String getColour(int index) {
@@ -161,6 +164,14 @@ public class ModConfig extends Config {
     )
     @HypixelKey
     public static String apiKey = "";
+
+    @Button(
+            name = "Generate New API Key",
+            text = "Click",
+            category = "General",
+            subcategory = "API"
+    )
+    Runnable newKey = () -> mc.thePlayer.sendChatMessage("/api new");
 
     @CfgName(
             name = "ExpertiseLore",
@@ -432,6 +443,15 @@ public class ModConfig extends Config {
     )
     public static boolean threeMan = false;
 
+    @Dropdown(
+            name = "Riddle Puzzle Answer Text Color",
+            description = "Color for the solution to the three man dungeon puzzle.",
+            options = {"Black", "Dark Blue", "Dark Green", "Dark Aqua", "Dark Red", "Dark Purple", "Gold", "Gray", "Dark Gray", "Blue", "Green", "Aqua", "Red", "Light Purple", "Yellow", "White"},
+            category = "Puzzle Solvers",
+            subcategory = "Dungeons"
+    )
+    public static int threeManAnswerColour = 2;
+
     @CfgName(
             name = "OruoPuzzle",
             category = "toggles"
@@ -443,6 +463,15 @@ public class ModConfig extends Config {
             subcategory = "Dungeons"
     )
     public static boolean oruo = false;
+
+    @Dropdown(
+            name = "Trivia Wrong Answer Text Color",
+            description = "Color for the wrong answers in Oruo's trivia dungeon puzzle.",
+            options = {"Black", "Dark Blue", "Dark Green", "Dark Aqua", "Dark Red", "Dark Purple", "Gold", "Gray", "Dark Gray", "Blue", "Green", "Aqua", "Red", "Light Purple", "Yellow", "White"},
+            category = "Puzzle Solvers",
+            subcategory = "Dungeons"
+    )
+    public static int triviaWrongAnswerColour = 12;
 
     @CfgName(
             name = "BlazePuzzle",
@@ -497,13 +526,6 @@ public class ModConfig extends Config {
     )
     public static boolean creeperLines = true;
 
-    @HUD(
-            name = "Water Solver",
-            category = "Puzzle Solvers",
-            subcategory = "Dungeons"
-    )
-    public static WaterSolver.WaterSolverHud waterSolverHud = new WaterSolver.WaterSolverHud();
-
     @CfgName(
             name = "TicTacToePuzzle",
             category = "toggles"
@@ -522,6 +544,13 @@ public class ModConfig extends Config {
             subcategory = "Dungeons"
     )
     public static OneColor ticTacToeColour = new OneColor(64, 255, 64);
+
+    @HUD(
+            name = "Water Solver",
+            category = "Puzzle Solvers",
+            subcategory = "Dungeons"
+    )
+    public static WaterSolver.WaterSolverHud waterSolverHud = new WaterSolver.WaterSolverHud();
 
     @CfgName(
             name = "BoulderPuzzle",
@@ -956,6 +985,21 @@ public class ModConfig extends Config {
             subcategory = "General"
     )
     public static OneColor commissionColour = new OneColor(81, 255, 81, 215);
+
+   @Switch(
+            name = "Highlight Filled Orders",
+            description = "Show which bazaar orders have been filled.",
+            category = "Highlights",
+            subcategory = "General"
+    )
+    public static boolean highlightOrders = false;
+
+    @Color(
+            name = "Filled Order Highlight Color",
+            category = "Highlights",
+            subcategory = "General"
+    )
+    public static OneColor highlightOrdersColour = new OneColor(81, 255, 81, 215);
 
     @CfgName(
             name = "HighlightSlayers",
@@ -1908,24 +1952,6 @@ public class ModConfig extends Config {
             subcategory = "Text"
     )
     public static int skillAverageColour = 6;
-
-    @Dropdown(
-            name = "Riddle Puzzle Answer Text Color",
-            description = "Color for the solution to the three man dungeon puzzle.",
-            options = {"Black", "Dark Blue", "Dark Green", "Dark Aqua", "Dark Red", "Dark Purple", "Gold", "Gray", "Dark Gray", "Blue", "Green", "Aqua", "Red", "Light Purple", "Yellow", "White"},
-            category = "Colors",
-            subcategory = "Text"
-    )
-    public static int threeManAnswerColour = 2;
-
-    @Dropdown(
-            name = "Trivia Wrong Answer Text Color",
-            description = "Color for the wrong answers in Oruo's trivia dungeon puzzle.",
-            options = {"Black", "Dark Blue", "Dark Green", "Dark Aqua", "Dark Red", "Dark Purple", "Gold", "Gray", "Dark Gray", "Blue", "Green", "Aqua", "Red", "Light Purple", "Yellow", "White"},
-            category = "Colors",
-            subcategory = "Text"
-    )
-    public static int triviaWrongAnswerColour = 12;
 
     @Color(
             name = "Pet Levels 1 to 9 Color",

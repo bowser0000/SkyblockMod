@@ -134,6 +134,7 @@ public class DankersSkyblockMod {
         MinecraftForge.EVENT_BUS.register(new HidePlayerArmour());
         MinecraftForge.EVENT_BUS.register(new HideTooltipsInExperiments());
         MinecraftForge.EVENT_BUS.register(new HighlightCommissions());
+        MinecraftForge.EVENT_BUS.register(new HighlightFilledOrders());
         MinecraftForge.EVENT_BUS.register(new HighlightSkeletonMasters());
         MinecraftForge.EVENT_BUS.register(new IceWalkSolver());
         MinecraftForge.EVENT_BUS.register(new KuudraNotifications());

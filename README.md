@@ -86,6 +86,7 @@ Discord Server: https://discord.gg/QsEkNQS
 - Kuudra notifications (stun/ballista/cloak)
 - Powder/hour tracker
 - Fix drill animation resetting
+- Highlight filled bazaar orders
 </details>
 
 <details>
