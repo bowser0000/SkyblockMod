@@ -32,7 +32,7 @@ public class JsonConfig {
         if (!(new File(file).exists())) createNewJsonObject(file);
         try {
             return new JsonParser().parse(new FileReader(file)).getAsJsonObject();
-        } catch (IllegalStateException corrupted) {
+        } catch (IllegalStateException | JsonSyntaxException corrupted) {
             corrupted.printStackTrace();
             System.out.println("Recreating " + file);
             createNewJsonObject(file);
