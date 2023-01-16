@@ -102,7 +102,11 @@ public class HOTMCommand extends CommandBase {
 
             String ability = EnumChatFormatting.RED + "None";
             if (miningCore.has("selected_pickaxe_ability")) {
-                ability = Node.valueOf(miningCore.get("selected_pickaxe_ability").getAsString()).name;
+                if (miningCore.get("selected_pickaxe_ability").isJsonNull()) {
+                    ability = EnumChatFormatting.RED + "None";
+                } else {
+                    ability = Node.valueOf(miningCore.get("selected_pickaxe_ability").getAsString()).name;
+                }
             }
 
             ChatComponentText tree = new ChatComponentText(EnumChatFormatting.GREEN + "" + EnumChatFormatting.BOLD + "[CLICK]");
