@@ -279,9 +279,9 @@ public class IceWalkSolver {
     static void reset() {
         silverfishRoomDirection = null;
         chest = null;
-        threeByThreeRoute.clear();
-        fiveByFiveRoute.clear();
-        sevenBySevenRoute.clear();
+        if (threeByThreeRoute != null) threeByThreeRoute.clear();
+        if (fiveByFiveRoute != null) fiveByFiveRoute.clear();
+        if (sevenBySevenRoute != null) sevenBySevenRoute.clear();
     }
 
 }
