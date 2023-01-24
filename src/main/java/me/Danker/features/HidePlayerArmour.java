@@ -5,18 +5,16 @@ import me.Danker.utils.Utils;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.potion.Potion;
 import net.minecraftforge.client.event.RenderLivingEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Pattern;
 
 public class HidePlayerArmour {
 
     List<ItemStack> armour = new ArrayList<>();
-
-    public static Pattern npcNameRegex = Pattern.compile("^[a-z0-9]{10}$");
 
     @SubscribeEvent
     public void onRenderLivingPre(RenderLivingEvent.Pre<EntityLivingBase> event) {
@@ -34,13 +32,14 @@ public class HidePlayerArmour {
     }
 
     public boolean isNPC(EntityPlayer player) {
-        return player.getMaxHealth() == 20.0F && npcNameRegex.matcher(player.getName()).matches();
+        return player.getUniqueID() == null || player.getUniqueID().version() != 4;
     }
 
     public boolean shouldHideArmor(RenderLivingEvent<EntityLivingBase> event) {
         return ModConfig.hideArmour
                 && Utils.inSkyblock && event.entity instanceof EntityPlayer
-                && (!ModConfig.hidePlayerArmourOnly || !isNPC(((EntityPlayer) event.entity)));
+                && (!ModConfig.hidePlayerArmourOnly || !isNPC(((EntityPlayer) event.entity)))
+                && event.entity.getActivePotionEffect(Potion.invisibility) == null;
     }
 
     @SubscribeEvent
@@ -51,7 +50,6 @@ public class HidePlayerArmour {
             for (int i = 0; i < player.inventory.armorInventory.length; i++) {
                 player.inventory.armorInventory[i] = armour.get(i);
             }
-
             armour.clear();
         }
     }
