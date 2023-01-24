@@ -64,6 +64,7 @@ dependencies {
 
     if (platform.isLegacyForge) {
         shade("cc.polyfrost:oneconfig-wrapper-launchwrapper:1.0.0-alpha+")
+        runtimeOnly("me.djtheredstoner:DevAuth-forge-legacy:1.1.0")
     }
 }
 

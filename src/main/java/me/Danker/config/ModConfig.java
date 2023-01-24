@@ -85,6 +85,8 @@ public class ModConfig extends Config {
         addDependency("triviaWrongAnswerColour", "oruo");
         addDependency("threeManAnswerColour", "threeMan");
         addDependency("highlightOrdersColour", "highlightOrders");
+        addDependency("hidePlayerArmourOnly", "hideArmour");
+
     }
 
     public static String getColour(int index) {
@@ -257,6 +259,14 @@ public class ModConfig extends Config {
             subcategory = "General"
     )
     public static boolean hideArmour = false;
+
+    @Switch(
+            name = "Don't hide NPC armor",
+            description = "If you have Hide Player Armor enabled, don't hide the armor of NPCs. 99% accurate",
+            category = "General",
+            subcategory = "General"
+    )
+    public static boolean hidePlayerArmourOnly = false;
 
     @CfgName(
             name = "AutoJoinSkyblock",
