@@ -1,5 +1,6 @@
 package me.Danker.features.puzzlesolvers;
 
+import me.Danker.DankersSkyblockMod;
 import me.Danker.config.ModConfig;
 import me.Danker.events.GuiChestBackgroundDrawnEvent;
 import me.Danker.utils.RenderUtils;
@@ -50,61 +51,64 @@ public class SameColourSolver {
 
     @SubscribeEvent
     public void onTick(TickEvent.ClientTickEvent event) {
-        if (!ModConfig.sameColour || foundColour || !Utils.isInDungeons()) return;
         if (event.phase != TickEvent.Phase.START) return;
+        if (!ModConfig.sameColour || foundColour || !Utils.isInDungeons()) return;
 
-        Minecraft mc = Minecraft.getMinecraft();
-        EntityPlayerSP player = mc.thePlayer;
-        if (mc.currentScreen instanceof GuiChest) {
-            if (player == null) return;
-            ContainerChest chest = (ContainerChest) player.openContainer;
-            List<Slot> invSlots = ((GuiChest) mc.currentScreen).inventorySlots.inventorySlots;
-            String chestName = chest.getLowerChestInventory().getDisplayName().getUnformattedText().trim();
+        if (DankersSkyblockMod.tickAmount % 5 == 0) {
+            Minecraft mc = Minecraft.getMinecraft();
+            EntityPlayerSP player = mc.thePlayer;
+            if (mc.currentScreen instanceof GuiChest) {
+                if (player == null) return;
+                ContainerChest chest = (ContainerChest) player.openContainer;
+                List<Slot> invSlots = ((GuiChest) mc.currentScreen).inventorySlots.inventorySlots;
+                String chestName = chest.getLowerChestInventory().getDisplayName().getUnformattedText().trim();
 
-            if (chestName.equals("Change all to same color!")) {
-                int red = 0;
-                int orange = 0;
-                int yellow = 0;
-                int green = 0;
-                int blue = 0;
+                if (chestName.equals("Change all to same color!")) {
+                    int red = 0;
+                    int orange = 0;
+                    int yellow = 0;
+                    int green = 0;
+                    int blue = 0;
 
-                for (int i = 12; i <= 32; i++) {
-                    ItemStack stack = invSlots.get(i).getStack();
-                    if (stack == null || stack.getItem() != Item.getItemFromBlock(Blocks.stained_glass_pane)) continue;
-                    if (stack.getItemDamage() == 7) continue;
+                    for (int i = 12; i <= 32; i++) {
+                        ItemStack stack = invSlots.get(i).getStack();
+                        if (stack == null || stack.getItem() != Item.getItemFromBlock(Blocks.stained_glass_pane))
+                            continue;
+                        if (stack.getItemDamage() == 7) continue;
 
-                    switch (stack.getItemDamage()) {
-                        case 1:
-                            orange++;
-                            break;
-                        case 4:
-                            yellow++;
-                            break;
-                        case 11:
-                            blue++;
-                            break;
-                        case 13:
-                            green++;
-                            break;
-                        case 14:
-                            red++;
-                            break;
+                        switch (stack.getItemDamage()) {
+                            case 1:
+                                orange++;
+                                break;
+                            case 4:
+                                yellow++;
+                                break;
+                            case 11:
+                                blue++;
+                                break;
+                            case 13:
+                                green++;
+                                break;
+                            case 14:
+                                red++;
+                                break;
+                        }
                     }
-                }
 
-                int max = NumberUtils.max(new int[]{red, orange, yellow, green, blue});
-                if (max == red) {
-                    correctColour = 14;
-                } else if (max == orange) {
-                    correctColour = 1;
-                } else if (max == yellow) {
-                    correctColour = 4;
-                } else if (max == green) {
-                    correctColour = 13;
-                } else {
-                    correctColour = 11;
+                    int max = NumberUtils.max(new int[]{red, orange, yellow, green, blue});
+                    if (max == red) {
+                        correctColour = 14;
+                    } else if (max == orange) {
+                        correctColour = 1;
+                    } else if (max == yellow) {
+                        correctColour = 4;
+                    } else if (max == green) {
+                        correctColour = 13;
+                    } else {
+                        correctColour = 11;
+                    }
+                    foundColour = true;
                 }
-                foundColour = true;
             }
         }
     }

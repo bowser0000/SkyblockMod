@@ -336,6 +336,14 @@ public class ModConfig extends Config {
     )
     public static boolean autoAcceptReparty = false;
 
+    @Switch(
+            name = "RNG Meter Tracker",
+            description = "Prints RNG meter info at the end of a dungeon run.\nOpen your RNG meter menu to sync selected drops.",
+            category = "General",
+            subcategory = "Dungeons"
+    )
+    public static boolean meterTracker = false;
+
     @CfgName(
             name = "ChatMaddox",
             category = "toggles"

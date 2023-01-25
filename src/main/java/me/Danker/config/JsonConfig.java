@@ -3,6 +3,7 @@ package me.Danker.config;
 import com.google.gson.*;
 import me.Danker.features.Alerts;
 import me.Danker.features.ChatAliases;
+import me.Danker.features.MeterTracker;
 import me.Danker.features.MinionLastCollected;
 import me.Danker.features.loot.TrophyFishTracker;
 
@@ -69,6 +70,7 @@ public class JsonConfig {
 
             // Trophy Fish
             TrophyFishTracker.fish = initJsonObject(TrophyFishTracker.configFile);
+            MeterTracker.meter = initJsonObject(MeterTracker.configFile);
         } catch (IOException ex) {
             ex.printStackTrace();
         }

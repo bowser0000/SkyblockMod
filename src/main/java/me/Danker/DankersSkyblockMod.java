@@ -140,6 +140,7 @@ public class DankersSkyblockMod {
         MinecraftForge.EVENT_BUS.register(new KuudraNotifications());
         MinecraftForge.EVENT_BUS.register(new LividSolver());
         MinecraftForge.EVENT_BUS.register(new LowHealthNotifications());
+        MinecraftForge.EVENT_BUS.register(new MeterTracker());
         MinecraftForge.EVENT_BUS.register(new MinionLastCollected());
         MinecraftForge.EVENT_BUS.register(new NecronNotifications());
         MinecraftForge.EVENT_BUS.register(new NoF3Coords());

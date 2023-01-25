@@ -24,7 +24,7 @@ jobs:
           ~/.gradle/wrapper
         key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle', '**/gradle-wrapper.properties') }}
         restore-keys: ${{ runner.os }}-gradle
-    - run: ./gradlew build
+    - run: ./gradlew build --no-daemon
     - name: Upload
       uses: actions/upload-artifact@v2
       with:
