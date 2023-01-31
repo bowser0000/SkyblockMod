@@ -65,7 +65,7 @@ public class MeterTracker {
 
     @SubscribeEvent
     public void init(ModInitEvent event) {
-        configFile = event.configDirectory + "/dsmmeter.json";
+        configFile = event.configDirectory + "/dsm/dsmmeter.json";
     }
 
     @SubscribeEvent

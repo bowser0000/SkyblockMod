@@ -20,7 +20,7 @@ public class ChatAliases {
 
     @SubscribeEvent
     public void init(ModInitEvent event) {
-        configFile = event.configDirectory + "/dsmaliases.json";
+        configFile = event.configDirectory + "/dsm/dsmaliases.json";
     }
 
     @SubscribeEvent

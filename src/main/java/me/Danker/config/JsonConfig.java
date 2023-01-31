@@ -1,11 +1,13 @@
 package me.Danker.config;
 
 import com.google.gson.*;
+import me.Danker.DankersSkyblockMod;
 import me.Danker.features.Alerts;
 import me.Danker.features.ChatAliases;
 import me.Danker.features.MeterTracker;
 import me.Danker.features.MinionLastCollected;
 import me.Danker.features.loot.TrophyFishTracker;
+import org.apache.commons.io.FileUtils;
 
 import java.io.File;
 import java.io.FileReader;
@@ -56,6 +58,18 @@ public class JsonConfig {
 
     public static void reloadConfig() {
         try {
+            File directory = new File(DankersSkyblockMod.configDirectory + "/dsm");
+            if (!directory.exists()) directory.mkdir();
+
+            // migrate
+            if (new File(DankersSkyblockMod.configDirectory + "/dsmalerts.json").exists()) {
+                transferFile("/dsmalerts.json");
+                transferFile("/dsmaliases.json");
+                transferFile("/dsmminions.json");
+                transferFile("/dsmtrophyfish.json");
+                transferFile("/dsmmeter.json");
+            }
+
             // Alerts
             Object[] alerts = initJsonArray(Alerts.configFile, Alerts.Alert[].class);
             if (alerts != null) Alerts.alerts = new ArrayList<>(Arrays.asList((Alerts.Alert[]) alerts));
@@ -73,6 +87,14 @@ public class JsonConfig {
             MeterTracker.meter = initJsonObject(MeterTracker.configFile);
         } catch (IOException ex) {
             ex.printStackTrace();
+        }
+    }
+
+    public static void transferFile(String file) throws IOException {
+        File path = new File(DankersSkyblockMod.configDirectory + file);
+        if (path.exists()) {
+            File dest = new File(DankersSkyblockMod.configDirectory + "/dsm");
+            FileUtils.moveFileToDirectory(path, dest, true);
         }
     }
 

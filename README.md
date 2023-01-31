@@ -87,6 +87,7 @@ Discord Server: https://discord.gg/QsEkNQS
 - Powder/hour tracker
 - Fix drill animation resetting
 - Highlight filled bazaar orders
+- Dungeon RNG meter info display
 </details>
 
 <details>

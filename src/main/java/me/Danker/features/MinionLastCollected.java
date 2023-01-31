@@ -32,7 +32,7 @@ public class MinionLastCollected {
 
     @SubscribeEvent
     public void init(ModInitEvent event) {
-        configFile = event.configDirectory + "/dsmminions.json";
+        configFile = event.configDirectory + "/dsm/dsmminions.json";
     }
 
     @SubscribeEvent

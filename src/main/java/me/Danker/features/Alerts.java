@@ -26,7 +26,7 @@ public class Alerts {
 
     @SubscribeEvent
     public void init(ModInitEvent event) {
-        configFile = event.configDirectory + "/dsmalerts.json";
+        configFile = event.configDirectory + "/dsm/dsmalerts.json";
     }
 
     @SubscribeEvent

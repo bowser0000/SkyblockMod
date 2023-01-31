@@ -59,7 +59,7 @@ public class TrophyFishTracker {
 
     @SubscribeEvent
     public void init(ModInitEvent event) {
-        configFile = event.configDirectory + "/dsmtrophyfish.json";
+        configFile = event.configDirectory + "/dsm/dsmtrophyfish.json";
     }
 
     @SubscribeEvent
