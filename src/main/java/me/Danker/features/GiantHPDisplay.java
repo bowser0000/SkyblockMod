@@ -35,6 +35,7 @@ public class GiantHPDisplay {
             if (ModConfig.giantHPHud.isEnabled() && Utils.isInDungeons() && world != null) {
                 giants.clear();
                 List<String> scoreboard = ScoreboardHandler.getSidebarLines();
+                if (scoreboard.size() == 0) return;
                 String firstLine = ScoreboardHandler.cleanSB(scoreboard.get(scoreboard.size() - 1));
 
                 if (firstLine.contains("sadan")) {
