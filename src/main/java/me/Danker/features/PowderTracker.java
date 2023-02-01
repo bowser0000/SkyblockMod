@@ -3,6 +3,7 @@ package me.Danker.features;
 import cc.polyfrost.oneconfig.config.annotations.Button;
 import cc.polyfrost.oneconfig.config.annotations.Dropdown;
 import cc.polyfrost.oneconfig.config.annotations.Exclude;
+import cc.polyfrost.oneconfig.config.annotations.Switch;
 import cc.polyfrost.oneconfig.hud.Hud;
 import cc.polyfrost.oneconfig.libs.universal.UMatrixStack;
 import me.Danker.DankersSkyblockMod;
@@ -132,6 +133,14 @@ public class PowderTracker {
         )
         Runnable resetPowderTracker = PowderTracker::reset;
 
+        @Switch(
+                name = "Only show in CH and DM",
+                description = "Only display if you're in the Crystal Hollows or Dwarven Mines.",
+                category = "Trackers",
+                subcategory = "Powder Tracker"
+        )
+        public static boolean onlyInArea = true;
+
         @Override
         protected void draw(UMatrixStack matrices, float x, float y, float scale, boolean example) {
             if (example) {
@@ -140,7 +149,9 @@ public class PowderTracker {
             }
 
             if (enabled && Utils.inSkyblock) {
-                TextRenderer.drawHUDText(getText(), x, y, scale);
+                if (!onlyInArea || (Utils.currentLocation == Location.DWARVEN_MINES || Utils.currentLocation == Location.CRYSTAL_HOLLOWS)) {
+                    TextRenderer.drawHUDText(getText(), x, y, scale);
+                }
             }
         }
 
