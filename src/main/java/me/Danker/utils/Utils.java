@@ -1,5 +1,6 @@
 package me.Danker.utils;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import me.Danker.DankersSkyblockMod;
@@ -527,6 +528,22 @@ public class Utils {
 		}
 
 		return newObj;
+	}
+
+	public static JsonArray deepCopy(JsonArray array) {
+		JsonArray newArray = new JsonArray();
+
+		for (JsonElement element : array) {
+			if (element.isJsonObject()) {
+				newArray.add(deepCopy(element.getAsJsonObject()));
+			} else if (element.isJsonArray()) {
+				newArray.add(deepCopy(element.getAsJsonArray()));
+			} else  {
+				newArray.add(element);
+			}
+		}
+
+		return newArray;
 	}
 
 	// https://github.com/BiscuitDevelopment/SkyblockAddons/blob/main/src/main/java/codes/biscuit/skyblockaddons/utils/ItemUtils.java#L139-L148

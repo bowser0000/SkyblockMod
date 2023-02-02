@@ -42,7 +42,8 @@ Discord Server: https://discord.gg/QsEkNQS
 - Gemstones applied in item lore
 - Catacombs trackers
 - Dungeons puzzle solver (Riddle, trivia, blaze, creeper, water, tic tac toe, boulder, silverfish, ice walk)
-- Dungeons timer (watcher, boss, deaths, and puzzle fails)
+- Dungeons timer (similar to LiveSplit)
+- Misc. dungeon info
 - Watcher ready message
 - Catacombs F7 Stage 3 solvers (Starts with letter, select all colour, ignore arrows on sea lanterns)
 - Find correct Livid (with graphic display of HP)

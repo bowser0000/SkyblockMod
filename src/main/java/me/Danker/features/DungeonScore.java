@@ -48,13 +48,11 @@ public class DungeonScore {
 
         if (!ModConfig.dungeonScoreHud.isEnabled() || !Utils.isInDungeons()) return;
 
-        if (message.contains("PUZZLE FAIL! ") || message.contains("chose the wrong answer! I shall never forget this moment")) {
-            failedPuzzles++;
-        }
-
         if (message.contains(":")) return;
 
-        if (message.contains(" and became a ghost.")) {
+        if (message.contains("PUZZLE FAIL! ") || message.contains("chose the wrong answer! I shall never forget this moment")) {
+            failedPuzzles++;
+        } else if (message.contains(" and became a ghost.")) {
             deaths++;
         }
     }

@@ -1,110 +1,404 @@
 package me.Danker.features;
 
+import cc.polyfrost.oneconfig.config.annotations.Dropdown;
 import cc.polyfrost.oneconfig.config.annotations.Exclude;
+import cc.polyfrost.oneconfig.config.annotations.Number;
+import cc.polyfrost.oneconfig.config.annotations.Switch;
 import cc.polyfrost.oneconfig.hud.Hud;
 import cc.polyfrost.oneconfig.libs.universal.UMatrixStack;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import me.Danker.DankersSkyblockMod;
+import me.Danker.config.ModConfig;
+import me.Danker.events.ModInitEvent;
+import me.Danker.events.PostConfigInitEvent;
 import me.Danker.handlers.TextRenderer;
 import me.Danker.utils.RenderUtils;
 import me.Danker.utils.Utils;
-import net.minecraft.client.Minecraft;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StringUtils;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
+import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent;
+
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
 
 public class DungeonTimer {
 
-    static double dungeonStartTime = 0;
-    static double bloodOpenTime = 0;
-    static double watcherClearTime = 0;
-    static double bossClearTime = 0;
+    public static JsonObject timer = new JsonObject();
+    public static String configFile;
+
+    static ActiveTimer activeTimer = null;
+
     static int witherDoors = 0;
     static int dungeonDeaths = 0;
     static int puzzleFails = 0;
 
+    public static JsonObject createEmpty() {
+        JsonObject timer = new JsonObject();
+
+        JsonArray f1 = getBasicSplits(EnumChatFormatting.GOLD + "Bonzo Entry", "Bonzo");
+        f1.add(createSplit(EnumChatFormatting.GOLD + "Bonzo Phase 1", "\\[BOSS\\] Bonzo: Oh noes, you got me\\.\\. what ever will I do\\?!"));
+        f1.add(getEndSplit(EnumChatFormatting.GOLD + "Bonzo Phase 2"));
+        timer.add("F1", f1);
+        timer.add("M1", Utils.deepCopy(f1));
+
+        JsonArray f2 = getBasicSplits(EnumChatFormatting.WHITE + "Scarf Entry", "Scarf");
+        f2.add(createSplit(EnumChatFormatting.WHITE + "Scarf Phase 1", "\\[BOSS\\] Scarf: Those toys are not strong enough I see\\."));
+        f2.add(getEndSplit(EnumChatFormatting.WHITE + "Scarf Phase 2"));
+        timer.add("F2", f2);
+        timer.add("M2", Utils.deepCopy(f2));
+
+        JsonArray f3 = getBasicSplits(EnumChatFormatting.RED + "Professor Entry", "The Professor");
+        f3.add(createSplit(EnumChatFormatting.WHITE + "Guardians", "\\[BOSS\\] The Professor: Oh\\? You found my Guardians' one weakness\\?"));
+        f3.add(createSplit(EnumChatFormatting.RED + "Professor", "\\[BOSS\\] The Professor: I see\\. You have forced me to use my ultimate technique\\."));
+        f3.add(getEndSplit(EnumChatFormatting.RED + "Phase 2"));
+        timer.add("F3", f3);
+        timer.add("M3", Utils.deepCopy(f3));
+
+        JsonArray f4 = getBasicSplits(EnumChatFormatting.RED + "Thorn Entry", "Thorn");
+        f4.add(getEndSplit(EnumChatFormatting.RED + "Thorn"));
+        timer.add("F4", f4);
+        timer.add("M4", Utils.deepCopy(f4));
+
+        JsonArray f5 = getBasicSplits(EnumChatFormatting.RED + "Livid Entry", "Livid");
+        f5.add(getEndSplit(EnumChatFormatting.RED + "Livid"));
+        timer.add("F5", f5);
+        timer.add("M5", Utils.deepCopy(f5));
+
+        JsonArray f6 = getBasicSplits(EnumChatFormatting.RED + "Sadan Entry", "Sadan");
+        f6.add(createSplit(EnumChatFormatting.LIGHT_PURPLE + "Terracottas", "\\[BOSS\\] Sadan: ENOUGH!"));
+        f6.add(createSplit(EnumChatFormatting.GREEN + "Giants", "\\[BOSS\\] Sadan: You did it\\. I understand now, you have earned my respect\\."));
+        f6.add(getEndSplit(EnumChatFormatting.RED + "Sadan"));
+        timer.add("F6", f6);
+        timer.add("M6", Utils.deepCopy(f6));
+
+        JsonArray f7 = getBasicSplits(EnumChatFormatting.RED + "Boss Entry", "Maxor");
+        f7.add(createSplit(EnumChatFormatting.AQUA + "Maxor", "\\[BOSS\\] Storm: Pathetic Maxor, just like expected\\."));
+        f7.add(createSplit(EnumChatFormatting.RED + "Storm", "\\[BOSS\\] Storm: At least my son died by your hands\\."));
+        f7.add(createSplit(EnumChatFormatting.GOLD + "Terminals", "The Core entrance is opening!"));
+        f7.add(createSplit(EnumChatFormatting.GOLD + "Goldor", "\\[BOSS\\] Goldor: \\.\\.\\.\\."));
+        f7.add(createSplit(EnumChatFormatting.DARK_RED + "Necron", "\\[BOSS\\] Necron: All this, for nothing\\.\\.\\."));
+        timer.add("F7", f7);
+        JsonArray m7 = Utils.deepCopy(f7);
+        m7.add(getEndSplit(EnumChatFormatting.GRAY + "Wither King"));
+        timer.add("M7", m7);
+
+        return timer;
+    }
+
+    public static JsonObject createSplit(String name, String triggerRegex) {
+        JsonObject split = new JsonObject();
+
+        split.addProperty("name", name);
+        split.addProperty("trigger", triggerRegex);
+        split.addProperty("pb", -1);
+        split.addProperty("gold", -1);
+
+        return split;
+    }
+
+    public static JsonArray getBasicSplits(String entryName, String bossName) {
+        JsonArray splits = new JsonArray();
+
+        splits.add(createSplit(EnumChatFormatting.DARK_RED + "Blood Open", "The BLOOD DOOR has been opened!"));
+        splits.add(createSplit(EnumChatFormatting.RED + "Blood Clear", "\\[BOSS\\] The Watcher: You have proven yourself. You may pass."));
+        splits.add(createSplit(entryName, "\\[BOSS\\] " + bossName + ":.*"));
+
+        return splits;
+    }
+
+    public static JsonObject getEndSplit(String name) {
+        return createSplit(name, ".* {3}Team Score:.*");
+    }
+
+    @SubscribeEvent
+    public void init(ModInitEvent event) {
+        configFile = event.configDirectory + "/dsm/dsmdungeonsplits.json";
+    }
+
+    @SubscribeEvent
+    public void postConfigInit(PostConfigInitEvent event) {
+        if (timer.entrySet().isEmpty()) timer = createEmpty();
+        save();
+    }
+
     @SubscribeEvent(receiveCanceled = true)
     public void onChat(ClientChatReceivedEvent event) {
+        if (!Utils.isInDungeons()) return;
+        if (event.type == 2) return;
+
         String message = StringUtils.stripControlCodes(event.message.getUnformattedText());
 
-        if (!Utils.isInDungeons()) return;
-
-        if (message.contains("[BOSS] The Watcher: You have proven yourself. You may pass.")) {
-            watcherClearTime = System.currentTimeMillis() / 1000;
-        } else if (message.contains("PUZZLE FAIL! ") || message.contains("chose the wrong answer! I shall never forget this moment")) {
-            puzzleFails++;
+        if (activeTimer != null && !activeTimer.isTimerDone()) {
+            if (message.matches(activeTimer.getCurrentSplit().triggerRegex)) {
+                activeTimer.split();
+            }
         }
 
         if (message.contains(":")) return;
 
-        if (message.contains("Dungeon starts in 1 second.")) { // Dungeons Stuff
-            dungeonStartTime = System.currentTimeMillis() / 1000 + 1;
-            bloodOpenTime = dungeonStartTime;
-            watcherClearTime = dungeonStartTime;
-            bossClearTime = dungeonStartTime;
-            witherDoors = 0;
-            dungeonDeaths = 0;
-            puzzleFails = 0;
-        } else if (message.contains("The BLOOD DOOR has been opened!")) {
-            bloodOpenTime = System.currentTimeMillis() / 1000;
+        if (message.contains("Dungeon starts in 1 second.")) {
+            activeTimer.getFirstSplit().startTime = System.currentTimeMillis() + 1000D;
+        } else if (message.contains("PUZZLE FAIL! ") || message.contains("chose the wrong answer! I shall never forget this moment")) {
+            puzzleFails++;
         } else if (message.contains(" opened a WITHER door!")) {
             witherDoors++;
         } else if (message.contains(" and became a ghost.")) {
             dungeonDeaths++;
-        } else if (message.contains(" Defeated ") && message.contains(" in ")) {
-            bossClearTime = System.currentTimeMillis() / 1000;
         }
+    }
+
+    @SubscribeEvent
+    public void onTick(TickEvent.ClientTickEvent event) {
+        if (event.phase != TickEvent.Phase.START) return;
+
+        if (!ModConfig.dungeonTimerHud.isEnabled()) return;
+        if (activeTimer != null) return;
+
+        if (DankersSkyblockMod.tickAmount % 20 == 0) {
+            String currentFloor = Utils.currentFloor.toString();
+
+            if (timer.has(currentFloor)) {
+                activeTimer = new ActiveTimer(timer.get(currentFloor).getAsJsonArray());
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public void onWorldChange(WorldEvent.Load event) {
+        activeTimer = null;
+        witherDoors = 0;
+        dungeonDeaths = 0;
+        puzzleFails = 0;
+    }
+
+    public static void save() {
+        try (FileWriter writer = new FileWriter(configFile)) {
+            new GsonBuilder().create().toJson(timer, writer);
+            writer.flush();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    static class ActiveTimer {
+
+        ArrayList<Split> splits = new ArrayList<>();
+        int currentIndex = 0;
+
+        public ActiveTimer(JsonArray floor) {
+            for (JsonElement element : floor) {
+                splits.add(new Split(element.getAsJsonObject()));
+            }
+        }
+
+        public boolean isTimerDone() {
+            return currentIndex >= splits.size();
+        }
+
+        public Split getCurrentSplit() {
+            return splits.get(currentIndex);
+        }
+
+        public Split getFirstSplit() {
+            return splits.get(0);
+        }
+
+        public void split() {
+            double time = System.currentTimeMillis();
+
+            Split curSplit = getCurrentSplit();
+            curSplit.endTime = time;
+            if (curSplit.goldTime < 0D || curSplit.getTime() < curSplit.goldTime) {
+                curSplit.splitObj.addProperty("gold", curSplit.getTime()); // set gold
+            }
+
+            currentIndex++;
+
+            if (currentIndex < splits.size()) {
+                getCurrentSplit().startTime = time;
+            } else {
+                double sum = 0D;
+                double pbSum = 0D;
+
+                for (Split split : splits) {
+                    sum += split.getTime();
+                    pbSum += split.pbTime;
+                }
+
+                if (pbSum < 0D || sum < pbSum) {
+                    for (Split split : splits) {
+                        split.splitObj.addProperty("pb", split.getTime()); // replace times with pb
+                    }
+                }
+            }
+            save();
+        }
+
+    }
+
+    static class Split {
+
+        public JsonObject splitObj;
+        public String name;
+        public String triggerRegex;
+        public double startTime = -1;
+        public double endTime = -1;
+        public double pbTime;
+        public double goldTime;
+
+        public Split(JsonObject split) {
+            this.splitObj = split;
+            this.name = split.get("name").getAsString();
+            this.triggerRegex = split.get("trigger").getAsString();
+            this.pbTime = split.get("pb").getAsDouble();
+            this.goldTime = split.get("gold").getAsDouble();
+        }
+
+        public double getTime() {
+            if (startTime < 0D) return 0D;
+            if (endTime < 0D) return (System.currentTimeMillis() - startTime) / 1000D;
+            return (endTime - startTime) / 1000D;
+        }
+
+        public String getColouredTime() {
+            String time = String.format("%." + DungeonTimerHud.decimals + "f", getTime()) + "s";
+
+            if (startTime < 0D) return ModConfig.getColour(DungeonTimerHud.timerColour) + time;
+            if (endTime > 0D && (goldTime < 0D || getTime() < goldTime)) return ModConfig.getColour(DungeonTimerHud.goldColour) + time;
+            if (pbTime < 0D || getTime() < pbTime) return ModConfig.getColour(DungeonTimerHud.greenColour) + time;
+            return ModConfig.getColour(DungeonTimerHud.redColour) + time;
+        }
+
+        public String getPBDiff() {
+            if (goldTime < 0D || pbTime < 0D) return "";
+            if (getTime() < goldTime && endTime < 0D) return "";
+            return " (" + String.format("%+." + DungeonTimerHud.decimals + "f", getTime() - pbTime) + "s)";
+        }
+
     }
 
     public static class DungeonTimerHud extends Hud {
 
         @Exclude
-        String exampleText = EnumChatFormatting.GRAY + "Wither Doors:\n" +
-                             EnumChatFormatting.DARK_RED + "Blood Open:\n" +
-                             EnumChatFormatting.RED + "Watcher Clear:\n" +
-                             EnumChatFormatting.BLUE + "Boss Clear:\n" +
+        String exampleText = EnumChatFormatting.DARK_RED + "Blood Open:\n" +
+                             EnumChatFormatting.RED + "Blood Clear:\n" +
+                             EnumChatFormatting.RED + "Boss Entry:\n" +
+                             EnumChatFormatting.AQUA + "Maxor:\n" +
+                             EnumChatFormatting.RED + "Storm:\n" +
+                             EnumChatFormatting.GOLD + "Terminals:\n" +
+                             EnumChatFormatting.GOLD + "Goldor:\n" +
+                             EnumChatFormatting.DARK_RED + "Necron:\n" +
+                             EnumChatFormatting.GRAY + "Wither King:";
+
+        @Exclude
+        String extraInfoText = EnumChatFormatting.GRAY + "\nWither Doors:\n" +
                              EnumChatFormatting.YELLOW + "Deaths:\n" +
                              EnumChatFormatting.YELLOW + "Puzzle Fails:";
 
         @Exclude
-        String exampleNums = EnumChatFormatting.GRAY + "" + 5 + "\n" +
-                             EnumChatFormatting.DARK_RED + Utils.getTimeBetween(0, 33) + "\n" +
-                             EnumChatFormatting.RED + Utils.getTimeBetween(0, 129) + "\n" +
-                             EnumChatFormatting.BLUE + Utils.getTimeBetween(0, 169) + "\n" +
-                             EnumChatFormatting.YELLOW + 2 + "\n" +
-                             EnumChatFormatting.YELLOW + 1;
+        String exampleNums = ModConfig.getColour(goldColour) + "175.56s\n" +
+                             ModConfig.getColour(greenColour) + "130.63s\n" +
+                             ModConfig.getColour(greenColour) + "458.94s\n" +
+                             ModConfig.getColour(redColour) + "49.93s\n" +
+                             ModConfig.getColour(goldColour) + "73.75s\n" +
+                             ModConfig.getColour(greenColour) + "227.65s\n" +
+                             ModConfig.getColour(redColour) + "17.56s\n" +
+                             ModConfig.getColour(timerColour) + "32.19s\n" +
+                             ModConfig.getColour(timerColour) + "0.00s";
+
+
+        @Exclude
+        String extraInfoNums = "\n" + EnumChatFormatting.GRAY+ 5 + "\n" +
+                               EnumChatFormatting.YELLOW + 2 + "\n" +
+                               EnumChatFormatting.YELLOW + 1;
+
+        @Dropdown(
+                name = "Timer Color",
+                options = {"Black", "Dark Blue", "Dark Green", "Dark Aqua", "Dark Red", "Dark Purple", "Gold", "Gray", "Dark Gray", "Blue", "Green", "Aqua", "Red", "Light Purple", "Yellow", "White"}
+        )
+        public static int timerColour = 7;
+
+        @Dropdown(
+                name = "Green Split Color",
+                options = {"Black", "Dark Blue", "Dark Green", "Dark Aqua", "Dark Red", "Dark Purple", "Gold", "Gray", "Dark Gray", "Blue", "Green", "Aqua", "Red", "Light Purple", "Yellow", "White"}
+        )
+        public static int greenColour = 10;
+
+        @Dropdown(
+                name = "Red Split Color",
+                options = {"Black", "Dark Blue", "Dark Green", "Dark Aqua", "Dark Red", "Dark Purple", "Gold", "Gray", "Dark Gray", "Blue", "Green", "Aqua", "Red", "Light Purple", "Yellow", "White"}
+        )
+        public static int redColour = 12;
+
+        @Dropdown(
+                name = "Gold Split Color",
+                options = {"Black", "Dark Blue", "Dark Green", "Dark Aqua", "Dark Red", "Dark Purple", "Gold", "Gray", "Dark Gray", "Blue", "Green", "Aqua", "Red", "Light Purple", "Yellow", "White"}
+        )
+        public static int goldColour = 6;
+
+        @Number(
+                name = "Timer Decimal Places",
+                min = 0, max = 5
+        )
+        public static int decimals = 2;
+
+        @Switch(
+                name = "Show difference from PB",
+                description = "Show the time difference from your personal best run."
+        )
+        public static boolean showDiff = false;
+
+        @Switch(
+                name = "Show Misc. Info",
+                description = "Show miscellaneous info about the dungeon run."
+        )
+        public static boolean extraInfo = false;
 
         @Override
         protected void draw(UMatrixStack matrices, float x, float y, float scale, boolean example) {
-            Minecraft mc = Minecraft.getMinecraft();
-
             if (example) {
-                TextRenderer.drawHUDText(exampleText, x, y, scale);
-                TextRenderer.drawHUDText(exampleNums, (int) (x + (80 * scale)), y, scale);
+                TextRenderer.drawHUDText(extraInfo ? exampleText + extraInfoText : exampleText, x, y, scale);
+                TextRenderer.drawHUDText(extraInfo ? exampleNums + extraInfoNums : exampleNums, (int) (x + (90 * scale)), y, scale);
                 return;
             }
 
             if (enabled && Utils.isInDungeons()) {
-                String dungeonTimerText = EnumChatFormatting.GRAY + "Wither Doors:\n" +
-                                          EnumChatFormatting.DARK_RED + "Blood Open:\n" +
-                                          EnumChatFormatting.RED + "Watcher Clear:\n" +
-                                          EnumChatFormatting.BLUE + "Boss Clear:\n" +
-                                          EnumChatFormatting.YELLOW + "Deaths:\n" +
-                                          EnumChatFormatting.YELLOW + "Puzzle Fails:";
-                String dungeonTimers = EnumChatFormatting.GRAY + "" + witherDoors + "\n" +
-                                       EnumChatFormatting.DARK_RED + Utils.getTimeBetween(dungeonStartTime, bloodOpenTime) + "\n" +
-                                       EnumChatFormatting.RED + Utils.getTimeBetween(dungeonStartTime, watcherClearTime) + "\n" +
-                                       EnumChatFormatting.BLUE + Utils.getTimeBetween(dungeonStartTime, bossClearTime) + "\n" +
-                                       EnumChatFormatting.YELLOW + dungeonDeaths + "\n" +
-                                       EnumChatFormatting.YELLOW + puzzleFails;
+                if (activeTimer != null) {
+                    String dungeonTimerText = "";
+                    String dungeonTimers = "";
 
-                TextRenderer.drawHUDText(dungeonTimerText, x, y, scale);
-                TextRenderer.drawHUDText(dungeonTimers, (int) (x + (80 * scale)), y, scale);
+                    for (Split split : activeTimer.splits) {
+                        dungeonTimerText += split.name + ":\n";
+                        dungeonTimers += split.getColouredTime();
+                        if (showDiff) dungeonTimers += split.getPBDiff();
+                        dungeonTimers += "\n";
+                    }
+
+                    if (extraInfo) {
+                        dungeonTimerText += EnumChatFormatting.GRAY + "Wither Doors:\n" +
+                                            EnumChatFormatting.YELLOW + "Deaths:\n" +
+                                            EnumChatFormatting.YELLOW + "Puzzle Fails:";
+                        dungeonTimers += EnumChatFormatting.GRAY + "" + witherDoors + "\n" +
+                                         EnumChatFormatting.YELLOW + dungeonDeaths + "\n" +
+                                         EnumChatFormatting.YELLOW + puzzleFails;
+                    }
+
+                    TextRenderer.drawHUDText(dungeonTimerText, x, y, scale);
+                    TextRenderer.drawHUDText(dungeonTimers, (int) (x + (90 * scale)), y, scale);
+                }
             }
         }
 
         @Override
         protected float getWidth(float scale, boolean example) {
-            return (RenderUtils.getWidthFromText(exampleNums) + 80 * scale) * scale;
+            return (RenderUtils.getWidthFromText(exampleNums) + 90 * scale) * scale;
         }
 
         @Override
