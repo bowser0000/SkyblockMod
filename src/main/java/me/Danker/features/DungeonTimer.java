@@ -371,27 +371,27 @@ public class DungeonTimer {
 
             if (enabled && Utils.isInDungeons()) {
                 if (activeTimer != null) {
-                    String dungeonTimerText = "";
-                    String dungeonTimers = "";
+                    StringBuilder dungeonTimerText = new StringBuilder();
+                    StringBuilder dungeonTimers = new StringBuilder();
 
                     for (Split split : activeTimer.splits) {
-                        dungeonTimerText += split.name + ":\n";
-                        dungeonTimers += split.getColouredTime();
-                        if (showDiff) dungeonTimers += split.getPBDiff();
-                        dungeonTimers += "\n";
+                        dungeonTimerText.append(split.name).append(":\n");
+                        dungeonTimers.append(split.getColouredTime());
+                        if (showDiff) dungeonTimers.append(split.getPBDiff());
+                        dungeonTimers.append("\n");
                     }
 
                     if (extraInfo) {
-                        dungeonTimerText += EnumChatFormatting.GRAY + "Wither Doors:\n" +
-                                            EnumChatFormatting.YELLOW + "Deaths:\n" +
-                                            EnumChatFormatting.YELLOW + "Puzzle Fails:";
-                        dungeonTimers += EnumChatFormatting.GRAY + "" + witherDoors + "\n" +
-                                         EnumChatFormatting.YELLOW + dungeonDeaths + "\n" +
-                                         EnumChatFormatting.YELLOW + puzzleFails;
+                        dungeonTimerText.append(EnumChatFormatting.GRAY).append("Wither Doors:\n")
+                                        .append(EnumChatFormatting.YELLOW).append("Deaths:\n")
+                                        .append(EnumChatFormatting.YELLOW).append("Puzzle Fails:");
+                        dungeonTimers.append(EnumChatFormatting.GRAY).append(witherDoors).append("\n")
+                                     .append(EnumChatFormatting.YELLOW).append(dungeonDeaths).append("\n")
+                                     .append(EnumChatFormatting.YELLOW).append(puzzleFails);
                     }
 
-                    TextRenderer.drawHUDText(dungeonTimerText, x, y, scale);
-                    TextRenderer.drawHUDText(dungeonTimers, (int) (x + (90 * scale)), y, scale);
+                    TextRenderer.drawHUDText(dungeonTimerText.toString(), x, y, scale);
+                    TextRenderer.drawHUDText(dungeonTimers.toString(), (int) (x + (90 * scale)), y, scale);
                 }
             }
         }
