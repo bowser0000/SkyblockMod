@@ -36,7 +36,7 @@ loom {
     noServerRunConfigs()
     if (project.platform.isLegacyForge) {
         launchConfigs.named("client") {
-            arg("--tweakClass", "cc.polyfrost.oneconfigwrapper.OneConfigWrapper")
+            arg("--tweakClass", "cc.polyfrost.oneconfig.loader.stage0.LaunchWrapperTweaker")
             property("mixin.debug.export", "true")
         }
         runConfigs.named("client") {
@@ -63,7 +63,7 @@ dependencies {
     modCompileOnly("cc.polyfrost:oneconfig-$platform:0.2.0-alpha+")
 
     if (platform.isLegacyForge) {
-        shade("cc.polyfrost:oneconfig-wrapper-launchwrapper:1.0.0-alpha+")
+        shade("cc.polyfrost:oneconfig-wrapper-launchwrapper:1.0.0-beta+")
         runtimeOnly("me.djtheredstoner:DevAuth-forge-legacy:1.1.0")
     }
 }
@@ -136,7 +136,7 @@ tasks {
                             "ModSide" to "CLIENT",
                             "ForceLoadAsMod" to true,
                             "TweakOrder" to "0",
-                            "TweakClass" to "cc.polyfrost.oneconfigwrapper.OneConfigWrapper",
+                            "TweakClass" to "cc.polyfrost.oneconfig.loader.stage0.LaunchWrapperTweaker",
                             "Main-Class" to "DefenitlyNotAJoikedInstallerFrame"
                     )
             )

@@ -27,6 +27,8 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class DungeonTimer {
 
@@ -136,14 +138,15 @@ public class DungeonTimer {
         String message = StringUtils.stripControlCodes(event.message.getUnformattedText());
 
         if (activeTimer != null && !activeTimer.isTimerDone()) {
-            if (message.matches(activeTimer.getCurrentSplit().triggerRegex)) {
+            Matcher matcher = activeTimer.getCurrentSplit().trigger.matcher(message);
+            if (matcher.matches()) {
                 activeTimer.split();
             }
         }
 
         if (message.contains(":")) return;
 
-        if (message.contains("Dungeon starts in 1 second.")) {
+        if (activeTimer != null && message.contains("Dungeon starts in 1 second.")) {
             activeTimer.getFirstSplit().startTime = System.currentTimeMillis() + 1000D;
         } else if (message.contains("PUZZLE FAIL! ") || message.contains("chose the wrong answer! I shall never forget this moment")) {
             puzzleFails++;
@@ -247,7 +250,7 @@ public class DungeonTimer {
 
         public JsonObject splitObj;
         public String name;
-        public String triggerRegex;
+        public Pattern trigger;
         public double startTime = -1;
         public double endTime = -1;
         public double pbTime;
@@ -256,7 +259,7 @@ public class DungeonTimer {
         public Split(JsonObject split) {
             this.splitObj = split;
             this.name = split.get("name").getAsString();
-            this.triggerRegex = split.get("trigger").getAsString();
+            this.trigger = Pattern.compile(split.get("trigger").getAsString());
             this.pbTime = split.get("pb").getAsDouble();
             this.goldTime = split.get("gold").getAsDouble();
         }
