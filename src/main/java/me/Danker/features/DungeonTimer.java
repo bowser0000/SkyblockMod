@@ -195,9 +195,21 @@ public class DungeonTimer {
         ArrayList<Split> splits = new ArrayList<>();
         int currentIndex = 0;
 
+        public double sumOfBest = 0;
+
         public ActiveTimer(JsonArray floor) {
+            boolean fullRun = true;
+
             for (JsonElement element : floor) {
-                splits.add(new Split(element.getAsJsonObject()));
+                Split split = new Split(element.getAsJsonObject());
+                splits.add(split);
+
+                if (split.goldTime < 0D) {
+                    sumOfBest = -1;
+                    fullRun = false;
+                } else if (fullRun && split.goldTime > 0D) {
+                    sumOfBest += split.goldTime;
+                }
             }
         }
 
@@ -220,6 +232,7 @@ public class DungeonTimer {
             curSplit.endTime = time;
             if (curSplit.goldTime < 0D || curSplit.getTime() < curSplit.goldTime) {
                 curSplit.splitObj.addProperty("gold", curSplit.getTime()); // set gold
+                sumOfBest -= curSplit.goldTime - curSplit.getTime();
             }
 
             currentIndex++;
@@ -242,6 +255,19 @@ public class DungeonTimer {
                 }
             }
             save();
+        }
+
+        public String getSumOfBest() {
+            if (sumOfBest < 0D) return "";
+
+            int minutes = (int) (sumOfBest / 60);
+            double seconds = sumOfBest % 60;
+
+            if (minutes == 0) {
+                return String.format("%." + DungeonTimerHud.decimals + "f", seconds) + "s";
+            } else {
+                return minutes + "m" + String.format("%." + DungeonTimerHud.decimals + "f", seconds) + "s";
+            }
         }
 
     }
@@ -353,10 +379,16 @@ public class DungeonTimer {
         public static int decimals = 2;
 
         @Switch(
-                name = "Show difference from PB",
+                name = "Show Difference From PB",
                 description = "Show the time difference from your personal best run."
         )
         public static boolean showDiff = false;
+
+        @Switch(
+                name = "Show Sum of Best",
+                description = "Show sum of gold splits in the timer."
+        )
+        public static boolean sumOfBest = false;
 
         @Switch(
                 name = "Show Misc. Info",
@@ -382,6 +414,11 @@ public class DungeonTimer {
                         dungeonTimers.append(split.getColouredTime());
                         if (showDiff) dungeonTimers.append(split.getPBDiff());
                         dungeonTimers.append("\n");
+                    }
+
+                    if (sumOfBest && activeTimer.sumOfBest > 0D) {
+                        dungeonTimerText.append(EnumChatFormatting.GOLD).append("Sum of Best:\n");
+                        dungeonTimers.append(EnumChatFormatting.GOLD).append(activeTimer.getSumOfBest()).append("\n");
                     }
 
                     if (extraInfo) {
