@@ -96,6 +96,7 @@ public class PlayerCommand extends CommandBase {
             double enchantingLevel = 0;
             double alchemyLevel = 0;
             double tamingLevel = 0;
+            double carpentryLevel = 0;
 
             if (userObject.has("experience_skill_farming") || userObject.has("experience_skill_mining") || userObject.has("experience_skill_combat") || userObject.has("experience_skill_foraging") || userObject.has("experience_skill_fishing") || userObject.has("experience_skill_enchanting") || userObject.has("experience_skill_alchemy")) {
                 if (userObject.has("experience_skill_farming")) {
@@ -129,6 +130,10 @@ public class PlayerCommand extends CommandBase {
                 if (userObject.has("experience_skill_taming")) {
                     tamingLevel = Utils.xpToSkillLevel(userObject.get("experience_skill_taming").getAsDouble(), 50);
                     tamingLevel = (double) Math.round(tamingLevel * 100) / 100;
+                }
+                if (userObject.has("experience_skill_carpentry")) {
+                    carpentryLevel = Utils.xpToSkillLevel(userObject.get("experience_skill_carpentry").getAsDouble(), 50);
+                    carpentryLevel = (double) Math.round(carpentryLevel * 100) / 100;
                 }
             } else {
                 // Get skills from achievement API, will be floored
@@ -170,9 +175,10 @@ public class PlayerCommand extends CommandBase {
                 }
             }
 
-            double skillAvg = (farmingLevel + miningLevel + combatLevel + foragingLevel + fishingLevel + enchantingLevel + alchemyLevel + tamingLevel) / 8;
+            double skillAvg = (farmingLevel + miningLevel + combatLevel + foragingLevel + fishingLevel + enchantingLevel + alchemyLevel + tamingLevel + carpentryLevel) / 9;
             skillAvg = (double) Math.round(skillAvg * 100) / 100;
-            double trueAvg = (Math.floor(farmingLevel) + Math.floor(miningLevel) + Math.floor(combatLevel) + Math.floor(foragingLevel) + Math.floor(fishingLevel) + Math.floor(enchantingLevel) + Math.floor(alchemyLevel) + Math.floor(tamingLevel)) / 8;
+            double trueAvg = (Math.floor(farmingLevel) + Math.floor(miningLevel) + Math.floor(combatLevel) + Math.floor(foragingLevel) + Math.floor(fishingLevel) + Math.floor(enchantingLevel) + Math.floor(alchemyLevel) + Math.floor(tamingLevel) + Math.floor(carpentryLevel)) / 9;
+            trueAvg = (double) Math.round(trueAvg * 100) / 100;
 
             // Slayers
             System.out.println("Fetching slayer stats...");
@@ -234,6 +240,7 @@ public class PlayerCommand extends CommandBase {
                                                         ModConfig.getColour(ModConfig.typeColour) + " Enchanting: " + ModConfig.getColour(ModConfig.valueColour) + EnumChatFormatting.BOLD + enchantingLevel + "\n" +
                                                         ModConfig.getColour(ModConfig.typeColour) + " Alchemy: " + ModConfig.getColour(ModConfig.valueColour) + EnumChatFormatting.BOLD + alchemyLevel + "\n" +
                                                         ModConfig.getColour(ModConfig.typeColour) + " Taming: " + ModConfig.getColour(ModConfig.valueColour) + EnumChatFormatting.BOLD + tamingLevel + "\n" +
+                                                        ModConfig.getColour(ModConfig.typeColour) + " Carpentry: " + ModConfig.getColour(ModConfig.valueColour) + EnumChatFormatting.BOLD + carpentryLevel + "\n" +
                                                         EnumChatFormatting.AQUA + " Average Skill Level: " + ModConfig.getColour(ModConfig.skillAverageColour) + EnumChatFormatting.BOLD + skillAvg + "\n" +
                                                         EnumChatFormatting.AQUA + " True Average Skill Level: " + ModConfig.getColour(ModConfig.skillAverageColour) + EnumChatFormatting.BOLD + trueAvg + "\n\n" +
                                                         EnumChatFormatting.AQUA + " " + username + "'s Total Slayer XP: " + EnumChatFormatting.GOLD + EnumChatFormatting.BOLD + nf.format(zombieXP + spiderXP + wolfXP + endermanXP) + "\n" +
