@@ -65,7 +65,7 @@ public class TrophyFishTracker {
     @SubscribeEvent
     public void postConfigInit(PostConfigInitEvent event) {
         if (fish.entrySet().isEmpty() || fish.has("Sulpher Skitter")) fish = createEmpty();
-        fishSession = createEmpty();
+        if (fishSession.entrySet().isEmpty()) fishSession = createEmpty();
         save();
     }
 
