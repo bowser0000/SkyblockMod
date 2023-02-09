@@ -108,7 +108,7 @@ public class DungeonTimer {
     public static JsonArray getBasicSplits(String entryName, String bossName) {
         JsonArray splits = new JsonArray();
 
-        splits.add(createSplit(EnumChatFormatting.DARK_RED + "Blood Open", "The BLOOD DOOR has been opened!"));
+        splits.add(createSplit(EnumChatFormatting.DARK_RED + "Blood Open", "\\[BOSS\\] The Watcher: .*"));
         splits.add(createSplit(EnumChatFormatting.RED + "Blood Clear", "\\[BOSS\\] The Watcher: You have proven yourself. You may pass."));
         splits.add(createSplit(entryName, "\\[BOSS\\] " + bossName + ":.*"));
 
