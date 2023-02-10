@@ -2,6 +2,8 @@ package me.Danker.config;
 
 
 import cc.polyfrost.oneconfig.config.Config;
+import cc.polyfrost.oneconfig.config.annotations.Button;
+import cc.polyfrost.oneconfig.config.annotations.Color;
 import cc.polyfrost.oneconfig.config.annotations.Number;
 import cc.polyfrost.oneconfig.config.annotations.*;
 import cc.polyfrost.oneconfig.config.core.OneColor;
@@ -31,6 +33,10 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.util.EnumChatFormatting;
 import org.apache.commons.codec.binary.Base64;
 
+import java.awt.*;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
@@ -1490,6 +1496,21 @@ public class ModConfig extends Config {
     public static boolean killComboMessages = true;
 
     // Music
+
+    @Button(
+            name = "Instructions",
+            description = "Click to learn how to use custom music.",
+            text = "Click",
+            category = "Music"
+    )
+    Runnable musicInstructions = () -> {
+        try {
+            Desktop.getDesktop().browse(new URI("https://github.com/bowser0000/SkyblockMod/blob/master/README.md#custom-music"));
+        } catch (IOException | URISyntaxException ex) {
+            Notifications.INSTANCE.send("Error", "Error opening web page.");
+            ex.printStackTrace();
+        }
+    };
 
     @Button(
             name = "Reload Custom Music",
