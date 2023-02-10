@@ -105,16 +105,19 @@ public class DungeonsCommand extends CommandBase {
 			JsonObject catacombsObject = dungeonsObject.get("dungeon_types").getAsJsonObject().get("catacombs").getAsJsonObject();
 
 			double catacombs = Utils.xpToDungeonsLevel(catacombsObject.get("experience").getAsDouble());
-			double healer = MathHelper.clamp_double(Utils.xpToDungeonsLevel(dungeonsObject.get("player_classes").getAsJsonObject().get("healer").getAsJsonObject().get("experience").getAsDouble()), 0D, 50D);
-			double mage = MathHelper.clamp_double(Utils.xpToDungeonsLevel(dungeonsObject.get("player_classes").getAsJsonObject().get("mage").getAsJsonObject().get("experience").getAsDouble()), 0D, 50D);
-			double berserk = MathHelper.clamp_double(Utils.xpToDungeonsLevel(dungeonsObject.get("player_classes").getAsJsonObject().get("berserk").getAsJsonObject().get("experience").getAsDouble()), 0D, 50D);
-			double archer = MathHelper.clamp_double(Utils.xpToDungeonsLevel(dungeonsObject.get("player_classes").getAsJsonObject().get("archer").getAsJsonObject().get("experience").getAsDouble()), 0D, 50D);
-			double tank = MathHelper.clamp_double(Utils.xpToDungeonsLevel(dungeonsObject.get("player_classes").getAsJsonObject().get("tank").getAsJsonObject().get("experience").getAsDouble()), 0D, 50D);
+			double healer = getClassLevel(dungeonsObject, "healer");
+			double mage = getClassLevel(dungeonsObject, "mage");
+			double berserk = getClassLevel(dungeonsObject, "berserk");
+			double archer = getClassLevel(dungeonsObject, "archer");
+			double tank = getClassLevel(dungeonsObject, "tank");
 			double classAverage = Math.round((healer + mage + berserk + archer + tank) / 5D * 100D) / 100D;
 			String selectedClass = Utils.capitalizeString(dungeonsObject.get("selected_dungeon_class").getAsString());
 			int secrets = playerResponse.get("player").getAsJsonObject().get("achievements").getAsJsonObject().get("skyblock_treasure_hunter").getAsInt();
 
-			int highestFloor = catacombsObject.get("highest_tier_completed").getAsInt();
+			int highestFloor = 0;
+			if (catacombsObject.has("highest_tier_completed")) {
+				highestFloor = catacombsObject.get("highest_tier_completed").getAsInt();
+			}
 			JsonObject completionObj = catacombsObject.get("tier_completions").getAsJsonObject();
 
 			JsonObject catacombsMasterObject = dungeonsObject.get("dungeon_types").getAsJsonObject().get("master_catacombs").getAsJsonObject();
@@ -176,4 +179,19 @@ public class DungeonsCommand extends CommandBase {
 					.appendSibling(new ChatComponentText(ModConfig.getDelimiter())));
 		}).start();
 	}
+
+	double getClassLevel(JsonObject obj, String dungeonClass) {
+		if (obj.has("player_classes")) {
+			JsonObject classes = obj.get("player_classes").getAsJsonObject();
+			if (classes.has(dungeonClass)) {
+				JsonObject clazz = classes.get(dungeonClass).getAsJsonObject();
+				if (clazz.has("experience")) {
+					double xp = clazz.get("experience").getAsDouble();
+					return MathHelper.clamp_double(Utils.xpToDungeonsLevel(xp), 0D, 50D);
+				}
+			}
+		}
+		return 0D;
+	}
+
 }
