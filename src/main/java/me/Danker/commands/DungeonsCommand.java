@@ -112,7 +112,12 @@ public class DungeonsCommand extends CommandBase {
 			double tank = getClassLevel(dungeonsObject, "tank");
 			double classAverage = Math.round((healer + mage + berserk + archer + tank) / 5D * 100D) / 100D;
 			String selectedClass = Utils.capitalizeString(dungeonsObject.get("selected_dungeon_class").getAsString());
-			int secrets = playerResponse.get("player").getAsJsonObject().get("achievements").getAsJsonObject().get("skyblock_treasure_hunter").getAsInt();
+
+			int secrets = 0;
+			JsonObject achievementsObj = playerResponse.get("player").getAsJsonObject().get("achievements").getAsJsonObject();
+			if (achievementsObj.has("skyblock_treasure_hunter")) {
+				secrets = achievementsObj.get("skyblock_treasure_hunter").getAsInt();
+			}
 
 			int highestFloor = 0;
 			if (catacombsObject.has("highest_tier_completed")) {
