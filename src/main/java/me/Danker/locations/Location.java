@@ -16,7 +16,8 @@ public enum Location {
     JERRY_WORKSHOP("Jerry's Workshop"),
     PRIVATE_ISLAND("Private Island"),
     PARK("The Park"),
-    SPIDERS_DEN("Spider's Den");
+    SPIDERS_DEN("Spider's Den"),
+    GARDEN("Garden");
 
     String text;
 

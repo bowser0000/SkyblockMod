@@ -69,6 +69,7 @@ public class SkyblockPlayersCommand extends CommandBase {
 			int privateIsland = 0; // dynamic
 			int hub = 0; // hub
 			int farmingIslands = 0; // farming_1
+			int garden = 0; // garden
 			int park = 0; // foraging_1
 			int goldMine = 0; // mining_1
 			int deepCaverns = 0; // mining_2
@@ -85,54 +86,24 @@ public class SkyblockPlayersCommand extends CommandBase {
 			if (playersResponse.get("games").getAsJsonObject().get("SKYBLOCK").getAsJsonObject().has("modes")) {
 				JsonObject skyblockPlayers = playersResponse.get("games").getAsJsonObject().get("SKYBLOCK").getAsJsonObject().get("modes").getAsJsonObject();
 				skyblockTotalPlayers = playersResponse.get("games").getAsJsonObject().get("SKYBLOCK").getAsJsonObject().get("players").getAsInt();
-				if (skyblockPlayers.has("dynamic")) {
-					privateIsland = skyblockPlayers.get("dynamic").getAsInt();
-				}
-				if (skyblockPlayers.has("hub")) {
-					hub = skyblockPlayers.get("hub").getAsInt();
-				}
-				if (skyblockPlayers.has("farming_1")) {
-					farmingIslands = skyblockPlayers.get("farming_1").getAsInt();
-				}
-				if (skyblockPlayers.has("foraging_1")) {
-					park = skyblockPlayers.get("foraging_1").getAsInt();
-				}
-				if (skyblockPlayers.has("mining_1")) {
-					goldMine = skyblockPlayers.get("mining_1").getAsInt();
-				}
-				if (skyblockPlayers.has("mining_2")) {
-					deepCaverns = skyblockPlayers.get("mining_2").getAsInt();
-				}
-				if (skyblockPlayers.has("mining_3")) {
-					dwarvenMines = skyblockPlayers.get("mining_3").getAsInt();
-				}
-				if (skyblockPlayers.has("crystal_hollows")) {
-					crystalHollows = skyblockPlayers.get("crystal_hollows").getAsInt();
-				}
-				if (skyblockPlayers.has("combat_1")) {
-					spidersDen = skyblockPlayers.get("combat_1").getAsInt();
-				}
-				if (skyblockPlayers.has("crimson_isle")) {
-					crimsonIsle = skyblockPlayers.get("crimson_isle").getAsInt();
-				}
-				if (skyblockPlayers.has("instanced")) {
-					kuudra = skyblockPlayers.get("instanced").getAsInt();
-				}
-				if (skyblockPlayers.has("combat_3")) {
-					end = skyblockPlayers.get("combat_3").getAsInt();
-				}
-				if (skyblockPlayers.has("dungeon_hub")) {
-					dungeonsHub = skyblockPlayers.get("dungeon_hub").getAsInt();
-				}
-				if (skyblockPlayers.has("dungeon")) {
-					dungeons = skyblockPlayers.get("dungeon").getAsInt();
-				}
-				if (skyblockPlayers.has("dark_auction")) {
-					darkAuction = skyblockPlayers.get("dark_auction").getAsInt();
-				}
-				if (skyblockPlayers.has("winter")) {
-					jerry = skyblockPlayers.get("winter").getAsInt();
-				}
+
+				privateIsland = getPlayerCount("dynamic", skyblockPlayers);
+				hub = getPlayerCount("hub", skyblockPlayers);
+				farmingIslands = getPlayerCount("farming_1", skyblockPlayers);
+				garden = getPlayerCount("garden", skyblockPlayers);
+				park = getPlayerCount("foraging_1", skyblockPlayers);
+				goldMine = getPlayerCount("mining_1", skyblockPlayers);
+				deepCaverns = getPlayerCount("mining_2", skyblockPlayers);
+				dwarvenMines = getPlayerCount("mining_3", skyblockPlayers);
+				crystalHollows = getPlayerCount("crystal_hollows", skyblockPlayers);
+				spidersDen = getPlayerCount("combat_1", skyblockPlayers);
+				crimsonIsle = getPlayerCount("crimson_isle", skyblockPlayers);
+				kuudra = getPlayerCount("instanced", skyblockPlayers);
+				end = getPlayerCount("combat_3", skyblockPlayers);
+				dungeonsHub = getPlayerCount("dungeon_hub", skyblockPlayers);
+				dungeons = getPlayerCount("dungeon", skyblockPlayers);
+				darkAuction = getPlayerCount("dark_auction", skyblockPlayers);
+				jerry = getPlayerCount("winter", skyblockPlayers);
 			}
 			
 			NumberFormat nf = NumberFormat.getIntegerInstance(Locale.US);
@@ -142,6 +113,7 @@ public class SkyblockPlayersCommand extends CommandBase {
 														ModConfig.getColour(ModConfig.typeColour) + " Private Island: " + ModConfig.getColour(ModConfig.valueColour) + nf.format(privateIsland) + " / " + Utils.getPercentage(privateIsland, skyblockTotalPlayers) + "%\n" +
 														ModConfig.getColour(ModConfig.typeColour) + " Hub: " + ModConfig.getColour(ModConfig.valueColour) + nf.format(hub) + " / " + Utils.getPercentage(hub, skyblockTotalPlayers) + "%\n" +
 														ModConfig.getColour(ModConfig.typeColour) + " Farming Islands: " + ModConfig.getColour(ModConfig.valueColour) + nf.format(farmingIslands) + " / " + Utils.getPercentage(farmingIslands, skyblockTotalPlayers) + "%\n" +
+														ModConfig.getColour(ModConfig.typeColour) + " Garden: " + ModConfig.getColour(ModConfig.valueColour) + nf.format(garden) + " / " + Utils.getPercentage(garden, skyblockTotalPlayers) + "%\n" +
 														ModConfig.getColour(ModConfig.typeColour) + " Park: " + ModConfig.getColour(ModConfig.valueColour) + nf.format(park) + " / " + Utils.getPercentage(park, skyblockTotalPlayers) + "%\n" +
 														ModConfig.getColour(ModConfig.typeColour) + " Gold Mine: " + ModConfig.getColour(ModConfig.valueColour) + nf.format(goldMine) + " / " + Utils.getPercentage(goldMine, skyblockTotalPlayers) + "%\n" +
 														ModConfig.getColour(ModConfig.typeColour) + " Deep Caverns: " + ModConfig.getColour(ModConfig.valueColour) + nf.format(deepCaverns) + " / " + Utils.getPercentage(deepCaverns, skyblockTotalPlayers) + "%\n" +
@@ -157,6 +129,11 @@ public class SkyblockPlayersCommand extends CommandBase {
 														ModConfig.getColour(ModConfig.typeColour) + " Jerry's Workshop: " + ModConfig.getColour(ModConfig.valueColour) + nf.format(jerry) + " / " + Utils.getPercentage(jerry, skyblockTotalPlayers) + "%\n" +
 														ModConfig.getDelimiter()));
 		}).start();
+	}
+
+	static int getPlayerCount(String location, JsonObject obj) {
+		if (obj.has(location)) return obj.get(location).getAsInt();
+		return 0;
 	}
 
 }
