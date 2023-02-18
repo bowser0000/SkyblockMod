@@ -18,9 +18,11 @@ public class EndOfFarmAlert {
     public void onTick(TickEvent.ClientTickEvent event) {
         if (event.phase != TickEvent.Phase.START) return;
 
-        EntityPlayer player = Minecraft.getMinecraft().thePlayer;
         if (DankersSkyblockMod.tickAmount % 10 == 0) {
             if (ModConfig.endOfFarmAlert && Utils.currentLocation == Location.GARDEN) {
+                EntityPlayer player = Minecraft.getMinecraft().thePlayer;
+                if (player == null) return;
+
                 double x = player.posX;
                 double z = player.posZ;
 
