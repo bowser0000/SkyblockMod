@@ -70,8 +70,16 @@ public class ModConfig extends Config {
         addDependency("chronomatronNextToNextColour", "chronomatron");
         addDependency("clickInOrderNextColour", "clickInOrder");
         addDependency("clickInOrderNextToNextColour", "clickInOrder");
-        addDependency("farmMinCoords", "endOfFarmAlert");
-        addDependency("farmMaxCoords", "endOfFarmAlert");
+        addDependency("farmX", "endOfFarmAlert");
+        addDependency("farmMinX", "endOfFarmAlert");
+        addDependency("farmMinX", "farmX");
+        addDependency("farmMaxX", "endOfFarmAlert");
+        addDependency("farmMaxX", "farmX");
+        addDependency("farmZ", "endOfFarmAlert");
+        addDependency("farmMinZ", "endOfFarmAlert");
+        addDependency("farmMinZ", "farmZ");
+        addDependency("farmMaxZ", "endOfFarmAlert");
+        addDependency("farmMaxZ", "farmZ");
         addDependency("boulderColour", "boulder");
         addDependency("boulderArrowColour", "boulder");
         addDependency("silverfishLineColour", "silverfish");
@@ -139,6 +147,7 @@ public class ModConfig extends Config {
         custom alerts
         general
         dungeons
+        farming
     aliases
         custom aliases
     waypoints
@@ -1142,45 +1151,6 @@ public class ModConfig extends Config {
     public static boolean rngesusAlerts = false;
 
     @CfgName(
-            name = "EndOfFarmAlert",
-            category = "toggles"
-    )
-    @Switch(
-            name = "Alert When Reaching End of Farm",
-            description = "Alerts when you go past coords set with /dsmfarmlength.",
-            size = OptionSize.DUAL,
-            category = "Alerts",
-            subcategory = "General"
-    )
-    public static boolean endOfFarmAlert = false;
-
-    @CfgName(
-            name = "farmMin",
-            category = "misc"
-    )
-    @Number(
-            name = "Minimum Coords",
-            description = "When your coords go below this number, the alert will sound.",
-            min = -200F, max = 200F,
-            category = "Alerts",
-            subcategory = "General"
-    )
-    public static float farmMinCoords = -78.5F;
-
-    @CfgName(
-            name = "farmMax",
-            category = "misc"
-    )
-    @Number(
-            name = "Maximum Coords",
-            description = "When your coords go above this number, the alert will sound.",
-            min = -200F, max = 200F,
-            category = "Alerts",
-            subcategory = "General"
-    )
-    public static float farmMaxCoords = 79.5F;
-
-    @CfgName(
             name = "NotifySlayerSlain",
             category = "toggles"
     )
@@ -1263,6 +1233,89 @@ public class ModConfig extends Config {
             subcategory = "Dungeons"
     )
     public static boolean necronNotifications = false;
+
+    @CfgName(
+            name = "EndOfFarmAlert",
+            category = "toggles"
+    )
+    @Switch(
+            name = "Alert When Reaching End of Farm",
+            description = "Alerts when you go past certain coords.",
+            size = OptionSize.DUAL,
+            category = "Alerts",
+            subcategory = "Farming"
+    )
+    public static boolean endOfFarmAlert = false;
+
+    @Switch(
+            name = "Alert Based on X Coordinates",
+            description = "Alerts when you go past X coords.",
+            size = OptionSize.DUAL,
+            category = "Alerts",
+            subcategory = "Farming"
+    )
+    public static boolean farmX = true;
+
+    @CfgName(
+            name = "farmMin",
+            category = "misc"
+    )
+    @Number(
+            name = "Minimum X Coords",
+            description = "When your coords go below this number, the alert will sound.",
+            min = -300F, max = 300F,
+            category = "Alerts",
+            subcategory = "Farming"
+    )
+    public static float farmMinX = -220F;
+
+    @CfgName(
+            name = "farmMax",
+            category = "misc"
+    )
+    @Number(
+            name = "Maximum X Coords",
+            description = "When your coords go above this number, the alert will sound.",
+            min = -300F, max = 300F,
+            category = "Alerts",
+            subcategory = "Farming"
+    )
+    public static float farmMaxX = 220F;
+
+    @Switch(
+            name = "Alert Based on Z Coordinates",
+            description = "Alerts when you go past Z coords.",
+            size = OptionSize.DUAL,
+            category = "Alerts",
+            subcategory = "Farming"
+    )
+    public static boolean farmZ = true;
+
+    @CfgName(
+            name = "farmMin",
+            category = "misc"
+    )
+    @Number(
+            name = "Minimum Z Coords",
+            description = "When your coords go below this number, the alert will sound.",
+            min = -300F, max = 300F,
+            category = "Alerts",
+            subcategory = "Farming"
+    )
+    public static float farmMinZ = -220F;
+
+    @CfgName(
+            name = "farmMax",
+            category = "misc"
+    )
+    @Number(
+            name = "Maximum Z Coords",
+            description = "When your coords go above this number, the alert will sound.",
+            min = -300F, max = 300F,
+            category = "Alerts",
+            subcategory = "Farming"
+    )
+    public static float farmMaxZ = 220F;
 
     // Aliases
 

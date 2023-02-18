@@ -50,7 +50,8 @@ public class DankerGuiCommand extends CommandBase {
 			debug.append("[Current Display][").append(ModConfig.getDisplay()).append("]\n");
 			debug.append("[Auto Display][").append(LootDisplay.autoDisplay).append("]\n");
 			debug.append("[Skill Tracker Visible][").append(ModConfig.skillTrackerHud.isEnabled()).append("]\n");
-			debug.append("[Farm Length][").append(ModConfig.farmMinCoords).append(" to ").append(ModConfig.farmMaxCoords).append("]\n");
+			debug.append("[Farm Length X][").append(ModConfig.farmMinX).append(" to ").append(ModConfig.farmMaxX).append("]\n");
+			debug.append("[Farm Length Z][").append(ModConfig.farmMinZ).append(" to ").append(ModConfig.farmMaxZ).append("]\n");
 			debug.append("# Problematic Mods\n");
 			debug.append("[LabyMod][").append(DankersSkyblockMod.usingLabymod).append("]\n");
 			debug.append("[OAM][").append(DankersSkyblockMod.usingOAM).append("]\n");

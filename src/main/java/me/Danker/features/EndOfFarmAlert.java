@@ -2,6 +2,7 @@ package me.Danker.features;
 
 import me.Danker.DankersSkyblockMod;
 import me.Danker.config.ModConfig;
+import me.Danker.locations.Location;
 import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
@@ -19,13 +20,12 @@ public class EndOfFarmAlert {
 
         EntityPlayer player = Minecraft.getMinecraft().thePlayer;
         if (DankersSkyblockMod.tickAmount % 10 == 0) {
-            if (ModConfig.endOfFarmAlert && Utils.isInScoreboard("Your Island")) {
+            if (ModConfig.endOfFarmAlert && Utils.currentLocation == Location.GARDEN) {
                 double x = player.posX;
                 double z = player.posZ;
-                double min = ModConfig.farmMinCoords;
-                double max = ModConfig.farmMaxCoords;
 
-                if (x <= min || x >= max || z <= min || z >= max) {
+                if ((ModConfig.farmX && (x <= ModConfig.farmMinX || x >= ModConfig.farmMaxX)) ||
+                    (ModConfig.farmZ && (z <= ModConfig.farmMinZ || z >= ModConfig.farmMaxZ))) {
                     if (!alerted) {
                         alerted = true;
                         Utils.createTitle(EnumChatFormatting.RED + "END OF FARM", 1);
