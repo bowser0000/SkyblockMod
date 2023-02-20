@@ -54,6 +54,9 @@ public class ModConfig extends Config {
         registerKeyBind(waypointKey, CrystalHollowWaypoints::onKey);
         registerKeyBind(skillTrackerKey, SkillTracker::onKey);
         registerKeyBind(powderTrackerKey, PowderTracker::onKey);
+        registerKeyBind(disableMouse, DisableMovement::onDisableMouse);
+        registerKeyBind(disableWS, DisableMovement::onDisableWS);
+        registerKeyBind(disableAD, DisableMovement::onDisableAD);
 
         addDependency("customNametags", "customColouredNames");
         addDependency("creeperLines", "creeper");
@@ -2159,5 +2162,26 @@ public class ModConfig extends Config {
             subcategory = "Trackers"
     )
     public static OneKeyBind powderTrackerKey = new OneKeyBind(UKeyboard.KEY_NUMPAD8);
+
+    @KeyBind(
+            name = "Disable Mouse Movement",
+            category = "Keybinds",
+            subcategory = "Farming"
+    )
+    public static OneKeyBind disableMouse = new OneKeyBind();
+
+    @KeyBind(
+            name = "Disable Moving Forwards/Back",
+            category = "Keybinds",
+            subcategory = "Farming"
+    )
+    public static OneKeyBind disableWS = new OneKeyBind();
+
+    @KeyBind(
+            name = "Disable Moving Left/Right",
+            category = "Keybinds",
+            subcategory = "Farming"
+    )
+    public static OneKeyBind disableAD = new OneKeyBind();
 
 }
