@@ -89,6 +89,7 @@ Discord Server: https://discord.gg/QsEkNQS
 - Fix drill animation resetting
 - Highlight filled bazaar orders
 - Dungeon RNG meter info display
+- Optimize mining route
 </details>
 
 <details>
@@ -133,6 +134,9 @@ Discord Server: https://discord.gg/QsEkNQS
 - Start/Stop Skill Tracker - Numpad 5 by default.
 - Create Waypoint - Numpad 6 by default.
 - Start/Stop Powder Tracker - Numpad 8 by default.
+- Disable Mouse Movement - None by default.
+- Disable Moving Forwards/Back - None by default.
+- Disable Moving Left/Right - None by default.
 </details>
 
 <details>
@@ -240,3 +244,4 @@ Software | License
 [MatterOverdrive (Legacy Edition)](https://bitbucket.org/hrznstudio/mo-legacy-edition/) | [GNU General Public License](https://bitbucket.org/hrznstudio/mo-legacy-edition/src/1.12.2/LICENSE.md)
 [Hide Armour](https://github.com/Furgl/Hide-Armor/tree/1.15.2) | No License
 [Elite Discord Bot](https://github.com/ptlthg/EliteDiscordBot) | [MIT License](https://github.com/ptlthg/EliteDiscordBot/blob/master/LICENSE)
+[Baeldung Tutorials](https://github.com/eugenp/tutorials) | [MIT License](https://github.com/eugenp/tutorials/blob/master/LICENSE)

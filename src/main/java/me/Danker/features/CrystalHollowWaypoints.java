@@ -26,7 +26,7 @@ import java.util.regex.Pattern;
 
 public class CrystalHollowWaypoints {
 
-    public static List<Waypoint> waypoints = new ArrayList<>();
+    public static ArrayList<Waypoint> waypoints = new ArrayList<>();
     public static Pattern dsmPattern = Pattern.compile("(?<name>.*?) @ (?<x>\\d{1,3}) (?<y>\\d{1,3}) (?<z>\\d{1,3})");
     public static Pattern skytilsPattern = Pattern.compile("(?<name>.*?): (?<x>\\d{1,3}) (?<y>\\d{1,3}) (?<z>\\d{1,3})");
 

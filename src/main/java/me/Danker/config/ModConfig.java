@@ -17,6 +17,7 @@ import cc.polyfrost.oneconfig.config.migration.CfgName;
 import cc.polyfrost.oneconfig.libs.universal.UKeyboard;
 import cc.polyfrost.oneconfig.utils.IOUtils;
 import cc.polyfrost.oneconfig.utils.Notifications;
+import cc.polyfrost.oneconfig.utils.SimpleProfiler;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -30,6 +31,7 @@ import me.Danker.gui.alerts.AlertsGui;
 import me.Danker.gui.aliases.AliasesGui;
 import me.Danker.gui.crystalhollowwaypoints.CrystalHollowWaypointsGui;
 import net.minecraft.client.Minecraft;
+import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 import org.apache.commons.codec.binary.Base64;
 
@@ -38,6 +40,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class ModConfig extends Config {
@@ -168,6 +171,7 @@ public class ModConfig extends Config {
         dungeons
         waypoints
         trackers
+        farming
     */
 
     // General
@@ -1464,6 +1468,65 @@ public class ModConfig extends Config {
             }
         }
     };
+
+    @Button(
+            name = "Optimize Waypoints",
+            text = "Click",
+            description = "Optimizes the waypoint path for the minimum cycle distance.",
+            category = "Waypoints",
+            subcategory = "Crystal Hollows"
+    )
+    Runnable optimizeCoords = () -> new Thread(() -> {
+        SimpleProfiler.push("Coords Optimizer");
+        Notifications.INSTANCE.send("Running...", "Optimizing waypoints...");
+
+        ArrayList<CrystalHollowWaypoints.Waypoint> numbered = CoordsOptimizer.getNumbered(CrystalHollowWaypoints.waypoints);
+        double unoptimizedLength = CoordsOptimizer.getLength(numbered);
+
+        if (numbered.size() < 2) {
+            Notifications.INSTANCE.send("Error", "Requires at least 2 numbered waypoints.");
+            SimpleProfiler.pop("Coords Optimizer");
+            return;
+        }
+
+        CoordsOptimizer coordsOptimizer = new CoordsOptimizer(numbered);
+        coordsOptimizer.solve();
+        ArrayList<CrystalHollowWaypoints.Waypoint> optimized = coordsOptimizer.getOptimizedPath();
+        double optimizedLength = CoordsOptimizer.getLength(optimized);
+
+        System.out.println("Coords optimizer took " + SimpleProfiler.pop("Coords Optimizer") + "ms");
+        Notifications.INSTANCE.send("Finished", "Finished optimizing waypoints.");
+
+        if (optimizedLength < unoptimizedLength) {
+            CrystalHollowWaypoints.waypoints = optimized;
+            System.out.println("Optimized waypoints from length " + unoptimizedLength + " to length " + optimizedLength);
+            if (mc.thePlayer != null) {
+                mc.thePlayer.addChatMessage(new ChatComponentText(getColour(mainColour) + "Optimized waypoints from length " + String.format("%.2f", unoptimizedLength) + " to length " + String.format("%.2f", optimizedLength) + "."));
+            }
+        } else {
+            System.out.println("Could not find more optimized path. Found length " + optimizedLength + " but best length is " + unoptimizedLength);
+            if (mc.thePlayer != null) {
+                mc.thePlayer.addChatMessage(new ChatComponentText(getColour(errorColour) + "Could not find more optimized path. It may have failed to find one, or your route is already perfect."));
+            }
+        }
+    }).start();
+
+    @Info(
+            text = "Run multiple times for best results.",
+            type = InfoType.INFO,
+            category = "Waypoints",
+            subcategory = "Crystal Hollows"
+    )
+    public static boolean ignored2;
+
+    @Number(
+            name = "Number of Iterations",
+            description = "Number of iterations to try optimizing coords. 1 million takes about 5 seconds.",
+            min = 1, max = 2_000_000_000,
+            category = "Waypoints",
+            subcategory = "Crystal Hollows"
+    )
+    public static int coordsIterations = 1_000_000;
 
     // Messages
 
