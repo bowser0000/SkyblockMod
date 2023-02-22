@@ -16,12 +16,14 @@ public class CoordsOptimizer {
     ArrayList<CrystalHollowWaypoints.Waypoint> waypoints;
 
     private final double c = 1.0;
-    private final double alpha = 1;
-    private final double beta = 5;
+    private double alpha;
+    private double beta;
     private final double evaporation = 0.5;
     private final double Q = 500;
     private final double antFactor = 0.8;
     private final double randomFactor = 0.01;
+
+    private final int maxIterations = 5000;
 
     private final int numberOfCities;
     private final int numberOfAnts;
@@ -41,6 +43,8 @@ public class CoordsOptimizer {
         graph = getAdjacency();
         numberOfCities = graph.length;
         numberOfAnts = (int) (numberOfCities * antFactor);
+        alpha = ModConfig.coordAlpha;
+        beta = ModConfig.coordBeta;
 
         trails = new double[numberOfCities][numberOfCities];
         probabilities = new double[numberOfCities];
@@ -64,9 +68,7 @@ public class CoordsOptimizer {
         setupAnts();
         clearTrails();
 
-        for (int i = 0; i < ModConfig.coordsIterations; i++) {
-            if (i % 100000 == 0) System.out.println("Iteration #" + i);
-
+        for (int i = 0; i < maxIterations; i++) {
             moveAnts();
             updateTrails();
             updateBest();

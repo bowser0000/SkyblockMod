@@ -106,7 +106,7 @@ public class ModConfig extends Config {
         addDependency("threeManAnswerColour", "threeMan");
         addDependency("highlightOrdersColour", "highlightOrders");
         addDependency("hidePlayerArmourOnly", "hideArmour");
-
+        addDependency("autoImportWaypoints", "autoWaypoints");
     }
 
     public static String getColour(int index) {
@@ -1520,13 +1520,22 @@ public class ModConfig extends Config {
     public static boolean ignored2;
 
     @Number(
-            name = "Number of Iterations",
-            description = "Number of iterations to try optimizing coords. 1 million takes about 5 seconds.",
-            min = 1, max = 2_000_000_000,
+            name = "Alpha",
+            description = "Controls pheromone importance.",
+            min = 1, max = 100,
             category = "Waypoints",
             subcategory = "Crystal Hollows"
     )
-    public static int coordsIterations = 1_000_000;
+    public static int coordAlpha = 10;
+
+    @Number(
+            name = "Beta",
+            description = "Controls distance importance.",
+            min = 1, max = 500,
+            category = "Waypoints",
+            subcategory = "Crystal Hollows"
+    )
+    public static int coordBeta = 50;
 
     // Messages
 
