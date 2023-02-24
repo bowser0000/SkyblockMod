@@ -34,8 +34,12 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.codec.binary.Base64InputStream;
+import org.apache.commons.compress.compressors.gzip.GzipCompressorInputStream;
 
 import java.awt.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -1438,13 +1442,34 @@ public class ModConfig extends Config {
     )
     Runnable importWaypoints = () -> {
         String clipboard = IOUtils.getStringFromClipboard();
-        if (clipboard == null || !Base64.isBase64(clipboard)) {
+        if (clipboard == null) {
             Notifications.INSTANCE.send("Error", "Could not find Skytils waypoints in clipboard.");
             return;
         }
 
-        byte[] decoded = Base64.decodeBase64(clipboard);
-        String objectString = new String(decoded, StandardCharsets.UTF_8);
+        String objectString;
+
+        if (clipboard.startsWith("<Skytils-Waypoint-Data>(V1):")) {
+            try {
+                String str = clipboard.substring(clipboard.indexOf(":") + 1);
+                GzipCompressorInputStream gcis = new GzipCompressorInputStream(new Base64InputStream(new ByteArrayInputStream(str.getBytes())));
+
+                ByteArrayOutputStream out = new ByteArrayOutputStream();
+                org.apache.commons.compress.utils.IOUtils.copy(gcis, out);
+
+                objectString = out.toString();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+                Notifications.INSTANCE.send("Error", "Error parsing waypoints in clipboard.");
+                return;
+            }
+        } else if (Base64.isBase64(clipboard)) {
+            objectString = new String(Base64.decodeBase64(clipboard), StandardCharsets.UTF_8);
+        } else {
+            Notifications.INSTANCE.send("Error", "Could not find Skytils waypoints in clipboard.");
+            return;
+        }
+
         JsonObject obj = new Gson().fromJson(objectString, JsonObject.class);
         JsonArray categories = obj.get("categories").getAsJsonArray();
 
