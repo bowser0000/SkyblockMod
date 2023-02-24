@@ -1,5 +1,12 @@
 package me.Danker.features;
 
+import cc.polyfrost.oneconfig.utils.IOUtils;
+import cc.polyfrost.oneconfig.utils.Notifications;
+import cc.polyfrost.oneconfig.utils.SimpleProfiler;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import me.Danker.DankersSkyblockMod;
 import me.Danker.config.ModConfig;
 import me.Danker.gui.crystalhollowwaypoints.CrystalHollowAddWaypointGui;
@@ -18,7 +25,14 @@ import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
+import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.codec.binary.Base64InputStream;
+import org.apache.commons.compress.compressors.gzip.GzipCompressorInputStream;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -58,7 +72,7 @@ public class CrystalHollowWaypoints {
                 if (!perma) {
                     perma = true;
                     try {
-                        if (ModConfig.autoImportWaypoints) CrystalHollowWaypoints.addDSMWaypoints(ModConfig.permaWaypoints, false, true);
+                        if (ModConfig.autoImportWaypoints) addDSMWaypoints(ModConfig.permaWaypoints, false, true);
                     } catch (ArrayIndexOutOfBoundsException ignored) {}
                 }
 
@@ -243,36 +257,6 @@ public class CrystalHollowWaypoints {
         shop = false;
     }
 
-    public static class Waypoint {
-
-        public String location;
-        public BlockPos pos;
-        public boolean toggled;
-
-        public Waypoint(String location, BlockPos pos) {
-            this.location = location;
-            this.pos = pos;
-            this.toggled = true;
-        }
-
-        public String getFormattedWaypoint() {
-            return location + "@-" + pos.getX() + "," + pos.getY() + "," + pos.getZ();
-        }
-
-        public String getDistance(EntityPlayer player) {
-            return Math.round(player.getDistance(pos.getX(), pos.getY(), pos.getZ())) + "m";
-        }
-
-        public String getPos() {
-            return pos.getX() + ", " + pos.getY() + ", " + pos.getZ();
-        }
-
-        public void toggle() {
-            toggled = !toggled;
-        }
-
-    }
-
     public static void addWaypoint(String name, String x, String y, String z, boolean auto) {
         if (auto) {
             for (Waypoint existing : waypoints) {
@@ -313,6 +297,140 @@ public class CrystalHollowWaypoints {
             waypoints.add(newWaypoint);
             if (!silent) Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Added " + newWaypoint.location + " @ " + newWaypoint.getPos()));
         }
+    }
+
+    public static void copyToClipboard() {
+        StringBuilder sb = new StringBuilder();
+        for (Waypoint waypoint : waypoints) {
+            if (sb.length() > 0) sb.append("\\n");
+            sb.append(waypoint.getFormattedWaypoint());
+        }
+        String waypoints = sb.toString();
+        if (waypoints.length() > 0) {
+            IOUtils.copyStringToClipboard(waypoints);
+            Notifications.INSTANCE.send("Success", "Copied waypoints to clipboard.");
+        }
+    }
+
+    public static void importWaypoints() {
+        String clipboard = IOUtils.getStringFromClipboard();
+        if (clipboard == null) {
+            Notifications.INSTANCE.send("Error", "Could not find Skytils waypoints in clipboard.");
+            return;
+        }
+
+        String objectString;
+
+        if (clipboard.startsWith("<Skytils-Waypoint-Data>(V1):")) {
+            try {
+                String str = clipboard.substring(clipboard.indexOf(":") + 1);
+                GzipCompressorInputStream gcis = new GzipCompressorInputStream(new Base64InputStream(new ByteArrayInputStream(str.getBytes())));
+
+                ByteArrayOutputStream out = new ByteArrayOutputStream();
+                org.apache.commons.compress.utils.IOUtils.copy(gcis, out);
+
+                objectString = out.toString();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+                Notifications.INSTANCE.send("Error", "Error parsing waypoints in clipboard.");
+                return;
+            }
+        } else if (Base64.isBase64(clipboard)) {
+            objectString = new String(Base64.decodeBase64(clipboard), StandardCharsets.UTF_8);
+        } else {
+            Notifications.INSTANCE.send("Error", "Could not find Skytils waypoints in clipboard.");
+            return;
+        }
+
+        JsonObject obj = new Gson().fromJson(objectString, JsonObject.class);
+        JsonArray categories = obj.get("categories").getAsJsonArray();
+
+        for (JsonElement element : categories) {
+            JsonObject inner = element.getAsJsonObject();
+
+            String island = inner.get("island").getAsString();
+            if (!island.equals("crystal_hollows")) return;
+
+            JsonArray waypoints = inner.get("waypoints").getAsJsonArray();
+
+            for (JsonElement waypointElement : waypoints) {
+                JsonObject waypoint = waypointElement.getAsJsonObject();
+
+                String name = waypoint.get("name").getAsString();
+                String x = waypoint.get("x").getAsString();
+                String y = waypoint.get("y").getAsString();
+                String z = waypoint.get("z").getAsString();
+
+                addWaypoint(name, x, y, z, false);
+            }
+        }
+    }
+
+    public static void optimize() {
+        SimpleProfiler.push("Coords Optimizer");
+        Notifications.INSTANCE.send("Running...", "Optimizing waypoints...");
+
+        Minecraft mc = Minecraft.getMinecraft();
+        ArrayList<Waypoint> numbered = CoordsOptimizer.getNumbered(waypoints);
+        double unoptimizedLength = CoordsOptimizer.getLength(numbered);
+
+        if (numbered.size() < 2) {
+            Notifications.INSTANCE.send("Error", "Requires at least 2 numbered waypoints.");
+            SimpleProfiler.pop("Coords Optimizer");
+            return;
+        }
+
+        CoordsOptimizer coordsOptimizer = new CoordsOptimizer(numbered);
+        coordsOptimizer.solve();
+        ArrayList<Waypoint> optimized = coordsOptimizer.getOptimizedPath();
+        double optimizedLength = CoordsOptimizer.getLength(optimized);
+
+        System.out.println("Coords optimizer took " + SimpleProfiler.pop("Coords Optimizer") + "ms");
+        Notifications.INSTANCE.send("Finished", "Finished optimizing waypoints.");
+
+        if (optimizedLength < unoptimizedLength) {
+            waypoints = optimized;
+            System.out.println("Optimized waypoints from length " + unoptimizedLength + " to length " + optimizedLength);
+            if (mc.thePlayer != null) {
+                mc.thePlayer.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Optimized waypoints from length " + String.format("%.2f", unoptimizedLength) + " to length " + String.format("%.2f", optimizedLength) + "."));
+            }
+        } else {
+            System.out.println("Could not find more optimized path. Found length " + optimizedLength + " but best length is " + unoptimizedLength);
+            if (mc.thePlayer != null) {
+                mc.thePlayer.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "Could not find more optimized path. It may have failed to find one, or your route is already perfect."));
+            }
+        }
+    }
+    
+
+    public static class Waypoint {
+
+        public String location;
+        public BlockPos pos;
+        public boolean toggled;
+
+        public Waypoint(String location, BlockPos pos) {
+            this.location = location;
+            this.pos = pos;
+            this.toggled = true;
+        }
+
+        public String getFormattedWaypoint() {
+            return location + "@-" + pos.getX() + "," + pos.getY() + "," + pos.getZ();
+        }
+
+        public String getDistance(EntityPlayer player) {
+            return Math.round(player.getDistance(pos.getX(), pos.getY(), pos.getZ())) + "m";
+        }
+
+        public String getPos() {
+            return pos.getX() + ", " + pos.getY() + ", " + pos.getZ();
+        }
+
+        public void toggle() {
+            toggled = !toggled;
+        }
+
     }
 
 }

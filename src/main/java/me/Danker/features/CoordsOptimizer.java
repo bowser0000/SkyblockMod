@@ -12,8 +12,8 @@ public class CoordsOptimizer {
 
     // https://www.baeldung.com/java-ant-colony-optimization
 
-    final static Pattern numberedPattern = Pattern.compile("\\s*\\d+\\s*");
-    ArrayList<CrystalHollowWaypoints.Waypoint> waypoints;
+    private final static Pattern numberedPattern = Pattern.compile("\\d+");
+    private final ArrayList<CrystalHollowWaypoints.Waypoint> waypoints;
 
     private final double c = 1.0;
     private double alpha;
@@ -57,10 +57,12 @@ public class CoordsOptimizer {
         ArrayList<CrystalHollowWaypoints.Waypoint> numbered = new ArrayList<>();
 
         for (CrystalHollowWaypoints.Waypoint waypoint : waypoints) {
-            Matcher matcher = numberedPattern.matcher(waypoint.location);
-            if (matcher.matches()) numbered.add(waypoint);
+            String location = waypoint.location.replaceAll("\\D", "");
+            Matcher matcher = numberedPattern.matcher(location);
+            if (matcher.matches()) numbered.add(new CrystalHollowWaypoints.Waypoint(location, waypoint.pos));
         }
 
+        numbered.sort(Comparator.comparingInt(w -> Integer.parseInt(w.location)));
         return numbered;
     }
 
@@ -248,7 +250,7 @@ public class CoordsOptimizer {
             return visited[i];
         }
 
-        public double trailLength(double graph[][]) {
+        public double trailLength(double[][] graph) {
             double length = graph[trail[trailSize - 1]][trail[0]];
             for (int i = 0; i < trailSize - 1; i++) {
                 length += graph[trail[i]][trail[i + 1]];

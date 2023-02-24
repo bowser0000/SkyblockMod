@@ -15,13 +15,7 @@ import cc.polyfrost.oneconfig.config.data.OptionSize;
 import cc.polyfrost.oneconfig.config.migration.CfgMigrator;
 import cc.polyfrost.oneconfig.config.migration.CfgName;
 import cc.polyfrost.oneconfig.libs.universal.UKeyboard;
-import cc.polyfrost.oneconfig.utils.IOUtils;
 import cc.polyfrost.oneconfig.utils.Notifications;
-import cc.polyfrost.oneconfig.utils.SimpleProfiler;
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import me.Danker.DankersSkyblockMod;
 import me.Danker.features.*;
 import me.Danker.features.loot.LootDisplay;
@@ -31,20 +25,12 @@ import me.Danker.gui.alerts.AlertsGui;
 import me.Danker.gui.aliases.AliasesGui;
 import me.Danker.gui.crystalhollowwaypoints.CrystalHollowWaypointsGui;
 import net.minecraft.client.Minecraft;
-import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
-import org.apache.commons.codec.binary.Base64;
-import org.apache.commons.codec.binary.Base64InputStream;
-import org.apache.commons.compress.compressors.gzip.GzipCompressorInputStream;
 
 import java.awt.*;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 import java.util.Arrays;
 
 public class ModConfig extends Config {
@@ -1420,18 +1406,7 @@ public class ModConfig extends Config {
             category = "Waypoints",
             subcategory = "Crystal Hollows"
     )
-    Runnable copyWaypoints = () -> {
-        StringBuilder sb = new StringBuilder();
-        for (CrystalHollowWaypoints.Waypoint waypoint : CrystalHollowWaypoints.waypoints) {
-            if (sb.length() > 0) sb.append("\\n");
-            sb.append(waypoint.getFormattedWaypoint());
-        }
-        String waypoints = sb.toString();
-        if (waypoints.length() > 0) {
-            IOUtils.copyStringToClipboard(waypoints);
-            Notifications.INSTANCE.send("Success", "Copied waypoints to clipboard.");
-        }
-    };
+    Runnable copyWaypoints = CrystalHollowWaypoints::copyToClipboard;
 
     @Button(
             name = "Import Skytils Waypoints",
@@ -1440,59 +1415,7 @@ public class ModConfig extends Config {
             category = "Waypoints",
             subcategory = "Crystal Hollows"
     )
-    Runnable importWaypoints = () -> {
-        String clipboard = IOUtils.getStringFromClipboard();
-        if (clipboard == null) {
-            Notifications.INSTANCE.send("Error", "Could not find Skytils waypoints in clipboard.");
-            return;
-        }
-
-        String objectString;
-
-        if (clipboard.startsWith("<Skytils-Waypoint-Data>(V1):")) {
-            try {
-                String str = clipboard.substring(clipboard.indexOf(":") + 1);
-                GzipCompressorInputStream gcis = new GzipCompressorInputStream(new Base64InputStream(new ByteArrayInputStream(str.getBytes())));
-
-                ByteArrayOutputStream out = new ByteArrayOutputStream();
-                org.apache.commons.compress.utils.IOUtils.copy(gcis, out);
-
-                objectString = out.toString();
-            } catch (IOException ex) {
-                ex.printStackTrace();
-                Notifications.INSTANCE.send("Error", "Error parsing waypoints in clipboard.");
-                return;
-            }
-        } else if (Base64.isBase64(clipboard)) {
-            objectString = new String(Base64.decodeBase64(clipboard), StandardCharsets.UTF_8);
-        } else {
-            Notifications.INSTANCE.send("Error", "Could not find Skytils waypoints in clipboard.");
-            return;
-        }
-
-        JsonObject obj = new Gson().fromJson(objectString, JsonObject.class);
-        JsonArray categories = obj.get("categories").getAsJsonArray();
-
-        for (JsonElement element : categories) {
-            JsonObject inner = element.getAsJsonObject();
-
-            String island = inner.get("island").getAsString();
-            if (!island.equals("crystal_hollows")) return;
-
-            JsonArray waypoints = inner.get("waypoints").getAsJsonArray();
-
-            for (JsonElement waypointElement : waypoints) {
-                JsonObject waypoint = waypointElement.getAsJsonObject();
-
-                String name = waypoint.get("name").getAsString();
-                String x = waypoint.get("x").getAsString();
-                String y = waypoint.get("y").getAsString();
-                String z = waypoint.get("z").getAsString();
-
-                CrystalHollowWaypoints.addWaypoint(name, x, y, z, false);
-            }
-        }
-    };
+    Runnable importWaypoints = CrystalHollowWaypoints::importWaypoints;
 
     @Button(
             name = "Optimize Waypoints",
@@ -1501,40 +1424,7 @@ public class ModConfig extends Config {
             category = "Waypoints",
             subcategory = "Crystal Hollows"
     )
-    Runnable optimizeCoords = () -> new Thread(() -> {
-        SimpleProfiler.push("Coords Optimizer");
-        Notifications.INSTANCE.send("Running...", "Optimizing waypoints...");
-
-        ArrayList<CrystalHollowWaypoints.Waypoint> numbered = CoordsOptimizer.getNumbered(CrystalHollowWaypoints.waypoints);
-        double unoptimizedLength = CoordsOptimizer.getLength(numbered);
-
-        if (numbered.size() < 2) {
-            Notifications.INSTANCE.send("Error", "Requires at least 2 numbered waypoints.");
-            SimpleProfiler.pop("Coords Optimizer");
-            return;
-        }
-
-        CoordsOptimizer coordsOptimizer = new CoordsOptimizer(numbered);
-        coordsOptimizer.solve();
-        ArrayList<CrystalHollowWaypoints.Waypoint> optimized = coordsOptimizer.getOptimizedPath();
-        double optimizedLength = CoordsOptimizer.getLength(optimized);
-
-        System.out.println("Coords optimizer took " + SimpleProfiler.pop("Coords Optimizer") + "ms");
-        Notifications.INSTANCE.send("Finished", "Finished optimizing waypoints.");
-
-        if (optimizedLength < unoptimizedLength) {
-            CrystalHollowWaypoints.waypoints = optimized;
-            System.out.println("Optimized waypoints from length " + unoptimizedLength + " to length " + optimizedLength);
-            if (mc.thePlayer != null) {
-                mc.thePlayer.addChatMessage(new ChatComponentText(getColour(mainColour) + "Optimized waypoints from length " + String.format("%.2f", unoptimizedLength) + " to length " + String.format("%.2f", optimizedLength) + "."));
-            }
-        } else {
-            System.out.println("Could not find more optimized path. Found length " + optimizedLength + " but best length is " + unoptimizedLength);
-            if (mc.thePlayer != null) {
-                mc.thePlayer.addChatMessage(new ChatComponentText(getColour(errorColour) + "Could not find more optimized path. It may have failed to find one, or your route is already perfect."));
-            }
-        }
-    }).start();
+    Runnable optimizeCoords = () -> new Thread(CrystalHollowWaypoints::optimize).start();
 
     @Info(
             text = "Run multiple times for best results.",
