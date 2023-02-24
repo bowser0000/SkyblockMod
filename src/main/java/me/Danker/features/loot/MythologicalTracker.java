@@ -44,7 +44,7 @@ public class MythologicalTracker {
 
         if (message.contains("You dug out")) {
             if (message.contains(" coins!")) {
-                double coinsEarned = Double.parseDouble(message.replaceAll("[^\\d]", ""));
+                double coinsEarned = Double.parseDouble(message.replaceAll("\\D", ""));
                 mythCoins += coinsEarned;
                 mythCoinsSession += coinsEarned;
                 CfgConfig.writeDoubleConfig("mythological", "coins", mythCoins);

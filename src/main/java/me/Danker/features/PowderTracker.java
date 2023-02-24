@@ -45,11 +45,11 @@ public class PowderTracker {
                     if (player == null || player.getDisplayName() == null) continue;
                     String text = player.getDisplayName().getUnformattedText();
                     if (text.startsWith(" Mithril Powder:")) {
-                        int mithril = Integer.parseInt(text.replaceAll("[^\\d]", ""));
+                        int mithril = Integer.parseInt(text.replaceAll("\\D", ""));
                         if (powderStopwatch.isStarted() && !powderStopwatch.isSuspended() && lastMithril != -1 && mithril > lastMithril) mithrilGained += mithril - lastMithril;
                         lastMithril = mithril;
                     } else if (text.startsWith(" Gemstone Powder:")) {
-                        int gemstone = Integer.parseInt(text.replaceAll("[^\\d]", ""));
+                        int gemstone = Integer.parseInt(text.replaceAll("\\D", ""));
                         if (powderStopwatch.isStarted() && !powderStopwatch.isSuspended() && lastGemstone != -1 && gemstone > lastGemstone) gemstoneGained += gemstone - lastGemstone;
                         lastGemstone = gemstone;
                     }

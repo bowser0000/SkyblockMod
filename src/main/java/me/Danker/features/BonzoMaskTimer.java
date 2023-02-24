@@ -47,7 +47,7 @@ public class BonzoMaskTimer {
                 for (String line : Utils.getItemLore(bonzoMask)) {
                     String stripped = StringUtils.stripControlCodes(line);
                     if (stripped.startsWith("Cooldown: "))
-                        cooldownSeconds = Integer.parseInt(stripped.replaceAll("[^\\d]", ""));
+                        cooldownSeconds = Integer.parseInt(stripped.replaceAll("\\D", ""));
                 }
                 System.out.println("Parsed Bonzo Mask Cooldown: " + cooldownSeconds);
                 if (cooldownSeconds > 0)

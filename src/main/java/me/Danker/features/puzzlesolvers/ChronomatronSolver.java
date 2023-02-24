@@ -61,7 +61,7 @@ public class ChronomatronSolver {
             if (invSlots.size() > 48 && invSlots.get(49).getStack() != null) {
                 if (invSlots.get(49).getStack().getDisplayName().startsWith("§7Timer: §a") && invSlots.get(4).getStack() != null) {
                     int round = invSlots.get(4).getStack().stackSize;
-                    int timerSeconds = Integer.parseInt(StringUtils.stripControlCodes(invSlots.get(49).getStack().getDisplayName()).replaceAll("[^\\d]", ""));
+                    int timerSeconds = Integer.parseInt(StringUtils.stripControlCodes(invSlots.get(49).getStack().getDisplayName()).replaceAll("\\D", ""));
                     if (round != lastChronomatronRound && timerSeconds == round + 2) {
                         lastChronomatronRound = round;
                         for (int i = 10; i <= 43; i++) {

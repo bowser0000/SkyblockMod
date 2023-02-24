@@ -77,9 +77,9 @@ public class DungeonScore {
                 String display = player.getDisplayName().getUnformattedText();
 
                 if (display.startsWith(" Opened Rooms: ")) {
-                    openedRooms = Double.parseDouble(display.replaceAll("[^\\d]", ""));
+                    openedRooms = Double.parseDouble(display.replaceAll("\\D", ""));
                 } else if (display.startsWith(" Completed Rooms: ")) {
-                    completedRooms = Double.parseDouble(display.replaceAll("[^\\d]", ""));
+                    completedRooms = Double.parseDouble(display.replaceAll("\\D", ""));
                 } else if (display.startsWith(" Secrets Found: ") && display.endsWith("%")) {
                     secrets = player.getDisplayName().getFormattedText();
 
@@ -144,7 +144,7 @@ public class DungeonScore {
                         timeScore = 0;
                     }
                 } else if (display.startsWith(" Crypts: ")) {
-                    bonusScore = MathHelper.clamp_int(Integer.parseInt(display.replaceAll("[^\\d]", "")), 0, 5);
+                    bonusScore = MathHelper.clamp_int(Integer.parseInt(display.replaceAll("\\D", "")), 0, 5);
                 } else if (display.contains("[✦]")) {
                     missingPuzzles++;
                 }

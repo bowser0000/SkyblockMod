@@ -642,7 +642,7 @@ public class CatacombsTracker {
                 for (String lineUnclean : tooltip) {
                     String line = StringUtils.stripControlCodes(lineUnclean);
                     if (line.contains(" Coins") && !line.contains("NOTE:")) {
-                        int coinsSpent = Integer.parseInt(line.replaceAll("[^\\d]", ""));
+                        int coinsSpent = Integer.parseInt(line.replaceAll("\\D", ""));
 
                         switch (Utils.currentFloor) {
                             case F1:

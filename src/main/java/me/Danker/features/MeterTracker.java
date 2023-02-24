@@ -86,7 +86,7 @@ public class MeterTracker {
 
             if (meter.has(currentFloor)) {
                 EntityPlayer player = Minecraft.getMinecraft().thePlayer;
-                int score = Integer.parseInt(message.replaceAll("[^\\d]", ""));
+                int score = Integer.parseInt(message.replaceAll("\\D", ""));
                 if (score < 270) return;
                 if (score < 300) score *= 0.7;
 
@@ -171,7 +171,7 @@ public class MeterTracker {
                                 progress = getProgressFromLine(line);
                                 goal = getGoalFromLine(line);
                             } else {
-                                progress = Integer.parseInt(StringUtils.stripControlCodes(lore.get(19)).replaceAll("[^\\d]", ""));
+                                progress = Integer.parseInt(StringUtils.stripControlCodes(lore.get(19)).replaceAll("\\D", ""));
                             }
 
                             JsonObject floorMeter = meter.get(floor).getAsJsonObject();
@@ -230,15 +230,15 @@ public class MeterTracker {
     }
 
     static int getProgressFromLine(String line) {
-        return Integer.parseInt(line.substring(0, line.indexOf("/")).replaceAll("[^\\d]", ""));
+        return Integer.parseInt(line.substring(0, line.indexOf("/")).replaceAll("\\D", ""));
     }
 
     static int getGoalFromLine(String line) {
         String goalString = line.substring(line.indexOf("/") + 1);
         if (goalString.endsWith("k")) {
-            return Integer.parseInt(goalString.replaceAll("[^\\d]", "")) * 1000;
+            return Integer.parseInt(goalString.replaceAll("\\D", "")) * 1000;
         } else {
-            return Integer.parseInt(goalString.replaceAll("[^\\d]", ""));
+            return Integer.parseInt(goalString.replaceAll("\\D", ""));
         }
     }
 

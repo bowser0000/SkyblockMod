@@ -407,7 +407,7 @@ public class Utils {
 
 	public static int getIntFromString(String text, boolean romanNumeral) {
     	if (text.matches(".*\\d.*")) {
-			return Integer.parseInt(StringUtils.stripControlCodes(text).replaceAll("[^\\d]", ""));
+			return Integer.parseInt(StringUtils.stripControlCodes(text).replaceAll("\\D", ""));
 		} else if (romanNumeral) {
     		int number = 0;
 
@@ -493,7 +493,7 @@ public class Utils {
 				}
 
 				if (foundAbility && line.contains(EnumChatFormatting.DARK_GRAY + "Cooldown: ")) {
-					return Integer.parseInt(StringUtils.stripControlCodes(line).replaceAll("[^\\d]", ""));
+					return Integer.parseInt(StringUtils.stripControlCodes(line).replaceAll("\\D", ""));
 				}
 			}
 		}
