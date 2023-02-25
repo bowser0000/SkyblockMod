@@ -6,6 +6,7 @@ import cc.polyfrost.oneconfig.config.annotations.Number;
 import cc.polyfrost.oneconfig.config.annotations.Switch;
 import cc.polyfrost.oneconfig.hud.Hud;
 import cc.polyfrost.oneconfig.libs.universal.UMatrixStack;
+import cc.polyfrost.oneconfig.utils.TickDelay;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -17,6 +18,9 @@ import me.Danker.events.PostConfigInitEvent;
 import me.Danker.handlers.TextRenderer;
 import me.Danker.utils.RenderUtils;
 import me.Danker.utils.Utils;
+import net.minecraft.client.Minecraft;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StringUtils;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
@@ -226,6 +230,7 @@ public class DungeonTimer {
         }
 
         public void split() {
+            EntityPlayer player = Minecraft.getMinecraft().thePlayer;
             double time = System.currentTimeMillis();
 
             Split curSplit = getCurrentSplit();
@@ -239,6 +244,10 @@ public class DungeonTimer {
 
             if (currentIndex < splits.size()) {
                 getCurrentSplit().startTime = time;
+
+                if (DungeonTimerHud.inChat) {
+                    player.addChatMessage(new ChatComponentText(curSplit.getFullText()));
+                }
             } else {
                 double sum = 0D;
                 double pbSum = 0D;
@@ -252,6 +261,14 @@ public class DungeonTimer {
                     for (Split split : splits) {
                         split.splitObj.addProperty("pb", split.getTime()); // replace times with pb
                     }
+                }
+
+                if (DungeonTimerHud.inChat) {
+                    new TickDelay(() -> {
+                        for (Split split : activeTimer.splits) {
+                            player.addChatMessage(new ChatComponentText(split.getFullText()));
+                        }
+                    }, 1);
                 }
             }
             save();
@@ -309,6 +326,12 @@ public class DungeonTimer {
             if (goldTime < 0D || pbTime < 0D) return "";
             if (getTime() < goldTime && endTime < 0D) return "";
             return " (" + String.format("%+." + DungeonTimerHud.decimals + "f", getTime() - pbTime) + "s)";
+        }
+
+        public String getFullText() {
+            String text = name + ": " + getColouredTime();
+            if (DungeonTimerHud.showDiff) text += getPBDiff();
+            return text;
         }
 
     }
@@ -396,6 +419,12 @@ public class DungeonTimer {
         )
         public static boolean extraInfo = false;
 
+        @Switch(
+                name = "Show Split Info in Chat",
+                description = "Shows split information in chat after a split and after a dungeon run."
+        )
+        public static boolean inChat = false;
+
         @Override
         protected void draw(UMatrixStack matrices, float x, float y, float scale, boolean example) {
             if (example) {
@@ -438,12 +467,12 @@ public class DungeonTimer {
 
         @Override
         protected float getWidth(float scale, boolean example) {
-            return (RenderUtils.getWidthFromText(exampleNums) + 90 * scale) * scale;
+            return (RenderUtils.getWidthFromText(extraInfo ? exampleNums + extraInfoNums : exampleNums) + 90 * scale) * scale;
         }
 
         @Override
         protected float getHeight(float scale, boolean example) {
-            return RenderUtils.getHeightFromText(exampleNums) * scale;
+            return RenderUtils.getHeightFromText(extraInfo ? exampleNums + extraInfoNums : exampleNums) * scale;
         }
 
     }
