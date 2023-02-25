@@ -316,7 +316,7 @@ public class DungeonTimer {
 
             if (startTime < 0D) return ModConfig.getColour(DungeonTimerHud.timerColour) + time;
             if (endTime > 0D && (goldTime < 0D || getTime() < goldTime)) return ModConfig.getColour(DungeonTimerHud.goldColour) + time;
-            if (pbTime < 0D || getTime() < pbTime) return ModConfig.getColour(DungeonTimerHud.greenColour) + time;
+            if (pbTime < 0D || (!DungeonTimerHud.compareGold && getTime() < pbTime)) return ModConfig.getColour(DungeonTimerHud.greenColour) + time;
             return ModConfig.getColour(DungeonTimerHud.redColour) + time;
         }
 
