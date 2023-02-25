@@ -1,9 +1,7 @@
 package me.Danker.features;
 
-import cc.polyfrost.oneconfig.config.annotations.Dropdown;
-import cc.polyfrost.oneconfig.config.annotations.Exclude;
 import cc.polyfrost.oneconfig.config.annotations.Number;
-import cc.polyfrost.oneconfig.config.annotations.Switch;
+import cc.polyfrost.oneconfig.config.annotations.*;
 import cc.polyfrost.oneconfig.hud.Hud;
 import cc.polyfrost.oneconfig.libs.universal.UMatrixStack;
 import cc.polyfrost.oneconfig.utils.TickDelay;
@@ -325,6 +323,9 @@ public class DungeonTimer {
         public String getPBDiff() {
             if (goldTime < 0D || pbTime < 0D) return "";
             if (getTime() < goldTime && endTime < 0D) return "";
+            if (DungeonTimerHud.compareGold) {
+                return " (" + String.format("%+." + DungeonTimerHud.decimals + "f", getTime() - goldTime) + "s)";
+            }
             return " (" + String.format("%+." + DungeonTimerHud.decimals + "f", getTime() - pbTime) + "s)";
         }
 
@@ -402,10 +403,17 @@ public class DungeonTimer {
         public static int decimals = 2;
 
         @Switch(
-                name = "Show Difference From PB",
+                name = "Show Difference",
                 description = "Show the time difference from your personal best run."
         )
         public static boolean showDiff = false;
+
+        @DualOption(
+                name = "Compare Difference Against",
+                left = "PB",
+                right = "Gold"
+        )
+        public static boolean compareGold = false;
 
         @Switch(
                 name = "Show Sum of Best",
