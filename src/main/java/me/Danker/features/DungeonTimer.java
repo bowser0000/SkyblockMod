@@ -285,6 +285,29 @@ public class DungeonTimer {
             }
         }
 
+        public String getBestPossibleTime() {
+            if (sumOfBest < 0D) return ""; // requires all splits to have golds
+
+            double sum = 0D;
+            for (Split split : splits) {
+                if (split.startTime < 0D || (split.endTime < 0D && split.getTime() < split.goldTime)) {
+                    // hasnt started or split hasnt reached gold split
+                    sum += split.goldTime;
+                } else {
+                    sum += split.getTime();
+                }
+            }
+
+            int minutes = (int) (sum / 60);
+            double seconds = sum % 60;
+
+            if (minutes == 0) {
+                return String.format("%." + DungeonTimerHud.decimals + "f", seconds) + "s";
+            } else {
+                return minutes + "m" + String.format("%." + DungeonTimerHud.decimals + "f", seconds) + "s";
+            }
+        }
+
     }
 
     static class Split {
@@ -383,6 +406,12 @@ public class DungeonTimer {
         public static boolean compareGold = false;
 
         @Switch(
+                name = "Show Current Pace",
+                description = "Shows your current pace, using your gold splits as a best possible time."
+        )
+        public static boolean bestPossibleTime = false;
+
+        @Switch(
                 name = "Show Sum of Best",
                 description = "Show sum of gold splits in the timer."
         )
@@ -420,7 +449,12 @@ public class DungeonTimer {
                         dungeonTimers.append("\n");
                     }
 
-                    if (sumOfBest && activeTimer.sumOfBest > 0D) {
+                    if (bestPossibleTime) {
+                        dungeonTimerText.append(EnumChatFormatting.GOLD).append("Current Pace:\n");
+                        dungeonTimers.append(EnumChatFormatting.GOLD).append(activeTimer.getBestPossibleTime()).append("\n");
+                    }
+
+                    if (sumOfBest) {
                         dungeonTimerText.append(EnumChatFormatting.GOLD).append("Sum of Best:\n");
                         dungeonTimers.append(EnumChatFormatting.GOLD).append(activeTimer.getSumOfBest()).append("\n");
                     }
@@ -461,6 +495,10 @@ public class DungeonTimer {
                                  EnumChatFormatting.DARK_RED + "Necron:\n" +
                                  EnumChatFormatting.GRAY + "Wither King:";
 
+            if (bestPossibleTime) {
+                exampleText += "\n" + EnumChatFormatting.GOLD + "Current Pace:";
+            }
+
             if (sumOfBest) {
                 exampleText += "\n" + EnumChatFormatting.GOLD + "Sum of Best:";
             }
@@ -495,6 +533,10 @@ public class DungeonTimer {
                               ModConfig.getColour(redColour) + "17.56s (+0.56s)\n" +
                               ModConfig.getColour(greenColour) + "32.19s\n" +
                               ModConfig.getColour(timerColour) + "0.00s";
+            }
+
+            if (bestPossibleTime) {
+                exampleNums += "\n" + EnumChatFormatting.GOLD + "21m54.01s";
             }
 
             if (sumOfBest) {
