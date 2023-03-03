@@ -339,39 +339,6 @@ public class DungeonTimer {
 
     public static class DungeonTimerHud extends Hud {
 
-        @Exclude
-        String exampleText = EnumChatFormatting.DARK_RED + "Blood Open:\n" +
-                             EnumChatFormatting.RED + "Blood Clear:\n" +
-                             EnumChatFormatting.RED + "Boss Entry:\n" +
-                             EnumChatFormatting.AQUA + "Maxor:\n" +
-                             EnumChatFormatting.RED + "Storm:\n" +
-                             EnumChatFormatting.GOLD + "Terminals:\n" +
-                             EnumChatFormatting.GOLD + "Goldor:\n" +
-                             EnumChatFormatting.DARK_RED + "Necron:\n" +
-                             EnumChatFormatting.GRAY + "Wither King:";
-
-        @Exclude
-        String extraInfoText = EnumChatFormatting.GRAY + "\nWither Doors:\n" +
-                             EnumChatFormatting.YELLOW + "Deaths:\n" +
-                             EnumChatFormatting.YELLOW + "Puzzle Fails:";
-
-        @Exclude
-        String exampleNums = ModConfig.getColour(goldColour) + "175.56s\n" +
-                             ModConfig.getColour(greenColour) + "130.63s\n" +
-                             ModConfig.getColour(greenColour) + "458.94s\n" +
-                             ModConfig.getColour(redColour) + "49.93s\n" +
-                             ModConfig.getColour(goldColour) + "73.75s\n" +
-                             ModConfig.getColour(greenColour) + "227.65s\n" +
-                             ModConfig.getColour(redColour) + "17.56s\n" +
-                             ModConfig.getColour(timerColour) + "32.19s\n" +
-                             ModConfig.getColour(timerColour) + "0.00s";
-
-
-        @Exclude
-        String extraInfoNums = "\n" + EnumChatFormatting.GRAY+ 5 + "\n" +
-                               EnumChatFormatting.YELLOW + 2 + "\n" +
-                               EnumChatFormatting.YELLOW + 1;
-
         @Dropdown(
                 name = "Timer Color",
                 options = {"Black", "Dark Blue", "Dark Green", "Dark Aqua", "Dark Red", "Dark Purple", "Gold", "Gray", "Dark Gray", "Blue", "Green", "Aqua", "Red", "Light Purple", "Yellow", "White"}
@@ -436,8 +403,8 @@ public class DungeonTimer {
         @Override
         protected void draw(UMatrixStack matrices, float x, float y, float scale, boolean example) {
             if (example) {
-                TextRenderer.drawHUDText(extraInfo ? exampleText + extraInfoText : exampleText, x, y, scale);
-                TextRenderer.drawHUDText(extraInfo ? exampleNums + extraInfoNums : exampleNums, (int) (x + (90 * scale)), y, scale);
+                TextRenderer.drawHUDText(getExampleText(), x, y, scale);
+                TextRenderer.drawHUDText(getExampleNums(), (int) (x + (90 * scale)), y, scale);
                 return;
             }
 
@@ -475,12 +442,72 @@ public class DungeonTimer {
 
         @Override
         protected float getWidth(float scale, boolean example) {
-            return (RenderUtils.getWidthFromText(extraInfo ? exampleNums + extraInfoNums : exampleNums) + 90 * scale) * scale;
+            return (RenderUtils.getWidthFromText(getExampleNums()) + 90 * scale) * scale;
         }
 
         @Override
         protected float getHeight(float scale, boolean example) {
-            return RenderUtils.getHeightFromText(extraInfo ? exampleNums + extraInfoNums : exampleNums) * scale;
+            return RenderUtils.getHeightFromText(getExampleNums()) * scale;
+        }
+        
+        String getExampleText() {
+            String exampleText = EnumChatFormatting.DARK_RED + "Blood Open:\n" +
+                                 EnumChatFormatting.RED + "Blood Clear:\n" +
+                                 EnumChatFormatting.RED + "Boss Entry:\n" +
+                                 EnumChatFormatting.AQUA + "Maxor:\n" +
+                                 EnumChatFormatting.RED + "Storm:\n" +
+                                 EnumChatFormatting.GOLD + "Terminals:\n" +
+                                 EnumChatFormatting.GOLD + "Goldor:\n" +
+                                 EnumChatFormatting.DARK_RED + "Necron:\n" +
+                                 EnumChatFormatting.GRAY + "Wither King:";
+
+            if (sumOfBest) {
+                exampleText += "\n" + EnumChatFormatting.GOLD + "Sum of Best:";
+            }
+
+            if (extraInfo) {
+                exampleText += EnumChatFormatting.GRAY + "\nWither Doors:\n" +
+                               EnumChatFormatting.YELLOW + "Deaths:\n" +
+                               EnumChatFormatting.YELLOW + "Puzzle Fails:";
+            }
+
+            return exampleText;
+        }
+
+        String getExampleNums() {
+            String exampleNums = ModConfig.getColour(goldColour) + "175.56s\n" +
+                                 ModConfig.getColour(greenColour) + "130.63s\n" +
+                                 ModConfig.getColour(greenColour) + "458.94s\n" +
+                                 ModConfig.getColour(redColour) + "49.93s\n" +
+                                 ModConfig.getColour(goldColour) + "73.75s\n" +
+                                 ModConfig.getColour(greenColour) + "227.65s\n" +
+                                 ModConfig.getColour(redColour) + "17.56s\n" +
+                                 ModConfig.getColour(timerColour) + "32.19s\n" +
+                                 ModConfig.getColour(timerColour) + "0.00s";
+
+            if (showDiff) {
+                exampleNums = ModConfig.getColour(goldColour) + "175.56s (-12.78s)\n" +
+                              ModConfig.getColour(greenColour) + "130.63s (-2.76s)\n" +
+                              ModConfig.getColour(greenColour) + "458.94s (-5.62s)\n" +
+                              ModConfig.getColour(redColour) + "49.93s (+1.21s)\n" +
+                              ModConfig.getColour(goldColour) + "73.75s (-1.69s)\n" +
+                              ModConfig.getColour(greenColour) + "227.65s (-13.52s)\n" +
+                              ModConfig.getColour(redColour) + "17.56s (+0.56s)\n" +
+                              ModConfig.getColour(greenColour) + "32.19s\n" +
+                              ModConfig.getColour(timerColour) + "0.00s";
+            }
+
+            if (sumOfBest) {
+                exampleNums += "\n" + EnumChatFormatting.GOLD + "6m2s.20s";
+            }
+
+            if (extraInfo) {
+                exampleNums += "\n" + EnumChatFormatting.GRAY+ 5 + "\n" +
+                               EnumChatFormatting.YELLOW + 2 + "\n" +
+                               EnumChatFormatting.YELLOW + 1;
+            }
+
+            return exampleNums;
         }
 
     }
