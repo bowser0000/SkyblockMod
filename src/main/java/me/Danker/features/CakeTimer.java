@@ -17,6 +17,9 @@ import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.lwjgl.opengl.GL11;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class CakeTimer {
 
     public static double cakeTime;
@@ -31,6 +34,15 @@ public class CakeTimer {
 
         if (message.contains("Yum! You gain +") && message.contains(" for 48 hours!")) {
             cakeTime = System.currentTimeMillis() / 1000 + 172800; // Add 48 hours
+            CfgConfig.writeDoubleConfig("misc", "cakeTime", cakeTime);
+        }else if(message.contains("You may eat some of it again in ")) {
+            Matcher hoursMatcher = Pattern.compile("(\\d+)h").matcher(message);
+            Matcher minutesMatcher = Pattern.compile("(\\d+)m").matcher(message);
+            Matcher secondsMatcher = Pattern.compile("(\\d+)s").matcher(message);
+            int hours = hoursMatcher.find() ? Integer.parseInt(hoursMatcher.group(1)) : 0;
+            int minutes = minutesMatcher.find() ? Integer.parseInt(minutesMatcher.group(1)) : 0;
+            int seconds = secondsMatcher.find() ? Integer.parseInt(secondsMatcher.group(1)) : 0;
+            cakeTime = System.currentTimeMillis() / 1000 + hours * 3600 + minutes * 60 + seconds; // Add left time before cake can be eaten again
             CfgConfig.writeDoubleConfig("misc", "cakeTime", cakeTime);
         }
     }
