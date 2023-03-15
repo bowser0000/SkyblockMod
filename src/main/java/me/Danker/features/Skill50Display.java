@@ -35,7 +35,15 @@ public class Skill50Display {
             if (ModConfig.maxSkillHud.isEnabled() && section.contains("+") && section.contains("(") && section.contains(")") && !section.contains("Runecrafting")) {
                 if (section.contains("/")) {
                     String xpGained = section.substring(section.indexOf("+"), section.indexOf("(") - 1);
-                    double currentXp = Double.parseDouble(section.substring(section.indexOf("(") + 1, section.indexOf("/")).replace(",", ""));
+
+                    double currentXp;
+                    try {
+                        currentXp = Double.parseDouble(section.substring(section.indexOf("(") + 1, section.indexOf("/")).replace(",", ""));
+                    } catch (NumberFormatException ex) {
+                        ex.printStackTrace();
+                        return;
+                    }
+
                     int limit;
                     int totalXp;
                     if (section.contains("Farming") || section.contains("Enchanting") || section.contains("Mining") || section.contains("Combat")) {
