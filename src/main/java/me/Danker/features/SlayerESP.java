@@ -53,7 +53,6 @@ public class SlayerESP {
                 List<Entity> entities = world.getLoadedEntityList();
                 for (Entity e : entities) {
                     String name = e.getName();
-                    System.out.println(name);
                     if (name.contains("Revenant Horror")) {
                         zombie = e;
                         return;
