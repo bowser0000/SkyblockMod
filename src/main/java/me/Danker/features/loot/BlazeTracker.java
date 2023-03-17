@@ -2,6 +2,7 @@ package me.Danker.features.loot;
 
 import me.Danker.config.CfgConfig;
 import me.Danker.config.ModConfig;
+import me.Danker.events.SlayerLootDropEvent;
 import me.Danker.utils.Utils;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StringUtils;
@@ -61,14 +62,138 @@ public class BlazeTracker {
     public static int bossesSession = 0;
 
     @SubscribeEvent
-    public void onChat(ClientChatReceivedEvent event) {
-        String message = StringUtils.stripControlCodes(event.message.getUnformattedText());
+    public void onLootDrop(SlayerLootDropEvent event) {
+        boolean rng = false;
 
+        switch (event.drop) {
+            case "◆ Lavatears Rune I":
+                lavatearRunes += event.amount;
+                lavatearRunesSession += event.amount;
+                CfgConfig.writeIntConfig("blaze", "lavatearRunes", lavatearRunes);
+                break;
+            case "Wisp's Ice-Flavored Water I Splash Potion":
+                splashPotions += event.amount;
+                splashPotionsSession += event.amount;
+                CfgConfig.writeIntConfig("blaze", "splashPotions", splashPotions);
+                break;
+            case "Bundle of Magma Arrows":
+                magmaArrows += event.amount;
+                magmaArrowsSession += event.amount;
+                CfgConfig.writeIntConfig("blaze", "magmaArrows", magmaArrows);
+                break;
+            case "Mana Disintegrator":
+                manaDisintegrators += event.amount;
+                manaDisintegratorsSession += event.amount;
+                CfgConfig.writeIntConfig("blaze", "manaDisintegrators", manaDisintegrators);
+                break;
+            case "Scorched Books":
+                scorchedBooks += event.amount;
+                scorchedBooksSession += event.amount;
+                CfgConfig.writeIntConfig("blaze", "scorchedBooks", scorchedBooks);
+                break;
+            case "Kelvin Inverter":
+                kelvinInverters += event.amount;
+                kelvinInvertersSession += event.amount;
+                CfgConfig.writeIntConfig("blaze", "kelvinInverters", kelvinInverters);
+                break;
+            case "Blaze Rod Distillate":
+                blazeRodDistillates += event.amount;
+                blazeRodDistillatesSession += event.amount;
+                CfgConfig.writeIntConfig("blaze", "blazeRodDistillates", blazeRodDistillates);
+                break;
+            case "Glowstone Distillate":
+                glowstoneDistillates += event.amount;
+                glowstoneDistillatesSession += event.amount;
+                CfgConfig.writeIntConfig("blaze", "glowstoneDistillates", glowstoneDistillates);
+                break;
+            case "Magma Cream Distillate":
+                magmaCreamDistillates += event.amount;
+                magmaCreamDistillatesSession += event.amount;
+                CfgConfig.writeIntConfig("blaze", "magmaCreamDistillates", magmaCreamDistillates);
+                break;
+            case "Nether Wart Distillate":
+                netherWartDistillates += event.amount;
+                netherWartDistillatesSession += event.amount;
+                CfgConfig.writeIntConfig("blaze", "netherWartDistillates", netherWartDistillates);
+                break;
+            case "Gabagool Distillate":
+                gabagoolDistillates += event.amount;
+                gabagoolDistillatesSession += event.amount;
+                CfgConfig.writeIntConfig("blaze", "gabagoolDistillates", gabagoolDistillates);
+                break;
+            case "Scorched Power Crystal":
+                scorchedPowerCrystals += event.amount;
+                scorchedPowerCrystalsSession += event.amount;
+                CfgConfig.writeIntConfig("blaze", "scorchedPowerCrystals", scorchedPowerCrystals);
+                break;
+            case "Fire Aspect III":
+                fireAspectBooks += event.amount;
+                fireAspectBooksSession += event.amount;
+                CfgConfig.writeIntConfig("blaze", "fireAspectBooks", fireAspectBooks);
+                break;
+            case "◆ Fiery Burst Rune I":
+                rng = true;
+                fieryBurstRunes += event.amount;
+                fieryBurstRunesSession += event.amount;
+                CfgConfig.writeIntConfig("blaze", "fieryBurstRunes", fieryBurstRunes);
+                if (ModConfig.rngesusAlerts) Utils.createTitle(EnumChatFormatting.RED + "FIERY BURST RUNE!", 3);
+                break;
+            case "Flawed Opal Gemstone":
+                opalGems += event.amount;
+                opalGemsSession += event.amount;
+                CfgConfig.writeIntConfig("blaze", "opalGems", opalGems);
+                break;
+            case "Archfiend Dice":
+                archfiendDice += event.amount;
+                archfiendDiceSession += event.amount;
+                CfgConfig.writeIntConfig("blaze", "archfiendDice", archfiendDice);
+                break;
+            case "Duplex I":
+                duplexBooks += event.amount;
+                duplexBooksSession += event.amount;
+                CfgConfig.writeIntConfig("blaze", "duplexBooks", duplexBooks);
+                break;
+            case "High Class Archfiend Dice":
+                rng = true;
+                highClassArchfiendDice += event.amount;
+                highClassArchfiendDiceSession += event.amount;
+                CfgConfig.writeIntConfig("blaze", "highClassArchfiendDice", highClassArchfiendDice);
+                if (ModConfig.rngesusAlerts) Utils.createTitle(EnumChatFormatting.GOLD + "HIGH CLASS ARCHFIEND DICE!", 5);
+                break;
+            case "Wilson's Engineering Plans":
+                rng = true;
+                engineeringPlans += event.amount;
+                engineeringPlansSession += event.amount;
+                CfgConfig.writeIntConfig("blaze", "engineeringPlans", engineeringPlans);
+                if (ModConfig.rngesusAlerts) Utils.createTitle(EnumChatFormatting.GOLD + "ENGINEERING PLANS!", 3);
+                break;
+            case "Subzero Inverter":
+                rng = true;
+                subzeroInverters += event.amount;
+                subzeroInvertersSession += event.amount;
+                CfgConfig.writeIntConfig("blaze", "subzeroInverters", subzeroInverters);
+                if (ModConfig.rngesusAlerts) Utils.createTitle(EnumChatFormatting.GOLD + "SUBZERO INVERTER!", 3);
+                break;
+        }
+
+        if (rng) {
+            time = System.currentTimeMillis() / 1000;
+            bosses = 0;
+            timeSession = System.currentTimeMillis() / 1000;
+            bossesSession = 0;
+            CfgConfig.writeDoubleConfig("blaze", "timeRNG", time);
+            CfgConfig.writeIntConfig("blaze", "bossRNG", 0);
+        }
+    }
+
+    @SubscribeEvent
+    public void onChat(ClientChatReceivedEvent event) {
         if (!Utils.inSkyblock) return;
         if (event.type == 2) return;
-        if (message.contains(":")) return;
 
-        boolean rng = false;
+        String message = StringUtils.stripControlCodes(event.message.getUnformattedText());
+
+        if (message.contains(":")) return;
 
         if (message.contains("   Blaze Slayer LVL ")) {
             demonlords++;
@@ -81,109 +206,6 @@ public class BlazeTracker {
             }
             CfgConfig.writeIntConfig("blaze", "demonlords", demonlords);
             CfgConfig.writeIntConfig("blaze", "bossRNG", bosses);
-        } else if (message.contains("VERY RARE DROP!  (") && message.contains(" Lavatears Rune I)")) {
-            lavatearRunes++;
-            lavatearRunesSession++;
-            CfgConfig.writeIntConfig("blaze", "lavatearRunes", lavatearRunes);
-        } else if (message.contains("VERY RARE DROP!  (Wisp's Ice-Flavored Water I Splash Potion)")) {
-            splashPotions++;
-            splashPotionsSession++;
-            CfgConfig.writeIntConfig("blaze", "splashPotions", splashPotions);
-        } else if (message.contains("RARE DROP! (Bundle of Magma Arrows)")) {
-            magmaArrows++;
-            magmaArrowsSession++;
-            CfgConfig.writeIntConfig("blaze", "magmaArrows", magmaArrows);
-        } else if (message.contains("VERY RARE DROP!  (Mana Disintegrator)")) {
-            manaDisintegrators++;
-            manaDisintegratorsSession++;
-            CfgConfig.writeIntConfig("blaze", "manaDisintegrators", manaDisintegrators);
-        } else if (message.contains("VERY RARE DROP!  (Scorched Books)")) {
-            scorchedBooks++;
-            scorchedBooksSession++;
-            CfgConfig.writeIntConfig("blaze", "scorchedBooks", scorchedBooks);
-        } else if (message.contains("VERY RARE DROP!  (Kelvin Inverter)")) {
-            kelvinInverters++;
-            kelvinInvertersSession++;
-            CfgConfig.writeIntConfig("blaze", "kelvinInverters", kelvinInverters);
-        } else if (message.contains("VERY RARE DROP!  (") && message.contains("Blaze Rod Distillate)")) {
-            int amount = LootTracker.getAmountfromMessage(message);
-            blazeRodDistillates += amount;
-            blazeRodDistillatesSession += amount;
-            CfgConfig.writeIntConfig("blaze", "blazeRodDistillates", blazeRodDistillates);
-        } else if (message.contains("VERY RARE DROP!  (") && message.contains("Glowstone Distillate)")) {
-            int amount = LootTracker.getAmountfromMessage(message);
-            glowstoneDistillates += amount;
-            glowstoneDistillatesSession += amount;
-            CfgConfig.writeIntConfig("blaze", "glowstoneDistillates", glowstoneDistillates);
-        } else if (message.contains("VERY RARE DROP!  (") && message.contains("Magma Cream Distillate)")) {
-            int amount = LootTracker.getAmountfromMessage(message);
-            magmaCreamDistillates += amount;
-            magmaCreamDistillatesSession += amount;
-            CfgConfig.writeIntConfig("blaze", "magmaCreamDistillates", magmaCreamDistillates);
-        } else if (message.contains("VERY RARE DROP!  (") && message.contains("Nether Wart Distillate)")) {
-            int amount = LootTracker.getAmountfromMessage(message);
-            netherWartDistillates += amount;
-            netherWartDistillatesSession += amount;
-            CfgConfig.writeIntConfig("blaze", "netherWartDistillates", netherWartDistillates);
-        } else if (message.contains("VERY RARE DROP!  (") && message.contains("Gabagool Distillate)")) {
-            int amount = LootTracker.getAmountfromMessage(message);
-            gabagoolDistillates += amount;
-            gabagoolDistillatesSession += amount;
-            CfgConfig.writeIntConfig("blaze", "gabagoolDistillates", gabagoolDistillates);
-        } else if (message.contains("VERY RARE DROP!  (Scorched Power Crystal)")) {
-            scorchedPowerCrystals++;
-            scorchedPowerCrystalsSession++;
-            CfgConfig.writeIntConfig("blaze", "scorchedPowerCrystals", scorchedPowerCrystals);
-        } else if (message.contains("VERY RARE DROP!  (Fire Aspect III)")) {
-            fireAspectBooks++;
-            fireAspectBooksSession++;
-            CfgConfig.writeIntConfig("blaze", "fireAspectBooks", fireAspectBooks);
-        } else if (message.contains("CRAZY RARE DROP!  (") && message.contains(" Fiery Burst Rune I)")) {
-            rng = true;
-            fieryBurstRunes++;
-            fieryBurstRunesSession++;
-            CfgConfig.writeIntConfig("blaze", "fieryBurstRunes", fieryBurstRunes);
-            if (ModConfig.rngesusAlerts) Utils.createTitle(EnumChatFormatting.RED + "FIERY BURST RUNE!", 5);
-        } else if (message.contains("VERY RARE DROP!  (") && message.contains(" Flawed Opal Gemstone)")) {
-            int amount = LootTracker.getAmountfromMessage(message);
-            opalGems += amount;
-            opalGemsSession += amount;
-            CfgConfig.writeIntConfig("blaze", "opalGems", opalGems);
-        } else if (message.contains("VERY RARE DROP!  (Archfiend Dice)")) {
-            archfiendDice++;
-            archfiendDiceSession++;
-            CfgConfig.writeIntConfig("blaze", "archfiendDice", archfiendDice);
-        } else if (message.contains("VERY RARE DROP!  (Duplex I)")) {
-            duplexBooks++;
-            duplexBooksSession++;
-            CfgConfig.writeIntConfig("blaze", "duplexBooks", duplexBooks);
-        } else if (message.contains("CRAZY RARE DROP!  (High Class Archfiend Dice)")) {
-            rng = true;
-            highClassArchfiendDice++;
-            highClassArchfiendDiceSession++;
-            CfgConfig.writeIntConfig("blaze", "highClassArchfiendDice", highClassArchfiendDice);
-            if (ModConfig.rngesusAlerts) Utils.createTitle(EnumChatFormatting.GOLD + "HIGH CLASS ARCHFIEND DICE!", 5);
-        } else if (message.contains("CRAZY RARE DROP!  (Wilson's Engineering Plans)")) {
-            rng = true;
-            engineeringPlans++;
-            engineeringPlansSession++;
-            CfgConfig.writeIntConfig("blaze", "engineeringPlans", engineeringPlans);
-            if (ModConfig.rngesusAlerts) Utils.createTitle(EnumChatFormatting.GOLD + "ENGINEERING PLANS!", 5);
-        } else if (message.contains("CRAZY RARE DROP!  (Subzero Inverter)")) {
-            rng = true;
-            subzeroInverters++;
-            subzeroInvertersSession++;
-            CfgConfig.writeIntConfig("blaze", "subzeroInverters", subzeroInverters);
-            if (ModConfig.rngesusAlerts) Utils.createTitle(EnumChatFormatting.GOLD + "SUBZERO INVERTER!", 5);
-        }
-
-        if (rng) {
-            time = System.currentTimeMillis() / 1000;
-            bosses = 0;
-            timeSession = System.currentTimeMillis() / 1000;
-            bossesSession = 0;
-            CfgConfig.writeDoubleConfig("blaze", "timeRNG", time);
-            CfgConfig.writeIntConfig("blaze", "bossRNG", 0);
         }
     }
 

@@ -2,6 +2,7 @@ package me.Danker.features.loot;
 
 import me.Danker.config.CfgConfig;
 import me.Danker.config.ModConfig;
+import me.Danker.events.SlayerLootDropEvent;
 import me.Danker.utils.Utils;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StringUtils;
@@ -38,15 +39,84 @@ public class WolfTracker {
     public static double timeSession = -1;
     public static int bossesSession = -1;
 
+
+    @SubscribeEvent
+    public void onLootDrop(SlayerLootDropEvent event) {
+        boolean rng = false;
+
+        switch (event.drop) {
+            case "Hamster Wheel":
+                wheels += event.amount;
+                wheelsSession += event.amount;
+                wheelsDrops++;
+                wheelsDropsSession++;
+                CfgConfig.writeIntConfig("wolf", "wheel", wheels);
+                CfgConfig.writeIntConfig("wolf", "wheelDrops", wheelsDrops);
+                break;
+            case "◆ Spirit Rune I":
+                spirits += event.amount;
+                spiritsSession += event.amount;
+                CfgConfig.writeIntConfig("wolf", "spirit", spirits);
+                break;
+            case "Critical VI":
+                books += event.amount;
+                booksSession += event.amount;
+                CfgConfig.writeIntConfig("wolf", "book", books);
+                break;
+            case "Furball":
+                furballs += event.amount;
+                furballsSession += event.amount;
+                CfgConfig.writeIntConfig("wolf", "furball", furballs);
+                break;
+            case "Red Claw Egg":
+                rng = true;
+                eggs += event.amount;
+                eggsSession += event.amount;
+                CfgConfig.writeIntConfig("wolf", "egg", eggs);
+                if (ModConfig.rngesusAlerts) Utils.createTitle(EnumChatFormatting.DARK_RED + "RED CLAW EGG!", 3);
+                break;
+            case "◆ Couture Rune I":
+                rng = true;
+                coutures += event.amount;
+                couturesSession += event.amount;
+                CfgConfig.writeIntConfig("wolf", "couture", coutures);
+                if (ModConfig.rngesusAlerts) Utils.createTitle(EnumChatFormatting.GOLD + "COUTURE RUNE!", 3);
+                break;
+            case "Grizzly Bait":
+            case "Rename Me":
+                rng = true;
+                baits += event.amount;
+                baitsSession += event.amount;
+                CfgConfig.writeIntConfig("wolf", "bait", baits);
+                if (ModConfig.rngesusAlerts) Utils.createTitle(EnumChatFormatting.AQUA + "GRIZZLY BAIT!", 3);
+                break;
+            case "Overflux Capacitor":
+                rng = true;
+                fluxes += event.amount;
+                fluxesSession += event.amount;
+                CfgConfig.writeIntConfig("wolf", "flux", fluxes);
+                if (ModConfig.rngesusAlerts) Utils.createTitle(EnumChatFormatting.DARK_PURPLE + "OVERFLUX CAPACITOR!", 5);
+                break;
+        }
+
+        if (rng) {
+            time = System.currentTimeMillis() / 1000;
+            bosses = 0;
+            timeSession = System.currentTimeMillis() / 1000;
+            bossesSession = 0;
+            CfgConfig.writeDoubleConfig("wolf", "timeRNG", time);
+            CfgConfig.writeIntConfig("wolf", "bossRNG", 0);
+        }
+    }
+
     @SubscribeEvent
     public void onChat(ClientChatReceivedEvent event) {
-        String message = StringUtils.stripControlCodes(event.message.getUnformattedText());
-
         if (!Utils.inSkyblock) return;
         if (event.type == 2) return;
-        if (message.contains(":")) return;
 
-        boolean rng = false;
+        String message = StringUtils.stripControlCodes(event.message.getUnformattedText());
+
+        if (message.contains(":")) return;
 
         if (message.contains("   Wolf Slayer LVL ")) {
             svens++;
@@ -59,59 +129,6 @@ public class WolfTracker {
             }
             CfgConfig.writeIntConfig("wolf", "svens", svens);
             CfgConfig.writeIntConfig("wolf", "bossRNG", bosses);
-        } else if (message.contains("RARE DROP! (") && message.contains("Hamster Wheel)")) {
-            int amount = LootTracker.getAmountfromMessage(message);
-            wheels += amount;
-            wheelsSession += amount;
-            wheelsDrops++;
-            wheelsDropsSession++;
-            CfgConfig.writeIntConfig("wolf", "wheel", wheels);
-            CfgConfig.writeIntConfig("wolf", "wheelDrops", wheelsDrops);
-        } else if (message.contains("VERY RARE DROP!  (") && message.contains(" Spirit Rune I)")) { // Removing the unicode here *should* fix rune drops not counting
-            spirits++;
-            spiritsSession++;
-            CfgConfig.writeIntConfig("wolf", "spirit", spirits);
-        } else if (message.contains("VERY RARE DROP!  (Critical VI)")) {
-            books++;
-            booksSession++;
-            CfgConfig.writeIntConfig("wolf", "book", books);
-        } else if (message.contains("VERY RARE DROP!  (Furball)")) {
-            furballs++;
-            furballsSession++;
-            CfgConfig.writeIntConfig("wolf", "furball", furballs);
-        } else if (message.contains("CRAZY RARE DROP!  (Red Claw Egg)")) {
-            rng = true;
-            eggs++;
-            eggsSession++;
-            CfgConfig.writeIntConfig("wolf", "egg", eggs);
-            if (ModConfig.rngesusAlerts) Utils.createTitle(EnumChatFormatting.DARK_RED + "RED CLAW EGG!", 3);
-        } else if (message.contains("CRAZY RARE DROP!  (") && message.contains(" Couture Rune I)")) {
-            rng = true;
-            coutures++;
-            couturesSession++;
-            CfgConfig.writeIntConfig("wolf", "couture", coutures);
-            if (ModConfig.rngesusAlerts) Utils.createTitle(EnumChatFormatting.GOLD + "COUTURE RUNE!", 3);
-        } else if (message.contains("CRAZY RARE DROP!  (Grizzly Bait)") || message.contains("CRAZY RARE DROP! (Rename Me)")) { // How did Skyblock devs even manage to make this item Rename Me
-            rng = true;
-            baits++;
-            baitsSession++;
-            CfgConfig.writeIntConfig("wolf", "bait", baits);
-            if (ModConfig.rngesusAlerts) Utils.createTitle(EnumChatFormatting.AQUA + "GRIZZLY BAIT!", 3);
-        } else if (message.contains("CRAZY RARE DROP!  (Overflux Capacitor)")) {
-            rng = true;
-            fluxes++;
-            fluxesSession++;
-            CfgConfig.writeIntConfig("wolf", "flux", fluxes);
-            if (ModConfig.rngesusAlerts) Utils.createTitle(EnumChatFormatting.DARK_PURPLE + "OVERFLUX CAPACITOR!", 5);
-        }
-
-        if (rng) {
-            time = System.currentTimeMillis() / 1000;
-            bosses = 0;
-            timeSession = System.currentTimeMillis() / 1000;
-            bossesSession = 0;
-            CfgConfig.writeDoubleConfig("wolf", "timeRNG", time);
-            CfgConfig.writeIntConfig("wolf", "bossRNG", 0);
         }
     }
 
