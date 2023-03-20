@@ -190,6 +190,8 @@ public class MeterTracker {
 
     @SubscribeEvent
     public void onSlotClick(ChestSlotClickedEvent event) {
+        if (event.item == null) return;
+
         String inventoryName = event.inventoryName;
         if (inventoryName.startsWith("Catacombs (") && inventoryName.endsWith(") RNG Meter")) {
             String floor = inventoryName.substring(inventoryName.indexOf("(") + 1, inventoryName.indexOf(")"));
