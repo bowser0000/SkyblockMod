@@ -1409,9 +1409,9 @@ public class ModConfig extends Config {
     Runnable copyWaypoints = CrystalHollowWaypoints::copyToClipboard;
 
     @Button(
-            name = "Import Skytils Waypoints",
+            name = "Import Waypoints from Clipboard",
             text = "Import",
-            description = "Imports base64 encoded Skytils waypoints from your clipboard.",
+            description = "Imports Skytils or DSM/SBE waypoints from your clipboard.",
             category = "Waypoints",
             subcategory = "Crystal Hollows"
     )

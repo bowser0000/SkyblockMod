@@ -3,10 +3,7 @@ package me.Danker.features;
 import cc.polyfrost.oneconfig.utils.IOUtils;
 import cc.polyfrost.oneconfig.utils.Notifications;
 import cc.polyfrost.oneconfig.utils.SimpleProfiler;
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
+import com.google.gson.*;
 import me.Danker.DankersSkyblockMod;
 import me.Danker.config.ModConfig;
 import me.Danker.gui.crystalhollowwaypoints.CrystalHollowAddWaypointGui;
@@ -299,50 +296,15 @@ public class CrystalHollowWaypoints {
         }
     }
 
-    public static void copyToClipboard() {
-        StringBuilder sb = new StringBuilder();
-        for (Waypoint waypoint : waypoints) {
-            if (sb.length() > 0) sb.append("\\n");
-            sb.append(waypoint.getFormattedWaypoint());
-        }
-        String waypoints = sb.toString();
-        if (waypoints.length() > 0) {
-            IOUtils.copyStringToClipboard(waypoints);
-            Notifications.INSTANCE.send("Success", "Copied waypoints to clipboard.");
-        }
-    }
-
-    public static void importWaypoints() {
-        String clipboard = IOUtils.getStringFromClipboard();
-        if (clipboard == null) {
-            Notifications.INSTANCE.send("Error", "Could not find Skytils waypoints in clipboard.");
+    public static void addSTWaypoints(String list) {
+        JsonObject obj;
+        try {
+            obj = new Gson().fromJson(list, JsonObject.class);
+        } catch (JsonSyntaxException ex) {
+            ex.printStackTrace();
             return;
         }
 
-        String objectString;
-
-        if (clipboard.startsWith("<Skytils-Waypoint-Data>(V1):")) {
-            try {
-                String str = clipboard.substring(clipboard.indexOf(":") + 1);
-                GzipCompressorInputStream gcis = new GzipCompressorInputStream(new Base64InputStream(new ByteArrayInputStream(str.getBytes())));
-
-                ByteArrayOutputStream out = new ByteArrayOutputStream();
-                org.apache.commons.compress.utils.IOUtils.copy(gcis, out);
-
-                objectString = out.toString();
-            } catch (IOException ex) {
-                ex.printStackTrace();
-                Notifications.INSTANCE.send("Error", "Error parsing waypoints in clipboard.");
-                return;
-            }
-        } else if (Base64.isBase64(clipboard)) {
-            objectString = new String(Base64.decodeBase64(clipboard), StandardCharsets.UTF_8);
-        } else {
-            Notifications.INSTANCE.send("Error", "Could not find Skytils waypoints in clipboard.");
-            return;
-        }
-
-        JsonObject obj = new Gson().fromJson(objectString, JsonObject.class);
         JsonArray categories = obj.get("categories").getAsJsonArray();
 
         for (JsonElement element : categories) {
@@ -362,6 +324,50 @@ public class CrystalHollowWaypoints {
                 String z = waypoint.get("z").getAsString();
 
                 addWaypoint(name, x, y, z, false);
+            }
+        }
+    }
+
+    public static void copyToClipboard() {
+        StringBuilder sb = new StringBuilder();
+        for (Waypoint waypoint : waypoints) {
+            if (sb.length() > 0) sb.append("\\n");
+            sb.append(waypoint.getFormattedWaypoint());
+        }
+        String waypoints = sb.toString();
+        if (waypoints.length() > 0) {
+            IOUtils.copyStringToClipboard(waypoints);
+            Notifications.INSTANCE.send("Success", "Copied waypoints to clipboard.");
+        }
+    }
+
+    public static void importWaypoints() {
+        String clipboard = IOUtils.getStringFromClipboard();
+        if (clipboard == null) {
+            Notifications.INSTANCE.send("Error", "Could not find waypoints in clipboard.");
+            return;
+        }
+
+        if (clipboard.startsWith("<Skytils-Waypoint-Data>(V1):")) {
+            try {
+                String str = clipboard.substring(clipboard.indexOf(":") + 1);
+                GzipCompressorInputStream gcis = new GzipCompressorInputStream(new Base64InputStream(new ByteArrayInputStream(str.getBytes())));
+
+                ByteArrayOutputStream out = new ByteArrayOutputStream();
+                org.apache.commons.compress.utils.IOUtils.copy(gcis, out);
+
+                addSTWaypoints(out.toString());
+            } catch (IOException ex) {
+                ex.printStackTrace();
+                Notifications.INSTANCE.send("Error", "Error parsing waypoints in clipboard.");
+            }
+        } else if (Base64.isBase64(clipboard)) {
+            addSTWaypoints(new String(Base64.decodeBase64(clipboard), StandardCharsets.UTF_8));
+        } else {
+            try {
+                addDSMWaypoints(clipboard, false, false);
+            } catch (Exception ex) {
+                Notifications.INSTANCE.send("Error", "Error parsing waypoints in clipboard.");
             }
         }
     }
@@ -386,7 +392,7 @@ public class CrystalHollowWaypoints {
         double optimizedLength = CoordsOptimizer.getLength(optimized);
 
         System.out.println("Coords optimizer took " + SimpleProfiler.pop("Coords Optimizer") + "ms");
-        Notifications.INSTANCE.send("Finished", "Finished optimizing waypoints.");
+        Notifications.INSTANCE.send("Finished", "Finished optimizing waypoints. See logs for more details.");
 
         if (optimizedLength < unoptimizedLength) {
             waypoints = optimized;
