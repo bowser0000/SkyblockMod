@@ -1,9 +1,8 @@
 package me.Danker.commands;
 
 import com.google.gson.JsonObject;
-import me.Danker.DankersSkyblockMod;
+import me.Danker.config.ModConfig;
 import me.Danker.handlers.APIHandler;
-import me.Danker.handlers.ConfigHandler;
 import me.Danker.utils.Utils;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
@@ -49,9 +48,9 @@ public class FairySoulsCommand extends CommandBase {
         new Thread(() -> {
 
             // Check key
-            String key = ConfigHandler.getString("api", "APIKey");
+            String key = ModConfig.apiKey;
             if(key.equals("")) {
-                player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "API key not set. Use /setkey."));
+                player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "API key not set. Use /setkey."));
                 return;
             }
 
@@ -61,10 +60,10 @@ public class FairySoulsCommand extends CommandBase {
             if(args.length == 0) {
                 username = player.getName();
                 uuid = APIHandler.getUUID(username);
-                player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Checking fairy souls of " + DankersSkyblockMod.SECONDARY_COLOUR + username));
+                player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Checking fairy souls of " + ModConfig.getColour(ModConfig.secondaryColour) + username));
             } else {
                 username = args[0];
-                player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Checking fairy souls of " + DankersSkyblockMod.SECONDARY_COLOUR + username));
+                player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Checking fairy souls of " + ModConfig.getColour(ModConfig.secondaryColour) + username));
                 uuid = APIHandler.getUUID(username);
             }
 
@@ -78,7 +77,7 @@ public class FairySoulsCommand extends CommandBase {
             JsonObject profileResponse = APIHandler.getResponse(profileURL, true);
             if (!profileResponse.get("success").getAsBoolean()) {
                 String reason = profileResponse.get("cause").getAsString();
-                player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Failed with reason: " + reason));
+                player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "Failed with reason: " + reason));
                 return;
             }
 
@@ -89,7 +88,7 @@ public class FairySoulsCommand extends CommandBase {
             int fairy_souls = userObject.get("fairy_souls_collected").getAsInt();
             System.out.println(fairy_souls);
 
-            player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "The player " + username + " has " + DankersSkyblockMod.VALUE_COLOUR + fairy_souls + DankersSkyblockMod.MAIN_COLOUR + "/227" + " collected"));
+            player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "The player " + username + " has " + ModConfig.getColour(ModConfig.valueColour) + fairy_souls + ModConfig.getColour(ModConfig.mainColour) + "/227" + " collected"));
 
         }).start();
 

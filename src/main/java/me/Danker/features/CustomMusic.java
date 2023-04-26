@@ -1,7 +1,7 @@
 package me.Danker.features;
 
 import me.Danker.DankersSkyblockMod;
-import me.Danker.commands.ToggleCommand;
+import me.Danker.config.ModConfig;
 import me.Danker.events.PostConfigInitEvent;
 import me.Danker.handlers.ScoreboardHandler;
 import me.Danker.utils.Utils;
@@ -30,43 +30,24 @@ public class CustomMusic {
     static boolean cancelNotes;
 
     public static Song dungeonboss;
-    public static int dungeonbossVolume;
     public static Song bloodroom;
-    public static int bloodroomVolume;
     public static Song dungeon;
-    public static int dungeonVolume;
     public static Song phase2;
-    public static int phase2Volume;
     public static Song phase3;
-    public static int phase3Volume;
     public static Song phase4;
-    public static int phase4Volume;
     public static Song phase5;
-    public static int phase5Volume;
     public static Song hub;
-    public static int hubVolume;
     public static Song island;
-    public static int islandVolume;
     public static Song dungeonHub;
-    public static int dungeonHubVolume;
     public static Song farmingIslands;
-    public static int farmingIslandsVolume;
     public static Song goldMine;
-    public static int goldMineVolume;
     public static Song deepCaverns;
-    public static int deepCavernsVolume;
     public static Song dwarvenMines;
-    public static int dwarvenMinesVolume;
     public static Song crystalHollows;
-    public static int crystalHollowsVolume;
     public static Song spidersDen;
-    public static int spidersDenVolume;
     public static Song crimsonIsle;
-    public static int crimsonIsleVolume;
     public static Song end;
-    public static int endVolume;
     public static Song park;
-    public static int parkVolume;
 
     static int curPhase = 0;
 
@@ -84,7 +65,7 @@ public class CustomMusic {
         World world = mc.theWorld;
         if (DankersSkyblockMod.tickAmount % 10 == 0) {
             if (world != null && player != null) {
-                if (Utils.inDungeons) {
+                if (Utils.isInDungeons()) {
                     List<String> scoreboard = ScoreboardHandler.getSidebarLines();
                     if (scoreboard.size() > 2) {
                         String firstLine = ScoreboardHandler.cleanSB(scoreboard.get(scoreboard.size() - 1));
@@ -99,7 +80,7 @@ public class CustomMusic {
                             firstLine.contains("maxor") || // F7
                             firstLine.contains("f7")) {
 
-                            if (ToggleCommand.dungeonBossMusic) {
+                            if (ModConfig.dungeonBossMusic) {
                                 switch (curPhase) {
                                     case -1:
                                         break;
@@ -122,42 +103,42 @@ public class CustomMusic {
                         }
                     }
                 } else {
-                    switch (Utils.tabLocation) {
-                        case "Hub":
-                            if (ToggleCommand.hubMusic) hub.start();
+                    switch (Utils.currentLocation) {
+                        case HUB:
+                            if (ModConfig.hubMusic) hub.start();
                             break;
-                        case "Private Island":
-                            if (ToggleCommand.islandMusic) island.start();
+                        case PRIVATE_ISLAND:
+                            if (ModConfig.islandMusic) island.start();
                             break;
-                        case "Dungeon Hub":
-                            if (ToggleCommand.dungeonHubMusic) dungeonHub.start();
+                        case DUNGEON_HUB:
+                            if (ModConfig.dungeonHubMusic) dungeonHub.start();
                             break;
-                        case "The Farming Islands":
-                            if (ToggleCommand.farmingIslandsMusic) farmingIslands.start();
+                        case FARMING_ISLANDS:
+                            if (ModConfig.farmingIslandsMusic) farmingIslands.start();
                             break;
-                        case "Gold Mine":
-                            if (ToggleCommand.goldMineMusic) goldMine.start();
+                        case GOLD_MINE:
+                            if (ModConfig.goldMineMusic) goldMine.start();
                             break;
-                        case "Deep Caverns":
-                            if (ToggleCommand.deepCavernsMusic) deepCaverns.start();
+                        case DEEP_CAVERNS:
+                            if (ModConfig.deepCavernsMusic) deepCaverns.start();
                             break;
-                        case "Dwarven Mines":
-                            if (ToggleCommand.dwarvenMinesMusic) dwarvenMines.start();
+                        case DWARVEN_MINES:
+                            if (ModConfig.dwarvenMinesMusic) dwarvenMines.start();
                             break;
-                        case "Crystal Hollows":
-                            if (ToggleCommand.crystalHollowsMusic) crystalHollows.start();
+                        case CRYSTAL_HOLLOWS:
+                            if (ModConfig.crystalHollowsMusic) crystalHollows.start();
                             break;
-                        case "Spider's Den":
-                            if (ToggleCommand.spidersDenMusic) spidersDen.start();
+                        case SPIDERS_DEN:
+                            if (ModConfig.spidersDenMusic) spidersDen.start();
                             break;
-                        case "Crimson Isle":
-                            if (ToggleCommand.crimsonIsleMusic) crimsonIsle.start();
+                        case CRIMSON_ISLE:
+                            if (ModConfig.crimsonIsleMusic) crimsonIsle.start();
                             break;
-                        case "The End":
-                            if (ToggleCommand.endMusic) end.start();
+                        case END:
+                            if (ModConfig.endMusic) end.start();
                             break;
-                        case "The Park":
-                            if (ToggleCommand.parkMusic) park.start();
+                        case PARK:
+                            if (ModConfig.parkMusic) park.start();
                             break;
                     }
                 }
@@ -169,14 +150,14 @@ public class CustomMusic {
     public void onChat(ClientChatReceivedEvent event) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
         String message = StringUtils.stripControlCodes(event.message.getUnformattedText());
 
-        if (ToggleCommand.dungeonMusic && Utils.inDungeons) {
+        if (ModConfig.dungeonMusic && Utils.isInDungeons()) {
             if (message.contains("[NPC] Mort: Here, I found this map when I first entered the dungeon.")) {
                 dungeon.start();
             }
         }
 
-        if (Utils.inDungeons) {
-            if (ToggleCommand.dungeonBossMusic) {
+        if (Utils.isInDungeons()) {
+            if (ModConfig.dungeonBossMusic) {
                 if (phase2.hasSongs() && message.startsWith("[BOSS] Storm: Pathetic Maxor")) {
                     phase2.start();
                     curPhase = 2;
@@ -205,14 +186,14 @@ public class CustomMusic {
                 phase5.stop();
             } else if (message.contains("The BLOOD DOOR has been opened!")) {
                 dungeon.stop();
-                if (ToggleCommand.bloodRoomMusic) bloodroom.start();
+                if (ModConfig.bloodRoomMusic) bloodroom.start();
             }
         }
     }
 
     @SubscribeEvent
     public void onSound(PlaySoundEvent event) {
-        if (ToggleCommand.disableHypixelMusic && cancelNotes && event.name.startsWith("note.")) {
+        if (ModConfig.disableHypixelMusic && cancelNotes && event.name.startsWith("note.")) {
             event.result = null;
         }
     }
@@ -229,25 +210,25 @@ public class CustomMusic {
 
         reset();
 
-        dungeonboss = new Song(directory, "dungeonboss", dungeonbossVolume);
-        bloodroom = new Song(directory, "bloodroom", bloodroomVolume);
-        dungeon = new Song(directory, "dungeon", dungeonVolume);
-        phase2 = new Song(directory, "phasetwo", phase2Volume);
-        phase3 = new Song(directory, "phasethree", phase3Volume);
-        phase4 = new Song(directory, "phasefour", phase4Volume);
-        phase5 = new Song(directory, "phasefive", phase5Volume);
-        hub = new Song(directory, "hub", hubVolume);
-        island = new Song(directory, "island", islandVolume);
-        dungeonHub = new Song(directory, "dungeonhub", dungeonHubVolume);
-        farmingIslands = new Song(directory, "farmingislands", farmingIslandsVolume);
-        goldMine = new Song(directory, "goldmine", goldMineVolume);
-        deepCaverns = new Song(directory, "deepcaverns", deepCavernsVolume);
-        dwarvenMines = new Song(directory, "dwarvenmines", dwarvenMinesVolume);
-        crystalHollows = new Song(directory, "crystalhollows", crystalHollowsVolume);
-        spidersDen = new Song(directory, "spidersden", spidersDenVolume);
-        crimsonIsle = new Song(directory, "crimsonisle", crimsonIsleVolume);
-        end = new Song(directory, "end", endVolume);
-        park = new Song(directory, "park", parkVolume);
+        dungeonboss = new Song(directory, "dungeonboss", ModConfig.dungeonBossVolume);
+        bloodroom = new Song(directory, "bloodroom", ModConfig.bloodRoomVolume);
+        dungeon = new Song(directory, "dungeon", ModConfig.dungeonVolume);
+        phase2 = new Song(directory, "phasetwo", ModConfig.phase2Volume);
+        phase3 = new Song(directory, "phasethree", ModConfig.phase3Volume);
+        phase4 = new Song(directory, "phasefour", ModConfig.phase4Volume);
+        phase5 = new Song(directory, "phasefive", ModConfig.phase5Volume);
+        hub = new Song(directory, "hub", ModConfig.hubVolume);
+        island = new Song(directory, "island", ModConfig.islandVolume);
+        dungeonHub = new Song(directory, "dungeonhub", ModConfig.dungeonHubVolume);
+        farmingIslands = new Song(directory, "farmingislands", ModConfig.farmingIslandsVolume);
+        goldMine = new Song(directory, "goldmine", ModConfig.goldMineVolume);
+        deepCaverns = new Song(directory, "deepcaverns", ModConfig.deepCavernsVolume);
+        dwarvenMines = new Song(directory, "dwarvenmines", ModConfig.dwarvenMinesVolume);
+        crystalHollows = new Song(directory, "crystalhollows", ModConfig.crystalHollowsVolume);
+        spidersDen = new Song(directory, "spidersden", ModConfig.spidersDenVolume);
+        crimsonIsle = new Song(directory, "crimsonisle", ModConfig.crimsonIsleVolume);
+        end = new Song(directory, "end", ModConfig.endVolume);
+        park = new Song(directory, "park", ModConfig.parkVolume);
     }
 
     public static void reset() {
@@ -310,7 +291,7 @@ public class CustomMusic {
 
                 EntityPlayer player = Minecraft.getMinecraft().thePlayer;
                 if (player != null) {
-                    player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Attempted to play non .wav file. Please use a .wav converter instead of renaming the file."));
+                    player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "Attempted to play non .wav file. Please use a .wav converter instead of renaming the file."));
                 }
             }
         }
@@ -337,7 +318,7 @@ public class CustomMusic {
             if (playlist.size() < 1) return false;
             if (volume <= 0 || volume > 100) {
                 EntityPlayer player = Minecraft.getMinecraft().thePlayer;
-                if (player != null) player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Volume can only be set between 0% and 100%."));
+                if (player != null) player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "Volume can only be set between 0% and 100%."));
                 return false;
             }
 

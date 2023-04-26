@@ -1,6 +1,6 @@
 package me.Danker.features;
 
-import me.Danker.commands.ToggleCommand;
+import me.Danker.config.ModConfig;
 import me.Danker.utils.RenderUtils;
 import me.Danker.utils.Utils;
 import net.minecraft.entity.Entity;
@@ -17,11 +17,10 @@ import java.util.List;
 public class HighlightSkeletonMasters {
 
     static List<Entity> skeletonMasters = new ArrayList<>();
-    public static int SKELETON_MASTER_COLOUR;
 
     @SubscribeEvent
     public void onRenderEntity(RenderLivingEvent.Pre<EntityLivingBase> event) {
-        if (ToggleCommand.highlightSkeletonMasters && event.entity instanceof EntitySkeleton && Utils.inDungeons) {
+        if (ModConfig.highlightSkeletonMasters && event.entity instanceof EntitySkeleton && Utils.isInDungeons()) {
             ItemStack helmet = event.entity.getCurrentArmor(3);
             if (helmet != null && helmet.getDisplayName().endsWith("Skeleton Master Helmet")) {
                 skeletonMasters.add(event.entity);
@@ -31,10 +30,10 @@ public class HighlightSkeletonMasters {
 
     @SubscribeEvent
     public void onWorldRender(RenderWorldLastEvent event) {
-        if (ToggleCommand.highlightSkeletonMasters) {
+        if (ModConfig.highlightSkeletonMasters) {
             for (Entity skeletonMaster : skeletonMasters) {
                 if (!skeletonMaster.isDead)
-                    RenderUtils.draw3DBox(skeletonMaster.getEntityBoundingBox(), SKELETON_MASTER_COLOUR, event.partialTicks);
+                    RenderUtils.draw3DBox(skeletonMaster.getEntityBoundingBox(), ModConfig.skeletonMasterBoxColour.getRGB(), event.partialTicks);
             }
             skeletonMasters.clear();
         }

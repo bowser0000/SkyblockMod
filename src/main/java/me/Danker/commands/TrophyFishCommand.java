@@ -1,10 +1,9 @@
 package me.Danker.commands;
 
 import com.google.gson.JsonObject;
-import me.Danker.DankersSkyblockMod;
+import me.Danker.config.ModConfig;
 import me.Danker.features.loot.TrophyFishTracker;
 import me.Danker.handlers.APIHandler;
-import me.Danker.handlers.ConfigHandler;
 import me.Danker.utils.Utils;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
@@ -52,9 +51,9 @@ public class TrophyFishCommand extends CommandBase {
             EntityPlayer player = (EntityPlayer) arg0;
 
             // Check key
-            String key = ConfigHandler.getString("api", "APIKey");
+            String key = ModConfig.apiKey;
             if (key.equals("")) {
-                player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "API key not set. Use /setkey."));
+                player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "API key not set. Use /setkey."));
                 return;
             }
 
@@ -64,10 +63,10 @@ public class TrophyFishCommand extends CommandBase {
             if (arg1.length == 0) {
                 username = player.getName();
                 uuid = player.getUniqueID().toString().replaceAll("[\\-]", "");
-                player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Checking trophy fish of " + DankersSkyblockMod.SECONDARY_COLOUR + username));
+                player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Checking trophy fish of " + ModConfig.getColour(ModConfig.secondaryColour) + username));
             } else {
                 username = arg1[0];
-                player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Checking trophy fish of " + DankersSkyblockMod.SECONDARY_COLOUR + username));
+                player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Checking trophy fish of " + ModConfig.getColour(ModConfig.secondaryColour) + username));
                 uuid = APIHandler.getUUID(username);
             }
 
@@ -80,7 +79,7 @@ public class TrophyFishCommand extends CommandBase {
             JsonObject profileResponse = APIHandler.getResponse(profileURL, true);
             if (!profileResponse.get("success").getAsBoolean()) {
                 String reason = profileResponse.get("cause").getAsString();
-                player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Failed with reason: " + reason));
+                player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "Failed with reason: " + reason));
                 return;
             }
 
@@ -88,7 +87,7 @@ public class TrophyFishCommand extends CommandBase {
             JsonObject trophyObject = profileResponse.get("profile").getAsJsonObject().get("members").getAsJsonObject().get(uuid).getAsJsonObject().get("trophy_fish").getAsJsonObject();
 
             if (!trophyObject.has("total_caught")) {
-                player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "This player has not fished a trophy fish."));
+                player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "This player has not fished a trophy fish."));
                 return;
             }
 
@@ -130,7 +129,7 @@ public class TrophyFishCommand extends CommandBase {
                 }
             }
 
-            player.addChatMessage(new ChatComponentText(DankersSkyblockMod.DELIMITER_COLOUR + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+            player.addChatMessage(new ChatComponentText(ModConfig.getDelimiter() + "\n" +
                     EnumChatFormatting.GOLD + " Trophy Fish Rank: " + tier + "\n" +
                     EnumChatFormatting.WHITE + "  Sulphur Skitter " + EnumChatFormatting.DARK_GRAY + "(" + TrophyFishTracker.getSum(fish, "Sulphur Skitter") + ")" + EnumChatFormatting.WHITE + ": " + TrophyFishTracker.getTierCount(fish, "Sulphur Skitter") + "\n" +
                     EnumChatFormatting.WHITE + "  Obfuscated 1 " + EnumChatFormatting.DARK_GRAY + "(" + TrophyFishTracker.getSum(fish, "Obfuscated 1") + ")" + EnumChatFormatting.WHITE + ": " + TrophyFishTracker.getTierCount(fish, "Obfuscated 1") + "\n" +
@@ -150,7 +149,7 @@ public class TrophyFishCommand extends CommandBase {
                     EnumChatFormatting.DARK_PURPLE + "  Soul Fish " + EnumChatFormatting.DARK_GRAY + "(" + TrophyFishTracker.getSum(fish, "Soul Fish") + ")" + EnumChatFormatting.DARK_PURPLE + ": " + TrophyFishTracker.getTierCount(fish, "Soul Fish") + "\n" +
                     EnumChatFormatting.DARK_PURPLE + "  Karate Fish " + EnumChatFormatting.DARK_GRAY + "(" + TrophyFishTracker.getSum(fish, "Karate Fish") + ")" + EnumChatFormatting.DARK_PURPLE + ": " + TrophyFishTracker.getTierCount(fish, "Karate Fish") + "\n" +
                     EnumChatFormatting.GOLD + "  Golden Fish " + EnumChatFormatting.DARK_GRAY + "(" + TrophyFishTracker.getSum(fish, "Golden Fish") + ")" + EnumChatFormatting.GOLD + ": " + TrophyFishTracker.getTierCount(fish, "Golden Fish") + "\n" +
-                    DankersSkyblockMod.DELIMITER_COLOUR + EnumChatFormatting.BOLD + "-------------------"));
+                    ModConfig.getDelimiter()));
         }).start();
     }
 

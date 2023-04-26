@@ -1,9 +1,8 @@
 package me.Danker.commands;
 
 import com.google.gson.JsonObject;
-import me.Danker.DankersSkyblockMod;
+import me.Danker.config.ModConfig;
 import me.Danker.handlers.APIHandler;
-import me.Danker.handlers.ConfigHandler;
 import me.Danker.utils.Utils;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
@@ -64,7 +63,7 @@ public class ArmourCommand extends CommandBase {
 			EntityPlayer player = (EntityPlayer) arg0;
 			
 			// Check key
-			String key = ConfigHandler.getString("api", "APIKey");
+			String key = ModConfig.apiKey;
 			if (key.equals("")) {
 				player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "API key not set. Use /setkey."));
 				return;
@@ -76,10 +75,10 @@ public class ArmourCommand extends CommandBase {
 			if (arg1.length == 0) {
 				username = player.getName();
 				uuid = player.getUniqueID().toString().replaceAll("[\\-]", "");
-				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Checking armour of " + DankersSkyblockMod.SECONDARY_COLOUR + username));
+				player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Checking armour of " + ModConfig.getColour(ModConfig.secondaryColour) + username));
 			} else {
 				username = arg1[0];
-				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Checking armour of " + DankersSkyblockMod.SECONDARY_COLOUR + username));
+				player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Checking armour of " + ModConfig.getColour(ModConfig.secondaryColour) + username));
 				uuid = APIHandler.getUUID(username);
 			}
 			
@@ -92,7 +91,7 @@ public class ArmourCommand extends CommandBase {
 			JsonObject profileResponse = APIHandler.getResponse(profileURL, true);
 			if (!profileResponse.get("success").getAsBoolean()) {
 				String reason = profileResponse.get("cause").getAsString();
-				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Failed with reason: " + reason));
+				player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "Failed with reason: " + reason));
 				return;
 			}
 			
@@ -135,15 +134,15 @@ public class ArmourCommand extends CommandBase {
 				}
 				armourStream.close();
 				
-				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.DELIMITER_COLOUR + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+				player.addChatMessage(new ChatComponentText(ModConfig.getDelimiter() + "\n" +
 															EnumChatFormatting.AQUA + " " + username + "'s Armour:\n" +
-															DankersSkyblockMod.TYPE_COLOUR + " Helmet:      " + helmet + "\n" +
-															DankersSkyblockMod.TYPE_COLOUR + " Chestplate: " + chest + "\n" +
-															DankersSkyblockMod.TYPE_COLOUR + " Leggings:   " + legs + "\n" +
-															DankersSkyblockMod.TYPE_COLOUR + " Boots:       " + boots + "\n" +
-															DankersSkyblockMod.DELIMITER_COLOUR + " " + EnumChatFormatting.BOLD + "-------------------"));
+															ModConfig.getColour(ModConfig.typeColour) + " Helmet:      " + helmet + "\n" +
+															ModConfig.getColour(ModConfig.typeColour) + " Chestplate: " + chest + "\n" +
+															ModConfig.getColour(ModConfig.typeColour) + " Leggings:   " + legs + "\n" +
+															ModConfig.getColour(ModConfig.typeColour) + " Boots:       " + boots + "\n" +
+															ModConfig.getDelimiter()));
 			} catch (IOException ex) {
-				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "An error has occurred while reading inventory data. See logs for more info."));
+				player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "An error has occurred while reading inventory data. See logs for more info."));
 				ex.printStackTrace();
 			}
 		}).start();

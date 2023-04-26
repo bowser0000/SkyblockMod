@@ -1,6 +1,6 @@
 package me.Danker.features.loot;
 
-import me.Danker.handlers.ConfigHandler;
+import me.Danker.config.CfgConfig;
 import me.Danker.utils.Utils;
 import net.minecraft.util.StringUtils;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
@@ -32,27 +32,27 @@ public class GhostTracker {
             if (message.contains("Sorrow")) {
                 sorrows++;
                 sorrowSession++;
-                ConfigHandler.writeIntConfig("ghosts", "sorrow", sorrows);
+                CfgConfig.writeIntConfig("ghosts", "sorrow", sorrows);
             }
             if (message.contains("Volta")) {
                 voltas++;
                 voltaSession++;
-                ConfigHandler.writeIntConfig("ghosts", "volta", voltas);
+                CfgConfig.writeIntConfig("ghosts", "volta", voltas);
             }
             if (message.contains("Plasma")) {
                 plasmas++;
                 plasmaSession++;
-                ConfigHandler.writeIntConfig("ghosts", "plasma", plasmas);
+                CfgConfig.writeIntConfig("ghosts", "plasma", plasmas);
             }
             if (message.contains("Ghostly Boots")) {
                 ghostlyBoots++;
                 ghostlyBootsSession++;
-                ConfigHandler.writeIntConfig("ghosts", "ghostlyBoots", ghostlyBoots);
+                CfgConfig.writeIntConfig("ghosts", "ghostlyBoots", ghostlyBoots);
             }
             if (message.contains("The ghost's death materialized ")) {
                 bagOfCashs++;
                 bagOfCashSession++;
-                ConfigHandler.writeIntConfig("ghosts", "bagOfCash", bagOfCashs);
+                CfgConfig.writeIntConfig("ghosts", "bagOfCash", bagOfCashs);
             }
         }
     }

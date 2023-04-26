@@ -1,7 +1,7 @@
 package me.Danker.features.puzzlesolvers;
 
 import me.Danker.DankersSkyblockMod;
-import me.Danker.commands.ToggleCommand;
+import me.Danker.config.ModConfig;
 import me.Danker.utils.RenderUtils;
 import me.Danker.utils.SilverfishUtils;
 import me.Danker.utils.Utils;
@@ -34,7 +34,6 @@ public class SilverfishSolver {
     static BlockPos chest = null;
     static EnumFacing silverfishRoomDirection = null;
     static List<SilverfishUtils.Point> route = new ArrayList<>();
-    public static int SILVERFISH_LINE_COLOUR;
 
     @SubscribeEvent
     public void onWorldChange(WorldEvent.Load event) {
@@ -49,7 +48,7 @@ public class SilverfishSolver {
         World world = mc.theWorld;
         EntityPlayerSP player = mc.thePlayer;
         if (DankersSkyblockMod.tickAmount % 20 == 0) {
-            if (ToggleCommand.silverfishToggled && Utils.inDungeons && world != null && player != null) {
+            if (ModConfig.silverfish && Utils.isInDungeons() && world != null && player != null) {
                 new Thread(() -> {
                     boolean foundRoom = false;
                     prevInSilverfishRoom = inSilverfishRoom;
@@ -148,7 +147,7 @@ public class SilverfishSolver {
 
     @SubscribeEvent
     public void onWorldRender(RenderWorldLastEvent event) {
-        if (ToggleCommand.silverfishToggled && Utils.inDungeons && route != null && route.size() > 0 && chest != null) {
+        if (ModConfig.silverfish && Utils.isInDungeons() && route != null && route.size() > 0 && chest != null) {
             for (int i = 0; i < route.size() - 1; i++) {
                 Vec3 pos1 = null;
                 Vec3 pos2 = null;
@@ -172,7 +171,7 @@ public class SilverfishSolver {
                     default:
                         return;
                 }
-                RenderUtils.draw3DLine(pos1, pos2, SILVERFISH_LINE_COLOUR, 5, true, event.partialTicks);
+                RenderUtils.draw3DLine(pos1, pos2, ModConfig.silverfishLineColour.getRGB(), 5, true, event.partialTicks);
             }
         }
     }

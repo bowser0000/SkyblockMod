@@ -1,14 +1,14 @@
 package me.Danker.features;
 
+import cc.polyfrost.oneconfig.libs.universal.UResolution;
 import me.Danker.DankersSkyblockMod;
-import me.Danker.commands.ToggleCommand;
+import me.Danker.config.ModConfig;
 import me.Danker.events.ChestSlotClickedEvent;
 import me.Danker.events.GuiChestBackgroundDrawnEvent;
 import me.Danker.utils.RenderUtils;
 import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
-import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.gui.inventory.GuiChest;
 import net.minecraft.inventory.ContainerChest;
 import net.minecraft.inventory.Slot;
@@ -27,7 +27,7 @@ public class BazaarTimeToFill {
 
     @SubscribeEvent
     public void onSlotClick(ChestSlotClickedEvent event) {
-        if (!ToggleCommand.bazaarTimeToFill) return;
+        if (!ModConfig.bazaarTimeToFill) return;
 
         if (event.inventoryName.contains(" ➜ ") && event.item != null) {
             if (event.slot.slotNumber - (event.chest.inventorySlots.inventorySlots.size() - 36) >= 0) {
@@ -52,7 +52,7 @@ public class BazaarTimeToFill {
 
     @SubscribeEvent
     public void onTick(TickEvent.ClientTickEvent event) {
-        if (!ToggleCommand.bazaarTimeToFill || !Utils.inSkyblock) return;
+        if (!ModConfig.bazaarTimeToFill || !Utils.inSkyblock) return;
         if (event.phase != TickEvent.Phase.START) return;
         if (DankersSkyblockMod.tickAmount % 10 != 0) return;
 
@@ -92,12 +92,11 @@ public class BazaarTimeToFill {
 
     @SubscribeEvent
     public void onGuiRender(GuiChestBackgroundDrawnEvent event) {
-        if (!ToggleCommand.bazaarTimeToFill) return;
+        if (!ModConfig.bazaarTimeToFill) return;
         if (textToDisplay.length() == 0) return;
 
-        ScaledResolution sr = new ScaledResolution(Minecraft.getMinecraft());
-        int width = sr.getScaledWidth();
-        int height = (sr.getScaledHeight() - 222) / 2;
+        int width = UResolution.getScaledWidth();
+        int height = (UResolution.getScaledHeight() - 222) / 2;
 
         RenderUtils.drawCenteredText(EnumChatFormatting.BLUE + "Estimated time to fill: " + textToDisplay, width, height, 1D);
     }

@@ -2,6 +2,7 @@ package me.Danker.features;
 
 import com.google.gson.JsonObject;
 import me.Danker.DankersSkyblockMod;
+import me.Danker.config.ModConfig;
 import me.Danker.handlers.APIHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
@@ -43,7 +44,7 @@ public class UpdateChecker {
                     } catch (InterruptedException ex) {
                         ex.printStackTrace();
                     }
-                    player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + DankersSkyblockMod.MODID + " is outdated. Please update to " + latestTag + ".\n").appendSibling(update));
+                    player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + DankersSkyblockMod.MODID + " is outdated. Please update to " + latestTag + ".\n").appendSibling(update));
                 }
             }).start();
         }

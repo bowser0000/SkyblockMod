@@ -2,9 +2,8 @@ package me.Danker.commands;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import me.Danker.DankersSkyblockMod;
+import me.Danker.config.ModConfig;
 import me.Danker.handlers.APIHandler;
-import me.Danker.handlers.ConfigHandler;
 import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.network.NetworkPlayerInfo;
@@ -48,9 +47,9 @@ public class LobbySkillsCommand extends CommandBase {
 		Map<String, Double> unsortedSAList = new HashMap<>();
 		ArrayList<Double> lobbySkills = new ArrayList<>();
 		// Check key
-		String key = ConfigHandler.getString("api", "APIKey");
+		String key = ModConfig.apiKey;
 		if (key.equals("")) {
-			playerSP.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "API key not set. Use /setkey."));
+			playerSP.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "API key not set. Use /setkey."));
 			return;
 		}
 
@@ -58,7 +57,7 @@ public class LobbySkillsCommand extends CommandBase {
 			try {
 				// Create deep copy of players to prevent passing reference and ConcurrentModificationException
 				Collection<NetworkPlayerInfo> players = new ArrayList<>(Minecraft.getMinecraft().getNetHandler().getPlayerInfoMap());
-				playerSP.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Checking skill average of lobby. Estimated time: " + (int) (Utils.getMatchingPlayers("").size() * 1.2 + 1) + " seconds."));
+				playerSP.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Checking skill average of lobby. Estimated time: " + (int) (Utils.getMatchingPlayers("").size() * 1.2 + 1) + " seconds."));
 				// Send request every .6 seconds, leaving room for another 20 requests per minute
 				
 				for (final NetworkPlayerInfo player : players) {
@@ -183,7 +182,7 @@ public class LobbySkillsCommand extends CommandBase {
 				String[] sortedSAListKeys = sortedSAList.keySet().toArray(new String[0]);
 				String top3 = "";
 				for (int i = 0; i < 3 && i < sortedSAListKeys.length; i++) {
-					top3 += "\n " + EnumChatFormatting.AQUA + sortedSAListKeys[i] + ": " + DankersSkyblockMod.SKILL_AVERAGE_COLOUR + EnumChatFormatting.BOLD + sortedSAList.get(sortedSAListKeys[i]);
+					top3 += "\n " + EnumChatFormatting.AQUA + sortedSAListKeys[i] + ": " + ModConfig.getColour(ModConfig.skillAverageColour) + EnumChatFormatting.BOLD + sortedSAList.get(sortedSAListKeys[i]);
 				}
 				
 				// Get lobby sa
@@ -194,10 +193,10 @@ public class LobbySkillsCommand extends CommandBase {
 				lobbySA = (double) Math.round((lobbySA / lobbySkills.size()) * 100) / 100;
 				
 				// Finally say skill lobby avg and highest SA users
-				playerSP.addChatMessage(new ChatComponentText(DankersSkyblockMod.DELIMITER_COLOUR + "" + EnumChatFormatting.BOLD + "-------------------\n" +
-															  DankersSkyblockMod.TYPE_COLOUR + " Lobby Skill Average: " + DankersSkyblockMod.SKILL_AVERAGE_COLOUR + EnumChatFormatting.BOLD + lobbySA + "\n" +
-															  DankersSkyblockMod.TYPE_COLOUR + " Highest Skill Averages:" + top3 + "\n" +
-															  DankersSkyblockMod.DELIMITER_COLOUR + "" + EnumChatFormatting.BOLD + " -------------------"));
+				playerSP.addChatMessage(new ChatComponentText(ModConfig.getDelimiter() + "\n" +
+															  ModConfig.getColour(ModConfig.typeColour) + " Lobby Skill Average: " + ModConfig.getColour(ModConfig.skillAverageColour) + EnumChatFormatting.BOLD + lobbySA + "\n" +
+															  ModConfig.getColour(ModConfig.typeColour) + " Highest Skill Averages:" + top3 + "\n" +
+															  ModConfig.getDelimiter()));
 			} catch (InterruptedException ex) {
 				System.out.println("Current skill average list: " + unsortedSAList);
 				Thread.currentThread().interrupt();

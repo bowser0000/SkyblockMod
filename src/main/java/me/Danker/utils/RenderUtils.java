@@ -1,11 +1,11 @@
 package me.Danker.utils;
 
+import cc.polyfrost.oneconfig.libs.universal.UResolution;
 import me.Danker.features.CrystalHollowWaypoints;
 import me.Danker.handlers.TextRenderer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
-import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
@@ -24,10 +24,9 @@ public class RenderUtils {
 
     public static void drawTitle(String text) {
         Minecraft mc = Minecraft.getMinecraft();
-        ScaledResolution scaledResolution = new ScaledResolution(mc);
 
-        int height = scaledResolution.getScaledHeight();
-        int width = scaledResolution.getScaledWidth();
+        int height = UResolution.getScaledHeight();
+        int width = UResolution.getScaledWidth();
         int drawHeight = 0;
         String[] splitText = text.split("\n");
         for (String title : splitText) {
@@ -40,15 +39,14 @@ public class RenderUtils {
 
             int titleX = (int) ((width / 2) - (textLength * scale / 2));
             int titleY = (int) ((height * 0.45) / scale) + (int) (drawHeight * scale);
-            new TextRenderer(mc, title, titleX, titleY, scale);
+            TextRenderer.drawHUDText(title, titleX, titleY, scale);
             drawHeight += mc.fontRendererObj.FONT_HEIGHT;
         }
     }
 
     public static void drawOnSlot(int size, int xSlotPos, int ySlotPos, int colour) {
-        ScaledResolution sr = new ScaledResolution(Minecraft.getMinecraft());
-        int guiLeft = (sr.getScaledWidth() - 176) / 2;
-        int guiTop = (sr.getScaledHeight() - 222) / 2;
+        int guiLeft = (UResolution.getScaledWidth() - 176) / 2;
+        int guiTop = (UResolution.getScaledHeight() - 222) / 2;
         int x = guiLeft + xSlotPos;
         int y = guiTop + ySlotPos;
         // Move down when chest isn't 6 rows
@@ -61,9 +59,8 @@ public class RenderUtils {
 
     public static void drawTextOnSlot(int size, int xSlotPos, int ySlotPos, String text) {
         Minecraft mc = Minecraft.getMinecraft();
-        ScaledResolution sr = new ScaledResolution(mc);
-        int guiLeft = (sr.getScaledWidth() - 176) / 2;
-        int guiTop = (sr.getScaledHeight() - 222) / 2;
+        int guiLeft = (UResolution.getScaledWidth() - 176) / 2;
+        int guiTop = (UResolution.getScaledHeight() - 222) / 2;
         int x = guiLeft + xSlotPos;
         int y = guiTop + ySlotPos;
         // Move down when chest isn't 6 rows
@@ -294,7 +291,7 @@ public class RenderUtils {
 
     public static void draw3DBox(AxisAlignedBB aabb, int colourInt, float partialTicks) {
         Entity render = Minecraft.getMinecraft().getRenderViewEntity();
-        Color colour = new Color(colourInt);
+        Color colour = new Color(colourInt, true);
 
         double realX = render.lastTickPosX + (render.posX - render.lastTickPosX) * partialTicks;
         double realY = render.lastTickPosY + (render.posY - render.lastTickPosY) * partialTicks;
@@ -410,7 +407,46 @@ public class RenderUtils {
     public static void drawCenteredText(String text, int screenWidth, int height, double scale) {
         Minecraft mc = Minecraft.getMinecraft();
         int textWidth = mc.fontRendererObj.getStringWidth(text);
-        new TextRenderer(mc, text, screenWidth / 2 - textWidth / 2, height, scale);
+        TextRenderer.drawText(text, screenWidth / 2 - textWidth / 2, height, scale);
+    }
+
+    public static void drawModalRectWithCustomSizedTexture(double x, double y, float u, float v, int width, int height, float textureWidth, float textureHeight)
+    {
+        float f = 1.0F / textureWidth;
+        float f1 = 1.0F / textureHeight;
+        Tessellator tessellator = Tessellator.getInstance();
+        WorldRenderer worldrenderer = tessellator.getWorldRenderer();
+        worldrenderer.begin(7, DefaultVertexFormats.POSITION_TEX);
+        worldrenderer.pos(x, y + height, 0.0D).tex(u * f, (v + (float)height) * f1).endVertex();
+        worldrenderer.pos(x + width, y + height, 0.0D).tex((u + (float)width) * f, (v + (float)height) * f1).endVertex();
+        worldrenderer.pos(x + width, y, 0.0D).tex((u + (float)width) * f, v * f1).endVertex();
+        worldrenderer.pos(x, y, 0.0D).tex(u * f, v * f1).endVertex();
+        tessellator.draw();
+    }
+
+    public static int getWidthFromText(String text) {
+        if (text == null) return 0;
+
+        FontRenderer fr = Minecraft.getMinecraft().fontRendererObj;
+        String[] splitText = text.split("\n");
+
+        int width = 0;
+        for (String line : splitText) {
+            int stringLength = fr.getStringWidth(line);
+            if (stringLength > width) {
+                width = stringLength;
+            }
+        }
+
+        return width;
+    }
+
+    public static int getHeightFromText(String text) {
+        if (text == null) return 0;
+
+        FontRenderer fr = Minecraft.getMinecraft().fontRendererObj;
+        String[] splitText = text.split("\n");
+        return splitText.length * fr.FONT_HEIGHT;
     }
 
 }

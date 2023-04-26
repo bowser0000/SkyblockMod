@@ -1,9 +1,8 @@
 package me.Danker.commands;
 
 import com.google.gson.JsonObject;
-import me.Danker.DankersSkyblockMod;
+import me.Danker.config.ModConfig;
 import me.Danker.handlers.APIHandler;
-import me.Danker.handlers.ConfigHandler;
 import me.Danker.utils.Utils;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
@@ -59,7 +58,7 @@ public class BankCommand extends CommandBase {
 			EntityPlayer player = (EntityPlayer) arg0;
 			
 			// Check key
-			String key = ConfigHandler.getString("api", "APIKey");
+			String key = ModConfig.apiKey;
 			if (key.equals("")) {
 				player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "API key not set. Use /setkey."));
 				return;
@@ -71,10 +70,10 @@ public class BankCommand extends CommandBase {
 			if (arg1.length == 0) {
 				username = player.getName();
 				uuid = player.getUniqueID().toString().replaceAll("[\\-]", "");
-				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Checking coins of " + DankersSkyblockMod.SECONDARY_COLOUR + username));
+				player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Checking coins of " + ModConfig.getColour(ModConfig.secondaryColour) + username));
 			} else {
 				username = arg1[0];
-				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Checking coins of " + DankersSkyblockMod.SECONDARY_COLOUR + username));
+				player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Checking coins of " + ModConfig.getColour(ModConfig.secondaryColour) + username));
 				uuid = APIHandler.getUUID(username);
 			}
 			
@@ -101,18 +100,18 @@ public class BankCommand extends CommandBase {
 				double bankCoins = profileResponse.get("profile").getAsJsonObject().get("banking").getAsJsonObject().get("balance").getAsDouble();
 				bankCoins = Math.floor(bankCoins * 100.0) / 100.0;
 				
-				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.DELIMITER_COLOUR + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+				player.addChatMessage(new ChatComponentText(ModConfig.getDelimiter() + "\n" +
 															EnumChatFormatting.AQUA + " " + username + "'s Coins:\n" +
-															DankersSkyblockMod.TYPE_COLOUR + " Bank: " + EnumChatFormatting.GOLD + nf.format(bankCoins) + "\n" +
-															DankersSkyblockMod.TYPE_COLOUR + " Purse: " + EnumChatFormatting.GOLD + nf.format(purseCoins) + "\n" +
-															DankersSkyblockMod.TYPE_COLOUR + " Total: " + EnumChatFormatting.GOLD + nf.format(bankCoins + purseCoins) + "\n" +
-															DankersSkyblockMod.DELIMITER_COLOUR + " " + EnumChatFormatting.BOLD + "-------------------"));
+															ModConfig.getColour(ModConfig.typeColour) + " Bank: " + EnumChatFormatting.GOLD + nf.format(bankCoins) + "\n" +
+															ModConfig.getColour(ModConfig.typeColour) + " Purse: " + EnumChatFormatting.GOLD + nf.format(purseCoins) + "\n" +
+															ModConfig.getColour(ModConfig.typeColour) + " Total: " + EnumChatFormatting.GOLD + nf.format(bankCoins + purseCoins) + "\n" +
+															ModConfig.getDelimiter()));
 			} else {
-				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.DELIMITER_COLOUR + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+				player.addChatMessage(new ChatComponentText(ModConfig.getDelimiter() + "\n" +
 															EnumChatFormatting.AQUA + " " + username + "'s Coins:\n" +
-															DankersSkyblockMod.TYPE_COLOUR + " Bank: " + EnumChatFormatting.RED + "Bank API disabled.\n" +
-															DankersSkyblockMod.TYPE_COLOUR + " Purse: " + EnumChatFormatting.GOLD + nf.format(purseCoins) + "\n" +
-															DankersSkyblockMod.DELIMITER_COLOUR + " " + EnumChatFormatting.BOLD + "-------------------"));
+															ModConfig.getColour(ModConfig.typeColour) + " Bank: " + EnumChatFormatting.RED + "Bank API disabled.\n" +
+															ModConfig.getColour(ModConfig.typeColour) + " Purse: " + EnumChatFormatting.GOLD + nf.format(purseCoins) + "\n" +
+															ModConfig.getDelimiter()));
 			}
 		}).start();
 	}

@@ -1,7 +1,7 @@
 package me.Danker.features;
 
 import me.Danker.DankersSkyblockMod;
-import me.Danker.commands.ToggleCommand;
+import me.Danker.config.ModConfig;
 import me.Danker.handlers.ScoreboardHandler;
 import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;
@@ -20,7 +20,7 @@ public class LowHealthNotifications {
 
         World world = Minecraft.getMinecraft().theWorld;
         if (DankersSkyblockMod.tickAmount % 2 == 0) {
-            if (ToggleCommand.lowHealthNotifyToggled && Utils.inDungeons && world != null) {
+            if (ModConfig.lowHealthNotify && Utils.isInDungeons() && world != null) {
                 List<String> scoreboard = ScoreboardHandler.getSidebarLines();
                 for (String score : scoreboard) {
                     if (score.endsWith("❤") && score.matches(".* §c\\d.*")) {

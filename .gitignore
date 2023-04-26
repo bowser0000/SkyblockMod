@@ -30,4 +30,3 @@ run
 *.dat_mcr
 *.lock
 *.dat_old
-*.properties

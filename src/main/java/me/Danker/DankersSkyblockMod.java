@@ -3,11 +3,14 @@ package me.Danker;
 import com.google.gson.JsonObject;
 import me.Danker.commands.*;
 import me.Danker.commands.warp.WarpCommandHandler;
+import me.Danker.config.CfgConfig;
+import me.Danker.config.ModConfig;
 import me.Danker.events.*;
 import me.Danker.features.*;
 import me.Danker.features.loot.*;
 import me.Danker.features.puzzlesolvers.*;
-import me.Danker.gui.*;
+import me.Danker.gui.WarningGui;
+import me.Danker.gui.WarningGuiRedirect;
 import me.Danker.handlers.ConfigHandler;
 import me.Danker.handlers.PacketHandler;
 import me.Danker.utils.RenderUtils;
@@ -16,7 +19,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.client.gui.inventory.GuiChest;
-import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.command.ICommand;
 import net.minecraft.event.ClickEvent;
 import net.minecraft.event.ClickEvent.Action;
@@ -38,7 +40,6 @@ import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
-import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -46,11 +47,9 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.InputEvent.KeyInputEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.common.network.FMLNetworkEvent.ClientConnectedToServerEvent;
-import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
 import javax.sound.sampled.LineUnavailableException;
@@ -62,14 +61,15 @@ import java.util.Map;
 
 @Mod(modid = DankersSkyblockMod.MODID, version = DankersSkyblockMod.VERSION, clientSideOnly = true)
 public class DankersSkyblockMod {
-    public static final String MODID = "Danker's Skyblock Mod";
-    public static final String VERSION = "1.9";
+    public static final String MODID = "@ID@";
+    public static final String VERSION = "@VER@";
+    public static ModConfig config;
+
     public static int titleTimer = -1;
     public static boolean showTitle = false;
     public static String titleText = "";
     public static int tickAmount = 1;
     public static int repoTickAmount = 1;
-    public static KeyBinding[] keyBindings = new KeyBinding[5];
     public static boolean usingLabymod = false;
     public static boolean usingOAM = false;
     static boolean OAMWarning = false;
@@ -87,15 +87,6 @@ public class DankersSkyblockMod {
     public static int enchantingLevel;
     public static int alchemyLevel;
     public static int carpentryLevel;
-    
-    public static String MAIN_COLOUR;
-    public static String SECONDARY_COLOUR;
-    public static String ERROR_COLOUR;
-    public static String DELIMITER_COLOUR;
-    public static String TYPE_COLOUR;
-    public static String VALUE_COLOUR;
-    public static String SKILL_AVERAGE_COLOUR;
-    public static String ANSWER_COLOUR;
 
     @EventHandler
     public void init(FMLInitializationEvent event) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
@@ -125,6 +116,8 @@ public class DankersSkyblockMod {
         MinecraftForge.EVENT_BUS.register(new CrimsonMinibossTimer());
         MinecraftForge.EVENT_BUS.register(new CrystalHollowWaypoints());
         MinecraftForge.EVENT_BUS.register(new CustomMusic());
+        MinecraftForge.EVENT_BUS.register(new DisableMovement());
+        MinecraftForge.EVENT_BUS.register(new DrillFix());
         MinecraftForge.EVENT_BUS.register(new DungeonScore());
         MinecraftForge.EVENT_BUS.register(new DungeonTimer());
         MinecraftForge.EVENT_BUS.register(new EndOfFarmAlert());
@@ -142,11 +135,13 @@ public class DankersSkyblockMod {
         MinecraftForge.EVENT_BUS.register(new HidePlayerArmour());
         MinecraftForge.EVENT_BUS.register(new HideTooltipsInExperiments());
         MinecraftForge.EVENT_BUS.register(new HighlightCommissions());
+        MinecraftForge.EVENT_BUS.register(new HighlightFilledOrders());
         MinecraftForge.EVENT_BUS.register(new HighlightSkeletonMasters());
         MinecraftForge.EVENT_BUS.register(new IceWalkSolver());
         MinecraftForge.EVENT_BUS.register(new KuudraNotifications());
         MinecraftForge.EVENT_BUS.register(new LividSolver());
         MinecraftForge.EVENT_BUS.register(new LowHealthNotifications());
+        MinecraftForge.EVENT_BUS.register(new MeterTracker());
         MinecraftForge.EVENT_BUS.register(new MinionLastCollected());
         MinecraftForge.EVENT_BUS.register(new NecronNotifications());
         MinecraftForge.EVENT_BUS.register(new NoF3Coords());
@@ -189,18 +184,9 @@ public class DankersSkyblockMod {
         MinecraftForge.EVENT_BUS.register(new ZombieTracker());
         
         MinecraftForge.EVENT_BUS.post(new ModInitEvent(configDirectory));
+        config = new ModConfig();
         ConfigHandler.reloadConfig();
         MinecraftForge.EVENT_BUS.post(new PostConfigInitEvent(configDirectory));
-
-        keyBindings[0] = new KeyBinding("Open Maddox Menu", Keyboard.KEY_M, "Danker's Skyblock Mod");
-        keyBindings[1] = new KeyBinding("Regular Ability", Keyboard.KEY_NUMPAD4, "Danker's Skyblock Mod");
-        keyBindings[2] = new KeyBinding("Start/Stop Skill Tracker", Keyboard.KEY_NUMPAD5, "Danker's Skyblock Mod");
-        keyBindings[3] = new KeyBinding("Create Waypoint", Keyboard.KEY_NUMPAD6, "Danker's Skyblock Mod");
-        keyBindings[4] = new KeyBinding("Start/Stop Powder Tracker", Keyboard.KEY_NUMPAD8, "Danker's Skyblock Mod");
-
-        for (KeyBinding keyBinding : keyBindings) {
-            ClientRegistry.registerKeyBinding(keyBinding);
-        }
 
         new Thread(Utils::refreshRepo).start();
     }
@@ -209,16 +195,12 @@ public class DankersSkyblockMod {
     public void preInit(final FMLPreInitializationEvent event) {
         ClientCommandHandler.instance.registerCommand(new ArmourCommand());
         ClientCommandHandler.instance.registerCommand(new BankCommand());
-        ClientCommandHandler.instance.registerCommand(new BlockSlayerCommand());
         ClientCommandHandler.instance.registerCommand(new CrystalHollowWaypointCommand());
-        ClientCommandHandler.instance.registerCommand(new CustomMusicCommand());
         ClientCommandHandler.instance.registerCommand(new DankerGuiCommand());
         ClientCommandHandler.instance.registerCommand(new DHelpCommand());
         ClientCommandHandler.instance.registerCommand(new DisplayCommand());
         ClientCommandHandler.instance.registerCommand(new DungeonsCommand());
         ClientCommandHandler.instance.registerCommand(new FairySoulsCommand());
-        ClientCommandHandler.instance.registerCommand(new FarmLengthCommand());
-        ClientCommandHandler.instance.registerCommand(new GetkeyCommand());
         ClientCommandHandler.instance.registerCommand(new GuildOfCommand());
         ClientCommandHandler.instance.registerCommand(new HOTMCommand());
         ClientCommandHandler.instance.registerCommand(new HOTMTreeCommand());
@@ -227,21 +209,17 @@ public class DankersSkyblockMod {
         ClientCommandHandler.instance.registerCommand(new LobbyBankCommand());
         ClientCommandHandler.instance.registerCommand(new LobbySkillsCommand());
         ClientCommandHandler.instance.registerCommand(new LootCommand());
-        ClientCommandHandler.instance.registerCommand(new MoveCommand());
         ClientCommandHandler.instance.registerCommand(new PetsCommand());
         ClientCommandHandler.instance.registerCommand(new PlayerCommand());
         ClientCommandHandler.instance.registerCommand(new PowderTrackerCommand());
         ClientCommandHandler.instance.registerCommand(new ReloadConfigCommand());
         ClientCommandHandler.instance.registerCommand(new ReloadRepoCommand());
         ClientCommandHandler.instance.registerCommand(new ResetLootCommand());
-        ClientCommandHandler.instance.registerCommand(new ScaleCommand());
-        ClientCommandHandler.instance.registerCommand(new SetkeyCommand());
         ClientCommandHandler.instance.registerCommand(new SkillsCommand());
         ClientCommandHandler.instance.registerCommand(new SkillTrackerCommand());
         ClientCommandHandler.instance.registerCommand(new SkyblockPlayersCommand());
         ClientCommandHandler.instance.registerCommand(new SlayerCommand());
         ClientCommandHandler.instance.registerCommand(new StopLobbyCommand());
-        ClientCommandHandler.instance.registerCommand(new ToggleCommand());
         ClientCommandHandler.instance.registerCommand(new TrophyFishCommand());
         ClientCommandHandler.instance.registerCommand(new WeightCommand());
 
@@ -266,7 +244,7 @@ public class DankersSkyblockMod {
     	
         if (!ClientCommandHandler.instance.getCommands().containsKey("reparty")) {
             ClientCommandHandler.instance.registerCommand(new RepartyCommand());
-        } else if (ConfigHandler.getBoolean("commands", "reparty")) {
+        } else if (CfgConfig.getBoolean("commands", "reparty")) {
             for (Map.Entry<String, ICommand> entry : ClientCommandHandler.instance.getCommands().entrySet()) {
                 if (entry.getKey().equals("reparty") || entry.getKey().equals("rp")) {
                     entry.setValue(new RepartyCommand());
@@ -288,7 +266,7 @@ public class DankersSkyblockMod {
     public void onJoin(EntityJoinWorldEvent event) {
         if (firstLaunch) {
             firstLaunch = false;
-            ConfigHandler.writeBooleanConfig("misc", "firstLaunch", false);
+            CfgConfig.writeBooleanConfig("misc", "firstLaunch", false);
 
             IChatComponent chatComponent = new ChatComponentText(
                     EnumChatFormatting.GOLD + "Thank you for downloading Danker's Skyblock Mod.\n" +
@@ -324,8 +302,9 @@ public class DankersSkyblockMod {
 
         if (message.startsWith("Your new API key is ") && Utils.isOnHypixel()) {
             String apiKey = event.message.getSiblings().get(0).getChatStyle().getChatClickEvent().getValue();
-            ConfigHandler.writeStringConfig("api", "APIKey", apiKey);
-            Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Set API key to " + DankersSkyblockMod.SECONDARY_COLOUR + apiKey));
+            ModConfig.apiKey = apiKey;
+            config.save();
+            Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Set API key to " + ModConfig.getColour(ModConfig.secondaryColour) + apiKey));
         } else if (Utils.inSkyblock && !message.contains(":") && message.contains("  SKILL LEVEL UP ")) {
             // Handle skill level ups
             String skill = message.substring(message.indexOf("UP") + 3, message.lastIndexOf(" "));
@@ -360,7 +339,7 @@ public class DankersSkyblockMod {
                     System.err.println("Unknown skill leveled up.");
             }
 
-            ConfigHandler.writeIntConfig("skills", skill.toLowerCase(Locale.US), level);
+            CfgConfig.writeIntConfig("skills", skill.toLowerCase(Locale.US), level);
         }
     }
 
@@ -369,7 +348,6 @@ public class DankersSkyblockMod {
         if (usingLabymod && !(Minecraft.getMinecraft().ingameGUI instanceof GuiIngameForge)) return;
         if (event.type != RenderGameOverlayEvent.ElementType.EXPERIENCE && event.type != RenderGameOverlayEvent.ElementType.JUMPBAR)
             return;
-        if (Minecraft.getMinecraft().currentScreen instanceof EditLocationsGui) return;
         MinecraftForge.EVENT_BUS.post(new RenderOverlayEvent());
     }
 
@@ -378,7 +356,6 @@ public class DankersSkyblockMod {
     public void renderPlayerInfoLabyMod(final RenderGameOverlayEvent event) {
         if (!usingLabymod) return;
         if (event.type != null) return;
-        if (Minecraft.getMinecraft().currentScreen instanceof EditLocationsGui) return;
         MinecraftForge.EVENT_BUS.post(new RenderOverlayEvent());
     }
 
@@ -401,9 +378,8 @@ public class DankersSkyblockMod {
             repoTickAmount++;
             if (player != null) {
                 Utils.checkForSkyblock();
-                Utils.checkForDungeons();
-                Utils.checkForDungeonFloor();
                 Utils.checkTabLocation();
+                Utils.checkForDungeonFloor();
             }
 
             tickAmount = 0;
@@ -449,30 +425,16 @@ public class DankersSkyblockMod {
     public void onRenderTick(TickEvent.RenderTickEvent event) {
         if (guiToOpen != null) {
             Minecraft mc = Minecraft.getMinecraft();
-            if (guiToOpen.startsWith("dankergui")) {
-                int page = Character.getNumericValue(guiToOpen.charAt(guiToOpen.length() - 1));
-                mc.displayGuiScreen(new DankerGui(page, ""));
-            } else {
-                switch (guiToOpen) {
-                    case "displaygui":
-                        mc.displayGuiScreen(new DisplayGui());
-                        break;
-                    case "inventory":
-                        mc.displayGuiScreen(InventoryCommand.chest);
-                        break;
-                    case "hotminventory":
-                        mc.displayGuiScreen(HOTMTreeCommand.chest);
-                        break;
-                }
+            switch (guiToOpen) {
+                case "inventory":
+                    mc.displayGuiScreen(InventoryCommand.chest);
+                    break;
+                case "hotminventory":
+                    mc.displayGuiScreen(HOTMTreeCommand.chest);
+                    break;
             }
             guiToOpen = null;
         }
-    }
-
-    @SubscribeEvent
-    public void onKey(KeyInputEvent event) {
-        if (!Utils.inDungeons) return;
-        if (keyBindings[1].isPressed()) Minecraft.getMinecraft().thePlayer.dropOneItem(true);
     }
 
     @SubscribeEvent
@@ -524,6 +486,13 @@ public class DankersSkyblockMod {
     public void onServerConnect(ClientConnectedToServerEvent event) {
         event.manager.channel().pipeline().addBefore("packet_handler", "danker_packet_handler", new PacketHandler());
         System.out.println("Added packet handler to channel pipeline.");
+    }
+
+    // misc feature ig
+
+    public static void onAbilityKey() {
+        if (!Utils.isInDungeons()) return;
+        Minecraft.getMinecraft().thePlayer.dropOneItem(true);
     }
 
 }

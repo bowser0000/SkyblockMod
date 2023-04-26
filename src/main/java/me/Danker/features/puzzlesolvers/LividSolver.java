@@ -1,12 +1,15 @@
 package me.Danker.features.puzzlesolvers;
 
+import cc.polyfrost.oneconfig.config.annotations.Color;
+import cc.polyfrost.oneconfig.config.annotations.Exclude;
+import cc.polyfrost.oneconfig.config.core.OneColor;
+import cc.polyfrost.oneconfig.hud.Hud;
+import cc.polyfrost.oneconfig.libs.universal.UMatrixStack;
 import me.Danker.DankersSkyblockMod;
-import me.Danker.commands.MoveCommand;
-import me.Danker.commands.ScaleCommand;
-import me.Danker.commands.ToggleCommand;
-import me.Danker.events.RenderOverlayEvent;
+import me.Danker.config.ModConfig;
 import me.Danker.handlers.ScoreboardHandler;
 import me.Danker.handlers.TextRenderer;
+import me.Danker.locations.DungeonFloor;
 import me.Danker.utils.RenderUtils;
 import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;
@@ -30,7 +33,6 @@ public class LividSolver {
 
     static BlockPos pos = new BlockPos(5, 108, 25);
     static Entity livid = null;
-    public static int LIVID_COLOUR;
 
     @SubscribeEvent
     public void onWorldChange(WorldEvent.Load event) {
@@ -40,12 +42,12 @@ public class LividSolver {
     @SubscribeEvent
     public void onTick(TickEvent.ClientTickEvent event) {
         if (event.phase != TickEvent.Phase.START) return;
-        if (!ToggleCommand.lividSolverToggled) return;
+        if (!ModConfig.lividSolverHud.isEnabled()) return;
 
         if (DankersSkyblockMod.tickAmount % 10 == 0) {
             World world = Minecraft.getMinecraft().theWorld;
             if (world == null) return;
-            if (Utils.currentFloor == Utils.DungeonFloor.F5 || Utils.currentFloor == Utils.DungeonFloor.M5) {
+            if (Utils.currentFloor == DungeonFloor.F5 || Utils.currentFloor == DungeonFloor.M5) {
                 List<String> scoreboard = ScoreboardHandler.getSidebarLines();
                 if (scoreboard.size() == 0) return;
                 String firstLine = ScoreboardHandler.cleanSB(scoreboard.get(scoreboard.size() - 1));
@@ -73,15 +75,8 @@ public class LividSolver {
     }
 
     @SubscribeEvent
-    public void renderPlayerInfo(RenderOverlayEvent event) {
-        if (ToggleCommand.lividSolverToggled && livid != null) {
-            new TextRenderer(Minecraft.getMinecraft(), livid.getName().replace(EnumChatFormatting.BOLD.toString(), ""), MoveCommand.lividHpXY[0], MoveCommand.lividHpXY[1], ScaleCommand.lividHpScale);
-        }
-    }
-
-    @SubscribeEvent
     public void onRenderEntity(RenderLivingEvent.Pre<EntityLivingBase> event) {
-        if (!ToggleCommand.lividSolverToggled || livid == null) return;
+        if (!ModConfig.lividSolverHud.isEnabled() || livid == null) return;
 
         Entity entity = event.entity;
         if (entity instanceof EntityArmorStand && entity.hasCustomName()) {
@@ -94,9 +89,9 @@ public class LividSolver {
 
     @SubscribeEvent
     public void onWorldRender(RenderWorldLastEvent event) {
-        if (ToggleCommand.lividSolverToggled && livid != null) {
+        if (ModConfig.lividSolverHud.isEnabled() && livid != null) {
             AxisAlignedBB aabb = new AxisAlignedBB(livid.posX - 0.5, livid.posY - 2, livid.posZ - 0.5, livid.posX + 0.5, livid.posY, livid.posZ + 0.5);
-            RenderUtils.draw3DBox(aabb, LIVID_COLOUR, event.partialTicks);
+            RenderUtils.draw3DBox(aabb, LividSolverHud.lividColour.getRGB(), event.partialTicks);
         }
     }
 
@@ -132,6 +127,47 @@ public class LividSolver {
                 break;
         }
         return colour + EnumChatFormatting.BOLD + "Livid";
+    }
+
+    public static class LividSolverHud extends Hud {
+
+        @Exclude
+        String exampleText = EnumChatFormatting.WHITE + "﴾ Livid " + EnumChatFormatting.YELLOW + "6.9M" + EnumChatFormatting.RED + "❤ " + EnumChatFormatting.WHITE + "﴿";
+
+        @Color(
+                name = "Correct Livid Box Color",
+                category = "Puzzle Solvers",
+                subcategory = "Dungeons"
+        )
+        public static OneColor lividColour = new OneColor(0, 0, 255);
+
+        @Override
+        protected void draw(UMatrixStack matrices, float x, float y, float scale, boolean example) {
+            if (example) {
+                TextRenderer.drawHUDText(exampleText, x, y, scale);
+                return;
+            }
+
+            if (ModConfig.lividSolverHud.isEnabled() && livid != null) {
+                TextRenderer.drawHUDText(getText(), x, y, scale);
+            }
+        }
+
+        @Override
+        protected float getWidth(float scale, boolean example) {
+            return RenderUtils.getWidthFromText(example ? exampleText : getText()) * scale;
+        }
+
+        @Override
+        protected float getHeight(float scale, boolean example) {
+            return RenderUtils.getHeightFromText(example ? exampleText : getText()) * scale;
+        }
+
+        String getText() {
+            if (livid != null) return livid.getName().replace(EnumChatFormatting.BOLD.toString(), "");
+            return "";
+        }
+
     }
 
 }

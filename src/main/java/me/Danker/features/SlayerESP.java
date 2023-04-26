@@ -1,8 +1,7 @@
 package me.Danker.features;
 
 import me.Danker.DankersSkyblockMod;
-import me.Danker.commands.ToggleCommand;
-import me.Danker.handlers.ScoreboardHandler;
+import me.Danker.config.ModConfig;
 import me.Danker.utils.RenderUtils;
 import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;
@@ -28,9 +27,7 @@ public class SlayerESP {
     static Entity spider = null;
     static Entity wolf = null;
     static Entity enderman = null;
-    static boolean slayerActive = false;
-    static boolean slayerStarted = false;
-    public static int SLAYER_COLOUR;
+    static Entity blaze = null;
 
     @SubscribeEvent
     public void onWorldChange(WorldEvent.Load event) {
@@ -38,6 +35,7 @@ public class SlayerESP {
         spider = null;
         wolf = null;
         enderman = null;
+        blaze = null;
     }
 
     @SubscribeEvent
@@ -47,34 +45,30 @@ public class SlayerESP {
 
         World world = Minecraft.getMinecraft().theWorld;
         if (world == null) return;
-        if (!slayerStarted) return;
-        if (zombie != null || spider != null || wolf != null || enderman != null) {
-            return;
-        }
-        slayerActive = true;
-        if (DankersSkyblockMod.tickAmount % 10 == 0 && ToggleCommand.highlightSlayers) {
-            for (String line : ScoreboardHandler.getSidebarLines()) {
-                String cleanedLine = ScoreboardHandler.cleanSB(line);
-                if (cleanedLine.contains("Slay the boss!")) {
-                    slayerActive = true;
-                    List<Entity> entities = world.getLoadedEntityList();
-                    for (Entity e : entities) {
-                        System.out.println(e.getName());
-                        if (e.getName().contains("Revenant Horror")) {
-                            zombie = e;
-                            return;
-                        } else if (e.getName().contains("Tarantula Broodfather")) {
-                            spider = e;
-                            return;
-                        } else if (e.getName().contains("Sven Packmaster")) {
-                            wolf = e;
-                            return;
-                        } else if (e.getName().contains("Voidgloom Seraph")) {
-                            enderman = e;
-                            return;
-                        }
+        if (zombie != null || spider != null || wolf != null || enderman != null) return;
+        // keep checking if blaze is active because it switches entities
+
+        if (DankersSkyblockMod.tickAmount % 10 == 0 && ModConfig.highlightSlayers) {
+            if (Utils.isInScoreboard("Slay the boss!")) {
+                List<Entity> entities = world.getLoadedEntityList();
+                for (Entity e : entities) {
+                    String name = e.getName();
+                    if (name.contains("Revenant Horror")) {
+                        zombie = e;
+                        return;
+                    } else if (name.contains("Tarantula Broodfather")) {
+                        spider = e;
+                        return;
+                    } else if (name.contains("Sven Packmaster")) {
+                        wolf = e;
+                        return;
+                    } else if (name.contains("Voidgloom Seraph")) {
+                        enderman = e;
+                        return;
+                    } else if (name.contains("Inferno Demonlord")) {
+                        blaze = e;
+                        return;
                     }
-                    break;
                 }
             }
         }
@@ -83,17 +77,16 @@ public class SlayerESP {
     @SubscribeEvent
     public void onChat(ClientChatReceivedEvent event) {
         if (!Utils.inSkyblock) return;
+
         String message = StringUtils.stripControlCodes(event.message.getUnformattedText());
-        if (message.contains("SLAYER QUEST STARTED!")) {
-            slayerStarted = true;
-        }
+        if (message.contains(":")) return;
+
         if (message.contains("NICE! SLAYER BOSS SLAIN!") || message.contains("SLAYER QUEST COMPLETE!") || message.contains("SLAYER QUEST FAILED!")) {
-            slayerActive = false;
-            slayerStarted = false;
             zombie = null;
             spider = null;
             wolf = null;
             enderman = null;
+            blaze = null;
         }
 
     }
@@ -102,27 +95,22 @@ public class SlayerESP {
     @SubscribeEvent
     public void onWorldRender(RenderWorldLastEvent event) {
         if (!Utils.inSkyblock) return;
-        if (!slayerStarted) return;
-        if (slayerActive && ToggleCommand.highlightSlayers) {
+        if (ModConfig.highlightSlayers) {
             if (zombie != null) {
                 AxisAlignedBB aabb = new AxisAlignedBB(zombie.posX - 0.5, zombie.posY - 2, zombie.posZ - 0.5, zombie.posX + 0.5, zombie.posY, zombie.posZ + 0.5);
-                RenderUtils.draw3DBox(aabb, SLAYER_COLOUR, event.partialTicks);
-                return;
-            }
-            if (spider != null) {
+                RenderUtils.draw3DBox(aabb, ModConfig.slayerBoxColour.getRGB(), event.partialTicks);
+            } else if (spider != null) {
                 AxisAlignedBB aabb = new AxisAlignedBB(spider.posX - 0.75, spider.posY - 1, spider.posZ - 0.75, spider.posX + 0.75, spider.posY, spider.posZ + 0.75);
-                RenderUtils.draw3DBox(aabb, SLAYER_COLOUR, event.partialTicks);
-                return;
-            }
-            if (wolf != null) {
+                RenderUtils.draw3DBox(aabb, ModConfig.slayerBoxColour.getRGB(), event.partialTicks);
+            } else if (wolf != null) {
                 AxisAlignedBB aabb = new AxisAlignedBB(wolf.posX - 0.5, wolf.posY - 1, wolf.posZ - 0.5, wolf.posX + 0.5, wolf.posY, wolf.posZ + 0.5);
-                RenderUtils.draw3DBox(aabb, SLAYER_COLOUR, event.partialTicks);
-                return;
-            }
-            if (enderman != null) {
+                RenderUtils.draw3DBox(aabb, ModConfig.slayerBoxColour.getRGB(), event.partialTicks);
+            } else if (enderman != null) {
                 AxisAlignedBB aabb = new AxisAlignedBB(enderman.posX - 0.5, enderman.posY - 3, enderman.posZ - 0.5, enderman.posX + 0.5, enderman.posY, enderman.posZ + 0.5);
-                RenderUtils.draw3DBox(aabb, SLAYER_COLOUR, event.partialTicks);
-                return;
+                RenderUtils.draw3DBox(aabb, ModConfig.slayerBoxColour.getRGB(), event.partialTicks);
+            } else if (blaze != null) {
+                AxisAlignedBB aabb = new AxisAlignedBB(blaze.posX - 0.5, blaze.posY - 2, blaze.posZ - 0.5, blaze.posX + 0.5, blaze.posY, blaze.posZ + 0.5);
+                RenderUtils.draw3DBox(aabb, ModConfig.slayerBoxColour.getRGB(), event.partialTicks);
             }
         }
     }

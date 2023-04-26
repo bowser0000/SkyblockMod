@@ -1,7 +1,7 @@
 package me.Danker.features;
 
 import com.google.gson.GsonBuilder;
-import me.Danker.commands.ToggleCommand;
+import me.Danker.config.ModConfig;
 import me.Danker.events.ModInitEvent;
 import me.Danker.utils.Utils;
 import net.minecraft.util.EnumChatFormatting;
@@ -26,12 +26,12 @@ public class Alerts {
 
     @SubscribeEvent
     public void init(ModInitEvent event) {
-        configFile = event.configDirectory + "/dsmalerts.json";
+        configFile = event.configDirectory + "/dsm/dsmalerts.json";
     }
 
     @SubscribeEvent
     public void onChat(ClientChatReceivedEvent event) {
-        if (!ToggleCommand.alerts || event.type == 2) return;
+        if (!ModConfig.alerts || event.type == 2) return;
 
         String message = StringUtils.stripControlCodes(event.message.getUnformattedText());
 
@@ -44,7 +44,7 @@ public class Alerts {
                     location = Utils.inSkyblock;
                     break;
                 case "Dungeons":
-                    location = Utils.inDungeons;
+                    location = Utils.isInDungeons();
                     break;
                 default:
                     location = true;

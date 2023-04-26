@@ -1,6 +1,6 @@
 package me.Danker.features;
 
-import me.Danker.commands.ToggleCommand;
+import me.Danker.config.ModConfig;
 import me.Danker.events.ModInitEvent;
 import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;
@@ -38,7 +38,7 @@ public class GemstonesLore {
         if (event.toolTip == null) return;
 
         ItemStack item = event.itemStack;
-        if (ToggleCommand.gemstoneLore) {
+        if (ModConfig.gemstoneLore) {
             if (item.hasTagCompound()) {
                 NBTTagCompound tags = item.getSubCompound("ExtraAttributes", false);
                 if (tags != null) {

@@ -1,11 +1,11 @@
 package me.Danker.features;
 
-import me.Danker.commands.ToggleCommand;
+import cc.polyfrost.oneconfig.libs.universal.UResolution;
+import me.Danker.config.ModConfig;
 import me.Danker.events.ModInitEvent;
 import me.Danker.utils.RenderUtils;
 import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
@@ -102,7 +102,7 @@ public class FilletMagmafish {
 
     @SubscribeEvent
     public void onGuiOpen(GuiOpenEvent event) {
-        if (!ToggleCommand.showTotalMagmafish || !Utils.inSkyblock) return;
+        if (!ModConfig.showTotalMagmafish || !Utils.inSkyblock) return;
 
         if (event.gui instanceof GuiInventory) {
             ItemStack[] inv = Minecraft.getMinecraft().thePlayer.inventory.mainInventory;
@@ -122,7 +122,7 @@ public class FilletMagmafish {
 
     @SubscribeEvent
     public void onGuiScreenRender(GuiScreenEvent.BackgroundDrawnEvent event) {
-        if (!ToggleCommand.showTotalMagmafish || !Utils.inSkyblock) return;
+        if (!ModConfig.showTotalMagmafish || !Utils.inSkyblock) return;
 
         if (event.gui instanceof GuiInventory) {
             if (total == 0) return;
@@ -130,9 +130,8 @@ public class FilletMagmafish {
             NumberFormat nf = NumberFormat.getIntegerInstance(Locale.US);
             String display = EnumChatFormatting.BLUE + "Magmafish: " + nf.format(total);
 
-            ScaledResolution sr = new ScaledResolution(Minecraft.getMinecraft());
-            int width = sr.getScaledWidth();
-            int height = (sr.getScaledHeight() - 222) / 2 + 10;
+            int width = UResolution.getScaledWidth();
+            int height = (UResolution.getScaledHeight() - 222) / 2 + 10;
 
             RenderUtils.drawCenteredText(display, width, height, 1D);
         }

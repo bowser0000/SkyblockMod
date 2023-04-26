@@ -1,16 +1,11 @@
 package me.Danker.gui.aliases;
 
-import me.Danker.commands.ToggleCommand;
+import cc.polyfrost.oneconfig.libs.universal.UResolution;
+import me.Danker.DankersSkyblockMod;
 import me.Danker.features.ChatAliases;
-import me.Danker.gui.DankerGui;
-import me.Danker.gui.buttons.FeatureButton;
-import me.Danker.handlers.ConfigHandler;
 import me.Danker.utils.RenderUtils;
-import me.Danker.utils.Utils;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.gui.ScaledResolution;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +19,6 @@ public class AliasesGui extends GuiScreen {
     private GuiButton backPage;
     private GuiButton nextPage;
     private GuiButton add;
-    private GuiButton aliases;
 
     public AliasesGui(int page) {
         this.page = page;
@@ -39,18 +33,15 @@ public class AliasesGui extends GuiScreen {
     public void initGui() {
         super.initGui();
 
-        ScaledResolution sr = new ScaledResolution(Minecraft.getMinecraft());
-        int height = sr.getScaledHeight();
-        int width = sr.getScaledWidth();
+        int height = UResolution.getScaledHeight();
+        int width = UResolution.getScaledWidth();
 
         goBack = new GuiButton(0, 2, height - 30, 100, 20, "Go Back");
         backPage = new GuiButton(0, width / 2 - 100, (int) (height * 0.8), 80, 20, "< Back");
         nextPage = new GuiButton(0, width / 2 + 20, (int) (height * 0.8), 80, 20, "Next >");
-        aliases = new FeatureButton("Aliases: " + Utils.getColouredBoolean(ToggleCommand.aliases), "Replaces text in chat with an alias");
         add = new GuiButton(0, 0, 0, "Add Alias");
 
         allButtons.clear();
-        allButtons.add(aliases);
         allButtons.add(add);
         for (int i = 0; i < ChatAliases.aliases.size(); i++) {
             ChatAliases.Alias alias = ChatAliases.aliases.get(i);
@@ -89,17 +80,13 @@ public class AliasesGui extends GuiScreen {
     @Override
     public void actionPerformed(GuiButton button) {
         if (button == goBack) {
-            mc.displayGuiScreen(new DankerGui(1, ""));
+            DankersSkyblockMod.config.openGui();
         } else if (button == nextPage) {
             mc.displayGuiScreen(new AliasesGui(page + 1));
         } else if (button == backPage) {
             mc.displayGuiScreen(new AliasesGui(page - 1));
         } else if (button == add) {
             mc.displayGuiScreen(new AliasesAddGui());
-        } else if (button == aliases) {
-            ToggleCommand.aliases = !ToggleCommand.aliases;
-            ConfigHandler.writeBooleanConfig("toggles", "Aliases", ToggleCommand.aliases);
-            aliases.displayString = "Aliases: " + Utils.getColouredBoolean(ToggleCommand.aliases);
         } else {
             mc.displayGuiScreen(new AliasesActionGui(button.id));
         }

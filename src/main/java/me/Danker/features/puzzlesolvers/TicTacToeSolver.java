@@ -1,7 +1,7 @@
 package me.Danker.features.puzzlesolvers;
 
 import me.Danker.DankersSkyblockMod;
-import me.Danker.commands.ToggleCommand;
+import me.Danker.config.ModConfig;
 import me.Danker.utils.RenderUtils;
 import me.Danker.utils.TicTacToeUtils;
 import me.Danker.utils.Utils;
@@ -37,7 +37,7 @@ public class TicTacToeSolver {
         World world = mc.theWorld;
         EntityPlayerSP player = mc.thePlayer;
         if (DankersSkyblockMod.tickAmount % 20 == 0) {
-            if (ToggleCommand.ticTacToeToggled && Utils.inDungeons && world != null && player != null) {
+            if (ModConfig.ticTacToe && Utils.isInDungeons() && world != null && player != null) {
                 correctTicTacToeButton = null;
                 AxisAlignedBB aabb = new AxisAlignedBB(player.posX - 6, player.posY - 6, player.posZ - 6, player.posX + 6, player.posY + 6, player.posZ + 6);
                 List<EntityItemFrame> itemFrames = world.getEntitiesWithinAABB(EntityItemFrame.class, aabb);
@@ -128,8 +128,8 @@ public class TicTacToeSolver {
 
     @SubscribeEvent
     public void onWorldRender(RenderWorldLastEvent event) {
-        if (ToggleCommand.ticTacToeToggled && correctTicTacToeButton != null) {
-            RenderUtils.draw3DBox(correctTicTacToeButton, 0x40FF40, event.partialTicks);
+        if (ModConfig.ticTacToe && correctTicTacToeButton != null) {
+            RenderUtils.draw3DBox(correctTicTacToeButton, ModConfig.ticTacToeColour.getRGB(), event.partialTicks);
         }
     }
 

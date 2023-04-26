@@ -1,6 +1,6 @@
 package me.Danker.features;
 
-import me.Danker.commands.ToggleCommand;
+import me.Danker.config.ModConfig;
 import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -13,7 +13,7 @@ public class AutoJoinSkyblock {
 
     @SubscribeEvent
     public void onConnect(FMLNetworkEvent.ClientConnectedToServerEvent event) {
-        if (ToggleCommand.autoJoinSkyblock && !joinedServer) {
+        if (ModConfig.autoJoinSkyblock && !joinedServer) {
             joinedServer = true;
             new Thread(() -> {
                 EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;

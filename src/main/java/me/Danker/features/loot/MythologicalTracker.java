@@ -1,6 +1,6 @@
 package me.Danker.features.loot;
 
-import me.Danker.handlers.ConfigHandler;
+import me.Danker.config.CfgConfig;
 import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
@@ -44,38 +44,38 @@ public class MythologicalTracker {
 
         if (message.contains("You dug out")) {
             if (message.contains(" coins!")) {
-                double coinsEarned = Double.parseDouble(message.replaceAll("[^\\d]", ""));
+                double coinsEarned = Double.parseDouble(message.replaceAll("\\D", ""));
                 mythCoins += coinsEarned;
                 mythCoinsSession += coinsEarned;
-                ConfigHandler.writeDoubleConfig("mythological", "coins", mythCoins);
+                CfgConfig.writeDoubleConfig("mythological", "coins", mythCoins);
             } else if (message.contains("a Griffin Feather!")) {
                 griffinFeathers++;
                 griffinFeathersSession++;
-                ConfigHandler.writeIntConfig("mythological", "griffinFeather", griffinFeathers);
+                CfgConfig.writeIntConfig("mythological", "griffinFeather", griffinFeathers);
             } else if (message.contains("a Crown of Greed!")) {
                 crownOfGreeds++;
                 crownOfGreedsSession++;
-                ConfigHandler.writeIntConfig("mythological", "crownOfGreed", crownOfGreeds);
+                CfgConfig.writeIntConfig("mythological", "crownOfGreed", crownOfGreeds);
             } else if (message.contains("a Washed-up Souvenir!")) {
                 washedUpSouvenirs++;
                 washedUpSouvenirsSession++;
-                ConfigHandler.writeIntConfig("mythological", "washedUpSouvenir", washedUpSouvenirs);
+                CfgConfig.writeIntConfig("mythological", "washedUpSouvenir", washedUpSouvenirs);
             } else if (message.contains("a Minos Hunter!")) {
                 minosHunters++;
                 minosHuntersSession++;
-                ConfigHandler.writeIntConfig("mythological", "minosHunter", minosHunters);
+                CfgConfig.writeIntConfig("mythological", "minosHunter", minosHunters);
             } else if (message.contains("Siamese Lynxes!")) {
                 siameseLynxes++;
                 siameseLynxesSession++;
-                ConfigHandler.writeIntConfig("mythological", "siameseLynx", siameseLynxes);
+                CfgConfig.writeIntConfig("mythological", "siameseLynx", siameseLynxes);
             } else if (message.contains("a Minotaur!")) {
                 minotaurs++;
                 minotaursSession++;
-                ConfigHandler.writeIntConfig("mythological", "minotaur", minotaurs);
+                CfgConfig.writeIntConfig("mythological", "minotaur", minotaurs);
             } else if (message.contains("a Gaia Construct!")) {
                 gaiaConstructs++;
                 gaiaConstructsSession++;
-                ConfigHandler.writeIntConfig("mythological", "gaiaConstruct", gaiaConstructs);
+                CfgConfig.writeIntConfig("mythological", "gaiaConstruct", gaiaConstructs);
             } else if (message.contains("a Minos Champion!")) {
                 Minecraft mc = Minecraft.getMinecraft();
                 List<Entity> listWorldEntity = mc.theWorld.getLoadedEntityList();
@@ -83,17 +83,17 @@ public class MythologicalTracker {
                     if (entity.getName().contains("Minos Champion")) {
                         minosChampions++;
                         minosChampionsSession++;
-                        ConfigHandler.writeIntConfig("mythological", "minosChampion", minosChampions);
+                        CfgConfig.writeIntConfig("mythological", "minosChampion", minosChampions);
                     } else if (entity.getName().contains("Minos Inquisitor")) {
                         minosInquisitors++;
                         minosInquisitorsSession++;
-                        ConfigHandler.writeIntConfig("mythological", "minosInquisitor", minosInquisitors);
+                        CfgConfig.writeIntConfig("mythological", "minosInquisitor", minosInquisitors);
                     }
                 }
             } else if (message.contains("a Minos Inquisitor!")) {
                 minosInquisitors++;
                 minosInquisitorsSession++;
-                ConfigHandler.writeIntConfig("mythological", "minosInquisitor", minosInquisitors);
+                CfgConfig.writeIntConfig("mythological", "minosInquisitor", minosInquisitors);
             }
         }
     }

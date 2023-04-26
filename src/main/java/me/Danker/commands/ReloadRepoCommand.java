@@ -1,6 +1,6 @@
 package me.Danker.commands;
 
-import me.Danker.DankersSkyblockMod;
+import me.Danker.config.ModConfig;
 import me.Danker.utils.Utils;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
@@ -35,7 +35,7 @@ public class ReloadRepoCommand extends CommandBase {
         new Thread(() -> {
             EntityPlayer player = (EntityPlayer) arg0;
             Utils.refreshRepo();
-            player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Refreshed Danker's Skyblock Mod repo."));
+            player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Refreshed Danker's Skyblock Mod repo."));
         }).start();
     }
 

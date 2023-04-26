@@ -1,6 +1,6 @@
 package me.Danker.features.puzzlesolvers;
 
-import me.Danker.commands.ToggleCommand;
+import me.Danker.config.ModConfig;
 import me.Danker.events.GuiChestBackgroundDrawnEvent;
 import me.Danker.utils.RenderUtils;
 import me.Danker.utils.Utils;
@@ -25,8 +25,6 @@ public class ClickInOrderSolver {
 
     static Slot[] clickInOrderSlots = new Slot[36];
     static int[] terminalNumberNeeded = new int[4];
-    public static int CLICK_IN_ORDER_NEXT;
-    public static int CLICK_IN_ORDER_NEXT_TO_NEXT;
 
     @SubscribeEvent(priority = EventPriority.LOW)
     public void onTooltipLow(ItemTooltipEvent event) {
@@ -41,7 +39,7 @@ public class ClickInOrderSolver {
             IInventory inv = chest.getLowerChestInventory();
             String chestName = inv.getDisplayName().getUnformattedText();
 
-            if (ToggleCommand.clickInOrderToggled && chestName.equals("Click in order!")) {
+            if (ModConfig.clickInOrder && chestName.equals("Click in order!")) {
                 event.toolTip.clear();
             }
         }
@@ -59,7 +57,7 @@ public class ClickInOrderSolver {
             List<Slot> invSlots = ((GuiChest) mc.currentScreen).inventorySlots.inventorySlots;
             String chestName = chest.getLowerChestInventory().getDisplayName().getUnformattedText().trim();
 
-            if (ToggleCommand.clickInOrderToggled && chestName.equals("Click in order!")) {
+            if (ModConfig.clickInOrder && chestName.equals("Click in order!")) {
                 if (terminalNumberNeeded[0] == 0) terminalNumberNeeded[0] = 15;
                 if (terminalNumberNeeded[2] == 0) terminalNumberNeeded[2] = 15;
                 for (int i = 10; i <= 25; i++) {
@@ -88,14 +86,14 @@ public class ClickInOrderSolver {
 
     @SubscribeEvent
     public void onGuiRender(GuiChestBackgroundDrawnEvent event) {
-        if (ToggleCommand.clickInOrderToggled && event.displayName.equals("Click in order!")) {
+        if (ModConfig.clickInOrder && event.displayName.equals("Click in order!")) {
             int chestSize = event.chestSize;
             List<Slot> invSlots = event.slots;
             Slot slot = invSlots.get(terminalNumberNeeded[1]);
-            RenderUtils.drawOnSlot(chestSize, slot.xDisplayPosition, slot.yDisplayPosition, CLICK_IN_ORDER_NEXT + 0xFF000000);
+            RenderUtils.drawOnSlot(chestSize, slot.xDisplayPosition, slot.yDisplayPosition, ModConfig.clickInOrderNextColour.getRGB());
             Slot nextSlot = invSlots.get(terminalNumberNeeded[3]);
             if (nextSlot != slot && nextSlot.getSlotIndex() != 0) {
-                RenderUtils.drawOnSlot(chestSize, nextSlot.xDisplayPosition, nextSlot.yDisplayPosition, CLICK_IN_ORDER_NEXT_TO_NEXT + 0xFF000000);
+                RenderUtils.drawOnSlot(chestSize, nextSlot.xDisplayPosition, nextSlot.yDisplayPosition, ModConfig.clickInOrderNextToNextColour.getRGB());
             }
         }
     }

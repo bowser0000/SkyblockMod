@@ -1,10 +1,10 @@
 package me.Danker.gui;
 
+import cc.polyfrost.oneconfig.libs.universal.UResolution;
 import me.Danker.utils.RenderUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.util.EnumChatFormatting;
 
 public class WarningGui extends GuiScreen {
@@ -23,9 +23,8 @@ public class WarningGui extends GuiScreen {
     public void initGui() {
         super.initGui();
 
-        ScaledResolution sr = new ScaledResolution(Minecraft.getMinecraft());
-        int height = sr.getScaledHeight();
-        int width = sr.getScaledWidth();
+        int height = UResolution.getScaledHeight();
+        int width = UResolution.getScaledWidth();
 
         close = new GuiButton(0, width / 2 - 100, (int) (height * 0.6), "Close");
 

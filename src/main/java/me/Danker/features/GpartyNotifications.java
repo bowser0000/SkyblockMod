@@ -1,6 +1,6 @@
 package me.Danker.features;
 
-import me.Danker.commands.ToggleCommand;
+import me.Danker.config.ModConfig;
 import me.Danker.utils.Utils;
 import net.minecraft.util.StringUtils;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
@@ -17,7 +17,7 @@ public class GpartyNotifications {
         if (!Utils.inSkyblock) return;
         if (message.contains(":")) return;
 
-        if (ToggleCommand.gpartyToggled) {
+        if (ModConfig.gparty) {
             if (message.contains(" has invited all members of ")) {
                 Utils.desktopNotification("Guild Party Notifier", "Guild Party", message, TrayIcon.MessageType.INFO);
             }

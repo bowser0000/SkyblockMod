@@ -1,6 +1,6 @@
 package me.Danker.features;
 
-import me.Danker.commands.ToggleCommand;
+import me.Danker.config.ModConfig;
 import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiChest;
@@ -18,7 +18,7 @@ public class AutoSwapToPickBlock {
 
     @SubscribeEvent
     public void onGuiOpen(GuiOpenEvent event) {
-        if (!ToggleCommand.swapToPickBlockToggled || !Utils.inSkyblock) return;
+        if (!ModConfig.swapToPickBlock || !Utils.inSkyblock) return;
 
         Minecraft mc = Minecraft.getMinecraft();
         GameSettings gameSettings = mc.gameSettings;

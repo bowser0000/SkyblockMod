@@ -1,12 +1,12 @@
 package me.Danker.gui.crystalhollowwaypoints;
 
+import cc.polyfrost.oneconfig.libs.universal.UResolution;
 import me.Danker.features.CrystalHollowWaypoints;
 import me.Danker.handlers.TextRenderer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiTextField;
-import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.BlockPos;
 
@@ -44,9 +44,8 @@ public class CrystalHollowAddWaypointGui extends GuiScreen {
     public void initGui() {
         super.initGui();
 
-        ScaledResolution sr = new ScaledResolution(Minecraft.getMinecraft());
-        int height = sr.getScaledHeight();
-        int width = sr.getScaledWidth();
+        int height = UResolution.getScaledHeight();
+        int width = UResolution.getScaledWidth();
 
         cancel = new GuiButton(0, 2, height - 30, 100, 20, "Cancel");
 
@@ -84,9 +83,9 @@ public class CrystalHollowAddWaypointGui extends GuiScreen {
         y.drawTextBox();
         z.drawTextBox();
 
-        new TextRenderer(mc, "X:", width / 2 - 85, (int) (height * 0.35), 1D);
-        new TextRenderer(mc, "Y:", width / 2 - 25, (int) (height * 0.35), 1D);
-        new TextRenderer(mc, "Z:", width / 2 + 35, (int) (height * 0.35), 1D);
+        TextRenderer.drawText("X:", width / 2 - 85, (int) (height * 0.35), 1D);
+        TextRenderer.drawText("Y:", width / 2 - 25, (int) (height * 0.35), 1D);
+        TextRenderer.drawText("Z:", width / 2 + 35, (int) (height * 0.35), 1D);
     }
 
     @Override

@@ -1,6 +1,6 @@
 package me.Danker.commands;
 
-import me.Danker.DankersSkyblockMod;
+import me.Danker.config.ModConfig;
 import me.Danker.features.loot.*;
 import me.Danker.utils.Utils;
 import net.minecraft.command.CommandBase;
@@ -55,7 +55,7 @@ public class LootCommand extends CommandBase {
 		final EntityPlayer player = (EntityPlayer) arg0;
 		
 		if (arg1.length == 0) {
-			player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Usage: " + getCommandUsage(arg0)));
+			player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "Usage: " + getCommandUsage(arg0)));
 			return;
 		}
 
@@ -80,13 +80,13 @@ public class LootCommand extends CommandBase {
 					} else {
 						bossesBetween = nf.format(WolfTracker.bossesSession);
 					}
-					if (ToggleCommand.slayerCountTotal) {
+					if (LootDisplay.slayerCountTotal) {
 						drop20 = nf.format(WolfTracker.wheelsSession);
 					} else {
 						drop20 = nf.format(WolfTracker.wheelsDropsSession) + " times";
 					}
 
-					player.addChatMessage(new ChatComponentText(EnumChatFormatting.AQUA + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+					player.addChatMessage(new ChatComponentText(EnumChatFormatting.AQUA + "" + EnumChatFormatting.STRIKETHROUGH + "-------------------\n" +
 																EnumChatFormatting.DARK_AQUA + EnumChatFormatting.BOLD + "  Sven Loot Summary (Current Session):\n" +
 																EnumChatFormatting.GOLD + "    Svens Killed: " + nf.format(WolfTracker.svensSession) + "\n" +
 																EnumChatFormatting.GREEN + "    Wolf Teeth: " + nf.format(WolfTracker.teethSession) + "\n" +
@@ -100,7 +100,7 @@ public class LootCommand extends CommandBase {
 																EnumChatFormatting.DARK_PURPLE + "    Overfluxes: " + WolfTracker.fluxesSession + "\n" +
 																EnumChatFormatting.AQUA + "    Time Since RNG: " + timeBetween + "\n" +
 																EnumChatFormatting.AQUA + "    Bosses Since RNG: " + bossesBetween + "\n" +
-																EnumChatFormatting.AQUA + EnumChatFormatting.BOLD + " -------------------"));
+																EnumChatFormatting.AQUA + EnumChatFormatting.STRIKETHROUGH + "-------------------"));
 					return;
 				}
 
@@ -114,13 +114,13 @@ public class LootCommand extends CommandBase {
 				} else {
 					bossesBetween = nf.format(WolfTracker.bosses);
 				}
-				if (ToggleCommand.slayerCountTotal) {
+				if (LootDisplay.slayerCountTotal) {
 					drop20 = nf.format(WolfTracker.wheels);
 				} else {
 					drop20 = nf.format(WolfTracker.wheelsDrops) + " times";
 				}
 
-				player.addChatMessage(new ChatComponentText(EnumChatFormatting.AQUA + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+				player.addChatMessage(new ChatComponentText(EnumChatFormatting.AQUA + "" + EnumChatFormatting.STRIKETHROUGH + "-------------------\n" +
 															EnumChatFormatting.DARK_AQUA + EnumChatFormatting.BOLD + "  Sven Loot Summary:\n" +
 															EnumChatFormatting.GOLD + "    Svens Killed: " + nf.format(WolfTracker.svens) + "\n" +
 															EnumChatFormatting.GREEN + "    Wolf Teeth: " + nf.format(WolfTracker.teeth) + "\n" +
@@ -134,7 +134,7 @@ public class LootCommand extends CommandBase {
 															EnumChatFormatting.DARK_PURPLE + "    Overfluxes: " + WolfTracker.fluxes + "\n" +
 															EnumChatFormatting.AQUA + "    Time Since RNG: " + timeBetween + "\n" +
 															EnumChatFormatting.AQUA + "    Bosses Since RNG: " + bossesBetween + "\n" +
-															EnumChatFormatting.AQUA + EnumChatFormatting.BOLD + " -------------------"));
+															EnumChatFormatting.AQUA + EnumChatFormatting.STRIKETHROUGH + "-------------------"));
 				break;
 			case "spider":
 				if (showSession) {
@@ -148,13 +148,13 @@ public class LootCommand extends CommandBase {
 					} else {
 						bossesBetween = nf.format(SpiderTracker.bossesSession);
 					}
-					if (ToggleCommand.slayerCountTotal) {
+					if (LootDisplay.slayerCountTotal) {
 						drop20 = nf.format(SpiderTracker.TAPSession);
 					} else {
 						drop20 = nf.format(SpiderTracker.TAPDropsSession) + " times";
 					}
 
-					player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+					player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "" + EnumChatFormatting.STRIKETHROUGH + "-------------------\n" +
 																EnumChatFormatting.DARK_RED + EnumChatFormatting.BOLD + "  Spider Loot Summary (Current Session):\n" +
 																EnumChatFormatting.GOLD + "    Tarantulas Killed: " + nf.format(SpiderTracker.tarantulasSession) + "\n" +
 																EnumChatFormatting.GREEN + "    Tarantula Webs: " + nf.format(SpiderTracker.websSession) + "\n" +
@@ -167,7 +167,7 @@ public class LootCommand extends CommandBase {
 																EnumChatFormatting.GOLD + "    Digested Mosquitos: " + SpiderTracker.mosquitosSession + "\n" +
 																EnumChatFormatting.AQUA + "    Time Since RNG: " + timeBetween + "\n" +
 																EnumChatFormatting.AQUA + "    Bosses Since RNG: " + bossesBetween + "\n" +
-																EnumChatFormatting.RED + EnumChatFormatting.BOLD + " -------------------"));
+																EnumChatFormatting.RED + EnumChatFormatting.STRIKETHROUGH + "-------------------"));
 					return;
 				}
 
@@ -181,13 +181,13 @@ public class LootCommand extends CommandBase {
 				} else {
 					bossesBetween = nf.format(SpiderTracker.bosses);
 				}
-				if (ToggleCommand.slayerCountTotal) {
+				if (LootDisplay.slayerCountTotal) {
 					drop20 = nf.format(SpiderTracker.TAP);
 				} else {
 					drop20 = nf.format(SpiderTracker.TAPDrops) + " times";
 				}
 
-				player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+				player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "" + EnumChatFormatting.STRIKETHROUGH + "-------------------\n" +
 															EnumChatFormatting.DARK_RED + EnumChatFormatting.BOLD + "  Spider Loot Summary:\n" +
 															EnumChatFormatting.GOLD + "    Tarantulas Killed: " + nf.format(SpiderTracker.tarantulas) + "\n" +
 															EnumChatFormatting.GREEN + "    Tarantula Webs: " + nf.format(SpiderTracker.webs) + "\n" +
@@ -200,7 +200,7 @@ public class LootCommand extends CommandBase {
 															EnumChatFormatting.GOLD + "    Digested Mosquitos: " + SpiderTracker.mosquitos + "\n" +
 															EnumChatFormatting.AQUA + "    Time Since RNG: " + timeBetween + "\n" +
 															EnumChatFormatting.AQUA + "    Bosses Since RNG: " + bossesBetween + "\n" +
-															EnumChatFormatting.RED + EnumChatFormatting.BOLD + " -------------------"));
+															EnumChatFormatting.RED + EnumChatFormatting.STRIKETHROUGH + "-------------------"));
 				break;
 			case "zombie":
 				if (showSession) {
@@ -214,13 +214,13 @@ public class LootCommand extends CommandBase {
 					} else {
 						bossesBetween = nf.format(ZombieTracker.bossesSession);
 					}
-					if (ToggleCommand.slayerCountTotal) {
+					if (LootDisplay.slayerCountTotal) {
 						drop20 = nf.format(ZombieTracker.foulFleshSession);
 					} else {
 						drop20 = nf.format(ZombieTracker.foulFleshDropsSession) + " times";
 					}
 
-					player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+					player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "" + EnumChatFormatting.STRIKETHROUGH + "-------------------\n" +
 																EnumChatFormatting.DARK_GREEN + EnumChatFormatting.BOLD + "  Zombie Loot Summary (Current Session):\n" +
 																EnumChatFormatting.GOLD + "    Revs Killed: " + nf.format(ZombieTracker.revsSession) + "\n" +
 																EnumChatFormatting.GREEN + "    Revenant Flesh: " + nf.format(ZombieTracker.revFleshSession) + "\n" +
@@ -238,7 +238,7 @@ public class LootCommand extends CommandBase {
 																EnumChatFormatting.RED + "    Warden Hearts: " + ZombieTracker.wardenHeartsSession + "\n" +
 																EnumChatFormatting.AQUA + "    Time Since RNG: " + timeBetween + "\n" +
 																EnumChatFormatting.AQUA + "    Bosses Since RNG: " + bossesBetween + "\n" +
-																EnumChatFormatting.GREEN + EnumChatFormatting.BOLD + " -------------------"));
+																EnumChatFormatting.GREEN + EnumChatFormatting.STRIKETHROUGH + "-------------------"));
 					return;
 				}
 
@@ -252,13 +252,13 @@ public class LootCommand extends CommandBase {
 				} else {
 					bossesBetween = nf.format(ZombieTracker.bosses);
 				}
-				if (ToggleCommand.slayerCountTotal) {
+				if (LootDisplay.slayerCountTotal) {
 					drop20 = nf.format(ZombieTracker.foulFlesh);
 				} else {
 					drop20 = nf.format(ZombieTracker.foulFleshDrops) + " times";
 				}
 
-				player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+				player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "" + EnumChatFormatting.STRIKETHROUGH + "-------------------\n" +
 															EnumChatFormatting.DARK_GREEN + EnumChatFormatting.BOLD + "  Zombie Loot Summary:\n" +
 															EnumChatFormatting.GOLD + "    Revs Killed: " + nf.format(ZombieTracker.revs) + "\n" +
 															EnumChatFormatting.GREEN + "    Revenant Flesh: " + nf.format(ZombieTracker.revFlesh) + "\n" +
@@ -276,7 +276,7 @@ public class LootCommand extends CommandBase {
 															EnumChatFormatting.RED + "    Warden Hearts: " + ZombieTracker.wardenHearts + "\n" +
 															EnumChatFormatting.AQUA + "    Time Since RNG: " + timeBetween + "\n" +
 															EnumChatFormatting.AQUA + "    Bosses Since RNG: " + bossesBetween + "\n" +
-															EnumChatFormatting.GREEN + EnumChatFormatting.BOLD + " -------------------"));
+															EnumChatFormatting.GREEN + EnumChatFormatting.STRIKETHROUGH + "-------------------"));
 				break;
 			case "enderman":
 				if (showSession) {
@@ -290,13 +290,13 @@ public class LootCommand extends CommandBase {
 					} else {
 						bossesBetween = nf.format(EndermanTracker.bossesSession);
 					}
-					if (ToggleCommand.slayerCountTotal) {
+					if (LootDisplay.slayerCountTotal) {
 						drop20 = nf.format(EndermanTracker.TAPSession);
 					} else {
 						drop20 = nf.format(EndermanTracker.TAPDropsSession) + " times";
 					}
 
-					player.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_PURPLE + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+					player.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_PURPLE + "" + EnumChatFormatting.STRIKETHROUGH + "-------------------\n" +
 							EnumChatFormatting.DARK_GREEN + EnumChatFormatting.BOLD + "  Enderman Loot Summary (Current Session):\n" +
 							EnumChatFormatting.GOLD + "    Voidglooms Killed: " + nf.format(EndermanTracker.voidgloomsSession) + "\n" +
 							EnumChatFormatting.DARK_GRAY + "    Null Spheres: " + nf.format(EndermanTracker.nullSpheresSession) + "\n" +
@@ -320,7 +320,7 @@ public class LootCommand extends CommandBase {
 							EnumChatFormatting.RED + "    Ender Slayer VII Books: " + EndermanTracker.enderBooksSession + "\n" +
 							EnumChatFormatting.AQUA + "    Time Since RNG: " + timeBetween + "\n" +
 							EnumChatFormatting.AQUA + "    Bosses Since RNG: " + bossesBetween + "\n" +
-							EnumChatFormatting.DARK_PURPLE + EnumChatFormatting.BOLD + " -------------------"));
+							EnumChatFormatting.DARK_PURPLE + EnumChatFormatting.STRIKETHROUGH + "-------------------"));
 					return;
 				}
 
@@ -334,13 +334,13 @@ public class LootCommand extends CommandBase {
 				} else {
 					bossesBetween = nf.format(EndermanTracker.bosses);
 				}
-				if (ToggleCommand.slayerCountTotal) {
+				if (LootDisplay.slayerCountTotal) {
 					drop20 = nf.format(EndermanTracker.TAP);
 				} else {
 					drop20 = nf.format(EndermanTracker.TAPDrops) + " times";
 				}
 
-				player.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_PURPLE + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+				player.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_PURPLE + "" + EnumChatFormatting.STRIKETHROUGH + "-------------------\n" +
 						EnumChatFormatting.DARK_GREEN + EnumChatFormatting.BOLD + "  Enderman Loot Summary:\n" +
 						EnumChatFormatting.GOLD + "    Voidglooms Killed: " + nf.format(EndermanTracker.voidglooms) + "\n" +
 						EnumChatFormatting.DARK_GRAY + "    Null Spheres: " + nf.format(EndermanTracker.nullSpheres) + "\n" +
@@ -364,7 +364,7 @@ public class LootCommand extends CommandBase {
 						EnumChatFormatting.RED + "    Ender Slayer VII Books: " + EndermanTracker.enderBooks + "\n" +
 						EnumChatFormatting.AQUA + "    Time Since RNG: " + timeBetween + "\n" +
 						EnumChatFormatting.AQUA + "    Bosses Since RNG: " + bossesBetween + "\n" +
-						EnumChatFormatting.DARK_PURPLE + EnumChatFormatting.BOLD + " -------------------"));
+						EnumChatFormatting.DARK_PURPLE + EnumChatFormatting.STRIKETHROUGH + "-------------------"));
 				break;
 			case "blaze":
 				if (showSession) {
@@ -379,7 +379,7 @@ public class LootCommand extends CommandBase {
 						bossesBetween = nf.format(BlazeTracker.bossesSession);
 					}
 
-					player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+					player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "" + EnumChatFormatting.STRIKETHROUGH + "-------------------\n" +
 							EnumChatFormatting.DARK_RED + EnumChatFormatting.BOLD + "  Blaze Loot Summary (Current Session):\n" +
 							EnumChatFormatting.GOLD + "    Demonlords Killed: " + nf.format(BlazeTracker.demonlordsSession) + "\n" +
 							EnumChatFormatting.GRAY + "    Derelict Ashes: " + nf.format(BlazeTracker.derelictAshesSession) + "\n" +
@@ -405,7 +405,7 @@ public class LootCommand extends CommandBase {
 							EnumChatFormatting.GOLD + "    Subzero Inverters: " + nf.format(BlazeTracker.subzeroInvertersSession) + "\n" +
 							EnumChatFormatting.AQUA + "    Time Since RNG: " + timeBetween + "\n" +
 							EnumChatFormatting.AQUA + "    Bosses Since RNG: " + bossesBetween + "\n" +
-							EnumChatFormatting.RED + EnumChatFormatting.BOLD + " -------------------"));
+							EnumChatFormatting.RED + EnumChatFormatting.STRIKETHROUGH + "-------------------"));
 					return;
 				}
 
@@ -420,7 +420,7 @@ public class LootCommand extends CommandBase {
 					bossesBetween = nf.format(BlazeTracker.bosses);
 				}
 
-				player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+				player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "" + EnumChatFormatting.STRIKETHROUGH + "-------------------\n" +
 						EnumChatFormatting.DARK_RED + EnumChatFormatting.BOLD + "  Blaze Loot Summary:\n" +
 						EnumChatFormatting.GOLD + "    Demonlords Killed: " + nf.format(BlazeTracker.demonlords) + "\n" +
 						EnumChatFormatting.GRAY + "    Derelict Ashes: " + nf.format(BlazeTracker.derelictAshes) + "\n" +
@@ -446,101 +446,105 @@ public class LootCommand extends CommandBase {
 						EnumChatFormatting.GOLD + "    Subzero Inverters: " + nf.format(BlazeTracker.subzeroInverters) + "\n" +
 						EnumChatFormatting.AQUA + "    Time Since RNG: " + timeBetween + "\n" +
 						EnumChatFormatting.AQUA + "    Bosses Since RNG: " + bossesBetween + "\n" +
-						EnumChatFormatting.RED + EnumChatFormatting.BOLD + " -------------------"));
+						EnumChatFormatting.RED + EnumChatFormatting.STRIKETHROUGH + "-------------------"));
 				break;
 			case "fishing":
 				if (arg1.length > 1) {
 					if (arg1[1].equalsIgnoreCase("winter")) {
 						if (showSession) {
-							if (FishingTracker.yetiTimeSession == -1) {
+							if (FishingTracker.reindrakeTimeSession == -1) {
 								timeBetween = "Never";
 							} else {
-								timeBetween = Utils.getTimeBetween(FishingTracker.yetiTimeSession, timeNow);
+								timeBetween = Utils.getTimeBetween(FishingTracker.reindrakeTimeSession, timeNow);
 							}
-							if (FishingTracker.yetiSCsSession == -1) {
+							if (FishingTracker.reindrakeSCsSession == -1) {
 								bossesBetween = "Never";
 							} else {
-								bossesBetween = nf.format(FishingTracker.yetiSCsSession);
+								bossesBetween = nf.format(FishingTracker.reindrakeSCsSession);
 							}
 
-							player.addChatMessage(new ChatComponentText(EnumChatFormatting.AQUA + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+							player.addChatMessage(new ChatComponentText(EnumChatFormatting.AQUA + "" + EnumChatFormatting.STRIKETHROUGH + "-------------------\n" +
 																		EnumChatFormatting.WHITE + EnumChatFormatting.BOLD + "  Winter Fishing Summary (Current Session):\n" +
 																		EnumChatFormatting.AQUA + "    Frozen Steves: " + nf.format(FishingTracker.frozenStevesSession) + "\n" +
 																		EnumChatFormatting.WHITE + "    Snowmans: " + nf.format(FishingTracker.frostyTheSnowmansSession) + "\n" +
 																		EnumChatFormatting.DARK_GREEN + "    Grinches: " + nf.format(FishingTracker.grinchesSession) + "\n" +
+																		EnumChatFormatting.RED + "    Nutcrackers: " + nf.format(FishingTracker.nutcrackersSession) + "\n" +
 																		EnumChatFormatting.GOLD + "    Yetis: " + nf.format(FishingTracker.yetisSession) + "\n" +
-																		EnumChatFormatting.AQUA + "    Time Since Yeti: " + timeBetween + "\n" +
-																		EnumChatFormatting.AQUA + "    Creatures Since Yeti: " + bossesBetween + "\n" +
-																		EnumChatFormatting.AQUA + EnumChatFormatting.BOLD + " -------------------"));
+																		EnumChatFormatting.GOLD + "    Reindrakes: " + nf.format(FishingTracker.reindrakesSession) + "\n" +
+																		EnumChatFormatting.AQUA + "    Time Since Reindrake: " + timeBetween + "\n" +
+																		EnumChatFormatting.AQUA + "    Creatures Since Reindrake: " + bossesBetween + "\n" +
+																		EnumChatFormatting.AQUA + EnumChatFormatting.STRIKETHROUGH + "-------------------"));
 							return;
 						}
 
-						if (FishingTracker.yetiTime == -1) {
+						if (FishingTracker.reindrakeTime == -1) {
 							timeBetween = "Never";
 						} else {
-							timeBetween = Utils.getTimeBetween(FishingTracker.yetiTime, timeNow);
+							timeBetween = Utils.getTimeBetween(FishingTracker.reindrakeTime, timeNow);
 						}
-						if (FishingTracker.yetiSCs == -1) {
+						if (FishingTracker.reindrakeSCs == -1) {
 							bossesBetween = "Never";
 						} else {
-							bossesBetween = nf.format(FishingTracker.yetiSCs);
+							bossesBetween = nf.format(FishingTracker.reindrakeSCs);
 						}
 
-						player.addChatMessage(new ChatComponentText(EnumChatFormatting.AQUA + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+						player.addChatMessage(new ChatComponentText(EnumChatFormatting.AQUA + "" + EnumChatFormatting.STRIKETHROUGH + "-------------------\n" +
 																	EnumChatFormatting.WHITE + EnumChatFormatting.BOLD + "  Winter Fishing Summary:\n" +
 																	EnumChatFormatting.AQUA + "    Frozen Steves: " + nf.format(FishingTracker.frozenSteves) + "\n" +
 																	EnumChatFormatting.WHITE + "    Snowmans: " + nf.format(FishingTracker.frostyTheSnowmans) + "\n" +
 																	EnumChatFormatting.DARK_GREEN + "    Grinches: " + nf.format(FishingTracker.grinches) + "\n" +
+																	EnumChatFormatting.RED + "    Nutcrackers: " + nf.format(FishingTracker.nutcrackers) + "\n" +
 																	EnumChatFormatting.GOLD + "    Yetis: " + nf.format(FishingTracker.yetis) + "\n" +
-																	EnumChatFormatting.AQUA + "    Time Since Yeti: " + timeBetween + "\n" +
-																	EnumChatFormatting.AQUA + "    Creatures Since Yeti: " + bossesBetween + "\n" +
-																	EnumChatFormatting.AQUA + EnumChatFormatting.BOLD + " -------------------"));
+																	EnumChatFormatting.GOLD + "    Reindrakes: " + nf.format(FishingTracker.reindrakes) + "\n" +
+																	EnumChatFormatting.AQUA + "    Time Since Reindrake: " + timeBetween + "\n" +
+																	EnumChatFormatting.AQUA + "    Creatures Since Reindrake: " + bossesBetween + "\n" +
+																	EnumChatFormatting.AQUA + EnumChatFormatting.STRIKETHROUGH + "-------------------"));
 						return;
 					} else if (arg1[1].equalsIgnoreCase("festival")) {
 						if (showSession) {
-							player.addChatMessage(new ChatComponentText(EnumChatFormatting.AQUA + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+							player.addChatMessage(new ChatComponentText(EnumChatFormatting.AQUA + "" + EnumChatFormatting.STRIKETHROUGH + "-------------------\n" +
 																		EnumChatFormatting.DARK_BLUE + EnumChatFormatting.BOLD + " Fishing Festival Summary (Current Session):\n" +
 																		EnumChatFormatting.LIGHT_PURPLE + "    Nurse Sharks: " + nf.format(FishingTracker.nurseSharksSession) + "\n" +
 																		EnumChatFormatting.BLUE + "    Blue Sharks: " + nf.format(FishingTracker.blueSharksSession) + "\n" +
 																		EnumChatFormatting.GOLD + "    Tiger Sharks: " + nf.format(FishingTracker.tigerSharksSession) + "\n" +
 																		EnumChatFormatting.WHITE + "    Great White Sharks: " + nf.format(FishingTracker.greatWhiteSharksSession) + "\n" +
-																		EnumChatFormatting.AQUA + EnumChatFormatting.BOLD + " -------------------"));
+																		EnumChatFormatting.AQUA + EnumChatFormatting.STRIKETHROUGH + "-------------------"));
 							return;
 						}
 
-						player.addChatMessage(new ChatComponentText(EnumChatFormatting.AQUA + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+						player.addChatMessage(new ChatComponentText(EnumChatFormatting.AQUA + "" + EnumChatFormatting.STRIKETHROUGH + "-------------------\n" +
 																	EnumChatFormatting.DARK_BLUE + EnumChatFormatting.BOLD + " Fishing Festival Summary:\n" +
 																	EnumChatFormatting.LIGHT_PURPLE + "    Nurse Sharks: " + nf.format(FishingTracker.nurseSharks) + "\n" +
 																	EnumChatFormatting.BLUE + "    Blue Sharks: " + nf.format(FishingTracker.blueSharks) + "\n" +
 																	EnumChatFormatting.GOLD + "    Tiger Sharks: " + nf.format(FishingTracker.tigerSharks) + "\n" +
 																	EnumChatFormatting.WHITE + "    Great White Sharks: " + nf.format(FishingTracker.greatWhiteSharks) + "\n" +
-																	EnumChatFormatting.AQUA + EnumChatFormatting.BOLD + " -------------------"));
+																	EnumChatFormatting.AQUA + EnumChatFormatting.STRIKETHROUGH + "-------------------"));
 						return;
 					} else if (arg1[1].equalsIgnoreCase("spooky")) {
 						if (showSession) {
-							player.addChatMessage(new ChatComponentText(EnumChatFormatting.AQUA + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+							player.addChatMessage(new ChatComponentText(EnumChatFormatting.AQUA + "" + EnumChatFormatting.STRIKETHROUGH + "-------------------\n" +
 																		EnumChatFormatting.GOLD + EnumChatFormatting.BOLD + " Spooky Fishing Summary (Current Session):\n" +
 																		EnumChatFormatting.BLUE + "    Scarecrows: " + nf.format(FishingTracker.scarecrowsSession) + "\n" +
 																		EnumChatFormatting.GRAY + "    Nightmares: " + nf.format(FishingTracker.nightmaresSession) + "\n" +
 																		EnumChatFormatting.DARK_PURPLE + "    Werewolves: " + nf.format(FishingTracker.werewolfsSession) + "\n" +
 																		EnumChatFormatting.GOLD + "    Phantom Fishers: " + nf.format(FishingTracker.phantomFishersSession) + "\n" +
 																		EnumChatFormatting.GOLD + "    Grim Reapers: " + nf.format(FishingTracker.grimReapersSession) + "\n" +
-																		EnumChatFormatting.AQUA + "" + EnumChatFormatting.BOLD + "-------------------"));
+																		EnumChatFormatting.AQUA + "" + EnumChatFormatting.STRIKETHROUGH + "-------------------"));
 							return;
 						}
 
-						player.addChatMessage(new ChatComponentText(EnumChatFormatting.AQUA + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+						player.addChatMessage(new ChatComponentText(EnumChatFormatting.AQUA + "" + EnumChatFormatting.STRIKETHROUGH + "-------------------\n" +
 																	EnumChatFormatting.GOLD + EnumChatFormatting.BOLD + " Spooky Fishing Summary:\n" +
 																	EnumChatFormatting.BLUE + "    Scarecrows: " + nf.format(FishingTracker.scarecrows) + "\n" +
 																	EnumChatFormatting.GRAY + "    Nightmares: " + nf.format(FishingTracker.nightmares) + "\n" +
 																	EnumChatFormatting.DARK_PURPLE + "    Werewolves: " + nf.format(FishingTracker.werewolfs) + "\n" +
 																	EnumChatFormatting.GOLD + "    Phantom Fishers: " + nf.format(FishingTracker.phantomFishers) + "\n" +
 																	EnumChatFormatting.GOLD + "    Grim Reapers: " + nf.format(FishingTracker.grimReapers) + "\n" +
-																	EnumChatFormatting.AQUA + "" + EnumChatFormatting.BOLD + "-------------------"));
+																	EnumChatFormatting.AQUA + "" + EnumChatFormatting.STRIKETHROUGH + "-------------------"));
 						return;
 					} else if (arg1[1].equalsIgnoreCase("ch")) {
 						if (showSession) {
-							player.addChatMessage(new ChatComponentText(EnumChatFormatting.AQUA + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+							player.addChatMessage(new ChatComponentText(EnumChatFormatting.AQUA + "" + EnumChatFormatting.STRIKETHROUGH + "-------------------\n" +
 																		EnumChatFormatting.GOLD + EnumChatFormatting.BOLD + " Crystal Hollows Fishing Summary:\n" +
 																		EnumChatFormatting.BLUE + "    Water Worms: " + nf.format(FishingTracker.waterWormsSession) + "\n" +
 																		EnumChatFormatting.GREEN + "    Poisoned Water Worms: " + nf.format(FishingTracker.poisonedWaterWormsSession) + "\n" +
@@ -548,12 +552,12 @@ public class LootCommand extends CommandBase {
 																		EnumChatFormatting.LIGHT_PURPLE + "    Lava Blazes: " + nf.format(FishingTracker.lavaBlazesSession) + "\n" +
 																		EnumChatFormatting.LIGHT_PURPLE + "    Lava Pigmen: " + nf.format(FishingTracker.lavaPigmenSession) + "\n" +
 																		EnumChatFormatting.GOLD + "    Zombie Miners: " + nf.format(FishingTracker.zombieMinersSession) + "\n" +
-																		EnumChatFormatting.AQUA + "" + EnumChatFormatting.BOLD + "-------------------"));
+																		EnumChatFormatting.AQUA + "" + EnumChatFormatting.STRIKETHROUGH + "-------------------"));
 
 							return;
 						}
 
-						player.addChatMessage(new ChatComponentText(EnumChatFormatting.AQUA + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+						player.addChatMessage(new ChatComponentText(EnumChatFormatting.AQUA + "" + EnumChatFormatting.STRIKETHROUGH + "-------------------\n" +
 																	EnumChatFormatting.GOLD + EnumChatFormatting.BOLD + " Crystal Hollows Fishing Summary:\n" +
 																	EnumChatFormatting.BLUE + "    Water Worms: " + nf.format(FishingTracker.waterWorms) + "\n" +
 																	EnumChatFormatting.GREEN + "    Poisoned Water Worms: " + nf.format(FishingTracker.poisonedWaterWorms) + "\n" +
@@ -561,7 +565,7 @@ public class LootCommand extends CommandBase {
 																	EnumChatFormatting.LIGHT_PURPLE + "    Lava Blazes: " + nf.format(FishingTracker.lavaBlazes) + "\n" +
 																	EnumChatFormatting.LIGHT_PURPLE + "    Lava Pigmen: " + nf.format(FishingTracker.lavaPigmen) + "\n" +
 																	EnumChatFormatting.GOLD + "    Zombie Miners: " + nf.format(FishingTracker.zombieMiners) + "\n" +
-																	EnumChatFormatting.AQUA + "" + EnumChatFormatting.BOLD + "-------------------"));
+																	EnumChatFormatting.AQUA + "" + EnumChatFormatting.STRIKETHROUGH + "-------------------"));
 						return;
 					} else if (arg1[1].equalsIgnoreCase("lava")) {
 						if (showSession) {
@@ -576,7 +580,7 @@ public class LootCommand extends CommandBase {
 								bossesBetween = nf.format(FishingTracker.jawbusSCsSession);
 							}
 
-							player.addChatMessage(new ChatComponentText(EnumChatFormatting.AQUA + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+							player.addChatMessage(new ChatComponentText(EnumChatFormatting.AQUA + "" + EnumChatFormatting.STRIKETHROUGH + "-------------------\n" +
 									EnumChatFormatting.RED + EnumChatFormatting.BOLD + " Lava Fishing Summary (Current Session):\n" +
 									EnumChatFormatting.BLUE + "    Plhlegblasts: " + nf.format(FishingTracker.plhlegblastsSession) + "\n" +
 									EnumChatFormatting.DARK_RED + "    Magma Slugs: " + nf.format(FishingTracker.magmaSlugsSession) + "\n" +
@@ -590,7 +594,7 @@ public class LootCommand extends CommandBase {
 									EnumChatFormatting.LIGHT_PURPLE + "    Lord Jawbuses: " + nf.format(FishingTracker.lordJawbusesSession) + "\n" +
 									EnumChatFormatting.AQUA + "    Time Since Lord Jawbus: " + timeBetween + "\n" +
 									EnumChatFormatting.AQUA + "    Creatures Since Lord Jawbus: " + bossesBetween + "\n" +
-									EnumChatFormatting.AQUA + EnumChatFormatting.BOLD + " -------------------"));
+									EnumChatFormatting.AQUA + EnumChatFormatting.STRIKETHROUGH + "-------------------"));
 							return;
 						}
 
@@ -605,7 +609,7 @@ public class LootCommand extends CommandBase {
 							bossesBetween = nf.format(FishingTracker.jawbusSCs);
 						}
 
-						player.addChatMessage(new ChatComponentText(EnumChatFormatting.AQUA + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+						player.addChatMessage(new ChatComponentText(EnumChatFormatting.AQUA + "" + EnumChatFormatting.STRIKETHROUGH + "-------------------\n" +
 								EnumChatFormatting.RED + EnumChatFormatting.BOLD + " Lava Fishing Summary:\n" +
 								EnumChatFormatting.BLUE + "    Plhlegblasts: " + nf.format(FishingTracker.plhlegblasts) + "\n" +
 								EnumChatFormatting.DARK_RED + "    Magma Slugs: " + nf.format(FishingTracker.magmaSlugs) + "\n" +
@@ -619,11 +623,11 @@ public class LootCommand extends CommandBase {
 								EnumChatFormatting.LIGHT_PURPLE + "    Lord Jawbuses: " + nf.format(FishingTracker.lordJawbuses) + "\n" +
 								EnumChatFormatting.AQUA + "    Time Since Lord Jawbus: " + timeBetween + "\n" +
 								EnumChatFormatting.AQUA + "    Creatures Since Lord Jawbus: " + bossesBetween + "\n" +
-								EnumChatFormatting.AQUA + EnumChatFormatting.BOLD + " -------------------"));
+								EnumChatFormatting.AQUA + EnumChatFormatting.STRIKETHROUGH + "-------------------"));
 						return;
 					} else if (arg1[1].equalsIgnoreCase("trophy")) {
 						if (showSession) {
-							player.addChatMessage(new ChatComponentText(EnumChatFormatting.AQUA + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+							player.addChatMessage(new ChatComponentText(EnumChatFormatting.AQUA + "" + EnumChatFormatting.STRIKETHROUGH + "-------------------\n" +
 									EnumChatFormatting.GOLD + EnumChatFormatting.BOLD + " Trophy Fishing Summary (Current Session):\n" +
 									EnumChatFormatting.WHITE + "    Sulphur Skitter " + EnumChatFormatting.DARK_GRAY + "(" + TrophyFishTracker.getSum(TrophyFishTracker.fishSession, "Sulphur Skitter") + ")" + EnumChatFormatting.WHITE + ": " + TrophyFishTracker.getTierCount(TrophyFishTracker.fishSession, "Sulphur Skitter") + "\n" +
 									EnumChatFormatting.WHITE + "    Obfuscated 1 " + EnumChatFormatting.DARK_GRAY + "(" + TrophyFishTracker.getSum(TrophyFishTracker.fishSession, "Obfuscated 1") + ")" + EnumChatFormatting.WHITE + ": " + TrophyFishTracker.getTierCount(TrophyFishTracker.fishSession, "Obfuscated 1") + "\n" +
@@ -643,11 +647,11 @@ public class LootCommand extends CommandBase {
 									EnumChatFormatting.DARK_PURPLE + "    Soul Fish " + EnumChatFormatting.DARK_GRAY + "(" + TrophyFishTracker.getSum(TrophyFishTracker.fishSession, "Soul Fish") + ")" + EnumChatFormatting.DARK_PURPLE + ": " + TrophyFishTracker.getTierCount(TrophyFishTracker.fishSession, "Soul Fish") + "\n" +
 									EnumChatFormatting.DARK_PURPLE + "    Karate Fish " + EnumChatFormatting.DARK_GRAY + "(" + TrophyFishTracker.getSum(TrophyFishTracker.fishSession, "Karate Fish") + ")" + EnumChatFormatting.DARK_PURPLE + ": " + TrophyFishTracker.getTierCount(TrophyFishTracker.fishSession, "Karate Fish") + "\n" +
 									EnumChatFormatting.GOLD + "    Golden Fish " + EnumChatFormatting.DARK_GRAY + "(" + TrophyFishTracker.getSum(TrophyFishTracker.fishSession, "Golden Fish") + ")" + EnumChatFormatting.GOLD + ": " + TrophyFishTracker.getTierCount(TrophyFishTracker.fishSession, "Golden Fish") + "\n" +
-									EnumChatFormatting.AQUA + EnumChatFormatting.BOLD + "-------------------"));
+									EnumChatFormatting.AQUA + EnumChatFormatting.STRIKETHROUGH + "-------------------"));
 							return;
 						}
 
-						player.addChatMessage(new ChatComponentText(EnumChatFormatting.AQUA + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+						player.addChatMessage(new ChatComponentText(EnumChatFormatting.AQUA + "" + EnumChatFormatting.STRIKETHROUGH + "-------------------\n" +
 								EnumChatFormatting.GOLD + EnumChatFormatting.BOLD + " Trophy Fishing Summary:\n" +
 								EnumChatFormatting.WHITE + "    Sulphur Skitter " + EnumChatFormatting.DARK_GRAY + "(" + TrophyFishTracker.getSum(TrophyFishTracker.fish, "Sulphur Skitter") + ")" + EnumChatFormatting.WHITE + ": " + TrophyFishTracker.getTierCount(TrophyFishTracker.fish, "Sulphur Skitter") + "\n" +
 								EnumChatFormatting.WHITE + "    Obfuscated 1 " + EnumChatFormatting.DARK_GRAY + "(" + TrophyFishTracker.getSum(TrophyFishTracker.fish, "Obfuscated 1") + ")" + EnumChatFormatting.WHITE + ": " + TrophyFishTracker.getTierCount(TrophyFishTracker.fish, "Obfuscated 1") + "\n" +
@@ -667,7 +671,7 @@ public class LootCommand extends CommandBase {
 								EnumChatFormatting.DARK_PURPLE + "    Soul Fish " + EnumChatFormatting.DARK_GRAY + "(" + TrophyFishTracker.getSum(TrophyFishTracker.fish, "Soul Fish") + ")" + EnumChatFormatting.DARK_PURPLE + ": " + TrophyFishTracker.getTierCount(TrophyFishTracker.fish, "Soul Fish") + "\n" +
 								EnumChatFormatting.DARK_PURPLE + "    Karate Fish " + EnumChatFormatting.DARK_GRAY + "(" + TrophyFishTracker.getSum(TrophyFishTracker.fish, "Karate Fish") + ")" + EnumChatFormatting.DARK_PURPLE + ": " + TrophyFishTracker.getTierCount(TrophyFishTracker.fish, "Karate Fish") + "\n" +
 								EnumChatFormatting.GOLD + "    Golden Fish " + EnumChatFormatting.DARK_GRAY + "(" + TrophyFishTracker.getSum(TrophyFishTracker.fish, "Golden Fish") + ")" + EnumChatFormatting.GOLD + ": " + TrophyFishTracker.getTierCount(TrophyFishTracker.fish, "Golden Fish") + "\n" +
-								EnumChatFormatting.AQUA + EnumChatFormatting.BOLD + "-------------------"));
+								EnumChatFormatting.AQUA + EnumChatFormatting.STRIKETHROUGH + "-------------------"));
 						return;
 					}
 				}
@@ -684,7 +688,7 @@ public class LootCommand extends CommandBase {
 						bossesBetween = nf.format(FishingTracker.empSCsSession);
 					}
 
-					player.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_AQUA + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+					player.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_AQUA + "" + EnumChatFormatting.STRIKETHROUGH + "-------------------\n" +
 																EnumChatFormatting.AQUA + EnumChatFormatting.BOLD + "  Fishing Summary (Current Session):\n" +
 																EnumChatFormatting.AQUA + "    Sea Creatures Caught: " + nf.format(FishingTracker.seaCreaturesSession) + "\n" +
 																EnumChatFormatting.GOLD + "    Good Catches: " + nf.format(FishingTracker.goodCatchesSession) + "\n" +
@@ -705,7 +709,7 @@ public class LootCommand extends CommandBase {
 																EnumChatFormatting.GOLD + "    Sea Emperors: " + nf.format(FishingTracker.seaEmperorsSession) + "\n" +
 																EnumChatFormatting.AQUA + "    Time Since Sea Emperor: " + timeBetween + "\n" +
 																EnumChatFormatting.AQUA + "    Sea Creatures Since Sea Emperor: " + bossesBetween + "\n" +
-																EnumChatFormatting.DARK_AQUA + EnumChatFormatting.BOLD + " -------------------"));
+																EnumChatFormatting.DARK_AQUA + EnumChatFormatting.STRIKETHROUGH + "-------------------"));
 					return;
 				}
 
@@ -720,7 +724,7 @@ public class LootCommand extends CommandBase {
 					bossesBetween = nf.format(FishingTracker.empSCs);
 				}
 
-				player.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_AQUA + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+				player.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_AQUA + "" + EnumChatFormatting.STRIKETHROUGH + "-------------------\n" +
 															EnumChatFormatting.AQUA + EnumChatFormatting.BOLD + "  Fishing Summary:\n" +
 															EnumChatFormatting.AQUA + "    Sea Creatures Caught: " + nf.format(FishingTracker.seaCreatures) + "\n" +
 															EnumChatFormatting.GOLD + "    Good Catches: " + nf.format(FishingTracker.goodCatches) + "\n" +
@@ -741,12 +745,12 @@ public class LootCommand extends CommandBase {
 															EnumChatFormatting.GOLD + "    Sea Emperors: " + nf.format(FishingTracker.seaEmperors) + "\n" +
 															EnumChatFormatting.AQUA + "    Time Since Sea Emperor: " + timeBetween + "\n" +
 															EnumChatFormatting.AQUA + "    Sea Creatures Since Sea Emperor: " + bossesBetween + "\n" +
-															EnumChatFormatting.DARK_AQUA + EnumChatFormatting.BOLD + " -------------------"));
+															EnumChatFormatting.DARK_AQUA + EnumChatFormatting.STRIKETHROUGH + "-------------------"));
 
 				break;
 			case "mythological":
 				if (showSession) {
-					player.addChatMessage(new ChatComponentText(EnumChatFormatting.GOLD + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+					player.addChatMessage(new ChatComponentText(EnumChatFormatting.GOLD + "" + EnumChatFormatting.STRIKETHROUGH + "-------------------\n" +
 																EnumChatFormatting.YELLOW + EnumChatFormatting.BOLD + "  Mythological Event Summary (Current Session):\n" +
 																EnumChatFormatting.YELLOW + "    Coins: " + Utils.getMoneySpent(MythologicalTracker.mythCoinsSession) + "\n" +
 																EnumChatFormatting.WHITE + "    Griffin Feathers: " + nf.format(MythologicalTracker.griffinFeathersSession) + "\n" +
@@ -758,10 +762,10 @@ public class LootCommand extends CommandBase {
 																EnumChatFormatting.WHITE + "   Gaia Constructs: " + nf.format(MythologicalTracker.gaiaConstructsSession) + "\n" +
 																EnumChatFormatting.DARK_PURPLE + "    Minos Champions: " + nf.format(MythologicalTracker.minosChampionsSession) + "\n" +
 																EnumChatFormatting.GOLD + "    Minos Inquisitors: " + nf.format(MythologicalTracker.minosInquisitorsSession) + "\n" +
-																EnumChatFormatting.GOLD + EnumChatFormatting.BOLD + "-------------------"));
+																EnumChatFormatting.GOLD + EnumChatFormatting.STRIKETHROUGH + "-------------------"));
 					return;
 				}
-				player.addChatMessage(new ChatComponentText(EnumChatFormatting.GOLD + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+				player.addChatMessage(new ChatComponentText(EnumChatFormatting.GOLD + "" + EnumChatFormatting.STRIKETHROUGH + "-------------------\n" +
 															EnumChatFormatting.YELLOW + EnumChatFormatting.BOLD + "  Mythological Event Summary:\n" +
 															EnumChatFormatting.YELLOW + "    Coins: " + Utils.getMoneySpent(MythologicalTracker.mythCoins) + "\n" +
 															EnumChatFormatting.WHITE + "    Griffin Feathers: " + nf.format(MythologicalTracker.griffinFeathers) + "\n" +
@@ -773,18 +777,18 @@ public class LootCommand extends CommandBase {
 															EnumChatFormatting.WHITE + "   Gaia Constructs: " + nf.format(MythologicalTracker.gaiaConstructs) + "\n" +
 															EnumChatFormatting.DARK_PURPLE + "    Minos Champions: " + nf.format(MythologicalTracker.minosChampions) + "\n" +
 															EnumChatFormatting.GOLD + "    Minos Inquisitors: " + nf.format(MythologicalTracker.minosInquisitors) + "\n" +
-															EnumChatFormatting.GOLD + EnumChatFormatting.BOLD + "-------------------"));
+															EnumChatFormatting.GOLD + EnumChatFormatting.STRIKETHROUGH + "-------------------"));
 				break;
 			case "catacombs":
 				if (arg1.length == 1) {
-					player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Usage: /loot catacombs <f1/f2/f3/f4/f5/f6/f7>"));
+					player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "Usage: /loot catacombs <f1/f2/f3/f4/f5/f6/f7>"));
 					return;
 				}
 				switch (arg1[1].toLowerCase()) {
 					case "f1":
 					case "floor1":
 						if (showSession) {
-							player.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_RED + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+							player.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_RED + "" + EnumChatFormatting.STRIKETHROUGH + "-------------------\n" +
 																		EnumChatFormatting.RED + EnumChatFormatting.BOLD + "  Catacombs F1 Summary (Current Session):\n" +
 																		EnumChatFormatting.GOLD + "    S+ Runs: " + nf.format(CatacombsTracker.f1SPlusSession) + "\n" +
 																		EnumChatFormatting.GOLD + "    Recombobulator 3000s: " + nf.format(CatacombsTracker.recombobulatorsSession) + "\n" +
@@ -792,10 +796,10 @@ public class LootCommand extends CommandBase {
 																		EnumChatFormatting.BLUE + "    Bonzo's Staffs: " + nf.format(CatacombsTracker.bonzoStaffsSession) + "\n" +
 																		EnumChatFormatting.AQUA + "    Coins Spent: " + Utils.getMoneySpent(CatacombsTracker.f1CoinsSpentSession) + "\n" +
 																		EnumChatFormatting.AQUA + "    Time Spent: " + Utils.getTimeBetween(0, CatacombsTracker.f1TimeSpentSession) + "\n" +
-																		EnumChatFormatting.DARK_RED + EnumChatFormatting.BOLD + " -------------------"));
+																		EnumChatFormatting.DARK_RED + EnumChatFormatting.STRIKETHROUGH + "-------------------"));
 							return;
 						}
-						player.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_RED + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+						player.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_RED + "" + EnumChatFormatting.STRIKETHROUGH + "-------------------\n" +
 																	EnumChatFormatting.RED + EnumChatFormatting.BOLD + "  Catacombs F1 Summary:\n" +
 																	EnumChatFormatting.GOLD + "    S+ Runs: " + nf.format(CatacombsTracker.f1SPlus) + "\n" +
 																	EnumChatFormatting.GOLD + "    Recombobulator 3000s: " + nf.format(CatacombsTracker.recombobulators) + "\n" +
@@ -803,12 +807,12 @@ public class LootCommand extends CommandBase {
 																	EnumChatFormatting.BLUE + "    Bonzo's Staffs: " + nf.format(CatacombsTracker.bonzoStaffs) + "\n" +
 																	EnumChatFormatting.AQUA + "    Coins Spent: " + Utils.getMoneySpent(CatacombsTracker.f1CoinsSpent) + "\n" +
 																	EnumChatFormatting.AQUA + "    Time Spent: " + Utils.getTimeBetween(0, CatacombsTracker.f1TimeSpent) + "\n" +
-																	EnumChatFormatting.DARK_RED + EnumChatFormatting.BOLD + " -------------------"));
+																	EnumChatFormatting.DARK_RED + EnumChatFormatting.STRIKETHROUGH + "-------------------"));
 						break;
 					case "f2":
 					case "floor2":
 						if (showSession) {
-							player.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_RED + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+							player.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_RED + "" + EnumChatFormatting.STRIKETHROUGH + "-------------------\n" +
 																		EnumChatFormatting.RED + EnumChatFormatting.BOLD + "  Catacombs F2 Summary (Current Session):\n" +
 																		EnumChatFormatting.GOLD + "    S+ Runs: " + nf.format(CatacombsTracker.f2SPlusSession) + "\n" +
 																		EnumChatFormatting.GOLD + "    Recombobulator 3000s: " + nf.format(CatacombsTracker.recombobulatorsSession) + "\n" +
@@ -817,10 +821,10 @@ public class LootCommand extends CommandBase {
 																		EnumChatFormatting.DARK_PURPLE + "    Adaptive Blades: " + nf.format(CatacombsTracker.adaptiveSwordsSession) + "\n" +
 																		EnumChatFormatting.AQUA + "    Coins Spent: " + Utils.getMoneySpent(CatacombsTracker.f2CoinsSpentSession) + "\n" +
 																		EnumChatFormatting.AQUA + "    Time Spent: " + Utils.getTimeBetween(0, CatacombsTracker.f2TimeSpentSession) + "\n" +
-																		EnumChatFormatting.DARK_RED + EnumChatFormatting.BOLD + " -------------------"));
+																		EnumChatFormatting.DARK_RED + EnumChatFormatting.STRIKETHROUGH + "-------------------"));
 							return;
 						}
-						player.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_RED + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+						player.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_RED + "" + EnumChatFormatting.STRIKETHROUGH + "-------------------\n" +
 																	EnumChatFormatting.RED + EnumChatFormatting.BOLD + "  Catacombs F2 Summary:\n" +
 																	EnumChatFormatting.GOLD + "    S+ Runs: " + nf.format(CatacombsTracker.f2SPlus) + "\n" +
 																	EnumChatFormatting.GOLD + "    Recombobulator 3000s: " + nf.format(CatacombsTracker.recombobulators) + "\n" +
@@ -829,12 +833,12 @@ public class LootCommand extends CommandBase {
 																	EnumChatFormatting.DARK_PURPLE + "    Adaptive Blades: " + nf.format(CatacombsTracker.adaptiveSwords) + "\n" +
 																	EnumChatFormatting.AQUA + "    Coins Spent: " + Utils.getMoneySpent(CatacombsTracker.f2CoinsSpent) + "\n" +
 																	EnumChatFormatting.AQUA + "    Time Spent: " + Utils.getTimeBetween(0, CatacombsTracker.f2TimeSpent) + "\n" +
-																	EnumChatFormatting.DARK_RED + EnumChatFormatting.BOLD + " -------------------"));
+																	EnumChatFormatting.DARK_RED + EnumChatFormatting.STRIKETHROUGH + "-------------------"));
 						break;
 					case "f3":
 					case "floor3":
 						if (showSession) {
-							player.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_RED + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+							player.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_RED + "" + EnumChatFormatting.STRIKETHROUGH + "-------------------\n" +
 																		EnumChatFormatting.RED + EnumChatFormatting.BOLD + "  Catacombs F3 Summary (Current Session):\n" +
 																		EnumChatFormatting.GOLD + "    S+ Runs: " + nf.format(CatacombsTracker.f3SPlusSession) + "\n" +
 																		EnumChatFormatting.GOLD + "    Recombobulator 3000s: " + nf.format(CatacombsTracker.recombobulatorsSession) + "\n" +
@@ -845,10 +849,10 @@ public class LootCommand extends CommandBase {
 																		EnumChatFormatting.DARK_PURPLE + "    Adaptive Boots: " + nf.format(CatacombsTracker.adaptiveBootsSession) + "\n" +
 																		EnumChatFormatting.AQUA + "    Coins Spent: " + Utils.getMoneySpent(CatacombsTracker.f3CoinsSpentSession) + "\n" +
 																		EnumChatFormatting.AQUA + "    Time Spent: " + Utils.getTimeBetween(0, CatacombsTracker.f3TimeSpentSession) + "\n" +
-																		EnumChatFormatting.DARK_RED + EnumChatFormatting.BOLD + " -------------------"));
+																		EnumChatFormatting.DARK_RED + EnumChatFormatting.STRIKETHROUGH + "-------------------"));
 							return;
 						}
-						player.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_RED + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+						player.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_RED + "" + EnumChatFormatting.STRIKETHROUGH + "-------------------\n" +
 																	EnumChatFormatting.RED + EnumChatFormatting.BOLD + "  Catacombs F3 Summary:\n" +
 																	EnumChatFormatting.GOLD + "    S+ Runs: " + nf.format(CatacombsTracker.f3SPlus) + "\n" +
 																	EnumChatFormatting.GOLD + "    Recombobulator 3000s: " + nf.format(CatacombsTracker.recombobulators) + "\n" +
@@ -859,12 +863,12 @@ public class LootCommand extends CommandBase {
 																	EnumChatFormatting.DARK_PURPLE + "    Adaptive Boots: " + nf.format(CatacombsTracker.adaptiveBoots) + "\n" +
 																	EnumChatFormatting.AQUA + "    Coins Spent: " + Utils.getMoneySpent(CatacombsTracker.f3CoinsSpent) + "\n" +
 																	EnumChatFormatting.AQUA + "    Time Spent: " + Utils.getTimeBetween(0, CatacombsTracker.f3TimeSpent) + "\n" +
-																	EnumChatFormatting.DARK_RED + EnumChatFormatting.BOLD + " -------------------"));
+																	EnumChatFormatting.DARK_RED + EnumChatFormatting.STRIKETHROUGH + "-------------------"));
 						break;
 					case "f4":
 					case "floor4":
 						if (showSession) {
-							player.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_RED + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+							player.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_RED + "" + EnumChatFormatting.STRIKETHROUGH + "-------------------\n" +
 																		EnumChatFormatting.RED + EnumChatFormatting.BOLD + "  Catacombs F4 Summary (Current Session):\n" +
 																		EnumChatFormatting.GOLD + "    S+ Runs: " + nf.format(CatacombsTracker.f4SPlusSession) + "\n" +
 																		EnumChatFormatting.GOLD + "    Recombobulator 3000s: " + nf.format(CatacombsTracker.recombobulatorsSession) + "\n" +
@@ -878,10 +882,10 @@ public class LootCommand extends CommandBase {
 																		EnumChatFormatting.GOLD + "    Leg Spirit Pets: " + nf.format(CatacombsTracker.legSpiritPetsSession) + "\n" +
 																		EnumChatFormatting.AQUA + "    Coins Spent: " + Utils.getMoneySpent(CatacombsTracker.f4CoinsSpentSession) + "\n" +
 																		EnumChatFormatting.AQUA + "    Time Spent: " + Utils.getTimeBetween(0, CatacombsTracker.f4TimeSpentSession) + "\n" +
-																		EnumChatFormatting.DARK_RED + EnumChatFormatting.BOLD + " -------------------"));
+																		EnumChatFormatting.DARK_RED + EnumChatFormatting.STRIKETHROUGH + "-------------------"));
 							return;
 						}
-						player.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_RED + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+						player.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_RED + "" + EnumChatFormatting.STRIKETHROUGH + "-------------------\n" +
 																	EnumChatFormatting.RED + EnumChatFormatting.BOLD + "  Catacombs F4 Summary:\n" +
 																	EnumChatFormatting.GOLD + "    S+ Runs: " + nf.format(CatacombsTracker.f4SPlus) + "\n" +
 																	EnumChatFormatting.GOLD + "    Recombobulator 3000s: " + nf.format(CatacombsTracker.recombobulators) + "\n" +
@@ -895,12 +899,12 @@ public class LootCommand extends CommandBase {
 																	EnumChatFormatting.GOLD + "    Leg Spirit Pets: " + nf.format(CatacombsTracker.legSpiritPets) + "\n" +
 																	EnumChatFormatting.AQUA + "    Coins Spent: " + Utils.getMoneySpent(CatacombsTracker.f4CoinsSpent) + "\n" +
 																	EnumChatFormatting.AQUA + "    Time Spent: " + Utils.getTimeBetween(0, CatacombsTracker.f4TimeSpent) + "\n" +
-																	EnumChatFormatting.DARK_RED + EnumChatFormatting.BOLD + " -------------------"));
+																	EnumChatFormatting.DARK_RED + EnumChatFormatting.STRIKETHROUGH + "-------------------"));
 						break;
 					case "f5":
 					case "floor5":
 						if (showSession) {
-							player.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_RED + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+							player.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_RED + "" + EnumChatFormatting.STRIKETHROUGH + "-------------------\n" +
 																		EnumChatFormatting.RED + EnumChatFormatting.BOLD + "  Catacombs F5 Summary (Current Session):\n" +
 																		EnumChatFormatting.GOLD + "    S+ Runs: " + nf.format(CatacombsTracker.f5SPlusSession) + "\n" +
 																		EnumChatFormatting.GOLD + "    Recombobulator 3000s: " + nf.format(CatacombsTracker.recombobulatorsSession) + "\n" +
@@ -915,10 +919,10 @@ public class LootCommand extends CommandBase {
 																		EnumChatFormatting.GOLD + "    Shadow Furys: " + nf.format(CatacombsTracker.shadowFurysSession) + "\n" +
 																		EnumChatFormatting.AQUA + "    Coins Spent: " + Utils.getMoneySpent(CatacombsTracker.f5CoinsSpentSession) + "\n" +
 																		EnumChatFormatting.AQUA + "    Time Spent: " + Utils.getTimeBetween(0, CatacombsTracker.f5TimeSpentSession) + "\n" +
-																		EnumChatFormatting.DARK_RED + EnumChatFormatting.BOLD + " -------------------"));
+																		EnumChatFormatting.DARK_RED + EnumChatFormatting.STRIKETHROUGH + "-------------------"));
 							return;
 						}
-						player.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_RED + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+						player.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_RED + "" + EnumChatFormatting.STRIKETHROUGH + "-------------------\n" +
 																	EnumChatFormatting.RED + EnumChatFormatting.BOLD + "  Catacombs F5 Summary:\n" +
 																	EnumChatFormatting.GOLD + "    S+ Runs: " + nf.format(CatacombsTracker.f5SPlus) + "\n" +
 																	EnumChatFormatting.GOLD + "    Recombobulator 3000s: " + nf.format(CatacombsTracker.recombobulators) + "\n" +
@@ -933,12 +937,12 @@ public class LootCommand extends CommandBase {
 																	EnumChatFormatting.GOLD + "    Shadow Furys: " + nf.format(CatacombsTracker.shadowFurys) + "\n" +
 																	EnumChatFormatting.AQUA + "    Coins Spent: " + Utils.getMoneySpent(CatacombsTracker.f5CoinsSpent) + "\n" +
 																	EnumChatFormatting.AQUA + "    Time Spent: " + Utils.getTimeBetween(0, CatacombsTracker.f5TimeSpent) + "\n" +
-																	EnumChatFormatting.DARK_RED + EnumChatFormatting.BOLD + " -------------------"));
+																	EnumChatFormatting.DARK_RED + EnumChatFormatting.STRIKETHROUGH + "-------------------"));
 						break;
 					case "f6":
 					case "floor6":
 						if (showSession) {
-							player.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_RED + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+							player.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_RED + "" + EnumChatFormatting.STRIKETHROUGH + "-------------------\n" +
 																		EnumChatFormatting.RED + EnumChatFormatting.BOLD + "  Catacombs F6 Summary (Current Session):\n" +
 																		EnumChatFormatting.GOLD + "    S+ Runs: " + nf.format(CatacombsTracker.f6SPlusSession) + "\n" +
 																		EnumChatFormatting.GOLD + "    Recombobulator 3000s: " + nf.format(CatacombsTracker.recombobulatorsSession) + "\n" +
@@ -954,10 +958,10 @@ public class LootCommand extends CommandBase {
 																		EnumChatFormatting.WHITE + "    Rerolls: " + nf.format(CatacombsTracker.f6RerollsSession) + "\n" +
 																		EnumChatFormatting.AQUA + "    Coins Spent: " + Utils.getMoneySpent(CatacombsTracker.f6CoinsSpentSession) + "\n" +
 																		EnumChatFormatting.AQUA + "    Time Spent: " + Utils.getTimeBetween(0, CatacombsTracker.f6TimeSpentSession) + "\n" +
-																		EnumChatFormatting.DARK_RED + EnumChatFormatting.BOLD + " -------------------"));
+																		EnumChatFormatting.DARK_RED + EnumChatFormatting.STRIKETHROUGH + "-------------------"));
 							return;
 						}
-						player.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_RED + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+						player.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_RED + "" + EnumChatFormatting.STRIKETHROUGH + "-------------------\n" +
 																	EnumChatFormatting.RED + EnumChatFormatting.BOLD + "  Catacombs F6 Summary:\n" +
 																	EnumChatFormatting.GOLD + "    S+ Runs: " + nf.format(CatacombsTracker.f6SPlus) + "\n" +
 																	EnumChatFormatting.GOLD + "    Recombobulator 3000s: " + nf.format(CatacombsTracker.recombobulators) + "\n" +
@@ -973,12 +977,12 @@ public class LootCommand extends CommandBase {
 																	EnumChatFormatting.WHITE + "    Rerolls: " + nf.format(CatacombsTracker.f6Rerolls) + "\n" +
 																	EnumChatFormatting.AQUA + "    Coins Spent: " + Utils.getMoneySpent(CatacombsTracker.f6CoinsSpent) + "\n" +
 																	EnumChatFormatting.AQUA + "    Time Spent: " + Utils.getTimeBetween(0, CatacombsTracker.f6TimeSpent) + "\n" +
-																	EnumChatFormatting.DARK_RED + EnumChatFormatting.BOLD + " -------------------"));
+																	EnumChatFormatting.DARK_RED + EnumChatFormatting.STRIKETHROUGH + "-------------------"));
 						break;
 					case "f7":
 					case "floor7":
 						if (showSession) {
-							player.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_RED + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+							player.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_RED + "" + EnumChatFormatting.STRIKETHROUGH + "-------------------\n" +
 																		EnumChatFormatting.RED + EnumChatFormatting.BOLD + "  Catacombs F7 Summary (Current Session):\n" +
 																		EnumChatFormatting.GOLD + "    S+ Runs: " + nf.format(CatacombsTracker.f7SPlusSession) + "\n" +
 																		EnumChatFormatting.GOLD + "    Recombobulator 3000s: " + nf.format(CatacombsTracker.recombobulatorsSession) + "\n" +
@@ -997,10 +1001,10 @@ public class LootCommand extends CommandBase {
 																		EnumChatFormatting.WHITE + "    Rerolls: " + nf.format(CatacombsTracker.f7RerollsSession) + "\n" +
 																		EnumChatFormatting.AQUA + "    Coins Spent: " + Utils.getMoneySpent(CatacombsTracker.f7CoinsSpentSession) + "\n" +
 																		EnumChatFormatting.AQUA + "    Time Spent: " + Utils.getTimeBetween(0, CatacombsTracker.f7TimeSpentSession) + "\n" +
-																		EnumChatFormatting.DARK_RED + EnumChatFormatting.BOLD + " -------------------"));
+																		EnumChatFormatting.DARK_RED + EnumChatFormatting.STRIKETHROUGH + "-------------------"));
 							return;
 						}
-						player.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_RED + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+						player.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_RED + "" + EnumChatFormatting.STRIKETHROUGH + "-------------------\n" +
 																	EnumChatFormatting.RED + EnumChatFormatting.BOLD + "  Catacombs F7 Summary:\n" +
 																	EnumChatFormatting.GOLD + "    S+ Runs: " + nf.format(CatacombsTracker.f7SPlus) + "\n" +
 																	EnumChatFormatting.GOLD + "    Recombobulator 3000s: " + nf.format(CatacombsTracker.recombobulators) + "\n" +
@@ -1019,12 +1023,12 @@ public class LootCommand extends CommandBase {
 																	EnumChatFormatting.WHITE + "    Rerolls: " + nf.format(CatacombsTracker.f7Rerolls) + "\n" +
 																	EnumChatFormatting.AQUA + "    Coins Spent: " + Utils.getMoneySpent(CatacombsTracker.f7CoinsSpent) + "\n" +
 																	EnumChatFormatting.AQUA + "    Time Spent: " + Utils.getTimeBetween(0, CatacombsTracker.f7TimeSpent) + "\n" +
-																	EnumChatFormatting.DARK_RED + EnumChatFormatting.BOLD + " -------------------"));
+																	EnumChatFormatting.DARK_RED + EnumChatFormatting.STRIKETHROUGH + "-------------------"));
 						break;
 					case "mm":
 					case "master":
 						if (showSession) {
-							player.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_RED + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+							player.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_RED + "" + EnumChatFormatting.STRIKETHROUGH + "-------------------\n" +
 																		EnumChatFormatting.RED + EnumChatFormatting.BOLD + "  Catacombs MM Summary (Current Session):\n" +
 																		EnumChatFormatting.GOLD + "    Master One S Runs: " + nf.format(CatacombsTracker.m1SSession) + "\n" +
 																		EnumChatFormatting.GOLD + "    Master One S+ Runs: " + nf.format(CatacombsTracker.m1SPlusSession) + "\n" +
@@ -1052,10 +1056,10 @@ public class LootCommand extends CommandBase {
 																		EnumChatFormatting.WHITE + "    Rerolls: " + nf.format(CatacombsTracker.masterRerollsSession) + "\n" +
 																		EnumChatFormatting.AQUA + "    Coins Spent: " + Utils.getMoneySpent(CatacombsTracker.masterCoinsSpentSession) + "\n" +
 																		EnumChatFormatting.AQUA + "    Time Spent: " + Utils.getTimeBetween(0, CatacombsTracker.masterTimeSpentSession) + "\n" +
-																		EnumChatFormatting.DARK_RED + EnumChatFormatting.BOLD + " -------------------"));
+																		EnumChatFormatting.DARK_RED + EnumChatFormatting.STRIKETHROUGH + "-------------------"));
 							return;
 						}
-						player.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_RED + "" + EnumChatFormatting.BOLD + "-------------------\n" +
+						player.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_RED + "" + EnumChatFormatting.STRIKETHROUGH + "-------------------\n" +
 																	EnumChatFormatting.RED + EnumChatFormatting.BOLD + "  Catacombs MM Summary:\n" +
 																	EnumChatFormatting.GOLD + "    Master One S Runs: " + nf.format(CatacombsTracker.m1S) + "\n" +
 																	EnumChatFormatting.GOLD + "    Master One S+ Runs: " + nf.format(CatacombsTracker.m1SPlus) + "\n" +
@@ -1083,14 +1087,14 @@ public class LootCommand extends CommandBase {
 																	EnumChatFormatting.WHITE + "    Rerolls: " + nf.format(CatacombsTracker.masterRerolls) + "\n" +
 																	EnumChatFormatting.AQUA + "    Coins Spent: " + Utils.getMoneySpent(CatacombsTracker.masterCoinsSpent) + "\n" +
 																	EnumChatFormatting.AQUA + "    Time Spent: " + Utils.getTimeBetween(0, CatacombsTracker.masterTimeSpent) + "\n" +
-																	EnumChatFormatting.DARK_RED + EnumChatFormatting.BOLD + " -------------------"));
+																	EnumChatFormatting.DARK_RED + EnumChatFormatting.STRIKETHROUGH + "-------------------"));
 						break;
 					default:
-						player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Usage: /loot catacombs <f1/f2/f3/f4/f5/f6/f7/mm>"));
+						player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "Usage: /loot catacombs <f1/f2/f3/f4/f5/f6/f7/mm>"));
 				}
 				break;
 			default:
-				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Usage: " + getCommandUsage(arg0)));
+				player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "Usage: " + getCommandUsage(arg0)));
 		}
 	}
 

@@ -1,11 +1,13 @@
 package me.Danker.features;
 
+import cc.polyfrost.oneconfig.config.annotations.Exclude;
+import cc.polyfrost.oneconfig.hud.Hud;
+import cc.polyfrost.oneconfig.libs.universal.UMatrixStack;
 import me.Danker.DankersSkyblockMod;
-import me.Danker.commands.MoveCommand;
-import me.Danker.commands.ScaleCommand;
-import me.Danker.commands.ToggleCommand;
-import me.Danker.events.RenderOverlayEvent;
+import me.Danker.config.ModConfig;
 import me.Danker.handlers.TextRenderer;
+import me.Danker.locations.DungeonFloor;
+import me.Danker.utils.RenderUtils;
 import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.network.NetworkPlayerInfo;
@@ -21,27 +23,36 @@ import java.util.Collection;
 
 public class DungeonScore {
 
-    int failedPuzzles;
-    int deaths;
-    int skillScore;
-    String secrets;
-    int exploreScore;
-    int timeScore;
-    int bonusScore;
+    static int failedPuzzles;
+    static int deaths;
+    static int skillScore;
+    static String secrets;
+    static int exploreScore;
+    static int timeScore;
+    static int bonusScore;
+
+    @SubscribeEvent
+    public void onWorldChange(WorldEvent.Load event) {
+        failedPuzzles = 0;
+        deaths = 0;
+        skillScore = 100;
+        secrets = "";
+        exploreScore = 0;
+        timeScore = 100;
+        bonusScore = 0;
+    }
 
     @SubscribeEvent(receiveCanceled = true)
     public void onChat(ClientChatReceivedEvent event) {
         String message = StringUtils.stripControlCodes(event.message.getUnformattedText());
 
-        if (!ToggleCommand.dungeonScore || !Utils.inDungeons) return;
-
-        if (message.contains("PUZZLE FAIL! ") || message.contains("chose the wrong answer! I shall never forget this moment")) {
-            failedPuzzles++;
-        }
+        if (!ModConfig.dungeonScoreHud.isEnabled() || !Utils.isInDungeons()) return;
 
         if (message.contains(":")) return;
 
-        if (message.contains(" and became a ghost.")) {
+        if (message.contains("PUZZLE FAIL! ") || message.contains("chose the wrong answer! I shall never forget this moment")) {
+            failedPuzzles++;
+        } else if (message.contains(" and became a ghost.")) {
             deaths++;
         }
     }
@@ -50,7 +61,7 @@ public class DungeonScore {
     public void onTick(TickEvent.ClientTickEvent event) {
         if (event.phase != TickEvent.Phase.START) return;
 
-        if (!ToggleCommand.dungeonScore || !Utils.inDungeons) return;
+        if (!ModConfig.dungeonScoreHud.isEnabled() || !Utils.isInDungeons()) return;
 
         if (DankersSkyblockMod.tickAmount % 20 == 0) {
             int missingPuzzles = 0;
@@ -66,9 +77,9 @@ public class DungeonScore {
                 String display = player.getDisplayName().getUnformattedText();
 
                 if (display.startsWith(" Opened Rooms: ")) {
-                    openedRooms = Double.parseDouble(display.replaceAll("[^\\d]", ""));
+                    openedRooms = Double.parseDouble(display.replaceAll("\\D", ""));
                 } else if (display.startsWith(" Completed Rooms: ")) {
-                    completedRooms = Double.parseDouble(display.replaceAll("[^\\d]", ""));
+                    completedRooms = Double.parseDouble(display.replaceAll("\\D", ""));
                 } else if (display.startsWith(" Secrets Found: ") && display.endsWith("%")) {
                     secrets = player.getDisplayName().getFormattedText();
 
@@ -102,7 +113,7 @@ public class DungeonScore {
                     int seconds = Integer.parseInt(timeText.substring(timeText.indexOf("m") + 1, timeText.indexOf("s")));
                     int time = minutes * 60 + seconds;
 
-                    if (Utils.currentFloor == Utils.DungeonFloor.F2) time -= 120;
+                    if (Utils.currentFloor == DungeonFloor.F2) time -= 120;
 
                     int base;
                     switch (Utils.currentFloor) {
@@ -133,7 +144,7 @@ public class DungeonScore {
                         timeScore = 0;
                     }
                 } else if (display.startsWith(" Crypts: ")) {
-                    bonusScore = MathHelper.clamp_int(Integer.parseInt(display.replaceAll("[^\\d]", "")), 0, 5);
+                    bonusScore = MathHelper.clamp_int(Integer.parseInt(display.replaceAll("\\D", "")), 0, 5);
                 } else if (display.contains("[✦]")) {
                     missingPuzzles++;
                 }
@@ -148,53 +159,78 @@ public class DungeonScore {
         }
     }
 
-    @SubscribeEvent
-    public void renderPlayerInfo(RenderOverlayEvent event) {
-        if (ToggleCommand.dungeonScore && Utils.inDungeons) {
+    public static class DungeonScoreHud extends Hud {
+
+        @Exclude
+        String exampleText = " Secrets Found: " + EnumChatFormatting.GREEN + "100.0%\n" +
+                             EnumChatFormatting.GOLD + "Skill:\n" +
+                             EnumChatFormatting.GOLD + "Explore:\n" +
+                             EnumChatFormatting.GOLD + "Speed:\n" +
+                             EnumChatFormatting.GOLD + "Bonus:\n" +
+                             EnumChatFormatting.GOLD + "Total:";
+
+        @Exclude
+        String exampleNums = "\n" +
+                             EnumChatFormatting.GOLD + "100\n" +
+                             EnumChatFormatting.GOLD + "100\n" +
+                             EnumChatFormatting.GOLD + "100\n" +
+                             EnumChatFormatting.GOLD + "5\n" +
+                             EnumChatFormatting.GOLD + "305 " + EnumChatFormatting.GRAY + "(" + EnumChatFormatting.GOLD + "S+" + EnumChatFormatting.GRAY + ")";
+
+        @Override
+        protected void draw(UMatrixStack matrices, float x, float y, float scale, boolean example) {
             Minecraft mc = Minecraft.getMinecraft();
 
-            int totalScore = skillScore + exploreScore + timeScore + bonusScore;
-            String total;
-            if (totalScore >= 300) {
-                total = EnumChatFormatting.GOLD + "S+";
-            } else if (totalScore >= 270) {
-                total = EnumChatFormatting.GOLD + "S";
-            } else if (totalScore >= 230) {
-                total = EnumChatFormatting.DARK_PURPLE + "A";
-            } else if (totalScore >= 160) {
-                total = EnumChatFormatting.GREEN + "B";
-            } else if (totalScore >= 100) {
-                total = EnumChatFormatting.BLUE + "C";
-            } else {
-                total = EnumChatFormatting.RED + "D";
+            if (example) {
+                TextRenderer.drawHUDText(exampleText, x, y, scale);
+                TextRenderer.drawHUDText(exampleNums, (int) (x + (80 * scale)), y, scale);
+                return;
             }
 
-            String scoreText = secrets + "\n" +
-                    EnumChatFormatting.GOLD + "Skill:\n" +
-                    EnumChatFormatting.GOLD + "Explore:\n" +
-                    EnumChatFormatting.GOLD + "Speed:\n" +
-                    EnumChatFormatting.GOLD + "Bonus:\n" +
-                    EnumChatFormatting.GOLD + "Total:";
-            String score = "\n" +
-                    EnumChatFormatting.GOLD + skillScore + "\n" +
-                    EnumChatFormatting.GOLD + exploreScore + "\n" +
-                    EnumChatFormatting.GOLD + timeScore + "\n" +
-                    EnumChatFormatting.GOLD + bonusScore + "\n" +
-                    EnumChatFormatting.GOLD + totalScore + EnumChatFormatting.GRAY + " (" + total + EnumChatFormatting.GRAY + ")";
-            new TextRenderer(mc, scoreText, MoveCommand.dungeonScoreXY[0], MoveCommand.dungeonScoreXY[1], ScaleCommand.dungeonScoreScale);
-            new TextRenderer(mc, score, MoveCommand.dungeonScoreXY[0] + 80, MoveCommand.dungeonScoreXY[1], ScaleCommand.dungeonScoreScale);
-        }
-    }
+            if (enabled && Utils.isInDungeons()) {
+                int totalScore = skillScore + exploreScore + timeScore + bonusScore;
+                String total;
+                if (totalScore >= 300) {
+                    total = EnumChatFormatting.GOLD + "S+";
+                } else if (totalScore >= 270) {
+                    total = EnumChatFormatting.GOLD + "S";
+                } else if (totalScore >= 230) {
+                    total = EnumChatFormatting.DARK_PURPLE + "A";
+                } else if (totalScore >= 160) {
+                    total = EnumChatFormatting.GREEN + "B";
+                } else if (totalScore >= 100) {
+                    total = EnumChatFormatting.BLUE + "C";
+                } else {
+                    total = EnumChatFormatting.RED + "D";
+                }
 
-    @SubscribeEvent
-    public void onWorldChange(WorldEvent.Load event) {
-        failedPuzzles = 0;
-        deaths = 0;
-        skillScore = 100;
-        secrets = "";
-        exploreScore = 0;
-        timeScore = 100;
-        bonusScore = 0;
+                String scoreText = secrets + "\n" +
+                                   EnumChatFormatting.GOLD + "Skill:\n" +
+                                   EnumChatFormatting.GOLD + "Explore:\n" +
+                                   EnumChatFormatting.GOLD + "Speed:\n" +
+                                   EnumChatFormatting.GOLD + "Bonus:\n" +
+                                   EnumChatFormatting.GOLD + "Total:";
+                String score = "\n" +
+                               EnumChatFormatting.GOLD + skillScore + "\n" +
+                               EnumChatFormatting.GOLD + exploreScore + "\n" +
+                               EnumChatFormatting.GOLD + timeScore + "\n" +
+                               EnumChatFormatting.GOLD + bonusScore + "\n" +
+                               EnumChatFormatting.GOLD + totalScore + EnumChatFormatting.GRAY + " (" + total + EnumChatFormatting.GRAY + ")";
+                TextRenderer.drawHUDText(scoreText, x, y, scale);
+                TextRenderer.drawHUDText(score, (int) (x + (80 * scale)), y, scale);
+            }
+        }
+
+        @Override
+        protected float getWidth(float scale, boolean example) {
+            return (RenderUtils.getWidthFromText(exampleNums) + 80 * scale) * scale;
+        }
+
+        @Override
+        protected float getHeight(float scale, boolean example) {
+            return RenderUtils.getHeightFromText(exampleNums) * scale;
+        }
+
     }
 
 }

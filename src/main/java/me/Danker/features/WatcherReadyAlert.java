@@ -1,6 +1,6 @@
 package me.Danker.features;
 
-import me.Danker.commands.ToggleCommand;
+import me.Danker.config.ModConfig;
 import me.Danker.utils.Utils;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StringUtils;
@@ -13,10 +13,11 @@ public class WatcherReadyAlert {
     public void onChat(ClientChatReceivedEvent event) {
         String message = StringUtils.stripControlCodes(event.message.getUnformattedText());
 
-        if (!Utils.inDungeons) return;
+        if (!ModConfig.watcherReady) return;
+        if (!Utils.isInDungeons()) return;
 
         if (message.contains("[BOSS] The Watcher: That will be enough for now.")) {
-            if (ToggleCommand.watcherReadyToggled) Utils.createTitle(EnumChatFormatting.RED + "WATCHER READY", 2);
+            Utils.createTitle(EnumChatFormatting.RED + "WATCHER READY", 2);
         }
     }
 }

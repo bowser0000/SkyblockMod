@@ -1,12 +1,12 @@
 package me.Danker.features.puzzlesolvers;
 
-import me.Danker.commands.ToggleCommand;
+import cc.polyfrost.oneconfig.libs.universal.UResolution;
+import me.Danker.config.ModConfig;
 import me.Danker.events.ChestSlotClickedEvent;
 import me.Danker.events.GuiChestBackgroundDrawnEvent;
 import me.Danker.handlers.TextRenderer;
 import me.Danker.utils.RenderUtils;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.init.Blocks;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
@@ -25,12 +25,10 @@ public class ChronomatronSolver {
     static int lastChronomatronRound = 0;
     static List<String> chronomatronPattern = new ArrayList<>();
     static int chronomatronMouseClicks = 0;
-    public static int CHRONOMATRON_NEXT;
-    public static int CHRONOMATRON_NEXT_TO_NEXT;
 
     @SubscribeEvent
     public void onSlotClick(ChestSlotClickedEvent event) {
-        if (ToggleCommand.chronomatronToggled && event.inventoryName.startsWith("Chronomatron (")) {
+        if (ModConfig.chronomatron && event.inventoryName.startsWith("Chronomatron (")) {
             IInventory inventory = event.inventory;
             ItemStack item = event.item;
 
@@ -57,13 +55,13 @@ public class ChronomatronSolver {
 
     @SubscribeEvent
     public void onGuiRender(GuiChestBackgroundDrawnEvent event) {
-        if (ToggleCommand.chronomatronToggled && event.displayName.startsWith("Chronomatron (")) {
+        if (ModConfig.chronomatron && event.displayName.startsWith("Chronomatron (")) {
             int chestSize = event.chestSize;
             List<Slot> invSlots = event.slots;
             if (invSlots.size() > 48 && invSlots.get(49).getStack() != null) {
                 if (invSlots.get(49).getStack().getDisplayName().startsWith("§7Timer: §a") && invSlots.get(4).getStack() != null) {
                     int round = invSlots.get(4).getStack().stackSize;
-                    int timerSeconds = Integer.parseInt(StringUtils.stripControlCodes(invSlots.get(49).getStack().getDisplayName()).replaceAll("[^\\d]", ""));
+                    int timerSeconds = Integer.parseInt(StringUtils.stripControlCodes(invSlots.get(49).getStack().getDisplayName()).replaceAll("\\D", ""));
                     if (round != lastChronomatronRound && timerSeconds == round + 2) {
                         lastChronomatronRound = round;
                         for (int i = 10; i <= 43; i++) {
@@ -84,9 +82,9 @@ public class ChronomatronSolver {
 
                                 
                             if (glass.getDisplayName().equals(chronomatronPattern.get(chronomatronMouseClicks))) {
-                                RenderUtils.drawOnSlot(chestSize, glassSlot.xDisplayPosition, glassSlot.yDisplayPosition, CHRONOMATRON_NEXT + 0xE5000000);
+                                RenderUtils.drawOnSlot(chestSize, glassSlot.xDisplayPosition, glassSlot.yDisplayPosition, ModConfig.chronomatronNextColour.getRGB());
                             } else if (chronomatronMouseClicks + 1 < chronomatronPattern.size() && glass.getDisplayName().equals(chronomatronPattern.get(chronomatronMouseClicks + 1))) {
-                                RenderUtils.drawOnSlot(chestSize, glassSlot.xDisplayPosition, glassSlot.yDisplayPosition, CHRONOMATRON_NEXT_TO_NEXT + 0XBE000000);
+                                RenderUtils.drawOnSlot(chestSize, glassSlot.xDisplayPosition, glassSlot.yDisplayPosition, ModConfig.chronomatronNextToNextColour.getRGB());
                             }
                             
                         }
@@ -96,9 +94,8 @@ public class ChronomatronSolver {
                 }
             }
             Minecraft mc = Minecraft.getMinecraft();
-            ScaledResolution sr = new ScaledResolution(mc);
-            int guiLeft = (sr.getScaledWidth() - 176) / 2;
-            new TextRenderer(mc, String.join("\n", chronomatronPattern), (int) (guiLeft * 0.8), 10, 1);
+            int guiLeft = (UResolution.getScaledWidth() - 176) / 2;
+            TextRenderer.drawText(String.join("\n", chronomatronPattern), (int) (guiLeft * 0.8), 10, 1);
         }
     }
 

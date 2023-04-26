@@ -20,7 +20,7 @@ public class SpiritBootsFix {
             EntityPlayer player = Minecraft.getMinecraft().thePlayer;
             S04PacketEntityEquipment packet = (S04PacketEntityEquipment) event.packet;
 
-            if (player == null || packet == null) return;
+            if (player == null) return;
             if (packet.getEntityID() == player.getEntityId()) {
                 slot.setAccessible(true);
                 slot.setInt(packet, slot.getInt(packet) + 1);

@@ -2,8 +2,8 @@ package me.Danker.commands;
 
 import com.google.gson.JsonObject;
 import me.Danker.DankersSkyblockMod;
+import me.Danker.config.ModConfig;
 import me.Danker.handlers.APIHandler;
-import me.Danker.handlers.ConfigHandler;
 import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiChest;
@@ -73,7 +73,7 @@ public class InventoryCommand extends CommandBase {
             Minecraft mc = Minecraft.getMinecraft();
 
             // Check key
-            String key = ConfigHandler.getString("api", "APIKey");
+            String key = ModConfig.apiKey;
             if (key.equals("")) {
                 player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "API key not set. Use /setkey."));
                 return;
@@ -85,10 +85,10 @@ public class InventoryCommand extends CommandBase {
             if (arg1.length == 0) {
                 username = player.getName();
                 uuid = player.getUniqueID().toString().replaceAll("[\\-]", "");
-                player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Checking inventory of " + DankersSkyblockMod.SECONDARY_COLOUR + username));
+                player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Checking inventory of " + ModConfig.getColour(ModConfig.secondaryColour) + username));
             } else {
                 username = arg1[0];
-                player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Checking inventory of " + DankersSkyblockMod.SECONDARY_COLOUR + username));
+                player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Checking inventory of " + ModConfig.getColour(ModConfig.secondaryColour) + username));
                 uuid = APIHandler.getUUID(username);
             }
 
@@ -152,7 +152,7 @@ public class InventoryCommand extends CommandBase {
                     }
                 }
             } catch (IOException ex) {
-                player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "An error has occurred while reading inventory data. See logs for more info."));
+                player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "An error has occurred while reading inventory data. See logs for more info."));
                 ex.printStackTrace();
             }
 

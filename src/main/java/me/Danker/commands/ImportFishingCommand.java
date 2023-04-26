@@ -1,11 +1,11 @@
 package me.Danker.commands;
 
 import com.google.gson.JsonObject;
-import me.Danker.DankersSkyblockMod;
+import me.Danker.config.CfgConfig;
+import me.Danker.config.ModConfig;
 import me.Danker.features.loot.FishingTracker;
 import me.Danker.features.loot.TrophyFishTracker;
 import me.Danker.handlers.APIHandler;
-import me.Danker.handlers.ConfigHandler;
 import me.Danker.utils.Utils;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
@@ -41,13 +41,13 @@ public class ImportFishingCommand extends CommandBase {
 			EntityPlayer player = (EntityPlayer) arg0;
 
 			// Check key
-			String key = ConfigHandler.getString("api", "APIKey");
+			String key = ModConfig.apiKey;
 			if (key.equals("")) {
-				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "API key not set. Use /setkey."));
+				player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "API key not set. Use /setkey."));
 				return;
 			}
 
-			player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Importing your fishing stats..."));
+			player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Importing your fishing stats..."));
 
 			// Get UUID for Hypixel API requests
 			String uuid = player.getUniqueID().toString().replaceAll("[\\-]", "");
@@ -60,7 +60,7 @@ public class ImportFishingCommand extends CommandBase {
 			JsonObject profileResponse = APIHandler.getResponse(profileURL, true);
 			if (!profileResponse.get("success").getAsBoolean()) {
 				String reason = profileResponse.get("cause").getAsString();
-				player.addChatMessage(new ChatComponentText(DankersSkyblockMod.ERROR_COLOUR + "Failed with reason: " + reason));
+				player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "Failed with reason: " + reason));
 				return;
 			}
 
@@ -100,7 +100,9 @@ public class ImportFishingCommand extends CommandBase {
 			FishingTracker.frozenSteves = getSCFromApi(statsObject, "kills_frozen_steve");
 			FishingTracker.frostyTheSnowmans = getSCFromApi(statsObject, "kills_frosty_the_snowman");
 			FishingTracker.grinches = getSCFromApi(statsObject, "kills_grinch");
+			FishingTracker.nutcrackers = getSCFromApi(statsObject, "kills_nutcracker");
 			FishingTracker.yetis = getSCFromApi(statsObject, "kills_yeti");
+			FishingTracker.reindrakes = getSCFromApi(statsObject, "kills_reindrake");
 			FishingTracker.nurseSharks = getSCFromApi(statsObject, "kills_nurse_shark");
 			FishingTracker.blueSharks = getSCFromApi(statsObject, "kills_blue_shark");
 			FishingTracker.tigerSharks = getSCFromApi(statsObject, "kills_tiger_shark");
@@ -128,53 +130,53 @@ public class ImportFishingCommand extends CommandBase {
 			FishingTracker.lordJawbuses = getSCFromApi(statsObject, "kills_lord_jawbus");
 
 			System.out.println("Writing SC to config...");
-			ConfigHandler.writeIntConfig("fishing", "goodCatch", FishingTracker.goodCatches);
-			ConfigHandler.writeIntConfig("fishing", "greatCatch", FishingTracker.greatCatches);
-			ConfigHandler.writeIntConfig("fishing", "seaCreature", FishingTracker.seaCreatures);
-			ConfigHandler.writeIntConfig("fishing", "squid", FishingTracker.squids);
-			ConfigHandler.writeIntConfig("fishing", "seaWalker", FishingTracker.seaWalkers);
-			ConfigHandler.writeIntConfig("fishing", "nightSquid", FishingTracker.nightSquids);
-			ConfigHandler.writeIntConfig("fishing", "seaGuardian", FishingTracker.seaGuardians);
-			ConfigHandler.writeIntConfig("fishing", "seaWitch", FishingTracker.seaWitches);
-			ConfigHandler.writeIntConfig("fishing", "seaArcher", FishingTracker.seaArchers);
-			ConfigHandler.writeIntConfig("fishing", "monsterOfDeep", FishingTracker.monsterOfTheDeeps);
-			ConfigHandler.writeIntConfig("fishing", "catfish", FishingTracker.catfishes);
-			ConfigHandler.writeIntConfig("fishing", "carrotKing", FishingTracker.carrotKings);
-			ConfigHandler.writeIntConfig("fishing", "seaLeech", FishingTracker.seaLeeches);
-			ConfigHandler.writeIntConfig("fishing", "guardianDefender", FishingTracker.guardianDefenders);
-			ConfigHandler.writeIntConfig("fishing", "deepSeaProtector", FishingTracker.deepSeaProtectors);
-			ConfigHandler.writeIntConfig("fishing", "hydra", FishingTracker.hydras);
-			ConfigHandler.writeIntConfig("fishing", "seaEmperor", FishingTracker.seaEmperors);
-			ConfigHandler.writeIntConfig("fishing", "milestone", FishingTracker.fishingMilestone);
-			ConfigHandler.writeIntConfig("fishing", "frozenSteve", FishingTracker.frozenSteves);
-			ConfigHandler.writeIntConfig("fishing", "snowman", FishingTracker.frostyTheSnowmans);
-			ConfigHandler.writeIntConfig("fishing", "grinch", FishingTracker.grinches);
-			ConfigHandler.writeIntConfig("fishing", "yeti", FishingTracker.yetis);
-			ConfigHandler.writeIntConfig("fishing", "nurseShark", FishingTracker.nurseSharks);
-			ConfigHandler.writeIntConfig("fishing", "blueShark", FishingTracker.blueSharks);
-			ConfigHandler.writeIntConfig("fishing", "tigerShark", FishingTracker.tigerSharks);
-			ConfigHandler.writeIntConfig("fishing", "greatWhiteShark", FishingTracker.greatWhiteSharks);
-			ConfigHandler.writeIntConfig("fishing", "scarecrow", FishingTracker.scarecrows);
-			ConfigHandler.writeIntConfig("fishing", "nightmare", FishingTracker.nightmares);
-			ConfigHandler.writeIntConfig("fishing", "werewolf", FishingTracker.werewolfs);
-			ConfigHandler.writeIntConfig("fishing", "phantomFisher", FishingTracker.phantomFishers);
-			ConfigHandler.writeIntConfig("fishing", "grimReaper", FishingTracker.grimReapers);
-			ConfigHandler.writeIntConfig("fishing", "waterWorm", FishingTracker.waterWorms);
-			ConfigHandler.writeIntConfig("fishing", "poisonedWaterWorm", FishingTracker.poisonedWaterWorms);
-			ConfigHandler.writeIntConfig("fishing", "flamingWorm", FishingTracker.flamingWorms);
-			ConfigHandler.writeIntConfig("fishing", "lavaBlaze", FishingTracker.lavaBlazes);
-			ConfigHandler.writeIntConfig("fishing", "lavaPigman", FishingTracker.lavaPigmen);
-			ConfigHandler.writeIntConfig("fishing", "zombieMiner", FishingTracker.zombieMiners);
-			ConfigHandler.writeIntConfig("fishing", "plhlegblast", FishingTracker.plhlegblasts);
-			ConfigHandler.writeIntConfig("fishing", "magmaSlug", FishingTracker.magmaSlugs);
-			ConfigHandler.writeIntConfig("fishing", "moogma", FishingTracker.moogmas);
-			ConfigHandler.writeIntConfig("fishing", "lavaLeech", FishingTracker.lavaLeeches);
-			ConfigHandler.writeIntConfig("fishing", "pyroclasticWorm", FishingTracker.pyroclasticWorms);
-			ConfigHandler.writeIntConfig("fishing", "lavaFlame", FishingTracker.lavaFlames);
-			ConfigHandler.writeIntConfig("fishing", "fireEel", FishingTracker.fireEels);
-			ConfigHandler.writeIntConfig("fishing", "taurus", FishingTracker.tauruses);
-			ConfigHandler.writeIntConfig("fishing", "thunder", FishingTracker.thunders);
-			ConfigHandler.writeIntConfig("fishing", "lordJawbus", FishingTracker.lordJawbuses);
+			CfgConfig.writeIntConfig("fishing", "goodCatch", FishingTracker.goodCatches);
+			CfgConfig.writeIntConfig("fishing", "greatCatch", FishingTracker.greatCatches);
+			CfgConfig.writeIntConfig("fishing", "seaCreature", FishingTracker.seaCreatures);
+			CfgConfig.writeIntConfig("fishing", "squid", FishingTracker.squids);
+			CfgConfig.writeIntConfig("fishing", "seaWalker", FishingTracker.seaWalkers);
+			CfgConfig.writeIntConfig("fishing", "nightSquid", FishingTracker.nightSquids);
+			CfgConfig.writeIntConfig("fishing", "seaGuardian", FishingTracker.seaGuardians);
+			CfgConfig.writeIntConfig("fishing", "seaWitch", FishingTracker.seaWitches);
+			CfgConfig.writeIntConfig("fishing", "seaArcher", FishingTracker.seaArchers);
+			CfgConfig.writeIntConfig("fishing", "monsterOfDeep", FishingTracker.monsterOfTheDeeps);
+			CfgConfig.writeIntConfig("fishing", "catfish", FishingTracker.catfishes);
+			CfgConfig.writeIntConfig("fishing", "carrotKing", FishingTracker.carrotKings);
+			CfgConfig.writeIntConfig("fishing", "seaLeech", FishingTracker.seaLeeches);
+			CfgConfig.writeIntConfig("fishing", "guardianDefender", FishingTracker.guardianDefenders);
+			CfgConfig.writeIntConfig("fishing", "deepSeaProtector", FishingTracker.deepSeaProtectors);
+			CfgConfig.writeIntConfig("fishing", "hydra", FishingTracker.hydras);
+			CfgConfig.writeIntConfig("fishing", "seaEmperor", FishingTracker.seaEmperors);
+			CfgConfig.writeIntConfig("fishing", "milestone", FishingTracker.fishingMilestone);
+			CfgConfig.writeIntConfig("fishing", "frozenSteve", FishingTracker.frozenSteves);
+			CfgConfig.writeIntConfig("fishing", "snowman", FishingTracker.frostyTheSnowmans);
+			CfgConfig.writeIntConfig("fishing", "grinch", FishingTracker.grinches);
+			CfgConfig.writeIntConfig("fishing", "yeti", FishingTracker.yetis);
+			CfgConfig.writeIntConfig("fishing", "nurseShark", FishingTracker.nurseSharks);
+			CfgConfig.writeIntConfig("fishing", "blueShark", FishingTracker.blueSharks);
+			CfgConfig.writeIntConfig("fishing", "tigerShark", FishingTracker.tigerSharks);
+			CfgConfig.writeIntConfig("fishing", "greatWhiteShark", FishingTracker.greatWhiteSharks);
+			CfgConfig.writeIntConfig("fishing", "scarecrow", FishingTracker.scarecrows);
+			CfgConfig.writeIntConfig("fishing", "nightmare", FishingTracker.nightmares);
+			CfgConfig.writeIntConfig("fishing", "werewolf", FishingTracker.werewolfs);
+			CfgConfig.writeIntConfig("fishing", "phantomFisher", FishingTracker.phantomFishers);
+			CfgConfig.writeIntConfig("fishing", "grimReaper", FishingTracker.grimReapers);
+			CfgConfig.writeIntConfig("fishing", "waterWorm", FishingTracker.waterWorms);
+			CfgConfig.writeIntConfig("fishing", "poisonedWaterWorm", FishingTracker.poisonedWaterWorms);
+			CfgConfig.writeIntConfig("fishing", "flamingWorm", FishingTracker.flamingWorms);
+			CfgConfig.writeIntConfig("fishing", "lavaBlaze", FishingTracker.lavaBlazes);
+			CfgConfig.writeIntConfig("fishing", "lavaPigman", FishingTracker.lavaPigmen);
+			CfgConfig.writeIntConfig("fishing", "zombieMiner", FishingTracker.zombieMiners);
+			CfgConfig.writeIntConfig("fishing", "plhlegblast", FishingTracker.plhlegblasts);
+			CfgConfig.writeIntConfig("fishing", "magmaSlug", FishingTracker.magmaSlugs);
+			CfgConfig.writeIntConfig("fishing", "moogma", FishingTracker.moogmas);
+			CfgConfig.writeIntConfig("fishing", "lavaLeech", FishingTracker.lavaLeeches);
+			CfgConfig.writeIntConfig("fishing", "pyroclasticWorm", FishingTracker.pyroclasticWorms);
+			CfgConfig.writeIntConfig("fishing", "lavaFlame", FishingTracker.lavaFlames);
+			CfgConfig.writeIntConfig("fishing", "fireEel", FishingTracker.fireEels);
+			CfgConfig.writeIntConfig("fishing", "taurus", FishingTracker.tauruses);
+			CfgConfig.writeIntConfig("fishing", "thunder", FishingTracker.thunders);
+			CfgConfig.writeIntConfig("fishing", "lordJawbus", FishingTracker.lordJawbuses);
 
 			TrophyFishTracker.fish = TrophyFishTracker.createEmpty();
 			TrophyFishTracker.fish.add("Sulphur Skitter", Utils.getTrophyFromAPI(trophyObject, "sulphur_skitter"));
@@ -197,7 +199,7 @@ public class ImportFishingCommand extends CommandBase {
 			TrophyFishTracker.fish.add("Golden Fish", Utils.getTrophyFromAPI(trophyObject, "golden_fish"));
 			TrophyFishTracker.save();
 
-			player.addChatMessage(new ChatComponentText(DankersSkyblockMod.MAIN_COLOUR + "Fishing stats imported."));
+			player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Fishing stats imported."));
 		}).start();
 	}
 

@@ -1,6 +1,6 @@
 package me.Danker.features;
 
-import me.Danker.commands.ToggleCommand;
+import me.Danker.config.ModConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.StringUtils;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
@@ -14,7 +14,7 @@ public class AutoAcceptReparty {
     @SubscribeEvent(receiveCanceled = true)
     public void onChat(ClientChatReceivedEvent event) {
 
-        if (ToggleCommand.autoAcceptReparty) {
+        if (ModConfig.autoAcceptReparty) {
             String message = StringUtils.stripControlCodes(event.message.getUnformattedText());
 
             if (message.contains(":")) return;

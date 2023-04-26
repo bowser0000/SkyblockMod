@@ -2,8 +2,8 @@ package me.Danker.features;
 
 import me.Danker.DankersSkyblockMod;
 import me.Danker.features.loot.LootDisplay;
-import me.Danker.handlers.ConfigHandler;
 import me.Danker.handlers.ScoreboardHandler;
+import me.Danker.locations.Location;
 import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -17,6 +17,8 @@ import java.util.List;
 
 public class AutoDisplay {
 
+    public static String display = "Off";
+
     @SubscribeEvent
     public void onTick(TickEvent.ClientTickEvent event) {
         if (event.phase != TickEvent.Phase.START) return;
@@ -25,51 +27,51 @@ public class AutoDisplay {
         World world = mc.theWorld;
         EntityPlayerSP player = mc.thePlayer;
         if (DankersSkyblockMod.tickAmount % 20 == 0) {
-            if (LootDisplay.auto && world != null && player != null) {
+            if (LootDisplay.autoDisplay && world != null && player != null) {
                 List<String> scoreboard = ScoreboardHandler.getSidebarLines();
                 boolean found = false;
                 for (String s : scoreboard) {
                     String sCleaned = ScoreboardHandler.cleanSB(s);
                     if (sCleaned.contains("Sven Packmaster")) {
-                        LootDisplay.display = "wolf";
+                        display = "Wolf Slayer";
                         found = true;
                     } else if (sCleaned.contains("Tarantula Broodfather")) {
-                        LootDisplay.display = "spider";
+                        display = "Spider Slayer";
                         found = true;
                     } else if (sCleaned.contains("Revenant Horror")) {
-                        LootDisplay.display = "zombie";
+                        display = "Zombie Slayer";
                         found = true;
                     } else if (sCleaned.contains("Voidgloom Seraph")) {
-                        LootDisplay.display = "enderman";
+                        display = "Enderman Slayer";
                         found = true;
                     } else if (sCleaned.contains("Inferno Demonlord")) {
-                        LootDisplay.display = "blaze";
+                        display = "Blaze Slayer";
                         found = true;
                     } else if (sCleaned.contains("The Mist")){
-                        LootDisplay.display = "ghost";
+                        display = "Ghost";
                         found = true;
-                    } else if (Utils.inDungeons) {
+                    } else if (Utils.isInDungeons()) {
                         switch (Utils.currentFloor) {
                             case F1:
-                                LootDisplay.display = "catacombs_floor_one";
+                                display = "Floor 1";
                                 break;
                             case F2:
-                                LootDisplay.display = "catacombs_floor_two";
+                                display = "Floor 2";
                                 break;
                             case F3:
-                                LootDisplay.display = "catacombs_floor_three";
+                                display = "Floor 3";
                                 break;
                             case F4:
-                                LootDisplay.display = "catacombs_floor_four";
+                                display = "Floor 4";
                                 break;
                             case F5:
-                                LootDisplay.display = "catacombs_floor_five";
+                                display = "Floor 5";
                                 break;
                             case F6:
-                                LootDisplay.display = "catacombs_floor_six";
+                                display = "Floor 6";
                                 break;
                             case F7:
-                                LootDisplay.display = "catacombs_floor_seven";
+                                display = "Floor 7";
                                 break;
                             case M1:
                             case M2:
@@ -78,7 +80,7 @@ public class AutoDisplay {
                             case M5:
                             case M6:
                             case M7:
-                                LootDisplay.display = "catacombs_master";
+                                display = "Master Mode";
                                 break;
                         }
                         found = true;
@@ -88,19 +90,19 @@ public class AutoDisplay {
                     ItemStack hotbarItem = player.inventory.getStackInSlot(i);
                     if (hotbarItem == null) continue;
                     if (hotbarItem.getDisplayName().contains("Ancestral Spade")) {
-                        LootDisplay.display = "mythological";
+                        display = "Mythological";
                         found = true;
                         break;
                     } else if (hotbarItem.getItem() == Items.fishing_rod) {
                         List<String> lore = hotbarItem.getTooltip(player, mc.gameSettings.advancedItemTooltips);
                         for (int j = lore.size() - 1; j >= 0; j--) { // reverse
                             if (lore.get(j).contains("FISHING ROD")) {
-                                if (Utils.tabLocation.equals("Crimson Isle")) {
-                                    LootDisplay.display = "fishing_lava";
-                                } else if (Utils.tabLocation.equals("Jerry's Workshop")) {
-                                    LootDisplay.display = "fishing_winter";
+                                if (Utils.currentLocation == Location.CRIMSON_ISLE) {
+                                    display = "Lava Fishing";
+                                } else if (Utils.currentLocation == Location.JERRY_WORKSHOP) {
+                                    display = "Winter Fishing";
                                 } else {
-                                    LootDisplay.display = "fishing";
+                                    display = "Fishing";
                                 }
                                 found = true;
                                 break;
@@ -108,8 +110,7 @@ public class AutoDisplay {
                         }
                     }
                 }
-                if (!found) LootDisplay.display = "off";
-                ConfigHandler.writeStringConfig("misc", "display", LootDisplay.display);
+                if (!found) display = "Off";
             }
         }
     }

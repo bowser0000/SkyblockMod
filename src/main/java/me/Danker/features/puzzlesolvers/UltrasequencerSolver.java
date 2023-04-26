@@ -1,6 +1,6 @@
 package me.Danker.features.puzzlesolvers;
 
-import me.Danker.commands.ToggleCommand;
+import me.Danker.config.ModConfig;
 import me.Danker.events.ChestSlotClickedEvent;
 import me.Danker.events.GuiChestBackgroundDrawnEvent;
 import me.Danker.utils.RenderUtils;
@@ -22,8 +22,6 @@ public class UltrasequencerSolver {
 
     static Slot[] clickInOrderSlots = new Slot[36];
     static int lastUltraSequencerClicked = 0;
-    public static int ULTRASEQUENCER_NEXT;
-    public static int ULTRASEQUENCER_NEXT_TO_NEXT;
 
     @SubscribeEvent
     public void onTick(TickEvent.ClientTickEvent event) {
@@ -37,7 +35,7 @@ public class UltrasequencerSolver {
             List<Slot> invSlots = ((GuiChest) mc.currentScreen).inventorySlots.inventorySlots;
             String chestName = chest.getLowerChestInventory().getDisplayName().getUnformattedText().trim();
 
-            if (ToggleCommand.ultrasequencerToggled && chestName.startsWith("Ultrasequencer (")) {
+            if (ModConfig.ultrasequencer && chestName.startsWith("Ultrasequencer (")) {
                 if (invSlots.get(49).getStack() != null && invSlots.get(49).getStack().getDisplayName().equals("§aRemember the pattern!")) {
                     for (int i = 9; i <= 44; i++) {
                         if (invSlots.get(i) == null || invSlots.get(i).getStack() == null) continue;
@@ -54,7 +52,7 @@ public class UltrasequencerSolver {
 
     @SubscribeEvent
     public void onSlotClick(ChestSlotClickedEvent event) {
-        if (ToggleCommand.ultrasequencerToggled && event.inventoryName.startsWith("Ultrasequencer (")) {
+        if (ModConfig.ultrasequencer && event.inventoryName.startsWith("Ultrasequencer (")) {
             IInventory inventory = event.inventory;
             if (event.item == null) {
                 if (event.isCancelable() && !Keyboard.isKeyDown(Keyboard.KEY_LCONTROL) && !Keyboard.isKeyDown(Keyboard.KEY_RCONTROL))
@@ -75,7 +73,7 @@ public class UltrasequencerSolver {
 
     @SubscribeEvent
     public void onGuiRender(GuiChestBackgroundDrawnEvent event) {
-        if (ToggleCommand.ultrasequencerToggled && event.displayName.startsWith("Ultrasequencer (")) {
+        if (ModConfig.ultrasequencer && event.displayName.startsWith("Ultrasequencer (")) {
             List<Slot> invSlots = event.slots;
             if (invSlots.size() > 48 && invSlots.get(49).getStack() != null) {
                 if (invSlots.get(49).getStack().getDisplayName().startsWith("§7Timer: §a")) {
@@ -88,14 +86,16 @@ public class UltrasequencerSolver {
                             }
                         }
                     }
-                    if (clickInOrderSlots[lastUltraSequencerClicked] != null) {
-                        Slot nextSlot = clickInOrderSlots[lastUltraSequencerClicked];
-                        RenderUtils.drawOnSlot(event.chestSize, nextSlot.xDisplayPosition, nextSlot.yDisplayPosition, ULTRASEQUENCER_NEXT + 0xE5000000);
+                    if (lastUltraSequencerClicked < clickInOrderSlots.length) {
+                        if (clickInOrderSlots[lastUltraSequencerClicked] != null) {
+                            Slot nextSlot = clickInOrderSlots[lastUltraSequencerClicked];
+                            RenderUtils.drawOnSlot(event.chestSize, nextSlot.xDisplayPosition, nextSlot.yDisplayPosition, ModConfig.ultrasequencerNextColour.getRGB());
+                        }
                     }
                     if (lastUltraSequencerClicked + 1 < clickInOrderSlots.length) {
                         if (clickInOrderSlots[lastUltraSequencerClicked + 1] != null) {
                             Slot nextSlot = clickInOrderSlots[lastUltraSequencerClicked + 1];
-                            RenderUtils.drawOnSlot(event.chestSize, nextSlot.xDisplayPosition, nextSlot.yDisplayPosition, ULTRASEQUENCER_NEXT_TO_NEXT + 0xD7000000);
+                            RenderUtils.drawOnSlot(event.chestSize, nextSlot.xDisplayPosition, nextSlot.yDisplayPosition, ModConfig.ultrasequencerNextToNextColour.getRGB());
                         }
                     }
                 }

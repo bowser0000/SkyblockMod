@@ -1,10 +1,11 @@
 package me.Danker.features;
 
 import com.google.gson.GsonBuilder;
-import me.Danker.commands.ToggleCommand;
+import me.Danker.config.ModConfig;
 import me.Danker.events.ChestSlotClickedEvent;
 import me.Danker.events.ModInitEvent;
 import me.Danker.events.PacketWriteEvent;
+import me.Danker.locations.Location;
 import me.Danker.utils.RenderUtils;
 import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;
@@ -28,16 +29,15 @@ public class MinionLastCollected {
     public static List<Minion> minions = new ArrayList<>();
     public static String configFile;
     static BlockPos lastMinion = null;
-    public static int LAST_COLLECTED_COLOUR;
 
     @SubscribeEvent
     public void init(ModInitEvent event) {
-        configFile = event.configDirectory + "/dsmminions.json";
+        configFile = event.configDirectory + "/dsm/dsmminions.json";
     }
 
     @SubscribeEvent
     public void onPacketWrite(PacketWriteEvent event) {
-        if (ToggleCommand.minionLastCollected && Utils.inSkyblock && Utils.isInScoreboard("Your Island")) {
+        if (ModConfig.minionLastCollected && Utils.inSkyblock && Utils.isInScoreboard("Your Island")) {
             if (event.packet instanceof C02PacketUseEntity) {
                 C02PacketUseEntity packet = (C02PacketUseEntity) event.packet;
                 Entity entity = packet.getEntityFromWorld(Minecraft.getMinecraft().theWorld);
@@ -54,7 +54,7 @@ public class MinionLastCollected {
 
     @SubscribeEvent
     public void onSlotClick(ChestSlotClickedEvent event) {
-        if (ToggleCommand.minionLastCollected && Utils.tabLocation.equals("Private Island")) {
+        if (ModConfig.minionLastCollected && Utils.currentLocation == Location.PRIVATE_ISLAND) {
             String inventoryName = event.inventoryName;
             ItemStack item = event.item;
             if (inventoryName.contains(" Minion ") && item != null && lastMinion != null) {
@@ -71,10 +71,10 @@ public class MinionLastCollected {
 
     @SubscribeEvent
     public void onWorldRender(RenderWorldLastEvent event) {
-        if (ToggleCommand.minionLastCollected && Utils.inSkyblock && Utils.tabLocation.equals("Private Island")) {
+        if (ModConfig.minionLastCollected && Utils.inSkyblock && Utils.currentLocation == Location.PRIVATE_ISLAND) {
             for (Minion minion : minions) {
                 if (!minionExistsAtPos(minion.pos)) continue;
-                RenderUtils.draw3DString(minion.pos.getX() + 0.5, minion.pos.getY() + 2.2, minion.pos.getZ() + 0.5, minion.getTimeCollected(), LAST_COLLECTED_COLOUR, event.partialTicks);
+                RenderUtils.draw3DString(minion.pos.getX() + 0.5, minion.pos.getY() + 2.2, minion.pos.getZ() + 0.5, minion.getTimeCollected(), ModConfig.lastCollectedColour.getRGB(), event.partialTicks);
             }
         }
     }

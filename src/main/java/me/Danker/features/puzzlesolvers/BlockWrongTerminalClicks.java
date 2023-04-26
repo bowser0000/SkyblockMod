@@ -1,6 +1,6 @@
 package me.Danker.features.puzzlesolvers;
 
-import me.Danker.commands.ToggleCommand;
+import me.Danker.config.ModConfig;
 import me.Danker.events.ChestSlotClickedEvent;
 import me.Danker.utils.Utils;
 import net.minecraft.init.Blocks;
@@ -16,7 +16,7 @@ public class BlockWrongTerminalClicks {
 
     @SubscribeEvent
     public void onSlotClick(ChestSlotClickedEvent event) {
-        if (ToggleCommand.blockWrongTerminalClicksToggled && Utils.inDungeons) {
+        if (ModConfig.blockWrongTerminalClicks && Utils.isInDungeons()) {
             IInventory inventory = event.inventory;
             String inventoryName = event.inventoryName;
             Slot slot = event.slot;

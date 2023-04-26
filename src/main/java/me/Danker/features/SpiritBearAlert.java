@@ -1,6 +1,6 @@
 package me.Danker.features;
 
-import me.Danker.commands.ToggleCommand;
+import me.Danker.config.ModConfig;
 import me.Danker.utils.Utils;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StringUtils;
@@ -16,7 +16,7 @@ public class SpiritBearAlert {
         if (!Utils.inSkyblock) return;
         if (message.contains(":")) return;
 
-        if (ToggleCommand.spiritBearAlerts && message.contains("The Spirit Bear has appeared!")) {
+        if (ModConfig.spiritBearAlerts && message.contains("The Spirit Bear has appeared!")) {
             Utils.createTitle(EnumChatFormatting.DARK_PURPLE + "SPIRIT BEAR", 2);
         }
     }

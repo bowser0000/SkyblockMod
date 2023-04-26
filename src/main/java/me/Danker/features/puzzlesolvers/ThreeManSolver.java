@@ -2,7 +2,7 @@ package me.Danker.features.puzzlesolvers;
 
 import com.google.gson.JsonArray;
 import me.Danker.DankersSkyblockMod;
-import me.Danker.commands.ToggleCommand;
+import me.Danker.config.ModConfig;
 import me.Danker.utils.RenderUtils;
 import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;
@@ -33,9 +33,9 @@ public class ThreeManSolver {
     public void onChat(ClientChatReceivedEvent event) {
         String message = StringUtils.stripControlCodes(event.message.getUnformattedText());
 
-        if (!Utils.inDungeons) return;
+        if (!Utils.isInDungeons()) return;
 
-        if (ToggleCommand.threeManToggled && message.startsWith("[NPC]")) {
+        if (ModConfig.threeMan && message.startsWith("[NPC]")) {
             if (DankersSkyblockMod.data != null && DankersSkyblockMod.data.has("threeman")) {
                 JsonArray riddleSolutions = DankersSkyblockMod.data.get("threeman").getAsJsonArray();
 
@@ -59,7 +59,7 @@ public class ThreeManSolver {
 
     @SubscribeEvent
     public void onWorldRender(RenderWorldLastEvent event) {
-        if (ToggleCommand.threeManToggled && riddleChest != null) {
+        if (ModConfig.threeMan && riddleChest != null) {
             RenderUtils.drawFilled3DBox(new AxisAlignedBB(riddleChest.getX() - 0.05, riddleChest.getY(), riddleChest.getZ() - 0.05, riddleChest.getX() + 1.05, riddleChest.getY() + 1, riddleChest.getZ() + 1.05), 0x197F19, true, true, event.partialTicks);
         }
     }
@@ -67,7 +67,7 @@ public class ThreeManSolver {
     public static void answer(String message) {
         Minecraft mc = Minecraft.getMinecraft();
         String npcName = message.substring(message.indexOf("]") + 2, message.indexOf(":"));
-        mc.thePlayer.addChatMessage(new ChatComponentText(DankersSkyblockMod.ANSWER_COLOUR + EnumChatFormatting.BOLD + StringUtils.stripControlCodes(npcName) + DankersSkyblockMod.MAIN_COLOUR + " has the blessing."));
+        mc.thePlayer.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.threeManAnswerColour) + EnumChatFormatting.BOLD + StringUtils.stripControlCodes(npcName) + ModConfig.getColour(ModConfig.mainColour) + " has the blessing."));
 
         if (riddleChest == null) {
             List<Entity> entities = mc.theWorld.getLoadedEntityList();

@@ -1,13 +1,15 @@
 package me.Danker.utils;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
+import com.google.gson.*;
 import me.Danker.DankersSkyblockMod;
+import me.Danker.config.CfgConfig;
+import me.Danker.config.ModConfig;
 import me.Danker.features.ColouredNames;
 import me.Danker.features.GoldenEnchants;
 import me.Danker.handlers.APIHandler;
-import me.Danker.handlers.ConfigHandler;
 import me.Danker.handlers.ScoreboardHandler;
+import me.Danker.locations.DungeonFloor;
+import me.Danker.locations.Location;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.network.NetworkPlayerInfo;
@@ -31,9 +33,8 @@ import java.util.stream.Collectors;
 public class Utils {
 	
 	public static boolean inSkyblock = false;
-	public static boolean inDungeons = false;
+	public static Location currentLocation = Location.NONE;
 	public static DungeonFloor currentFloor = DungeonFloor.NONE;
-	public static String tabLocation = "";
 	public static int[] skillXPPerLevel = {0, 50, 125, 200, 300, 500, 750, 1000, 1500, 2000, 3500, 5000, 7500, 10000, 15000, 20000, 30000, 50000,
 										   75000, 100000, 200000, 300000, 400000, 500000, 600000, 700000, 800000, 900000, 1000000, 1100000,
 										   1200000, 1300000, 1400000, 1500000, 1600000, 1700000, 1800000, 1900000, 2000000, 2100000, 2200000,
@@ -54,7 +55,6 @@ public class Utils {
 		put('D', 500);
 		put('M', 1000);
 	}};
-	public static String TITLE_SOUND;
 	
     public static int getItems(String item) {
     	Minecraft mc = Minecraft.getMinecraft();
@@ -102,7 +102,7 @@ public class Utils {
 	}
 	
 	public static void createTitle(String text, int seconds) {
-		Minecraft.getMinecraft().thePlayer.playSound(TITLE_SOUND, 1, (float) 0.5);
+		Minecraft.getMinecraft().thePlayer.playSound(ModConfig.alertNoise, 1, (float) 0.5);
 		DankersSkyblockMod.titleTimer = seconds * 20;
 		DankersSkyblockMod.showTitle = true;
 		DankersSkyblockMod.titleText = text;
@@ -131,18 +131,27 @@ public class Utils {
 		inSkyblock = false;
 	}
 
-	public static void checkForDungeons() {
-    	if (inSkyblock) {
-    		if (isInScoreboard("The Catacombs")) {
-    			inDungeons = true;
-    			return;
+	public static void checkTabLocation() {
+		if (inSkyblock) {
+			Collection<NetworkPlayerInfo> players = Minecraft.getMinecraft().getNetHandler().getPlayerInfoMap();
+			for (NetworkPlayerInfo player : players) {
+				if (player == null || player.getDisplayName() == null) continue;
+				String text = player.getDisplayName().getUnformattedText();
+				if (text.startsWith("Area: ") || text.startsWith("Dungeon: ")) {
+					currentLocation = Location.fromTab(text.substring(text.indexOf(":") + 2));
+					return;
+				}
 			}
 		}
-    	inDungeons = false;
+		currentLocation = Location.NONE;
+	}
+
+	public static boolean isInDungeons() { // update this whenever new dungeons come out
+		return currentLocation == Location.CATACOMBS;
 	}
 
 	public static void checkForDungeonFloor() {
-		if (inDungeons) {
+		if (isInDungeons()) {
 			List<String> scoreboard = ScoreboardHandler.getSidebarLines();
 
 			for (String s : scoreboard) {
@@ -164,21 +173,6 @@ public class Utils {
 		} else {
 			currentFloor = DungeonFloor.NONE;
 		}
-	}
-
-	public static void checkTabLocation() {
-    	if (inSkyblock) {
-			Collection<NetworkPlayerInfo> players = Minecraft.getMinecraft().getNetHandler().getPlayerInfoMap();
-			for (NetworkPlayerInfo player : players) {
-				if (player == null || player.getDisplayName() == null) continue;
-				String text = player.getDisplayName().getUnformattedText();
-				if (text.startsWith("Area: ")) {
-					tabLocation = text.substring(text.indexOf(":") + 2);
-					return;
-				}
-			}
-		}
-    	tabLocation = "";
 	}
 
 	public static boolean isInScoreboard(String text) {
@@ -411,7 +405,7 @@ public class Utils {
 
 	public static int getIntFromString(String text, boolean romanNumeral) {
     	if (text.matches(".*\\d.*")) {
-			return Integer.parseInt(StringUtils.stripControlCodes(text).replaceAll("[^\\d]", ""));
+			return Integer.parseInt(StringUtils.stripControlCodes(text).replaceAll("\\D", ""));
 		} else if (romanNumeral) {
     		int number = 0;
 
@@ -451,7 +445,7 @@ public class Utils {
 			}
 		}
 
-		ConfigHandler.writeIntConfig("skills", configValue, level);
+		CfgConfig.writeIntConfig("skills", configValue, level);
 		return level;
 	}
 
@@ -497,7 +491,7 @@ public class Utils {
 				}
 
 				if (foundAbility && line.contains(EnumChatFormatting.DARK_GRAY + "Cooldown: ")) {
-					return Integer.parseInt(StringUtils.stripControlCodes(line).replaceAll("[^\\d]", ""));
+					return Integer.parseInt(StringUtils.stripControlCodes(line).replaceAll("\\D", ""));
 				}
 			}
 		}
@@ -534,6 +528,22 @@ public class Utils {
 		return newObj;
 	}
 
+	public static JsonArray deepCopy(JsonArray array) {
+		JsonArray newArray = new JsonArray();
+
+		for (JsonElement element : array) {
+			if (element.isJsonObject()) {
+				newArray.add(deepCopy(element.getAsJsonObject()));
+			} else if (element.isJsonArray()) {
+				newArray.add(deepCopy(element.getAsJsonArray()));
+			} else  {
+				newArray.add(element);
+			}
+		}
+
+		return newArray;
+	}
+
 	// https://github.com/BiscuitDevelopment/SkyblockAddons/blob/main/src/main/java/codes/biscuit/skyblockaddons/utils/ItemUtils.java#L139-L148
 	public static NBTTagCompound getExtraAttributes(ItemStack item) {
 		if (item == null || !item.hasTagCompound()) return null;
@@ -561,23 +571,13 @@ public class Utils {
 		return tiers;
 	}
 
-	public enum DungeonFloor {
-		NONE,
-		E0,
-		F1,
-		F2,
-		F3,
-		F4,
-		F5,
-		F6,
-		F7,
-		M1,
-		M2,
-		M3,
-		M4,
-		M5,
-		M6,
-		M7
+	public static boolean isJson(String obj) {
+		try {
+			new JsonParser().parse(obj);
+		} catch (JsonSyntaxException ex) {
+			return false;
+		}
+		return true;
 	}
 
 }
