@@ -1,8 +1,6 @@
 package me.Danker.utils;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
+import com.google.gson.*;
 import me.Danker.DankersSkyblockMod;
 import me.Danker.config.CfgConfig;
 import me.Danker.config.ModConfig;
@@ -571,6 +569,15 @@ public class Utils {
 		tiers.addProperty("DIAMOND", obj.has(name + "_diamond") ? obj.get(name + "_diamond").getAsInt() : 0);
 
 		return tiers;
+	}
+
+	public static boolean isJson(String obj) {
+		try {
+			new JsonParser().parse(obj);
+		} catch (JsonSyntaxException ex) {
+			return false;
+		}
+		return true;
 	}
 
 }

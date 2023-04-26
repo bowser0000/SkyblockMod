@@ -328,6 +328,27 @@ public class CrystalHollowWaypoints {
         }
     }
 
+    public static void addSoopyWaypoints(String list) {
+        JsonArray arr;
+        try {
+            arr = new Gson().fromJson(list, JsonArray.class);
+        } catch (JsonSyntaxException ex) {
+            ex.printStackTrace();
+            return;
+        }
+
+        for (JsonElement element : arr) {
+            JsonObject waypoint = element.getAsJsonObject();
+
+            String name = waypoint.get("options").getAsJsonObject().get("name").getAsString();
+            String x = waypoint.get("x").getAsString();
+            String y = waypoint.get("y").getAsString();
+            String z = waypoint.get("z").getAsString();
+
+            addWaypoint(name, x, y, z, false);
+        }
+    }
+
     public static void copyToClipboard() {
         StringBuilder sb = new StringBuilder();
         for (Waypoint waypoint : waypoints) {
@@ -348,7 +369,7 @@ public class CrystalHollowWaypoints {
             return;
         }
 
-        if (clipboard.startsWith("<Skytils-Waypoint-Data>(V1):")) {
+        if (clipboard.startsWith("<Skytils-Waypoint-Data>(V1):")) { // ST
             try {
                 String str = clipboard.substring(clipboard.indexOf(":") + 1);
                 GzipCompressorInputStream gcis = new GzipCompressorInputStream(new Base64InputStream(new ByteArrayInputStream(str.getBytes())));
@@ -361,9 +382,11 @@ public class CrystalHollowWaypoints {
                 ex.printStackTrace();
                 Notifications.INSTANCE.send("Error", "Error parsing waypoints in clipboard.");
             }
-        } else if (Base64.isBase64(clipboard)) {
+        } else if (Base64.isBase64(clipboard)) { // ST
             addSTWaypoints(new String(Base64.decodeBase64(clipboard), StandardCharsets.UTF_8));
-        } else {
+        } else if (Utils.isJson(clipboard)) { // Soopy
+            addSoopyWaypoints(clipboard);
+        } else { // DSM
             try {
                 addDSMWaypoints(clipboard, false, false);
             } catch (Exception ex) {

@@ -1411,7 +1411,7 @@ public class ModConfig extends Config {
     @Button(
             name = "Import Waypoints from Clipboard",
             text = "Import",
-            description = "Imports Skytils or DSM/SBE waypoints from your clipboard.",
+            description = "Imports Skytils, DSM/SBE, or Soopy waypoints from your clipboard.",
             category = "Waypoints",
             subcategory = "Crystal Hollows"
     )
