@@ -97,6 +97,9 @@ public class ModConfig extends Config {
         addDependency("highlightOrdersColour", "highlightOrders");
         addDependency("hidePlayerArmourOnly", "hideArmour");
         addDependency("autoImportWaypoints", "autoWaypoints");
+        addDependency("debugPacketsIn", "debug");
+        addDependency("debugPacketsOut", "debug");
+        addDependency("debugChat", "debug");
     }
 
     public static String getColour(int index) {
@@ -162,6 +165,7 @@ public class ModConfig extends Config {
         waypoints
         trackers
         farming
+    debug
     */
 
     // General
@@ -2170,5 +2174,38 @@ public class ModConfig extends Config {
             subcategory = "Farming"
     )
     public static OneKeyBind disableAD = new OneKeyBind();
+
+    @Switch(
+            name = "Debug Messages",
+            description = "Enable debug messages.",
+            size = OptionSize.DUAL,
+            category = "Debug",
+            subcategory = "General"
+    )
+    public static boolean debug = false;
+
+    @Switch(
+            name = "Packets Received",
+            description = "Show packets being received.",
+            category = "Debug",
+            subcategory = "General"
+    )
+    public static boolean debugPacketsIn = false;
+
+    @Switch(
+            name = "Packets Sent",
+            description = "Show packets being sent.",
+            category = "Debug",
+            subcategory = "General"
+    )
+    public static boolean debugPacketsOut = false;
+
+    @Switch(
+            name = "Messages Sent",
+            description = "Show messages/commands being sent.",
+            category = "Debug",
+            subcategory = "General"
+    )
+    public static boolean debugChat = false;
 
 }
