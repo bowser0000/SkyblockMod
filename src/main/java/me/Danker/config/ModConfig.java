@@ -2180,7 +2180,7 @@ public class ModConfig extends Config {
             description = "Enable debug messages.",
             size = OptionSize.DUAL,
             category = "Debug",
-            subcategory = "General"
+            subcategory = "Debugging"
     )
     public static boolean debug = false;
 
@@ -2188,7 +2188,7 @@ public class ModConfig extends Config {
             name = "Packets Received",
             description = "Show packets being received.",
             category = "Debug",
-            subcategory = "General"
+            subcategory = "Debugging"
     )
     public static boolean debugPacketsIn = false;
 
@@ -2196,7 +2196,7 @@ public class ModConfig extends Config {
             name = "Packets Sent",
             description = "Show packets being sent.",
             category = "Debug",
-            subcategory = "General"
+            subcategory = "Debugging"
     )
     public static boolean debugPacketsOut = false;
 
@@ -2204,8 +2204,16 @@ public class ModConfig extends Config {
             name = "Messages Sent",
             description = "Show messages/commands being sent.",
             category = "Debug",
-            subcategory = "General"
+            subcategory = "Debugging"
     )
     public static boolean debugChat = false;
+
+    @Switch(
+            name = "Fix /locraw Spam",
+            description = "Prevents /locraw from being sent in succession, fixing commands being sent too fast.",
+            category = "Debug",
+            subcategory = "Fixes"
+    )
+    public static boolean fixLocraw = false;
 
 }
