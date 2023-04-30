@@ -43,7 +43,7 @@ public class ImportFishingCommand extends CommandBase {
 			// Check key
 			String key = ModConfig.apiKey;
 			if (key.equals("")) {
-				player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "API key not set. Use /setkey."));
+				player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "API key not set."));
 				return;
 			}
 

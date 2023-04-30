@@ -55,7 +55,7 @@ public class HOTMCommand extends CommandBase {
             // Check key
             String key = ModConfig.apiKey;
             if (key.equals("")) {
-                player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "API key not set. Use /setkey."));
+                player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "API key not set."));
                 return;
             }
 
