@@ -2216,4 +2216,12 @@ public class ModConfig extends Config {
     )
     public static boolean fixLocraw = false;
 
+    @Switch(
+            name = "Fix S04PacketEntityEquipment",
+            description = "Fixes S04PacketEntityEquipment packet incorrectly setting armor on Forge clients.",
+            category = "Debug",
+            subcategory = "Fixes"
+    )
+    public static boolean spiritBootsFix = true;
+
 }
