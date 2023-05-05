@@ -2161,6 +2161,14 @@ public class ModConfig extends Config {
     )
     public static OneKeyBind disableMouse = new OneKeyBind();
 
+    @Info(
+            text = "If this gets stuck, change your sensitivity in controls.",
+            type = InfoType.INFO,
+            category = "Keybinds",
+            subcategory = "Farming"
+    )
+    public static boolean ignored3;
+
     @KeyBind(
             name = "Disable Moving Forwards/Back",
             category = "Keybinds",
