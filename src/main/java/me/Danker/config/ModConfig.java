@@ -1791,6 +1791,21 @@ public class ModConfig extends Config {
     )
     public static int farmingIslandsVolume = 50;
 
+    @Switch(
+            name = "Garden Music",
+            category = "Music",
+            subcategory = "Music"
+    )
+    public static boolean gardenMusic = false;
+
+    @Slider(
+            name = "Garden Music Volume",
+            min = 0, max = 100,
+            category = "Music",
+            subcategory = "Music"
+    )
+    public static int gardenVolume = 50;
+
     @CfgName(
             name = "GoldMineMusic",
             category = "toggles"
@@ -1928,6 +1943,21 @@ public class ModConfig extends Config {
             subcategory = "Music"
     )
     public static int crimsonIsleVolume = 50;
+
+    @Switch(
+            name = "Kuudra Music",
+            category = "Music",
+            subcategory = "Music"
+    )
+    public static boolean kuudraMusic = false;
+
+    @Slider(
+            name = "Kuudra Music Volume",
+            min = 0, max = 100,
+            category = "Music",
+            subcategory = "Music"
+    )
+    public static int kuudraVolume = 50;
 
     @CfgName(
             name = "EndMusic",

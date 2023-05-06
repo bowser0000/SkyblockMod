@@ -40,12 +40,14 @@ public class CustomMusic {
     public static Song island;
     public static Song dungeonHub;
     public static Song farmingIslands;
+    public static Song garden;
     public static Song goldMine;
     public static Song deepCaverns;
     public static Song dwarvenMines;
     public static Song crystalHollows;
     public static Song spidersDen;
     public static Song crimsonIsle;
+    public static Song kuudra;
     public static Song end;
     public static Song park;
 
@@ -116,6 +118,9 @@ public class CustomMusic {
                         case FARMING_ISLANDS:
                             if (ModConfig.farmingIslandsMusic) farmingIslands.start();
                             break;
+                        case GARDEN:
+                            if (ModConfig.gardenMusic) garden.start();
+                            break;
                         case GOLD_MINE:
                             if (ModConfig.goldMineMusic) goldMine.start();
                             break;
@@ -133,6 +138,9 @@ public class CustomMusic {
                             break;
                         case CRIMSON_ISLE:
                             if (ModConfig.crimsonIsleMusic) crimsonIsle.start();
+                            break;
+                        case INSTANCED:
+                            if (ModConfig.kuudraMusic) kuudra.start();
                             break;
                         case END:
                             if (ModConfig.endMusic) end.start();
@@ -221,12 +229,14 @@ public class CustomMusic {
         island = new Song(directory, "island", ModConfig.islandVolume);
         dungeonHub = new Song(directory, "dungeonhub", ModConfig.dungeonHubVolume);
         farmingIslands = new Song(directory, "farmingislands", ModConfig.farmingIslandsVolume);
+        garden = new Song(directory, "garden", ModConfig.gardenVolume);
         goldMine = new Song(directory, "goldmine", ModConfig.goldMineVolume);
         deepCaverns = new Song(directory, "deepcaverns", ModConfig.deepCavernsVolume);
         dwarvenMines = new Song(directory, "dwarvenmines", ModConfig.dwarvenMinesVolume);
         crystalHollows = new Song(directory, "crystalhollows", ModConfig.crystalHollowsVolume);
         spidersDen = new Song(directory, "spidersden", ModConfig.spidersDenVolume);
         crimsonIsle = new Song(directory, "crimsonisle", ModConfig.crimsonIsleVolume);
+        kuudra = new Song(directory, "kuudra", ModConfig.kuudraVolume);
         end = new Song(directory, "end", ModConfig.endVolume);
         park = new Song(directory, "park", ModConfig.parkVolume);
     }
@@ -243,12 +253,14 @@ public class CustomMusic {
         if (island != null) island.stop();
         if (dungeonHub != null) dungeonHub.stop();
         if (farmingIslands != null) farmingIslands.stop();
+        if (garden != null) garden.stop();
         if (goldMine != null) goldMine.stop();
         if (deepCaverns != null) deepCaverns.stop();
         if (dwarvenMines != null) dwarvenMines.stop();
         if (crystalHollows != null) crystalHollows.stop();
         if (spidersDen != null) spidersDen.stop();
         if (crimsonIsle != null) crimsonIsle.stop();
+        if (kuudra != null) kuudra.stop();
         if (end != null) end.stop();
         if (park != null) park.stop();
         curPhase = 0;
@@ -323,7 +335,7 @@ public class CustomMusic {
             }
 
             if (music != null) {
-                float decibels = (float) (20 * Math.log(volume / 100.0));
+                float decibels = (float) (20 * Math.log10(volume / 100.0));
                 FloatControl control = (FloatControl) music.getControl(FloatControl.Type.MASTER_GAIN);
                 if (decibels <= control.getMinimum() || decibels >= control.getMaximum()) return false;
                 control.setValue(decibels);

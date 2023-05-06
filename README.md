@@ -184,12 +184,14 @@ Shortcut commands that save you the time of typing the whole warp command.
   - Hub: `hub.wav`
   - Private Island: `island.wav`
   - Farming Islands: `farmingislands.wav`
+  - Garden: `garden.wav`
   - Gold Mine: `goldmine.wav`
   - Deep Caverns: `deepcaverns.wav`
   - Dwarven Mines: `dwarvenmines.wav`
   - Crystal Hollows: `crystalhollows.wav`
   - Spider's Den: `spidersden.wav`
   - Crimson Isle: `crimsonisle.wav`
+  - Kuudra: `kuudra.wav`
   - The End: `end.wav`
   - The Park: `park.wav`
 2. Either run `/dsmmusic reload` or restart your game.
