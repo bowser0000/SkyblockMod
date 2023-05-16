@@ -245,6 +245,16 @@ public class WeightCommand extends CommandBase {
                 double caneWeight = Math.round(caneColl / multipliers.get("cane").getAsDouble()) / 100D;
                 double wartWeight = Math.round(wartColl / multipliers.get("wart").getAsDouble()) / 100D;
 
+                double mainWeight = Math.floor((wheatWeight + carrotWeight + potatoWeight + pumpkinWeight + melonWeight + mushroomWeight + cocoaWeight + cactusWeight + caneWeight + wartWeight) * 100D) / 100D;
+
+                // mushroom
+                double doubleBreakRatio = (cactusWeight + caneWeight) / mainWeight;
+                double normalRatio = (mainWeight - cactusWeight - caneWeight) / mainWeight;
+
+                mushroomWeight = doubleBreakRatio * (mushroomColl / (2D * multipliers.get("mushroom").getAsDouble()) / 100D) + normalRatio * (mushroomColl / multipliers.get("mushroom").getAsDouble() / 100D);
+                mushroomWeight = Math.round(mushroomWeight * 100D) / 100D;
+                mainWeight = Math.floor((wheatWeight + carrotWeight + potatoWeight + pumpkinWeight + melonWeight + mushroomWeight + cocoaWeight + cactusWeight + caneWeight + wartWeight) * 100D) / 100D;
+
                 // bonus weight
                 double farmingBonus = 0;
                 double anitaBonus = 0;
@@ -272,12 +282,14 @@ public class WeightCommand extends CommandBase {
                     // get total golds
                     for (String contest : contests) {
                         JsonObject contestData = jacob.get("contests").getAsJsonObject().get(contest).getAsJsonObject();
-                        if (contestData.has("claimed_position")) {
+                        if (contestData.has("claimed_medal")) {
+                            if (contestData.get("claimed_medal").getAsString().equals("gold")) totalGolds++;
+                        } else if (contestData.has("claimed_position")) {
                             if (contestData.get("claimed_position").getAsInt() <= contestData.get("claimed_participants").getAsInt() * 0.05 + 1) totalGolds++;
                         }
                     }
 
-                    medalBonus = Math.floor(totalGolds / 50D) * 50D / 2D;
+                    medalBonus = Math.floor(totalGolds / 50D) * 25D;
                     medalBonus = MathHelper.clamp_double(medalBonus, 0D, 500D);
                 }
 
@@ -287,7 +299,6 @@ public class WeightCommand extends CommandBase {
                     if (t12Minions.contains(minionName)) minionBonus += 5;
                 }
 
-                double mainWeight = Math.floor((wheatWeight + carrotWeight + potatoWeight + pumpkinWeight + melonWeight + mushroomWeight + cocoaWeight + cactusWeight + caneWeight + wartWeight) * 100D) / 100D;
                 double bonusWeight = farmingBonus + anitaBonus + medalBonus + minionBonus;
 
                 NumberFormat nf = NumberFormat.getNumberInstance(Locale.US);
