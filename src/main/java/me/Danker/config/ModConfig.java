@@ -100,6 +100,9 @@ public class ModConfig extends Config {
         addDependency("debugPacketsIn", "debug");
         addDependency("debugPacketsOut", "debug");
         addDependency("debugChat", "debug");
+        addDependency("thunderAlert", "fishingAlert");
+        addDependency("jawbusAlert", "fishingAlert");
+        addDependency("gwAlert", "fishingAlert");
     }
 
     public static String getColour(int index) {
@@ -147,6 +150,7 @@ public class ModConfig extends Config {
         general
         dungeons
         farming
+        fishing
     aliases
         custom aliases
     waypoints
@@ -1164,18 +1168,6 @@ public class ModConfig extends Config {
     public static boolean notifySlayerSlain = false;
 
     @CfgName(
-            name = "FishingAlert",
-            category = "toggles"
-    )
-    @Switch(
-            name = "Fishing Spawn Alerts",
-            description = "Alerts when a Thunder or Lord Jawbus spawns nearby.",
-            category = "Alerts",
-            subcategory = "General"
-    )
-    public static boolean fishingAlert = false;
-
-    @CfgName(
             name = "KuudraNotifications",
             category = "toggles"
     )
@@ -1317,6 +1309,42 @@ public class ModConfig extends Config {
             subcategory = "Farming"
     )
     public static float farmMaxZ = 220F;
+
+    @CfgName(
+            name = "FishingAlert",
+            category = "toggles"
+    )
+    @Switch(
+            name = "Fishing Spawn Alerts",
+            description = "Alerts when a mob is fished up nearby.",
+            category = "Alerts",
+            subcategory = "Fishing"
+    )
+    public static boolean fishingAlert = false;
+
+    @Switch(
+            name = "Thunder Spawn Alert",
+            description = "Alert when a Thunder is fished up nearby.",
+            category = "Alerts",
+            subcategory = "Fishing"
+    )
+    public static boolean thunderAlert = true;
+
+    @Switch(
+            name = "Jawbus Spawn Alert",
+            description = "Alert when a Jawbus is fished up nearby.",
+            category = "Alerts",
+            subcategory = "Fishing"
+    )
+    public static boolean jawbusAlert = true;
+
+    @Switch(
+            name = "Great White Shark Spawn Alert",
+            description = "Alert when a Great White Shark is fished up nearby.",
+            category = "Alerts",
+            subcategory = "Fishing"
+    )
+    public static boolean gwAlert = true;
 
     // Aliases
 

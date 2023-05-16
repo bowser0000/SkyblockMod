@@ -20,6 +20,7 @@ public class FishingSpawnAlerts {
 
     static boolean lastThunder = false;
     static boolean lastJawbus = false;
+    static boolean lastGW = false;
 
     @SubscribeEvent
     public void onTick(TickEvent.ClientTickEvent event) {
@@ -27,27 +28,32 @@ public class FishingSpawnAlerts {
 
         World world = Minecraft.getMinecraft().theWorld;
         if (DankersSkyblockMod.tickAmount % 10 == 0) {
-            if (ModConfig.fishingAlert && Utils.currentLocation == Location.CRIMSON_ISLE && world != null) {
+            if (ModConfig.fishingAlert && world != null) {
                 boolean thunder = false;
                 boolean jawbus = false;
+                boolean gw = false;
                 List<Entity> entities = world.getLoadedEntityList();
 
                 for (Entity entity : entities) {
                     if (entity instanceof EntityArmorStand) {
                         String name = StringUtils.stripControlCodes(entity.getName());
-                        if (name.contains("Thunder")) {
+                        if (ModConfig.thunderAlert && name.contains("Thunder")) {
                             thunder = true;
-                        } else if (name.contains("Lord Jawbus")) {
+                        } else if (ModConfig.jawbusAlert && name.contains("Lord Jawbus")) {
                             jawbus = true;
+                        } else if (ModConfig.gwAlert && name.contains("Great White Shark")) {
+                            gw = true;
                         }
                     }
                 }
 
                 if (thunder && !lastThunder) Utils.createTitle(EnumChatFormatting.AQUA + "THUNDER", 2);
                 if (jawbus && !lastJawbus) Utils.createTitle(EnumChatFormatting.AQUA + "JAWBUS", 2);
+                if (gw && !lastGW) Utils.createTitle(EnumChatFormatting.AQUA + "GREAT WHITE", 2);
 
                 lastThunder = thunder;
                 lastJawbus = jawbus;
+                lastGW = gw;
             }
         }
     }
