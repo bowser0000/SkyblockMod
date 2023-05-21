@@ -98,7 +98,7 @@ public class AbilityCooldowns {
         }
 
         public String getTimer() {
-            return EnumChatFormatting.GREEN + ability + ": " + EnumChatFormatting.YELLOW + String.format("%.3f", getCooldown()) + "s";
+            return EnumChatFormatting.GOLD + ability + ": " + EnumChatFormatting.GOLD + String.format("%.3f", getCooldown()) + "s";
         }
 
         public double getCooldown() {
@@ -110,9 +110,9 @@ public class AbilityCooldowns {
     public static class AbilityCooldownHud extends Hud {
 
         @Exclude
-        String exampleText = EnumChatFormatting.GREEN + "Spirit Glide: " + EnumChatFormatting.YELLOW + "32.734s\n" +
-                EnumChatFormatting.GREEN + "Parley: " + EnumChatFormatting.YELLOW + "2.652s\n" +
-                EnumChatFormatting.GREEN + "Ice Spray: " + EnumChatFormatting.YELLOW + "1.429s";
+        String exampleText = EnumChatFormatting.GOLD + "Spirit Glide: " + EnumChatFormatting.GOLD + "32.734s\n" +
+                EnumChatFormatting.GOLD + "Parley: " + EnumChatFormatting.GOLD + "2.652s\n" +
+                EnumChatFormatting.GOLD + "Ice Spray: " + EnumChatFormatting.GOLD + "1.429s";
 
         @Override
         protected void preRender(boolean example) {
