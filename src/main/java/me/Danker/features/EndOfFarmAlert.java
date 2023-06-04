@@ -12,7 +12,8 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 public class EndOfFarmAlert {
 
-    static boolean alerted = false;
+    static boolean alertedX = false;
+    static boolean alertedZ = false;
 
     @SubscribeEvent
     public void onTick(TickEvent.ClientTickEvent event) {
@@ -26,14 +27,22 @@ public class EndOfFarmAlert {
                 double x = player.posX;
                 double z = player.posZ;
 
-                if ((ModConfig.farmX && (x <= ModConfig.farmMinX || x >= ModConfig.farmMaxX)) ||
-                    (ModConfig.farmZ && (z <= ModConfig.farmMinZ || z >= ModConfig.farmMaxZ))) {
-                    if (!alerted) {
-                        alerted = true;
+                if (ModConfig.farmX && (x <= ModConfig.farmMinX || x >= ModConfig.farmMaxX)) {
+                    if (!alertedX) {
+                        alertedX = true;
                         Utils.createTitle(EnumChatFormatting.RED + "END OF FARM", 1);
                     }
                 } else {
-                    alerted = false;
+                    alertedX = false;
+                }
+
+                if (ModConfig.farmZ && (z <= ModConfig.farmMinZ || z >= ModConfig.farmMaxZ)) {
+                    if (!alertedZ) {
+                        alertedZ = true;
+                        Utils.createTitle(EnumChatFormatting.RED + "END OF FARM", 1);
+                    }
+                } else {
+                    alertedZ = false;
                 }
             }
         }
