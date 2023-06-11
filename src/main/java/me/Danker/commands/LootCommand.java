@@ -24,7 +24,7 @@ public class LootCommand extends CommandBase {
 
 	@Override
 	public String getCommandUsage(ICommandSender arg0) {
-		return "/" + getCommandName() + " <zombie/spider/wolf/enderman/blaze/fishing/catacombs/mythological> [winter/festival/spooky/ch/lava/trophy/f(1-7)/mm/session]";
+		return "/" + getCommandName() + " <zombie/spider/wolf/enderman/blaze/vampire/fishing/catacombs/mythological> [winter/festival/spooky/ch/lava/trophy/f(1-7)/mm/session]";
 	}
 
 	public static String usage(ICommandSender arg0) {
@@ -39,7 +39,7 @@ public class LootCommand extends CommandBase {
 	@Override
 	public List<String> addTabCompletionOptions(ICommandSender sender, String[] args, BlockPos pos) {
 		if (args.length == 1) {
-			return getListOfStringsMatchingLastWord(args, "wolf", "spider", "zombie", "enderman", "blaze", "fishing", "catacombs", "mythological");
+			return getListOfStringsMatchingLastWord(args, "wolf", "spider", "zombie", "enderman", "blaze", "vampire", "fishing", "catacombs", "mythological");
 		} else if (args.length == 2 && args[0].equalsIgnoreCase("fishing")) {
 			return getListOfStringsMatchingLastWord(args, "winter", "festival", "spooky", "ch", "lava", "trophy", "session");
 		} else if (args.length == 2 && args[0].equalsIgnoreCase("catacombs")) {
@@ -444,6 +444,64 @@ public class LootCommand extends CommandBase {
 						EnumChatFormatting.GOLD + "    High Class Archfiend Dice: " + nf.format(BlazeTracker.highClassArchfiendDice) + "\n" +
 						EnumChatFormatting.GOLD + "    Engineering Plans: " + nf.format(BlazeTracker.engineeringPlans) + "\n" +
 						EnumChatFormatting.GOLD + "    Subzero Inverters: " + nf.format(BlazeTracker.subzeroInverters) + "\n" +
+						EnumChatFormatting.AQUA + "    Time Since RNG: " + timeBetween + "\n" +
+						EnumChatFormatting.AQUA + "    Bosses Since RNG: " + bossesBetween + "\n" +
+						EnumChatFormatting.RED + EnumChatFormatting.STRIKETHROUGH + "-------------------"));
+				break;
+			case "vampire":
+				if (showSession) {
+					if (VampireTracker.timeSession == -1) {
+						timeBetween = "Never";
+					} else {
+						timeBetween = Utils.getTimeBetween(VampireTracker.timeSession, timeNow);
+					}
+					if (VampireTracker.bossesSession == -1) {
+						bossesBetween = "Never";
+					} else {
+						bossesBetween = nf.format(VampireTracker.bossesSession);
+					}
+
+					player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "" + EnumChatFormatting.STRIKETHROUGH + "-------------------\n" +
+							EnumChatFormatting.DARK_RED + EnumChatFormatting.BOLD + "  Vampire Loot Summary:\n" +
+							EnumChatFormatting.GOLD + "    Riftstalkers Killed: " + nf.format(VampireTracker.riftstalkersSession) + "\n" +
+							EnumChatFormatting.DARK_RED + "    Coven Seals: " + nf.format(VampireTracker.covenSealsSession) + "\n" +
+							EnumChatFormatting.DARK_AQUA + "    Quantum Bundles: " + nf.format(VampireTracker.quantumBundlesSession) + "\n" +
+							EnumChatFormatting.RED + "    Bubba Blisters: " + nf.format(VampireTracker.bubbaBlistersSession) + "\n" +
+							EnumChatFormatting.LIGHT_PURPLE + "    Soultwist Runes: " + nf.format(VampireTracker.soultwistRunesSession) + "\n" +
+							EnumChatFormatting.GRAY + "    Chocolate Chips: " + nf.format(VampireTracker.chocolateChipsSession) + "\n" +
+							EnumChatFormatting.GOLD + "    Lucky Blocks: " + nf.format(VampireTracker.luckyBlocksSession) + "\n" +
+							EnumChatFormatting.RED + "    The One Bundles: " + nf.format(VampireTracker.theOneBundlesSession) + "\n" +
+							EnumChatFormatting.GREEN + "    McGrubber's Burgers: " + nf.format(VampireTracker.mcgrubbersBurgersSession) + "\n" +
+							EnumChatFormatting.WHITE + "    Vampire Parts: " + nf.format(VampireTracker.vampirePartsSession) + "\n" +
+							EnumChatFormatting.AQUA + "    Time Since RNG: " + timeBetween + "\n" +
+							EnumChatFormatting.AQUA + "    Bosses Since RNG: " + bossesBetween + "\n" +
+							EnumChatFormatting.RED + EnumChatFormatting.STRIKETHROUGH + "-------------------"));
+					return;
+				}
+
+				if (VampireTracker.time == -1) {
+					timeBetween = "Never";
+				} else {
+					timeBetween = Utils.getTimeBetween(VampireTracker.time, timeNow);
+				}
+				if (VampireTracker.bosses == -1) {
+					bossesBetween = "Never";
+				} else {
+					bossesBetween = nf.format(VampireTracker.bosses);
+				}
+
+				player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "" + EnumChatFormatting.STRIKETHROUGH + "-------------------\n" +
+						EnumChatFormatting.DARK_RED + EnumChatFormatting.BOLD + "  Vampire Loot Summary:\n" +
+						EnumChatFormatting.GOLD + "    Riftstalkers Killed: " + nf.format(VampireTracker.riftstalkers) + "\n" +
+						EnumChatFormatting.DARK_RED + "    Coven Seals: " + nf.format(VampireTracker.covenSeals) + "\n" +
+						EnumChatFormatting.DARK_AQUA + "    Quantum Bundles: " + nf.format(VampireTracker.quantumBundles) + "\n" +
+						EnumChatFormatting.RED + "    Bubba Blisters: " + nf.format(VampireTracker.bubbaBlisters) + "\n" +
+						EnumChatFormatting.LIGHT_PURPLE + "    Soultwist Runes: " + nf.format(VampireTracker.soultwistRunes) + "\n" +
+						EnumChatFormatting.GRAY + "    Chocolate Chips: " + nf.format(VampireTracker.chocolateChips) + "\n" +
+						EnumChatFormatting.GOLD + "    Lucky Blocks: " + nf.format(VampireTracker.luckyBlocks) + "\n" +
+						EnumChatFormatting.RED + "    The One Bundles: " + nf.format(VampireTracker.theOneBundles) + "\n" +
+						EnumChatFormatting.GREEN + "    McGrubber's Burgers: " + nf.format(VampireTracker.mcgrubbersBurgers) + "\n" +
+						EnumChatFormatting.WHITE + "    Vampire Parts: " + nf.format(VampireTracker.vampireParts) + "\n" +
 						EnumChatFormatting.AQUA + "    Time Since RNG: " + timeBetween + "\n" +
 						EnumChatFormatting.AQUA + "    Bosses Since RNG: " + bossesBetween + "\n" +
 						EnumChatFormatting.RED + EnumChatFormatting.STRIKETHROUGH + "-------------------"));

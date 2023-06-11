@@ -182,6 +182,7 @@ public class DankersSkyblockMod {
         MinecraftForge.EVENT_BUS.register(new MythologicalTracker());
         MinecraftForge.EVENT_BUS.register(new SpiderTracker());
         MinecraftForge.EVENT_BUS.register(new TrophyFishTracker());
+        MinecraftForge.EVENT_BUS.register(new VampireTracker());
         MinecraftForge.EVENT_BUS.register(new WolfTracker());
         MinecraftForge.EVENT_BUS.register(new ZombieTracker());
         

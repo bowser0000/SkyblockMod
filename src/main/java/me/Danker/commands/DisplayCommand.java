@@ -36,7 +36,7 @@ public class DisplayCommand extends CommandBase {
 	@Override
 	public List<String> addTabCompletionOptions(ICommandSender sender, String[] args, BlockPos pos) {
 		if (args.length == 1) {
-			return getListOfStringsMatchingLastWord(args, "wolf", "spider", "zombie", "enderman", "blaze", "fishing", "catacombs", "mythological", "ghost", "auto", "off");
+			return getListOfStringsMatchingLastWord(args, "wolf", "spider", "zombie", "enderman", "blaze", "vampire", "fishing", "catacombs", "mythological", "ghost", "auto", "off");
 		} else if (args.length == 2 && args[0].equalsIgnoreCase("fishing")) {
 			return getListOfStringsMatchingLastWord(args, "winter", "festival", "spooky", "ch", "lava", "trophy", "session");
 		} else if (args.length == 2 && args[0].equalsIgnoreCase("catacombs")) {
@@ -72,6 +72,9 @@ public class DisplayCommand extends CommandBase {
 			break;
 		case "blaze":
 			display = "Blaze Slayer";
+			break;
+		case "vampire":
+			display = "Vampire Slayer";
 			break;
 		case "fishing":
 			if (arg1.length > 1) {
@@ -142,6 +145,7 @@ public class DisplayCommand extends CommandBase {
 				case "mm":
 				case "master":
 					display = "Master Mode";
+					break;
 				default:
 					player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "Usage: /display catacombs <f1/f2/f3/f4/f5/f6/f7/mm>"));
 					return;

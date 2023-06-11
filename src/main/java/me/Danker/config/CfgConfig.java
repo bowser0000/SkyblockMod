@@ -275,6 +275,19 @@ public class CfgConfig {
 		BlazeTracker.subzeroInverters = initInt("blaze", "subzeroInverters", 0);
 		BlazeTracker.time = initDouble("blaze", "timeRNG", -1);
 		BlazeTracker.bosses = initInt("blaze", "bossRNG", -1);
+		// Vampire
+		VampireTracker.riftstalkers = initInt("vampire", "riftstalkers", 0);
+		VampireTracker.covenSeals = initInt("vampire", "covenSeals", 0);
+		VampireTracker.quantumBundles = initInt("vampire", "quantumBundles", 0);
+		VampireTracker.bubbaBlisters = initInt("vampire", "bubbaBlisters", 0);
+		VampireTracker.soultwistRunes = initInt("vampire", "soultwistRunes", 0);
+		VampireTracker.chocolateChips = initInt("vampire", "chocolateChips", 0);
+		VampireTracker.luckyBlocks = initInt("vampire", "luckyBlocks", 0);
+		VampireTracker.theOneBundles = initInt("vampire", "theOneBundles", 0);
+		VampireTracker.mcgrubbersBurgers = initInt("vampire", "mcgrubbersBurgers", 0);
+		VampireTracker.vampireParts = initInt("vampire", "vampireParts", 0);
+		VampireTracker.time = initDouble("vampire", "timeRNG", -1);
+		VampireTracker.bosses = initInt("vampire", "bossRNG", -1);
 
 		// Fishing
 		FishingTracker.seaCreatures = initInt("fishing", "seaCreature", 0);

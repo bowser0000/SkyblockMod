@@ -42,6 +42,7 @@ public class LootTracker {
         }
     }
 
+    // slayer token drops
     @SubscribeEvent
     public void onPacketRead(PacketReadEvent event) {
         if (!Utils.inSkyblock) return;
@@ -58,26 +59,31 @@ public class LootTracker {
                     int itemRev = Utils.getItems("Revenant Flesh");
                     int itemNullSphere = Utils.getItems("Null Sphere");
                     int itemDerelictAshe = Utils.getItems("Derelict Ashe");
+                    int itemCovenSeal = Utils.getItems("Coven Seal");
 
                     // If no items, are detected, allow check again. Should fix items not being found
-                    if (itemTeeth + itemWebs + itemRev + itemNullSphere + itemDerelictAshe > 0) {
+                    if (itemTeeth + itemWebs + itemRev + itemNullSphere + itemDerelictAshe + itemCovenSeal > 0) {
                         itemsChecked = System.currentTimeMillis() / 1000;
                         WolfTracker.teeth += itemTeeth;
                         SpiderTracker.webs += itemWebs;
                         ZombieTracker.revFlesh += itemRev;
                         EndermanTracker.nullSpheres += itemNullSphere;
                         BlazeTracker.derelictAshes += itemDerelictAshe;
+                        VampireTracker.covenSeals += itemCovenSeal;
+
                         WolfTracker.teethSession += itemTeeth;
                         SpiderTracker.websSession += itemWebs;
                         ZombieTracker.revFleshSession += itemRev;
                         EndermanTracker.nullSpheresSession += itemNullSphere;
                         BlazeTracker.derelictAshesSession += itemDerelictAshe;
+                        VampireTracker.covenSealsSession += itemCovenSeal;
 
                         CfgConfig.writeIntConfig("wolf", "teeth", WolfTracker.teeth);
                         CfgConfig.writeIntConfig("spider", "web", SpiderTracker.webs);
                         CfgConfig.writeIntConfig("zombie", "revFlesh", ZombieTracker.revFlesh);
                         CfgConfig.writeIntConfig("enderman", "nullSpheres", EndermanTracker.nullSpheres);
                         CfgConfig.writeIntConfig("blaze", "derelictAshe", BlazeTracker.derelictAshes);
+                        CfgConfig.writeIntConfig("vampire", "covenSeals", VampireTracker.covenSeals);
                     }
                 }
             }

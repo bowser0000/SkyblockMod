@@ -36,7 +36,7 @@ import java.util.Arrays;
 public class ModConfig extends Config {
 
     @Exclude Minecraft mc = Minecraft.getMinecraft();
-    @Exclude static String[] displays = {"Off", "Zombie Slayer", "Spider Slayer", "Wolf Slayer", "Enderman Slayer", "Blaze Slayer", "Fishing", "Winter Fishing", "Fishing Festival", "Spooky Fishing", "Crystal Hollows Fishing", "Lava Fishing", "Trophy Fishing", "Floor 1", "Floor 2", "Floor 3", "Floor 4", "Floor 5", "Floor 6", "Floor 7", "Master Mode", "Mythological", "Ghost"};
+    @Exclude static String[] displays = {"Off", "Zombie Slayer", "Spider Slayer", "Wolf Slayer", "Enderman Slayer", "Blaze Slayer", "Vampire Slayer", "Fishing", "Winter Fishing", "Fishing Festival", "Spooky Fishing", "Crystal Hollows Fishing", "Lava Fishing", "Trophy Fishing", "Floor 1", "Floor 2", "Floor 3", "Floor 4", "Floor 5", "Floor 6", "Floor 7", "Master Mode", "Mythological", "Ghost"};
 
     public ModConfig() {
         super(new Mod("Danker's Skyblock Mod", ModType.SKYBLOCK, "/assets/dsm/icons/icon.png", new CfgMigrator("./config/Danker's Skyblock Mod.cfg")), "dsmconfig.json");

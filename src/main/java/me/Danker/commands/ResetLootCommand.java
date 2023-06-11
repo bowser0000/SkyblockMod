@@ -26,7 +26,7 @@ public class ResetLootCommand extends CommandBase {
 
 	@Override
 	public String getCommandUsage(ICommandSender arg0) {
-		return "/" + getCommandName() + "<zombie/spider/wolf/enderman/blaze/fishing/mythological/catacombs/confirm/cancel>";
+		return "/" + getCommandName() + "<zombie/spider/wolf/enderman/blaze/vampire/fishing/mythological/catacombs/confirm/cancel>";
 	}
 
 	public static String usage(ICommandSender arg0) {
@@ -45,7 +45,7 @@ public class ResetLootCommand extends CommandBase {
 		if (confirmReset) {
 			return getListOfStringsMatchingLastWord(args, "confirm", "cancel");
 		} else {
-			return getListOfStringsMatchingLastWord(args, "zombie", "spider", "wolf", "enderman", "blaze", "fishing", "mythological", "catacombs");
+			return getListOfStringsMatchingLastWord(args, "zombie", "spider", "wolf", "enderman", "blaze", "vampire", "fishing", "mythological", "catacombs");
 		}
 	}
 	
@@ -54,7 +54,7 @@ public class ResetLootCommand extends CommandBase {
 		final EntityPlayer player = (EntityPlayer) arg0;
 		
 		if (arg1.length == 0) {
-			player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "Usage: /resetloot <zombie/spider/wolf/enderman/blaze/fishing/mythological/catacombs>"));
+			player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "Usage: /resetloot <zombie/spider/wolf/enderman/blaze/vampire/fishing/mythological/catacombs>"));
 			return;
 		}
 		
@@ -78,6 +78,9 @@ public class ResetLootCommand extends CommandBase {
 							break;
 						case "blaze":
 							resetBlaze();
+							break;
+						case "vampire":
+							resetVampire();
 							break;
 						case "fishing":
 							resetFishing();
@@ -107,6 +110,7 @@ public class ResetLootCommand extends CommandBase {
 				case "wolf":
 				case "enderman":
 				case "blaze":
+				case "vampire":
 				case "fishing":
 				case "mythological":
 				case "catacombs":
@@ -232,12 +236,29 @@ public class ResetLootCommand extends CommandBase {
 		BlazeTracker.highClassArchfiendDiceSession = 0;
 		BlazeTracker.engineeringPlansSession = 0;
 		BlazeTracker.subzeroInvertersSession = 0;
-		BlazeTracker.timeSession = 0;
-		BlazeTracker.bossesSession = 0;
+		BlazeTracker.timeSession = -1;
+		BlazeTracker.bossesSession = -1;
 		CfgConfig.deleteCategory("blaze");
 		ConfigHandler.reloadConfig();
 	}
-	
+
+	static void resetVampire() {
+		VampireTracker.riftstalkersSession = 0;
+		VampireTracker.covenSealsSession = 0;
+		VampireTracker.quantumBundlesSession = 0;
+		VampireTracker.bubbaBlistersSession = 0;
+		VampireTracker.soultwistRunesSession = 0;
+		VampireTracker.chocolateChipsSession = 0;
+		VampireTracker.luckyBlocksSession = 0;
+		VampireTracker.theOneBundlesSession = 0;
+		VampireTracker.mcgrubbersBurgersSession = 0;
+		VampireTracker.vampirePartsSession = 0;
+		VampireTracker.timeSession = -1;
+		VampireTracker.bossesSession = -1;
+		CfgConfig.deleteCategory("vampire");
+		ConfigHandler.reloadConfig();
+	}
+
 	static void resetFishing() {
 		FishingTracker.seaCreaturesSession = 0;
 		FishingTracker.goodCatchesSession = 0;

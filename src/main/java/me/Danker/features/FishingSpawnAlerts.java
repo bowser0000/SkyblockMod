@@ -2,7 +2,6 @@ package me.Danker.features;
 
 import me.Danker.DankersSkyblockMod;
 import me.Danker.config.ModConfig;
-import me.Danker.locations.Location;
 import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;

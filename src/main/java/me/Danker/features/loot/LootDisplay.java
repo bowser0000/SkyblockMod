@@ -54,6 +54,7 @@ public class LootDisplay extends Hud {
                     "Wolf Slayer",
                     "Enderman Slayer",
                     "Blaze Slayer",
+                    "Vampire Slayer",
                     "Fishing",
                     "Winter Fishing",
                     "Fishing Festival",
@@ -670,6 +671,81 @@ public class LootDisplay extends Hud {
                                     EnumChatFormatting.GOLD + nf.format(BlazeTracker.highClassArchfiendDiceSession) + "\n" +
                                     EnumChatFormatting.GOLD + nf.format(BlazeTracker.engineeringPlansSession) + "\n" +
                                     EnumChatFormatting.GOLD + nf.format(BlazeTracker.subzeroInvertersSession) + "\n" +
+                                    EnumChatFormatting.AQUA + timeBetween + "\n" +
+                                    EnumChatFormatting.AQUA + bossesBetween;
+                        }
+                        break;
+                    case "Vampire Slayer":
+                        if (!sessionDisplay) {
+                            if (VampireTracker.time == -1) {
+                                timeBetween = "Never";
+                            } else {
+                                timeBetween = Utils.getTimeBetween(VampireTracker.time, timeNow);
+                            }
+                            if (VampireTracker.bosses == -1) {
+                                bossesBetween = "Never";
+                            } else {
+                                bossesBetween = nf.format(VampireTracker.bosses);
+                            }
+
+                            dropsText = EnumChatFormatting.GOLD + "Riftstalkers Killed:\n" +
+                                    EnumChatFormatting.DARK_RED + "Coven Seals:\n" +
+                                    EnumChatFormatting.DARK_AQUA + "Quantum Bundles:\n" +
+                                    EnumChatFormatting.RED + "Bubba Blisters:\n" +
+                                    EnumChatFormatting.LIGHT_PURPLE + "Soultwist Runes:\n" +
+                                    EnumChatFormatting.GRAY + "Chocolate Chips:\n" +
+                                    EnumChatFormatting.GOLD + "Lucky Blocks:\n" +
+                                    EnumChatFormatting.RED + "The One Bundles:\n" +
+                                    EnumChatFormatting.GREEN + "McGrubbers Burgers:\n" +
+                                    EnumChatFormatting.WHITE + "Vampire Parts:\n" +
+                                    EnumChatFormatting.AQUA + "Time Since RNG:\n" +
+                                    EnumChatFormatting.AQUA + "Bosses Since RNG:";
+                            countText = EnumChatFormatting.GOLD + nf.format(VampireTracker.riftstalkers) + "\n" +
+                                    EnumChatFormatting.DARK_RED + nf.format(VampireTracker.covenSeals) + "\n" +
+                                    EnumChatFormatting.DARK_AQUA + nf.format(VampireTracker.quantumBundles) + "\n" +
+                                    EnumChatFormatting.RED + nf.format(VampireTracker.bubbaBlisters) + "\n" +
+                                    EnumChatFormatting.LIGHT_PURPLE + nf.format(VampireTracker.soultwistRunes) + "\n" +
+                                    EnumChatFormatting.GRAY + nf.format(VampireTracker.chocolateChips) + "\n" +
+                                    EnumChatFormatting.GOLD + nf.format(VampireTracker.luckyBlocks) + "\n" +
+                                    EnumChatFormatting.RED + nf.format(VampireTracker.theOneBundles) + "\n" +
+                                    EnumChatFormatting.GREEN + nf.format(VampireTracker.mcgrubbersBurgers) + "\n" +
+                                    EnumChatFormatting.WHITE + nf.format(VampireTracker.vampireParts) + "\n" +
+                                    EnumChatFormatting.AQUA + timeBetween + "\n" +
+                                    EnumChatFormatting.AQUA + bossesBetween;
+                        } else {
+                            if (VampireTracker.timeSession == -1) {
+                                timeBetween = "Never";
+                            } else {
+                                timeBetween = Utils.getTimeBetween(VampireTracker.timeSession, timeNow);
+                            }
+                            if (VampireTracker.bossesSession == -1) {
+                                bossesBetween = "Never";
+                            } else {
+                                bossesBetween = nf.format(VampireTracker.bossesSession);
+                            }
+
+                            dropsText = EnumChatFormatting.GOLD + "Riftstalkers Killed:\n" +
+                                    EnumChatFormatting.DARK_RED + "Coven Seals:\n" +
+                                    EnumChatFormatting.DARK_AQUA + "Quantum Bundles:\n" +
+                                    EnumChatFormatting.RED + "Bubba Blisters:\n" +
+                                    EnumChatFormatting.LIGHT_PURPLE + "Soultwist Runes:\n" +
+                                    EnumChatFormatting.GRAY + "Chocolate Chips:\n" +
+                                    EnumChatFormatting.GOLD + "Lucky Blocks:\n" +
+                                    EnumChatFormatting.RED + "The One Bundles:\n" +
+                                    EnumChatFormatting.GREEN + "McGrubbers Burgers:\n" +
+                                    EnumChatFormatting.WHITE + "Vampire Parts:\n" +
+                                    EnumChatFormatting.AQUA + "Time Since RNG:\n" +
+                                    EnumChatFormatting.AQUA + "Bosses Since RNG:";
+                            countText = EnumChatFormatting.GOLD + nf.format(VampireTracker.riftstalkersSession) + "\n" +
+                                    EnumChatFormatting.DARK_RED + nf.format(VampireTracker.covenSealsSession) + "\n" +
+                                    EnumChatFormatting.DARK_AQUA + nf.format(VampireTracker.quantumBundlesSession) + "\n" +
+                                    EnumChatFormatting.RED + nf.format(VampireTracker.bubbaBlistersSession) + "\n" +
+                                    EnumChatFormatting.LIGHT_PURPLE + nf.format(VampireTracker.soultwistRunesSession) + "\n" +
+                                    EnumChatFormatting.GRAY + nf.format(VampireTracker.chocolateChipsSession) + "\n" +
+                                    EnumChatFormatting.GOLD + nf.format(VampireTracker.luckyBlocksSession) + "\n" +
+                                    EnumChatFormatting.RED + nf.format(VampireTracker.theOneBundlesSession) + "\n" +
+                                    EnumChatFormatting.GREEN + nf.format(VampireTracker.mcgrubbersBurgersSession) + "\n" +
+                                    EnumChatFormatting.WHITE + nf.format(VampireTracker.vampirePartsSession) + "\n" +
                                     EnumChatFormatting.AQUA + timeBetween + "\n" +
                                     EnumChatFormatting.AQUA + bossesBetween;
                         }
