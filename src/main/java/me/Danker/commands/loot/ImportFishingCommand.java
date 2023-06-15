@@ -1,4 +1,4 @@
-package me.Danker.commands;
+package me.Danker.commands.loot;
 
 import com.google.gson.JsonObject;
 import me.Danker.config.CfgConfig;

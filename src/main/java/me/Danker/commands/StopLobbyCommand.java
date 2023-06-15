@@ -1,5 +1,7 @@
 package me.Danker.commands;
 
+import me.Danker.commands.api.LobbyBankCommand;
+import me.Danker.commands.api.LobbySkillsCommand;
 import me.Danker.config.ModConfig;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;

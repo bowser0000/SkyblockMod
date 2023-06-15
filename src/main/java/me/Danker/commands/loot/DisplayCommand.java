@@ -1,4 +1,4 @@
-package me.Danker.commands;
+package me.Danker.commands.loot;
 
 import me.Danker.DankersSkyblockMod;
 import me.Danker.config.ModConfig;

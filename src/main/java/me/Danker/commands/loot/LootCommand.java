@@ -1,4 +1,4 @@
-package me.Danker.commands;
+package me.Danker.commands.loot;
 
 import me.Danker.config.ModConfig;
 import me.Danker.features.loot.*;
@@ -462,7 +462,7 @@ public class LootCommand extends CommandBase {
 					}
 
 					player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "" + EnumChatFormatting.STRIKETHROUGH + "-------------------\n" +
-							EnumChatFormatting.DARK_RED + EnumChatFormatting.BOLD + "  Vampire Loot Summary:\n" +
+							EnumChatFormatting.DARK_RED + EnumChatFormatting.BOLD + "  Vampire Loot Summary (Current Session):\n" +
 							EnumChatFormatting.GOLD + "    Riftstalkers Killed: " + nf.format(VampireTracker.riftstalkersSession) + "\n" +
 							EnumChatFormatting.DARK_RED + "    Coven Seals: " + nf.format(VampireTracker.covenSealsSession) + "\n" +
 							EnumChatFormatting.DARK_AQUA + "    Quantum Bundles: " + nf.format(VampireTracker.quantumBundlesSession) + "\n" +
@@ -603,7 +603,7 @@ public class LootCommand extends CommandBase {
 					} else if (arg1[1].equalsIgnoreCase("ch")) {
 						if (showSession) {
 							player.addChatMessage(new ChatComponentText(EnumChatFormatting.AQUA + "" + EnumChatFormatting.STRIKETHROUGH + "-------------------\n" +
-																		EnumChatFormatting.GOLD + EnumChatFormatting.BOLD + " Crystal Hollows Fishing Summary:\n" +
+																		EnumChatFormatting.GOLD + EnumChatFormatting.BOLD + " Crystal Hollows Fishing Summary (Current Session):\n" +
 																		EnumChatFormatting.BLUE + "    Water Worms: " + nf.format(FishingTracker.waterWormsSession) + "\n" +
 																		EnumChatFormatting.GREEN + "    Poisoned Water Worms: " + nf.format(FishingTracker.poisonedWaterWormsSession) + "\n" +
 																		EnumChatFormatting.RED + "    Flaming Worms: " + nf.format(FishingTracker.flamingWormsSession) + "\n" +

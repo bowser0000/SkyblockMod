@@ -2,6 +2,11 @@ package me.Danker;
 
 import com.google.gson.JsonObject;
 import me.Danker.commands.*;
+import me.Danker.commands.api.*;
+import me.Danker.commands.loot.DisplayCommand;
+import me.Danker.commands.loot.ImportFishingCommand;
+import me.Danker.commands.loot.LootCommand;
+import me.Danker.commands.loot.ResetLootCommand;
 import me.Danker.commands.warp.WarpCommandHandler;
 import me.Danker.config.CfgConfig;
 import me.Danker.config.ModConfig;
