@@ -58,8 +58,8 @@ public class BlazeTracker {
     public static int highClassArchfiendDiceSession = 0;
     public static int engineeringPlansSession = 0;
     public static int subzeroInvertersSession = 0;
-    public static double timeSession = 0;
-    public static int bossesSession = 0;
+    public static double timeSession = -1;
+    public static int bossesSession = -1;
 
     @SubscribeEvent
     public void onLootDrop(SlayerLootDropEvent event) {
