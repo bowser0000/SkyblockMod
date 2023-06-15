@@ -66,29 +66,31 @@ public class WarpCommandHandler {
      * Register all commands
      */
     private void registerCommands() {
-        registerCommand(new WarpCommand("deep", "deep"));
-        registerCommand(new WarpCommand("nether", "nether"));
-        registerCommand(new WarpCommand("isle", "isle"));
-        registerCommand(new WarpCommand("crimson", "crimson"));
-        registerCommand(new WarpCommand("mines", "mines"));
-        registerCommand(new WarpCommand("forge", "forge"));
-        registerCommand(new WarpCommand("crystals", "crystals"));
-        registerCommand(new WarpCommand("gold", "gold"));
-        registerCommand(new WarpCommand("desert", "desert"));
-        registerCommand(new WarpCommand("spider", "spider"));
-        registerCommand(new WarpCommand("barn", "barn"));
-        registerCommand(new WarpCommand("end", "end"));
-        registerCommand(new WarpCommand("park", "park"));
-        registerCommand(new WarpCommand("castle", "castle"));
-        registerCommand(new WarpCommand("museum", "museum"));
-        registerCommand(new WarpCommand("da", "da"));
-        registerCommand(new WarpCommand("crypt", "crypt"));
-        registerCommand(new WarpCommand("nest", "nest"));
-        registerCommand(new WarpCommand("void", "void"));
+        registerCommand(new WarpCommand("deep"));
+        registerCommand(new WarpCommand("nether"));
+        registerCommand(new WarpCommand("isle"));
+        registerCommand(new WarpCommand("crimson"));
+        registerCommand(new WarpCommand("wk", "kuudra"));
+        registerCommand(new WarpCommand("mines"));
+        registerCommand(new WarpCommand("forge"));
+        registerCommand(new WarpCommand("crystals"));
+        registerCommand(new WarpCommand("gold"));
+        registerCommand(new WarpCommand("desert"));
+        registerCommand(new WarpCommand("spider"));
+        registerCommand(new WarpCommand("barn"));
+        registerCommand(new WarpCommand("end"));
+        registerCommand(new WarpCommand("park"));
+        registerCommand(new WarpCommand("castle"));
+        registerCommand(new WarpCommand("museum"));
+        registerCommand(new WarpCommand("da"));
+        registerCommand(new WarpCommand("crypt"));
+        registerCommand(new WarpCommand("nest"));
+        registerCommand(new WarpCommand("void"));
         registerCommand(new WarpCommand("drag", "dragon"));
-        registerCommand(new WarpCommand("jungle", "jungle"));
-        registerCommand(new WarpCommand("howl", "howl"));
+        registerCommand(new WarpCommand("jungle"));
+        registerCommand(new WarpCommand("howl"));
         registerCommand(new WarpCommand("dun", "dungeon_hub"));
+        registerCommand(new WarpCommand("garden"));
     }
 
 }
