@@ -20,8 +20,6 @@ public class VampireTracker {
     public static int theOneBundles;
     public static int mcgrubbersBurgers;
     public static int vampireParts;
-    public static double time;
-    public static int bosses;
 
     public static int riftstalkersSession = 0;
     public static int covenSealsSession = 0;
@@ -33,8 +31,6 @@ public class VampireTracker {
     public static int theOneBundlesSession = 0;
     public static int mcgrubbersBurgersSession = 0;
     public static int vampirePartsSession = 0;
-    public static double timeSession = -1;
-    public static int bossesSession = -1;
 
     @SubscribeEvent
     public void onLootDrop(SlayerLootDropEvent event) {
@@ -85,14 +81,7 @@ public class VampireTracker {
         if (message.contains("   Vampire Slayer LVL ")) {
             riftstalkers++;
             riftstalkersSession++;
-            if (bosses != -1) {
-                bosses++;
-            }
-            if (bossesSession != -1) {
-                bossesSession++;
-            }
             CfgConfig.writeIntConfig("vampire", "riftstalkers", riftstalkers);
-            CfgConfig.writeIntConfig("vampire", "bossRNG", bosses);
         } else if (message.contains("(Enchanted Book Bundle)")) { // special case
             String formatted = event.message.getFormattedText();
             if (formatted.contains(EnumChatFormatting.GREEN + "Enchanted")) { // quantum

@@ -286,8 +286,6 @@ public class CfgConfig {
 		VampireTracker.theOneBundles = initInt("vampire", "theOneBundles", 0);
 		VampireTracker.mcgrubbersBurgers = initInt("vampire", "mcgrubbersBurgers", 0);
 		VampireTracker.vampireParts = initInt("vampire", "vampireParts", 0);
-		VampireTracker.time = initDouble("vampire", "timeRNG", -1);
-		VampireTracker.bosses = initInt("vampire", "bossRNG", -1);
 
 		// Fishing
 		FishingTracker.seaCreatures = initInt("fishing", "seaCreature", 0);

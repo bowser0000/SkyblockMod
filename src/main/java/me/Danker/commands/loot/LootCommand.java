@@ -450,17 +450,6 @@ public class LootCommand extends CommandBase {
 				break;
 			case "vampire":
 				if (showSession) {
-					if (VampireTracker.timeSession == -1) {
-						timeBetween = "Never";
-					} else {
-						timeBetween = Utils.getTimeBetween(VampireTracker.timeSession, timeNow);
-					}
-					if (VampireTracker.bossesSession == -1) {
-						bossesBetween = "Never";
-					} else {
-						bossesBetween = nf.format(VampireTracker.bossesSession);
-					}
-
 					player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "" + EnumChatFormatting.STRIKETHROUGH + "-------------------\n" +
 							EnumChatFormatting.DARK_RED + EnumChatFormatting.BOLD + "  Vampire Loot Summary (Current Session):\n" +
 							EnumChatFormatting.GOLD + "    Riftstalkers Killed: " + nf.format(VampireTracker.riftstalkersSession) + "\n" +
@@ -473,21 +462,8 @@ public class LootCommand extends CommandBase {
 							EnumChatFormatting.RED + "    The One Bundles: " + nf.format(VampireTracker.theOneBundlesSession) + "\n" +
 							EnumChatFormatting.GREEN + "    McGrubber's Burgers: " + nf.format(VampireTracker.mcgrubbersBurgersSession) + "\n" +
 							EnumChatFormatting.WHITE + "    Vampire Parts: " + nf.format(VampireTracker.vampirePartsSession) + "\n" +
-							EnumChatFormatting.AQUA + "    Time Since RNG: " + timeBetween + "\n" +
-							EnumChatFormatting.AQUA + "    Bosses Since RNG: " + bossesBetween + "\n" +
 							EnumChatFormatting.RED + EnumChatFormatting.STRIKETHROUGH + "-------------------"));
 					return;
-				}
-
-				if (VampireTracker.time == -1) {
-					timeBetween = "Never";
-				} else {
-					timeBetween = Utils.getTimeBetween(VampireTracker.time, timeNow);
-				}
-				if (VampireTracker.bosses == -1) {
-					bossesBetween = "Never";
-				} else {
-					bossesBetween = nf.format(VampireTracker.bosses);
 				}
 
 				player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "" + EnumChatFormatting.STRIKETHROUGH + "-------------------\n" +
@@ -502,8 +478,6 @@ public class LootCommand extends CommandBase {
 						EnumChatFormatting.RED + "    The One Bundles: " + nf.format(VampireTracker.theOneBundles) + "\n" +
 						EnumChatFormatting.GREEN + "    McGrubber's Burgers: " + nf.format(VampireTracker.mcgrubbersBurgers) + "\n" +
 						EnumChatFormatting.WHITE + "    Vampire Parts: " + nf.format(VampireTracker.vampireParts) + "\n" +
-						EnumChatFormatting.AQUA + "    Time Since RNG: " + timeBetween + "\n" +
-						EnumChatFormatting.AQUA + "    Bosses Since RNG: " + bossesBetween + "\n" +
 						EnumChatFormatting.RED + EnumChatFormatting.STRIKETHROUGH + "-------------------"));
 				break;
 			case "fishing":

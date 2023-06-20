@@ -677,17 +677,6 @@ public class LootDisplay extends Hud {
                         break;
                     case "Vampire Slayer":
                         if (!sessionDisplay) {
-                            if (VampireTracker.time == -1) {
-                                timeBetween = "Never";
-                            } else {
-                                timeBetween = Utils.getTimeBetween(VampireTracker.time, timeNow);
-                            }
-                            if (VampireTracker.bosses == -1) {
-                                bossesBetween = "Never";
-                            } else {
-                                bossesBetween = nf.format(VampireTracker.bosses);
-                            }
-
                             dropsText = EnumChatFormatting.GOLD + "Riftstalkers Killed:\n" +
                                     EnumChatFormatting.DARK_RED + "Coven Seals:\n" +
                                     EnumChatFormatting.DARK_AQUA + "Quantum Bundles:\n" +
@@ -697,9 +686,7 @@ public class LootDisplay extends Hud {
                                     EnumChatFormatting.GOLD + "Lucky Blocks:\n" +
                                     EnumChatFormatting.RED + "The One Bundles:\n" +
                                     EnumChatFormatting.GREEN + "McGrubbers Burgers:\n" +
-                                    EnumChatFormatting.WHITE + "Vampire Parts:\n" +
-                                    EnumChatFormatting.AQUA + "Time Since RNG:\n" +
-                                    EnumChatFormatting.AQUA + "Bosses Since RNG:";
+                                    EnumChatFormatting.WHITE + "Vampire Parts:";
                             countText = EnumChatFormatting.GOLD + nf.format(VampireTracker.riftstalkers) + "\n" +
                                     EnumChatFormatting.DARK_RED + nf.format(VampireTracker.covenSeals) + "\n" +
                                     EnumChatFormatting.DARK_AQUA + nf.format(VampireTracker.quantumBundles) + "\n" +
@@ -709,21 +696,8 @@ public class LootDisplay extends Hud {
                                     EnumChatFormatting.GOLD + nf.format(VampireTracker.luckyBlocks) + "\n" +
                                     EnumChatFormatting.RED + nf.format(VampireTracker.theOneBundles) + "\n" +
                                     EnumChatFormatting.GREEN + nf.format(VampireTracker.mcgrubbersBurgers) + "\n" +
-                                    EnumChatFormatting.WHITE + nf.format(VampireTracker.vampireParts) + "\n" +
-                                    EnumChatFormatting.AQUA + timeBetween + "\n" +
-                                    EnumChatFormatting.AQUA + bossesBetween;
+                                    EnumChatFormatting.WHITE + nf.format(VampireTracker.vampireParts);
                         } else {
-                            if (VampireTracker.timeSession == -1) {
-                                timeBetween = "Never";
-                            } else {
-                                timeBetween = Utils.getTimeBetween(VampireTracker.timeSession, timeNow);
-                            }
-                            if (VampireTracker.bossesSession == -1) {
-                                bossesBetween = "Never";
-                            } else {
-                                bossesBetween = nf.format(VampireTracker.bossesSession);
-                            }
-
                             dropsText = EnumChatFormatting.GOLD + "Riftstalkers Killed:\n" +
                                     EnumChatFormatting.DARK_RED + "Coven Seals:\n" +
                                     EnumChatFormatting.DARK_AQUA + "Quantum Bundles:\n" +
@@ -733,9 +707,7 @@ public class LootDisplay extends Hud {
                                     EnumChatFormatting.GOLD + "Lucky Blocks:\n" +
                                     EnumChatFormatting.RED + "The One Bundles:\n" +
                                     EnumChatFormatting.GREEN + "McGrubbers Burgers:\n" +
-                                    EnumChatFormatting.WHITE + "Vampire Parts:\n" +
-                                    EnumChatFormatting.AQUA + "Time Since RNG:\n" +
-                                    EnumChatFormatting.AQUA + "Bosses Since RNG:";
+                                    EnumChatFormatting.WHITE + "Vampire Parts:";
                             countText = EnumChatFormatting.GOLD + nf.format(VampireTracker.riftstalkersSession) + "\n" +
                                     EnumChatFormatting.DARK_RED + nf.format(VampireTracker.covenSealsSession) + "\n" +
                                     EnumChatFormatting.DARK_AQUA + nf.format(VampireTracker.quantumBundlesSession) + "\n" +
@@ -745,9 +717,7 @@ public class LootDisplay extends Hud {
                                     EnumChatFormatting.GOLD + nf.format(VampireTracker.luckyBlocksSession) + "\n" +
                                     EnumChatFormatting.RED + nf.format(VampireTracker.theOneBundlesSession) + "\n" +
                                     EnumChatFormatting.GREEN + nf.format(VampireTracker.mcgrubbersBurgersSession) + "\n" +
-                                    EnumChatFormatting.WHITE + nf.format(VampireTracker.vampirePartsSession) + "\n" +
-                                    EnumChatFormatting.AQUA + timeBetween + "\n" +
-                                    EnumChatFormatting.AQUA + bossesBetween;
+                                    EnumChatFormatting.WHITE + nf.format(VampireTracker.vampirePartsSession);
                         }
                         break;
                     case "Fishing":

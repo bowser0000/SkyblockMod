@@ -253,8 +253,6 @@ public class ResetLootCommand extends CommandBase {
 		VampireTracker.theOneBundlesSession = 0;
 		VampireTracker.mcgrubbersBurgersSession = 0;
 		VampireTracker.vampirePartsSession = 0;
-		VampireTracker.timeSession = -1;
-		VampireTracker.bossesSession = -1;
 		CfgConfig.deleteCategory("vampire");
 		ConfigHandler.reloadConfig();
 	}
