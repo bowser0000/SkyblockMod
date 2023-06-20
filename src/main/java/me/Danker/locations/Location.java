@@ -18,7 +18,7 @@ public enum Location {
     PARK("The Park"),
     SPIDERS_DEN("Spider's Den"),
     GARDEN("Garden"),
-    RIFT("Rift");
+    RIFT("The Rift");
 
     String text;
 
