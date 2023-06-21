@@ -1,4 +1,4 @@
-package me.Danker.commands;
+package me.Danker.commands.loot;
 
 import com.google.gson.JsonObject;
 import me.Danker.config.CfgConfig;
@@ -43,7 +43,7 @@ public class ImportFishingCommand extends CommandBase {
 			// Check key
 			String key = ModConfig.apiKey;
 			if (key.equals("")) {
-				player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "API key not set. Use /setkey."));
+				player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "API key not set."));
 				return;
 			}
 

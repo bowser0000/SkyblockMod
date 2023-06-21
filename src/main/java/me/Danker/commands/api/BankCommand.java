@@ -1,4 +1,4 @@
-package me.Danker.commands;
+package me.Danker.commands.api;
 
 import com.google.gson.JsonObject;
 import me.Danker.config.ModConfig;
@@ -60,7 +60,7 @@ public class BankCommand extends CommandBase {
 			// Check key
 			String key = ModConfig.apiKey;
 			if (key.equals("")) {
-				player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "API key not set. Use /setkey."));
+				player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "API key not set."));
 				return;
 			}
 			

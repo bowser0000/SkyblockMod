@@ -1,4 +1,4 @@
-package me.Danker.commands;
+package me.Danker.commands.api;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -157,7 +157,7 @@ public class PetsCommand extends CommandBase {
 			// Check key
 			String key = ModConfig.apiKey;
 			if (key.equals("")) {
-				player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "API key not set. Use /setkey."));
+				player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "API key not set."));
 				return;
 			}
 

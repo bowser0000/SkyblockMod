@@ -1,6 +1,11 @@
 package me.Danker.commands;
 
 import me.Danker.DankersSkyblockMod;
+import me.Danker.commands.api.*;
+import me.Danker.commands.loot.DisplayCommand;
+import me.Danker.commands.loot.ImportFishingCommand;
+import me.Danker.commands.loot.LootCommand;
+import me.Danker.commands.loot.ResetLootCommand;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;

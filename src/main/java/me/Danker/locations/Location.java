@@ -17,7 +17,8 @@ public enum Location {
     PRIVATE_ISLAND("Private Island"),
     PARK("The Park"),
     SPIDERS_DEN("Spider's Den"),
-    GARDEN("Garden");
+    GARDEN("Garden"),
+    RIFT("The Rift");
 
     String text;
 

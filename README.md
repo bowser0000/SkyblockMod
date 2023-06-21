@@ -98,9 +98,9 @@ Discord Server: https://discord.gg/QsEkNQS
 ## Commands
 - /dhelp - Returns this message in-game.
 - /dsm - Opens the GUI for Danker's Skyblock Mod.
-- /loot <zombie/spider/wolf/enderman/blaze/fishing/catacombs/mythological/> [winter/festival/spooky/ch/lava/trophy/f(1-7)/mm/session] - Returns loot received from slayer quests or fishing stats. /loot fishing winter returns winter sea creatures instead.
-- /display <zombie/spider/wolf/enderman/blaze/fishing/catacombs/mythological/ghosts/auto/off> [winter/festival/spooky/ch/lava/trophy/f(1-7)/mm/session] - Text display for trackers. /display fishing winter displays winter sea creatures instead. /display auto automatically displays the loot for the slayer quest you have active.
-- /resetloot <zombie/spider/wolf/enderman/blaze/fishing/catacombs/mythological/confirm/cancel> -  - Resets loot for trackers. /resetloot confirm confirms the reset.
+- /loot <zombie/spider/wolf/enderman/blaze/vampire/fishing/catacombs/mythological/> [winter/festival/spooky/ch/lava/trophy/f(1-7)/mm/session] - Returns loot received from slayer quests or fishing stats. /loot fishing winter returns winter sea creatures instead.
+- /display <zombie/spider/wolf/enderman/blaze/vampire/fishing/catacombs/mythological/ghosts/auto/off> [winter/festival/spooky/ch/lava/trophy/f(1-7)/mm/session] - Text display for trackers. /display fishing winter displays winter sea creatures instead. /display auto automatically displays the loot for the slayer quest you have active.
+- /resetloot <zombie/spider/wolf/enderman/blaze/vampire/fishing/catacombs/mythological/confirm/cancel> -  - Resets loot for trackers. /resetloot confirm confirms the reset.
 - /slayer [player] - Uses API to get slayer xp of a person. If no name is provided, it checks yours.
 - /skill [player] - Uses API to get skill levels of a person. If no name is provided, it checks yours.
 - /lobbyskills - Uses API to find the average skills of the lobby, as well the three players with the highest skill average.
@@ -184,12 +184,14 @@ Shortcut commands that save you the time of typing the whole warp command.
   - Hub: `hub.wav`
   - Private Island: `island.wav`
   - Farming Islands: `farmingislands.wav`
+  - Garden: `garden.wav`
   - Gold Mine: `goldmine.wav`
   - Deep Caverns: `deepcaverns.wav`
   - Dwarven Mines: `dwarvenmines.wav`
   - Crystal Hollows: `crystalhollows.wav`
   - Spider's Den: `spidersden.wav`
   - Crimson Isle: `crimsonisle.wav`
+  - Kuudra: `kuudra.wav`
   - The End: `end.wav`
   - The Park: `park.wav`
 2. Either run `/dsmmusic reload` or restart your game.

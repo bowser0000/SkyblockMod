@@ -42,7 +42,9 @@ public class DisableMovement {
     @SubscribeEvent
     public void onWorldUnload(WorldEvent.Unload event) {
         if (disableMouse) {
-            Minecraft.getMinecraft().gameSettings.mouseSensitivity = sens;
+            GameSettings gs = Minecraft.getMinecraft().gameSettings;
+            gs.mouseSensitivity = sens;
+            gs.saveOptions();
         }
 
         disableMouse = false;
@@ -63,6 +65,7 @@ public class DisableMovement {
             player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Disabled moving mouse."));
         } else {
             gs.mouseSensitivity = sens;
+            gs.saveOptions();
             player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Enabled moving mouse."));
         }
     }

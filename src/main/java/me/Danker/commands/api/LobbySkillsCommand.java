@@ -1,4 +1,4 @@
-package me.Danker.commands;
+package me.Danker.commands.api;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -49,7 +49,7 @@ public class LobbySkillsCommand extends CommandBase {
 		// Check key
 		String key = ModConfig.apiKey;
 		if (key.equals("")) {
-			playerSP.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "API key not set. Use /setkey."));
+			playerSP.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "API key not set."));
 			return;
 		}
 

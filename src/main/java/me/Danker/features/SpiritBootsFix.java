@@ -1,5 +1,6 @@
 package me.Danker.features;
 
+import me.Danker.config.ModConfig;
 import me.Danker.events.PacketReadEvent;
 import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;
@@ -15,16 +16,22 @@ public class SpiritBootsFix {
     static Field slot = ReflectionHelper.findField(S04PacketEntityEquipment.class, "equipmentSlot", "field_149392_b", "b");
 
     @SubscribeEvent
-    public void onPacketRead(PacketReadEvent event) throws IllegalAccessException {
+    public void onPacketRead(PacketReadEvent event) {
+        if (!ModConfig.spiritBootsFix) return;
+
         if (Utils.inSkyblock && event.packet instanceof S04PacketEntityEquipment) {
             EntityPlayer player = Minecraft.getMinecraft().thePlayer;
             S04PacketEntityEquipment packet = (S04PacketEntityEquipment) event.packet;
 
             if (player == null) return;
             if (packet.getEntityID() == player.getEntityId()) {
-                slot.setAccessible(true);
-                slot.setInt(packet, slot.getInt(packet) + 1);
-                event.packet = packet;
+                try {
+                    slot.setAccessible(true);
+                    slot.setInt(packet, slot.getInt(packet) + 1);
+                    event.packet = packet;
+                } catch (IllegalAccessException ex) {
+                    ex.printStackTrace();
+                }
             }
         }
     }

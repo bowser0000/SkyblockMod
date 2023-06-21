@@ -2,6 +2,11 @@ package me.Danker;
 
 import com.google.gson.JsonObject;
 import me.Danker.commands.*;
+import me.Danker.commands.api.*;
+import me.Danker.commands.loot.DisplayCommand;
+import me.Danker.commands.loot.ImportFishingCommand;
+import me.Danker.commands.loot.LootCommand;
+import me.Danker.commands.loot.ResetLootCommand;
 import me.Danker.commands.warp.WarpCommandHandler;
 import me.Danker.config.CfgConfig;
 import me.Danker.config.ModConfig;
@@ -116,6 +121,7 @@ public class DankersSkyblockMod {
         MinecraftForge.EVENT_BUS.register(new CrimsonMinibossTimer());
         MinecraftForge.EVENT_BUS.register(new CrystalHollowWaypoints());
         MinecraftForge.EVENT_BUS.register(new CustomMusic());
+        MinecraftForge.EVENT_BUS.register(new Debug());
         MinecraftForge.EVENT_BUS.register(new DisableMovement());
         MinecraftForge.EVENT_BUS.register(new DrillFix());
         MinecraftForge.EVENT_BUS.register(new DungeonScore());
@@ -134,12 +140,14 @@ public class DankersSkyblockMod {
         MinecraftForge.EVENT_BUS.register(new HidePetCandy());
         MinecraftForge.EVENT_BUS.register(new HidePlayerArmour());
         MinecraftForge.EVENT_BUS.register(new HideTooltipsInExperiments());
+        MinecraftForge.EVENT_BUS.register(new HideTooltipsMisc());
         MinecraftForge.EVENT_BUS.register(new HighlightCommissions());
         MinecraftForge.EVENT_BUS.register(new HighlightFilledOrders());
         MinecraftForge.EVENT_BUS.register(new HighlightSkeletonMasters());
         MinecraftForge.EVENT_BUS.register(new IceWalkSolver());
         MinecraftForge.EVENT_BUS.register(new KuudraNotifications());
         MinecraftForge.EVENT_BUS.register(new LividSolver());
+        MinecraftForge.EVENT_BUS.register(new LocrawSpamFix());
         MinecraftForge.EVENT_BUS.register(new LowHealthNotifications());
         MinecraftForge.EVENT_BUS.register(new MeterTracker());
         MinecraftForge.EVENT_BUS.register(new MinionLastCollected());
@@ -180,6 +188,7 @@ public class DankersSkyblockMod {
         MinecraftForge.EVENT_BUS.register(new MythologicalTracker());
         MinecraftForge.EVENT_BUS.register(new SpiderTracker());
         MinecraftForge.EVENT_BUS.register(new TrophyFishTracker());
+        MinecraftForge.EVENT_BUS.register(new VampireTracker());
         MinecraftForge.EVENT_BUS.register(new WolfTracker());
         MinecraftForge.EVENT_BUS.register(new ZombieTracker());
         

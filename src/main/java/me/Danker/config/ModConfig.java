@@ -36,7 +36,7 @@ import java.util.Arrays;
 public class ModConfig extends Config {
 
     @Exclude Minecraft mc = Minecraft.getMinecraft();
-    @Exclude static String[] displays = {"Off", "Zombie Slayer", "Spider Slayer", "Wolf Slayer", "Enderman Slayer", "Blaze Slayer", "Fishing", "Winter Fishing", "Fishing Festival", "Spooky Fishing", "Crystal Hollows Fishing", "Lava Fishing", "Trophy Fishing", "Floor 1", "Floor 2", "Floor 3", "Floor 4", "Floor 5", "Floor 6", "Floor 7", "Master Mode", "Mythological", "Ghost"};
+    @Exclude static String[] displays = {"Off", "Zombie Slayer", "Spider Slayer", "Wolf Slayer", "Enderman Slayer", "Blaze Slayer", "Vampire Slayer", "Fishing", "Winter Fishing", "Fishing Festival", "Spooky Fishing", "Crystal Hollows Fishing", "Lava Fishing", "Trophy Fishing", "Floor 1", "Floor 2", "Floor 3", "Floor 4", "Floor 5", "Floor 6", "Floor 7", "Master Mode", "Mythological", "Ghost"};
 
     public ModConfig() {
         super(new Mod("Danker's Skyblock Mod", ModType.SKYBLOCK, "/assets/dsm/icons/icon.png", new CfgMigrator("./config/Danker's Skyblock Mod.cfg")), "dsmconfig.json");
@@ -97,6 +97,12 @@ public class ModConfig extends Config {
         addDependency("highlightOrdersColour", "highlightOrders");
         addDependency("hidePlayerArmourOnly", "hideArmour");
         addDependency("autoImportWaypoints", "autoWaypoints");
+        addDependency("debugPacketsIn", "debug");
+        addDependency("debugPacketsOut", "debug");
+        addDependency("debugChat", "debug");
+        addDependency("thunderAlert", "fishingAlert");
+        addDependency("jawbusAlert", "fishingAlert");
+        addDependency("gwAlert", "fishingAlert");
     }
 
     public static String getColour(int index) {
@@ -144,6 +150,7 @@ public class ModConfig extends Config {
         general
         dungeons
         farming
+        fishing
     aliases
         custom aliases
     waypoints
@@ -162,6 +169,7 @@ public class ModConfig extends Config {
         waypoints
         trackers
         farming
+    debug
     */
 
     // General
@@ -410,12 +418,20 @@ public class ModConfig extends Config {
             category = "toggles"
     )
     @Switch(
-            name = "Hide tooltips in Melody's Harp",
+            name = "Hide Tooltips in Melody's Harp",
             description = "Hides tooltips in Melody's Harp.",
             category = "General",
             subcategory = "Hide Tooltips"
     )
     public static boolean melodyTooltips = false;
+
+    @Switch(
+            name = "Hide Tooltips During Hacking",
+            description = "Hides tooltips during hacking in the rift.",
+            category = "General",
+            subcategory = "Hide Tooltips"
+    )
+    public static boolean hackingTooltips = false;
 
     @CfgName(
             name = "HideTooltipsInExperimentAddons",
@@ -1160,18 +1176,6 @@ public class ModConfig extends Config {
     public static boolean notifySlayerSlain = false;
 
     @CfgName(
-            name = "FishingAlert",
-            category = "toggles"
-    )
-    @Switch(
-            name = "Fishing Spawn Alerts",
-            description = "Alerts when a Thunder or Lord Jawbus spawns nearby.",
-            category = "Alerts",
-            subcategory = "General"
-    )
-    public static boolean fishingAlert = false;
-
-    @CfgName(
             name = "KuudraNotifications",
             category = "toggles"
     )
@@ -1313,6 +1317,42 @@ public class ModConfig extends Config {
             subcategory = "Farming"
     )
     public static float farmMaxZ = 220F;
+
+    @CfgName(
+            name = "FishingAlert",
+            category = "toggles"
+    )
+    @Switch(
+            name = "Fishing Spawn Alerts",
+            description = "Alerts when a mob is fished up nearby.",
+            category = "Alerts",
+            subcategory = "Fishing"
+    )
+    public static boolean fishingAlert = false;
+
+    @Switch(
+            name = "Thunder Spawn Alert",
+            description = "Alert when a Thunder is fished up nearby.",
+            category = "Alerts",
+            subcategory = "Fishing"
+    )
+    public static boolean thunderAlert = true;
+
+    @Switch(
+            name = "Jawbus Spawn Alert",
+            description = "Alert when a Jawbus is fished up nearby.",
+            category = "Alerts",
+            subcategory = "Fishing"
+    )
+    public static boolean jawbusAlert = true;
+
+    @Switch(
+            name = "Great White Shark Spawn Alert",
+            description = "Alert when a Great White Shark is fished up nearby.",
+            category = "Alerts",
+            subcategory = "Fishing"
+    )
+    public static boolean gwAlert = true;
 
     // Aliases
 
@@ -1787,6 +1827,21 @@ public class ModConfig extends Config {
     )
     public static int farmingIslandsVolume = 50;
 
+    @Switch(
+            name = "Garden Music",
+            category = "Music",
+            subcategory = "Music"
+    )
+    public static boolean gardenMusic = false;
+
+    @Slider(
+            name = "Garden Music Volume",
+            min = 0, max = 100,
+            category = "Music",
+            subcategory = "Music"
+    )
+    public static int gardenVolume = 50;
+
     @CfgName(
             name = "GoldMineMusic",
             category = "toggles"
@@ -1924,6 +1979,21 @@ public class ModConfig extends Config {
             subcategory = "Music"
     )
     public static int crimsonIsleVolume = 50;
+
+    @Switch(
+            name = "Kuudra Music",
+            category = "Music",
+            subcategory = "Music"
+    )
+    public static boolean kuudraMusic = false;
+
+    @Slider(
+            name = "Kuudra Music Volume",
+            min = 0, max = 100,
+            category = "Music",
+            subcategory = "Music"
+    )
+    public static int kuudraVolume = 50;
 
     @CfgName(
             name = "EndMusic",
@@ -2157,6 +2227,14 @@ public class ModConfig extends Config {
     )
     public static OneKeyBind disableMouse = new OneKeyBind();
 
+    @Info(
+            text = "If this gets stuck, change your sensitivity in controls.",
+            type = InfoType.INFO,
+            category = "Keybinds",
+            subcategory = "Farming"
+    )
+    public static boolean ignored3;
+
     @KeyBind(
             name = "Disable Moving Forwards/Back",
             category = "Keybinds",
@@ -2170,5 +2248,54 @@ public class ModConfig extends Config {
             subcategory = "Farming"
     )
     public static OneKeyBind disableAD = new OneKeyBind();
+
+    @Switch(
+            name = "Debug Messages",
+            description = "Enable debug messages.",
+            size = OptionSize.DUAL,
+            category = "Debug",
+            subcategory = "Debugging"
+    )
+    public static boolean debug = false;
+
+    @Switch(
+            name = "Packets Received",
+            description = "Show packets being received.",
+            category = "Debug",
+            subcategory = "Debugging"
+    )
+    public static boolean debugPacketsIn = false;
+
+    @Switch(
+            name = "Packets Sent",
+            description = "Show packets being sent.",
+            category = "Debug",
+            subcategory = "Debugging"
+    )
+    public static boolean debugPacketsOut = false;
+
+    @Switch(
+            name = "Messages Sent",
+            description = "Show messages/commands being sent.",
+            category = "Debug",
+            subcategory = "Debugging"
+    )
+    public static boolean debugChat = false;
+
+    @Switch(
+            name = "Fix /locraw Spam",
+            description = "Prevents /locraw from being sent in succession, fixing commands being sent too fast.",
+            category = "Debug",
+            subcategory = "Fixes"
+    )
+    public static boolean fixLocraw = false;
+
+    @Switch(
+            name = "Fix S04PacketEntityEquipment",
+            description = "Fixes S04PacketEntityEquipment packet incorrectly setting armor on Forge clients.",
+            category = "Debug",
+            subcategory = "Fixes"
+    )
+    public static boolean spiritBootsFix = true;
 
 }

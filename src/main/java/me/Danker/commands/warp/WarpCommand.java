@@ -9,9 +9,13 @@ import net.minecraft.command.ICommandSender;
 public class WarpCommand extends CommandBase {
 
 
-    private boolean custom_command = false;
+    private boolean custom_command;
     public String name;
     public String destination;
+
+    public WarpCommand(String name) {
+        this(name, name, false);
+    }
 
     /**
      * A Command blueprint extending CommandBase that uses the name and sends the destination as "/warp {@link #destination}"
@@ -19,8 +23,7 @@ public class WarpCommand extends CommandBase {
      * @param destination the location name that is sent
      */
     public WarpCommand(String name, String destination) {
-        this.name = name;
-        this.destination = destination;
+        this(name, destination, false);
     }
 
     /**
