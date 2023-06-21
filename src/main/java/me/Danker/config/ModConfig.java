@@ -418,12 +418,20 @@ public class ModConfig extends Config {
             category = "toggles"
     )
     @Switch(
-            name = "Hide tooltips in Melody's Harp",
+            name = "Hide Tooltips in Melody's Harp",
             description = "Hides tooltips in Melody's Harp.",
             category = "General",
             subcategory = "Hide Tooltips"
     )
     public static boolean melodyTooltips = false;
+
+    @Switch(
+            name = "Hide Tooltips During Hacking",
+            description = "Hides tooltips during hacking in the rift.",
+            category = "General",
+            subcategory = "Hide Tooltips"
+    )
+    public static boolean hackingTooltips = false;
 
     @CfgName(
             name = "HideTooltipsInExperimentAddons",
