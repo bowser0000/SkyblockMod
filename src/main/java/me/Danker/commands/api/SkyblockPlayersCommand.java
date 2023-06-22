@@ -17,6 +17,8 @@ import java.util.Locale;
 
 public class SkyblockPlayersCommand extends CommandBase {
 
+	static NumberFormat nf = NumberFormat.getIntegerInstance(Locale.US);
+
 	@Override
 	public String getCommandName() {
 		return "sbplayers";
@@ -83,6 +85,8 @@ public class SkyblockPlayersCommand extends CommandBase {
 			int dungeons = 0; // dungeon
 			int darkAuction = 0; // dark_auction
 			int jerry = 0; // winter
+			int rift = 0; // rift
+
 			if (playersResponse.get("games").getAsJsonObject().get("SKYBLOCK").getAsJsonObject().has("modes")) {
 				JsonObject skyblockPlayers = playersResponse.get("games").getAsJsonObject().get("SKYBLOCK").getAsJsonObject().get("modes").getAsJsonObject();
 				skyblockTotalPlayers = playersResponse.get("games").getAsJsonObject().get("SKYBLOCK").getAsJsonObject().get("players").getAsInt();
@@ -104,29 +108,30 @@ public class SkyblockPlayersCommand extends CommandBase {
 				dungeons = getPlayerCount("dungeon", skyblockPlayers);
 				darkAuction = getPlayerCount("dark_auction", skyblockPlayers);
 				jerry = getPlayerCount("winter", skyblockPlayers);
+				rift = getPlayerCount("rift", skyblockPlayers);
 			}
-			
-			NumberFormat nf = NumberFormat.getIntegerInstance(Locale.US);
+
 			player.addChatMessage(new ChatComponentText(ModConfig.getDelimiter() + "\n" +
 														ModConfig.getColour(ModConfig.typeColour) + " Hypixel: " + ModConfig.getColour(ModConfig.valueColour) + nf.format(totalPlayers) + "\n" +
-														ModConfig.getColour(ModConfig.typeColour) + " Skyblock: " + ModConfig.getColour(ModConfig.valueColour) + nf.format(skyblockTotalPlayers) + " / " + Utils.getPercentage(skyblockTotalPlayers, totalPlayers) + "%\n" +
-														ModConfig.getColour(ModConfig.typeColour) + " Private Island: " + ModConfig.getColour(ModConfig.valueColour) + nf.format(privateIsland) + " / " + Utils.getPercentage(privateIsland, skyblockTotalPlayers) + "%\n" +
-														ModConfig.getColour(ModConfig.typeColour) + " Hub: " + ModConfig.getColour(ModConfig.valueColour) + nf.format(hub) + " / " + Utils.getPercentage(hub, skyblockTotalPlayers) + "%\n" +
-														ModConfig.getColour(ModConfig.typeColour) + " Farming Islands: " + ModConfig.getColour(ModConfig.valueColour) + nf.format(farmingIslands) + " / " + Utils.getPercentage(farmingIslands, skyblockTotalPlayers) + "%\n" +
-														ModConfig.getColour(ModConfig.typeColour) + " Garden: " + ModConfig.getColour(ModConfig.valueColour) + nf.format(garden) + " / " + Utils.getPercentage(garden, skyblockTotalPlayers) + "%\n" +
-														ModConfig.getColour(ModConfig.typeColour) + " Park: " + ModConfig.getColour(ModConfig.valueColour) + nf.format(park) + " / " + Utils.getPercentage(park, skyblockTotalPlayers) + "%\n" +
-														ModConfig.getColour(ModConfig.typeColour) + " Gold Mine: " + ModConfig.getColour(ModConfig.valueColour) + nf.format(goldMine) + " / " + Utils.getPercentage(goldMine, skyblockTotalPlayers) + "%\n" +
-														ModConfig.getColour(ModConfig.typeColour) + " Deep Caverns: " + ModConfig.getColour(ModConfig.valueColour) + nf.format(deepCaverns) + " / " + Utils.getPercentage(deepCaverns, skyblockTotalPlayers) + "%\n" +
-														ModConfig.getColour(ModConfig.typeColour) + " Dwarven Mines: " + ModConfig.getColour(ModConfig.valueColour) + nf.format(dwarvenMines) + " / " + Utils.getPercentage(dwarvenMines, skyblockTotalPlayers) + "%\n" +
-														ModConfig.getColour(ModConfig.typeColour) + " Crystal Hollows: " + ModConfig.getColour(ModConfig.valueColour) + nf.format(crystalHollows) + " / " + Utils.getPercentage(crystalHollows, skyblockTotalPlayers) + "%\n" +
-														ModConfig.getColour(ModConfig.typeColour) + " Spider's Den: " + ModConfig.getColour(ModConfig.valueColour) + nf.format(spidersDen) + " / " + Utils.getPercentage(spidersDen, skyblockTotalPlayers) + "%\n" +
-														ModConfig.getColour(ModConfig.typeColour) + " Crimson Isle: " + ModConfig.getColour(ModConfig.valueColour) + nf.format(crimsonIsle) + " / " + Utils.getPercentage(crimsonIsle, skyblockTotalPlayers) + "%\n" +
-														ModConfig.getColour(ModConfig.typeColour) + " Kuudra: " + ModConfig.getColour(ModConfig.valueColour) + nf.format(kuudra) + " / " + Utils.getPercentage(kuudra, skyblockTotalPlayers) + "%\n" +
-														ModConfig.getColour(ModConfig.typeColour) + " The End: " + ModConfig.getColour(ModConfig.valueColour) + nf.format(end) + " / " + Utils.getPercentage(end, skyblockTotalPlayers) + "%\n" +
-														ModConfig.getColour(ModConfig.typeColour) + " Dungeons Hub: " + ModConfig.getColour(ModConfig.valueColour) + nf.format(dungeonsHub) + " / " + Utils.getPercentage(dungeonsHub, skyblockTotalPlayers) + "%\n" +
-														ModConfig.getColour(ModConfig.typeColour) + " Dungeons: " + ModConfig.getColour(ModConfig.valueColour) + nf.format(dungeons) + " / " + Utils.getPercentage(dungeons, skyblockTotalPlayers) + "%\n" +
-														ModConfig.getColour(ModConfig.typeColour) + " Dark Auction: " + ModConfig.getColour(ModConfig.valueColour) + nf.format(darkAuction) + " / " + Utils.getPercentage(darkAuction, skyblockTotalPlayers) + "%\n" +
-														ModConfig.getColour(ModConfig.typeColour) + " Jerry's Workshop: " + ModConfig.getColour(ModConfig.valueColour) + nf.format(jerry) + " / " + Utils.getPercentage(jerry, skyblockTotalPlayers) + "%\n" +
+														getOutput("Skyblock", skyblockTotalPlayers, totalPlayers) +
+														getOutput("Private Island", privateIsland, skyblockTotalPlayers) +
+														getOutput("Hub", hub, skyblockTotalPlayers) +
+														getOutput("Dark Auction", darkAuction, skyblockTotalPlayers) +
+														getOutput("The Rift", rift, skyblockTotalPlayers) +
+														getOutput("Farming Islands", farmingIslands, skyblockTotalPlayers) +
+														getOutput("Garden", garden, skyblockTotalPlayers) +
+														getOutput("Park", park, skyblockTotalPlayers) +
+														getOutput("Gold Mine", goldMine, skyblockTotalPlayers) +
+														getOutput("Deep Caverns", deepCaverns, skyblockTotalPlayers) +
+														getOutput("Dwarven Mines", dwarvenMines, skyblockTotalPlayers) +
+														getOutput("Crystal Hollows", crystalHollows, skyblockTotalPlayers) +
+														getOutput("Spider's Den", spidersDen, skyblockTotalPlayers) +
+														getOutput("Crimson Isle", crimsonIsle, skyblockTotalPlayers) +
+														getOutput("Kuudra", kuudra, skyblockTotalPlayers) +
+														getOutput("The End", end, skyblockTotalPlayers) +
+														getOutput("Dungeons Hub", dungeonsHub, skyblockTotalPlayers) +
+														getOutput("Dungeons", dungeons, skyblockTotalPlayers) +
+														getOutput("Jerry's Workshop", jerry, skyblockTotalPlayers) +
 														ModConfig.getDelimiter()));
 		}).start();
 	}
@@ -134,6 +139,10 @@ public class SkyblockPlayersCommand extends CommandBase {
 	static int getPlayerCount(String location, JsonObject obj) {
 		if (obj.has(location)) return obj.get(location).getAsInt();
 		return 0;
+	}
+
+	static String getOutput(String name, int amount, int total) {
+		return ModConfig.getColour(ModConfig.typeColour) + " " + name + ": " + ModConfig.getColour(ModConfig.valueColour) + nf.format(amount) + " / " + Utils.getPercentage(amount, total) + "%\n";
 	}
 
 }

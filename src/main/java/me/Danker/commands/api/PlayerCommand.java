@@ -203,6 +203,18 @@ public class PlayerCommand extends CommandBase {
             if (slayersObject.get("enderman").getAsJsonObject().has("xp")) {
                 endermanXP = slayersObject.get("enderman").getAsJsonObject().get("xp").getAsInt();
             }
+            // Blaze
+            int blazeXP = 0;
+            if (slayersObject.get("blaze").getAsJsonObject().has("xp")) {
+                blazeXP = slayersObject.get("blaze").getAsJsonObject().get("xp").getAsInt();
+            }
+            // Vampire
+            int vampireXP = 0;
+            if (slayersObject.get("vampire").getAsJsonObject().has("xp")) {
+                vampireXP = slayersObject.get("vampire").getAsJsonObject().get("xp").getAsInt();
+            }
+
+            int totalXP = zombieXP + spiderXP + wolfXP + blazeXP + vampireXP;
 
             // Bank
             System.out.println("Fetching bank + purse coins...");
@@ -243,11 +255,13 @@ public class PlayerCommand extends CommandBase {
                                                         ModConfig.getColour(ModConfig.typeColour) + " Carpentry: " + ModConfig.getColour(ModConfig.valueColour) + EnumChatFormatting.BOLD + carpentryLevel + "\n" +
                                                         EnumChatFormatting.AQUA + " Average Skill Level: " + ModConfig.getColour(ModConfig.skillAverageColour) + EnumChatFormatting.BOLD + skillAvg + "\n" +
                                                         EnumChatFormatting.AQUA + " True Average Skill Level: " + ModConfig.getColour(ModConfig.skillAverageColour) + EnumChatFormatting.BOLD + trueAvg + "\n\n" +
-                                                        EnumChatFormatting.AQUA + " " + username + "'s Total Slayer XP: " + EnumChatFormatting.GOLD + EnumChatFormatting.BOLD + nf.format(zombieXP + spiderXP + wolfXP + endermanXP) + "\n" +
+                                                        EnumChatFormatting.AQUA + " " + username + "'s Total Slayer XP: " + EnumChatFormatting.GOLD + EnumChatFormatting.BOLD + nf.format(totalXP) + "\n" +
                                                         ModConfig.getColour(ModConfig.typeColour) + " Zombie XP: " + ModConfig.getColour(ModConfig.valueColour) + EnumChatFormatting.BOLD + nf.format(zombieXP) + "\n" +
                                                         ModConfig.getColour(ModConfig.typeColour) + " Spider XP: " + ModConfig.getColour(ModConfig.valueColour) + EnumChatFormatting.BOLD + nf.format(spiderXP) + "\n" +
                                                         ModConfig.getColour(ModConfig.typeColour) + " Wolf XP: " + ModConfig.getColour(ModConfig.valueColour) + EnumChatFormatting.BOLD + nf.format(wolfXP) + "\n" +
-                                                        ModConfig.getColour(ModConfig.typeColour) + " Enderman XP: " + ModConfig.getColour(ModConfig.valueColour) + EnumChatFormatting.BOLD + nf.format(endermanXP) + "\n\n" +
+                                                        ModConfig.getColour(ModConfig.typeColour) + " Enderman XP: " + ModConfig.getColour(ModConfig.valueColour) + EnumChatFormatting.BOLD + nf.format(endermanXP) + "\n" +
+                                                        ModConfig.getColour(ModConfig.typeColour) + " Blaze XP: " + ModConfig.getColour(ModConfig.valueColour) + EnumChatFormatting.BOLD + nf.format(blazeXP) + "\n" +
+                                                        ModConfig.getColour(ModConfig.typeColour) + " Vampire XP: " + ModConfig.getColour(ModConfig.valueColour) + EnumChatFormatting.BOLD + nf.format(vampireXP) + "\n\n" +
                                                         EnumChatFormatting.AQUA + " " + username + "'s Coins:\n" +
                                                         ModConfig.getColour(ModConfig.typeColour) + " Bank: " + (bankCoins == 0 ? EnumChatFormatting.RED + "Bank API disabled." : EnumChatFormatting.GOLD + nf.format(bankCoins)) + "\n" +
                                                         ModConfig.getColour(ModConfig.typeColour) + " Purse: " + EnumChatFormatting.GOLD + nf.format(purseCoins) + "\n" +
