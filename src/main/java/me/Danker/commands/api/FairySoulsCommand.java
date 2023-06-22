@@ -86,9 +86,7 @@ public class FairySoulsCommand extends CommandBase {
             JsonObject userObject = profileResponse.get("profile").getAsJsonObject().get("members").getAsJsonObject().get(uuid).getAsJsonObject();
 
             int fairy_souls = userObject.get("fairy_souls_collected").getAsInt();
-            System.out.println(fairy_souls);
-
-            player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "The player " + username + " has " + ModConfig.getColour(ModConfig.valueColour) + fairy_souls + ModConfig.getColour(ModConfig.mainColour) + "/227" + " collected"));
+            player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "The player " + username + " has " + ModConfig.getColour(ModConfig.valueColour) + fairy_souls + ModConfig.getColour(ModConfig.mainColour) + "/242" + " collected"));
 
         }).start();
 
