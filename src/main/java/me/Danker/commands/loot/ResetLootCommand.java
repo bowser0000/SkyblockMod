@@ -268,6 +268,7 @@ public class ResetLootCommand extends CommandBase {
 		FishingTracker.seaWitchesSession = 0;
 		FishingTracker.seaArchersSession = 0;
 		FishingTracker.monsterOfTheDeepsSession = 0;
+		FishingTracker.agarimoosSession = 0;
 		FishingTracker.catfishesSession = 0;
 		FishingTracker.carrotKingsSession = 0;
 		FishingTracker.seaLeechesSession = 0;

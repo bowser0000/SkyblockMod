@@ -298,6 +298,7 @@ public class CfgConfig {
 		FishingTracker.seaWitches = initInt("fishing", "seaWitch", 0);
 		FishingTracker.seaArchers = initInt("fishing", "seaArcher", 0);
 		FishingTracker.monsterOfTheDeeps = initInt("fishing", "monsterOfDeep", 0);
+		FishingTracker.agarimoos = initInt("fishing", "agarimoo", 0);
 		FishingTracker.catfishes = initInt("fishing", "catfish", 0);
 		FishingTracker.carrotKings = initInt("fishing", "carrotKing", 0);
 		FishingTracker.seaLeeches = initInt("fishing", "seaLeech", 0);

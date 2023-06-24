@@ -732,6 +732,7 @@ public class LootCommand extends CommandBase {
 																EnumChatFormatting.BLUE + "    Sea Witches: " + nf.format(FishingTracker.seaWitchesSession) + "\n" +
 																EnumChatFormatting.GREEN + "    Sea Archers: " + nf.format(FishingTracker.seaArchersSession) + "\n" +
 																EnumChatFormatting.GREEN + "    Monster of the Deeps: " + nf.format(FishingTracker.monsterOfTheDeepsSession) + "\n" +
+																EnumChatFormatting.RED + "    Agarimoos: " + nf.format(FishingTracker.agarimoosSession) + "\n" +
 																EnumChatFormatting.YELLOW + "    Catfishes: " + nf.format(FishingTracker.catfishesSession) + "\n" +
 																EnumChatFormatting.GOLD + "    Carrot Kings: " + nf.format(FishingTracker.carrotKingsSession) + "\n" +
 																EnumChatFormatting.GRAY + "    Sea Leeches: " + nf.format(FishingTracker.seaLeechesSession) + "\n" +
@@ -768,6 +769,7 @@ public class LootCommand extends CommandBase {
 															EnumChatFormatting.BLUE + "    Sea Witches: " + nf.format(FishingTracker.seaWitches) + "\n" +
 															EnumChatFormatting.GREEN + "    Sea Archers: " + nf.format(FishingTracker.seaArchers) + "\n" +
 															EnumChatFormatting.GREEN + "    Monster of the Deeps: " + nf.format(FishingTracker.monsterOfTheDeeps) + "\n" +
+															EnumChatFormatting.RED + "    Agarimoos: " + nf.format(FishingTracker.agarimoos) + "\n" +
 															EnumChatFormatting.YELLOW + "    Catfishes: " + nf.format(FishingTracker.catfishes) + "\n" +
 															EnumChatFormatting.GOLD + "    Carrot Kings: " + nf.format(FishingTracker.carrotKings) + "\n" +
 															EnumChatFormatting.GRAY + "    Sea Leeches: " + nf.format(FishingTracker.seaLeeches) + "\n" +

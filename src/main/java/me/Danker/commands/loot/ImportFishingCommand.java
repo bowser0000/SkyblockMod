@@ -89,6 +89,7 @@ public class ImportFishingCommand extends CommandBase {
 			FishingTracker.seaWitches = getSCFromApi(statsObject, "kills_sea_witch");
 			FishingTracker.seaArchers = getSCFromApi(statsObject, "kills_sea_archer");
 			FishingTracker.monsterOfTheDeeps = getSCFromApi(statsObject, "kills_zombie_deep") + getSCFromApi(statsObject, "kills_chicken_deep");
+			FishingTracker.agarimoos = getSCFromApi(statsObject, "kills_agarimoo");
 			FishingTracker.catfishes = getSCFromApi(statsObject, "kills_catfish");
 			FishingTracker.carrotKings = getSCFromApi(statsObject, "kills_carrot_king");
 			FishingTracker.seaLeeches = getSCFromApi(statsObject, "kills_sea_leech");
@@ -140,6 +141,7 @@ public class ImportFishingCommand extends CommandBase {
 			CfgConfig.writeIntConfig("fishing", "seaWitch", FishingTracker.seaWitches);
 			CfgConfig.writeIntConfig("fishing", "seaArcher", FishingTracker.seaArchers);
 			CfgConfig.writeIntConfig("fishing", "monsterOfDeep", FishingTracker.monsterOfTheDeeps);
+			CfgConfig.writeIntConfig("fishing", "agarimoo", FishingTracker.agarimoos);
 			CfgConfig.writeIntConfig("fishing", "catfish", FishingTracker.catfishes);
 			CfgConfig.writeIntConfig("fishing", "carrotKing", FishingTracker.carrotKings);
 			CfgConfig.writeIntConfig("fishing", "seaLeech", FishingTracker.seaLeeches);

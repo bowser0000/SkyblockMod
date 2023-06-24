@@ -20,6 +20,7 @@ public class FishingTracker {
     public static int seaWitches;
     public static int seaArchers;
     public static int monsterOfTheDeeps;
+    public static int agarimoos;
     public static int catfishes;
     public static int carrotKings;
     public static int seaLeeches;
@@ -82,6 +83,7 @@ public class FishingTracker {
     public static int seaWitchesSession = 0;
     public static int seaArchersSession = 0;
     public static int monsterOfTheDeepsSession = 0;
+    public static int agarimoosSession = 0;
     public static int catfishesSession = 0;
     public static int carrotKingsSession = 0;
     public static int seaLeechesSession = 0;
@@ -183,6 +185,11 @@ public class FishingTracker {
             monsterOfTheDeeps++;
             monsterOfTheDeepsSession++;
             CfgConfig.writeIntConfig("fishing", "monsterOfDeep", monsterOfTheDeeps);
+            increaseSeaCreatures();
+        } else if (message.contains("Your Chumcap Bucket trembles, it's an Agarimoo.")) {
+            agarimoos++;
+            agarimoosSession++;
+            CfgConfig.writeIntConfig("fishing", "agarimoo", agarimoos);
             increaseSeaCreatures();
         } else if (message.contains("Huh? A Catfish")) {
             catfishes++;
