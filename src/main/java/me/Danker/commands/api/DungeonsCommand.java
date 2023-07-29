@@ -3,6 +3,7 @@ package me.Danker.commands.api;
 import com.google.gson.JsonObject;
 import me.Danker.config.ModConfig;
 import me.Danker.handlers.APIHandler;
+import me.Danker.handlers.HypixelAPIHandler;
 import me.Danker.utils.Utils;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
@@ -53,42 +54,29 @@ public class DungeonsCommand extends CommandBase {
 		new Thread(() -> {
 			EntityPlayer player = (EntityPlayer) arg0;
 			
-			// Check key
-			String key = ModConfig.apiKey;
-			if (key.equals("")) {
-				player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "API key not set."));
-				return;
-			}
-			
 			// Get UUID for Hypixel API requests
 			String username;
 			String uuid;
 			if (arg1.length == 0) {
 				username = player.getName();
 				uuid = player.getUniqueID().toString().replaceAll("[\\-]", "");
-				player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Checking dungeon stats of " + ModConfig.getColour(ModConfig.secondaryColour) + username));
 			} else {
 				username = arg1[0];
-				player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Checking dungeon stats of " + ModConfig.getColour(ModConfig.secondaryColour) + username));
 				uuid = APIHandler.getUUID(username);
 			}
-			
+			player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Checking dungeon stats of " + ModConfig.getColour(ModConfig.secondaryColour) + username));
+
 			// Find stats of latest profile
-			String latestProfile = APIHandler.getLatestProfileID(uuid, key);
-			if (latestProfile == null) return;
-			
-			String profileURL = "https://api.hypixel.net/skyblock/profile?profile=" + latestProfile + "&key=" + key;
-			System.out.println("Fetching profile...");
-			JsonObject profileResponse = APIHandler.getResponse(profileURL, true);
-			if (!profileResponse.get("success").getAsBoolean()) {
-				String reason = profileResponse.get("cause").getAsString();
-				player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "Failed with reason: " + reason));
+			JsonObject profileResponse = HypixelAPIHandler.getLatestProfile(uuid);
+			if (profileResponse == null) return;
+
+			System.out.println("Fetching player data...");
+			JsonObject playerResponse = HypixelAPIHandler.getJsonObjectAuth(HypixelAPIHandler.URL + "player/" + uuid);
+
+			if (playerResponse == null) {
+				player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "Could not connect to API."));
 				return;
 			}
-
-			String playerURL = "https://api.hypixel.net/player?uuid=" + uuid + "&key=" + key;
-			System.out.println("Fetching player data...");
-			JsonObject playerResponse = APIHandler.getResponse(playerURL, true);
 			if (!playerResponse.get("success").getAsBoolean()) {
 				String reason = playerResponse.get("cause").getAsString();
 				player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "Failed with reason: " + reason));
@@ -96,7 +84,7 @@ public class DungeonsCommand extends CommandBase {
 			}
 			
 			System.out.println("Fetching dungeon stats...");
-			JsonObject dungeonsObject = profileResponse.get("profile").getAsJsonObject().get("members").getAsJsonObject().get(uuid).getAsJsonObject().get("dungeons").getAsJsonObject();
+			JsonObject dungeonsObject = profileResponse.get("members").getAsJsonObject().get(uuid).getAsJsonObject().get("dungeons").getAsJsonObject();
 			if (!dungeonsObject.get("dungeon_types").getAsJsonObject().get("catacombs").getAsJsonObject().has("experience")) {
 				player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "This player has not played dungeons."));
 				return;

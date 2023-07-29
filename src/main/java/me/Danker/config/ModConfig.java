@@ -123,7 +123,6 @@ public class ModConfig extends Config {
 
     /* categories:
     general
-        api
         general
         slayers
         hide tooltips
@@ -173,28 +172,6 @@ public class ModConfig extends Config {
     */
 
     // General
-
-    @CfgName(
-            name = "APIKey",
-            category = "api"
-    )
-    @Text(
-            name = "API Key",
-            description = "API key used for commands.",
-            secure = true,
-            category = "General",
-            subcategory = "API"
-    )
-    @HypixelKey
-    public static String apiKey = "";
-
-    @Button(
-            name = "Generate New API Key",
-            text = "Click",
-            category = "General",
-            subcategory = "API"
-    )
-    Runnable newKey = () -> mc.thePlayer.sendChatMessage("/api new");
 
     @CfgName(
             name = "ExpertiseLore",

@@ -52,7 +52,7 @@ public class LootCommand extends CommandBase {
 
 	@Override
 	public void processCommand(ICommandSender arg0, String[] arg1) throws CommandException {
-		final EntityPlayer player = (EntityPlayer) arg0;
+		EntityPlayer player = (EntityPlayer) arg0;
 		
 		if (arg1.length == 0) {
 			player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "Usage: " + getCommandUsage(arg0)));

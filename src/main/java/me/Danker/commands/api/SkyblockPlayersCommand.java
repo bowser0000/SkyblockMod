@@ -2,7 +2,7 @@ package me.Danker.commands.api;
 
 import com.google.gson.JsonObject;
 import me.Danker.config.ModConfig;
-import me.Danker.handlers.APIHandler;
+import me.Danker.handlers.HypixelAPIHandler;
 import me.Danker.utils.Utils;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
@@ -49,16 +49,13 @@ public class SkyblockPlayersCommand extends CommandBase {
 		new Thread(() -> {
 			EntityPlayer player = (EntityPlayer) arg0;
 			
-			// Check key
-			String key = ModConfig.apiKey;
-			if (key.equals("")) {
-				player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "API key not set."));
+			System.out.println("Fetching player count...");
+			JsonObject playersResponse = HypixelAPIHandler.getJsonObjectAuth(HypixelAPIHandler.URL + "gameCounts");
+
+			if (playersResponse == null) {
+				player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "Could not connect to API."));
 				return;
 			}
-			
-			String playersURL = "https://api.hypixel.net/gameCounts?key=" + key;
-			System.out.println("Fetching player count...");
-			JsonObject playersResponse = APIHandler.getResponse(playersURL, true);
 			if (!playersResponse.get("success").getAsBoolean()) {
 				String reason = playersResponse.get("cause").getAsString();
 				player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "Failed with reason: " + reason));
