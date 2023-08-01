@@ -57,7 +57,7 @@ public class APIHandler {
 						Gson gson = new Gson();
 						return gson.fromJson(error, JsonObject.class);
 					}
-				} else if (urlString.startsWith("https://api.mojang.com/users/profiles/minecraft/") && conn.getResponseCode() == 204) {
+				} else if (urlString.startsWith("https://api.mojang.com/users/profiles/minecraft/") && (conn.getResponseCode() == 204 || conn.getResponseCode() == 404)) {
 					player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "Failed with reason: Player does not exist."));
 				} else {
 					player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "Request failed. HTTP Error Code: " + conn.getResponseCode()));

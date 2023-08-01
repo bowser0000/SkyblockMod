@@ -165,7 +165,7 @@ public class PetsCommand extends CommandBase {
 				username = arg1[0];
 				uuid = APIHandler.getUUID(username);
 			}
-			player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Checking pets of " + ModConfig.getColour(ModConfig.secondaryColour) + username));
+			player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Checking pets of " + ModConfig.getColour(ModConfig.secondaryColour) + username + ModConfig.getColour(ModConfig.mainColour) + " using Polyfrost's API."));
 
 			// Find stats of latest profile
 			JsonObject profileResponse = HypixelAPIHandler.getLatestProfile(uuid);

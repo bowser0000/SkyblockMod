@@ -40,7 +40,7 @@ public class ImportFishingCommand extends CommandBase {
 		new Thread(() -> {
 			EntityPlayer player = (EntityPlayer) arg0;
 
-			player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Importing your fishing stats..."));
+			player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Importing your fishing stats using Polyfrost's API..."));
 
 			// Get UUID for Hypixel API requests
 			String uuid = player.getUniqueID().toString().replaceAll("[\\-]", "");

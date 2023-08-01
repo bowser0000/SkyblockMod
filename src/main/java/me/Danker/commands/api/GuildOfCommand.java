@@ -62,7 +62,7 @@ public class GuildOfCommand extends CommandBase {
 				username = arg1[0];
 				uuid = APIHandler.getUUID(username);
 			}
-			player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Checking guild of " + ModConfig.getColour(ModConfig.secondaryColour) + username));
+			player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Checking guild of " + ModConfig.getColour(ModConfig.secondaryColour) + username + ModConfig.getColour(ModConfig.mainColour) + " using Polyfrost's API."));
 			
 			// Find guild ID
 			System.out.println("Fetching guild...");
