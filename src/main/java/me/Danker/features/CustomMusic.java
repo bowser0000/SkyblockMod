@@ -305,6 +305,13 @@ public class CustomMusic {
                 if (player != null) {
                     player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "Attempted to play non .wav file. Please use a .wav converter instead of renaming the file."));
                 }
+            } catch (IllegalArgumentException ex) {
+                ex.printStackTrace();
+
+                EntityPlayer player = Minecraft.getMinecraft().thePlayer;
+                if (player != null) {
+                    player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "Could not play music. Are your audio drivers up to date?"));
+                }
             }
         }
 
