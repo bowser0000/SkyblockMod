@@ -76,7 +76,7 @@ public class SkyblockPlayersCommand extends CommandBase {
 			int crystalHollows = 0; // crystal_hollows
 			int spidersDen = 0; // combat_1
 			int crimsonIsle = 0; // crimson_isle
-			int kuudra = 0; // instanced
+			int kuudra = 0; // kuudra
 			int end = 0; // combat_3
 			int dungeonsHub = 0; // dungeon_hub
 			int dungeons = 0; // dungeon
@@ -99,7 +99,7 @@ public class SkyblockPlayersCommand extends CommandBase {
 				crystalHollows = getPlayerCount("crystal_hollows", skyblockPlayers);
 				spidersDen = getPlayerCount("combat_1", skyblockPlayers);
 				crimsonIsle = getPlayerCount("crimson_isle", skyblockPlayers);
-				kuudra = getPlayerCount("instanced", skyblockPlayers);
+				kuudra = getPlayerCount("kuudra", skyblockPlayers);
 				end = getPlayerCount("combat_3", skyblockPlayers);
 				dungeonsHub = getPlayerCount("dungeon_hub", skyblockPlayers);
 				dungeons = getPlayerCount("dungeon", skyblockPlayers);

@@ -139,7 +139,7 @@ public class CustomMusic {
                         case CRIMSON_ISLE:
                             if (ModConfig.crimsonIsleMusic) crimsonIsle.start();
                             break;
-                        case INSTANCED:
+                        case KUUDRA:
                             if (ModConfig.kuudraMusic) kuudra.start();
                             break;
                         case END:
