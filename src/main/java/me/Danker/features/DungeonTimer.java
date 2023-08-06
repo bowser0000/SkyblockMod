@@ -150,7 +150,7 @@ public class DungeonTimer {
 
         if (message.contains(":")) return;
 
-        if (activeTimer != null && message.contains("Dungeon starts in 1 second.")) {
+        if (activeTimer != null && message.contains("Starting in 1 second")) {
             activeTimer.getFirstSplit().startTime = System.currentTimeMillis() + 1000D;
         } else if (message.contains("PUZZLE FAIL! ") || message.contains("chose the wrong answer! I shall never forget this moment")) {
             puzzleFails++;
