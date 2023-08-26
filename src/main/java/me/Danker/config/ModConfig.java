@@ -879,6 +879,13 @@ public class ModConfig extends Config {
     public static BonzoMaskTimer.BonzoTimerHud bonzoTimerHud = new BonzoMaskTimer.BonzoTimerHud();
 
     @HUD(
+            name = "Spirit Mask Timer",
+            category = "Display",
+            subcategory = "Dungeons"
+    )
+    public static SpiritMaskTimer.SpiritTimerHud spiritTimerHud = new SpiritMaskTimer.SpiritTimerHud();
+
+    @HUD(
             name = "Display Players in 30 Block Radius",
             category = "Display",
             subcategory = "Dungeons"

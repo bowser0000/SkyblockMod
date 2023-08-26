@@ -111,6 +111,7 @@ public class DankersSkyblockMod {
         MinecraftForge.EVENT_BUS.register(new BlockWrongSlayer());
         MinecraftForge.EVENT_BUS.register(new BlockWrongTerminalClicks());
         MinecraftForge.EVENT_BUS.register(new BonzoMaskTimer());
+        MinecraftForge.EVENT_BUS.register(new SpiritMaskTimer());
         MinecraftForge.EVENT_BUS.register(new BoulderSolver());
         MinecraftForge.EVENT_BUS.register(new CakeTimer());
         MinecraftForge.EVENT_BUS.register(new ChatAliases());
@@ -498,5 +499,4 @@ public class DankersSkyblockMod {
         if (!Utils.isInDungeons()) return;
         Minecraft.getMinecraft().thePlayer.dropOneItem(true);
     }
-
 }
