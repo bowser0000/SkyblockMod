@@ -54,6 +54,10 @@ public class CustomMusic {
 
     static int curPhase = 0;
 
+    // Once the lightning strikes, the music in the blood room should stop playing.
+    // We start waiting for it when the Watcher says his last line.
+    static boolean awaitingLightning = false;
+
     @SubscribeEvent
     public void onWorldChange(WorldEvent.Load event) {
         reset();
@@ -193,7 +197,7 @@ public class CustomMusic {
 
             if (ModConfig.bloodRoomMusic) {
                 if (message.startsWith("[BOSS] The Watcher: You have proven yourself. You may pass")) {
-                    bloodroom.stop();
+                    awaitingLightning = true;
                 }
             }
 
@@ -220,6 +224,13 @@ public class CustomMusic {
     public void onSound(PlaySoundEvent event) {
         if (ModConfig.disableHypixelMusic && cancelNotes && event.name.startsWith("note.")) {
             event.result = null;
+        }
+        
+        // If we're awaiting the lightning, we should stop the music.
+        // This could be a false positive due to stormy mobs, but it wouldn't make much of a difference.
+        if (awaitingLightning && event.name.equals("ambient.weather.thunder")) {
+            awaitingLightning = false;
+            if (bloodroom != null) bloodroom.stop();
         }
     }
 
