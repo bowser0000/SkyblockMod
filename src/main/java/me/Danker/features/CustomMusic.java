@@ -32,6 +32,7 @@ public class CustomMusic {
     public static Song dungeonboss;
     public static Song bloodroom;
     public static Song dungeon;
+    public static Song phase1;
     public static Song phase2;
     public static Song phase3;
     public static Song phase4;
@@ -78,8 +79,13 @@ public class CustomMusic {
                             secondLine.contains("- Healthy") || // F3
                             firstLine.contains("30,344") || // F4
                             firstLine.contains("livid") || // F5
-                            firstLine.contains("sadan") || // F6
-                            firstLine.contains("maxor") || // F7
+                            firstLine.contains("sadan")) { // F6
+
+                            if (ModConfig.dungeonBossMusic && curPhase != -1) {
+                                dungeonboss.start();
+                            }
+
+                        } else if (firstLine.contains("maxor") || // F7
                             firstLine.contains("f7")) {
 
                             if (ModConfig.dungeonBossMusic) {
@@ -98,8 +104,9 @@ public class CustomMusic {
                                     case 5:
                                         phase5.start();
                                         break;
+                                    case 1:
                                     default:
-                                        dungeonboss.start();
+                                        phase1.start();
                                 }
                             }
                         }
@@ -166,7 +173,10 @@ public class CustomMusic {
 
         if (Utils.isInDungeons()) {
             if (ModConfig.dungeonBossMusic) {
-                if (phase2.hasSongs() && message.startsWith("[BOSS] Storm: Pathetic Maxor")) {
+                if (phase1.hasSongs() && message.startsWith("[BOSS] Maxor: WELL WELL WELL")) { // he says more but apostrophes are annoying to deal with sometimes
+                    phase1.start();
+                    curPhase = 1;
+                } else if (phase2.hasSongs() && message.startsWith("[BOSS] Storm: Pathetic Maxor")) {
                     phase2.start();
                     curPhase = 2;
                 } else if (phase3.hasSongs() && message.startsWith("[BOSS] Goldor: Who dares trespass into my domain?")) {
@@ -181,6 +191,12 @@ public class CustomMusic {
                 }
             }
 
+            if (ModConfig.bloodRoomMusic) {
+                if (message.startsWith("[BOSS] The Watcher: You have proven yourself. You may pass")) {
+                    bloodroom.stop();
+                }
+            }
+
             if (message.contains(":")) return;
 
             if (message.contains("EXTRA STATS ")) {
@@ -188,6 +204,7 @@ public class CustomMusic {
                 dungeonboss.stop();
                 bloodroom.stop();
                 dungeon.stop();
+                phase1.stop();
                 phase2.stop();
                 phase3.stop();
                 phase4.stop();
@@ -221,6 +238,7 @@ public class CustomMusic {
         dungeonboss = new Song(directory, "dungeonboss", ModConfig.dungeonBossVolume);
         bloodroom = new Song(directory, "bloodroom", ModConfig.bloodRoomVolume);
         dungeon = new Song(directory, "dungeon", ModConfig.dungeonVolume);
+        phase1 = new Song(directory, "phaseone", ModConfig.phase1Volume);
         phase2 = new Song(directory, "phasetwo", ModConfig.phase2Volume);
         phase3 = new Song(directory, "phasethree", ModConfig.phase3Volume);
         phase4 = new Song(directory, "phasefour", ModConfig.phase4Volume);
@@ -245,6 +263,7 @@ public class CustomMusic {
         if (dungeonboss != null) dungeonboss.stop();
         if (bloodroom != null) bloodroom.stop();
         if (dungeon != null) dungeon.stop();
+        if (phase1 != null) phase1.stop();
         if (phase2 != null) phase2.stop();
         if (phase3 != null) phase3.stop();
         if (phase4 != null) phase4.stop();
