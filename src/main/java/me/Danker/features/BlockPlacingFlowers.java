@@ -19,8 +19,7 @@ public class BlockPlacingFlowers {
             Blocks.dirt,
             Blocks.flower_pot,
             Blocks.tallgrass,
-            Blocks.double_plant,
-            Blocks.rose_bush
+            Blocks.double_plant
     ));
 
     @SubscribeEvent
