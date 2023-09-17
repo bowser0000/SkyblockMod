@@ -238,8 +238,8 @@ public class ModConfig extends Config {
             category = "toggles"
     )
     @Switch(
-            name = "Prevent Placing FoT/Spirit Sceptre",
-            description = "Blocks placing Flower of Truth or Spirit Sceptre.",
+            name = "Prevent Placing Flower Weapons",
+            description = "Blocks placing Flower of Truth, Spirit Sceptre, Bouquet of Lies, and Fire Freeze Staff.",
             category = "General",
             subcategory = "General"
     )
