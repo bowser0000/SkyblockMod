@@ -19,7 +19,8 @@ public class BlockPlacingFlowers {
             Blocks.dirt,
             Blocks.flower_pot,
             Blocks.tallgrass,
-            Blocks.double_plant
+            Blocks.double_plant,
+            Blocks.rose_bush
     ));
 
     @SubscribeEvent
@@ -36,6 +37,9 @@ public class BlockPlacingFlowers {
                     event.setCanceled(true);
                 }
                 if (item.getDisplayName().contains("Spirit Sceptre")) {
+                    event.setCanceled(true);
+                }
+                if (item.getDisplayName().contains("Bouquet of Lies")) {
                     event.setCanceled(true);
                 }
             }
