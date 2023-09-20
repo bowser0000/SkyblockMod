@@ -87,10 +87,17 @@ public class MinionLastCollected {
             if (armourStand.getCurrentArmor(i) == null) return false;
         }
 
-        return (Item.getIdFromItem(armourStand.getCurrentArmor(0).getItem()) == 301 &&
-                Item.getIdFromItem(armourStand.getCurrentArmor(1).getItem()) == 300 &&
-                Item.getIdFromItem(armourStand.getCurrentArmor(2).getItem()) == 299 &&
-                Item.getIdFromItem(armourStand.getCurrentArmor(3).getItem()) == 397);
+        return (Item.getIdFromItem(armourStand.getCurrentArmor(0).getItem()) == 301 && // leather boots
+                Item.getIdFromItem(armourStand.getCurrentArmor(1).getItem()) == 300 && // leather leggings
+                (Item.getIdFromItem(armourStand.getCurrentArmor(2).getItem()) == 299 || // leather chestplate
+                Item.getIdFromItem(armourStand.getCurrentArmor(2).getItem()) == 304) && // chainmail leggings?
+                Item.getIdFromItem(armourStand.getCurrentArmor(3).getItem()) == 397); // :skull:
+    }
+
+    // maybe use in the future
+    public boolean isArmour(Item item) {
+        int id = Item.getIdFromItem(item);
+        return id >= 298 && id <= 317;
     }
 
     public Minion getMinionFromPos(BlockPos pos) {

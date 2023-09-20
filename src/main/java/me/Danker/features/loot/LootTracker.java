@@ -82,7 +82,7 @@ public class LootTracker {
                         CfgConfig.writeIntConfig("spider", "web", SpiderTracker.webs);
                         CfgConfig.writeIntConfig("zombie", "revFlesh", ZombieTracker.revFlesh);
                         CfgConfig.writeIntConfig("enderman", "nullSpheres", EndermanTracker.nullSpheres);
-                        CfgConfig.writeIntConfig("blaze", "derelictAshe", BlazeTracker.derelictAshes);
+                        CfgConfig.writeIntConfig("blaze", "derelictAshes", BlazeTracker.derelictAshes);
                         CfgConfig.writeIntConfig("vampire", "covenSeals", VampireTracker.covenSeals);
                     }
                 }

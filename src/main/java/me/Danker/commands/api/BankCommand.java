@@ -3,6 +3,7 @@ package me.Danker.commands.api;
 import com.google.gson.JsonObject;
 import me.Danker.config.ModConfig;
 import me.Danker.handlers.APIHandler;
+import me.Danker.handlers.HypixelAPIHandler;
 import me.Danker.utils.Utils;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
@@ -57,47 +58,30 @@ public class BankCommand extends CommandBase {
 		new Thread(() -> {
 			EntityPlayer player = (EntityPlayer) arg0;
 			
-			// Check key
-			String key = ModConfig.apiKey;
-			if (key.equals("")) {
-				player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "API key not set."));
-				return;
-			}
-			
 			// Get UUID for Hypixel API requests
 			String username;
 			String uuid;
 			if (arg1.length == 0) {
 				username = player.getName();
 				uuid = player.getUniqueID().toString().replaceAll("[\\-]", "");
-				player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Checking coins of " + ModConfig.getColour(ModConfig.secondaryColour) + username));
 			} else {
 				username = arg1[0];
-				player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Checking coins of " + ModConfig.getColour(ModConfig.secondaryColour) + username));
 				uuid = APIHandler.getUUID(username);
 			}
+			player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Checking coins of " + ModConfig.getColour(ModConfig.secondaryColour) + username + ModConfig.getColour(ModConfig.mainColour) + " using Polyfrost's API."));
 			
 			// Find stats of latest profile
-			String latestProfile = APIHandler.getLatestProfileID(uuid, key);
-			if (latestProfile == null) return;
-			
-			String profileURL = "https://api.hypixel.net/skyblock/profile?profile=" + latestProfile + "&key=" + key;
-			System.out.println("Fetching profile...");
-			JsonObject profileResponse = APIHandler.getResponse(profileURL, true);
-			if (!profileResponse.get("success").getAsBoolean()) {
-				String reason = profileResponse.get("cause").getAsString();
-				player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Failed with reason: " + reason));
-				return;
-			}
+			JsonObject profileResponse = HypixelAPIHandler.getLatestProfile(uuid);
+			if (profileResponse == null) return;
 			
 			System.out.println("Fetching bank + purse coins...");
-			double purseCoins = profileResponse.get("profile").getAsJsonObject().get("members").getAsJsonObject().get(uuid).getAsJsonObject().get("coin_purse").getAsDouble();
+			double purseCoins = profileResponse.get("members").getAsJsonObject().get(uuid).getAsJsonObject().get("coin_purse").getAsDouble();
 			purseCoins = Math.floor(purseCoins * 100.0) / 100.0;
 			NumberFormat nf = NumberFormat.getIntegerInstance(Locale.US);
 			
 			// Check for bank api
-			if (profileResponse.get("profile").getAsJsonObject().has("banking")) {
-				double bankCoins = profileResponse.get("profile").getAsJsonObject().get("banking").getAsJsonObject().get("balance").getAsDouble();
+			if (profileResponse.has("banking")) {
+				double bankCoins = profileResponse.get("banking").getAsJsonObject().get("balance").getAsDouble();
 				bankCoins = Math.floor(bankCoins * 100.0) / 100.0;
 				
 				player.addChatMessage(new ChatComponentText(ModConfig.getDelimiter() + "\n" +

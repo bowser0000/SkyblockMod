@@ -1,9 +1,8 @@
 package me.Danker.commands.api;
 
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import me.Danker.config.ModConfig;
-import me.Danker.handlers.APIHandler;
+import me.Danker.handlers.HypixelAPIHandler;
 import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.network.NetworkPlayerInfo;
@@ -46,46 +45,25 @@ public class LobbyBankCommand extends CommandBase {
         EntityPlayer playerSP = (EntityPlayer) sender;
         Map<String, Double> unsortedBankList = new HashMap<>();
         ArrayList<Double> lobbyBanks = new ArrayList<>();
-        // Check key
-        String key = ModConfig.apiKey;
-        if (key.equals("")) {
-            playerSP.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "API key not set."));
-            return;
-        }
 
         mainThread = new Thread(() -> {
             try {
                 // Create deep copy of players to prevent passing reference and ConcurrentModificationException
                 Collection<NetworkPlayerInfo> players = new ArrayList<>(Minecraft.getMinecraft().getNetHandler().getPlayerInfoMap());
-                playerSP.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Checking bank of lobby. Estimated time: " + (int) (Utils.getMatchingPlayers("").size() * 1.2 + 1) + " seconds."));
+                playerSP.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Checking bank of lobby using Polyfrost's API. Estimated time: " + (int) (Utils.getMatchingPlayers("").size() * 1.2 + 1) + " seconds."));
                 // Send request every .6 seconds, leaving room for another 20 requests per minute
 
-                for (final NetworkPlayerInfo player : players) {
+                for (NetworkPlayerInfo player : players) {
                     if (player.getGameProfile().getName().startsWith("!")) continue;
-                    // Manually get latest profile to use reduced requests on extra achievement API
-                    String UUID = player.getGameProfile().getId().toString().replaceAll("-", "");
-                    int profileIndex = -1;
+
                     Thread.sleep(600);
-                    JsonObject profileResponse = APIHandler.getResponse("https://api.hypixel.net/skyblock/profiles?uuid=" + UUID + "&key=" + key, true);
-                    if (!profileResponse.get("success").getAsBoolean()) {
-                        String reason = profileResponse.get("cause").getAsString();
-                        System.out.println("User " + player.getGameProfile().getName() + " failed with reason: " + reason);
-                        continue;
-                    }
-                    if (profileResponse.get("profiles").isJsonNull()) continue;
 
-                    JsonArray profiles = profileResponse.get("profiles").getAsJsonArray();
-                    for (int i = 0; i < profiles.size(); i++) {
-                        JsonObject profile = profiles.get(i).getAsJsonObject();
-                        if (profile.get("selected").getAsBoolean()) {
-                            profileIndex = i;
-                            break;
-                        }
-                    }
-                    if (profileIndex == -1) continue;
+                    String UUID = player.getGameProfile().getId().toString().replaceAll("-", "");
+                    JsonObject profileResponse = HypixelAPIHandler.getLatestProfile(UUID);
+                    if (profileResponse == null) continue;
 
-                    JsonObject latestProfile = profiles.get(profileIndex).getAsJsonObject().get("members").getAsJsonObject().get(UUID).getAsJsonObject();
-                    boolean hasBanking = profiles.get(profileIndex).getAsJsonObject().has("banking");
+                    JsonObject latestProfile = profileResponse.get("members").getAsJsonObject().get(UUID).getAsJsonObject();
+                    boolean hasBanking = profileResponse.has("banking");
 
                     double coin_purse;
                     // Add bank to lobby banks
@@ -94,8 +72,7 @@ public class LobbyBankCommand extends CommandBase {
                     if (latestProfile.has("coin_purse")) {
                         coin_purse = latestProfile.get("coin_purse").getAsDouble();
                         if (hasBanking) {
-                            coin_purse += profiles.get(profileIndex).getAsJsonObject().get("banking").getAsJsonObject().get("balance").getAsDouble();
-
+                            coin_purse += profileResponse.get("banking").getAsJsonObject().get("balance").getAsDouble();
                         }
 
                         unsortedBankList.put(player.getGameProfile().getName(), coin_purse); // Put bank in HashMap

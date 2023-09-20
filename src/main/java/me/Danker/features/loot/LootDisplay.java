@@ -742,7 +742,8 @@ public class LootDisplay extends Hud {
                                     EnumChatFormatting.DARK_GRAY + "Night Squids:\n" +
                                     EnumChatFormatting.DARK_AQUA + "Sea Guardians:\n" +
                                     EnumChatFormatting.BLUE + "Sea Witches:\n" +
-                                    EnumChatFormatting.GREEN + "Sea Archers:";
+                                    EnumChatFormatting.GREEN + "Sea Archers:\n" +
+                                    EnumChatFormatting.GREEN + "Monster of Deeps:";
                             countText = EnumChatFormatting.AQUA + nf.format(FishingTracker.seaCreatures) + "\n" +
                                     EnumChatFormatting.AQUA + nf.format(FishingTracker.fishingMilestone) + "\n" +
                                     EnumChatFormatting.GOLD + nf.format(FishingTracker.goodCatches) + "\n" +
@@ -752,9 +753,10 @@ public class LootDisplay extends Hud {
                                     EnumChatFormatting.DARK_GRAY + nf.format(FishingTracker.nightSquids) + "\n" +
                                     EnumChatFormatting.DARK_AQUA + nf.format(FishingTracker.seaGuardians) + "\n" +
                                     EnumChatFormatting.BLUE + nf.format(FishingTracker.seaWitches) + "\n" +
-                                    EnumChatFormatting.GREEN + nf.format(FishingTracker.seaArchers);
+                                    EnumChatFormatting.GREEN + nf.format(FishingTracker.seaArchers) + "\n" +
+                                    EnumChatFormatting.GREEN + nf.format(FishingTracker.monsterOfTheDeeps);
                             // Seperated to save vertical space
-                            dropsTextTwo = EnumChatFormatting.GREEN + "Monster of Deeps:\n" +
+                            dropsTextTwo = EnumChatFormatting.RED + "Agarimoos:\n" +
                                     EnumChatFormatting.YELLOW + "Catfishes:\n" +
                                     EnumChatFormatting.GOLD + "Carrot Kings:\n" +
                                     EnumChatFormatting.GRAY + "Sea Leeches:\n" +
@@ -764,7 +766,7 @@ public class LootDisplay extends Hud {
                                     EnumChatFormatting.GOLD + "Sea Emperors:\n" +
                                     EnumChatFormatting.AQUA + "Time Since Emp:\n" +
                                     EnumChatFormatting.AQUA + "Creatures Since Emp:";
-                            countTextTwo = EnumChatFormatting.GREEN + nf.format(FishingTracker.monsterOfTheDeeps) + "\n" +
+                            countTextTwo = EnumChatFormatting.RED + nf.format(FishingTracker.agarimoos) + "\n" +
                                     EnumChatFormatting.YELLOW + nf.format(FishingTracker.catfishes) + "\n" +
                                     EnumChatFormatting.GOLD + nf.format(FishingTracker.carrotKings) + "\n" +
                                     EnumChatFormatting.GRAY + nf.format(FishingTracker.seaLeeches) + "\n" +
@@ -803,7 +805,8 @@ public class LootDisplay extends Hud {
                                     EnumChatFormatting.DARK_GRAY + "Night Squids:\n" +
                                     EnumChatFormatting.DARK_AQUA + "Sea Guardians:\n" +
                                     EnumChatFormatting.BLUE + "Sea Witches:\n" +
-                                    EnumChatFormatting.GREEN + "Sea Archers:";
+                                    EnumChatFormatting.GREEN + "Sea Archers:\n" +
+                                    EnumChatFormatting.GREEN + "Monster of Deeps:";
                             countText = EnumChatFormatting.AQUA + nf.format(FishingTracker.seaCreaturesSession) + "\n" +
                                     EnumChatFormatting.AQUA + nf.format(FishingTracker.fishingMilestoneSession) + "\n" +
                                     EnumChatFormatting.GOLD + nf.format(FishingTracker.goodCatchesSession) + "\n" +
@@ -813,9 +816,10 @@ public class LootDisplay extends Hud {
                                     EnumChatFormatting.DARK_GRAY + nf.format(FishingTracker.nightSquidsSession) + "\n" +
                                     EnumChatFormatting.DARK_AQUA + nf.format(FishingTracker.seaGuardiansSession) + "\n" +
                                     EnumChatFormatting.BLUE + nf.format(FishingTracker.seaWitchesSession) + "\n" +
-                                    EnumChatFormatting.GREEN + nf.format(FishingTracker.seaArchersSession);
+                                    EnumChatFormatting.GREEN + nf.format(FishingTracker.seaArchersSession) + "\n" +
+                                    EnumChatFormatting.GREEN + nf.format(FishingTracker.monsterOfTheDeepsSession);
                             // Seperated to save vertical space
-                            dropsTextTwo = EnumChatFormatting.GREEN + "Monster of Deeps:\n" +
+                            dropsTextTwo = EnumChatFormatting.RED + "Agarimoos:\n" +
                                     EnumChatFormatting.YELLOW + "Catfishes:\n" +
                                     EnumChatFormatting.GOLD + "Carrot Kings:\n" +
                                     EnumChatFormatting.GRAY + "Sea Leeches:\n" +
@@ -825,7 +829,7 @@ public class LootDisplay extends Hud {
                                     EnumChatFormatting.GOLD + "Sea Emperors:\n" +
                                     EnumChatFormatting.AQUA + "Time Since Emp:\n" +
                                     EnumChatFormatting.AQUA + "Creatures Since Emp:";
-                            countTextTwo = EnumChatFormatting.GREEN + nf.format(FishingTracker.monsterOfTheDeepsSession) + "\n" +
+                            countTextTwo = EnumChatFormatting.RED + nf.format(FishingTracker.agarimoosSession) + "\n" +
                                     EnumChatFormatting.YELLOW + nf.format(FishingTracker.catfishesSession) + "\n" +
                                     EnumChatFormatting.GOLD + nf.format(FishingTracker.carrotKingsSession) + "\n" +
                                     EnumChatFormatting.GRAY + nf.format(FishingTracker.seaLeechesSession) + "\n" +

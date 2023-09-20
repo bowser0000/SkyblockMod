@@ -111,6 +111,7 @@ public class DankersSkyblockMod {
         MinecraftForge.EVENT_BUS.register(new BlockWrongSlayer());
         MinecraftForge.EVENT_BUS.register(new BlockWrongTerminalClicks());
         MinecraftForge.EVENT_BUS.register(new BonzoMaskTimer());
+        MinecraftForge.EVENT_BUS.register(new SpiritMaskTimer());
         MinecraftForge.EVENT_BUS.register(new BoulderSolver());
         MinecraftForge.EVENT_BUS.register(new CakeTimer());
         MinecraftForge.EVENT_BUS.register(new ChatAliases());
@@ -201,7 +202,7 @@ public class DankersSkyblockMod {
     }
 
     @EventHandler
-    public void preInit(final FMLPreInitializationEvent event) {
+    public void preInit(FMLPreInitializationEvent event) {
         ClientCommandHandler.instance.registerCommand(new ArmourCommand());
         ClientCommandHandler.instance.registerCommand(new BankCommand());
         ClientCommandHandler.instance.registerCommand(new CrystalHollowWaypointCommand());
@@ -238,7 +239,7 @@ public class DankersSkyblockMod {
     }
 
     @EventHandler
-    public void postInit(final FMLPostInitializationEvent event) {
+    public void postInit(FMLPostInitializationEvent event) {
 		Package[] packages = Package.getPackages();
 		for (Package p : packages){
 			if (p.getName().startsWith("com.spiderfrog.gadgets") || p.getName().startsWith("com.spiderfrog.oldanimations")){
@@ -309,12 +310,7 @@ public class DankersSkyblockMod {
     public void onChat(ClientChatReceivedEvent event) {
         String message = StringUtils.stripControlCodes(event.message.getUnformattedText());
 
-        if (message.startsWith("Your new API key is ") && Utils.isOnHypixel()) {
-            String apiKey = event.message.getSiblings().get(0).getChatStyle().getChatClickEvent().getValue();
-            ModConfig.apiKey = apiKey;
-            config.save();
-            Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Set API key to " + ModConfig.getColour(ModConfig.secondaryColour) + apiKey));
-        } else if (Utils.inSkyblock && !message.contains(":") && message.contains("  SKILL LEVEL UP ")) {
+        if (Utils.inSkyblock && !message.contains(":") && message.contains("  SKILL LEVEL UP ")) {
             // Handle skill level ups
             String skill = message.substring(message.indexOf("UP") + 3, message.lastIndexOf(" "));
             int level = Utils.getIntFromString(message.substring(message.indexOf("➜") + 1), true);
@@ -353,7 +349,7 @@ public class DankersSkyblockMod {
     }
 
     @SubscribeEvent
-    public void renderPlayerInfo(final RenderGameOverlayEvent.Post event) {
+    public void renderPlayerInfo(RenderGameOverlayEvent.Post event) {
         if (usingLabymod && !(Minecraft.getMinecraft().ingameGUI instanceof GuiIngameForge)) return;
         if (event.type != RenderGameOverlayEvent.ElementType.EXPERIENCE && event.type != RenderGameOverlayEvent.ElementType.JUMPBAR)
             return;
@@ -362,7 +358,7 @@ public class DankersSkyblockMod {
 
     // LabyMod Support
     @SubscribeEvent
-    public void renderPlayerInfoLabyMod(final RenderGameOverlayEvent event) {
+    public void renderPlayerInfoLabyMod(RenderGameOverlayEvent event) {
         if (!usingLabymod) return;
         if (event.type != null) return;
         MinecraftForge.EVENT_BUS.post(new RenderOverlayEvent());
@@ -503,5 +499,4 @@ public class DankersSkyblockMod {
         if (!Utils.isInDungeons()) return;
         Minecraft.getMinecraft().thePlayer.dropOneItem(true);
     }
-
 }

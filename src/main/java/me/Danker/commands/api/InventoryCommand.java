@@ -3,10 +3,10 @@ package me.Danker.commands.api;
 import com.google.gson.JsonObject;
 import me.Danker.DankersSkyblockMod;
 import me.Danker.config.ModConfig;
+import me.Danker.containers.GuiChestDynamic;
 import me.Danker.handlers.APIHandler;
+import me.Danker.handlers.HypixelAPIHandler;
 import me.Danker.utils.Utils;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.inventory.GuiChest;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
@@ -21,6 +21,7 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.ResourceLocation;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -31,7 +32,7 @@ import java.util.List;
 
 public class InventoryCommand extends CommandBase {
 
-    public static GuiChest chest = null;
+    public static GuiChestDynamic chest = null;
 
     @Override
     public String getCommandName() {
@@ -70,14 +71,6 @@ public class InventoryCommand extends CommandBase {
         // MULTI THREAD DRIFTING
         new Thread(() -> {
             EntityPlayer player = (EntityPlayer) arg0;
-            Minecraft mc = Minecraft.getMinecraft();
-
-            // Check key
-            String key = ModConfig.apiKey;
-            if (key.equals("")) {
-                player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "API key not set."));
-                return;
-            }
 
             // Get UUID for Hypixel API requests
             String username;
@@ -85,36 +78,28 @@ public class InventoryCommand extends CommandBase {
             if (arg1.length == 0) {
                 username = player.getName();
                 uuid = player.getUniqueID().toString().replaceAll("[\\-]", "");
-                player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Checking inventory of " + ModConfig.getColour(ModConfig.secondaryColour) + username));
             } else {
                 username = arg1[0];
-                player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Checking inventory of " + ModConfig.getColour(ModConfig.secondaryColour) + username));
                 uuid = APIHandler.getUUID(username);
             }
+            player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Checking inventory of " + ModConfig.getColour(ModConfig.secondaryColour) + username + ModConfig.getColour(ModConfig.mainColour) + " using Polyfrost's API."));
 
             // Find stats of latest profile
-            String latestProfile = APIHandler.getLatestProfileID(uuid, key);
-            if (latestProfile == null) return;
-
-            String profileURL = "https://api.hypixel.net/skyblock/profile?profile=" + latestProfile + "&key=" + key;
-            System.out.println("Fetching profile...");
-            JsonObject profileResponse = APIHandler.getResponse(profileURL, true);
-            if (!profileResponse.get("success").getAsBoolean()) {
-                String reason = profileResponse.get("cause").getAsString();
-                player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Failed with reason: " + reason));
-                return;
-            }
+            JsonObject profileResponse = HypixelAPIHandler.getLatestProfile(uuid);
+            if (profileResponse == null) return;
 
             System.out.println("Fetching inventory...");
-            JsonObject userObject = profileResponse.get("profile").getAsJsonObject().get("members").getAsJsonObject().get(uuid).getAsJsonObject();
+            JsonObject userObject = profileResponse.get("members").getAsJsonObject().get(uuid).getAsJsonObject();
 
-            IInventory inventory = new InventoryBasic(username + "'s Inventory:", true, 54);
+            IInventory inventory = new InventoryBasic(username + "'s Inventory:", true, 63);
 
-            String armourBase64 = userObject.get("inv_armor").getAsJsonObject().get("data").getAsString();
-            InputStream armourStream = new ByteArrayInputStream(Base64.getDecoder().decode(armourBase64));
+            ItemStack notEnabled = new ItemStack(Blocks.barrier, 1, 0);
+            notEnabled.setStackDisplayName(EnumChatFormatting.RED + "Inventory API not enabled.");
 
             try {
                 // Armour
+                String armourBase64 = userObject.get("inv_armor").getAsJsonObject().get("data").getAsString();
+                InputStream armourStream = new ByteArrayInputStream(Base64.getDecoder().decode(armourBase64));
                 NBTTagCompound armour = CompressedStreamTools.readCompressed(armourStream);
                 NBTTagList armourList = armour.getTagList("i", 10);
 
@@ -124,10 +109,30 @@ public class InventoryCommand extends CommandBase {
                     inventory.setInventorySlotContents(7 - i * 2, ItemStack.loadItemStackFromNBT(item));
                 }
 
+                // Equipment
+                if (userObject.has("equippment_contents")) {
+                    String equipmentBase64 = userObject.get("equippment_contents").getAsJsonObject().get("data").getAsString();
+                    InputStream equipmentStream = new ByteArrayInputStream(Base64.getDecoder().decode(equipmentBase64));
+                    NBTTagCompound equipment = CompressedStreamTools.readCompressed(equipmentStream);
+                    NBTTagList equipmentList = equipment.getTagList("i", 10);
+
+                    for (int i = 0; i < equipmentList.tagCount(); i++) {
+                        NBTTagCompound item = equipmentList.getCompoundTagAt(i);
+                        if (item.hasNoTags()) continue;
+                        inventory.setInventorySlotContents(16 - i * 2, ItemStack.loadItemStackFromNBT(item));
+                    }
+                } else {
+                    for (int i = 10; i <= 16; i += 2) {
+                        inventory.setInventorySlotContents(i, notEnabled);
+                    }
+                }
+
+                // Border
                 ItemStack glass = new ItemStack(Blocks.stained_glass_pane, 1, 15);
                 glass.setStackDisplayName("");
-                for (int i = 0; i < 18; i++) {
+                for (int i = 0; i < 27; i++) {
                     if (i < 8 && i % 2 == 1) continue;
+                    if (i > 8 && i < 17 && i % 2 == 0) continue;
                     inventory.setInventorySlotContents(i, glass);
                 }
 
@@ -142,12 +147,10 @@ public class InventoryCommand extends CommandBase {
                     for (int i = 0; i < invList.tagCount(); i++) {
                         NBTTagCompound item = invList.getCompoundTagAt(i);
                         if (item.hasNoTags()) continue;
-                        inventory.setInventorySlotContents(i < 9 ? i + 45 : i + 9, ItemStack.loadItemStackFromNBT(item));
+                        inventory.setInventorySlotContents(i < 9 ? i + 54 : i + 18, ItemStack.loadItemStackFromNBT(item));
                     }
                 } else {
-                    ItemStack notEnabled = new ItemStack(Blocks.barrier, 1, 0);
-                    notEnabled.setStackDisplayName(EnumChatFormatting.RED + "Inventory API not enabled.");
-                    for (int i = 18; i < 54; i++) {
+                    for (int i = 27; i < 63; i++) {
                         inventory.setInventorySlotContents(i, notEnabled);
                     }
                 }
@@ -156,7 +159,7 @@ public class InventoryCommand extends CommandBase {
                 ex.printStackTrace();
             }
 
-            chest = new GuiChest(player.inventory, inventory);
+            chest = new GuiChestDynamic(player.inventory, inventory, new ResourceLocation("dsm", "textures/generic_63.png"));
             DankersSkyblockMod.guiToOpen = "inventory";
         }).start();
     }

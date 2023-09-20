@@ -53,7 +53,7 @@ public class HOTMTreeCommand extends CommandBase {
         new Thread(() -> {
             EntityPlayer player = (EntityPlayer) arg0;
 
-            player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Checking HotM tree of " + ModConfig.getColour(ModConfig.secondaryColour) + arg1[0]));
+            player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Checking HotM tree of " + ModConfig.getColour(ModConfig.secondaryColour) + arg1[0] + ModConfig.getColour(ModConfig.mainColour) + " using Polyfrost's API."));
 
             System.out.println("Fetching profile...");
             String profileURL = "https://sky.shiiyu.moe/api/v2/profile/" + arg1[0];

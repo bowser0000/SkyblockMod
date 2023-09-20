@@ -6,6 +6,7 @@ import com.google.gson.JsonObject;
 import me.Danker.DankersSkyblockMod;
 import me.Danker.config.ModConfig;
 import me.Danker.handlers.APIHandler;
+import me.Danker.handlers.HypixelAPIHandler;
 import me.Danker.utils.Utils;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
@@ -75,25 +76,17 @@ public class WeightCommand extends CommandBase {
         new Thread(() -> {
             EntityPlayer player = (EntityPlayer) arg0;
 
-            // Check key
-            String key = ModConfig.apiKey;
-            if (key.equals("")) {
-                player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "API key not set."));
-                return;
-            }
-
             // Get UUID for Hypixel API requests
             String username;
             String uuid;
             if (arg1.length == 0) {
                 username = player.getName();
                 uuid = player.getUniqueID().toString().replaceAll("[\\-]", "");
-                player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Checking weight of " + ModConfig.getColour(ModConfig.secondaryColour) + username));
             } else {
                 username = arg1[0];
-                player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Checking weight of " + ModConfig.getColour(ModConfig.secondaryColour) + username));
                 uuid = APIHandler.getUUID(username);
             }
+            player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Checking weight of " + ModConfig.getColour(ModConfig.secondaryColour) + username + ModConfig.getColour(ModConfig.mainColour) + " using Polyfrost's API."));
 
             if (arg1.length < 2) {
                 System.out.println("Fetching weight from SkyShiiyu API...");
@@ -105,10 +98,10 @@ public class WeightCommand extends CommandBase {
                     return;
                 }
 
-                String latestProfile = APIHandler.getLatestProfileID(uuid, key);
-                if (latestProfile == null) return;
+                String latestProfileID = HypixelAPIHandler.getLatestProfileID(uuid);
+                if (latestProfileID == null) return;
 
-                JsonObject data = weightResponse.get("profiles").getAsJsonObject().get(latestProfile).getAsJsonObject().get("data").getAsJsonObject().get("weight").getAsJsonObject().get("senither").getAsJsonObject();
+                JsonObject data = weightResponse.get("profiles").getAsJsonObject().get(latestProfileID).getAsJsonObject().get("data").getAsJsonObject().get("weight").getAsJsonObject().get("senither").getAsJsonObject();
 
                 double weight = data.get("overall").getAsDouble();
 
@@ -128,6 +121,7 @@ public class WeightCommand extends CommandBase {
                 double wolfWeight = data.get("slayer").getAsJsonObject().get("slayers").getAsJsonObject().get("wolf").getAsDouble();
                 double endermanWeight = data.get("slayer").getAsJsonObject().get("slayers").getAsJsonObject().get("enderman").getAsDouble();
                 double blazeWeight = data.get("slayer").getAsJsonObject().get("slayers").getAsJsonObject().get("blaze").getAsDouble();
+                double vampireWeight = data.get("slayer").getAsJsonObject().get("slayers").getAsJsonObject().get("vampire").getAsDouble();
 
                 double dungeonWeight = data.get("dungeon").getAsJsonObject().get("total").getAsDouble();
                 double cataWeight = data.get("dungeon").getAsJsonObject().get("dungeons").getAsJsonObject().get("catacombs").getAsJsonObject().get("weight").getAsDouble();
@@ -155,7 +149,8 @@ public class WeightCommand extends CommandBase {
                         ModConfig.getColour(ModConfig.typeColour) + "   Spider Weight: " + ModConfig.getColour(ModConfig.valueColour) + nf.format(spiderWeight) + "\n" +
                         ModConfig.getColour(ModConfig.typeColour) + "   Wolf Weight: " + ModConfig.getColour(ModConfig.valueColour) + nf.format(wolfWeight) + "\n" +
                         ModConfig.getColour(ModConfig.typeColour) + "   Enderman Weight: " + ModConfig.getColour(ModConfig.valueColour) + nf.format(endermanWeight) + "\n" +
-                        ModConfig.getColour(ModConfig.typeColour) + "   Blaze Weight: " + ModConfig.getColour(ModConfig.valueColour) + nf.format(blazeWeight) + "\n\n" +
+                        ModConfig.getColour(ModConfig.typeColour) + "   Blaze Weight: " + ModConfig.getColour(ModConfig.valueColour) + nf.format(blazeWeight) + "\n" +
+                        ModConfig.getColour(ModConfig.typeColour) + "   Vampire Weight: " + ModConfig.getColour(ModConfig.valueColour) + nf.format(vampireWeight) + "\n\n" +
                         ModConfig.getColour(ModConfig.typeColour) + " Dungeons Weight: " + ModConfig.getColour(ModConfig.valueColour) + nf.format(dungeonWeight) + "\n" +
                         ModConfig.getColour(ModConfig.typeColour) + "   Catacombs XP Weight: " + ModConfig.getColour(ModConfig.valueColour) + nf.format(cataWeight) + "\n" +
                         ModConfig.getColour(ModConfig.typeColour) + "   Healer Weight: " + ModConfig.getColour(ModConfig.valueColour) + nf.format(healerWeight) + "\n" +
@@ -174,10 +169,10 @@ public class WeightCommand extends CommandBase {
                     return;
                 }
 
-                String latestProfile = APIHandler.getLatestProfileID(uuid, key);
-                if (latestProfile == null) return;
+                String latestProfileID = HypixelAPIHandler.getLatestProfileID(uuid);
+                if (latestProfileID == null) return;
 
-                JsonObject data = weightResponse.get("profiles").getAsJsonObject().get(latestProfile).getAsJsonObject().get("data").getAsJsonObject().get("weight").getAsJsonObject().get("lily").getAsJsonObject();
+                JsonObject data = weightResponse.get("profiles").getAsJsonObject().get(latestProfileID).getAsJsonObject().get("data").getAsJsonObject().get("weight").getAsJsonObject().get("lily").getAsJsonObject();
 
                 double weight = data.get("total").getAsDouble();
                 double skillWeight = data.get("skill").getAsJsonObject().get("base").getAsDouble();

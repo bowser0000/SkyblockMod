@@ -5,7 +5,7 @@ import me.Danker.config.CfgConfig;
 import me.Danker.config.ModConfig;
 import me.Danker.features.loot.FishingTracker;
 import me.Danker.features.loot.TrophyFishTracker;
-import me.Danker.handlers.APIHandler;
+import me.Danker.handlers.HypixelAPIHandler;
 import me.Danker.utils.Utils;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
@@ -40,32 +40,16 @@ public class ImportFishingCommand extends CommandBase {
 		new Thread(() -> {
 			EntityPlayer player = (EntityPlayer) arg0;
 
-			// Check key
-			String key = ModConfig.apiKey;
-			if (key.equals("")) {
-				player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "API key not set."));
-				return;
-			}
-
-			player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Importing your fishing stats..."));
+			player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Importing your fishing stats using Polyfrost's API..."));
 
 			// Get UUID for Hypixel API requests
 			String uuid = player.getUniqueID().toString().replaceAll("[\\-]", "");
 
-			String latestProfile = APIHandler.getLatestProfileID(uuid, key);
-			if (latestProfile == null) return;
-
-			String profileURL = "https://api.hypixel.net/skyblock/profile?profile=" + latestProfile + "&key=" + key;
-			System.out.println("Fetching profile...");
-			JsonObject profileResponse = APIHandler.getResponse(profileURL, true);
-			if (!profileResponse.get("success").getAsBoolean()) {
-				String reason = profileResponse.get("cause").getAsString();
-				player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "Failed with reason: " + reason));
-				return;
-			}
+			JsonObject profileResponse = HypixelAPIHandler.getLatestProfile(uuid);
+			if (profileResponse == null) return;
 
 			System.out.println("Fetching fishing stats...");
-			JsonObject memberObject = profileResponse.get("profile").getAsJsonObject().get("members").getAsJsonObject().get(uuid).getAsJsonObject();
+			JsonObject memberObject = profileResponse.get("members").getAsJsonObject().get(uuid).getAsJsonObject();
 			JsonObject statsObject = memberObject.get("stats").getAsJsonObject();
 			JsonObject trophyObject = memberObject.get("trophy_fish").getAsJsonObject();
 
@@ -89,6 +73,7 @@ public class ImportFishingCommand extends CommandBase {
 			FishingTracker.seaWitches = getSCFromApi(statsObject, "kills_sea_witch");
 			FishingTracker.seaArchers = getSCFromApi(statsObject, "kills_sea_archer");
 			FishingTracker.monsterOfTheDeeps = getSCFromApi(statsObject, "kills_zombie_deep") + getSCFromApi(statsObject, "kills_chicken_deep");
+			FishingTracker.agarimoos = getSCFromApi(statsObject, "kills_agarimoo");
 			FishingTracker.catfishes = getSCFromApi(statsObject, "kills_catfish");
 			FishingTracker.carrotKings = getSCFromApi(statsObject, "kills_carrot_king");
 			FishingTracker.seaLeeches = getSCFromApi(statsObject, "kills_sea_leech");
@@ -140,6 +125,7 @@ public class ImportFishingCommand extends CommandBase {
 			CfgConfig.writeIntConfig("fishing", "seaWitch", FishingTracker.seaWitches);
 			CfgConfig.writeIntConfig("fishing", "seaArcher", FishingTracker.seaArchers);
 			CfgConfig.writeIntConfig("fishing", "monsterOfDeep", FishingTracker.monsterOfTheDeeps);
+			CfgConfig.writeIntConfig("fishing", "agarimoo", FishingTracker.agarimoos);
 			CfgConfig.writeIntConfig("fishing", "catfish", FishingTracker.catfishes);
 			CfgConfig.writeIntConfig("fishing", "carrotKing", FishingTracker.carrotKings);
 			CfgConfig.writeIntConfig("fishing", "seaLeech", FishingTracker.seaLeeches);

@@ -138,7 +138,7 @@ public class BlazeTracker {
                 CfgConfig.writeIntConfig("blaze", "fieryBurstRunes", fieryBurstRunes);
                 if (ModConfig.rngesusAlerts) Utils.createTitle(EnumChatFormatting.RED + "FIERY BURST RUNE!", 3);
                 break;
-            case "Flawed Opal Gemstone":
+            case "❂ Flawed Opal Gemstone":
                 opalGems += event.amount;
                 opalGemsSession += event.amount;
                 CfgConfig.writeIntConfig("blaze", "opalGems", opalGems);

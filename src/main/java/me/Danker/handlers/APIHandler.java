@@ -2,7 +2,6 @@ package me.Danker.handlers;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import me.Danker.config.ModConfig;
 import net.minecraft.client.Minecraft;
@@ -58,7 +57,7 @@ public class APIHandler {
 						Gson gson = new Gson();
 						return gson.fromJson(error, JsonObject.class);
 					}
-				} else if (urlString.startsWith("https://api.mojang.com/users/profiles/minecraft/") && conn.getResponseCode() == 204) {
+				} else if (urlString.startsWith("https://api.mojang.com/users/profiles/minecraft/") && (conn.getResponseCode() == 204 || conn.getResponseCode() == 404)) {
 					player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "Failed with reason: Player does not exist."));
 				} else {
 					player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "Request failed. HTTP Error Code: " + conn.getResponseCode()));
@@ -136,36 +135,5 @@ public class APIHandler {
 		JsonObject nameResponse = getResponse("https://sessionserver.mojang.com/session/minecraft/profile/" + uuid, false);
 		return nameResponse.get("name").getAsString();
 	}
-	
-	public static String getLatestProfileID(String UUID, String key) {
-		EntityPlayer player = Minecraft.getMinecraft().thePlayer;
-		
-		// Get profiles
-		System.out.println("Fetching profiles...");
-		
-		JsonObject profilesResponse = getResponse("https://api.hypixel.net/skyblock/profiles?uuid=" + UUID + "&key=" + key, true);
-		if (!profilesResponse.get("success").getAsBoolean()) {
-			String reason = profilesResponse.get("cause").getAsString();
-			player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "Failed with reason: " + reason));
-			return null;
-		}
-		if (profilesResponse.get("profiles").isJsonNull()) {
-			player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "This player doesn't appear to have played SkyBlock."));
-			return null;
-		}
-		
-		// Loop through profiles to find latest
-		System.out.println("Looping through profiles...");
-		JsonArray profilesArray = profilesResponse.get("profiles").getAsJsonArray();
-		
-		for (JsonElement profile : profilesArray) {
-			JsonObject profileJSON = profile.getAsJsonObject();
 
-			if (profileJSON.get("selected").getAsBoolean()) {
-				return profileJSON.get("profile_id").getAsString();
-			}
-		}
-		
-		return null;
-	}
 }

@@ -3,6 +3,7 @@ package me.Danker.commands.api;
 import com.google.gson.JsonObject;
 import me.Danker.config.ModConfig;
 import me.Danker.handlers.APIHandler;
+import me.Danker.handlers.HypixelAPIHandler;
 import me.Danker.utils.Utils;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
@@ -51,42 +52,28 @@ public class PlayerCommand extends CommandBase {
         new Thread(() -> {
             EntityPlayer player = (EntityPlayer) arg0;
 
-            // Check key
-            String key = ModConfig.apiKey;
-            if (key.equals("")) {
-                player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "API key not set."));
-                return;
-            }
-
             // Get UUID for Hypixel API requests
             String username;
             String uuid;
             if (arg1.length == 0) {
                 username = player.getName();
                 uuid = player.getUniqueID().toString().replaceAll("[\\-]", "");
-                player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Checking stats of " + ModConfig.getColour(ModConfig.secondaryColour) + username));
             } else {
                 username = arg1[0];
-                player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Checking stats of " + ModConfig.getColour(ModConfig.secondaryColour) + username));
                 uuid = APIHandler.getUUID(username);
             }
+            player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Checking stats of " + ModConfig.getColour(ModConfig.secondaryColour) + username + ModConfig.getColour(ModConfig.mainColour) + " using Polyfrost's API."));
 
             // Find stats of latest profile
-            String latestProfile = APIHandler.getLatestProfileID(uuid, key);
-            if (latestProfile == null) return;
+            JsonObject profileResponse = HypixelAPIHandler.getLatestProfile(uuid);
+            if (profileResponse == null) return;
 
-            String profileURL = "https://api.hypixel.net/skyblock/profile?profile=" + latestProfile + "&key=" + key;
-            System.out.println("Fetching profile...");
-            JsonObject profileResponse = APIHandler.getResponse(profileURL, true);
-            if (!profileResponse.get("success").getAsBoolean()) {
-                String reason = profileResponse.get("cause").getAsString();
-                player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "Failed with reason: " + reason));
-                return;
-            }
+            String latestProfileID = HypixelAPIHandler.getLatestProfileID(uuid);
+            if (latestProfileID == null) return;
 
             // Skills
             System.out.println("Fetching skills...");
-            JsonObject userObject = profileResponse.get("profile").getAsJsonObject().get("members").getAsJsonObject().get(uuid).getAsJsonObject();
+            JsonObject userObject = profileResponse.get("members").getAsJsonObject().get(uuid).getAsJsonObject();
 
             double farmingLevel = 0;
             double miningLevel = 0;
@@ -138,10 +125,13 @@ public class PlayerCommand extends CommandBase {
             } else {
                 // Get skills from achievement API, will be floored
 
-                String playerURL = "https://api.hypixel.net/player?uuid=" + uuid + "&key=" + key;
                 System.out.println("Fetching skills from achievement API");
-                JsonObject playerObject = APIHandler.getResponse(playerURL, true);
+                JsonObject playerObject = HypixelAPIHandler.getJsonObjectAuth(HypixelAPIHandler.URL + "player/" + uuid);
 
+                if (playerObject == null) {
+                    player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "Could not connect to API."));
+                    return;
+                }
                 if (!playerObject.get("success").getAsBoolean()) {
                     String reason = profileResponse.get("cause").getAsString();
                     player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "Failed with reason: " + reason));
@@ -182,7 +172,7 @@ public class PlayerCommand extends CommandBase {
 
             // Slayers
             System.out.println("Fetching slayer stats...");
-            JsonObject slayersObject = profileResponse.get("profile").getAsJsonObject().get("members").getAsJsonObject().get(uuid).getAsJsonObject().get("slayer_bosses").getAsJsonObject();
+            JsonObject slayersObject = profileResponse.get("members").getAsJsonObject().get(uuid).getAsJsonObject().get("slayer_bosses").getAsJsonObject();
             // Zombie
             int zombieXP = 0;
             if (slayersObject.get("zombie").getAsJsonObject().has("xp")) {
@@ -203,16 +193,28 @@ public class PlayerCommand extends CommandBase {
             if (slayersObject.get("enderman").getAsJsonObject().has("xp")) {
                 endermanXP = slayersObject.get("enderman").getAsJsonObject().get("xp").getAsInt();
             }
+            // Blaze
+            int blazeXP = 0;
+            if (slayersObject.get("blaze").getAsJsonObject().has("xp")) {
+                blazeXP = slayersObject.get("blaze").getAsJsonObject().get("xp").getAsInt();
+            }
+            // Vampire
+            int vampireXP = 0;
+            if (slayersObject.get("vampire").getAsJsonObject().has("xp")) {
+                vampireXP = slayersObject.get("vampire").getAsJsonObject().get("xp").getAsInt();
+            }
+
+            int totalXP = zombieXP + spiderXP + wolfXP + blazeXP + vampireXP;
 
             // Bank
             System.out.println("Fetching bank + purse coins...");
             double bankCoins = 0;
-            double purseCoins = profileResponse.get("profile").getAsJsonObject().get("members").getAsJsonObject().get(uuid).getAsJsonObject().get("coin_purse").getAsDouble();
+            double purseCoins = profileResponse.get("members").getAsJsonObject().get(uuid).getAsJsonObject().get("coin_purse").getAsDouble();
             purseCoins = Math.floor(purseCoins * 100.0) / 100.0;
 
             // Check for bank api
-            if (profileResponse.get("profile").getAsJsonObject().has("banking")) {
-                bankCoins = profileResponse.get("profile").getAsJsonObject().get("banking").getAsJsonObject().get("balance").getAsDouble();
+            if (profileResponse.has("banking")) {
+                bankCoins = profileResponse.get("banking").getAsJsonObject().get("balance").getAsDouble();
                 bankCoins = Math.floor(bankCoins * 100.0) / 100.0;
             }
 
@@ -226,7 +228,7 @@ public class PlayerCommand extends CommandBase {
                 return;
             }
 
-            double weight = weightResponse.get("profiles").getAsJsonObject().get(latestProfile).getAsJsonObject().get("data").getAsJsonObject().get("weight").getAsJsonObject().get("senither").getAsJsonObject().get("overall").getAsDouble();
+            double weight = weightResponse.get("profiles").getAsJsonObject().get(latestProfileID).getAsJsonObject().get("data").getAsJsonObject().get("weight").getAsJsonObject().get("senither").getAsJsonObject().get("overall").getAsDouble();
 
             NumberFormat nf = NumberFormat.getIntegerInstance(Locale.US);
             NumberFormat nfd = NumberFormat.getNumberInstance(Locale.US);
@@ -243,11 +245,13 @@ public class PlayerCommand extends CommandBase {
                                                         ModConfig.getColour(ModConfig.typeColour) + " Carpentry: " + ModConfig.getColour(ModConfig.valueColour) + EnumChatFormatting.BOLD + carpentryLevel + "\n" +
                                                         EnumChatFormatting.AQUA + " Average Skill Level: " + ModConfig.getColour(ModConfig.skillAverageColour) + EnumChatFormatting.BOLD + skillAvg + "\n" +
                                                         EnumChatFormatting.AQUA + " True Average Skill Level: " + ModConfig.getColour(ModConfig.skillAverageColour) + EnumChatFormatting.BOLD + trueAvg + "\n\n" +
-                                                        EnumChatFormatting.AQUA + " " + username + "'s Total Slayer XP: " + EnumChatFormatting.GOLD + EnumChatFormatting.BOLD + nf.format(zombieXP + spiderXP + wolfXP + endermanXP) + "\n" +
+                                                        EnumChatFormatting.AQUA + " " + username + "'s Total Slayer XP: " + EnumChatFormatting.GOLD + EnumChatFormatting.BOLD + nf.format(totalXP) + "\n" +
                                                         ModConfig.getColour(ModConfig.typeColour) + " Zombie XP: " + ModConfig.getColour(ModConfig.valueColour) + EnumChatFormatting.BOLD + nf.format(zombieXP) + "\n" +
                                                         ModConfig.getColour(ModConfig.typeColour) + " Spider XP: " + ModConfig.getColour(ModConfig.valueColour) + EnumChatFormatting.BOLD + nf.format(spiderXP) + "\n" +
                                                         ModConfig.getColour(ModConfig.typeColour) + " Wolf XP: " + ModConfig.getColour(ModConfig.valueColour) + EnumChatFormatting.BOLD + nf.format(wolfXP) + "\n" +
-                                                        ModConfig.getColour(ModConfig.typeColour) + " Enderman XP: " + ModConfig.getColour(ModConfig.valueColour) + EnumChatFormatting.BOLD + nf.format(endermanXP) + "\n\n" +
+                                                        ModConfig.getColour(ModConfig.typeColour) + " Enderman XP: " + ModConfig.getColour(ModConfig.valueColour) + EnumChatFormatting.BOLD + nf.format(endermanXP) + "\n" +
+                                                        ModConfig.getColour(ModConfig.typeColour) + " Blaze XP: " + ModConfig.getColour(ModConfig.valueColour) + EnumChatFormatting.BOLD + nf.format(blazeXP) + "\n" +
+                                                        ModConfig.getColour(ModConfig.typeColour) + " Vampire XP: " + ModConfig.getColour(ModConfig.valueColour) + EnumChatFormatting.BOLD + nf.format(vampireXP) + "\n\n" +
                                                         EnumChatFormatting.AQUA + " " + username + "'s Coins:\n" +
                                                         ModConfig.getColour(ModConfig.typeColour) + " Bank: " + (bankCoins == 0 ? EnumChatFormatting.RED + "Bank API disabled." : EnumChatFormatting.GOLD + nf.format(bankCoins)) + "\n" +
                                                         ModConfig.getColour(ModConfig.typeColour) + " Purse: " + EnumChatFormatting.GOLD + nf.format(purseCoins) + "\n" +

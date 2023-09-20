@@ -51,7 +51,7 @@ public class ResetLootCommand extends CommandBase {
 	
 	@Override
 	public void processCommand(ICommandSender arg0, String[] arg1) throws CommandException {
-		final EntityPlayer player = (EntityPlayer) arg0;
+		EntityPlayer player = (EntityPlayer) arg0;
 		
 		if (arg1.length == 0) {
 			player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "Usage: /resetloot <zombie/spider/wolf/enderman/blaze/vampire/fishing/mythological/catacombs>"));
@@ -268,6 +268,7 @@ public class ResetLootCommand extends CommandBase {
 		FishingTracker.seaWitchesSession = 0;
 		FishingTracker.seaArchersSession = 0;
 		FishingTracker.monsterOfTheDeepsSession = 0;
+		FishingTracker.agarimoosSession = 0;
 		FishingTracker.catfishesSession = 0;
 		FishingTracker.carrotKingsSession = 0;
 		FishingTracker.seaLeechesSession = 0;
