@@ -253,6 +253,7 @@ public class CfgConfig {
 		// Blaze
 		BlazeTracker.demonlords = initInt("blaze", "demonlords", 0);
 		BlazeTracker.derelictAshes = initInt("blaze", "derelictAshes", 0);
+		BlazeTracker.blazePowder = initInt("blaze", "blazePowder", 0);
 		BlazeTracker.lavatearRunes = initInt("blaze", "lavatearRunes", 0);
 		BlazeTracker.splashPotions = initInt("blaze", "splashPotions", 0);
 		BlazeTracker.magmaArrows = initInt("blaze", "magmaArrows", 0);

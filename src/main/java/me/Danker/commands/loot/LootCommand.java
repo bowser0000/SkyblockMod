@@ -383,6 +383,7 @@ public class LootCommand extends CommandBase {
 							EnumChatFormatting.DARK_RED + EnumChatFormatting.BOLD + "  Blaze Loot Summary (Current Session):\n" +
 							EnumChatFormatting.GOLD + "    Demonlords Killed: " + nf.format(BlazeTracker.demonlordsSession) + "\n" +
 							EnumChatFormatting.GRAY + "    Derelict Ashes: " + nf.format(BlazeTracker.derelictAshesSession) + "\n" +
+							EnumChatFormatting.YELLOW + "    Enchanted Blaze Powder: " + nf.format(BlazeTracker.blazePowderSession) + "\n" +
 							EnumChatFormatting.RED + "    Lavatear Runes: " + nf.format(BlazeTracker.lavatearRunesSession) + "\n" +
 							EnumChatFormatting.AQUA + "    Splash Potions: " + nf.format(BlazeTracker.splashPotionsSession) + "\n" +
 							EnumChatFormatting.DARK_RED + "    Magma Arrows: " + nf.format(BlazeTracker.magmaArrowsSession) + "\n" +
@@ -424,6 +425,7 @@ public class LootCommand extends CommandBase {
 						EnumChatFormatting.DARK_RED + EnumChatFormatting.BOLD + "  Blaze Loot Summary:\n" +
 						EnumChatFormatting.GOLD + "    Demonlords Killed: " + nf.format(BlazeTracker.demonlords) + "\n" +
 						EnumChatFormatting.GRAY + "    Derelict Ashes: " + nf.format(BlazeTracker.derelictAshes) + "\n" +
+						EnumChatFormatting.YELLOW + "    Enchanted Blaze Powder: " + nf.format(BlazeTracker.blazePowder) + "\n" +
 						EnumChatFormatting.RED + "    Lavatear Runes: " + nf.format(BlazeTracker.lavatearRunes) + "\n" +
 						EnumChatFormatting.AQUA + "    Splash Potions: " + nf.format(BlazeTracker.splashPotions) + "\n" +
 						EnumChatFormatting.DARK_RED + "    Magma Arrows: " + nf.format(BlazeTracker.magmaArrows) + "\n" +

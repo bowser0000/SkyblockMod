@@ -567,6 +567,7 @@ public class LootDisplay extends Hud {
 
                             dropsText = EnumChatFormatting.GOLD + "Demonlords Killed:\n" +
                                     EnumChatFormatting.GRAY + "Derelict Ashes:\n" +
+                                    EnumChatFormatting.YELLOW + "Blaze Powder:\n" +
                                     EnumChatFormatting.RED + "Lavatear Runes:\n" +
                                     EnumChatFormatting.AQUA + "Splash Potions:\n" +
                                     EnumChatFormatting.DARK_RED + "Magma Arrows:\n" +
@@ -591,6 +592,7 @@ public class LootDisplay extends Hud {
                                     EnumChatFormatting.AQUA + "Bosses Since RNG:";
                             countText = EnumChatFormatting.GOLD + nf.format(BlazeTracker.demonlords) + "\n" +
                                     EnumChatFormatting.GRAY + nf.format(BlazeTracker.derelictAshes) + "\n" +
+                                    EnumChatFormatting.YELLOW + nf.format(BlazeTracker.blazePowder) + "\n" +
                                     EnumChatFormatting.RED + nf.format(BlazeTracker.lavatearRunes) + "\n" +
                                     EnumChatFormatting.AQUA + nf.format(BlazeTracker.splashPotions) + "\n" +
                                     EnumChatFormatting.DARK_RED + nf.format(BlazeTracker.magmaArrows) + "\n" +
@@ -627,6 +629,7 @@ public class LootDisplay extends Hud {
 
                             dropsText = EnumChatFormatting.GOLD + "Demonlords Killed:\n" +
                                     EnumChatFormatting.GRAY + "Derelict Ashes:\n" +
+                                    EnumChatFormatting.YELLOW + "Blaze Powder:\n" +
                                     EnumChatFormatting.RED + "Lavatear Runes:\n" +
                                     EnumChatFormatting.AQUA + "Splash Potions:\n" +
                                     EnumChatFormatting.DARK_RED + "Magma Arrows:\n" +
@@ -651,6 +654,7 @@ public class LootDisplay extends Hud {
                                     EnumChatFormatting.AQUA + "Bosses Since RNG:";
                             countText = EnumChatFormatting.GOLD + nf.format(BlazeTracker.demonlordsSession) + "\n" +
                                     EnumChatFormatting.GRAY + nf.format(BlazeTracker.derelictAshesSession) + "\n" +
+                                    EnumChatFormatting.YELLOW + nf.format(BlazeTracker.blazePowderSession) + "\n" +
                                     EnumChatFormatting.RED + nf.format(BlazeTracker.lavatearRunesSession) + "\n" +
                                     EnumChatFormatting.AQUA + nf.format(BlazeTracker.splashPotionsSession) + "\n" +
                                     EnumChatFormatting.DARK_RED + nf.format(BlazeTracker.magmaArrowsSession) + "\n" +
