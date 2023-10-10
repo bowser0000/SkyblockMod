@@ -54,7 +54,7 @@ public class BlazeSolver {
                     if (entity.getName().contains("Blaze") && entity.getName().contains("/")) {
                         String blazeName = StringUtils.stripControlCodes(entity.getName());
                         try {
-                            int health = Integer.parseInt(blazeName.substring(blazeName.indexOf("/") + 1, blazeName.length() - 1));
+                            int health = Utils.parseInt(blazeName.substring(blazeName.indexOf("/") + 1, blazeName.length() - 1));
                             if (health > highestHealth) {
                                 highestHealth = health;
                                 highestBlaze = entity;
