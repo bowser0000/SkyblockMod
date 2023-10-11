@@ -580,4 +580,9 @@ public class Utils {
 		return true;
 	}
 
+	public static int parseInt(String integer){
+		String cleanInt = integer.replaceAll("\\D", "");
+		return Integer.parseInt(cleanInt);
+	}
+
 }
