@@ -35,7 +35,10 @@ public class CakeTimer {
         if (message.contains("Yum! You gain +") && message.contains(" for 48 hours!")) {
             cakeTime = System.currentTimeMillis() / 1000 + 172800; // Add 48 hours
             CfgConfig.writeDoubleConfig("misc", "cakeTime", cakeTime);
-        }else if(message.contains("You may eat some of it again in ")) {
+        }else if(message.contains("Big Yum! You refresh") && message.contains("for 48 hours!")){ // Reset timer when refreshing cake
+            cakeTime = System.currentTimeMillis() / 1000 + 172800; // Add 48 hours
+            CfgConfig.writeDoubleConfig("misc", "cakeTime", cakeTime);
+        } else if(message.contains("You may eat some of it again in ")) { // Keeping this. Maybe Hypixel will revert changes ?
             Matcher hoursMatcher = Pattern.compile("(\\d+)h").matcher(message);
             Matcher minutesMatcher = Pattern.compile("(\\d+)m").matcher(message);
             Matcher secondsMatcher = Pattern.compile("(\\d+)s").matcher(message);
