@@ -49,7 +49,7 @@ public class DungeonTimer {
         JsonObject timer = new JsonObject();
 
         JsonArray f1 = getBasicSplits(EnumChatFormatting.GOLD + "Bonzo Entry", "Bonzo");
-        f1.add(createSplit(EnumChatFormatting.GOLD + "Bonzo Phase 1", "\\[BOSS\\] Bonzo: Oh noes, you got me\\.\\. what ever will I do\\?!"));
+        f1.add(createSplit(EnumChatFormatting.GOLD + "Bonzo Phase 1", "\\[BOSS\\] Bonzo: Oh I'm dead!"));
         f1.add(getEndSplit(EnumChatFormatting.GOLD + "Bonzo Phase 2"));
         timer.add("F1", f1);
         timer.add("M1", Utils.deepCopy(f1));
