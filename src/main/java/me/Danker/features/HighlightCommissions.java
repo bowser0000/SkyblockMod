@@ -20,7 +20,7 @@ public class HighlightCommissions {
         if (!event.displayName.equals("Commissions")) return;
 
         for (Slot slot : slots) {
-            if (slot != null && slot.getStack() == null) continue;
+            if (slot == null || slot.getStack() == null) continue;
             if (slot.getStack().getItem() instanceof ItemWritableBook) {
                 for (String line : Utils.getItemLore(slot.getStack())) {
                     if (line.contains("COMPLETED")) {
