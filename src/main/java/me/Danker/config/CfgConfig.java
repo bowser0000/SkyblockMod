@@ -369,11 +369,14 @@ public class CfgConfig {
 		// F1
 		CatacombsTracker.f1SPlus = initInt("catacombs", "floorOneSPlus", 0);
 		CatacombsTracker.bonzoStaffs = initInt("catacombs", "bonzoStaff", 0);
+		CatacombsTracker.balloonSnakes = initInt("catacombs", "balloonSnake", 0);
 		CatacombsTracker.f1CoinsSpent = initDouble("catacombs", "floorOneCoins", 0);
 		CatacombsTracker.f1TimeSpent = initDouble("catacombs", "floorOneTime", 0);
 		// F2
 		CatacombsTracker.f2SPlus = initInt("catacombs", "floorTwoSPlus", 0);
 		CatacombsTracker.scarfStudies = initInt("catacombs", "scarfStudies", 0);
+		CatacombsTracker.adaptiveSwords = initInt("catacombs", "adaptiveSword", 0);
+		CatacombsTracker.adaptiveBelts = initInt("catacombs", "adaptiveBelt", 0);
 		CatacombsTracker.f2CoinsSpent = initDouble("catacombs", "floorTwoCoins", 0);
 		CatacombsTracker.f2TimeSpent = initDouble("catacombs", "floorTwoTime", 0);
 		// F3
@@ -382,7 +385,6 @@ public class CfgConfig {
 		CatacombsTracker.adaptiveChests = initInt("catacombs", "adaptiveChest", 0);
 		CatacombsTracker.adaptiveLegs = initInt("catacombs", "adaptiveLegging", 0);
 		CatacombsTracker.adaptiveBoots = initInt("catacombs", "adaptiveBoot", 0);
-		CatacombsTracker.adaptiveSwords = initInt("catacombs", "adaptiveSword", 0);
 		CatacombsTracker.f3CoinsSpent = initDouble("catacombs", "floorThreeCoins", 0);
 		CatacombsTracker.f3TimeSpent = initDouble("catacombs", "floorThreeTime", 0);
 		// F4
@@ -403,6 +405,7 @@ public class CfgConfig {
 		CatacombsTracker.shadowAssChests = initInt("catacombs", "shadowAssassinChest", 0);
 		CatacombsTracker.shadowAssLegs = initInt("catacombs", "shadowAssassinLegging", 0);
 		CatacombsTracker.shadowAssBoots = initInt("catacombs", "shadowAssassinBoot", 0);
+		CatacombsTracker.shadowAssCloaks = initInt("catacombs", "shadowAssassinCloak", 0);
 		CatacombsTracker.lastBreaths = initInt("catacombs", "lastBreath", 0);
 		CatacombsTracker.lividDaggers = initInt("catacombs", "lividDagger", 0);
 		CatacombsTracker.shadowFurys = initInt("catacombs", "shadowFury", 0);
@@ -418,6 +421,8 @@ public class CfgConfig {
 		CatacombsTracker.necroLordLegs = initInt("catacombs", "necroLordLegging", 0);
 		CatacombsTracker.necroLordBoots = initInt("catacombs", "necroLordBoot", 0);
 		CatacombsTracker.necroSwords = initInt("catacombs", "necroSword", 0);
+		CatacombsTracker.soulweaverGloves = initInt("catacombs", "soulweaverGlove", 0);
+		CatacombsTracker.felSkulls = initInt("catacombs", "felSkull", 0);
 		CatacombsTracker.f6Rerolls = initInt("catacombs", "floorSixRerolls", 0);
 		CatacombsTracker.f6CoinsSpent = initDouble("catacombs", "floorSixCoins", 0);
 		CatacombsTracker.f6TimeSpent = initDouble("catacombs", "floorSixTime", 0);

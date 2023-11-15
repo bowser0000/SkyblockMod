@@ -829,6 +829,7 @@ public class LootCommand extends CommandBase {
 																		EnumChatFormatting.GOLD + "    S+ Runs: " + nf.format(CatacombsTracker.f1SPlusSession) + "\n" +
 																		EnumChatFormatting.GOLD + "    Recombobulator 3000s: " + nf.format(CatacombsTracker.recombobulatorsSession) + "\n" +
 																		EnumChatFormatting.DARK_PURPLE + "    Fuming Potato Books: " + nf.format(CatacombsTracker.fumingPotatoBooksSession) + "\n" +
+																		EnumChatFormatting.GREEN + "    Balloon Snakes: " + nf.format(CatacombsTracker.balloonSnakesSession) + "\n" +
 																		EnumChatFormatting.BLUE + "    Bonzo's Staffs: " + nf.format(CatacombsTracker.bonzoStaffsSession) + "\n" +
 																		EnumChatFormatting.AQUA + "    Coins Spent: " + Utils.getMoneySpent(CatacombsTracker.f1CoinsSpentSession) + "\n" +
 																		EnumChatFormatting.AQUA + "    Time Spent: " + Utils.getTimeBetween(0, CatacombsTracker.f1TimeSpentSession) + "\n" +
@@ -840,6 +841,7 @@ public class LootCommand extends CommandBase {
 																	EnumChatFormatting.GOLD + "    S+ Runs: " + nf.format(CatacombsTracker.f1SPlus) + "\n" +
 																	EnumChatFormatting.GOLD + "    Recombobulator 3000s: " + nf.format(CatacombsTracker.recombobulators) + "\n" +
 																	EnumChatFormatting.DARK_PURPLE + "    Fuming Potato Books: " + nf.format(CatacombsTracker.fumingPotatoBooks) + "\n" +
+																	EnumChatFormatting.GREEN + "    Balloon Snakes: " + nf.format(CatacombsTracker.balloonSnakes) + "\n" +
 																	EnumChatFormatting.BLUE + "    Bonzo's Staffs: " + nf.format(CatacombsTracker.bonzoStaffs) + "\n" +
 																	EnumChatFormatting.AQUA + "    Coins Spent: " + Utils.getMoneySpent(CatacombsTracker.f1CoinsSpent) + "\n" +
 																	EnumChatFormatting.AQUA + "    Time Spent: " + Utils.getTimeBetween(0, CatacombsTracker.f1TimeSpent) + "\n" +
@@ -855,6 +857,7 @@ public class LootCommand extends CommandBase {
 																		EnumChatFormatting.DARK_PURPLE + "    Fuming Potato Books: " + nf.format(CatacombsTracker.fumingPotatoBooksSession) + "\n" +
 																		EnumChatFormatting.BLUE + "    Scarf's Studies: " + nf.format(CatacombsTracker.scarfStudiesSession) + "\n" +
 																		EnumChatFormatting.DARK_PURPLE + "    Adaptive Blades: " + nf.format(CatacombsTracker.adaptiveSwordsSession) + "\n" +
+																		EnumChatFormatting.DARK_PURPLE + "    Adaptive Belts: " + nf.format(CatacombsTracker.adaptiveBeltsSession) + "\n" +
 																		EnumChatFormatting.AQUA + "    Coins Spent: " + Utils.getMoneySpent(CatacombsTracker.f2CoinsSpentSession) + "\n" +
 																		EnumChatFormatting.AQUA + "    Time Spent: " + Utils.getTimeBetween(0, CatacombsTracker.f2TimeSpentSession) + "\n" +
 																		EnumChatFormatting.DARK_RED + EnumChatFormatting.STRIKETHROUGH + "-------------------"));
@@ -867,6 +870,7 @@ public class LootCommand extends CommandBase {
 																	EnumChatFormatting.DARK_PURPLE + "    Fuming Potato Books: " + nf.format(CatacombsTracker.fumingPotatoBooks) + "\n" +
 																	EnumChatFormatting.BLUE + "    Scarf's Studies: " + nf.format(CatacombsTracker.scarfStudies) + "\n" +
 																	EnumChatFormatting.DARK_PURPLE + "    Adaptive Blades: " + nf.format(CatacombsTracker.adaptiveSwords) + "\n" +
+																	EnumChatFormatting.DARK_PURPLE + "    Adaptive Belts: " + nf.format(CatacombsTracker.adaptiveBelts) + "\n" +
 																	EnumChatFormatting.AQUA + "    Coins Spent: " + Utils.getMoneySpent(CatacombsTracker.f2CoinsSpent) + "\n" +
 																	EnumChatFormatting.AQUA + "    Time Spent: " + Utils.getTimeBetween(0, CatacombsTracker.f2TimeSpent) + "\n" +
 																	EnumChatFormatting.DARK_RED + EnumChatFormatting.STRIKETHROUGH + "-------------------"));
@@ -950,6 +954,7 @@ public class LootCommand extends CommandBase {
 																		EnumChatFormatting.DARK_PURPLE + "    Shadow Assassin Chests: " + nf.format(CatacombsTracker.shadowAssChestsSession) + "\n" +
 																		EnumChatFormatting.DARK_PURPLE + "    Shadow Assassin Legs: " + nf.format(CatacombsTracker.shadowAssLegsSession) + "\n" +
 																		EnumChatFormatting.DARK_PURPLE + "    Shadow Assassin Boots: " + nf.format(CatacombsTracker.shadowAssBootsSession) + "\n" +
+																		EnumChatFormatting.DARK_PURPLE + "    Shadow Assassin Cloaks: " + nf.format(CatacombsTracker.shadowAssCloaksSession) + "\n" +
 																		EnumChatFormatting.GOLD + "    Last Breaths: " + nf.format(CatacombsTracker.lastBreathsSession) + "\n" +
 																		EnumChatFormatting.GOLD + "    Livid Daggers: " + nf.format(CatacombsTracker.lividDaggersSession) + "\n" +
 																		EnumChatFormatting.GOLD + "    Shadow Furys: " + nf.format(CatacombsTracker.shadowFurysSession) + "\n" +
@@ -968,6 +973,7 @@ public class LootCommand extends CommandBase {
 																	EnumChatFormatting.DARK_PURPLE + "    Shadow Assassin Chests: " + nf.format(CatacombsTracker.shadowAssChests) + "\n" +
 																	EnumChatFormatting.DARK_PURPLE + "    Shadow Assassin Legs: " + nf.format(CatacombsTracker.shadowAssLegs) + "\n" +
 																	EnumChatFormatting.DARK_PURPLE + "    Shadow Assassin Boots: " + nf.format(CatacombsTracker.shadowAssBoots) + "\n" +
+																	EnumChatFormatting.DARK_PURPLE + "    Shadow Assassin Cloaks: " + nf.format(CatacombsTracker.shadowAssCloaks) + "\n" +
 																	EnumChatFormatting.GOLD + "    Last Breaths: " + nf.format(CatacombsTracker.lastBreaths) + "\n" +
 																	EnumChatFormatting.GOLD + "    Livid Daggers: " + nf.format(CatacombsTracker.lividDaggers) + "\n" +
 																	EnumChatFormatting.GOLD + "    Shadow Furys: " + nf.format(CatacombsTracker.shadowFurys) + "\n" +
@@ -991,6 +997,7 @@ public class LootCommand extends CommandBase {
 																		EnumChatFormatting.GOLD + "    Necro Lord Leggings: " + nf.format(CatacombsTracker.necroLordLegsSession) + "\n" +
 																		EnumChatFormatting.GOLD + "    Necro Lord Boots: " + nf.format(CatacombsTracker.necroLordBootsSession) + "\n" +
 																		EnumChatFormatting.GOLD + "    Necro Swords: " + nf.format(CatacombsTracker.necroSwordsSession) + "\n" +
+																		EnumChatFormatting.DARK_PURPLE + "    Fel Skulls: " + nf.format(CatacombsTracker.felSkullsSession) + "\n" +
 																		EnumChatFormatting.WHITE + "    Rerolls: " + nf.format(CatacombsTracker.f6RerollsSession) + "\n" +
 																		EnumChatFormatting.AQUA + "    Coins Spent: " + Utils.getMoneySpent(CatacombsTracker.f6CoinsSpentSession) + "\n" +
 																		EnumChatFormatting.AQUA + "    Time Spent: " + Utils.getTimeBetween(0, CatacombsTracker.f6TimeSpentSession) + "\n" +
@@ -1010,6 +1017,7 @@ public class LootCommand extends CommandBase {
 																	EnumChatFormatting.GOLD + "    Necro Lord Leggings: " + nf.format(CatacombsTracker.necroLordLegs) + "\n" +
 																	EnumChatFormatting.GOLD + "    Necro Lord Boots: " + nf.format(CatacombsTracker.necroLordBoots) + "\n" +
 																	EnumChatFormatting.GOLD + "    Necro Swords: " + nf.format(CatacombsTracker.necroSwords) + "\n" +
+                                									EnumChatFormatting.DARK_PURPLE + "    Fel Skulls: " + nf.format(CatacombsTracker.felSkulls) + "\n" +
 																	EnumChatFormatting.WHITE + "    Rerolls: " + nf.format(CatacombsTracker.f6Rerolls) + "\n" +
 																	EnumChatFormatting.AQUA + "    Coins Spent: " + Utils.getMoneySpent(CatacombsTracker.f6CoinsSpent) + "\n" +
 																	EnumChatFormatting.AQUA + "    Time Spent: " + Utils.getTimeBetween(0, CatacombsTracker.f6TimeSpent) + "\n" +

@@ -21,12 +21,14 @@ public class CatacombsTracker {
     // F1
     public static int f1SPlus;
     public static int bonzoStaffs;
+    public static int balloonSnakes;
     public static double f1CoinsSpent;
     public static double f1TimeSpent;
     // F2
     public static int f2SPlus;
     public static int scarfStudies;
     public static int adaptiveSwords;
+    public static int adaptiveBelts;
     public static double f2CoinsSpent;
     public static double f2TimeSpent;
     // F3
@@ -55,6 +57,7 @@ public class CatacombsTracker {
     public static int shadowAssChests;
     public static int shadowAssLegs;
     public static int shadowAssBoots;
+    public static int shadowAssCloaks;
     public static int lastBreaths;
     public static int lividDaggers;
     public static int shadowFurys;
@@ -70,6 +73,8 @@ public class CatacombsTracker {
     public static int necroLordLegs;
     public static int necroLordBoots;
     public static int necroSwords;
+    public static int soulweaverGloves;
+    public static int felSkulls;
     public static int f6Rerolls;
     public static double f6CoinsSpent;
     public static double f6TimeSpent;
@@ -121,12 +126,14 @@ public class CatacombsTracker {
     // F1
     public static int f1SPlusSession = 0;
     public static int bonzoStaffsSession = 0;
+    public static int balloonSnakesSession = 0;
     public static double f1CoinsSpentSession = 0;
     public static double f1TimeSpentSession = 0;
     // F2
     public static int f2SPlusSession = 0;
     public static int scarfStudiesSession = 0;
     public static int adaptiveSwordsSession = 0;
+    public static int adaptiveBeltsSession = 0;
     public static double f2CoinsSpentSession = 0;
     public static double f2TimeSpentSession = 0;
     // F3
@@ -155,6 +162,7 @@ public class CatacombsTracker {
     public static int shadowAssChestsSession = 0;
     public static int shadowAssLegsSession = 0;
     public static int shadowAssBootsSession = 0;
+    public static int shadowAssCloaksSession = 0;
     public static int lastBreathsSession = 0;
     public static int lividDaggersSession = 0;
     public static int shadowFurysSession = 0;
@@ -170,6 +178,8 @@ public class CatacombsTracker {
     public static int necroLordLegsSession = 0;
     public static int necroLordBootsSession = 0;
     public static int necroSwordsSession = 0;
+    public static int soulweaverGlovesSession = 0;
+    public static int felSkullsSession = 0;
     public static int f6RerollsSession = 0;
     public static double f6CoinsSpentSession = 0;
     public static double f6TimeSpentSession = 0;
@@ -360,7 +370,7 @@ public class CatacombsTracker {
 
         if (message.contains(":")) return;
 
-        if (message.contains("    ")) {
+        if (message.startsWith("    ")) {
             if (message.contains("Recombobulator 3000")) {
                 recombobulators++;
                 recombobulatorsSession++;
@@ -373,10 +383,22 @@ public class CatacombsTracker {
                 bonzoStaffs++;
                 bonzoStaffsSession++;
                 CfgConfig.writeIntConfig("catacombs", "bonzoStaff", bonzoStaffs);
+            } else if (message.contains("Balloon Snake")) {
+                balloonSnakes++;
+                balloonSnakesSession++;
+                CfgConfig.writeIntConfig("catacombs", "balloonSnake", balloonSnakes);
             } else if (message.contains("Scarf's Studies")) { // F2
                 scarfStudies++;
                 scarfStudiesSession++;
                 CfgConfig.writeIntConfig("catacombs", "scarfStudies", scarfStudies);
+            } else if (message.contains("Adaptive Blade")) {
+                adaptiveSwords++;
+                adaptiveSwordsSession++;
+                CfgConfig.writeIntConfig("catacombs", "adaptiveSword", adaptiveSwords);
+            } else if (message.contains("Adaptive Belt")) {
+                adaptiveBelts++;
+                adaptiveBeltsSession++;
+                CfgConfig.writeIntConfig("catacombs", "adaptiveBelt", adaptiveBelts);
             } else if (message.contains("Adaptive Helmet")) { // F3
                 adaptiveHelms++;
                 adaptiveHelmsSession++;
@@ -393,10 +415,6 @@ public class CatacombsTracker {
                 adaptiveBoots++;
                 adaptiveBootsSession++;
                 CfgConfig.writeIntConfig("catacombs", "adaptiveBoot", adaptiveBoots);
-            } else if (message.contains("Adaptive Blade")) {
-                adaptiveSwords++;
-                adaptiveSwordsSession++;
-                CfgConfig.writeIntConfig("catacombs", "adaptiveSword", adaptiveSwords);
             } else if (message.contains("Spirit Wing")) { // F4
                 spiritWings++;
                 spiritWingsSession++;
@@ -449,6 +467,10 @@ public class CatacombsTracker {
                 shadowAssBoots++;
                 shadowAssBootsSession++;
                 CfgConfig.writeIntConfig("catacombs", "shadowAssassinBoot", shadowAssBoots);
+            } else if (message.contains("Shadow Assassin Cloak")) {
+                shadowAssCloaks++;
+                shadowAssCloaksSession++;
+                CfgConfig.writeIntConfig("catacombs", "shadowAssassinCloak", shadowAssCloaks);
             } else if (message.contains("Livid Dagger")) {
                 lividDaggers++;
                 lividDaggersSession++;
@@ -489,6 +511,14 @@ public class CatacombsTracker {
                 necroSwords++;
                 necroSwordsSession++;
                 CfgConfig.writeIntConfig("catacombs", "necroSword", necroSwords);
+            } else if (message.contains("Soulweaver Gloves")) {
+                soulweaverGloves++;
+                soulweaverGlovesSession++;
+                CfgConfig.writeIntConfig("catacombs", "soulweaverGlove", soulweaverGloves);
+            } else if (message.contains("Fel Skull")) {
+                felSkulls++;
+                felSkullsSession++;
+                CfgConfig.writeIntConfig("catacombs", "felSkull", felSkulls);
             } else if (message.contains("Wither Blood")) { // F7
                 witherBloods++;
                 witherBloodsSession++;

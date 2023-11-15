@@ -342,10 +342,13 @@ public class ResetLootCommand extends CommandBase {
 		CatacombsTracker.fumingPotatoBooksSession = 0;
 		CatacombsTracker.f1SPlusSession = 0;
 		CatacombsTracker.bonzoStaffsSession = 0;
+		CatacombsTracker.balloonSnakesSession = 0;
 		CatacombsTracker.f1CoinsSpentSession = 0;
 		CatacombsTracker.f1TimeSpentSession = 0;
 		CatacombsTracker.f2SPlusSession = 0;
 		CatacombsTracker.scarfStudiesSession = 0;
+		CatacombsTracker.adaptiveSwordsSession = 0;
+		CatacombsTracker.adaptiveBeltsSession = 0;
 		CatacombsTracker.f2CoinsSpentSession = 0;
 		CatacombsTracker.f2TimeSpentSession = 0;
 		CatacombsTracker.f3SPlusSession = 0;
@@ -353,7 +356,6 @@ public class ResetLootCommand extends CommandBase {
 		CatacombsTracker.adaptiveChestsSession = 0;
 		CatacombsTracker.adaptiveLegsSession = 0;
 		CatacombsTracker.adaptiveBootsSession = 0;
-		CatacombsTracker.adaptiveSwordsSession = 0;
 		CatacombsTracker.f3CoinsSpentSession = 0;
 		CatacombsTracker.f3TimeSpentSession = 0;
 		CatacombsTracker.f4SPlusSession = 0;
@@ -370,6 +372,7 @@ public class ResetLootCommand extends CommandBase {
 		CatacombsTracker.shadowAssChestsSession = 0;
 		CatacombsTracker.shadowAssLegsSession = 0;
 		CatacombsTracker.shadowAssBootsSession = 0;
+		CatacombsTracker.shadowAssCloaksSession = 0;
 		CatacombsTracker.lividDaggersSession = 0;
 		CatacombsTracker.shadowFurysSession = 0;
 		CatacombsTracker.f5CoinsSpentSession = 0;
@@ -383,6 +386,7 @@ public class ResetLootCommand extends CommandBase {
 		CatacombsTracker.necroLordLegsSession = 0;
 		CatacombsTracker.necroLordBootsSession = 0;
 		CatacombsTracker.necroSwordsSession = 0;
+		CatacombsTracker.felSkullsSession = 0;
 		CatacombsTracker.f6RerollsSession = 0;
 		CatacombsTracker.f6CoinsSpentSession = 0;
 		CatacombsTracker.f6TimeSpentSession = 0;
