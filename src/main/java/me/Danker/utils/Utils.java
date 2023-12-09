@@ -111,7 +111,12 @@ public class Utils {
 	public static boolean isOnHypixel() {
 		Minecraft mc = Minecraft.getMinecraft();
 		if (mc != null && mc.theWorld != null && !mc.isSingleplayer()) {
-			return mc.getCurrentServerData().serverIP.toLowerCase().contains("hypixel");
+			if (mc.thePlayer != null && mc.thePlayer.getClientBrand() != null && mc.thePlayer.getClientBrand().toLowerCase().contains("hypixel")) {
+				return true;
+			}
+			if (mc.getCurrentServerData().serverIP.toLowerCase().contains("hypixel")) {
+				return true;
+			}
 		}
 		return false;
 	}
