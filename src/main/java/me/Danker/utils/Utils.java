@@ -608,4 +608,9 @@ public class Utils {
 		return newObj;
 	}
 
+	public static int getSkillMaxLevel(String skill) {
+		if (DankersSkyblockMod.data == null) return 50;
+		return DankersSkyblockMod.data.getAsJsonObject("skills").get(skill).getAsInt();
+	}
+
 }

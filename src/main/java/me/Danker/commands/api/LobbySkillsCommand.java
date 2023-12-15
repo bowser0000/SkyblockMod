@@ -77,39 +77,39 @@ public class LobbySkillsCommand extends CommandBase {
 					
 					if (experienceObj.has("SKILL_FARMING") || experienceObj.has("SKILL_MINING") || experienceObj.has("SKILL_COMBAT") || experienceObj.has("SKILL_FORAGING") || experienceObj.has("SKILL_FISHING") || experienceObj.has("SKILL_ENCHANTING") || experienceObj.has("SKILL_ALCHEMY")) {
 						if (experienceObj.has("SKILL_FARMING")) {
-							farmingLevel = Utils.xpToSkillLevel(experienceObj.get("SKILL_FARMING").getAsDouble(), 60);
+							farmingLevel = Utils.xpToSkillLevel(experienceObj.get("SKILL_FARMING").getAsDouble(), Utils.getSkillMaxLevel("farming"));
 							farmingLevel = (double) Math.round(farmingLevel * 100) / 100;
 						}
 						if (experienceObj.has("SKILL_MINING")) {
-							miningLevel = Utils.xpToSkillLevel(experienceObj.get("SKILL_MINING").getAsDouble(), 60);
+							miningLevel = Utils.xpToSkillLevel(experienceObj.get("SKILL_MINING").getAsDouble(), Utils.getSkillMaxLevel("mining"));
 							miningLevel = (double) Math.round(miningLevel * 100) / 100;
 						}
 						if (experienceObj.has("SKILL_COMBAT")) {
-							combatLevel = Utils.xpToSkillLevel(experienceObj.get("SKILL_COMBAT").getAsDouble(), 60);
+							combatLevel = Utils.xpToSkillLevel(experienceObj.get("SKILL_COMBAT").getAsDouble(), Utils.getSkillMaxLevel("combat"));
 							combatLevel = (double) Math.round(combatLevel * 100) / 100;
 						}
 						if (experienceObj.has("SKILL_FORAGING")) {
-							foragingLevel = Utils.xpToSkillLevel(experienceObj.get("SKILL_FORAGING").getAsDouble(), 50);
+							foragingLevel = Utils.xpToSkillLevel(experienceObj.get("SKILL_FORAGING").getAsDouble(), Utils.getSkillMaxLevel("foraging"));
 							foragingLevel = (double) Math.round(foragingLevel * 100) / 100;
 						}
 						if (experienceObj.has("SKILL_FISHING")) {
-							fishingLevel = Utils.xpToSkillLevel(experienceObj.get("SKILL_FISHING").getAsDouble(), 50);
+							fishingLevel = Utils.xpToSkillLevel(experienceObj.get("SKILL_FISHING").getAsDouble(), Utils.getSkillMaxLevel("fishing"));
 							fishingLevel = (double) Math.round(fishingLevel * 100) / 100;
 						}
 						if (experienceObj.has("SKILL_ENCHANTING")) {
-							enchantingLevel = Utils.xpToSkillLevel(experienceObj.get("SKILL_ENCHANTING").getAsDouble(), 60);
+							enchantingLevel = Utils.xpToSkillLevel(experienceObj.get("SKILL_ENCHANTING").getAsDouble(), Utils.getSkillMaxLevel("enchanting"));
 							enchantingLevel = (double) Math.round(enchantingLevel * 100) / 100;
 						}
 						if (experienceObj.has("SKILL_ALCHEMY")) {
-							alchemyLevel = Utils.xpToSkillLevel(experienceObj.get("SKILL_ALCHEMY").getAsDouble(), 50);
+							alchemyLevel = Utils.xpToSkillLevel(experienceObj.get("SKILL_ALCHEMY").getAsDouble(), Utils.getSkillMaxLevel("alchemy"));
 							alchemyLevel = (double) Math.round(alchemyLevel * 100) / 100;
 						}
 						if (experienceObj.has("SKILL_TAMING")) {
-							tamingLevel = Utils.xpToSkillLevel(experienceObj.get("SKILL_TAMING").getAsDouble(), 50);
+							tamingLevel = Utils.xpToSkillLevel(experienceObj.get("SKILL_TAMING").getAsDouble(), Utils.getSkillMaxLevel("taming"));
 							tamingLevel = (double) Math.round(tamingLevel * 100) / 100;
 						}
 						if (experienceObj.has("SKILL_CARPENTRY")) {
-							carpentryLevel = Utils.xpToSkillLevel(experienceObj.get("SKILL_CARPENTRY").getAsDouble(), 50);
+							carpentryLevel = Utils.xpToSkillLevel(experienceObj.get("SKILL_CARPENTRY").getAsDouble(), Utils.getSkillMaxLevel("carpentry"));
 							carpentryLevel = (double) Math.round(carpentryLevel * 100) / 100;
 						}
 					} else {
@@ -129,28 +129,28 @@ public class LobbySkillsCommand extends CommandBase {
 						
 						JsonObject achievementObject = Utils.getObjectFromPath(playerObject, "player.achievements");
 						if (achievementObject.has("skyblock_harvester")) {
-							farmingLevel = achievementObject.get("skyblock_harvester").getAsInt();
+							farmingLevel = Math.min(achievementObject.get("skyblock_harvester").getAsInt(), Utils.getSkillMaxLevel("farming"));
 						}
 						if (achievementObject.has("skyblock_excavator")) {
-							miningLevel = achievementObject.get("skyblock_excavator").getAsInt();
+							miningLevel = Math.min(achievementObject.get("skyblock_excavator").getAsInt(), Utils.getSkillMaxLevel("mining"));
 						}
 						if (achievementObject.has("skyblock_combat")) {
-							combatLevel = achievementObject.get("skyblock_combat").getAsInt();
+							combatLevel = Math.min(achievementObject.get("skyblock_combat").getAsInt(), Utils.getSkillMaxLevel("combat"));
 						}
 						if (achievementObject.has("skyblock_gatherer")) {
-							foragingLevel = Math.min(achievementObject.get("skyblock_gatherer").getAsInt(), 50);
+							foragingLevel = Math.min(achievementObject.get("skyblock_gatherer").getAsInt(), Utils.getSkillMaxLevel("foraging"));
 						}
 						if (achievementObject.has("skyblock_angler")) {
-							fishingLevel = Math.min(achievementObject.get("skyblock_angler").getAsInt(), 50);
+							fishingLevel = Math.min(achievementObject.get("skyblock_angler").getAsInt(), Utils.getSkillMaxLevel("fishing"));
 						}
 						if (achievementObject.has("skyblock_augmentation")) {
-							enchantingLevel = achievementObject.get("skyblock_augmentation").getAsInt();
+							enchantingLevel = Math.min(achievementObject.get("skyblock_augmentation").getAsInt(), Utils.getSkillMaxLevel("enchanting"));
 						}
 						if (achievementObject.has("skyblock_concoctor")) {
-							alchemyLevel = Math.min(achievementObject.get("skyblock_concoctor").getAsInt(), 50);
+							alchemyLevel = Math.min(achievementObject.get("skyblock_concoctor").getAsInt(), Utils.getSkillMaxLevel("alchemy"));
 						}
 						if (achievementObject.has("skyblock_domesticator")) {
-							tamingLevel = Math.min(achievementObject.get("skyblock_domesticator").getAsInt(), 50);
+							tamingLevel = Math.min(achievementObject.get("skyblock_domesticator").getAsInt(), Utils.getSkillMaxLevel("taming"));
 						}
 					}
 					
