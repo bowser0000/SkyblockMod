@@ -65,7 +65,7 @@ public class HOTMTreeCommand extends CommandBase {
             }
 
             System.out.println("Fetching HotM tree...");
-            JsonArray tree = profileResponse.get("profiles").getAsJsonObject().get(arg1[1]).getAsJsonObject().get("items").getAsJsonObject().get("hotm").getAsJsonArray();
+            JsonArray tree = Utils.getObjectFromPath(profileResponse, "profiles." + arg1[1] + ".items").getAsJsonArray("hotm");
 
             IInventory inventory = new InventoryBasic(arg1[0] + "'s HotM Tree:", true, 63);
 
@@ -76,7 +76,7 @@ public class HOTMTreeCommand extends CommandBase {
 
                 ItemStack item = new ItemStack(Item.getItemById(node.get("id").getAsInt()), node.get("Count").getAsInt(), node.get("Damage").getAsInt());
 
-                NBTTagCompound nbt = new NBTTagCompound();
+                NBTTagCompound nbt;
                 try {
                     nbt = JsonToNBT.getTagFromJson(node.get("tag").toString());
                     removeDoubleQuotes(nbt);

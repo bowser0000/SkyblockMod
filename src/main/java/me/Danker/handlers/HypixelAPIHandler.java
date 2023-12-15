@@ -113,7 +113,7 @@ public class HypixelAPIHandler {
         // Get profiles
         System.out.println("Fetching profiles...");
 
-        JsonObject profilesResponse = getJsonObjectAuth(URL + "skyblock/profiles/" + UUID);
+        JsonObject profilesResponse = getJsonObjectAuth(URL + "v2/skyblock/profiles/" + UUID);
         if (profilesResponse == null) {
             player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "Could not connect to API."));
             return null;
@@ -130,7 +130,7 @@ public class HypixelAPIHandler {
 
         // Loop through profiles to find latest
         System.out.println("Looping through profiles...");
-        JsonArray profilesArray = profilesResponse.get("profiles").getAsJsonArray();
+        JsonArray profilesArray = profilesResponse.getAsJsonArray("profiles");
 
         for (JsonElement profile : profilesArray) {
             JsonObject profileJSON = profile.getAsJsonObject();
@@ -149,7 +149,7 @@ public class HypixelAPIHandler {
         // Get profiles
         System.out.println("Fetching profiles...");
 
-        JsonObject profilesResponse = getJsonObjectAuth(URL + "skyblock/profiles/" + UUID);
+        JsonObject profilesResponse = getJsonObjectAuth(URL + "v2/skyblock/profiles/" + UUID);
         if (profilesResponse == null) {
             player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "Could not connect to API."));
             return null;
@@ -166,7 +166,7 @@ public class HypixelAPIHandler {
 
         // Loop through profiles to find latest
         System.out.println("Looping through profiles...");
-        JsonArray profilesArray = profilesResponse.get("profiles").getAsJsonArray();
+        JsonArray profilesArray = profilesResponse.getAsJsonArray("profiles");
 
         for (JsonElement profile : profilesArray) {
             JsonObject profileJSON = profile.getAsJsonObject();

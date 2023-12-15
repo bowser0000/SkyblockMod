@@ -89,7 +89,7 @@ public class InventoryCommand extends CommandBase {
             if (profileResponse == null) return;
 
             System.out.println("Fetching inventory...");
-            JsonObject userObject = profileResponse.get("members").getAsJsonObject().get(uuid).getAsJsonObject();
+            JsonObject inventoryObject = Utils.getObjectFromPath(profileResponse, "members." + uuid + ".inventory");
 
             IInventory inventory = new InventoryBasic(username + "'s Inventory:", true, 63);
 
@@ -98,7 +98,7 @@ public class InventoryCommand extends CommandBase {
 
             try {
                 // Armour
-                String armourBase64 = userObject.get("inv_armor").getAsJsonObject().get("data").getAsString();
+                String armourBase64 = inventoryObject.getAsJsonObject("inv_armor").get("data").getAsString();
                 InputStream armourStream = new ByteArrayInputStream(Base64.getDecoder().decode(armourBase64));
                 NBTTagCompound armour = CompressedStreamTools.readCompressed(armourStream);
                 NBTTagList armourList = armour.getTagList("i", 10);
@@ -110,8 +110,8 @@ public class InventoryCommand extends CommandBase {
                 }
 
                 // Equipment
-                if (userObject.has("equippment_contents")) {
-                    String equipmentBase64 = userObject.get("equippment_contents").getAsJsonObject().get("data").getAsString();
+                if (inventoryObject.has("equipment_contents")) {
+                    String equipmentBase64 = inventoryObject.getAsJsonObject("equipment_contents").get("data").getAsString();
                     InputStream equipmentStream = new ByteArrayInputStream(Base64.getDecoder().decode(equipmentBase64));
                     NBTTagCompound equipment = CompressedStreamTools.readCompressed(equipmentStream);
                     NBTTagList equipmentList = equipment.getTagList("i", 10);
@@ -119,7 +119,7 @@ public class InventoryCommand extends CommandBase {
                     for (int i = 0; i < equipmentList.tagCount(); i++) {
                         NBTTagCompound item = equipmentList.getCompoundTagAt(i);
                         if (item.hasNoTags()) continue;
-                        inventory.setInventorySlotContents(16 - i * 2, ItemStack.loadItemStackFromNBT(item));
+                        inventory.setInventorySlotContents(i * 2 + 10, ItemStack.loadItemStackFromNBT(item));
                     }
                 } else {
                     for (int i = 10; i <= 16; i += 2) {
@@ -137,8 +137,8 @@ public class InventoryCommand extends CommandBase {
                 }
 
                 // Inventory
-                if (userObject.has("inv_contents")) {
-                    String invBase64 = userObject.get("inv_contents").getAsJsonObject().get("data").getAsString();
+                if (inventoryObject.has("inv_contents")) {
+                    String invBase64 = inventoryObject.getAsJsonObject("inv_contents").get("data").getAsString();
                     InputStream invStream = new ByteArrayInputStream(Base64.getDecoder().decode(invBase64));
 
                     NBTTagCompound inv = CompressedStreamTools.readCompressed(invStream);

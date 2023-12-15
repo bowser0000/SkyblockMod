@@ -85,10 +85,10 @@ public class GuildOfCommand extends CommandBase {
 			int players = 0;
 			// Check if player is in guild
 			if (!guildResponse.get("guild").isJsonNull()) {
-				guildName = guildResponse.get("guild").getAsJsonObject().get("name").getAsString();
+				guildName = guildResponse.getAsJsonObject("guild").get("name").getAsString();
 				
 				// Loop through members to find guildmaster
-				JsonArray guildMembers = guildResponse.get("guild").getAsJsonObject().get("members").getAsJsonArray();
+				JsonArray guildMembers = guildResponse.getAsJsonObject("guild").getAsJsonArray("members");
 				players = guildMembers.size();
 				for (JsonElement member : guildMembers) {
 					JsonObject memberObject = member.getAsJsonObject();

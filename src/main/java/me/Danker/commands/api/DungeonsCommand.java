@@ -84,13 +84,12 @@ public class DungeonsCommand extends CommandBase {
 			}
 			
 			System.out.println("Fetching dungeon stats...");
-			JsonObject dungeonsObject = profileResponse.get("members").getAsJsonObject().get(uuid).getAsJsonObject().get("dungeons").getAsJsonObject();
-			if (!dungeonsObject.get("dungeon_types").getAsJsonObject().get("catacombs").getAsJsonObject().has("experience")) {
+			JsonObject dungeonsObject = Utils.getObjectFromPath(profileResponse, "members." + uuid + ".dungeons");
+			JsonObject catacombsObject = Utils.getObjectFromPath(dungeonsObject, "dungeon_types.catacombs");
+			if (!catacombsObject.has("experience")) {
 				player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "This player has not played dungeons."));
 				return;
 			}
-
-			JsonObject catacombsObject = dungeonsObject.get("dungeon_types").getAsJsonObject().get("catacombs").getAsJsonObject();
 
 			double catacombs = Utils.xpToDungeonsLevel(catacombsObject.get("experience").getAsDouble());
 			double healer = getClassLevel(dungeonsObject, "healer");
@@ -102,7 +101,7 @@ public class DungeonsCommand extends CommandBase {
 			String selectedClass = Utils.capitalizeString(dungeonsObject.get("selected_dungeon_class").getAsString());
 
 			int secrets = 0;
-			JsonObject achievementsObj = playerResponse.get("player").getAsJsonObject().get("achievements").getAsJsonObject();
+			JsonObject achievementsObj = Utils.getObjectFromPath(playerResponse, "player.achievements");
 			if (achievementsObj.has("skyblock_treasure_hunter")) {
 				secrets = achievementsObj.get("skyblock_treasure_hunter").getAsInt();
 			}
@@ -111,16 +110,16 @@ public class DungeonsCommand extends CommandBase {
 			if (catacombsObject.has("highest_tier_completed")) {
 				highestFloor = catacombsObject.get("highest_tier_completed").getAsInt();
 			}
-			JsonObject completionObj = catacombsObject.get("tier_completions").getAsJsonObject();
+			JsonObject completionObj = catacombsObject.getAsJsonObject("tier_completions");
 
-			JsonObject catacombsMasterObject = dungeonsObject.get("dungeon_types").getAsJsonObject().get("master_catacombs").getAsJsonObject();
+			JsonObject catacombsMasterObject = Utils.getObjectFromPath(dungeonsObject, "dungeon_types.master_catacombs");
 			boolean hasPlayedMaster = catacombsMasterObject.has("highest_tier_completed");
 
 			int highestMasterFloor = 0;
 			JsonObject completionMasterObj = null;
 			if (hasPlayedMaster) {
 				highestMasterFloor = catacombsMasterObject.get("highest_tier_completed").getAsInt();
-				completionMasterObj = catacombsMasterObject.get("tier_completions").getAsJsonObject();
+				completionMasterObj = catacombsMasterObject.getAsJsonObject("tier_completions");
 			}
 
 			ChatComponentText classLevels = new ChatComponentText(EnumChatFormatting.GOLD + " Selected Class: " + selectedClass + "\n\n" +
@@ -174,16 +173,14 @@ public class DungeonsCommand extends CommandBase {
 	}
 
 	double getClassLevel(JsonObject obj, String dungeonClass) {
-		if (obj.has("player_classes")) {
-			JsonObject classes = obj.get("player_classes").getAsJsonObject();
-			if (classes.has(dungeonClass)) {
-				JsonObject clazz = classes.get(dungeonClass).getAsJsonObject();
-				if (clazz.has("experience")) {
-					double xp = clazz.get("experience").getAsDouble();
-					return MathHelper.clamp_double(Utils.xpToDungeonsLevel(xp), 0D, 50D);
-				}
+		JsonObject clazz = Utils.getObjectFromPath(obj, "player_classes." + dungeonClass);
+		if (clazz != null) {
+			if (clazz.has("experience")) {
+				double xp = clazz.get("experience").getAsDouble();
+				return MathHelper.clamp_double(Utils.xpToDungeonsLevel(xp), 0D, 50D);
 			}
 		}
+
 		return 0D;
 	}
 

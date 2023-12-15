@@ -75,39 +75,40 @@ public class SlayerCommand extends CommandBase {
 			if (profileResponse == null) return;
 			
 			System.out.println("Fetching slayer stats...");
-			JsonObject slayersObject = profileResponse.get("members").getAsJsonObject().get(uuid).getAsJsonObject().get("slayer_bosses").getAsJsonObject();
+			JsonObject slayersObject = Utils.getObjectFromPath(profileResponse, "members." + uuid + ".slayer.slayer_bosses");
+
 			// Zombie
 			int zombieXP = 0;
-			if (slayersObject.get("zombie").getAsJsonObject().has("xp")) {
-				zombieXP = slayersObject.get("zombie").getAsJsonObject().get("xp").getAsInt();
+			if (slayersObject.getAsJsonObject("zombie").has("xp")) {
+				zombieXP = slayersObject.getAsJsonObject("zombie").get("xp").getAsInt();
 			}
 			// Spider
 			int spiderXP = 0;
-			if (slayersObject.get("spider").getAsJsonObject().has("xp")) {
-				spiderXP = slayersObject.get("spider").getAsJsonObject().get("xp").getAsInt();
+			if (slayersObject.getAsJsonObject("spider").has("xp")) {
+				spiderXP = slayersObject.getAsJsonObject("spider").get("xp").getAsInt();
 			}
 			// Wolf
 			int wolfXP = 0;
-			if (slayersObject.get("wolf").getAsJsonObject().has("xp")) {
-				wolfXP = slayersObject.get("wolf").getAsJsonObject().get("xp").getAsInt();
+			if (slayersObject.getAsJsonObject("wolf").has("xp")) {
+				wolfXP = slayersObject.getAsJsonObject("wolf").get("xp").getAsInt();
 			}
 			// Enderman
 			int endermanXP = 0;
-			if (slayersObject.get("enderman").getAsJsonObject().has("xp")) {
-				endermanXP = slayersObject.get("enderman").getAsJsonObject().get("xp").getAsInt();
+			if (slayersObject.getAsJsonObject("enderman").has("xp")) {
+				endermanXP = slayersObject.getAsJsonObject("enderman").get("xp").getAsInt();
 			}
 			// Blaze
 			int blazeXP = 0;
-			if (slayersObject.get("blaze").getAsJsonObject().has("xp")) {
-				blazeXP = slayersObject.get("blaze").getAsJsonObject().get("xp").getAsInt();
+			if (slayersObject.getAsJsonObject("blaze").has("xp")) {
+				blazeXP = slayersObject.getAsJsonObject("blaze").get("xp").getAsInt();
 			}
 			// Vampire
 			int vampireXP = 0;
-			if (slayersObject.get("vampire").getAsJsonObject().has("xp")) {
-				vampireXP = slayersObject.get("vampire").getAsJsonObject().get("xp").getAsInt();
+			if (slayersObject.getAsJsonObject("vampire").has("xp")) {
+				vampireXP = slayersObject.getAsJsonObject("vampire").get("xp").getAsInt();
 			}
 
-			int totalXP = zombieXP + spiderXP + wolfXP + blazeXP + vampireXP;
+			int totalXP = zombieXP + spiderXP + wolfXP + endermanXP + blazeXP + vampireXP;
 			
 			NumberFormat nf = NumberFormat.getIntegerInstance(Locale.US);
 			player.addChatMessage(new ChatComponentText(ModConfig.getDelimiter() + "\n" +

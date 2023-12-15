@@ -73,7 +73,8 @@ public class PlayerCommand extends CommandBase {
 
             // Skills
             System.out.println("Fetching skills...");
-            JsonObject userObject = profileResponse.get("members").getAsJsonObject().get(uuid).getAsJsonObject();
+            JsonObject userObject = Utils.getObjectFromPath(profileResponse, "members." + uuid);
+            JsonObject experienceObj = Utils.getObjectFromPath(userObject, "player_data.experience");
 
             double farmingLevel = 0;
             double miningLevel = 0;
@@ -85,41 +86,41 @@ public class PlayerCommand extends CommandBase {
             double tamingLevel = 0;
             double carpentryLevel = 0;
 
-            if (userObject.has("experience_skill_farming") || userObject.has("experience_skill_mining") || userObject.has("experience_skill_combat") || userObject.has("experience_skill_foraging") || userObject.has("experience_skill_fishing") || userObject.has("experience_skill_enchanting") || userObject.has("experience_skill_alchemy")) {
-                if (userObject.has("experience_skill_farming")) {
-                    farmingLevel = Utils.xpToSkillLevel(userObject.get("experience_skill_farming").getAsDouble(), 60);
+            if (experienceObj.has("SKILL_FARMING") || experienceObj.has("SKILL_MINING") || experienceObj.has("SKILL_COMBAT") || experienceObj.has("SKILL_FORAGING") || experienceObj.has("SKILL_FISHING") || experienceObj.has("SKILL_ENCHANTING") || experienceObj.has("SKILL_ALCHEMY")) {
+                if (experienceObj.has("SKILL_FARMING")) {
+                    farmingLevel = Utils.xpToSkillLevel(experienceObj.get("SKILL_FARMING").getAsDouble(), 60);
                     farmingLevel = (double) Math.round(farmingLevel * 100) / 100;
                 }
-                if (userObject.has("experience_skill_mining")) {
-                    miningLevel = Utils.xpToSkillLevel(userObject.get("experience_skill_mining").getAsDouble(), 60);
+                if (experienceObj.has("SKILL_MINING")) {
+                    miningLevel = Utils.xpToSkillLevel(experienceObj.get("SKILL_MINING").getAsDouble(), 60);
                     miningLevel = (double) Math.round(miningLevel * 100) / 100;
                 }
-                if (userObject.has("experience_skill_combat")) {
-                    combatLevel = Utils.xpToSkillLevel(userObject.get("experience_skill_combat").getAsDouble(), 60);
+                if (experienceObj.has("SKILL_COMBAT")) {
+                    combatLevel = Utils.xpToSkillLevel(experienceObj.get("SKILL_COMBAT").getAsDouble(), 60);
                     combatLevel = (double) Math.round(combatLevel * 100) / 100;
                 }
-                if (userObject.has("experience_skill_foraging")) {
-                    foragingLevel = Utils.xpToSkillLevel(userObject.get("experience_skill_foraging").getAsDouble(), 50);
+                if (experienceObj.has("SKILL_FORAGING")) {
+                    foragingLevel = Utils.xpToSkillLevel(experienceObj.get("SKILL_FORAGING").getAsDouble(), 50);
                     foragingLevel = (double) Math.round(foragingLevel * 100) / 100;
                 }
-                if (userObject.has("experience_skill_fishing")) {
-                    fishingLevel = Utils.xpToSkillLevel(userObject.get("experience_skill_fishing").getAsDouble(), 50);
+                if (experienceObj.has("SKILL_FISHING")) {
+                    fishingLevel = Utils.xpToSkillLevel(experienceObj.get("SKILL_FISHING").getAsDouble(), 50);
                     fishingLevel = (double) Math.round(fishingLevel * 100) / 100;
                 }
-                if (userObject.has("experience_skill_enchanting")) {
-                    enchantingLevel = Utils.xpToSkillLevel(userObject.get("experience_skill_enchanting").getAsDouble(), 60);
+                if (experienceObj.has("SKILL_ENCHANTING")) {
+                    enchantingLevel = Utils.xpToSkillLevel(experienceObj.get("SKILL_ENCHANTING").getAsDouble(), 60);
                     enchantingLevel = (double) Math.round(enchantingLevel * 100) / 100;
                 }
-                if (userObject.has("experience_skill_alchemy")) {
-                    alchemyLevel = Utils.xpToSkillLevel(userObject.get("experience_skill_alchemy").getAsDouble(), 50);
+                if (experienceObj.has("SKILL_ALCHEMY")) {
+                    alchemyLevel = Utils.xpToSkillLevel(experienceObj.get("SKILL_ALCHEMY").getAsDouble(), 50);
                     alchemyLevel = (double) Math.round(alchemyLevel * 100) / 100;
                 }
-                if (userObject.has("experience_skill_taming")) {
-                    tamingLevel = Utils.xpToSkillLevel(userObject.get("experience_skill_taming").getAsDouble(), 50);
+                if (experienceObj.has("SKILL_TAMING")) {
+                    tamingLevel = Utils.xpToSkillLevel(experienceObj.get("SKILL_TAMING").getAsDouble(), 50);
                     tamingLevel = (double) Math.round(tamingLevel * 100) / 100;
                 }
-                if (userObject.has("experience_skill_carpentry")) {
-                    carpentryLevel = Utils.xpToSkillLevel(userObject.get("experience_skill_carpentry").getAsDouble(), 50);
+                if (experienceObj.has("SKILL_CARPENTRY")) {
+                    carpentryLevel = Utils.xpToSkillLevel(experienceObj.get("SKILL_CARPENTRY").getAsDouble(), 50);
                     carpentryLevel = (double) Math.round(carpentryLevel * 100) / 100;
                 }
             } else {
@@ -138,7 +139,7 @@ public class PlayerCommand extends CommandBase {
                     return;
                 }
 
-                JsonObject achievementObject = playerObject.get("player").getAsJsonObject().get("achievements").getAsJsonObject();
+                JsonObject achievementObject = Utils.getObjectFromPath(playerObject, "player.achievements");
                 if (achievementObject.has("skyblock_harvester")) {
                     farmingLevel = achievementObject.get("skyblock_harvester").getAsInt();
                 }
@@ -172,49 +173,49 @@ public class PlayerCommand extends CommandBase {
 
             // Slayers
             System.out.println("Fetching slayer stats...");
-            JsonObject slayersObject = profileResponse.get("members").getAsJsonObject().get(uuid).getAsJsonObject().get("slayer_bosses").getAsJsonObject();
+            JsonObject slayersObject = Utils.getObjectFromPath(userObject, "slayer.slayer_bosses");
             // Zombie
             int zombieXP = 0;
-            if (slayersObject.get("zombie").getAsJsonObject().has("xp")) {
-                zombieXP = slayersObject.get("zombie").getAsJsonObject().get("xp").getAsInt();
+            if (slayersObject.getAsJsonObject("zombie").has("xp")) {
+                zombieXP = slayersObject.getAsJsonObject("zombie").get("xp").getAsInt();
             }
             // Spider
             int spiderXP = 0;
-            if (slayersObject.get("spider").getAsJsonObject().has("xp")) {
-                spiderXP = slayersObject.get("spider").getAsJsonObject().get("xp").getAsInt();
+            if (slayersObject.getAsJsonObject("spider").has("xp")) {
+                spiderXP = slayersObject.getAsJsonObject("spider").get("xp").getAsInt();
             }
             // Wolf
             int wolfXP = 0;
-            if (slayersObject.get("wolf").getAsJsonObject().has("xp")) {
-                wolfXP = slayersObject.get("wolf").getAsJsonObject().get("xp").getAsInt();
+            if (slayersObject.getAsJsonObject("wolf").has("xp")) {
+                wolfXP = slayersObject.getAsJsonObject("wolf").get("xp").getAsInt();
             }
             // Enderman
             int endermanXP = 0;
-            if (slayersObject.get("enderman").getAsJsonObject().has("xp")) {
-                endermanXP = slayersObject.get("enderman").getAsJsonObject().get("xp").getAsInt();
+            if (slayersObject.getAsJsonObject("enderman").has("xp")) {
+                endermanXP = slayersObject.getAsJsonObject("enderman").get("xp").getAsInt();
             }
             // Blaze
             int blazeXP = 0;
-            if (slayersObject.get("blaze").getAsJsonObject().has("xp")) {
-                blazeXP = slayersObject.get("blaze").getAsJsonObject().get("xp").getAsInt();
+            if (slayersObject.getAsJsonObject("blaze").has("xp")) {
+                blazeXP = slayersObject.getAsJsonObject("blaze").get("xp").getAsInt();
             }
             // Vampire
             int vampireXP = 0;
-            if (slayersObject.get("vampire").getAsJsonObject().has("xp")) {
-                vampireXP = slayersObject.get("vampire").getAsJsonObject().get("xp").getAsInt();
+            if (slayersObject.getAsJsonObject("vampire").has("xp")) {
+                vampireXP = slayersObject.getAsJsonObject("vampire").get("xp").getAsInt();
             }
 
-            int totalXP = zombieXP + spiderXP + wolfXP + blazeXP + vampireXP;
+            int totalXP = zombieXP + spiderXP + wolfXP + endermanXP + blazeXP + vampireXP;
 
             // Bank
             System.out.println("Fetching bank + purse coins...");
             double bankCoins = 0;
-            double purseCoins = profileResponse.get("members").getAsJsonObject().get(uuid).getAsJsonObject().get("coin_purse").getAsDouble();
+            double purseCoins = userObject.getAsJsonObject("currencies").get("coin_purse").getAsDouble();
             purseCoins = Math.floor(purseCoins * 100.0) / 100.0;
 
             // Check for bank api
             if (profileResponse.has("banking")) {
-                bankCoins = profileResponse.get("banking").getAsJsonObject().get("balance").getAsDouble();
+                bankCoins = profileResponse.getAsJsonObject("banking").get("balance").getAsDouble();
                 bankCoins = Math.floor(bankCoins * 100.0) / 100.0;
             }
 
@@ -228,7 +229,7 @@ public class PlayerCommand extends CommandBase {
                 return;
             }
 
-            double weight = weightResponse.get("profiles").getAsJsonObject().get(latestProfileID).getAsJsonObject().get("data").getAsJsonObject().get("weight").getAsJsonObject().get("senither").getAsJsonObject().get("overall").getAsDouble();
+            double weight = Utils.getObjectFromPath(weightResponse, "profiles." + latestProfileID + ".data.weight.senither").get("overall").getAsDouble();
 
             NumberFormat nf = NumberFormat.getIntegerInstance(Locale.US);
             NumberFormat nfd = NumberFormat.getNumberInstance(Locale.US);

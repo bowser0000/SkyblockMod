@@ -70,10 +70,10 @@ public class HOTMCommand extends CommandBase {
             if (profileResponse == null) return;
 
             String latestProfileID = HypixelAPIHandler.getLatestProfileID(uuid);
-            if (profileResponse == null) return;
+            if (latestProfileID == null) return;
 
             System.out.println("Fetching mining stats...");
-            JsonObject miningCore = profileResponse.get("members").getAsJsonObject().get(uuid).getAsJsonObject().get("mining_core").getAsJsonObject();
+            JsonObject miningCore = Utils.getObjectFromPath(profileResponse, "members." + uuid + ".mining_core");
 
             int mithril = 0;
             if (miningCore.has("powder_mithril")) {

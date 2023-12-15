@@ -62,7 +62,7 @@ public class LobbySkillsCommand extends CommandBase {
 					JsonObject profileResponse = HypixelAPIHandler.getLatestProfile(UUID);
 					if (profileResponse == null) continue;
 
-					JsonObject latestProfile = profileResponse.get("members").getAsJsonObject().get(UUID).getAsJsonObject();
+					JsonObject experienceObj = Utils.getObjectFromPath(profileResponse, "members." + UUID + ".player_data.experience");
 					
 					// Get SA
 					double farmingLevel = 0;
@@ -73,39 +73,44 @@ public class LobbySkillsCommand extends CommandBase {
 					double enchantingLevel = 0;
 					double alchemyLevel = 0;
 					double tamingLevel = 0;
+					double carpentryLevel = 0;
 					
-					if (latestProfile.has("experience_skill_farming") || latestProfile.has("experience_skill_mining") || latestProfile.has("experience_skill_combat") || latestProfile.has("experience_skill_foraging") || latestProfile.has("experience_skill_fishing") || latestProfile.has("experience_skill_enchanting") || latestProfile.has("experience_skill_alchemy")) {
-						if (latestProfile.has("experience_skill_farming")) {
-							farmingLevel = Utils.xpToSkillLevel(latestProfile.get("experience_skill_farming").getAsDouble(), 60);
+					if (experienceObj.has("SKILL_FARMING") || experienceObj.has("SKILL_MINING") || experienceObj.has("SKILL_COMBAT") || experienceObj.has("SKILL_FORAGING") || experienceObj.has("SKILL_FISHING") || experienceObj.has("SKILL_ENCHANTING") || experienceObj.has("SKILL_ALCHEMY")) {
+						if (experienceObj.has("SKILL_FARMING")) {
+							farmingLevel = Utils.xpToSkillLevel(experienceObj.get("SKILL_FARMING").getAsDouble(), 60);
 							farmingLevel = (double) Math.round(farmingLevel * 100) / 100;
 						}
-						if (latestProfile.has("experience_skill_mining")) {
-							miningLevel = Utils.xpToSkillLevel(latestProfile.get("experience_skill_mining").getAsDouble(), 60);
+						if (experienceObj.has("SKILL_MINING")) {
+							miningLevel = Utils.xpToSkillLevel(experienceObj.get("SKILL_MINING").getAsDouble(), 60);
 							miningLevel = (double) Math.round(miningLevel * 100) / 100;
 						}
-						if (latestProfile.has("experience_skill_combat")) {
-							combatLevel = Utils.xpToSkillLevel(latestProfile.get("experience_skill_combat").getAsDouble(), 60);
+						if (experienceObj.has("SKILL_COMBAT")) {
+							combatLevel = Utils.xpToSkillLevel(experienceObj.get("SKILL_COMBAT").getAsDouble(), 60);
 							combatLevel = (double) Math.round(combatLevel * 100) / 100;
 						}
-						if (latestProfile.has("experience_skill_foraging")) {
-							foragingLevel = Utils.xpToSkillLevel(latestProfile.get("experience_skill_foraging").getAsDouble(), 50);
+						if (experienceObj.has("SKILL_FORAGING")) {
+							foragingLevel = Utils.xpToSkillLevel(experienceObj.get("SKILL_FORAGING").getAsDouble(), 50);
 							foragingLevel = (double) Math.round(foragingLevel * 100) / 100;
 						}
-						if (latestProfile.has("experience_skill_fishing")) {
-							fishingLevel = Utils.xpToSkillLevel(latestProfile.get("experience_skill_fishing").getAsDouble(), 50);
+						if (experienceObj.has("SKILL_FISHING")) {
+							fishingLevel = Utils.xpToSkillLevel(experienceObj.get("SKILL_FISHING").getAsDouble(), 50);
 							fishingLevel = (double) Math.round(fishingLevel * 100) / 100;
 						}
-						if (latestProfile.has("experience_skill_enchanting")) {
-							enchantingLevel = Utils.xpToSkillLevel(latestProfile.get("experience_skill_enchanting").getAsDouble(), 60);
+						if (experienceObj.has("SKILL_ENCHANTING")) {
+							enchantingLevel = Utils.xpToSkillLevel(experienceObj.get("SKILL_ENCHANTING").getAsDouble(), 60);
 							enchantingLevel = (double) Math.round(enchantingLevel * 100) / 100;
 						}
-						if (latestProfile.has("experience_skill_alchemy")) {
-							alchemyLevel = Utils.xpToSkillLevel(latestProfile.get("experience_skill_alchemy").getAsDouble(), 50);
+						if (experienceObj.has("SKILL_ALCHEMY")) {
+							alchemyLevel = Utils.xpToSkillLevel(experienceObj.get("SKILL_ALCHEMY").getAsDouble(), 50);
 							alchemyLevel = (double) Math.round(alchemyLevel * 100) / 100;
 						}
-						if (latestProfile.has("experience_skill_taming")) {
-							tamingLevel = Utils.xpToSkillLevel(latestProfile.get("experience_skill_taming").getAsDouble(), 50);
+						if (experienceObj.has("SKILL_TAMING")) {
+							tamingLevel = Utils.xpToSkillLevel(experienceObj.get("SKILL_TAMING").getAsDouble(), 50);
 							tamingLevel = (double) Math.round(tamingLevel * 100) / 100;
+						}
+						if (experienceObj.has("SKILL_CARPENTRY")) {
+							carpentryLevel = Utils.xpToSkillLevel(experienceObj.get("SKILL_CARPENTRY").getAsDouble(), 50);
+							carpentryLevel = (double) Math.round(carpentryLevel * 100) / 100;
 						}
 					} else {
 						Thread.sleep(600); // Sleep for another request
@@ -122,7 +127,7 @@ public class LobbySkillsCommand extends CommandBase {
 							continue;
 						}
 						
-						JsonObject achievementObject = playerObject.get("player").getAsJsonObject().get("achievements").getAsJsonObject();
+						JsonObject achievementObject = Utils.getObjectFromPath(playerObject, "player.achievements");
 						if (achievementObject.has("skyblock_harvester")) {
 							farmingLevel = achievementObject.get("skyblock_harvester").getAsInt();
 						}
@@ -149,7 +154,7 @@ public class LobbySkillsCommand extends CommandBase {
 						}
 					}
 					
-					double skillAvg = (farmingLevel + miningLevel + combatLevel + foragingLevel + fishingLevel + enchantingLevel + alchemyLevel + tamingLevel) / 8;
+					double skillAvg = (farmingLevel + miningLevel + combatLevel + foragingLevel + fishingLevel + enchantingLevel + alchemyLevel + tamingLevel + carpentryLevel) / 9;
 					skillAvg = (double) Math.round(skillAvg * 100) / 100;
 					unsortedSAList.put(player.getGameProfile().getName(), skillAvg); // Put SA in HashMap
 					lobbySkills.add(skillAvg); // Add SA to lobby skills

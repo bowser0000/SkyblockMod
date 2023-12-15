@@ -84,9 +84,9 @@ public class SkyblockPlayersCommand extends CommandBase {
 			int jerry = 0; // winter
 			int rift = 0; // rift
 
-			if (playersResponse.get("games").getAsJsonObject().get("SKYBLOCK").getAsJsonObject().has("modes")) {
-				JsonObject skyblockPlayers = playersResponse.get("games").getAsJsonObject().get("SKYBLOCK").getAsJsonObject().get("modes").getAsJsonObject();
-				skyblockTotalPlayers = playersResponse.get("games").getAsJsonObject().get("SKYBLOCK").getAsJsonObject().get("players").getAsInt();
+			if (Utils.getObjectFromPath(playersResponse, "games.SKYBLOCK").has("modes")) {
+				JsonObject skyblockPlayers = Utils.getObjectFromPath(playersResponse, "games.SKYBLOCK.modes");
+				skyblockTotalPlayers = Utils.getObjectFromPath(playersResponse, "games.SKYBLOCK").get("players").getAsInt();
 
 				privateIsland = getPlayerCount("dynamic", skyblockPlayers);
 				hub = getPlayerCount("hub", skyblockPlayers);

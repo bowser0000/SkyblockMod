@@ -68,7 +68,7 @@ public class TrophyFishCommand extends CommandBase {
             if (profileResponse == null) return;
 
             System.out.println("Fetching trophy fish...");
-            JsonObject trophyObject = profileResponse.get("members").getAsJsonObject().get(uuid).getAsJsonObject().get("trophy_fish").getAsJsonObject();
+            JsonObject trophyObject = Utils.getObjectFromPath(profileResponse, "members." + uuid + ".trophy_fish");
 
             if (!trophyObject.has("total_caught")) {
                 player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "This player has not fished a trophy fish."));
@@ -97,7 +97,7 @@ public class TrophyFishCommand extends CommandBase {
 
             String tier = EnumChatFormatting.RED + "None";
             if (trophyObject.has("rewards")) {
-                switch (trophyObject.get("rewards").getAsJsonArray().size()) {
+                switch (trophyObject.getAsJsonArray("rewards").size()) {
                     case 1:
                         tier = EnumChatFormatting.DARK_GRAY + "Novice";
                         break;

@@ -173,7 +173,7 @@ public class ColouredNames {
 
     public static String getColourFromName(String name) {
         try {
-            return "§" + DankersSkyblockMod.data.get("colourednames").getAsJsonObject().get(name).getAsString();
+            return "§" + DankersSkyblockMod.data.getAsJsonObject("colourednames").get(name).getAsString();
         } catch (NullPointerException ex) {
             return EnumChatFormatting.WHITE.toString();
         }

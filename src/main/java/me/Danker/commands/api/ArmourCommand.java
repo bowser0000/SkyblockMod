@@ -78,8 +78,8 @@ public class ArmourCommand extends CommandBase {
 			// Find stats of latest profile
 			JsonObject profileResponse = HypixelAPIHandler.getLatestProfile(uuid);
 			if (profileResponse == null) return;
-			
-			String armourBase64 = profileResponse.get("members").getAsJsonObject().get(uuid).getAsJsonObject().get("inv_armor").getAsJsonObject().get("data").getAsString();
+
+			String armourBase64 = Utils.getObjectFromPath(profileResponse, "members." + uuid + ".inventory.inv_armor").get("data").getAsString();
 			InputStream armourStream = new ByteArrayInputStream(Base64.getDecoder().decode(armourBase64));
 			// String armourDecodedGZIP = new String(Base64.getDecoder().decode(armourBase64));
 			

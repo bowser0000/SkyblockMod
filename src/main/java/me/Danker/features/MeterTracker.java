@@ -90,7 +90,7 @@ public class MeterTracker {
                 if (score < 270) return;
                 if (score < 300) score *= 0.7;
 
-                JsonObject floor = meter.get(currentFloor).getAsJsonObject();
+                JsonObject floor = meter.getAsJsonObject(currentFloor);
                 NumberFormat nf = NumberFormat.getIntegerInstance(Locale.US);
 
                 String drop = floor.get("drop").getAsString();
@@ -174,7 +174,7 @@ public class MeterTracker {
                                 progress = Integer.parseInt(StringUtils.stripControlCodes(lore.get(19)).replaceAll("\\D", ""));
                             }
 
-                            JsonObject floorMeter = meter.get(floor).getAsJsonObject();
+                            JsonObject floorMeter = meter.getAsJsonObject(floor);
                             floorMeter.addProperty("drop", drop);
                             floorMeter.addProperty("progress", progress);
                             floorMeter.addProperty("goal", goal);
@@ -197,7 +197,7 @@ public class MeterTracker {
             String floor = inventoryName.substring(inventoryName.indexOf("(") + 1, inventoryName.indexOf(")"));
 
             if (meter.has(floor)) {
-                JsonObject floorMeter = meter.get(floor).getAsJsonObject();
+                JsonObject floorMeter = meter.getAsJsonObject(floor);
                 String drop = event.item.getDisplayName();
                 String currentDrop = floorMeter.get("drop").getAsString();
                 if (drop.equals(currentDrop)) return;

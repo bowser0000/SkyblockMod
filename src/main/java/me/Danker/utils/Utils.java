@@ -457,7 +457,7 @@ public class Utils {
 	public static void refreshRepo() {
 		DankersSkyblockMod.data = APIHandler.getResponse("https://raw.githubusercontent.com/bowser0000/SkyblockMod-REPO/main/data.json", false);
 		System.out.println("Loaded data from GitHub?: " + (DankersSkyblockMod.data != null && DankersSkyblockMod.data.has("trivia")));
-		ColouredNames.users = DankersSkyblockMod.data.get("colourednames").getAsJsonObject().entrySet().stream()
+		ColouredNames.users = DankersSkyblockMod.data.getAsJsonObject("colourednames").entrySet().stream()
 				.map(Map.Entry::getKey)
 				.collect(Collectors.toCollection(ArrayList::new));
 		System.out.println("Refreshed DSM repo at " + System.currentTimeMillis());
@@ -588,6 +588,24 @@ public class Utils {
 	public static int parseInt(String integer){
 		String cleanInt = integer.replaceAll("\\D", "");
 		return Integer.parseInt(cleanInt);
+	}
+
+	public static JsonObject getObjectFromPath(JsonObject obj, String path) {
+		if (obj == null) return null;
+
+		String[] split = path.split("\\.");
+		JsonObject newObj = obj;
+
+		for (String id : split) {
+			if (!newObj.has(id)) {
+				System.out.println(id + " does not exist in path " + path);
+				return null;
+			}
+
+			newObj = newObj.getAsJsonObject(id);
+		}
+
+		return newObj;
 	}
 
 }

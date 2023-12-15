@@ -3,7 +3,6 @@ package me.Danker.commands.api;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import me.Danker.DankersSkyblockMod;
 import me.Danker.config.ModConfig;
 import me.Danker.handlers.APIHandler;
 import me.Danker.handlers.HypixelAPIHandler;
@@ -15,11 +14,9 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.MathHelper;
 
 import java.text.NumberFormat;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class WeightCommand extends CommandBase {
 
@@ -86,9 +83,11 @@ public class WeightCommand extends CommandBase {
                 username = arg1[0];
                 uuid = APIHandler.getUUID(username);
             }
-            player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Checking weight of " + ModConfig.getColour(ModConfig.secondaryColour) + username + ModConfig.getColour(ModConfig.mainColour) + " using Polyfrost's API."));
+
+            NumberFormat nf = NumberFormat.getNumberInstance(Locale.US);
 
             if (arg1.length < 2) {
+                player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Checking weight of " + ModConfig.getColour(ModConfig.secondaryColour) + username + ModConfig.getColour(ModConfig.mainColour) + " using SkyCrypt's API."));
                 System.out.println("Fetching weight from SkyShiiyu API...");
                 String weightURL = "https://sky.shiiyu.moe/api/v2/profile/" + username;
                 JsonObject weightResponse = APIHandler.getResponse(weightURL, true);
@@ -101,37 +100,39 @@ public class WeightCommand extends CommandBase {
                 String latestProfileID = HypixelAPIHandler.getLatestProfileID(uuid);
                 if (latestProfileID == null) return;
 
-                JsonObject data = weightResponse.get("profiles").getAsJsonObject().get(latestProfileID).getAsJsonObject().get("data").getAsJsonObject().get("weight").getAsJsonObject().get("senither").getAsJsonObject();
+                JsonObject data = Utils.getObjectFromPath(weightResponse, "profiles." + latestProfileID + ".data.weight.senither");
+                JsonObject skillsObj = Utils.getObjectFromPath(data, "skill.skills");
+                JsonObject slayerObj = Utils.getObjectFromPath(data, "slayer.slayers");
+                JsonObject classesObj = Utils.getObjectFromPath(data, "dungeon.classes");
 
                 double weight = data.get("overall").getAsDouble();
 
-                double skillWeight = data.get("skill").getAsJsonObject().get("total").getAsDouble();
-                double farmingWeight = data.get("skill").getAsJsonObject().get("skills").getAsJsonObject().get("farming").getAsDouble();
-                double miningWeight = data.get("skill").getAsJsonObject().get("skills").getAsJsonObject().get("mining").getAsDouble();
-                double combatWeight = data.get("skill").getAsJsonObject().get("skills").getAsJsonObject().get("combat").getAsDouble();
-                double foragingWeight = data.get("skill").getAsJsonObject().get("skills").getAsJsonObject().get("foraging").getAsDouble();
-                double fishingWeight = data.get("skill").getAsJsonObject().get("skills").getAsJsonObject().get("fishing").getAsDouble();
-                double enchantingWeight = data.get("skill").getAsJsonObject().get("skills").getAsJsonObject().get("enchanting").getAsDouble();
-                double alchemyWeight = data.get("skill").getAsJsonObject().get("skills").getAsJsonObject().get("alchemy").getAsDouble();
-                double tamingWeight = data.get("skill").getAsJsonObject().get("skills").getAsJsonObject().get("taming").getAsDouble();
+                double skillWeight = data.getAsJsonObject("skill").get("total").getAsDouble();
+                double farmingWeight = skillsObj.get("farming").getAsDouble();
+                double miningWeight = skillsObj.get("mining").getAsDouble();
+                double combatWeight = skillsObj.get("combat").getAsDouble();
+                double foragingWeight = skillsObj.get("foraging").getAsDouble();
+                double fishingWeight = skillsObj.get("fishing").getAsDouble();
+                double enchantingWeight = skillsObj.get("enchanting").getAsDouble();
+                double alchemyWeight = skillsObj.get("alchemy").getAsDouble();
+                double tamingWeight = skillsObj.get("taming").getAsDouble();
 
-                double slayerWeight = data.get("slayer").getAsJsonObject().get("total").getAsDouble();
-                double zombieWeight = data.get("slayer").getAsJsonObject().get("slayers").getAsJsonObject().get("zombie").getAsDouble();
-                double spiderWeight = data.get("slayer").getAsJsonObject().get("slayers").getAsJsonObject().get("spider").getAsDouble();
-                double wolfWeight = data.get("slayer").getAsJsonObject().get("slayers").getAsJsonObject().get("wolf").getAsDouble();
-                double endermanWeight = data.get("slayer").getAsJsonObject().get("slayers").getAsJsonObject().get("enderman").getAsDouble();
-                double blazeWeight = data.get("slayer").getAsJsonObject().get("slayers").getAsJsonObject().get("blaze").getAsDouble();
-                double vampireWeight = data.get("slayer").getAsJsonObject().get("slayers").getAsJsonObject().get("vampire").getAsDouble();
+                double slayerWeight = data.getAsJsonObject("slayer").get("total").getAsDouble();
+                double zombieWeight = slayerObj.get("zombie").getAsDouble();
+                double spiderWeight = slayerObj.get("spider").getAsDouble();
+                double wolfWeight = slayerObj.get("wolf").getAsDouble();
+                double endermanWeight = slayerObj.get("enderman").getAsDouble();
+                double blazeWeight = slayerObj.get("blaze").getAsDouble();
+                double vampireWeight = slayerObj.get("vampire").getAsDouble();
 
-                double dungeonWeight = data.get("dungeon").getAsJsonObject().get("total").getAsDouble();
-                double cataWeight = data.get("dungeon").getAsJsonObject().get("dungeons").getAsJsonObject().get("catacombs").getAsJsonObject().get("weight").getAsDouble();
-                double healerWeight = data.get("dungeon").getAsJsonObject().get("classes").getAsJsonObject().get("healer").getAsJsonObject().get("weight").getAsDouble();
-                double mageWeight = data.get("dungeon").getAsJsonObject().get("classes").getAsJsonObject().get("mage").getAsJsonObject().get("weight").getAsDouble();
-                double berserkWeight = data.get("dungeon").getAsJsonObject().get("classes").getAsJsonObject().get("berserk").getAsJsonObject().get("weight").getAsDouble();
-                double archerWeight = data.get("dungeon").getAsJsonObject().get("classes").getAsJsonObject().get("archer").getAsJsonObject().get("weight").getAsDouble();
-                double tankWeight = data.get("dungeon").getAsJsonObject().get("classes").getAsJsonObject().get("tank").getAsJsonObject().get("weight").getAsDouble();
+                double dungeonWeight = data.getAsJsonObject("dungeon").get("total").getAsDouble();
+                double cataWeight = Utils.getObjectFromPath(data, "dungeon.dungeons.catacombs").get("weight").getAsDouble();
+                double healerWeight = classesObj.getAsJsonObject("healer").get("weight").getAsDouble();
+                double mageWeight = classesObj.getAsJsonObject("mage").get("weight").getAsDouble();
+                double berserkWeight = classesObj.getAsJsonObject("berserk").get("weight").getAsDouble();
+                double archerWeight = classesObj.getAsJsonObject("archer").get("weight").getAsDouble();
+                double tankWeight = classesObj.getAsJsonObject("tank").get("weight").getAsDouble();
 
-                NumberFormat nf = NumberFormat.getNumberInstance(Locale.US);
                 player.addChatMessage(new ChatComponentText(ModConfig.getDelimiter() + "\n" +
                         EnumChatFormatting.AQUA + " " + username + "'s Weight:\n" +
                         ModConfig.getColour(ModConfig.typeColour) + " Total Weight: " + ModConfig.getColour(ModConfig.valueColour) + nf.format(weight) + "\n\n" +
@@ -160,6 +161,7 @@ public class WeightCommand extends CommandBase {
                         ModConfig.getColour(ModConfig.typeColour) + "   Tank Weight: " + ModConfig.getColour(ModConfig.valueColour) + nf.format(tankWeight) + "\n" +
                         ModConfig.getDelimiter()));
             } else if (arg1[1].equalsIgnoreCase("lily")) {
+                player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Checking weight of " + ModConfig.getColour(ModConfig.secondaryColour) + username + ModConfig.getColour(ModConfig.mainColour) + " using SkyCrypt's API."));
                 System.out.println("Fetching weight from SkyShiiyu API...");
                 String weightURL = "https://sky.shiiyu.moe/api/v2/profile/" + username;
                 JsonObject weightResponse = APIHandler.getResponse(weightURL, true);
@@ -172,17 +174,16 @@ public class WeightCommand extends CommandBase {
                 String latestProfileID = HypixelAPIHandler.getLatestProfileID(uuid);
                 if (latestProfileID == null) return;
 
-                JsonObject data = weightResponse.get("profiles").getAsJsonObject().get(latestProfileID).getAsJsonObject().get("data").getAsJsonObject().get("weight").getAsJsonObject().get("lily").getAsJsonObject();
+                JsonObject data = Utils.getObjectFromPath(weightResponse, "profiles." + latestProfileID + ".data.weight.lily");
 
                 double weight = data.get("total").getAsDouble();
-                double skillWeight = data.get("skill").getAsJsonObject().get("base").getAsDouble();
-                double skillOverflow = data.get("skill").getAsJsonObject().get("overflow").getAsDouble();
+                double skillWeight = data.getAsJsonObject("skill").get("base").getAsDouble();
+                double skillOverflow = data.getAsJsonObject("skill").get("overflow").getAsDouble();
                 double slayerWeight = data.get("slayer").getAsDouble();
-                double catacombsXPWeight = data.get("catacombs").getAsJsonObject().get("experience").getAsDouble();
-                double catacombsBaseWeight = data.get("catacombs").getAsJsonObject().get("completion").getAsJsonObject().get("base").getAsDouble();
-                double catacombsMasterWeight = data.get("catacombs").getAsJsonObject().get("completion").getAsJsonObject().get("master").getAsDouble();
+                double catacombsXPWeight = data.getAsJsonObject("catacombs").get("experience").getAsDouble();
+                double catacombsBaseWeight = Utils.getObjectFromPath(data, "catacombs.completion").get("base").getAsDouble();
+                double catacombsMasterWeight = Utils.getObjectFromPath(data, "catacombs.completion").get("master").getAsDouble();
 
-                NumberFormat nf = NumberFormat.getNumberInstance(Locale.US);
                 player.addChatMessage(new ChatComponentText(ModConfig.getDelimiter() + "\n" +
                         EnumChatFormatting.AQUA + " " + username + "'s Weight (Lily):\n" +
                         ModConfig.getColour(ModConfig.typeColour) + " Total Weight: " + ModConfig.getColour(ModConfig.valueColour) + nf.format(weight) + "\n" +
@@ -193,6 +194,7 @@ public class WeightCommand extends CommandBase {
                         ModConfig.getColour(ModConfig.typeColour) + " Catacombs Master Completion Weight: " + ModConfig.getColour(ModConfig.valueColour) + nf.format(catacombsMasterWeight) + "\n" +
                         ModConfig.getDelimiter()));
             } else if (arg1[1].equalsIgnoreCase("farming")) {
+                player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Checking weight of " + ModConfig.getColour(ModConfig.secondaryColour) + username + ModConfig.getColour(ModConfig.mainColour) + " using EliteBot's API."));
                 String profileURL = "https://api.elitebot.dev/weight/" + uuid;
                 System.out.println("Fetching weight from elitebot.dev...");
 
@@ -203,7 +205,7 @@ public class WeightCommand extends CommandBase {
 
                 try {
                     selectedProfileId = weightResponse.get("selectedProfileId").getAsString();
-                    JsonArray profiles = weightResponse.get("profiles").getAsJsonArray();
+                    JsonArray profiles = weightResponse.getAsJsonArray("profiles");
 
                     for (JsonElement element : profiles) {
                         if (!element.isJsonObject()) continue;
@@ -232,8 +234,6 @@ public class WeightCommand extends CommandBase {
                     player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + username + " does not have collection API on (or has zero farming weight)!"));
                     return;
                 }
-
-                NumberFormat nf = NumberFormat.getNumberInstance(Locale.US);
 
                 JsonObject bonusWeight = profileWeight.getAsJsonObject("bonusWeight");
 

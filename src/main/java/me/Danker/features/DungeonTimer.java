@@ -172,7 +172,7 @@ public class DungeonTimer {
             String currentFloor = Utils.currentFloor.toString();
 
             if (timer.has(currentFloor)) {
-                activeTimer = new ActiveTimer(timer.get(currentFloor).getAsJsonArray());
+                activeTimer = new ActiveTimer(timer.getAsJsonArray(currentFloor));
             }
         }
     }

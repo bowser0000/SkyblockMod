@@ -172,7 +172,7 @@ public class PetsCommand extends CommandBase {
 			if (profileResponse == null) return;
 
 			System.out.println("Fetching pets...");
-			JsonArray petsArray = profileResponse.get("members").getAsJsonObject().get(uuid).getAsJsonObject().get("pets").getAsJsonArray();
+			JsonArray petsArray = Utils.getObjectFromPath(profileResponse, "members." + uuid + ".pets_data").getAsJsonArray("pets");
 			if (petsArray.size() == 0) {
 				player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + username + " has no pets."));
 				return;

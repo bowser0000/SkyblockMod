@@ -75,13 +75,13 @@ public class BankCommand extends CommandBase {
 			if (profileResponse == null) return;
 			
 			System.out.println("Fetching bank + purse coins...");
-			double purseCoins = profileResponse.get("members").getAsJsonObject().get(uuid).getAsJsonObject().get("coin_purse").getAsDouble();
+			double purseCoins = Utils.getObjectFromPath(profileResponse, "members." + uuid + ".currencies").get("coin_purse").getAsDouble();
 			purseCoins = Math.floor(purseCoins * 100.0) / 100.0;
 			NumberFormat nf = NumberFormat.getIntegerInstance(Locale.US);
 			
 			// Check for bank api
 			if (profileResponse.has("banking")) {
-				double bankCoins = profileResponse.get("banking").getAsJsonObject().get("balance").getAsDouble();
+				double bankCoins = profileResponse.getAsJsonObject("banking").get("balance").getAsDouble();
 				bankCoins = Math.floor(bankCoins * 100.0) / 100.0;
 				
 				player.addChatMessage(new ChatComponentText(ModConfig.getDelimiter() + "\n" +

@@ -305,7 +305,7 @@ public class CrystalHollowWaypoints {
             return;
         }
 
-        JsonArray categories = obj.get("categories").getAsJsonArray();
+        JsonArray categories = obj.getAsJsonArray("categories");
 
         for (JsonElement element : categories) {
             JsonObject inner = element.getAsJsonObject();
@@ -313,7 +313,7 @@ public class CrystalHollowWaypoints {
             String island = inner.get("island").getAsString();
             if (!island.equals("crystal_hollows")) return;
 
-            JsonArray waypoints = inner.get("waypoints").getAsJsonArray();
+            JsonArray waypoints = inner.getAsJsonArray("waypoints");
 
             for (JsonElement waypointElement : waypoints) {
                 JsonObject waypoint = waypointElement.getAsJsonObject();
@@ -340,7 +340,7 @@ public class CrystalHollowWaypoints {
         for (JsonElement element : arr) {
             JsonObject waypoint = element.getAsJsonObject();
 
-            String name = waypoint.get("options").getAsJsonObject().get("name").getAsString();
+            String name = waypoint.getAsJsonObject("options").get("name").getAsString();
             String x = waypoint.get("x").getAsString();
             String y = waypoint.get("y").getAsString();
             String z = waypoint.get("z").getAsString();

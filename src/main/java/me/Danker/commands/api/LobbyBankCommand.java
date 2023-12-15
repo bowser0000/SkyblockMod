@@ -62,22 +62,21 @@ public class LobbyBankCommand extends CommandBase {
                     JsonObject profileResponse = HypixelAPIHandler.getLatestProfile(UUID);
                     if (profileResponse == null) continue;
 
-                    JsonObject latestProfile = profileResponse.get("members").getAsJsonObject().get(UUID).getAsJsonObject();
+                    JsonObject purseObj = Utils.getObjectFromPath(profileResponse, "members." + UUID + ".currencies");
                     boolean hasBanking = profileResponse.has("banking");
 
                     double coin_purse;
                     // Add bank to lobby banks
                     // Put bank in HashMap
 
-                    if (latestProfile.has("coin_purse")) {
-                        coin_purse = latestProfile.get("coin_purse").getAsDouble();
+                    if (purseObj.has("coin_purse")) {
+                        coin_purse = purseObj.get("coin_purse").getAsDouble();
                         if (hasBanking) {
-                            coin_purse += profileResponse.get("banking").getAsJsonObject().get("balance").getAsDouble();
+                            coin_purse += profileResponse.getAsJsonObject("banking").get("balance").getAsDouble();
                         }
 
                         unsortedBankList.put(player.getGameProfile().getName(), coin_purse); // Put bank in HashMap
                         lobbyBanks.add(coin_purse); // Add bank to lobby banks
-
                     }
                 }
 
