@@ -1,5 +1,6 @@
 package me.Danker.commands.api;
 
+import com.google.common.collect.ImmutableList;
 import com.google.gson.JsonObject;
 import me.Danker.config.ModConfig;
 import me.Danker.handlers.APIHandler;
@@ -14,7 +15,6 @@ import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 
 import java.text.NumberFormat;
-import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
@@ -22,12 +22,12 @@ public class BankCommand extends CommandBase {
 
 	@Override
 	public String getCommandName() {
-		return "bank";
+		return "bankof";
 	}
 	
 	@Override
 	public List<String> getCommandAliases() {
-        return Collections.singletonList("purse");
+		return ImmutableList.of("purse", "coins");
     }
 
 	@Override
