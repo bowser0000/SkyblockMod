@@ -135,6 +135,9 @@ public class FishingTracker {
     public static double jawbusTimeSession = -1;
     public static int jawbusSCsSession = -1;
 
+    boolean doubleHook = false;
+    boolean hasIncreased = false;
+
     @SubscribeEvent(receiveCanceled = true)
     public void onChat(ClientChatReceivedEvent event) {
         if (!Utils.inSkyblock) return;
@@ -144,7 +147,9 @@ public class FishingTracker {
         if (event.type == 2) return;
         if (message.contains(":")) return;
 
-        if (message.startsWith("GOOD CATCH!")) {
+        if (message.equals("It's a Double Hook!")) {
+            doubleHook = true;
+        } else if (message.startsWith("GOOD CATCH!")) {
             goodCatches++;
             goodCatchesSession++;
             CfgConfig.writeIntConfig("fishing", "goodCatch", goodCatches);
@@ -158,112 +163,112 @@ public class FishingTracker {
             CfgConfig.writeIntConfig("fishing", "squid", squids);
             increaseSeaCreatures();
         } else if (message.equals("You caught a Sea Walker.")) {
-            seaWalkers++;
-            seaWalkersSession++;
+            seaWalkers += getAmount();
+            seaWalkersSession += getAmount();
             CfgConfig.writeIntConfig("fishing", "seaWalker", seaWalkers);
             increaseSeaCreatures();
         } else if (message.equals("Pitch darkness reveals a Night Squid.")) {
-            nightSquids++;
-            nightSquidsSession++;
+            nightSquids += getAmount();
+            nightSquidsSession += getAmount();
             CfgConfig.writeIntConfig("fishing", "nightSquid", nightSquids);
             increaseSeaCreatures();
         } else if (message.equals("You stumbled upon a Sea Guardian.")) {
-            seaGuardians++;
-            seaGuardiansSession++;
+            seaGuardians += getAmount();
+            seaGuardiansSession += getAmount();
             CfgConfig.writeIntConfig("fishing", "seaGuardian", seaGuardians);
             increaseSeaCreatures();
         } else if (message.equals("It looks like you've disrupted the Sea Witch's brewing session. Watch out, she's furious!")) {
-            seaWitches++;
-            seaWitchesSession++;
+            seaWitches += getAmount();
+            seaWitchesSession += getAmount();
             CfgConfig.writeIntConfig("fishing", "seaWitch", seaWitches);
             increaseSeaCreatures();
         } else if (message.equals("You reeled in a Sea Archer.")) {
-            seaArchers++;
-            seaArchersSession++;
+            seaArchers += getAmount();
+            seaArchersSession += getAmount();
             CfgConfig.writeIntConfig("fishing", "seaArcher", seaArchers);
             increaseSeaCreatures();
         } else if (message.equals("The Rider of the Deep has emerged.")) {
-            monsterOfTheDeeps++;
-            monsterOfTheDeepsSession++;
+            monsterOfTheDeeps += getAmount();
+            monsterOfTheDeepsSession += getAmount();
             CfgConfig.writeIntConfig("fishing", "monsterOfDeep", monsterOfTheDeeps);
             increaseSeaCreatures();
         } else if (message.equals("Your Chumcap Bucket trembles, it's an Agarimoo.")) {
-            agarimoos++;
-            agarimoosSession++;
+            agarimoos += getAmount();
+            agarimoosSession += getAmount();
             CfgConfig.writeIntConfig("fishing", "agarimoo", agarimoos);
             increaseSeaCreatures();
         } else if (message.equals("Huh? A Catfish!")) {
-            catfishes++;
-            catfishesSession++;
+            catfishes += getAmount();
+            catfishesSession += getAmount();
             CfgConfig.writeIntConfig("fishing", "catfish", catfishes);
             increaseSeaCreatures();
         } else if (message.equals("Is this even a fish? It's the Carrot King!")) {
-            carrotKings++;
-            carrotKingsSession++;
+            carrotKings += getAmount();
+            carrotKingsSession += getAmount();
             CfgConfig.writeIntConfig("fishing", "carrotKing", carrotKings);
             increaseSeaCreatures();
         } else if (message.equals("Gross! A Sea Leech!")) {
-            seaLeeches++;
-            seaLeechesSession++;
+            seaLeeches += getAmount();
+            seaLeechesSession += getAmount();
             CfgConfig.writeIntConfig("fishing", "seaLeech", seaLeeches);
             increaseSeaCreatures();
         } else if (message.equals("You've discovered a Guardian Defender of the sea.")) {
-            guardianDefenders++;
-            guardianDefendersSession++;
+            guardianDefenders += getAmount();
+            guardianDefendersSession += getAmount();
             CfgConfig.writeIntConfig("fishing", "guardianDefender", guardianDefenders);
             increaseSeaCreatures();
         } else if (message.equals("You have awoken the Deep Sea Protector, prepare for a battle!")) {
-            deepSeaProtectors++;
-            deepSeaProtectorsSession++;
+            deepSeaProtectors += getAmount();
+            deepSeaProtectorsSession += getAmount();
             CfgConfig.writeIntConfig("fishing", "deepSeaProtector", deepSeaProtectors);
             increaseSeaCreatures();
         } else if (message.equals("The Water Hydra has come to test your strength.")) {
-            hydras++;
-            hydrasSession++;
+            hydras += getAmount();
+            hydrasSession += getAmount();
             CfgConfig.writeIntConfig("fishing", "hydra", hydras);
             increaseSeaCreatures();
         } else if (message.equals("The Sea Emperor arises from the depths.")) {
             increaseSeaCreatures();
 
-            seaEmperors++;
+            seaEmperors += getAmount();
             empTime = System.currentTimeMillis() / 1000;
             empSCs = 0;
-            seaEmperorsSession++;
+            seaEmperorsSession += getAmount();
             empTimeSession = System.currentTimeMillis() / 1000;
             empSCsSession = 0;
             CfgConfig.writeIntConfig("fishing", "seaEmperor", seaEmperors);
             CfgConfig.writeDoubleConfig("fishing", "empTime", empTime);
             CfgConfig.writeIntConfig("fishing", "empSC", empSCs);
         } else if (message.equals("Frozen Steve fell into the pond long ago, never to resurface...until now!")) { // Fishing Winter
-            frozenSteves++;
-            frozenStevesSession++;
+            frozenSteves += getAmount();
+            frozenStevesSession += getAmount();
             CfgConfig.writeIntConfig("fishing", "frozenSteve", frozenSteves);
             increaseSeaCreatures();
-        } else if (message.equals("It's a snowman! He looks harmless")) {
-            frostyTheSnowmans++;
-            frostyTheSnowmansSession++;
+        } else if (message.equals("It's a snowman! He looks harmless.")) {
+            frostyTheSnowmans += getAmount();
+            frostyTheSnowmansSession += getAmount();
             CfgConfig.writeIntConfig("fishing", "snowman", frostyTheSnowmans);
             increaseSeaCreatures();
-        } else if (message.equals("stole Jerry's Gifts...get them back!")) {
-            grinches++;
-            grinchesSession++;
+        } else if (message.equals("The Grinch stole Jerry's Gifts...get them back!")) {
+            grinches += getAmount();
+            grinchesSession += getAmount();
             CfgConfig.writeIntConfig("fishing", "grinch", grinches);
             increaseSeaCreatures();
         } else if (message.equals("You found a forgotten Nutcracker laying beneath the ice.")) {
-            nutcrackers++;
-            nutcrackersSession++;
+            nutcrackers += getAmount();
+            nutcrackersSession += getAmount();
             CfgConfig.writeIntConfig("fishing", "nutcracker", nutcrackers);
             increaseSeaCreatures();
         } else if (message.equals("What is this creature!?")) {
-            yetis++;
-            yetisSession++;
+            yetis += getAmount();
+            yetisSession += getAmount();
             CfgConfig.writeIntConfig("fishing", "yeti", yetis);
             increaseSeaCreatures();
         } else if (message.equals("A Reindrake forms from the depths.")) {
-            reindrakes++;
+            reindrakes += getAmount();
             reindrakeTime = System.currentTimeMillis() / 1000;
             reindrakeSCs = 0;
-            reindrakesSession++;
+            reindrakesSession += getAmount();
             reindrakeTimeSession = System.currentTimeMillis() / 1000;
             reindrakeSCsSession = 0;
             CfgConfig.writeIntConfig("fishing", "reindrake", reindrakes);
@@ -271,130 +276,130 @@ public class FishingTracker {
             CfgConfig.writeIntConfig("fishing", "reindrakeSC", reindrakeSCs);
             increaseSeaCreatures();
         } else if (message.equals("A tiny fin emerges from the water, you've caught a Nurse Shark.")) { // Fishing Festival
-            nurseSharks++;
-            nurseSharksSession++;
+            nurseSharks += getAmount();
+            nurseSharksSession += getAmount();
             CfgConfig.writeIntConfig("fishing", "nurseShark", nurseSharks);
             increaseSeaCreatures();
         } else if (message.equals("You spot a fin as blue as the water it came from, it's a Blue Shark.")) {
-            blueSharks++;
-            blueSharksSession++;
+            blueSharks += getAmount();
+            blueSharksSession += getAmount();
             CfgConfig.writeIntConfig("fishing", "blueShark", blueSharks);
             increaseSeaCreatures();
         } else if (message.equals("A striped beast bounds from the depths, the wild Tiger Shark!")) {
-            tigerSharks++;
-            tigerSharksSession++;
+            tigerSharks += getAmount();
+            tigerSharksSession += getAmount();
             CfgConfig.writeIntConfig("fishing", "tigerShark", tigerSharks);
             increaseSeaCreatures();
         } else if (message.equals("Hide no longer, a Great White Shark has tracked your scent and thirsts for your blood!")) {
-            greatWhiteSharks++;
-            greatWhiteSharksSession++;
+            greatWhiteSharks += getAmount();
+            greatWhiteSharksSession += getAmount();
             CfgConfig.writeIntConfig("fishing", "greatWhiteShark", greatWhiteSharks);
             increaseSeaCreatures();
         } else if (message.equals("Phew! It's only a Scarecrow.")) {
-            scarecrows++;
-            scarecrowsSession++;
+            scarecrows += getAmount();
+            scarecrowsSession += getAmount();
             CfgConfig.writeIntConfig("fishing", "scarecrow", scarecrows);
             increaseSeaCreatures();
         } else if (message.equals("You hear trotting from beneath the waves, you caught a Nightmare.")) {
-            nightmares++;
-            nightmaresSession++;
+            nightmares += getAmount();
+            nightmaresSession += getAmount();
             CfgConfig.writeIntConfig("fishing", "nightmare", nightmares);
             increaseSeaCreatures();
         } else if (message.equals("It must be a full moon, a Werewolf appears.")) {
-            werewolfs++;
-            werewolfsSession++;
+            werewolfs += getAmount();
+            werewolfsSession += getAmount();
             CfgConfig.writeIntConfig("fishing", "werewolf", werewolfs);
             increaseSeaCreatures();
         } else if (message.equals("The spirit of a long lost Phantom Fisher has come to haunt you.")) {
-            phantomFishers++;
-            phantomFishersSession++;
+            phantomFishers += getAmount();
+            phantomFishersSession += getAmount();
             CfgConfig.writeIntConfig("fishing", "phantomFisher", phantomFishers);
             increaseSeaCreatures();
         } else if (message.equals("This can't be! The manifestation of death himself!")) {
-            grimReapers++;
-            grimReapersSession++;
+            grimReapers += getAmount();
+            grimReapersSession += getAmount();
             CfgConfig.writeIntConfig("fishing", "grimReaper", grimReapers);
             increaseSeaCreatures();
         } else if (message.equals("A Water Worm surfaces!")) {
-            waterWorms++;
-            waterWormsSession++;
+            waterWorms += getAmount();
+            waterWormsSession += getAmount();
             CfgConfig.writeIntConfig("fishing", "waterWorm", waterWorms);
             increaseSeaCreatures();
         } else if (message.equals("A Poisoned Water Worm surfaces!")) {
-            poisonedWaterWorms++;
-            poisonedWaterWormsSession++;
+            poisonedWaterWorms += getAmount();
+            poisonedWaterWormsSession += getAmount();
             CfgConfig.writeIntConfig("fishing", "poisonedWaterWorm", poisonedWaterWorms);
             increaseSeaCreatures();
         } else if (message.equals("A Flaming Worm surfaces from the depths!")) {
-            flamingWorms++;
-            flamingWormsSession++;
+            flamingWorms += getAmount();
+            flamingWormsSession += getAmount();
             CfgConfig.writeIntConfig("fishing", "flamingWorm", flamingWorms);
             increaseSeaCreatures();
         } else if (message.equals("A Lava Blaze has surfaced from the depths!")) {
-            lavaBlazes++;
-            lavaBlazesSession++;
+            lavaBlazes += getAmount();
+            lavaBlazesSession += getAmount();
             CfgConfig.writeIntConfig("fishing", "lavaBlaze", lavaBlazes);
             increaseSeaCreatures();
         } else if (message.equals("A Lava Pigman arose from the depths!")) {
-            lavaPigmen++;
-            lavaPigmenSession++;
+            lavaPigmen += getAmount();
+            lavaPigmenSession += getAmount();
             CfgConfig.writeIntConfig("fishing", "lavaPigman", lavaPigmen);
             increaseSeaCreatures();
         } else if (message.equals("A Zombie Miner surfaces!")) {
-            zombieMiners++;
-            zombieMinersSession++;
+            zombieMiners += getAmount();
+            zombieMinersSession += getAmount();
             CfgConfig.writeIntConfig("fishing", "zombieMiner", zombieMiners);
             increaseSeaCreatures();
         } else if (message.equals("WOAH! A Plhlegblast appeared.")) {
-            plhlegblasts++;
-            plhlegblastsSession++;
+            plhlegblasts += getAmount();
+            plhlegblastsSession += getAmount();
             CfgConfig.writeIntConfig("fishing", "plhlegblast", plhlegblasts);
             increaseSeaCreatures();
         } else if (message.equals("From beneath the lava appears a Magma Slug.")) {
-            magmaSlugs++;
-            magmaSlugsSession++;
+            magmaSlugs += getAmount();
+            magmaSlugsSession += getAmount();
             CfgConfig.writeIntConfig("fishing", "magmaSlug", magmaSlugs);
             increaseSeaCreatures();
         } else if (message.equals("You hear a faint Moo from the lava... A Moogma appears.")) {
-            moogmas++;
-            moogmasSession++;
+            moogmas += getAmount();
+            moogmasSession += getAmount();
             CfgConfig.writeIntConfig("fishing", "moogma", moogmas);
             increaseSeaCreatures();
         } else if (message.equals("A small but fearsome Lava Leech emerges.")) {
-            lavaLeeches++;
-            lavaLeechesSession++;
+            lavaLeeches += getAmount();
+            lavaLeechesSession += getAmount();
             CfgConfig.writeIntConfig("fishing", "lavaLeech", lavaLeeches);
             increaseSeaCreatures();
         } else if (message.equals("You feel the heat radiating as a Pyroclastic Worm surfaces.")) {
-            pyroclasticWorms++;
-            pyroclasticWormsSession++;
+            pyroclasticWorms += getAmount();
+            pyroclasticWormsSession += getAmount();
             CfgConfig.writeIntConfig("fishing", "pyroclasticWorm", pyroclasticWorms);
             increaseSeaCreatures();
         } else if (message.equals("A Lava Flame flies out from beneath the lava.")) {
-            lavaFlames++;
-            lavaFlamesSession++;
+            lavaFlames += getAmount();
+            lavaFlamesSession += getAmount();
             CfgConfig.writeIntConfig("fishing", "lavaFlame", lavaFlames);
             increaseSeaCreatures();
         } else if (message.equals("A Fire Eel slithers out from the depths.")) {
-            fireEels++;
-            fireEelsSession++;
+            fireEels += getAmount();
+            fireEelsSession += getAmount();
             CfgConfig.writeIntConfig("fishing", "fireEel", fireEels);
             increaseSeaCreatures();
         } else if (message.equals("Taurus and his steed emerge.")) {
-            tauruses++;
-            taurusesSession++;
+            tauruses += getAmount();
+            taurusesSession += getAmount();
             CfgConfig.writeIntConfig("fishing", "taurus", tauruses);
             increaseSeaCreatures();
         } else if (message.equals("You hear a massive rumble as Thunder emerges.")) {
-            thunders++;
-            thundersSession++;
+            thunders += getAmount();
+            thundersSession += getAmount();
             CfgConfig.writeIntConfig("fishing", "thunder", thunders);
             increaseSeaCreatures();
         } else if (message.equals("You have angered a legendary creature... Lord Jawbus has arrived.")) {
-            lordJawbuses++;
+            lordJawbuses += getAmount();
             jawbusTime = System.currentTimeMillis() / 1000;
             jawbusSCs = 0;
-            lordJawbusesSession++;
+            lordJawbusesSession += getAmount();
             jawbusTimeSession = System.currentTimeMillis() / 1000;
             jawbusSCsSession = 0;
             CfgConfig.writeIntConfig("fishing", "lordJawbus", lordJawbuses);
@@ -402,6 +407,8 @@ public class FishingTracker {
             CfgConfig.writeIntConfig("fishing", "jawbusSC", jawbusSCs);
             increaseSeaCreatures();
         }
+
+        ifIncreased();
     }
 
     public void increaseSeaCreatures() {
@@ -438,6 +445,15 @@ public class FishingTracker {
         CfgConfig.writeIntConfig("fishing", "empSC", empSCs);
         CfgConfig.writeIntConfig("fishing", "reindrakeSC", reindrakeSCs);
         CfgConfig.writeIntConfig("fishing", "jawbusSC", jawbusSCs);
+    }
+
+    public int getAmount() {
+        hasIncreased = true;
+        return doubleHook ? 2 : 1;
+    }
+
+    public void ifIncreased() {
+        if (hasIncreased) doubleHook = false;
     }
 
 }
