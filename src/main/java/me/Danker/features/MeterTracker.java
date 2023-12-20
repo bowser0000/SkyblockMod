@@ -165,13 +165,17 @@ public class MeterTracker {
                             int progress;
                             int goal = 0;
 
-                            if (StringUtils.stripControlCodes(lore.get(15)).equals("Selected Drop")) {
-                                drop = lore.get(16);
-                                String line = StringUtils.stripControlCodes(lore.get(19));
+                            if (StringUtils.stripControlCodes(lore.get(13)).equals("Selected Drop")) {
+                                drop = lore.get(14);
+                                String line = StringUtils.stripControlCodes(lore.get(17));
                                 progress = getProgressFromLine(line);
                                 goal = getGoalFromLine(line);
                             } else {
-                                progress = Integer.parseInt(StringUtils.stripControlCodes(lore.get(19)).replaceAll("\\D", ""));
+                                try {
+                                    progress = Integer.parseInt(StringUtils.stripControlCodes(lore.get(17)).replaceAll("\\D", ""));
+                                } catch (NumberFormatException ex) {
+                                    progress = 0;
+                                }
                             }
 
                             JsonObject floorMeter = meter.getAsJsonObject(floor);
@@ -232,15 +236,24 @@ public class MeterTracker {
     }
 
     static int getProgressFromLine(String line) {
-        return Integer.parseInt(line.substring(0, line.indexOf("/")).replaceAll("\\D", ""));
+        try {
+            return Integer.parseInt(line.substring(0, line.indexOf("/")).replaceAll("\\D", ""));
+        } catch (NumberFormatException ex) {
+            return 0;
+        }
     }
 
     static int getGoalFromLine(String line) {
         String goalString = line.substring(line.indexOf("/") + 1);
-        if (goalString.endsWith("k")) {
-            return Integer.parseInt(goalString.replaceAll("\\D", "")) * 1000;
-        } else {
-            return Integer.parseInt(goalString.replaceAll("\\D", ""));
+
+        try {
+            if (goalString.endsWith("k")) {
+                return Integer.parseInt(goalString.replaceAll("\\D", "")) * 1000;
+            } else {
+                return Integer.parseInt(goalString.replaceAll("\\D", ""));
+            }
+        } catch (NumberFormatException ex) {
+            return 1;
         }
     }
 
