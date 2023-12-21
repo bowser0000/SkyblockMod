@@ -84,11 +84,11 @@ public class TrophyFishTracker {
             String fishName = matcher.group("fish");
             String tier = matcher.group("tier");
 
-            JsonObject fishObj = fish.get(fishName).getAsJsonObject();
+            JsonObject fishObj = fish.getAsJsonObject(fishName);
             int amount = fishObj.get(tier).getAsInt();
             fishObj.addProperty(tier, amount + 1);
 
-            JsonObject fishSessionObj = fishSession.get(fishName).getAsJsonObject();
+            JsonObject fishSessionObj = fishSession.getAsJsonObject(fishName);
             int amountSession = fishSessionObj.get(tier).getAsInt();
             fishSessionObj.addProperty(tier, amountSession + 1);
 
@@ -106,7 +106,7 @@ public class TrophyFishTracker {
     }
 
     public static String getTierCount(JsonObject obj, String name) {
-        JsonObject type = obj.get(name).getAsJsonObject();
+        JsonObject type = obj.getAsJsonObject(name);
 
         int bronze = type.get("BRONZE").getAsInt();
         int silver = type.get("SILVER").getAsInt();
@@ -120,7 +120,7 @@ public class TrophyFishTracker {
     }
 
     public static int getSum(JsonObject obj, String name) {
-        JsonObject type = obj.get(name).getAsJsonObject();
+        JsonObject type = obj.getAsJsonObject(name);
         return type.get("BRONZE").getAsInt() +
                type.get("SILVER").getAsInt() +
                type.get("GOLD").getAsInt() +
@@ -128,7 +128,7 @@ public class TrophyFishTracker {
     }
 
     public static void drawCompletion(JsonObject obj, String name, int x, int y, double scale) {
-        JsonObject type = obj.get(name).getAsJsonObject();
+        JsonObject type = obj.getAsJsonObject(name);
 
         boolean bronze = type.get("BRONZE").getAsInt() > 0;
         boolean silver = type.get("SILVER").getAsInt() > 0;

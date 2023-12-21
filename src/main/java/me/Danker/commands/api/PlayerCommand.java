@@ -3,6 +3,7 @@ package me.Danker.commands.api;
 import com.google.gson.JsonObject;
 import me.Danker.config.ModConfig;
 import me.Danker.handlers.APIHandler;
+import me.Danker.handlers.HypixelAPIHandler;
 import me.Danker.utils.Utils;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
@@ -51,42 +52,29 @@ public class PlayerCommand extends CommandBase {
         new Thread(() -> {
             EntityPlayer player = (EntityPlayer) arg0;
 
-            // Check key
-            String key = ModConfig.apiKey;
-            if (key.equals("")) {
-                player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "API key not set."));
-                return;
-            }
-
             // Get UUID for Hypixel API requests
             String username;
             String uuid;
             if (arg1.length == 0) {
                 username = player.getName();
                 uuid = player.getUniqueID().toString().replaceAll("[\\-]", "");
-                player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Checking stats of " + ModConfig.getColour(ModConfig.secondaryColour) + username));
             } else {
                 username = arg1[0];
-                player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Checking stats of " + ModConfig.getColour(ModConfig.secondaryColour) + username));
                 uuid = APIHandler.getUUID(username);
             }
+            player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Checking stats of " + ModConfig.getColour(ModConfig.secondaryColour) + username + ModConfig.getColour(ModConfig.mainColour) + " using Polyfrost's API."));
 
             // Find stats of latest profile
-            String latestProfile = APIHandler.getLatestProfileID(uuid, key);
-            if (latestProfile == null) return;
+            JsonObject profileResponse = HypixelAPIHandler.getLatestProfile(uuid);
+            if (profileResponse == null) return;
 
-            String profileURL = "https://api.hypixel.net/skyblock/profile?profile=" + latestProfile + "&key=" + key;
-            System.out.println("Fetching profile...");
-            JsonObject profileResponse = APIHandler.getResponse(profileURL, true);
-            if (!profileResponse.get("success").getAsBoolean()) {
-                String reason = profileResponse.get("cause").getAsString();
-                player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "Failed with reason: " + reason));
-                return;
-            }
+            String latestProfileID = HypixelAPIHandler.getLatestProfileID(uuid);
+            if (latestProfileID == null) return;
 
             // Skills
             System.out.println("Fetching skills...");
-            JsonObject userObject = profileResponse.get("profile").getAsJsonObject().get("members").getAsJsonObject().get(uuid).getAsJsonObject();
+            JsonObject userObject = Utils.getObjectFromPath(profileResponse, "members." + uuid);
+            JsonObject experienceObj = Utils.getObjectFromPath(userObject, "player_data.experience");
 
             double farmingLevel = 0;
             double miningLevel = 0;
@@ -98,80 +86,83 @@ public class PlayerCommand extends CommandBase {
             double tamingLevel = 0;
             double carpentryLevel = 0;
 
-            if (userObject.has("experience_skill_farming") || userObject.has("experience_skill_mining") || userObject.has("experience_skill_combat") || userObject.has("experience_skill_foraging") || userObject.has("experience_skill_fishing") || userObject.has("experience_skill_enchanting") || userObject.has("experience_skill_alchemy")) {
-                if (userObject.has("experience_skill_farming")) {
-                    farmingLevel = Utils.xpToSkillLevel(userObject.get("experience_skill_farming").getAsDouble(), 60);
+            if (experienceObj.has("SKILL_FARMING") || experienceObj.has("SKILL_MINING") || experienceObj.has("SKILL_COMBAT") || experienceObj.has("SKILL_FORAGING") || experienceObj.has("SKILL_FISHING") || experienceObj.has("SKILL_ENCHANTING") || experienceObj.has("SKILL_ALCHEMY")) {
+                if (experienceObj.has("SKILL_FARMING")) {
+                    farmingLevel = Utils.xpToSkillLevel(experienceObj.get("SKILL_FARMING").getAsDouble(), Utils.getSkillMaxLevel("farming"));
                     farmingLevel = (double) Math.round(farmingLevel * 100) / 100;
                 }
-                if (userObject.has("experience_skill_mining")) {
-                    miningLevel = Utils.xpToSkillLevel(userObject.get("experience_skill_mining").getAsDouble(), 60);
+                if (experienceObj.has("SKILL_MINING")) {
+                    miningLevel = Utils.xpToSkillLevel(experienceObj.get("SKILL_MINING").getAsDouble(), Utils.getSkillMaxLevel("mining"));
                     miningLevel = (double) Math.round(miningLevel * 100) / 100;
                 }
-                if (userObject.has("experience_skill_combat")) {
-                    combatLevel = Utils.xpToSkillLevel(userObject.get("experience_skill_combat").getAsDouble(), 60);
+                if (experienceObj.has("SKILL_COMBAT")) {
+                    combatLevel = Utils.xpToSkillLevel(experienceObj.get("SKILL_COMBAT").getAsDouble(), Utils.getSkillMaxLevel("combat"));
                     combatLevel = (double) Math.round(combatLevel * 100) / 100;
                 }
-                if (userObject.has("experience_skill_foraging")) {
-                    foragingLevel = Utils.xpToSkillLevel(userObject.get("experience_skill_foraging").getAsDouble(), 50);
+                if (experienceObj.has("SKILL_FORAGING")) {
+                    foragingLevel = Utils.xpToSkillLevel(experienceObj.get("SKILL_FORAGING").getAsDouble(), Utils.getSkillMaxLevel("foraging"));
                     foragingLevel = (double) Math.round(foragingLevel * 100) / 100;
                 }
-                if (userObject.has("experience_skill_fishing")) {
-                    fishingLevel = Utils.xpToSkillLevel(userObject.get("experience_skill_fishing").getAsDouble(), 50);
+                if (experienceObj.has("SKILL_FISHING")) {
+                    fishingLevel = Utils.xpToSkillLevel(experienceObj.get("SKILL_FISHING").getAsDouble(), Utils.getSkillMaxLevel("fishing"));
                     fishingLevel = (double) Math.round(fishingLevel * 100) / 100;
                 }
-                if (userObject.has("experience_skill_enchanting")) {
-                    enchantingLevel = Utils.xpToSkillLevel(userObject.get("experience_skill_enchanting").getAsDouble(), 60);
+                if (experienceObj.has("SKILL_ENCHANTING")) {
+                    enchantingLevel = Utils.xpToSkillLevel(experienceObj.get("SKILL_ENCHANTING").getAsDouble(), Utils.getSkillMaxLevel("enchanting"));
                     enchantingLevel = (double) Math.round(enchantingLevel * 100) / 100;
                 }
-                if (userObject.has("experience_skill_alchemy")) {
-                    alchemyLevel = Utils.xpToSkillLevel(userObject.get("experience_skill_alchemy").getAsDouble(), 50);
+                if (experienceObj.has("SKILL_ALCHEMY")) {
+                    alchemyLevel = Utils.xpToSkillLevel(experienceObj.get("SKILL_ALCHEMY").getAsDouble(), Utils.getSkillMaxLevel("alchemy"));
                     alchemyLevel = (double) Math.round(alchemyLevel * 100) / 100;
                 }
-                if (userObject.has("experience_skill_taming")) {
-                    tamingLevel = Utils.xpToSkillLevel(userObject.get("experience_skill_taming").getAsDouble(), 50);
+                if (experienceObj.has("SKILL_TAMING")) {
+                    tamingLevel = Utils.xpToSkillLevel(experienceObj.get("SKILL_TAMING").getAsDouble(), Utils.getSkillMaxLevel("taming"));
                     tamingLevel = (double) Math.round(tamingLevel * 100) / 100;
                 }
-                if (userObject.has("experience_skill_carpentry")) {
-                    carpentryLevel = Utils.xpToSkillLevel(userObject.get("experience_skill_carpentry").getAsDouble(), 50);
+                if (experienceObj.has("SKILL_CARPENTRY")) {
+                    carpentryLevel = Utils.xpToSkillLevel(experienceObj.get("SKILL_CARPENTRY").getAsDouble(), Utils.getSkillMaxLevel("carpentry"));
                     carpentryLevel = (double) Math.round(carpentryLevel * 100) / 100;
                 }
             } else {
                 // Get skills from achievement API, will be floored
 
-                String playerURL = "https://api.hypixel.net/player?uuid=" + uuid + "&key=" + key;
                 System.out.println("Fetching skills from achievement API");
-                JsonObject playerObject = APIHandler.getResponse(playerURL, true);
+                JsonObject playerObject = HypixelAPIHandler.getJsonObjectAuth(HypixelAPIHandler.URL + "player/" + uuid);
 
+                if (playerObject == null) {
+                    player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "Could not connect to API."));
+                    return;
+                }
                 if (!playerObject.get("success").getAsBoolean()) {
                     String reason = profileResponse.get("cause").getAsString();
                     player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "Failed with reason: " + reason));
                     return;
                 }
 
-                JsonObject achievementObject = playerObject.get("player").getAsJsonObject().get("achievements").getAsJsonObject();
+                JsonObject achievementObject = Utils.getObjectFromPath(playerObject, "player.achievements");
                 if (achievementObject.has("skyblock_harvester")) {
-                    farmingLevel = achievementObject.get("skyblock_harvester").getAsInt();
+                    farmingLevel = Math.min(achievementObject.get("skyblock_harvester").getAsInt(), Utils.getSkillMaxLevel("farming"));
                 }
                 if (achievementObject.has("skyblock_excavator")) {
-                    miningLevel = achievementObject.get("skyblock_excavator").getAsInt();
+                    miningLevel = Math.min(achievementObject.get("skyblock_excavator").getAsInt(), Utils.getSkillMaxLevel("mining"));
                 }
                 if (achievementObject.has("skyblock_combat")) {
-                    combatLevel = achievementObject.get("skyblock_combat").getAsInt();
+                    combatLevel = Math.min(achievementObject.get("skyblock_combat").getAsInt(), Utils.getSkillMaxLevel("combat"));
                 }
                 if (achievementObject.has("skyblock_gatherer")) {
-                    foragingLevel = Math.min(achievementObject.get("skyblock_gatherer").getAsInt(), 50);
+                    foragingLevel = Math.min(achievementObject.get("skyblock_gatherer").getAsInt(), Utils.getSkillMaxLevel("foraging"));
                 }
                 if (achievementObject.has("skyblock_angler")) {
-                    fishingLevel = Math.min(achievementObject.get("skyblock_angler").getAsInt(), 50);
+                    fishingLevel = Math.min(achievementObject.get("skyblock_angler").getAsInt(), Utils.getSkillMaxLevel("fishing"));
                 }
                 if (achievementObject.has("skyblock_augmentation")) {
-                    enchantingLevel = achievementObject.get("skyblock_augmentation").getAsInt();
+                    enchantingLevel = Math.min(achievementObject.get("skyblock_augmentation").getAsInt(), Utils.getSkillMaxLevel("enchanting"));
                 }
                 if (achievementObject.has("skyblock_concoctor")) {
-                    alchemyLevel = Math.min(achievementObject.get("skyblock_concoctor").getAsInt(), 50);
+                    alchemyLevel = Math.min(achievementObject.get("skyblock_concoctor").getAsInt(), Utils.getSkillMaxLevel("alchemy"));
                 }
                 if (achievementObject.has("skyblock_domesticator")) {
-                    tamingLevel = Math.min(achievementObject.get("skyblock_domesticator").getAsInt(), 50);
+                    tamingLevel = Math.min(achievementObject.get("skyblock_domesticator").getAsInt(), Utils.getSkillMaxLevel("taming"));
                 }
             }
 
@@ -182,37 +173,49 @@ public class PlayerCommand extends CommandBase {
 
             // Slayers
             System.out.println("Fetching slayer stats...");
-            JsonObject slayersObject = profileResponse.get("profile").getAsJsonObject().get("members").getAsJsonObject().get(uuid).getAsJsonObject().get("slayer_bosses").getAsJsonObject();
+            JsonObject slayersObject = Utils.getObjectFromPath(userObject, "slayer.slayer_bosses");
             // Zombie
             int zombieXP = 0;
-            if (slayersObject.get("zombie").getAsJsonObject().has("xp")) {
-                zombieXP = slayersObject.get("zombie").getAsJsonObject().get("xp").getAsInt();
+            if (slayersObject.getAsJsonObject("zombie").has("xp")) {
+                zombieXP = slayersObject.getAsJsonObject("zombie").get("xp").getAsInt();
             }
             // Spider
             int spiderXP = 0;
-            if (slayersObject.get("spider").getAsJsonObject().has("xp")) {
-                spiderXP = slayersObject.get("spider").getAsJsonObject().get("xp").getAsInt();
+            if (slayersObject.getAsJsonObject("spider").has("xp")) {
+                spiderXP = slayersObject.getAsJsonObject("spider").get("xp").getAsInt();
             }
             // Wolf
             int wolfXP = 0;
-            if (slayersObject.get("wolf").getAsJsonObject().has("xp")) {
-                wolfXP = slayersObject.get("wolf").getAsJsonObject().get("xp").getAsInt();
+            if (slayersObject.getAsJsonObject("wolf").has("xp")) {
+                wolfXP = slayersObject.getAsJsonObject("wolf").get("xp").getAsInt();
             }
             // Enderman
             int endermanXP = 0;
-            if (slayersObject.get("enderman").getAsJsonObject().has("xp")) {
-                endermanXP = slayersObject.get("enderman").getAsJsonObject().get("xp").getAsInt();
+            if (slayersObject.getAsJsonObject("enderman").has("xp")) {
+                endermanXP = slayersObject.getAsJsonObject("enderman").get("xp").getAsInt();
             }
+            // Blaze
+            int blazeXP = 0;
+            if (slayersObject.getAsJsonObject("blaze").has("xp")) {
+                blazeXP = slayersObject.getAsJsonObject("blaze").get("xp").getAsInt();
+            }
+            // Vampire
+            int vampireXP = 0;
+            if (slayersObject.getAsJsonObject("vampire").has("xp")) {
+                vampireXP = slayersObject.getAsJsonObject("vampire").get("xp").getAsInt();
+            }
+
+            int totalXP = zombieXP + spiderXP + wolfXP + endermanXP + blazeXP + vampireXP;
 
             // Bank
             System.out.println("Fetching bank + purse coins...");
             double bankCoins = 0;
-            double purseCoins = profileResponse.get("profile").getAsJsonObject().get("members").getAsJsonObject().get(uuid).getAsJsonObject().get("coin_purse").getAsDouble();
+            double purseCoins = userObject.getAsJsonObject("currencies").get("coin_purse").getAsDouble();
             purseCoins = Math.floor(purseCoins * 100.0) / 100.0;
 
             // Check for bank api
-            if (profileResponse.get("profile").getAsJsonObject().has("banking")) {
-                bankCoins = profileResponse.get("profile").getAsJsonObject().get("banking").getAsJsonObject().get("balance").getAsDouble();
+            if (profileResponse.has("banking")) {
+                bankCoins = profileResponse.getAsJsonObject("banking").get("balance").getAsDouble();
                 bankCoins = Math.floor(bankCoins * 100.0) / 100.0;
             }
 
@@ -226,7 +229,7 @@ public class PlayerCommand extends CommandBase {
                 return;
             }
 
-            double weight = weightResponse.get("profiles").getAsJsonObject().get(latestProfile).getAsJsonObject().get("data").getAsJsonObject().get("weight").getAsJsonObject().get("senither").getAsJsonObject().get("overall").getAsDouble();
+            double weight = Utils.getObjectFromPath(weightResponse, "profiles." + latestProfileID + ".data.weight.senither").get("overall").getAsDouble();
 
             NumberFormat nf = NumberFormat.getIntegerInstance(Locale.US);
             NumberFormat nfd = NumberFormat.getNumberInstance(Locale.US);
@@ -243,11 +246,13 @@ public class PlayerCommand extends CommandBase {
                                                         ModConfig.getColour(ModConfig.typeColour) + " Carpentry: " + ModConfig.getColour(ModConfig.valueColour) + EnumChatFormatting.BOLD + carpentryLevel + "\n" +
                                                         EnumChatFormatting.AQUA + " Average Skill Level: " + ModConfig.getColour(ModConfig.skillAverageColour) + EnumChatFormatting.BOLD + skillAvg + "\n" +
                                                         EnumChatFormatting.AQUA + " True Average Skill Level: " + ModConfig.getColour(ModConfig.skillAverageColour) + EnumChatFormatting.BOLD + trueAvg + "\n\n" +
-                                                        EnumChatFormatting.AQUA + " " + username + "'s Total Slayer XP: " + EnumChatFormatting.GOLD + EnumChatFormatting.BOLD + nf.format(zombieXP + spiderXP + wolfXP + endermanXP) + "\n" +
+                                                        EnumChatFormatting.AQUA + " " + username + "'s Total Slayer XP: " + EnumChatFormatting.GOLD + EnumChatFormatting.BOLD + nf.format(totalXP) + "\n" +
                                                         ModConfig.getColour(ModConfig.typeColour) + " Zombie XP: " + ModConfig.getColour(ModConfig.valueColour) + EnumChatFormatting.BOLD + nf.format(zombieXP) + "\n" +
                                                         ModConfig.getColour(ModConfig.typeColour) + " Spider XP: " + ModConfig.getColour(ModConfig.valueColour) + EnumChatFormatting.BOLD + nf.format(spiderXP) + "\n" +
                                                         ModConfig.getColour(ModConfig.typeColour) + " Wolf XP: " + ModConfig.getColour(ModConfig.valueColour) + EnumChatFormatting.BOLD + nf.format(wolfXP) + "\n" +
-                                                        ModConfig.getColour(ModConfig.typeColour) + " Enderman XP: " + ModConfig.getColour(ModConfig.valueColour) + EnumChatFormatting.BOLD + nf.format(endermanXP) + "\n\n" +
+                                                        ModConfig.getColour(ModConfig.typeColour) + " Enderman XP: " + ModConfig.getColour(ModConfig.valueColour) + EnumChatFormatting.BOLD + nf.format(endermanXP) + "\n" +
+                                                        ModConfig.getColour(ModConfig.typeColour) + " Blaze XP: " + ModConfig.getColour(ModConfig.valueColour) + EnumChatFormatting.BOLD + nf.format(blazeXP) + "\n" +
+                                                        ModConfig.getColour(ModConfig.typeColour) + " Vampire XP: " + ModConfig.getColour(ModConfig.valueColour) + EnumChatFormatting.BOLD + nf.format(vampireXP) + "\n\n" +
                                                         EnumChatFormatting.AQUA + " " + username + "'s Coins:\n" +
                                                         ModConfig.getColour(ModConfig.typeColour) + " Bank: " + (bankCoins == 0 ? EnumChatFormatting.RED + "Bank API disabled." : EnumChatFormatting.GOLD + nf.format(bankCoins)) + "\n" +
                                                         ModConfig.getColour(ModConfig.typeColour) + " Purse: " + EnumChatFormatting.GOLD + nf.format(purseCoins) + "\n" +

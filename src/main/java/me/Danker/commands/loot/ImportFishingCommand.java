@@ -5,7 +5,7 @@ import me.Danker.config.CfgConfig;
 import me.Danker.config.ModConfig;
 import me.Danker.features.loot.FishingTracker;
 import me.Danker.features.loot.TrophyFishTracker;
-import me.Danker.handlers.APIHandler;
+import me.Danker.handlers.HypixelAPIHandler;
 import me.Danker.utils.Utils;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
@@ -40,94 +40,80 @@ public class ImportFishingCommand extends CommandBase {
 		new Thread(() -> {
 			EntityPlayer player = (EntityPlayer) arg0;
 
-			// Check key
-			String key = ModConfig.apiKey;
-			if (key.equals("")) {
-				player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "API key not set."));
-				return;
-			}
-
-			player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Importing your fishing stats..."));
+			player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Importing your fishing stats using Polyfrost's API..."));
 
 			// Get UUID for Hypixel API requests
 			String uuid = player.getUniqueID().toString().replaceAll("[\\-]", "");
 
-			String latestProfile = APIHandler.getLatestProfileID(uuid, key);
-			if (latestProfile == null) return;
-
-			String profileURL = "https://api.hypixel.net/skyblock/profile?profile=" + latestProfile + "&key=" + key;
-			System.out.println("Fetching profile...");
-			JsonObject profileResponse = APIHandler.getResponse(profileURL, true);
-			if (!profileResponse.get("success").getAsBoolean()) {
-				String reason = profileResponse.get("cause").getAsString();
-				player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "Failed with reason: " + reason));
-				return;
-			}
+			JsonObject profileResponse = HypixelAPIHandler.getLatestProfile(uuid);
+			if (profileResponse == null) return;
 
 			System.out.println("Fetching fishing stats...");
-			JsonObject memberObject = profileResponse.get("profile").getAsJsonObject().get("members").getAsJsonObject().get(uuid).getAsJsonObject();
-			JsonObject statsObject = memberObject.get("stats").getAsJsonObject();
-			JsonObject trophyObject = memberObject.get("trophy_fish").getAsJsonObject();
+			JsonObject memberObject = Utils.getObjectFromPath(profileResponse, "members." + uuid);
+			JsonObject itemsFishedObject = Utils.getObjectFromPath(memberObject, "player_stats.items_fished");
+			JsonObject killsObject = Utils.getObjectFromPath(memberObject, "player_stats.kills");
+			JsonObject trophyObject = memberObject.getAsJsonObject("trophy_fish");
 
 			FishingTracker.greatCatches = 0;
 			FishingTracker.goodCatches = 0;
-			if (statsObject.has("items_fished_treasure")) {
-				if (statsObject.has("items_fished_large_treasure")) {
-					FishingTracker.greatCatches = statsObject.get("items_fished_large_treasure").getAsInt();
-					FishingTracker.goodCatches = statsObject.get("items_fished_treasure").getAsInt() - FishingTracker.greatCatches;
+			if (itemsFishedObject.has("treasure")) {
+				if (itemsFishedObject.has("large_treasure")) {
+					FishingTracker.greatCatches = itemsFishedObject.get("large_treasure").getAsInt();
+					FishingTracker.goodCatches = itemsFishedObject.get("treasure").getAsInt() - FishingTracker.greatCatches;
 				} else {
-					FishingTracker.goodCatches = statsObject.get("items_fished_treasure").getAsInt();
+					FishingTracker.goodCatches = itemsFishedObject.get("treasure").getAsInt();
 				}
 			}
 
 			FishingTracker.seaCreatures = 0;
+			FishingTracker.fishingMilestone = Utils.getObjectFromPath(memberObject, "player_stats.pets.milestone").get("sea_creatures_killed").getAsInt();;
 
-			FishingTracker.squids = getSCFromApi(statsObject, "kills_pond_squid");
-			FishingTracker.seaWalkers = getSCFromApi(statsObject, "kills_sea_walker");
-			FishingTracker.nightSquids = getSCFromApi(statsObject, "kills_night_squid");
-			FishingTracker.seaGuardians = getSCFromApi(statsObject, "kills_sea_guardian");
-			FishingTracker.seaWitches = getSCFromApi(statsObject, "kills_sea_witch");
-			FishingTracker.seaArchers = getSCFromApi(statsObject, "kills_sea_archer");
-			FishingTracker.monsterOfTheDeeps = getSCFromApi(statsObject, "kills_zombie_deep") + getSCFromApi(statsObject, "kills_chicken_deep");
-			FishingTracker.catfishes = getSCFromApi(statsObject, "kills_catfish");
-			FishingTracker.carrotKings = getSCFromApi(statsObject, "kills_carrot_king");
-			FishingTracker.seaLeeches = getSCFromApi(statsObject, "kills_sea_leech");
-			FishingTracker.guardianDefenders = getSCFromApi(statsObject, "kills_guardian_defender");
-			FishingTracker.deepSeaProtectors = getSCFromApi(statsObject, "kills_deep_sea_protector");
-			FishingTracker.hydras = getSCFromApi(statsObject, "kills_water_hydra") / 2;
-			FishingTracker.seaEmperors = getSCFromApi(statsObject, "kills_skeleton_emperor") + getSCFromApi(statsObject, "kills_guardian_emperor");
-			FishingTracker.fishingMilestone = getSCFromApi(statsObject, "pet_milestone_sea_creatures_killed");
-			FishingTracker.frozenSteves = getSCFromApi(statsObject, "kills_frozen_steve");
-			FishingTracker.frostyTheSnowmans = getSCFromApi(statsObject, "kills_frosty_the_snowman");
-			FishingTracker.grinches = getSCFromApi(statsObject, "kills_grinch");
-			FishingTracker.nutcrackers = getSCFromApi(statsObject, "kills_nutcracker");
-			FishingTracker.yetis = getSCFromApi(statsObject, "kills_yeti");
-			FishingTracker.reindrakes = getSCFromApi(statsObject, "kills_reindrake");
-			FishingTracker.nurseSharks = getSCFromApi(statsObject, "kills_nurse_shark");
-			FishingTracker.blueSharks = getSCFromApi(statsObject, "kills_blue_shark");
-			FishingTracker.tigerSharks = getSCFromApi(statsObject, "kills_tiger_shark");
-			FishingTracker.greatWhiteSharks = getSCFromApi(statsObject, "kills_great_white_shark");
-			FishingTracker.scarecrows = getSCFromApi(statsObject, "kills_scarecrow");
-			FishingTracker.nightmares = getSCFromApi(statsObject, "kills_nightmare");
-			FishingTracker.werewolfs = getSCFromApi(statsObject, "kills_werewolf");
-			FishingTracker.phantomFishers = getSCFromApi(statsObject, "kills_phantom_fisherman");
-			FishingTracker.grimReapers = getSCFromApi(statsObject, "kills_grim_reaper");
-			FishingTracker.waterWorms = getSCFromApi(statsObject, "kills_water_worm");
-			FishingTracker.poisonedWaterWorms = getSCFromApi(statsObject, "kills_poisoned_water_worm");
-			FishingTracker.flamingWorms = getSCFromApi(statsObject, "kills_flaming_worm");
-			FishingTracker.lavaBlazes = getSCFromApi(statsObject, "kills_lava_blaze");
-			FishingTracker.lavaPigmen = getSCFromApi(statsObject, "kills_lava_pigman");
-			FishingTracker.zombieMiners = getSCFromApi(statsObject, "kills_zombie_miner");
-			FishingTracker.plhlegblasts = getSCFromApi(statsObject, "kills_plhlegblast");
-			FishingTracker.magmaSlugs = getSCFromApi(statsObject, "kills_magma_slug");
-			FishingTracker.moogmas = getSCFromApi(statsObject, "kills_moogma");
-			FishingTracker.lavaLeeches = getSCFromApi(statsObject, "kills_lava_leech");
-			FishingTracker.pyroclasticWorms = getSCFromApi(statsObject, "kills_pyroclastic_worm");
-			FishingTracker.lavaFlames = getSCFromApi(statsObject, "kills_lava_flame");
-			FishingTracker.fireEels = getSCFromApi(statsObject, "kills_fire_eel");
-			FishingTracker.tauruses = getSCFromApi(statsObject, "kills_pig_rider");
-			FishingTracker.thunders = getSCFromApi(statsObject, "kills_thunder");
-			FishingTracker.lordJawbuses = getSCFromApi(statsObject, "kills_lord_jawbus");
+			FishingTracker.squids = getSCFromApi(killsObject, "pond_squid");
+			FishingTracker.seaWalkers = getSCFromApi(killsObject, "sea_walker");
+			FishingTracker.nightSquids = getSCFromApi(killsObject, "night_squid");
+			FishingTracker.seaGuardians = getSCFromApi(killsObject, "sea_guardian");
+			FishingTracker.seaWitches = getSCFromApi(killsObject, "sea_witch");
+			FishingTracker.seaArchers = getSCFromApi(killsObject, "sea_archer");
+			FishingTracker.monsterOfTheDeeps = getSCFromApi(killsObject, "zombie_deep") + getSCFromApi(killsObject, "chicken_deep");
+			FishingTracker.agarimoos = getSCFromApi(killsObject, "agarimoo");
+			FishingTracker.catfishes = getSCFromApi(killsObject, "catfish");
+			FishingTracker.carrotKings = getSCFromApi(killsObject, "carrot_king");
+			FishingTracker.seaLeeches = getSCFromApi(killsObject, "sea_leech");
+			FishingTracker.guardianDefenders = getSCFromApi(killsObject, "guardian_defender");
+			FishingTracker.deepSeaProtectors = getSCFromApi(killsObject, "deep_sea_protector");
+			FishingTracker.hydras = getSCFromApi(killsObject, "water_hydra") / 2;
+			FishingTracker.seaEmperors = getSCFromApi(killsObject, "skeleton_emperor") + getSCFromApi(killsObject, "guardian_emperor");
+			FishingTracker.frozenSteves = getSCFromApi(killsObject, "frozen_steve");
+			FishingTracker.frostyTheSnowmans = getSCFromApi(killsObject, "frosty_the_snowman");
+			FishingTracker.grinches = getSCFromApi(killsObject, "grinch");
+			FishingTracker.nutcrackers = getSCFromApi(killsObject, "nutcracker");
+			FishingTracker.yetis = getSCFromApi(killsObject, "yeti");
+			FishingTracker.reindrakes = getSCFromApi(killsObject, "reindrake_100");
+			FishingTracker.nurseSharks = getSCFromApi(killsObject, "nurse_shark");
+			FishingTracker.blueSharks = getSCFromApi(killsObject, "blue_shark");
+			FishingTracker.tigerSharks = getSCFromApi(killsObject, "tiger_shark");
+			FishingTracker.greatWhiteSharks = getSCFromApi(killsObject, "great_white_shark");
+			FishingTracker.scarecrows = getSCFromApi(killsObject, "scarecrow");
+			FishingTracker.nightmares = getSCFromApi(killsObject, "nightmare");
+			FishingTracker.werewolfs = getSCFromApi(killsObject, "werewolf");
+			FishingTracker.phantomFishers = getSCFromApi(killsObject, "phantom_fisherman");
+			FishingTracker.grimReapers = getSCFromApi(killsObject, "grim_reaper");
+			FishingTracker.waterWorms = getSCFromApi(killsObject, "water_worm");
+			FishingTracker.poisonedWaterWorms = getSCFromApi(killsObject, "poisoned_water_worm");
+			FishingTracker.flamingWorms = getSCFromApi(killsObject, "flaming_worm");
+			FishingTracker.lavaBlazes = getSCFromApi(killsObject, "lava_blaze");
+			FishingTracker.lavaPigmen = getSCFromApi(killsObject, "lava_pigman");
+			FishingTracker.zombieMiners = getSCFromApi(killsObject, "zombie_miner");
+			FishingTracker.plhlegblasts = getSCFromApi(killsObject, "pond_squid_300");
+			FishingTracker.magmaSlugs = getSCFromApi(killsObject, "magma_slug");
+			FishingTracker.moogmas = getSCFromApi(killsObject, "moogma");
+			FishingTracker.lavaLeeches = getSCFromApi(killsObject, "lava_leech");
+			FishingTracker.pyroclasticWorms = getSCFromApi(killsObject, "pyroclastic_worm");
+			FishingTracker.lavaFlames = getSCFromApi(killsObject, "lava_flame");
+			FishingTracker.fireEels = getSCFromApi(killsObject, "fire_eel");
+			FishingTracker.tauruses = getSCFromApi(killsObject, "pig_rider");
+			FishingTracker.thunders = getSCFromApi(killsObject, "thunder");
+			FishingTracker.lordJawbuses = getSCFromApi(killsObject, "lord_jawbus");
 
 			System.out.println("Writing SC to config...");
 			CfgConfig.writeIntConfig("fishing", "goodCatch", FishingTracker.goodCatches);
@@ -140,6 +126,7 @@ public class ImportFishingCommand extends CommandBase {
 			CfgConfig.writeIntConfig("fishing", "seaWitch", FishingTracker.seaWitches);
 			CfgConfig.writeIntConfig("fishing", "seaArcher", FishingTracker.seaArchers);
 			CfgConfig.writeIntConfig("fishing", "monsterOfDeep", FishingTracker.monsterOfTheDeeps);
+			CfgConfig.writeIntConfig("fishing", "agarimoo", FishingTracker.agarimoos);
 			CfgConfig.writeIntConfig("fishing", "catfish", FishingTracker.catfishes);
 			CfgConfig.writeIntConfig("fishing", "carrotKing", FishingTracker.carrotKings);
 			CfgConfig.writeIntConfig("fishing", "seaLeech", FishingTracker.seaLeeches);
@@ -152,6 +139,7 @@ public class ImportFishingCommand extends CommandBase {
 			CfgConfig.writeIntConfig("fishing", "snowman", FishingTracker.frostyTheSnowmans);
 			CfgConfig.writeIntConfig("fishing", "grinch", FishingTracker.grinches);
 			CfgConfig.writeIntConfig("fishing", "yeti", FishingTracker.yetis);
+			CfgConfig.writeIntConfig("fishing", "reindrake", FishingTracker.reindrakes);
 			CfgConfig.writeIntConfig("fishing", "nurseShark", FishingTracker.nurseSharks);
 			CfgConfig.writeIntConfig("fishing", "blueShark", FishingTracker.blueSharks);
 			CfgConfig.writeIntConfig("fishing", "tigerShark", FishingTracker.tigerSharks);

@@ -84,6 +84,7 @@ public class WolfTracker {
                 break;
             case "Grizzly Bait":
             case "Rename Me":
+            case "Grizzly Salmon":
                 rng = true;
                 baits += event.amount;
                 baitsSession += event.amount;

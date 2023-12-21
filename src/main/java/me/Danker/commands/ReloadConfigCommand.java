@@ -34,7 +34,7 @@ public class ReloadConfigCommand extends CommandBase {
 	
 	@Override
 	public void processCommand(ICommandSender arg0, String[] arg1) throws CommandException {
-		final EntityPlayer player = (EntityPlayer)arg0;
+		EntityPlayer player = (EntityPlayer)arg0;
 		ConfigHandler.reloadConfig();
 		MinecraftForge.EVENT_BUS.post(new PostConfigInitEvent(DankersSkyblockMod.configDirectory));
 		player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Reloaded config."));

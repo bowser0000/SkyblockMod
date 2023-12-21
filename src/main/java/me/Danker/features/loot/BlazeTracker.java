@@ -13,6 +13,7 @@ public class BlazeTracker {
 
     public static int demonlords;
     public static int derelictAshes;
+    public static int blazePowder;
     public static int lavatearRunes;
     public static int splashPotions;
     public static int magmaArrows;
@@ -38,6 +39,7 @@ public class BlazeTracker {
 
     public static int demonlordsSession = 0;
     public static int derelictAshesSession = 0;
+    public static int blazePowderSession = 0;
     public static int lavatearRunesSession = 0;
     public static int splashPotionsSession = 0;
     public static int magmaArrowsSession = 0;
@@ -66,14 +68,19 @@ public class BlazeTracker {
         boolean rng = false;
 
         switch (event.drop) {
+            case "Enchanted Blaze Powder":
+                blazePowder += event.amount;
+                blazePowderSession += event.amount;
+                CfgConfig.writeIntConfig("blaze", "blazePowder", blazePowder);
+                break;
             case "◆ Lavatears Rune I":
                 lavatearRunes += event.amount;
                 lavatearRunesSession += event.amount;
                 CfgConfig.writeIntConfig("blaze", "lavatearRunes", lavatearRunes);
                 break;
             case "Wisp's Ice-Flavored Water I Splash Potion":
-                splashPotions += event.amount;
-                splashPotionsSession += event.amount;
+                splashPotions += 5;
+                splashPotionsSession += 5;
                 CfgConfig.writeIntConfig("blaze", "splashPotions", splashPotions);
                 break;
             case "Bundle of Magma Arrows":
@@ -138,7 +145,7 @@ public class BlazeTracker {
                 CfgConfig.writeIntConfig("blaze", "fieryBurstRunes", fieryBurstRunes);
                 if (ModConfig.rngesusAlerts) Utils.createTitle(EnumChatFormatting.RED + "FIERY BURST RUNE!", 3);
                 break;
-            case "Flawed Opal Gemstone":
+            case "❂ Flawed Opal Gemstone":
                 opalGems += event.amount;
                 opalGemsSession += event.amount;
                 CfgConfig.writeIntConfig("blaze", "opalGems", opalGems);

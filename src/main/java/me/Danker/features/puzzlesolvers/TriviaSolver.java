@@ -85,14 +85,14 @@ public class TriviaSolver {
                     triviaAnswersJson = new JsonArray();
                     triviaAnswersJson.add(new JsonPrimitive("Year " + year));
                 } else {
-                    JsonObject triviaSolutions = DankersSkyblockMod.data.get("trivia").getAsJsonObject();
+                    JsonObject triviaSolutions = DankersSkyblockMod.data.getAsJsonObject("trivia");
 
                     List<String> triviaSolutionsList = triviaSolutions.entrySet().stream()
                                                        .map(Map.Entry::getKey)
                                                        .collect(Collectors.toCollection(ArrayList::new));
                     for (String question : triviaSolutionsList) {
                         if (message.contains(question)) {
-                            triviaAnswersJson = triviaSolutions.get(question).getAsJsonArray();
+                            triviaAnswersJson = triviaSolutions.getAsJsonArray(question);
                             break;
                         }
                     }

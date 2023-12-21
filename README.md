@@ -107,7 +107,7 @@ Discord Server: https://discord.gg/QsEkNQS
 - /guildof [player] - Uses API to get guild name and guild master of a person. If no name is provided, it checks yours.
 - /petsof [player] - Uses API to get pets of a person. If no name is provided, it checks yours.
 - /bank [player] - Uses API to get bank and purse coins of a person. If no name is provided, it checks yours.
-- /armor [player] - Uses API to get armour of a person. If no name is provided, it checks yours.
+- /armor [player] - Uses API to get armor of a person. If no name is provided, it checks yours.
 - /dungeons [player] - Uses API to get dungeon levels of a person. If no name is provided, it checks yours.
 - /weight [player] [lily/farming] - Uses API to get weight of a person. If no name is provided, it checks yours. Adding lily uses lily's weight. Adding farming uses Kaeso's farming weight.
 - /importfishing - Imports your fishing stats from your latest profile to your fishing tracker using the API.

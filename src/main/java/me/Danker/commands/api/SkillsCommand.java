@@ -3,6 +3,7 @@ package me.Danker.commands.api;
 import com.google.gson.JsonObject;
 import me.Danker.config.ModConfig;
 import me.Danker.handlers.APIHandler;
+import me.Danker.handlers.HypixelAPIHandler;
 import me.Danker.utils.Utils;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
@@ -55,41 +56,24 @@ public class SkillsCommand extends CommandBase {
 		new Thread(() -> {
 			EntityPlayer player = (EntityPlayer) arg0;
 			
-			// Check key
-			String key = ModConfig.apiKey;
-			if (key.equals("")) {
-				player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "API key not set."));
-				return;
-			}
-			
 			// Get UUID for Hypixel API requests
 			String username;
 			String uuid;
 			if (arg1.length == 0) {
 				username = player.getName();
 				uuid = player.getUniqueID().toString().replaceAll("[\\-]", "");
-				player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Checking skills of " + ModConfig.getColour(ModConfig.secondaryColour) + username));
 			} else {
 				username = arg1[0];
-				player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Checking skills of " + ModConfig.getColour(ModConfig.secondaryColour) + username));
 				uuid = APIHandler.getUUID(username);
 			}
+			player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Checking skills of " + ModConfig.getColour(ModConfig.secondaryColour) + username + ModConfig.getColour(ModConfig.mainColour) + " using Polyfrost's API."));
 			
 			// Find stats of latest profile
-			String latestProfile = APIHandler.getLatestProfileID(uuid, key);
-			if (latestProfile == null) return;
-			
-			String profileURL = "https://api.hypixel.net/skyblock/profile?profile=" + latestProfile + "&key=" + key;
-			System.out.println("Fetching profile...");
-			JsonObject profileResponse = APIHandler.getResponse(profileURL, true);
-			if (!profileResponse.get("success").getAsBoolean()) {
-				String reason = profileResponse.get("cause").getAsString();
-				player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "Failed with reason: " + reason));
-				return;
-			}
+			JsonObject profileResponse = HypixelAPIHandler.getLatestProfile(uuid);
+			if (profileResponse == null) return;
 			
 			System.out.println("Fetching skills...");
-			JsonObject userObject = profileResponse.get("profile").getAsJsonObject().get("members").getAsJsonObject().get(uuid).getAsJsonObject();
+			JsonObject experienceObj = Utils.getObjectFromPath(profileResponse, "members." + uuid + ".player_data.experience");
 
 			ChatComponentText farmingLevelText = new ChatComponentText(ModConfig.getColour(ModConfig.typeColour) + " Farming: ");
 			ChatComponentText miningLevelText = new ChatComponentText(ModConfig.getColour(ModConfig.typeColour) + " Mining: ");
@@ -112,105 +96,117 @@ public class SkillsCommand extends CommandBase {
 			double tamingLevel = 0;
 			double carpentryLevel = 0;
 
-			if (userObject.has("experience_skill_farming") || userObject.has("experience_skill_mining") || userObject.has("experience_skill_combat") || userObject.has("experience_skill_foraging") || userObject.has("experience_skill_fishing") || userObject.has("experience_skill_enchanting") || userObject.has("experience_skill_alchemy")) {
-				if (userObject.has("experience_skill_farming")) {
-					farmingLevel = Utils.xpToSkillLevel(userObject.get("experience_skill_farming").getAsDouble(), 60);
+			if (experienceObj.has("SKILL_FARMING") || experienceObj.has("SKILL_MINING") || experienceObj.has("SKILL_COMBAT") || experienceObj.has("SKILL_FORAGING") || experienceObj.has("SKILL_FISHING") || experienceObj.has("SKILL_ENCHANTING") || experienceObj.has("SKILL_ALCHEMY")) {
+				if (experienceObj.has("SKILL_FARMING")) {
+					double rawFarmingXP = experienceObj.get("SKILL_FARMING").getAsDouble();
+					farmingLevel = Utils.xpToSkillLevel(rawFarmingXP, Utils.getSkillMaxLevel("farming"));
 					farmingLevel = (double) Math.round(farmingLevel * 100) / 100;
-					farmingLevelText.setChatStyle(appendFormatted(farmingLevelText, "XP", userObject.get("experience_skill_farming").getAsDouble()));
-					farmingLevelText.setChatStyle(appendFormatted(farmingLevelText, "Overflow XP", getOverflowXP(userObject.get("experience_skill_farming").getAsDouble(), 60)));
+					farmingLevelText.setChatStyle(appendFormatted(farmingLevelText, "XP", rawFarmingXP));
+					farmingLevelText.setChatStyle(appendFormatted(farmingLevelText, "Overflow XP", getOverflowXP(rawFarmingXP, Utils.getSkillMaxLevel("farming"))));
 				}
-				if (userObject.has("experience_skill_mining")) {
-					miningLevel = Utils.xpToSkillLevel(userObject.get("experience_skill_mining").getAsDouble(), 60);
+				if (experienceObj.has("SKILL_MINING")) {
+					double rawMiningXP = experienceObj.get("SKILL_MINING").getAsDouble();
+					miningLevel = Utils.xpToSkillLevel(rawMiningXP, Utils.getSkillMaxLevel("mining"));
 					miningLevel = (double) Math.round(miningLevel * 100) / 100;
-					miningLevelText.setChatStyle(appendFormatted(miningLevelText, "XP", userObject.get("experience_skill_mining").getAsDouble()));
-					miningLevelText.setChatStyle(appendFormatted(miningLevelText, "Overflow XP", getOverflowXP(userObject.get("experience_skill_mining").getAsDouble(), 60)));
+					miningLevelText.setChatStyle(appendFormatted(miningLevelText, "XP", rawMiningXP));
+					miningLevelText.setChatStyle(appendFormatted(miningLevelText, "Overflow XP", getOverflowXP(rawMiningXP, Utils.getSkillMaxLevel("mining"))));
 				}
-				if (userObject.has("experience_skill_combat")) {
-					combatLevel = Utils.xpToSkillLevel(userObject.get("experience_skill_combat").getAsDouble(), 60);
+				if (experienceObj.has("SKILL_COMBAT")) {
+					double rawCombatXP = experienceObj.get("SKILL_COMBAT").getAsDouble();
+					combatLevel = Utils.xpToSkillLevel(rawCombatXP, Utils.getSkillMaxLevel("combat"));
 					combatLevel = (double) Math.round(combatLevel * 100) / 100;
-					combatLevelText.setChatStyle(appendFormatted(combatLevelText, "XP", userObject.get("experience_skill_combat").getAsDouble()));
-					combatLevelText.setChatStyle(appendFormatted(combatLevelText, "Overflow XP", getOverflowXP(userObject.get("experience_skill_combat").getAsDouble(), 60)));
+					combatLevelText.setChatStyle(appendFormatted(combatLevelText, "XP", rawCombatXP));
+					combatLevelText.setChatStyle(appendFormatted(combatLevelText, "Overflow XP", getOverflowXP(rawCombatXP, Utils.getSkillMaxLevel("combat"))));
 				}
-				if (userObject.has("experience_skill_foraging")) {
-					foragingLevel = Utils.xpToSkillLevel(userObject.get("experience_skill_foraging").getAsDouble(), 50);
+				if (experienceObj.has("SKILL_FORAGING")) {
+					double rawForagingXP = experienceObj.get("SKILL_FORAGING").getAsDouble();
+					foragingLevel = Utils.xpToSkillLevel(rawForagingXP, Utils.getSkillMaxLevel("foraging"));
 					foragingLevel = (double) Math.round(foragingLevel * 100) / 100;
-					foragingLevelText.setChatStyle(appendFormatted(foragingLevelText, "XP", userObject.get("experience_skill_foraging").getAsDouble()));
-					foragingLevelText.setChatStyle(appendFormatted(foragingLevelText, "Overflow XP", getOverflowXP(userObject.get("experience_skill_foraging").getAsDouble(), 50)));
+					foragingLevelText.setChatStyle(appendFormatted(foragingLevelText, "XP", rawForagingXP));
+					foragingLevelText.setChatStyle(appendFormatted(foragingLevelText, "Overflow XP", getOverflowXP(rawForagingXP, Utils.getSkillMaxLevel("foraging"))));
 				}
-				if (userObject.has("experience_skill_fishing")) {
-					fishingLevel = Utils.xpToSkillLevel(userObject.get("experience_skill_fishing").getAsDouble(), 50);
+				if (experienceObj.has("SKILL_FISHING")) {
+					double rawFishingXP = experienceObj.get("SKILL_FISHING").getAsDouble();
+					fishingLevel = Utils.xpToSkillLevel(rawFishingXP, Utils.getSkillMaxLevel("fishing"));
 					fishingLevel = (double) Math.round(fishingLevel * 100) / 100;
-					fishingLevelText.setChatStyle(appendFormatted(fishingLevelText, "XP", userObject.get("experience_skill_fishing").getAsDouble()));
-					fishingLevelText.setChatStyle(appendFormatted(fishingLevelText, "Overflow XP", getOverflowXP(userObject.get("experience_skill_fishing").getAsDouble(), 50)));
+					fishingLevelText.setChatStyle(appendFormatted(fishingLevelText, "XP", rawFishingXP));
+					fishingLevelText.setChatStyle(appendFormatted(fishingLevelText, "Overflow XP", getOverflowXP(rawFishingXP, Utils.getSkillMaxLevel("fishing"))));
 				}
-				if (userObject.has("experience_skill_enchanting")) {
-					enchantingLevel = Utils.xpToSkillLevel(userObject.get("experience_skill_enchanting").getAsDouble(), 60);
+				if (experienceObj.has("SKILL_ENCHANTING")) {
+					double rawEnchantingXP = experienceObj.get("SKILL_ENCHANTING").getAsDouble();
+					enchantingLevel = Utils.xpToSkillLevel(rawEnchantingXP, Utils.getSkillMaxLevel("enchanting"));
 					enchantingLevel = (double) Math.round(enchantingLevel * 100) / 100;
-					enchantingLevelText.setChatStyle(appendFormatted(enchantingLevelText, "XP", userObject.get("experience_skill_enchanting").getAsDouble()));
-					enchantingLevelText.setChatStyle(appendFormatted(enchantingLevelText, "Overflow XP", getOverflowXP(userObject.get("experience_skill_enchanting").getAsDouble(), 60)));
+					enchantingLevelText.setChatStyle(appendFormatted(enchantingLevelText, "XP", rawEnchantingXP));
+					enchantingLevelText.setChatStyle(appendFormatted(enchantingLevelText, "Overflow XP", getOverflowXP(rawEnchantingXP, Utils.getSkillMaxLevel("enchanting"))));
 				}
-				if (userObject.has("experience_skill_alchemy")) {
-					alchemyLevel = Utils.xpToSkillLevel(userObject.get("experience_skill_alchemy").getAsDouble(), 50);
+				if (experienceObj.has("SKILL_ALCHEMY")) {
+					double rawAlchemyXP = experienceObj.get("SKILL_ALCHEMY").getAsDouble();
+					alchemyLevel = Utils.xpToSkillLevel(rawAlchemyXP, Utils.getSkillMaxLevel("alchemy"));
 					alchemyLevel = (double) Math.round(alchemyLevel * 100) / 100;
-					alchemyLevelText.setChatStyle(appendFormatted(alchemyLevelText, "XP", userObject.get("experience_skill_alchemy").getAsDouble()));
-					alchemyLevelText.setChatStyle(appendFormatted(alchemyLevelText, "Overflow XP", getOverflowXP(userObject.get("experience_skill_alchemy").getAsDouble(), 50)));
+					alchemyLevelText.setChatStyle(appendFormatted(alchemyLevelText, "XP", rawAlchemyXP));
+					alchemyLevelText.setChatStyle(appendFormatted(alchemyLevelText, "Overflow XP", getOverflowXP(rawAlchemyXP, Utils.getSkillMaxLevel("alchemy"))));
 				}
-				if (userObject.has("experience_skill_taming")) {
-					tamingLevel = Utils.xpToSkillLevel(userObject.get("experience_skill_taming").getAsDouble(), 50);
+				if (experienceObj.has("SKILL_TAMING")) {
+					double rawTamingXP = experienceObj.get("SKILL_TAMING").getAsDouble();
+					tamingLevel = Utils.xpToSkillLevel(rawTamingXP, Utils.getSkillMaxLevel("taming"));
 					tamingLevel = (double) Math.round(tamingLevel * 100) / 100;
-					tamingLevelText.setChatStyle(appendFormatted(tamingLevelText, "XP", userObject.get("experience_skill_taming").getAsDouble()));
-					tamingLevelText.setChatStyle(appendFormatted(tamingLevelText, "Overflow XP", getOverflowXP(userObject.get("experience_skill_taming").getAsDouble(), 50)));
+					tamingLevelText.setChatStyle(appendFormatted(tamingLevelText, "XP", rawTamingXP));
+					tamingLevelText.setChatStyle(appendFormatted(tamingLevelText, "Overflow XP", getOverflowXP(rawTamingXP, Utils.getSkillMaxLevel("taming"))));
 				}
-				if (userObject.has("experience_skill_carpentry")) {
-					carpentryLevel = Utils.xpToSkillLevel(userObject.get("experience_skill_carpentry").getAsDouble(), 50);
+				if (experienceObj.has("SKILL_CARPENTRY")) {
+					double rawCarpentryXP = experienceObj.get("SKILL_CARPENTRY").getAsDouble();
+					carpentryLevel = Utils.xpToSkillLevel(rawCarpentryXP, Utils.getSkillMaxLevel("carpentry"));
 					carpentryLevel = (double) Math.round(carpentryLevel * 100) / 100;
-					carpentryLevelText.setChatStyle(appendFormatted(carpentryLevelText, "XP", userObject.get("experience_skill_carpentry").getAsDouble()));
-					carpentryLevelText.setChatStyle(appendFormatted(carpentryLevelText, "Overflow XP", getOverflowXP(userObject.get("experience_skill_carpentry").getAsDouble(), 50)));
+					carpentryLevelText.setChatStyle(appendFormatted(carpentryLevelText, "XP", rawCarpentryXP));
+					carpentryLevelText.setChatStyle(appendFormatted(carpentryLevelText, "Overflow XP", getOverflowXP(rawCarpentryXP, Utils.getSkillMaxLevel("carpentry"))));
 				}
 			} else {
 				// Get skills from achievement API, will be floored
-				
-				String playerURL = "https://api.hypixel.net/player?uuid=" + uuid + "&key=" + key;
+
 				System.out.println("Fetching skills from achievement API");
-				JsonObject playerObject = APIHandler.getResponse(playerURL, true);
-				
+				JsonObject playerObject = HypixelAPIHandler.getJsonObjectAuth(HypixelAPIHandler.URL + "player/" + uuid);
+
+				if (playerObject == null) {
+					player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "Could not connect to API."));
+					return;
+				}
 				if (!playerObject.get("success").getAsBoolean()) {
 					String reason = profileResponse.get("cause").getAsString();
 					player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "Failed with reason: " + reason));
 					return;
 				}
-				
-				JsonObject achievementObject = playerObject.get("player").getAsJsonObject().get("achievements").getAsJsonObject();
+
+				JsonObject achievementObject = Utils.getObjectFromPath(playerObject, "player.achievements");
 				if (achievementObject.has("skyblock_harvester")) {
-					farmingLevel = achievementObject.get("skyblock_harvester").getAsInt();
+					farmingLevel = Math.min(achievementObject.get("skyblock_harvester").getAsInt(), Utils.getSkillMaxLevel("farming"));
 					farmingLevelText.setChatStyle(appendFormatted(farmingLevelText, "XP", Utils.skillLevelToXp((int) farmingLevel)));
 				}
 				if (achievementObject.has("skyblock_excavator")) {
-					miningLevel = achievementObject.get("skyblock_excavator").getAsInt();
+					miningLevel = Math.min(achievementObject.get("skyblock_excavator").getAsInt(), Utils.getSkillMaxLevel("mining"));
 					miningLevelText.setChatStyle(appendFormatted(miningLevelText, "XP", Utils.skillLevelToXp((int) miningLevel)));
 				}
 				if (achievementObject.has("skyblock_combat")) {
-					combatLevel = achievementObject.get("skyblock_combat").getAsInt();
+					combatLevel = Math.min(achievementObject.get("skyblock_combat").getAsInt(), Utils.getSkillMaxLevel("combat"));
 					combatLevelText.setChatStyle(appendFormatted(combatLevelText, "XP", Utils.skillLevelToXp((int) combatLevel)));
 				}
 				if (achievementObject.has("skyblock_gatherer")) {
-					foragingLevel = Math.min(achievementObject.get("skyblock_gatherer").getAsInt(), 50);
+					foragingLevel = Math.min(achievementObject.get("skyblock_gatherer").getAsInt(), Utils.getSkillMaxLevel("foraging"));
 					foragingLevelText.setChatStyle(appendFormatted(foragingLevelText, "XP", Utils.skillLevelToXp((int) foragingLevel)));
 				}
 				if (achievementObject.has("skyblock_angler")) {
-					fishingLevel = Math.min(achievementObject.get("skyblock_angler").getAsInt(), 50);
+					fishingLevel = Math.min(achievementObject.get("skyblock_angler").getAsInt(), Utils.getSkillMaxLevel("fishing"));
 					fishingLevelText.setChatStyle(appendFormatted(fishingLevelText, "XP", Utils.skillLevelToXp((int) fishingLevel)));
 				}
 				if (achievementObject.has("skyblock_augmentation")) {
-					enchantingLevel = achievementObject.get("skyblock_augmentation").getAsInt();
+					enchantingLevel = Math.min(achievementObject.get("skyblock_augmentation").getAsInt(), Utils.getSkillMaxLevel("enchanting"));
 					enchantingLevelText.setChatStyle(appendFormatted(enchantingLevelText, "XP", Utils.skillLevelToXp((int) enchantingLevel)));
 				}
 				if (achievementObject.has("skyblock_concoctor")) {
-					alchemyLevel = Math.min(achievementObject.get("skyblock_concoctor").getAsInt(), 50);
+					alchemyLevel = Math.min(achievementObject.get("skyblock_concoctor").getAsInt(), Utils.getSkillMaxLevel("alchemy"));
 					alchemyLevelText.setChatStyle(appendFormatted(alchemyLevelText, "XP", Utils.skillLevelToXp((int) alchemyLevel)));
 				}
 				if (achievementObject.has("skyblock_domesticator")) {
-					tamingLevel = Math.min(achievementObject.get("skyblock_domesticator").getAsInt(), 50);
+					tamingLevel = Math.min(achievementObject.get("skyblock_domesticator").getAsInt(), Utils.getSkillMaxLevel("taming"));
 					tamingLevelText.setChatStyle(appendFormatted(tamingLevelText, "XP", Utils.skillLevelToXp((int) tamingLevel)));
 				}
 			}

@@ -4,6 +4,7 @@ import com.google.gson.JsonObject;
 import me.Danker.config.ModConfig;
 import me.Danker.features.loot.TrophyFishTracker;
 import me.Danker.handlers.APIHandler;
+import me.Danker.handlers.HypixelAPIHandler;
 import me.Danker.utils.Utils;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
@@ -50,41 +51,24 @@ public class TrophyFishCommand extends CommandBase {
         new Thread(() -> {
             EntityPlayer player = (EntityPlayer) arg0;
 
-            // Check key
-            String key = ModConfig.apiKey;
-            if (key.equals("")) {
-                player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "API key not set."));
-                return;
-            }
-
             // Get UUID for Hypixel API requests
             String username;
             String uuid;
             if (arg1.length == 0) {
                 username = player.getName();
                 uuid = player.getUniqueID().toString().replaceAll("[\\-]", "");
-                player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Checking trophy fish of " + ModConfig.getColour(ModConfig.secondaryColour) + username));
             } else {
                 username = arg1[0];
-                player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Checking trophy fish of " + ModConfig.getColour(ModConfig.secondaryColour) + username));
                 uuid = APIHandler.getUUID(username);
             }
+            player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Checking trophy fish of " + ModConfig.getColour(ModConfig.secondaryColour) + username + ModConfig.getColour(ModConfig.mainColour) + " using Polyfrost's API."));
 
             // Find stats of latest profile
-            String latestProfile = APIHandler.getLatestProfileID(uuid, key);
-            if (latestProfile == null) return;
-
-            String profileURL = "https://api.hypixel.net/skyblock/profile?profile=" + latestProfile + "&key=" + key;
-            System.out.println("Fetching profile...");
-            JsonObject profileResponse = APIHandler.getResponse(profileURL, true);
-            if (!profileResponse.get("success").getAsBoolean()) {
-                String reason = profileResponse.get("cause").getAsString();
-                player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "Failed with reason: " + reason));
-                return;
-            }
+            JsonObject profileResponse = HypixelAPIHandler.getLatestProfile(uuid);
+            if (profileResponse == null) return;
 
             System.out.println("Fetching trophy fish...");
-            JsonObject trophyObject = profileResponse.get("profile").getAsJsonObject().get("members").getAsJsonObject().get(uuid).getAsJsonObject().get("trophy_fish").getAsJsonObject();
+            JsonObject trophyObject = Utils.getObjectFromPath(profileResponse, "members." + uuid + ".trophy_fish");
 
             if (!trophyObject.has("total_caught")) {
                 player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "This player has not fished a trophy fish."));
@@ -113,7 +97,7 @@ public class TrophyFishCommand extends CommandBase {
 
             String tier = EnumChatFormatting.RED + "None";
             if (trophyObject.has("rewards")) {
-                switch (trophyObject.get("rewards").getAsJsonArray().size()) {
+                switch (trophyObject.getAsJsonArray("rewards").size()) {
                     case 1:
                         tier = EnumChatFormatting.DARK_GRAY + "Novice";
                         break;

@@ -38,6 +38,12 @@ public class BlockPlacingFlowers {
                 if (item.getDisplayName().contains("Spirit Sceptre")) {
                     event.setCanceled(true);
                 }
+                if (item.getDisplayName().contains("Bouquet of Lies")) {
+                    event.setCanceled(true);
+                }
+                if (item.getDisplayName().contains("Fire Freeze Staff")) {
+                    event.setCanceled(true);
+                }
             }
         }
     }

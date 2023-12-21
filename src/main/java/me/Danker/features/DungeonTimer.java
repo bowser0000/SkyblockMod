@@ -49,7 +49,7 @@ public class DungeonTimer {
         JsonObject timer = new JsonObject();
 
         JsonArray f1 = getBasicSplits(EnumChatFormatting.GOLD + "Bonzo Entry", "Bonzo");
-        f1.add(createSplit(EnumChatFormatting.GOLD + "Bonzo Phase 1", "\\[BOSS\\] Bonzo: Oh noes, you got me\\.\\. what ever will I do\\?!"));
+        f1.add(createSplit(EnumChatFormatting.GOLD + "Bonzo Phase 1", "\\[BOSS\\] Bonzo: Oh I'm dead!"));
         f1.add(getEndSplit(EnumChatFormatting.GOLD + "Bonzo Phase 2"));
         timer.add("F1", f1);
         timer.add("M1", Utils.deepCopy(f1));
@@ -150,7 +150,7 @@ public class DungeonTimer {
 
         if (message.contains(":")) return;
 
-        if (activeTimer != null && message.contains("Dungeon starts in 1 second.")) {
+        if (activeTimer != null && message.contains("Starting in 1 second")) {
             activeTimer.getFirstSplit().startTime = System.currentTimeMillis() + 1000D;
         } else if (message.contains("PUZZLE FAIL! ") || message.contains("chose the wrong answer! I shall never forget this moment")) {
             puzzleFails++;
@@ -172,7 +172,7 @@ public class DungeonTimer {
             String currentFloor = Utils.currentFloor.toString();
 
             if (timer.has(currentFloor)) {
-                activeTimer = new ActiveTimer(timer.get(currentFloor).getAsJsonArray());
+                activeTimer = new ActiveTimer(timer.getAsJsonArray(currentFloor));
             }
         }
     }

@@ -567,6 +567,7 @@ public class LootDisplay extends Hud {
 
                             dropsText = EnumChatFormatting.GOLD + "Demonlords Killed:\n" +
                                     EnumChatFormatting.GRAY + "Derelict Ashes:\n" +
+                                    EnumChatFormatting.YELLOW + "Blaze Powder:\n" +
                                     EnumChatFormatting.RED + "Lavatear Runes:\n" +
                                     EnumChatFormatting.AQUA + "Splash Potions:\n" +
                                     EnumChatFormatting.DARK_RED + "Magma Arrows:\n" +
@@ -591,6 +592,7 @@ public class LootDisplay extends Hud {
                                     EnumChatFormatting.AQUA + "Bosses Since RNG:";
                             countText = EnumChatFormatting.GOLD + nf.format(BlazeTracker.demonlords) + "\n" +
                                     EnumChatFormatting.GRAY + nf.format(BlazeTracker.derelictAshes) + "\n" +
+                                    EnumChatFormatting.YELLOW + nf.format(BlazeTracker.blazePowder) + "\n" +
                                     EnumChatFormatting.RED + nf.format(BlazeTracker.lavatearRunes) + "\n" +
                                     EnumChatFormatting.AQUA + nf.format(BlazeTracker.splashPotions) + "\n" +
                                     EnumChatFormatting.DARK_RED + nf.format(BlazeTracker.magmaArrows) + "\n" +
@@ -627,6 +629,7 @@ public class LootDisplay extends Hud {
 
                             dropsText = EnumChatFormatting.GOLD + "Demonlords Killed:\n" +
                                     EnumChatFormatting.GRAY + "Derelict Ashes:\n" +
+                                    EnumChatFormatting.YELLOW + "Blaze Powder:\n" +
                                     EnumChatFormatting.RED + "Lavatear Runes:\n" +
                                     EnumChatFormatting.AQUA + "Splash Potions:\n" +
                                     EnumChatFormatting.DARK_RED + "Magma Arrows:\n" +
@@ -651,6 +654,7 @@ public class LootDisplay extends Hud {
                                     EnumChatFormatting.AQUA + "Bosses Since RNG:";
                             countText = EnumChatFormatting.GOLD + nf.format(BlazeTracker.demonlordsSession) + "\n" +
                                     EnumChatFormatting.GRAY + nf.format(BlazeTracker.derelictAshesSession) + "\n" +
+                                    EnumChatFormatting.YELLOW + nf.format(BlazeTracker.blazePowderSession) + "\n" +
                                     EnumChatFormatting.RED + nf.format(BlazeTracker.lavatearRunesSession) + "\n" +
                                     EnumChatFormatting.AQUA + nf.format(BlazeTracker.splashPotionsSession) + "\n" +
                                     EnumChatFormatting.DARK_RED + nf.format(BlazeTracker.magmaArrowsSession) + "\n" +
@@ -742,7 +746,8 @@ public class LootDisplay extends Hud {
                                     EnumChatFormatting.DARK_GRAY + "Night Squids:\n" +
                                     EnumChatFormatting.DARK_AQUA + "Sea Guardians:\n" +
                                     EnumChatFormatting.BLUE + "Sea Witches:\n" +
-                                    EnumChatFormatting.GREEN + "Sea Archers:";
+                                    EnumChatFormatting.GREEN + "Sea Archers:\n" +
+                                    EnumChatFormatting.GREEN + "Monster of Deeps:";
                             countText = EnumChatFormatting.AQUA + nf.format(FishingTracker.seaCreatures) + "\n" +
                                     EnumChatFormatting.AQUA + nf.format(FishingTracker.fishingMilestone) + "\n" +
                                     EnumChatFormatting.GOLD + nf.format(FishingTracker.goodCatches) + "\n" +
@@ -752,9 +757,10 @@ public class LootDisplay extends Hud {
                                     EnumChatFormatting.DARK_GRAY + nf.format(FishingTracker.nightSquids) + "\n" +
                                     EnumChatFormatting.DARK_AQUA + nf.format(FishingTracker.seaGuardians) + "\n" +
                                     EnumChatFormatting.BLUE + nf.format(FishingTracker.seaWitches) + "\n" +
-                                    EnumChatFormatting.GREEN + nf.format(FishingTracker.seaArchers);
+                                    EnumChatFormatting.GREEN + nf.format(FishingTracker.seaArchers) + "\n" +
+                                    EnumChatFormatting.GREEN + nf.format(FishingTracker.monsterOfTheDeeps);
                             // Seperated to save vertical space
-                            dropsTextTwo = EnumChatFormatting.GREEN + "Monster of Deeps:\n" +
+                            dropsTextTwo = EnumChatFormatting.RED + "Agarimoos:\n" +
                                     EnumChatFormatting.YELLOW + "Catfishes:\n" +
                                     EnumChatFormatting.GOLD + "Carrot Kings:\n" +
                                     EnumChatFormatting.GRAY + "Sea Leeches:\n" +
@@ -764,7 +770,7 @@ public class LootDisplay extends Hud {
                                     EnumChatFormatting.GOLD + "Sea Emperors:\n" +
                                     EnumChatFormatting.AQUA + "Time Since Emp:\n" +
                                     EnumChatFormatting.AQUA + "Creatures Since Emp:";
-                            countTextTwo = EnumChatFormatting.GREEN + nf.format(FishingTracker.monsterOfTheDeeps) + "\n" +
+                            countTextTwo = EnumChatFormatting.RED + nf.format(FishingTracker.agarimoos) + "\n" +
                                     EnumChatFormatting.YELLOW + nf.format(FishingTracker.catfishes) + "\n" +
                                     EnumChatFormatting.GOLD + nf.format(FishingTracker.carrotKings) + "\n" +
                                     EnumChatFormatting.GRAY + nf.format(FishingTracker.seaLeeches) + "\n" +
@@ -803,7 +809,8 @@ public class LootDisplay extends Hud {
                                     EnumChatFormatting.DARK_GRAY + "Night Squids:\n" +
                                     EnumChatFormatting.DARK_AQUA + "Sea Guardians:\n" +
                                     EnumChatFormatting.BLUE + "Sea Witches:\n" +
-                                    EnumChatFormatting.GREEN + "Sea Archers:";
+                                    EnumChatFormatting.GREEN + "Sea Archers:\n" +
+                                    EnumChatFormatting.GREEN + "Monster of Deeps:";
                             countText = EnumChatFormatting.AQUA + nf.format(FishingTracker.seaCreaturesSession) + "\n" +
                                     EnumChatFormatting.AQUA + nf.format(FishingTracker.fishingMilestoneSession) + "\n" +
                                     EnumChatFormatting.GOLD + nf.format(FishingTracker.goodCatchesSession) + "\n" +
@@ -813,9 +820,10 @@ public class LootDisplay extends Hud {
                                     EnumChatFormatting.DARK_GRAY + nf.format(FishingTracker.nightSquidsSession) + "\n" +
                                     EnumChatFormatting.DARK_AQUA + nf.format(FishingTracker.seaGuardiansSession) + "\n" +
                                     EnumChatFormatting.BLUE + nf.format(FishingTracker.seaWitchesSession) + "\n" +
-                                    EnumChatFormatting.GREEN + nf.format(FishingTracker.seaArchersSession);
+                                    EnumChatFormatting.GREEN + nf.format(FishingTracker.seaArchersSession) + "\n" +
+                                    EnumChatFormatting.GREEN + nf.format(FishingTracker.monsterOfTheDeepsSession);
                             // Seperated to save vertical space
-                            dropsTextTwo = EnumChatFormatting.GREEN + "Monster of Deeps:\n" +
+                            dropsTextTwo = EnumChatFormatting.RED + "Agarimoos:\n" +
                                     EnumChatFormatting.YELLOW + "Catfishes:\n" +
                                     EnumChatFormatting.GOLD + "Carrot Kings:\n" +
                                     EnumChatFormatting.GRAY + "Sea Leeches:\n" +
@@ -825,7 +833,7 @@ public class LootDisplay extends Hud {
                                     EnumChatFormatting.GOLD + "Sea Emperors:\n" +
                                     EnumChatFormatting.AQUA + "Time Since Emp:\n" +
                                     EnumChatFormatting.AQUA + "Creatures Since Emp:";
-                            countTextTwo = EnumChatFormatting.GREEN + nf.format(FishingTracker.monsterOfTheDeepsSession) + "\n" +
+                            countTextTwo = EnumChatFormatting.RED + nf.format(FishingTracker.agarimoosSession) + "\n" +
                                     EnumChatFormatting.YELLOW + nf.format(FishingTracker.catfishesSession) + "\n" +
                                     EnumChatFormatting.GOLD + nf.format(FishingTracker.carrotKingsSession) + "\n" +
                                     EnumChatFormatting.GRAY + nf.format(FishingTracker.seaLeechesSession) + "\n" +
@@ -1304,12 +1312,14 @@ public class LootDisplay extends Hud {
                             dropsText = EnumChatFormatting.GOLD + "S+ Runs:\n" +
                                     EnumChatFormatting.GOLD + "Recombobulators:\n" +
                                     EnumChatFormatting.DARK_PURPLE + "Fuming Potato Books:\n" +
+                                    EnumChatFormatting.GREEN + "Balloon Snakes:\n" +
                                     EnumChatFormatting.BLUE + "Bonzo's Staffs:\n" +
                                     EnumChatFormatting.AQUA + "Coins Spent:\n" +
                                     EnumChatFormatting.AQUA + "Time Spent:";
                             countText = EnumChatFormatting.GOLD + nf.format(CatacombsTracker.f1SPlus) + "\n" +
                                     EnumChatFormatting.GOLD + nf.format(CatacombsTracker.recombobulators) + "\n" +
                                     EnumChatFormatting.DARK_PURPLE + nf.format(CatacombsTracker.fumingPotatoBooks) + "\n" +
+                                    EnumChatFormatting.GREEN + nf.format(CatacombsTracker.balloonSnakes) + "\n" +
                                     EnumChatFormatting.BLUE + nf.format(CatacombsTracker.bonzoStaffs) + "\n" +
                                     EnumChatFormatting.AQUA + Utils.getMoneySpent(CatacombsTracker.f1CoinsSpent) + "\n" +
                                     EnumChatFormatting.AQUA + Utils.getTimeBetween(0, CatacombsTracker.f1TimeSpent);
@@ -1317,12 +1327,14 @@ public class LootDisplay extends Hud {
                             dropsText = EnumChatFormatting.GOLD + "S+ Runs:\n" +
                                     EnumChatFormatting.GOLD + "Recombobulators:\n" +
                                     EnumChatFormatting.DARK_PURPLE + "Fuming Potato Books:\n" +
+                                    EnumChatFormatting.GREEN + "Balloon Snakes:\n" +
                                     EnumChatFormatting.BLUE + "Bonzo's Staffs:\n" +
                                     EnumChatFormatting.AQUA + "Coins Spent:\n" +
                                     EnumChatFormatting.AQUA + "Time Spent:";
                             countText = EnumChatFormatting.GOLD + nf.format(CatacombsTracker.f1SPlusSession) + "\n" +
                                     EnumChatFormatting.GOLD + nf.format(CatacombsTracker.recombobulatorsSession) + "\n" +
                                     EnumChatFormatting.DARK_PURPLE + nf.format(CatacombsTracker.fumingPotatoBooksSession) + "\n" +
+                                    EnumChatFormatting.GREEN + nf.format(CatacombsTracker.balloonSnakesSession) + "\n" +
                                     EnumChatFormatting.BLUE + nf.format(CatacombsTracker.bonzoStaffsSession) + "\n" +
                                     EnumChatFormatting.AQUA + Utils.getMoneySpent(CatacombsTracker.f1CoinsSpentSession) + "\n" +
                                     EnumChatFormatting.AQUA + Utils.getTimeBetween(0, CatacombsTracker.f1TimeSpentSession);
@@ -1335,6 +1347,7 @@ public class LootDisplay extends Hud {
                                     EnumChatFormatting.DARK_PURPLE + "Fuming Potato Books:\n" +
                                     EnumChatFormatting.BLUE + "Scarf's Studies:\n" +
                                     EnumChatFormatting.DARK_PURPLE + "Adaptive Blades:\n" +
+                                    EnumChatFormatting.DARK_PURPLE + "Adaptive Belts:\n" +
                                     EnumChatFormatting.AQUA + "Coins Spent:\n" +
                                     EnumChatFormatting.AQUA + "Time Spent:";
                             countText = EnumChatFormatting.GOLD + nf.format(CatacombsTracker.f2SPlus) + "\n" +
@@ -1342,6 +1355,7 @@ public class LootDisplay extends Hud {
                                     EnumChatFormatting.DARK_PURPLE + nf.format(CatacombsTracker.fumingPotatoBooks) + "\n" +
                                     EnumChatFormatting.BLUE + nf.format(CatacombsTracker.scarfStudies) + "\n" +
                                     EnumChatFormatting.DARK_PURPLE + nf.format(CatacombsTracker.adaptiveSwords) + "\n" +
+                                    EnumChatFormatting.DARK_PURPLE + nf.format(CatacombsTracker.adaptiveBelts) + "\n" +
                                     EnumChatFormatting.AQUA + Utils.getMoneySpent(CatacombsTracker.f2CoinsSpent) + "\n" +
                                     EnumChatFormatting.AQUA + Utils.getTimeBetween(0, CatacombsTracker.f2TimeSpent);
                         } else {
@@ -1350,6 +1364,7 @@ public class LootDisplay extends Hud {
                                     EnumChatFormatting.DARK_PURPLE + "Fuming Potato Books:\n" +
                                     EnumChatFormatting.BLUE + "Scarf's Studies:\n" +
                                     EnumChatFormatting.DARK_PURPLE + "Adaptive Blades:\n" +
+                                    EnumChatFormatting.DARK_PURPLE + "Adaptive Belts:\n" +
                                     EnumChatFormatting.AQUA + "Coins Spent:\n" +
                                     EnumChatFormatting.AQUA + "Time Spent:";
                             countText = EnumChatFormatting.GOLD + nf.format(CatacombsTracker.f2SPlusSession) + "\n" +
@@ -1357,6 +1372,7 @@ public class LootDisplay extends Hud {
                                     EnumChatFormatting.DARK_PURPLE + nf.format(CatacombsTracker.fumingPotatoBooksSession) + "\n" +
                                     EnumChatFormatting.BLUE + nf.format(CatacombsTracker.scarfStudiesSession) + "\n" +
                                     EnumChatFormatting.DARK_PURPLE + nf.format(CatacombsTracker.adaptiveSwordsSession) + "\n" +
+                                    EnumChatFormatting.DARK_PURPLE + nf.format(CatacombsTracker.adaptiveBeltsSession) + "\n" +
                                     EnumChatFormatting.AQUA + Utils.getMoneySpent(CatacombsTracker.f2CoinsSpentSession) + "\n" +
                                     EnumChatFormatting.AQUA + Utils.getTimeBetween(0, CatacombsTracker.f2TimeSpentSession);
                         }
@@ -1465,6 +1481,7 @@ public class LootDisplay extends Hud {
                                     EnumChatFormatting.DARK_PURPLE + "Shadow Chestplates:\n" +
                                     EnumChatFormatting.DARK_PURPLE + "Shadow Leggings:\n" +
                                     EnumChatFormatting.DARK_PURPLE + "Shadow Boots:\n" +
+                                    EnumChatFormatting.DARK_PURPLE + "Shadow Cloaks:\n" +
                                     EnumChatFormatting.GOLD + "Last Breaths:\n" +
                                     EnumChatFormatting.GOLD + "Livid Daggers:\n" +
                                     EnumChatFormatting.GOLD + "Shadow Furys:\n" +
@@ -1478,6 +1495,7 @@ public class LootDisplay extends Hud {
                                     EnumChatFormatting.DARK_PURPLE + nf.format(CatacombsTracker.shadowAssChests) + "\n" +
                                     EnumChatFormatting.DARK_PURPLE + nf.format(CatacombsTracker.shadowAssLegs) + "\n" +
                                     EnumChatFormatting.DARK_PURPLE + nf.format(CatacombsTracker.shadowAssBoots) + "\n" +
+                                    EnumChatFormatting.DARK_PURPLE + nf.format(CatacombsTracker.shadowAssCloaks) + "\n" +
                                     EnumChatFormatting.GOLD + nf.format(CatacombsTracker.lastBreaths) + "\n" +
                                     EnumChatFormatting.GOLD + nf.format(CatacombsTracker.lividDaggers) + "\n" +
                                     EnumChatFormatting.GOLD + nf.format(CatacombsTracker.shadowFurys) + "\n" +
@@ -1492,6 +1510,7 @@ public class LootDisplay extends Hud {
                                     EnumChatFormatting.DARK_PURPLE + "Shadow Chestplates:\n" +
                                     EnumChatFormatting.DARK_PURPLE + "Shadow Leggings:\n" +
                                     EnumChatFormatting.DARK_PURPLE + "Shadow Boots:\n" +
+                                    EnumChatFormatting.DARK_PURPLE + "Shadow Cloaks:\n" +
                                     EnumChatFormatting.GOLD + "Last Breaths:\n" +
                                     EnumChatFormatting.GOLD + "Livid Daggers:\n" +
                                     EnumChatFormatting.GOLD + "Shadow Furys:\n" +
@@ -1505,6 +1524,7 @@ public class LootDisplay extends Hud {
                                     EnumChatFormatting.DARK_PURPLE + nf.format(CatacombsTracker.shadowAssChestsSession) + "\n" +
                                     EnumChatFormatting.DARK_PURPLE + nf.format(CatacombsTracker.shadowAssLegsSession) + "\n" +
                                     EnumChatFormatting.DARK_PURPLE + nf.format(CatacombsTracker.shadowAssBootsSession) + "\n" +
+                                    EnumChatFormatting.DARK_PURPLE + nf.format(CatacombsTracker.shadowAssCloaksSession) + "\n" +
                                     EnumChatFormatting.GOLD + nf.format(CatacombsTracker.lastBreathsSession) + "\n" +
                                     EnumChatFormatting.GOLD + nf.format(CatacombsTracker.lividDaggersSession) + "\n" +
                                     EnumChatFormatting.GOLD + nf.format(CatacombsTracker.shadowFurysSession) + "\n" +
@@ -1525,6 +1545,7 @@ public class LootDisplay extends Hud {
                                     EnumChatFormatting.GOLD + "Necro Lord Leggings:\n" +
                                     EnumChatFormatting.GOLD + "Necro Lord Boots:\n" +
                                     EnumChatFormatting.GOLD + "Necro Swords:\n" +
+                                    EnumChatFormatting.DARK_PURPLE + "Fel Skulls:\n" +
                                     EnumChatFormatting.WHITE + "Rerolls:\n" +
                                     EnumChatFormatting.AQUA + "Coins Spent:\n" +
                                     EnumChatFormatting.AQUA + "Time Spent:";
@@ -1539,6 +1560,7 @@ public class LootDisplay extends Hud {
                                     EnumChatFormatting.GOLD + nf.format(CatacombsTracker.necroLordLegs) + "\n" +
                                     EnumChatFormatting.GOLD + nf.format(CatacombsTracker.necroLordBoots) + "\n" +
                                     EnumChatFormatting.GOLD + nf.format(CatacombsTracker.necroSwords) + "\n" +
+                                    EnumChatFormatting.DARK_PURPLE + nf.format(CatacombsTracker.felSkulls) + "\n" +
                                     EnumChatFormatting.WHITE + nf.format(CatacombsTracker.f6Rerolls) + "\n" +
                                     EnumChatFormatting.AQUA + Utils.getMoneySpent(CatacombsTracker.f6CoinsSpent) + "\n" +
                                     EnumChatFormatting.AQUA + Utils.getTimeBetween(0, CatacombsTracker.f6TimeSpent);
@@ -1554,6 +1576,7 @@ public class LootDisplay extends Hud {
                                     EnumChatFormatting.GOLD + "Necro Lord Leggings:\n" +
                                     EnumChatFormatting.GOLD + "Necro Lord Boots:\n" +
                                     EnumChatFormatting.GOLD + "Necro Swords:\n" +
+                                    EnumChatFormatting.DARK_PURPLE + "Fel Skulls:\n" +
                                     EnumChatFormatting.WHITE + "Rerolls:\n" +
                                     EnumChatFormatting.AQUA + "Coins Spent:\n" +
                                     EnumChatFormatting.AQUA + "Time Spent:";
@@ -1568,6 +1591,7 @@ public class LootDisplay extends Hud {
                                     EnumChatFormatting.GOLD + nf.format(CatacombsTracker.necroLordLegsSession) + "\n" +
                                     EnumChatFormatting.GOLD + nf.format(CatacombsTracker.necroLordBootsSession) + "\n" +
                                     EnumChatFormatting.GOLD + nf.format(CatacombsTracker.necroSwordsSession) + "\n" +
+                                    EnumChatFormatting.DARK_PURPLE + nf.format(CatacombsTracker.felSkullsSession) + "\n" +
                                     EnumChatFormatting.WHITE + nf.format(CatacombsTracker.f6RerollsSession) + "\n" +
                                     EnumChatFormatting.AQUA + Utils.getMoneySpent(CatacombsTracker.f6CoinsSpentSession) + "\n" +
                                     EnumChatFormatting.AQUA + Utils.getTimeBetween(0, CatacombsTracker.f6TimeSpentSession);

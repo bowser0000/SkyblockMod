@@ -95,6 +95,7 @@ public class ModConfig extends Config {
         addDependency("triviaWrongAnswerColour", "oruo");
         addDependency("threeManAnswerColour", "threeMan");
         addDependency("highlightOrdersColour", "highlightOrders");
+        addDependency("highlightPestsColour", "highlightPests");
         addDependency("hidePlayerArmourOnly", "hideArmour");
         addDependency("autoImportWaypoints", "autoWaypoints");
         addDependency("debugPacketsIn", "debug");
@@ -123,7 +124,6 @@ public class ModConfig extends Config {
 
     /* categories:
     general
-        api
         general
         slayers
         hide tooltips
@@ -173,28 +173,6 @@ public class ModConfig extends Config {
     */
 
     // General
-
-    @CfgName(
-            name = "APIKey",
-            category = "api"
-    )
-    @Text(
-            name = "API Key",
-            description = "API key used for commands.",
-            secure = true,
-            category = "General",
-            subcategory = "API"
-    )
-    @HypixelKey
-    public static String apiKey = "";
-
-    @Button(
-            name = "Generate New API Key",
-            text = "Click",
-            category = "General",
-            subcategory = "API"
-    )
-    Runnable newKey = () -> mc.thePlayer.sendChatMessage("/api new");
 
     @CfgName(
             name = "ExpertiseLore",
@@ -261,8 +239,8 @@ public class ModConfig extends Config {
             category = "toggles"
     )
     @Switch(
-            name = "Prevent Placing FoT/Spirit Sceptre",
-            description = "Blocks placing Flower of Truth or Spirit Sceptre.",
+            name = "Prevent Placing Flower Weapons",
+            description = "Blocks placing Flower of Truth, Spirit Sceptre, Bouquet of Lies, and Fire Freeze Staff.",
             category = "General",
             subcategory = "General"
     )
@@ -902,6 +880,13 @@ public class ModConfig extends Config {
     public static BonzoMaskTimer.BonzoTimerHud bonzoTimerHud = new BonzoMaskTimer.BonzoTimerHud();
 
     @HUD(
+            name = "Spirit Mask Timer",
+            category = "Display",
+            subcategory = "Dungeons"
+    )
+    public static SpiritMaskTimer.SpiritTimerHud spiritTimerHud = new SpiritMaskTimer.SpiritTimerHud();
+
+    @HUD(
             name = "Display Players in 30 Block Radius",
             category = "Display",
             subcategory = "Dungeons"
@@ -1047,6 +1032,21 @@ public class ModConfig extends Config {
             subcategory = "General"
     )
     public static OneColor highlightOrdersColour = new OneColor(81, 255, 81, 215);
+
+    @Switch(
+            name = "Highlight Plots With Pests",
+            description = "Show which plots have pests on them.",
+            category = "Highlights",
+            subcategory = "General"
+    )
+    public static boolean highlightPests = false;
+
+    @Color(
+            name = "Plot Highlight Color",
+            category = "Highlights",
+            subcategory = "General"
+    )
+    public static OneColor highlightPestsColour = new OneColor(81, 255, 81, 215);
 
     @CfgName(
             name = "HighlightSlayers",

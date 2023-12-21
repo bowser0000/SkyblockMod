@@ -86,7 +86,7 @@ public class WarpCommandHandler {
         registerCommand(new WarpCommand("crypt"));
         registerCommand(new WarpCommand("nest"));
         registerCommand(new WarpCommand("void"));
-        registerCommand(new WarpCommand("drag", "dragon"));
+        registerCommand(new WarpCommand("drag"));
         registerCommand(new WarpCommand("jungle"));
         registerCommand(new WarpCommand("howl"));
         registerCommand(new WarpCommand("dun", "dungeon_hub"));
