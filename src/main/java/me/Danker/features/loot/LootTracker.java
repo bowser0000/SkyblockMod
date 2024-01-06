@@ -22,9 +22,9 @@ public class LootTracker {
     public static long itemsChecked = 0;
     // RARE DROP! (61x Twilight Arrow Poison) (+140% Magic Find!)
     // VERY RARE DROP!  (19x Nether Wart Distillate) (+160% Magic Find!)
-    static Pattern twentyPattern = Pattern.compile("(VERY )?RARE DROP!  ?\\((?<amount>\\d+)x (?<drop>.+?)\\)( \\(.*\\))?");
+    static Pattern twentyPattern = Pattern.compile("(VERY )?RARE DROP!  ?\\((?<amount>\\d+)x (?<drop>.+?)\\).*");
     // CRAZY RARE DROP!  (Judgement Core) (+203% Magic Find!)
-    static Pattern dropPattern = Pattern.compile("((VERY|CRAZY|INSANE) )?RARE DROP!  ?\\((?<drop>.+?)\\)( \\(.*\\))?");
+    static Pattern dropPattern = Pattern.compile("(((VERY|CRAZY) )?RARE|INSANE) DROP!  ?\\((?<drop>.+?)\\).*");
 
     @SubscribeEvent
     public void onChat(ClientChatReceivedEvent event) {
