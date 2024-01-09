@@ -345,7 +345,7 @@ public class FishingTracker {
             lavaPigmenSession += getAmount();
             CfgConfig.writeIntConfig("fishing", "lavaPigman", lavaPigmen);
             increaseSeaCreatures();
-        } else if (message.equals("A Zombie Miner surfaces!")) {
+        } else if (message.equals("An Abyssal Miner breaks out of the water!")) {
             zombieMiners += getAmount();
             zombieMinersSession += getAmount();
             CfgConfig.writeIntConfig("fishing", "zombieMiner", zombieMiners);
