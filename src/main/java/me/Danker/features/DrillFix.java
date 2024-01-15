@@ -19,7 +19,7 @@ public class DrillFix {
         if (ModConfig.drillFix && Utils.inSkyblock) {
             Minecraft mc = Minecraft.getMinecraft();
             EntityPlayer player = mc.thePlayer;
-            boolean isDown = mc.gameSettings.keyBindUseItem.isKeyDown();
+            boolean isDown = mc.gameSettings.keyBindAttack.isKeyDown();
 
             if (player == null || player.inventory == null) return;
 
