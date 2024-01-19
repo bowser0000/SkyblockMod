@@ -77,19 +77,9 @@ public class MythologicalTracker {
                 gaiaConstructsSession++;
                 CfgConfig.writeIntConfig("mythological", "gaiaConstruct", gaiaConstructs);
             } else if (message.contains("a Minos Champion!")) {
-                Minecraft mc = Minecraft.getMinecraft();
-                List<Entity> listWorldEntity = mc.theWorld.getLoadedEntityList();
-                for (Entity entity : listWorldEntity) {
-                    if (entity.getName().contains("Minos Champion")) {
-                        minosChampions++;
-                        minosChampionsSession++;
-                        CfgConfig.writeIntConfig("mythological", "minosChampion", minosChampions);
-                    } else if (entity.getName().contains("Minos Inquisitor")) {
-                        minosInquisitors++;
-                        minosInquisitorsSession++;
-                        CfgConfig.writeIntConfig("mythological", "minosInquisitor", minosInquisitors);
-                    }
-                }
+                minosChampions++;
+                minosChampionsSession++;
+                CfgConfig.writeIntConfig("mythological", "minosChampion", minosChampions);
             } else if (message.contains("a Minos Inquisitor!")) {
                 minosInquisitors++;
                 minosInquisitorsSession++;
