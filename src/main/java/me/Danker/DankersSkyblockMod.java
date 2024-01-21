@@ -412,11 +412,11 @@ public class DankersSkyblockMod {
             if (chestName.equals("Your Skills")) {
                 List<Slot> invSlots = ((GuiChest) mc.currentScreen).inventorySlots.inventorySlots;
 
-                farmingLevel = Utils.initializeSkill(invSlots.get(19).getStack(), "farming");
-                miningLevel = Utils.initializeSkill(invSlots.get(20).getStack(), "mining");
-                combatLevel = Utils.initializeSkill(invSlots.get(21).getStack(), "combat");
-                foragingLevel = Utils.initializeSkill(invSlots.get(22).getStack(), "foraging");
-                fishingLevel = Utils.initializeSkill(invSlots.get(23).getStack(), "fishing");
+                combatLevel = Utils.initializeSkill(invSlots.get(19).getStack(), "combat");
+                farmingLevel = Utils.initializeSkill(invSlots.get(20).getStack(), "farming");
+                fishingLevel = Utils.initializeSkill(invSlots.get(21).getStack(), "fishing");
+                miningLevel = Utils.initializeSkill(invSlots.get(22).getStack(), "mining");
+                foragingLevel = Utils.initializeSkill(invSlots.get(23).getStack(), "foraging");
                 enchantingLevel = Utils.initializeSkill(invSlots.get(24).getStack(), "enchanting");
                 alchemyLevel = Utils.initializeSkill(invSlots.get(25).getStack(), "alchemy");
                 carpentryLevel = Utils.initializeSkill(invSlots.get(29).getStack(), "carpentry");
