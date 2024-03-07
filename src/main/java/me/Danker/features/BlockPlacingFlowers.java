@@ -6,6 +6,7 @@ import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumFacing;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -22,6 +23,13 @@ public class BlockPlacingFlowers {
             Blocks.double_plant
     ));
 
+    ArrayList<String> flowerWeapons  = new ArrayList<>(Arrays.asList(
+            "Flower of Truth",
+            "Spirit Sceptre",
+            "Bouquet of Lies",
+            "Fire Freeze Staff"
+    ));
+
     @SubscribeEvent
     public void onInteract(PlayerInteractEvent event) {
         if (!Utils.inSkyblock || Minecraft.getMinecraft().thePlayer != event.entityPlayer) return;
@@ -30,19 +38,14 @@ public class BlockPlacingFlowers {
 
         if (ModConfig.flowerWeapons && event.action == PlayerInteractEvent.Action.RIGHT_CLICK_BLOCK) {
             Block block = Minecraft.getMinecraft().theWorld.getBlockState(event.pos).getBlock();
+            Block blockUnder = Minecraft.getMinecraft().theWorld.getBlockState(event.pos.down().offset(event.face)).getBlock();
 
-            if (flowerPlaceable.contains(block)) {
-                if (item.getDisplayName().contains("Flower of Truth")) {
-                    event.setCanceled(true);
-                }
-                if (item.getDisplayName().contains("Spirit Sceptre")) {
-                    event.setCanceled(true);
-                }
-                if (item.getDisplayName().contains("Bouquet of Lies")) {
-                    event.setCanceled(true);
-                }
-                if (item.getDisplayName().contains("Fire Freeze Staff")) {
-                    event.setCanceled(true);
+            if (flowerPlaceable.contains(block) || flowerPlaceable.contains(blockUnder)) {
+                for (String weapon : flowerWeapons) {
+                    if(item.getDisplayName().contains(weapon)){
+                        event.setCanceled(true);
+                        break;
+                    }
                 }
             }
         }
