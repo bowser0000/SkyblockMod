@@ -161,54 +161,54 @@ public class RenderUtils {
 
     // I couldnt get waypoint strings to work so in the end I just copied from NEU
     // If anyone sees this please help
-	/*public static void draw3DWaypointString(CrystalHollowWaypoints.Waypoint waypoint, float partialTicks) {
-		Minecraft mc = Minecraft.getMinecraft();
-		EntityPlayer player = mc.thePlayer;
-		BlockPos pos = waypoint.pos;
-		double x = (pos.getX() - player.lastTickPosX) + ((pos.getX() - player.posX) - (pos.getX() - player.lastTickPosX)) * partialTicks;
-		double y = (pos.getY() - player.lastTickPosY) + ((pos.getY() - player.posY) - (pos.getY() - player.lastTickPosY)) * partialTicks;
-		double z = (pos.getZ() - player.lastTickPosZ) + ((pos.getZ() - player.posZ) - (pos.getZ() - player.lastTickPosZ)) * partialTicks;
+    /*public static void draw3DWaypointString(CrystalHollowWaypoints.Waypoint waypoint, float partialTicks) {
+        Minecraft mc = Minecraft.getMinecraft();
+        EntityPlayer player = mc.thePlayer;
+        BlockPos pos = waypoint.pos;
+        double x = (pos.getX() - player.lastTickPosX) + ((pos.getX() - player.posX) - (pos.getX() - player.lastTickPosX)) * partialTicks;
+        double y = (pos.getY() - player.lastTickPosY) + ((pos.getY() - player.posY) - (pos.getY() - player.lastTickPosY)) * partialTicks;
+        double z = (pos.getZ() - player.lastTickPosZ) + ((pos.getZ() - player.posZ) - (pos.getZ() - player.lastTickPosZ)) * partialTicks;
 
-		double distance = player.getDistance(x, y, z);
-		if (distance > 12) {
-			x *= 12 / distance;
-			y *= 12 / distance;
-			z *= 12 / distance;
-		}
+        double distance = player.getDistance(x, y, z);
+        if (distance > 12) {
+            x *= 12 / distance;
+            y *= 12 / distance;
+            z *= 12 / distance;
+        }
 
-		RenderManager renderManager = mc.getRenderManager();
-		Entity viewer = Minecraft.getMinecraft().getRenderViewEntity();
+        RenderManager renderManager = mc.getRenderManager();
+        Entity viewer = Minecraft.getMinecraft().getRenderViewEntity();
 
-		float f = 1.6F;
-		float f1 = 0.016666668F * f;
-		int width = mc.fontRendererObj.getStringWidth(waypoint.location) / 2;
-		int width2 = mc.fontRendererObj.getStringWidth(waypoint.getDistance(player)) / 2;
-		GlStateManager.pushMatrix();
-		GlStateManager.translate(x, y, z);
-		GL11.glNormal3f(0f, 1f, 0f);
-		GlStateManager.rotate(-renderManager.playerViewY, 0f, 1f, 0f);
-		GlStateManager.rotate(renderManager.playerViewX, 1f, 0f, 0f);
-		GlStateManager.scale(-f1, -f1, -f1);
-		GlStateManager.enableBlend();
-		GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
-		GL11.glDisable(GL11.GL_DEPTH_TEST);
-		GlStateManager.depthMask(false);
+        float f = 1.6F;
+        float f1 = 0.016666668F * f;
+        int width = mc.fontRendererObj.getStringWidth(waypoint.location) / 2;
+        int width2 = mc.fontRendererObj.getStringWidth(waypoint.getDistance(player)) / 2;
+        GlStateManager.pushMatrix();
+        GlStateManager.translate(x, y, z);
+        GL11.glNormal3f(0f, 1f, 0f);
+        GlStateManager.rotate(-renderManager.playerViewY, 0f, 1f, 0f);
+        GlStateManager.rotate(renderManager.playerViewX, 1f, 0f, 0f);
+        GlStateManager.scale(-f1, -f1, -f1);
+        GlStateManager.enableBlend();
+        GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
+        GL11.glDisable(GL11.GL_DEPTH_TEST);
+        GlStateManager.depthMask(false);
 
-		mc.fontRendererObj.drawString(waypoint.location, -width, 0, 0x55FFFF);
+        mc.fontRendererObj.drawString(waypoint.location, -width, 0, 0x55FFFF);
 
-		GlStateManager.rotate(-renderManager.playerViewY, 0.0F, 1.0F, 0.0F);
-		GlStateManager.rotate(renderManager.playerViewX, 1.0F, 0.0F, 0.0F);
-		GlStateManager.translate(0, -1, 0);
-		GlStateManager.rotate(-renderManager.playerViewX, 1.0F, 0.0F, 0.0F);
-		GlStateManager.rotate(renderManager.playerViewY, 0.0F, 1.0F, 0.0F);
+        GlStateManager.rotate(-renderManager.playerViewY, 0.0F, 1.0F, 0.0F);
+        GlStateManager.rotate(renderManager.playerViewX, 1.0F, 0.0F, 0.0F);
+        GlStateManager.translate(0, -1, 0);
+        GlStateManager.rotate(-renderManager.playerViewX, 1.0F, 0.0F, 0.0F);
+        GlStateManager.rotate(renderManager.playerViewY, 0.0F, 1.0F, 0.0F);
 
-		mc.fontRendererObj.drawString(waypoint.getDistance(player), -width2, 0, 0xFFFF55);
+        mc.fontRendererObj.drawString(waypoint.getDistance(player), -width2, 0, 0xFFFF55);
 
-		GL11.glEnable(GL11.GL_DEPTH_TEST);
-		GlStateManager.depthMask(true);
-		GlStateManager.disableBlend();
-		GlStateManager.popMatrix();
-	}*/
+        GL11.glEnable(GL11.GL_DEPTH_TEST);
+        GlStateManager.depthMask(true);
+        GlStateManager.disableBlend();
+        GlStateManager.popMatrix();
+    }*/
 
     // https://github.com/Moulberry/NotEnoughUpdates/blob/master/src/main/java/io/github/moulberry/notenoughupdates/miscfeatures/DwarvenMinesWaypoints.java#L261
     public static void draw3DWaypointString(CrystalHollowWaypoints.Waypoint waypoint, float partialTicks) {

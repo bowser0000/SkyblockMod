@@ -13,31 +13,31 @@ import net.minecraftforge.common.MinecraftForge;
 
 public class ReloadConfigCommand extends CommandBase {
 
-	@Override
-	public String getCommandName() {
-		return "reloadconfig";
-	}
+    @Override
+    public String getCommandName() {
+        return "reloadconfig";
+    }
 
-	@Override
-	public String getCommandUsage(ICommandSender arg0) {
-		return "/" + getCommandName();
-	}
+    @Override
+    public String getCommandUsage(ICommandSender arg0) {
+        return "/" + getCommandName();
+    }
 
-	public static String usage(ICommandSender arg0) {
-		return new ReloadConfigCommand().getCommandUsage(arg0);
-	}
+    public static String usage(ICommandSender arg0) {
+        return new ReloadConfigCommand().getCommandUsage(arg0);
+    }
 
-	@Override
-	public int getRequiredPermissionLevel() {
-		return 0;
-	}
-	
-	@Override
-	public void processCommand(ICommandSender arg0, String[] arg1) throws CommandException {
-		EntityPlayer player = (EntityPlayer)arg0;
-		ConfigHandler.reloadConfig();
-		MinecraftForge.EVENT_BUS.post(new PostConfigInitEvent(DankersSkyblockMod.configDirectory));
-		player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Reloaded config."));
-	}
+    @Override
+    public int getRequiredPermissionLevel() {
+        return 0;
+    }
+    
+    @Override
+    public void processCommand(ICommandSender arg0, String[] arg1) throws CommandException {
+        EntityPlayer player = (EntityPlayer)arg0;
+        ConfigHandler.reloadConfig();
+        MinecraftForge.EVENT_BUS.post(new PostConfigInitEvent(DankersSkyblockMod.configDirectory));
+        player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.mainColour) + "Reloaded config."));
+    }
 
 }

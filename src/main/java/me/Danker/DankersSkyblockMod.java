@@ -241,18 +241,18 @@ public class DankersSkyblockMod {
 
     @EventHandler
     public void postInit(FMLPostInitializationEvent event) {
-		Package[] packages = Package.getPackages();
-		for (Package p : packages){
-			if (p.getName().startsWith("com.spiderfrog.gadgets") || p.getName().startsWith("com.spiderfrog.oldanimations")){
-				usingOAM = true;
-				break;
-			}
-		}
-		System.out.println("OAM detection: " + usingOAM);
+        Package[] packages = Package.getPackages();
+        for (Package p : packages){
+            if (p.getName().startsWith("com.spiderfrog.gadgets") || p.getName().startsWith("com.spiderfrog.oldanimations")){
+                usingOAM = true;
+                break;
+            }
+        }
+        System.out.println("OAM detection: " + usingOAM);
 
-    	usingLabymod = Loader.isModLoaded("labymod");
-    	System.out.println("LabyMod detection: " + usingLabymod);
-    	
+        usingLabymod = Loader.isModLoaded("labymod");
+        System.out.println("LabyMod detection: " + usingLabymod);
+        
         if (!ClientCommandHandler.instance.getCommands().containsKey("reparty")) {
             ClientCommandHandler.instance.registerCommand(new RepartyCommand());
         } else if (CfgConfig.getBoolean("commands", "reparty")) {
@@ -266,12 +266,12 @@ public class DankersSkyblockMod {
     }
 
     @SubscribeEvent
-	public void onGuiOpenEvent(GuiOpenEvent event) {
-		if (event.gui instanceof GuiMainMenu && usingOAM && !OAMWarning) {
-		    event.gui = new WarningGuiRedirect(new WarningGui());
-		    OAMWarning = true;
-		}
-	}
+    public void onGuiOpenEvent(GuiOpenEvent event) {
+        if (event.gui instanceof GuiMainMenu && usingOAM && !OAMWarning) {
+            event.gui = new WarningGuiRedirect(new WarningGui());
+            OAMWarning = true;
+        }
+    }
 
     @SubscribeEvent
     public void onJoin(EntityJoinWorldEvent event) {
