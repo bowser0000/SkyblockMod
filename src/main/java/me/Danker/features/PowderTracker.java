@@ -40,7 +40,7 @@ public class PowderTracker {
         if (event.phase != TickEvent.Phase.START) return;
 
         if (DankersSkyblockMod.tickAmount % 20 == 0) {
-            if (Utils.currentLocation == Location.DWARVEN_MINES || Utils.currentLocation == Location.CRYSTAL_HOLLOWS) {
+            if (Utils.currentLocation == Location.DWARVEN_MINES || Utils.currentLocation == Location.CRYSTAL_HOLLOWS || Utils.currentLocation == Location.MINESHAFT)) {
                 if (Minecraft.getMinecraft().getNetHandler() == null) return;
                 Collection<NetworkPlayerInfo> players = Minecraft.getMinecraft().getNetHandler().getPlayerInfoMap();
                 for (NetworkPlayerInfo player : players) {
