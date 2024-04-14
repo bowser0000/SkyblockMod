@@ -15,6 +15,7 @@ public enum Location {
     HUB("Hub"),
     KUUDRA("Kuudra"),
     JERRY_WORKSHOP("Jerry's Workshop"),
+    MINESHAFT("Mineshaft"),
     PARK("The Park"),
     PRIVATE_ISLAND("Private Island"),
     RIFT("The Rift"),
