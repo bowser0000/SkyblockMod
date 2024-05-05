@@ -9,6 +9,7 @@ import me.Danker.handlers.TextRenderer;
 import me.Danker.utils.RenderUtils;
 import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StringUtils;
@@ -54,6 +55,7 @@ public class GolemSpawningAlert {
             if (example) {
                 double scaleReset = Math.pow(scale, -1);
                 GL11.glScaled(scale, scale, scale);
+                GlStateManager.color(1, 1, 1, 1);
 
                 mc.getTextureManager().bindTexture(GOLEM_ICON);
                 RenderUtils.drawModalRectWithCustomSizedTexture(x / scale, y / scale, 0, 0, 16, 16, 16, 16);
@@ -67,6 +69,7 @@ public class GolemSpawningAlert {
             if (enabled && Utils.inSkyblock && golemTime > System.currentTimeMillis() / 1000) {
                 double scaleReset = Math.pow(scale, -1);
                 GL11.glScaled(scale, scale, scale);
+                GlStateManager.color(1, 1, 1, 1);
 
                 mc.getTextureManager().bindTexture(GOLEM_ICON);
                 RenderUtils.drawModalRectWithCustomSizedTexture(x / scale, y / scale, 0, 0, 16, 16, 16, 16);
