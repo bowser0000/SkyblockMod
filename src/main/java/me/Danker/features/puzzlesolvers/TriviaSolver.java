@@ -36,12 +36,8 @@ public class TriviaSolver {
         triviaSolutions.put("What is the status of Thorn?", new String[]{"Shaman Necromancer"});
         triviaSolutions.put("What is the status of Livid?", new String[]{"Master Necromancer"});
         triviaSolutions.put("What is the status of Sadan?", new String[]{"Necromancer Lord"});
-        triviaSolutions.put("What is the status of Maxor?", new String[]{"Young Wither"});
-        triviaSolutions.put("What is the status of Goldor?", new String[]{"Wither Soldier"});
-        triviaSolutions.put("What is the status of Storm?", new String[]{"Elementalist"});
-        triviaSolutions.put("What is the status of Necron?", new String[]{"Wither Lord"});
-        triviaSolutions.put("What is the status of Maxor, Storm, Goldor and Necron?", new String[]{"Wither Lord"});
-        triviaSolutions.put("How many total Fairy Souls are there?", new String[]{"238 Fairy Souls"});
+        triviaSolutions.put("What is the status of Maxor, Storm, Goldor, and Necron?", new String[]{"The Wither Lords"});
+        triviaSolutions.put("How many total Fairy Souls are there?", new String[]{"247 Fairy Souls"});
         triviaSolutions.put("How many Fairy Souls are there in Spider's Den?", new String[]{"19 Fairy Souls"});
         triviaSolutions.put("How many Fairy Souls are there in The End?", new String[]{"12 Fairy Souls"});
         triviaSolutions.put("How many Fairy Souls are there in The Farming Islands?", new String[]{"20 Fairy Souls"});
@@ -54,13 +50,16 @@ public class TriviaSolver {
         triviaSolutions.put("How many Fairy Souls are there in Gold Mine?", new String[]{"12 Fairy Souls"});
         triviaSolutions.put("How many Fairy Souls are there in Dungeon Hub?", new String[]{"7 Fairy Souls"});
         triviaSolutions.put("Which brother is on the Spider's Den?", new String[]{"Rick"});
+        triviaSolutions.put("Which brother is on the Spiders Den?", new String[]{"Rick"});
         triviaSolutions.put("What is the name of Rick's brother?", new String[]{"Pat"});
         triviaSolutions.put("What is the name of the Painter in the Hub?", new String[]{"Marco"});
         triviaSolutions.put("What is the name of the person that upgrades pets?", new String[]{"Kat"});
         triviaSolutions.put("What is the name of the lady of the Nether?", new String[]{"Elle"});
         triviaSolutions.put("Which villager in the Village gives you a Rogue Sword?", new String[]{"Jamie"});
-        triviaSolutions.put("How many unique minions are there?", new String[]{"55 Minions"});
+        triviaSolutions.put("How many unique minions are there?", new String[]{"59 Minions"});
         triviaSolutions.put("Which of these enemies does not spawn in the Spider's Den?", new String[]{"Zombie Spider", "Cave Spider", "Wither Skeleton",
+                "Dashing Spooder", "Broodfather", "Night Spider"});
+        triviaSolutions.put("Which of these enemies does not spawn in the Spiders Den?", new String[]{"Zombie Spider", "Cave Spider", "Wither Skeleton",
                 "Dashing Spooder", "Broodfather", "Night Spider"});
         triviaSolutions.put("Which of these monsters only spawns at night?", new String[]{"Zombie Villager", "Ghast"});
         triviaSolutions.put("Which of these is not a dragon in The End?", new String[]{"Zoomer Dragon", "Weak Dragon", "Stonk Dragon", "Holy Dragon", "Boomer Dragon",
