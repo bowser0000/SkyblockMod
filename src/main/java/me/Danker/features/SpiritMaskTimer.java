@@ -10,6 +10,7 @@ import me.Danker.utils.RenderUtils;
 import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
@@ -73,6 +74,7 @@ public class SpiritMaskTimer {
             if (example) {
                 double scaleReset = Math.pow(scale, -1);
                 GL11.glScaled(scale, scale, scale);
+                GlStateManager.color(1, 1, 1, 1);
 
                 mc.getTextureManager().bindTexture(SPIRIT_ICON);
                 RenderUtils.drawModalRectWithCustomSizedTexture(x / scale, y / scale, 0, 0, 16, 16, 16, 16);
@@ -88,7 +90,8 @@ public class SpiritMaskTimer {
                 if ((helmetSlot != null && helmetSlot.getDisplayName().contains("Spirit Mask")) || nextspiritUse > 0) {
                     double scaleReset = Math.pow(scale, -1);
                     GL11.glScaled(scale, scale, scale);
-
+                    GlStateManager.color(1, 1, 1, 1);
+                    
                     mc.getTextureManager().bindTexture(SPIRIT_ICON);
                     RenderUtils.drawModalRectWithCustomSizedTexture(x / scale, y / scale, 0, 0, 16, 16, 16, 16);
 

@@ -10,6 +10,7 @@ import me.Danker.handlers.TextRenderer;
 import me.Danker.utils.RenderUtils;
 import me.Danker.utils.Utils;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StringUtils;
@@ -67,6 +68,7 @@ public class CakeTimer {
                 Minecraft mc = Minecraft.getMinecraft();
                 double scaleReset = Math.pow(scale, -1);
                 GL11.glScaled(scale, scale, scale);
+                GlStateManager.color(1, 1, 1, 1);
 
                 mc.getTextureManager().bindTexture(CAKE_ICON);
                 RenderUtils.drawModalRectWithCustomSizedTexture(x / scale, y / scale, 0, 0, 16, 16, 16, 16);
@@ -80,6 +82,7 @@ public class CakeTimer {
                 Minecraft mc = Minecraft.getMinecraft();
                 double scaleReset = Math.pow(scale, -1);
                 GL11.glScaled(scale, scale, scale);
+                GlStateManager.color(1, 1, 1, 1);
 
                 mc.getTextureManager().bindTexture(CAKE_ICON);
                 RenderUtils.drawModalRectWithCustomSizedTexture(x / scale, y / scale, 0, 0, 16, 16, 16, 16);

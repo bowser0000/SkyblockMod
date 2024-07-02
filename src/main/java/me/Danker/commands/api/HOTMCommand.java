@@ -87,6 +87,12 @@ public class HOTMCommand extends CommandBase {
                 if (miningCore.has("powder_spent_gemstone")) gemstone += miningCore.get("powder_spent_gemstone").getAsInt();
             }
 
+            int glacite = 0;
+            if (miningCore.has("powder_glacite")) {
+                glacite = miningCore.get("powder_glacite").getAsInt();
+                if (miningCore.has("powder_spent_glacite")) glacite += miningCore.get("powder_spent_glacite").getAsInt();
+            }
+
             String ability = EnumChatFormatting.RED + "None";
             if (miningCore.has("selected_pickaxe_ability")) {
                 if (miningCore.get("selected_pickaxe_ability").isJsonNull()) {
@@ -104,6 +110,7 @@ public class HOTMCommand extends CommandBase {
                                                         EnumChatFormatting.AQUA + username + "'s HotM:\n" +
                                                         ModConfig.getColour(ModConfig.typeColour) + "Mithril Powder: " + EnumChatFormatting.DARK_GREEN + nf.format(mithril) + "\n" +
                                                         ModConfig.getColour(ModConfig.typeColour) + "Gemstone Powder: " + EnumChatFormatting.LIGHT_PURPLE + nf.format(gemstone) + "\n" +
+                                                        ModConfig.getColour(ModConfig.typeColour) + "Glacite Powder: " + EnumChatFormatting.AQUA + nf.format(glacite) + "\n" +
                                                         ModConfig.getColour(ModConfig.typeColour) + "Pickaxe Ability: " + ModConfig.getColour(ModConfig.valueColour) + ability + "\n" +
                                                         ModConfig.getColour(ModConfig.typeColour) + "HotM Tree: ").appendSibling(tree)
                                                         .appendSibling(new ChatComponentText("\n" + ModConfig.getDelimiter())));
@@ -114,9 +121,11 @@ public class HOTMCommand extends CommandBase {
         mining_speed_boost("Mining Speed Boost"),
         pickaxe_toss("Pickobulus"),
         vein_seeker("Vein Seeker"),
-        maniac_miner("Maniac Miner");
+        maniac_miner("Maniac Miner"),
+        gemstone_infusion("Gemstone Infusion"),
+        hazardous_miner("Hazardous Miner");
 
-        public String name;
+        public final String name;
 
         Node(String name) {
             this.name = name;

@@ -29,6 +29,10 @@ public class Alerts {
         configFile = event.configDirectory + "/dsm/dsmalerts.json";
     }
 
+    public Pattern getRegexForAlert(Alert alert) {
+        return patterns.computeIfAbsent(alert, it -> Pattern.compile(it.message));
+    }
+
     @SubscribeEvent
     public void onChat(ClientChatReceivedEvent event) {
         if (!ModConfig.alerts || event.type == 2) return;
@@ -52,7 +56,7 @@ public class Alerts {
             if (!location) continue;
 
             if (alert.mode.equals("Regex")) {
-                Matcher matcher = patterns.get(alert).matcher(message);
+                Matcher matcher = getRegexForAlert(alert).matcher(message);
                 if (matcher.matches()) {
                     matcher.reset();
                     String alertText = alert.alert;

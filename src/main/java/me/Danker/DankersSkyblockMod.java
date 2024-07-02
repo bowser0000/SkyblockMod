@@ -241,18 +241,18 @@ public class DankersSkyblockMod {
 
     @EventHandler
     public void postInit(FMLPostInitializationEvent event) {
-		Package[] packages = Package.getPackages();
-		for (Package p : packages){
-			if (p.getName().startsWith("com.spiderfrog.gadgets") || p.getName().startsWith("com.spiderfrog.oldanimations")){
-				usingOAM = true;
-				break;
-			}
-		}
-		System.out.println("OAM detection: " + usingOAM);
+        Package[] packages = Package.getPackages();
+        for (Package p : packages){
+            if (p.getName().startsWith("com.spiderfrog.gadgets") || p.getName().startsWith("com.spiderfrog.oldanimations")){
+                usingOAM = true;
+                break;
+            }
+        }
+        System.out.println("OAM detection: " + usingOAM);
 
-    	usingLabymod = Loader.isModLoaded("labymod");
-    	System.out.println("LabyMod detection: " + usingLabymod);
-    	
+        usingLabymod = Loader.isModLoaded("labymod");
+        System.out.println("LabyMod detection: " + usingLabymod);
+        
         if (!ClientCommandHandler.instance.getCommands().containsKey("reparty")) {
             ClientCommandHandler.instance.registerCommand(new RepartyCommand());
         } else if (CfgConfig.getBoolean("commands", "reparty")) {
@@ -266,12 +266,12 @@ public class DankersSkyblockMod {
     }
 
     @SubscribeEvent
-	public void onGuiOpenEvent(GuiOpenEvent event) {
-		if (event.gui instanceof GuiMainMenu && usingOAM && !OAMWarning) {
-		    event.gui = new WarningGuiRedirect(new WarningGui());
-		    OAMWarning = true;
-		}
-	}
+    public void onGuiOpenEvent(GuiOpenEvent event) {
+        if (event.gui instanceof GuiMainMenu && usingOAM && !OAMWarning) {
+            event.gui = new WarningGuiRedirect(new WarningGui());
+            OAMWarning = true;
+        }
+    }
 
     @SubscribeEvent
     public void onJoin(EntityJoinWorldEvent event) {
@@ -412,11 +412,11 @@ public class DankersSkyblockMod {
             if (chestName.equals("Your Skills")) {
                 List<Slot> invSlots = ((GuiChest) mc.currentScreen).inventorySlots.inventorySlots;
 
-                farmingLevel = Utils.initializeSkill(invSlots.get(19).getStack(), "farming");
-                miningLevel = Utils.initializeSkill(invSlots.get(20).getStack(), "mining");
-                combatLevel = Utils.initializeSkill(invSlots.get(21).getStack(), "combat");
-                foragingLevel = Utils.initializeSkill(invSlots.get(22).getStack(), "foraging");
-                fishingLevel = Utils.initializeSkill(invSlots.get(23).getStack(), "fishing");
+                combatLevel = Utils.initializeSkill(invSlots.get(19).getStack(), "combat");
+                farmingLevel = Utils.initializeSkill(invSlots.get(20).getStack(), "farming");
+                fishingLevel = Utils.initializeSkill(invSlots.get(21).getStack(), "fishing");
+                miningLevel = Utils.initializeSkill(invSlots.get(22).getStack(), "mining");
+                foragingLevel = Utils.initializeSkill(invSlots.get(23).getStack(), "foraging");
                 enchantingLevel = Utils.initializeSkill(invSlots.get(24).getStack(), "enchanting");
                 alchemyLevel = Utils.initializeSkill(invSlots.get(25).getStack(), "alchemy");
                 carpentryLevel = Utils.initializeSkill(invSlots.get(29).getStack(), "carpentry");

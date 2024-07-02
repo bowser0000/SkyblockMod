@@ -135,6 +135,6 @@ public class RepartyCommand extends CommandBase implements ICommand {
             }
         });
 
-		partyThread.start();
+        partyThread.start();
     }
 }

@@ -17,679 +17,679 @@ import java.util.Locale;
 
 public class LootCommand extends CommandBase {
 
-	@Override
-	public String getCommandName() {
-		return "loot";
-	}
+    @Override
+    public String getCommandName() {
+        return "loot";
+    }
 
-	@Override
-	public String getCommandUsage(ICommandSender arg0) {
-		return "/" + getCommandName() + " <zombie/spider/wolf/enderman/blaze/vampire/fishing/catacombs/mythological> [winter/festival/spooky/ch/lava/trophy/f(1-7)/mm/session]";
-	}
+    @Override
+    public String getCommandUsage(ICommandSender arg0) {
+        return "/" + getCommandName() + " <zombie/spider/wolf/enderman/blaze/vampire/fishing/catacombs/mythological> [winter/festival/spooky/ch/lava/trophy/f(1-7)/mm/session]";
+    }
 
-	public static String usage(ICommandSender arg0) {
-		return new LootCommand().getCommandUsage(arg0);
-	}
+    public static String usage(ICommandSender arg0) {
+        return new LootCommand().getCommandUsage(arg0);
+    }
 
-	@Override
-	public int getRequiredPermissionLevel() {
-		return 0;
-	}
-	
-	@Override
-	public List<String> addTabCompletionOptions(ICommandSender sender, String[] args, BlockPos pos) {
-		if (args.length == 1) {
-			return getListOfStringsMatchingLastWord(args, "wolf", "spider", "zombie", "enderman", "blaze", "vampire", "fishing", "catacombs", "mythological");
-		} else if (args.length == 2 && args[0].equalsIgnoreCase("fishing")) {
-			return getListOfStringsMatchingLastWord(args, "winter", "festival", "spooky", "ch", "lava", "trophy", "session");
-		} else if (args.length == 2 && args[0].equalsIgnoreCase("catacombs")) {
-			return getListOfStringsMatchingLastWord(args, "f1", "floor1", "f2", "floor2", "f3", "floor3", "f4", "floor4", "f5", "floor5", "f6", "floor6", "f7", "floor7", "mm", "master");
-		} else if (args.length > 1) {
-			return getListOfStringsMatchingLastWord(args, "session");
-		}
-		return null;
-	}
+    @Override
+    public int getRequiredPermissionLevel() {
+        return 0;
+    }
+    
+    @Override
+    public List<String> addTabCompletionOptions(ICommandSender sender, String[] args, BlockPos pos) {
+        if (args.length == 1) {
+            return getListOfStringsMatchingLastWord(args, "wolf", "spider", "zombie", "enderman", "blaze", "vampire", "fishing", "catacombs", "mythological");
+        } else if (args.length == 2 && args[0].equalsIgnoreCase("fishing")) {
+            return getListOfStringsMatchingLastWord(args, "winter", "festival", "spooky", "ch", "lava", "trophy", "session");
+        } else if (args.length == 2 && args[0].equalsIgnoreCase("catacombs")) {
+            return getListOfStringsMatchingLastWord(args, "f1", "floor1", "f2", "floor2", "f3", "floor3", "f4", "floor4", "f5", "floor5", "f6", "floor6", "f7", "floor7", "mm", "master");
+        } else if (args.length > 1) {
+            return getListOfStringsMatchingLastWord(args, "session");
+        }
+        return null;
+    }
 
-	@Override
-	public void processCommand(ICommandSender arg0, String[] arg1) throws CommandException {
-		EntityPlayer player = (EntityPlayer) arg0;
-		
-		if (arg1.length == 0) {
-			player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "Usage: " + getCommandUsage(arg0)));
-			return;
-		}
+    @Override
+    public void processCommand(ICommandSender arg0, String[] arg1) throws CommandException {
+        EntityPlayer player = (EntityPlayer) arg0;
+        
+        if (arg1.length == 0) {
+            player.addChatMessage(new ChatComponentText(ModConfig.getColour(ModConfig.errorColour) + "Usage: " + getCommandUsage(arg0)));
+            return;
+        }
 
-		double timeNow = System.currentTimeMillis() / 1000;
-		String timeBetween;
-		String bossesBetween;
-		String drop20;
-		NumberFormat nf = NumberFormat.getIntegerInstance(Locale.US);
+        double timeNow = System.currentTimeMillis() / 1000;
+        String timeBetween;
+        String bossesBetween;
+        String drop20;
+        NumberFormat nf = NumberFormat.getIntegerInstance(Locale.US);
 
-		boolean showSession = arg1[arg1.length - 1].equalsIgnoreCase("session");
+        boolean showSession = arg1[arg1.length - 1].equalsIgnoreCase("session");
 
-		switch (arg1[0].toLowerCase()) {
-			case "wolf":
-				if (showSession) {
-					if (WolfTracker.timeSession == -1) {
-						timeBetween = "Never";
-					} else {
-						timeBetween = Utils.getTimeBetween(WolfTracker.timeSession, timeNow);
-					}
-					if (WolfTracker.bossesSession == -1) {
-						bossesBetween = "Never";
-					} else {
-						bossesBetween = nf.format(WolfTracker.bossesSession);
-					}
-					if (LootDisplay.slayerCountTotal) {
-						drop20 = nf.format(WolfTracker.wheelsSession);
-					} else {
-						drop20 = nf.format(WolfTracker.wheelsDropsSession) + " times";
-					}
+        switch (arg1[0].toLowerCase()) {
+            case "wolf":
+                if (showSession) {
+                    if (WolfTracker.timeSession == -1) {
+                        timeBetween = "Never";
+                    } else {
+                        timeBetween = Utils.getTimeBetween(WolfTracker.timeSession, timeNow);
+                    }
+                    if (WolfTracker.bossesSession == -1) {
+                        bossesBetween = "Never";
+                    } else {
+                        bossesBetween = nf.format(WolfTracker.bossesSession);
+                    }
+                    if (LootDisplay.slayerCountTotal) {
+                        drop20 = nf.format(WolfTracker.wheelsSession);
+                    } else {
+                        drop20 = nf.format(WolfTracker.wheelsDropsSession) + " times";
+                    }
 
-					player.addChatMessage(new ChatComponentText(EnumChatFormatting.AQUA + "" + EnumChatFormatting.STRIKETHROUGH + "-------------------\n" +
-																EnumChatFormatting.DARK_AQUA + EnumChatFormatting.BOLD + "  Sven Loot Summary (Current Session):\n" +
-																EnumChatFormatting.GOLD + "    Svens Killed: " + nf.format(WolfTracker.svensSession) + "\n" +
-																EnumChatFormatting.GREEN + "    Wolf Teeth: " + nf.format(WolfTracker.teethSession) + "\n" +
-																EnumChatFormatting.BLUE + "    Hamster Wheels: " + drop20 + "\n" +
-																EnumChatFormatting.AQUA + "    Spirit Runes: " + WolfTracker.spiritsSession + "\n" +
-																EnumChatFormatting.WHITE + "    Critical VI Books: " + WolfTracker.booksSession + "\n" +
-																EnumChatFormatting.DARK_AQUA + "    Furballs: " + WolfTracker.furballsSession + "\n" +
-																EnumChatFormatting.DARK_RED + "    Red Claw Eggs: " + WolfTracker.eggsSession + "\n" +
-																EnumChatFormatting.GOLD + "    Couture Runes: " + WolfTracker.couturesSession + "\n" +
-																EnumChatFormatting.AQUA + "    Grizzly Baits: " + WolfTracker.baitsSession + "\n" +
-																EnumChatFormatting.DARK_PURPLE + "    Overfluxes: " + WolfTracker.fluxesSession + "\n" +
-																EnumChatFormatting.AQUA + "    Time Since RNG: " + timeBetween + "\n" +
-																EnumChatFormatting.AQUA + "    Bosses Since RNG: " + bossesBetween + "\n" +
-																EnumChatFormatting.AQUA + EnumChatFormatting.STRIKETHROUGH + "-------------------"));
-					return;
-				}
+                    player.addChatMessage(new ChatComponentText(EnumChatFormatting.AQUA + "" + EnumChatFormatting.STRIKETHROUGH + "-------------------\n" +
+                                                                EnumChatFormatting.DARK_AQUA + EnumChatFormatting.BOLD + "  Sven Loot Summary (Current Session):\n" +
+                                                                EnumChatFormatting.GOLD + "    Svens Killed: " + nf.format(WolfTracker.svensSession) + "\n" +
+                                                                EnumChatFormatting.GREEN + "    Wolf Teeth: " + nf.format(WolfTracker.teethSession) + "\n" +
+                                                                EnumChatFormatting.BLUE + "    Hamster Wheels: " + drop20 + "\n" +
+                                                                EnumChatFormatting.AQUA + "    Spirit Runes: " + WolfTracker.spiritsSession + "\n" +
+                                                                EnumChatFormatting.WHITE + "    Critical VI Books: " + WolfTracker.booksSession + "\n" +
+                                                                EnumChatFormatting.DARK_AQUA + "    Furballs: " + WolfTracker.furballsSession + "\n" +
+                                                                EnumChatFormatting.DARK_RED + "    Red Claw Eggs: " + WolfTracker.eggsSession + "\n" +
+                                                                EnumChatFormatting.GOLD + "    Couture Runes: " + WolfTracker.couturesSession + "\n" +
+                                                                EnumChatFormatting.AQUA + "    Grizzly Baits: " + WolfTracker.baitsSession + "\n" +
+                                                                EnumChatFormatting.DARK_PURPLE + "    Overfluxes: " + WolfTracker.fluxesSession + "\n" +
+                                                                EnumChatFormatting.AQUA + "    Time Since RNG: " + timeBetween + "\n" +
+                                                                EnumChatFormatting.AQUA + "    Bosses Since RNG: " + bossesBetween + "\n" +
+                                                                EnumChatFormatting.AQUA + EnumChatFormatting.STRIKETHROUGH + "-------------------"));
+                    return;
+                }
 
-				if (WolfTracker.time == -1) {
-					timeBetween = "Never";
-				} else {
-					timeBetween = Utils.getTimeBetween(WolfTracker.time, timeNow);
-				}
-				if (WolfTracker.bosses == -1) {
-					bossesBetween = "Never";
-				} else {
-					bossesBetween = nf.format(WolfTracker.bosses);
-				}
-				if (LootDisplay.slayerCountTotal) {
-					drop20 = nf.format(WolfTracker.wheels);
-				} else {
-					drop20 = nf.format(WolfTracker.wheelsDrops) + " times";
-				}
+                if (WolfTracker.time == -1) {
+                    timeBetween = "Never";
+                } else {
+                    timeBetween = Utils.getTimeBetween(WolfTracker.time, timeNow);
+                }
+                if (WolfTracker.bosses == -1) {
+                    bossesBetween = "Never";
+                } else {
+                    bossesBetween = nf.format(WolfTracker.bosses);
+                }
+                if (LootDisplay.slayerCountTotal) {
+                    drop20 = nf.format(WolfTracker.wheels);
+                } else {
+                    drop20 = nf.format(WolfTracker.wheelsDrops) + " times";
+                }
 
-				player.addChatMessage(new ChatComponentText(EnumChatFormatting.AQUA + "" + EnumChatFormatting.STRIKETHROUGH + "-------------------\n" +
-															EnumChatFormatting.DARK_AQUA + EnumChatFormatting.BOLD + "  Sven Loot Summary:\n" +
-															EnumChatFormatting.GOLD + "    Svens Killed: " + nf.format(WolfTracker.svens) + "\n" +
-															EnumChatFormatting.GREEN + "    Wolf Teeth: " + nf.format(WolfTracker.teeth) + "\n" +
-															EnumChatFormatting.BLUE + "    Hamster Wheels: " + drop20 + "\n" +
-															EnumChatFormatting.AQUA + "    Spirit Runes: " + WolfTracker.spirits + "\n" +
-															EnumChatFormatting.WHITE + "    Critical VI Books: " + WolfTracker.books + "\n" +
-															EnumChatFormatting.DARK_AQUA + "    Furballs: " + WolfTracker.furballs + "\n" +
-															EnumChatFormatting.DARK_RED + "    Red Claw Eggs: " + WolfTracker.eggs + "\n" +
-															EnumChatFormatting.GOLD + "    Couture Runes: " + WolfTracker.coutures + "\n" +
-															EnumChatFormatting.AQUA + "    Grizzly Baits: " + WolfTracker.baits + "\n" +
-															EnumChatFormatting.DARK_PURPLE + "    Overfluxes: " + WolfTracker.fluxes + "\n" +
-															EnumChatFormatting.AQUA + "    Time Since RNG: " + timeBetween + "\n" +
-															EnumChatFormatting.AQUA + "    Bosses Since RNG: " + bossesBetween + "\n" +
-															EnumChatFormatting.AQUA + EnumChatFormatting.STRIKETHROUGH + "-------------------"));
-				break;
-			case "spider":
-				if (showSession) {
-					if (SpiderTracker.timeSession == -1) {
-						timeBetween = "Never";
-					} else {
-						timeBetween = Utils.getTimeBetween(SpiderTracker.timeSession, timeNow);
-					}
-					if (SpiderTracker.bossesSession == -1) {
-						bossesBetween = "Never";
-					} else {
-						bossesBetween = nf.format(SpiderTracker.bossesSession);
-					}
-					if (LootDisplay.slayerCountTotal) {
-						drop20 = nf.format(SpiderTracker.TAPSession);
-					} else {
-						drop20 = nf.format(SpiderTracker.TAPDropsSession) + " times";
-					}
+                player.addChatMessage(new ChatComponentText(EnumChatFormatting.AQUA + "" + EnumChatFormatting.STRIKETHROUGH + "-------------------\n" +
+                                                            EnumChatFormatting.DARK_AQUA + EnumChatFormatting.BOLD + "  Sven Loot Summary:\n" +
+                                                            EnumChatFormatting.GOLD + "    Svens Killed: " + nf.format(WolfTracker.svens) + "\n" +
+                                                            EnumChatFormatting.GREEN + "    Wolf Teeth: " + nf.format(WolfTracker.teeth) + "\n" +
+                                                            EnumChatFormatting.BLUE + "    Hamster Wheels: " + drop20 + "\n" +
+                                                            EnumChatFormatting.AQUA + "    Spirit Runes: " + WolfTracker.spirits + "\n" +
+                                                            EnumChatFormatting.WHITE + "    Critical VI Books: " + WolfTracker.books + "\n" +
+                                                            EnumChatFormatting.DARK_AQUA + "    Furballs: " + WolfTracker.furballs + "\n" +
+                                                            EnumChatFormatting.DARK_RED + "    Red Claw Eggs: " + WolfTracker.eggs + "\n" +
+                                                            EnumChatFormatting.GOLD + "    Couture Runes: " + WolfTracker.coutures + "\n" +
+                                                            EnumChatFormatting.AQUA + "    Grizzly Baits: " + WolfTracker.baits + "\n" +
+                                                            EnumChatFormatting.DARK_PURPLE + "    Overfluxes: " + WolfTracker.fluxes + "\n" +
+                                                            EnumChatFormatting.AQUA + "    Time Since RNG: " + timeBetween + "\n" +
+                                                            EnumChatFormatting.AQUA + "    Bosses Since RNG: " + bossesBetween + "\n" +
+                                                            EnumChatFormatting.AQUA + EnumChatFormatting.STRIKETHROUGH + "-------------------"));
+                break;
+            case "spider":
+                if (showSession) {
+                    if (SpiderTracker.timeSession == -1) {
+                        timeBetween = "Never";
+                    } else {
+                        timeBetween = Utils.getTimeBetween(SpiderTracker.timeSession, timeNow);
+                    }
+                    if (SpiderTracker.bossesSession == -1) {
+                        bossesBetween = "Never";
+                    } else {
+                        bossesBetween = nf.format(SpiderTracker.bossesSession);
+                    }
+                    if (LootDisplay.slayerCountTotal) {
+                        drop20 = nf.format(SpiderTracker.TAPSession);
+                    } else {
+                        drop20 = nf.format(SpiderTracker.TAPDropsSession) + " times";
+                    }
 
-					player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "" + EnumChatFormatting.STRIKETHROUGH + "-------------------\n" +
-																EnumChatFormatting.DARK_RED + EnumChatFormatting.BOLD + "  Spider Loot Summary (Current Session):\n" +
-																EnumChatFormatting.GOLD + "    Tarantulas Killed: " + nf.format(SpiderTracker.tarantulasSession) + "\n" +
-																EnumChatFormatting.GREEN + "    Tarantula Webs: " + nf.format(SpiderTracker.websSession) + "\n" +
-																EnumChatFormatting.DARK_GREEN + "    Arrow Poison: " + drop20 + "\n" +
-																EnumChatFormatting.DARK_GRAY + "    Bite Runes: " + SpiderTracker.bitesSession + "\n" +
-																EnumChatFormatting.WHITE + "    Bane VI Books: " + SpiderTracker.booksSession + "\n" +
-																EnumChatFormatting.AQUA + "    Spider Catalysts: " + SpiderTracker.catalystsSession + "\n" +
-																EnumChatFormatting.DARK_PURPLE + "    Tarantula Talismans: " + SpiderTracker.talismansSession + "\n" +
-																EnumChatFormatting.LIGHT_PURPLE + "    Fly Swatters: " + SpiderTracker.swattersSession + "\n" +
-																EnumChatFormatting.GOLD + "    Digested Mosquitos: " + SpiderTracker.mosquitosSession + "\n" +
-																EnumChatFormatting.AQUA + "    Time Since RNG: " + timeBetween + "\n" +
-																EnumChatFormatting.AQUA + "    Bosses Since RNG: " + bossesBetween + "\n" +
-																EnumChatFormatting.RED + EnumChatFormatting.STRIKETHROUGH + "-------------------"));
-					return;
-				}
+                    player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "" + EnumChatFormatting.STRIKETHROUGH + "-------------------\n" +
+                                                                EnumChatFormatting.DARK_RED + EnumChatFormatting.BOLD + "  Spider Loot Summary (Current Session):\n" +
+                                                                EnumChatFormatting.GOLD + "    Tarantulas Killed: " + nf.format(SpiderTracker.tarantulasSession) + "\n" +
+                                                                EnumChatFormatting.GREEN + "    Tarantula Webs: " + nf.format(SpiderTracker.websSession) + "\n" +
+                                                                EnumChatFormatting.DARK_GREEN + "    Arrow Poison: " + drop20 + "\n" +
+                                                                EnumChatFormatting.DARK_GRAY + "    Bite Runes: " + SpiderTracker.bitesSession + "\n" +
+                                                                EnumChatFormatting.WHITE + "    Bane VI Books: " + SpiderTracker.booksSession + "\n" +
+                                                                EnumChatFormatting.AQUA + "    Spider Catalysts: " + SpiderTracker.catalystsSession + "\n" +
+                                                                EnumChatFormatting.DARK_PURPLE + "    Tarantula Talismans: " + SpiderTracker.talismansSession + "\n" +
+                                                                EnumChatFormatting.LIGHT_PURPLE + "    Fly Swatters: " + SpiderTracker.swattersSession + "\n" +
+                                                                EnumChatFormatting.GOLD + "    Digested Mosquitos: " + SpiderTracker.mosquitosSession + "\n" +
+                                                                EnumChatFormatting.AQUA + "    Time Since RNG: " + timeBetween + "\n" +
+                                                                EnumChatFormatting.AQUA + "    Bosses Since RNG: " + bossesBetween + "\n" +
+                                                                EnumChatFormatting.RED + EnumChatFormatting.STRIKETHROUGH + "-------------------"));
+                    return;
+                }
 
-				if (SpiderTracker.time == -1) {
-					timeBetween = "Never";
-				} else {
-					timeBetween = Utils.getTimeBetween(SpiderTracker.time, timeNow);
-				}
-				if (SpiderTracker.bosses == -1) {
-					bossesBetween = "Never";
-				} else {
-					bossesBetween = nf.format(SpiderTracker.bosses);
-				}
-				if (LootDisplay.slayerCountTotal) {
-					drop20 = nf.format(SpiderTracker.TAP);
-				} else {
-					drop20 = nf.format(SpiderTracker.TAPDrops) + " times";
-				}
+                if (SpiderTracker.time == -1) {
+                    timeBetween = "Never";
+                } else {
+                    timeBetween = Utils.getTimeBetween(SpiderTracker.time, timeNow);
+                }
+                if (SpiderTracker.bosses == -1) {
+                    bossesBetween = "Never";
+                } else {
+                    bossesBetween = nf.format(SpiderTracker.bosses);
+                }
+                if (LootDisplay.slayerCountTotal) {
+                    drop20 = nf.format(SpiderTracker.TAP);
+                } else {
+                    drop20 = nf.format(SpiderTracker.TAPDrops) + " times";
+                }
 
-				player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "" + EnumChatFormatting.STRIKETHROUGH + "-------------------\n" +
-															EnumChatFormatting.DARK_RED + EnumChatFormatting.BOLD + "  Spider Loot Summary:\n" +
-															EnumChatFormatting.GOLD + "    Tarantulas Killed: " + nf.format(SpiderTracker.tarantulas) + "\n" +
-															EnumChatFormatting.GREEN + "    Tarantula Webs: " + nf.format(SpiderTracker.webs) + "\n" +
-															EnumChatFormatting.DARK_GREEN + "    Arrow Poison: " + drop20 + "\n" +
-															EnumChatFormatting.DARK_GRAY + "    Bite Runes: " + SpiderTracker.bites + "\n" +
-															EnumChatFormatting.WHITE + "    Bane VI Books: " + SpiderTracker.books + "\n" +
-															EnumChatFormatting.AQUA + "    Spider Catalysts: " + SpiderTracker.catalysts + "\n" +
-															EnumChatFormatting.DARK_PURPLE + "    Tarantula Talismans: " + SpiderTracker.talismans + "\n" +
-															EnumChatFormatting.LIGHT_PURPLE + "    Fly Swatters: " + SpiderTracker.swatters + "\n" +
-															EnumChatFormatting.GOLD + "    Digested Mosquitos: " + SpiderTracker.mosquitos + "\n" +
-															EnumChatFormatting.AQUA + "    Time Since RNG: " + timeBetween + "\n" +
-															EnumChatFormatting.AQUA + "    Bosses Since RNG: " + bossesBetween + "\n" +
-															EnumChatFormatting.RED + EnumChatFormatting.STRIKETHROUGH + "-------------------"));
-				break;
-			case "zombie":
-				if (showSession) {
-					if (ZombieTracker.timeSession == -1) {
-						timeBetween = "Never";
-					} else {
-						timeBetween = Utils.getTimeBetween(ZombieTracker.timeSession, timeNow);
-					}
-					if (ZombieTracker.bossesSession == -1) {
-						bossesBetween = "Never";
-					} else {
-						bossesBetween = nf.format(ZombieTracker.bossesSession);
-					}
-					if (LootDisplay.slayerCountTotal) {
-						drop20 = nf.format(ZombieTracker.foulFleshSession);
-					} else {
-						drop20 = nf.format(ZombieTracker.foulFleshDropsSession) + " times";
-					}
+                player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "" + EnumChatFormatting.STRIKETHROUGH + "-------------------\n" +
+                                                            EnumChatFormatting.DARK_RED + EnumChatFormatting.BOLD + "  Spider Loot Summary:\n" +
+                                                            EnumChatFormatting.GOLD + "    Tarantulas Killed: " + nf.format(SpiderTracker.tarantulas) + "\n" +
+                                                            EnumChatFormatting.GREEN + "    Tarantula Webs: " + nf.format(SpiderTracker.webs) + "\n" +
+                                                            EnumChatFormatting.DARK_GREEN + "    Arrow Poison: " + drop20 + "\n" +
+                                                            EnumChatFormatting.DARK_GRAY + "    Bite Runes: " + SpiderTracker.bites + "\n" +
+                                                            EnumChatFormatting.WHITE + "    Bane VI Books: " + SpiderTracker.books + "\n" +
+                                                            EnumChatFormatting.AQUA + "    Spider Catalysts: " + SpiderTracker.catalysts + "\n" +
+                                                            EnumChatFormatting.DARK_PURPLE + "    Tarantula Talismans: " + SpiderTracker.talismans + "\n" +
+                                                            EnumChatFormatting.LIGHT_PURPLE + "    Fly Swatters: " + SpiderTracker.swatters + "\n" +
+                                                            EnumChatFormatting.GOLD + "    Digested Mosquitos: " + SpiderTracker.mosquitos + "\n" +
+                                                            EnumChatFormatting.AQUA + "    Time Since RNG: " + timeBetween + "\n" +
+                                                            EnumChatFormatting.AQUA + "    Bosses Since RNG: " + bossesBetween + "\n" +
+                                                            EnumChatFormatting.RED + EnumChatFormatting.STRIKETHROUGH + "-------------------"));
+                break;
+            case "zombie":
+                if (showSession) {
+                    if (ZombieTracker.timeSession == -1) {
+                        timeBetween = "Never";
+                    } else {
+                        timeBetween = Utils.getTimeBetween(ZombieTracker.timeSession, timeNow);
+                    }
+                    if (ZombieTracker.bossesSession == -1) {
+                        bossesBetween = "Never";
+                    } else {
+                        bossesBetween = nf.format(ZombieTracker.bossesSession);
+                    }
+                    if (LootDisplay.slayerCountTotal) {
+                        drop20 = nf.format(ZombieTracker.foulFleshSession);
+                    } else {
+                        drop20 = nf.format(ZombieTracker.foulFleshDropsSession) + " times";
+                    }
 
-					player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "" + EnumChatFormatting.STRIKETHROUGH + "-------------------\n" +
-																EnumChatFormatting.DARK_GREEN + EnumChatFormatting.BOLD + "  Zombie Loot Summary (Current Session):\n" +
-																EnumChatFormatting.GOLD + "    Revs Killed: " + nf.format(ZombieTracker.revsSession) + "\n" +
-																EnumChatFormatting.GREEN + "    Revenant Flesh: " + nf.format(ZombieTracker.revFleshSession) + "\n" +
-																EnumChatFormatting.GREEN + "    Revenant Viscera: " + nf.format(ZombieTracker.revVisceraSession) + "\n" +
-																EnumChatFormatting.BLUE + "    Foul Flesh: " + drop20 + "\n" +
-																EnumChatFormatting.DARK_GREEN + "    Pestilence Runes: " +ZombieTracker.pestilencesSession + "\n" +
-																EnumChatFormatting.WHITE + "    Smite VI Books: " + ZombieTracker.booksSession + "\n" +
-																EnumChatFormatting.WHITE + "    Smite VII Books: " + ZombieTracker.booksT7Session + "\n" +
-																EnumChatFormatting.AQUA + "    Undead Catalysts: " + ZombieTracker.undeadCatasSession + "\n" +
-																EnumChatFormatting.DARK_PURPLE + "    Beheaded Horrors: " + ZombieTracker.beheadedsSession + "\n" +
-																EnumChatFormatting.RED + "    Revenant Catalysts: " + ZombieTracker.revCatasSession + "\n" +
-																EnumChatFormatting.DARK_GREEN + "    Snake Runes: " + ZombieTracker.snakesSession + "\n" +
-																EnumChatFormatting.GOLD + "    Scythe Blades: " + ZombieTracker.scythesSession + "\n" +
-																EnumChatFormatting.RED + "    Shard of the Shreddeds: " + ZombieTracker.shardsSession + "\n" +
-																EnumChatFormatting.RED + "    Warden Hearts: " + ZombieTracker.wardenHeartsSession + "\n" +
-																EnumChatFormatting.AQUA + "    Time Since RNG: " + timeBetween + "\n" +
-																EnumChatFormatting.AQUA + "    Bosses Since RNG: " + bossesBetween + "\n" +
-																EnumChatFormatting.GREEN + EnumChatFormatting.STRIKETHROUGH + "-------------------"));
-					return;
-				}
+                    player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "" + EnumChatFormatting.STRIKETHROUGH + "-------------------\n" +
+                                                                EnumChatFormatting.DARK_GREEN + EnumChatFormatting.BOLD + "  Zombie Loot Summary (Current Session):\n" +
+                                                                EnumChatFormatting.GOLD + "    Revs Killed: " + nf.format(ZombieTracker.revsSession) + "\n" +
+                                                                EnumChatFormatting.GREEN + "    Revenant Flesh: " + nf.format(ZombieTracker.revFleshSession) + "\n" +
+                                                                EnumChatFormatting.GREEN + "    Revenant Viscera: " + nf.format(ZombieTracker.revVisceraSession) + "\n" +
+                                                                EnumChatFormatting.BLUE + "    Foul Flesh: " + drop20 + "\n" +
+                                                                EnumChatFormatting.DARK_GREEN + "    Pestilence Runes: " +ZombieTracker.pestilencesSession + "\n" +
+                                                                EnumChatFormatting.WHITE + "    Smite VI Books: " + ZombieTracker.booksSession + "\n" +
+                                                                EnumChatFormatting.WHITE + "    Smite VII Books: " + ZombieTracker.booksT7Session + "\n" +
+                                                                EnumChatFormatting.AQUA + "    Undead Catalysts: " + ZombieTracker.undeadCatasSession + "\n" +
+                                                                EnumChatFormatting.DARK_PURPLE + "    Beheaded Horrors: " + ZombieTracker.beheadedsSession + "\n" +
+                                                                EnumChatFormatting.RED + "    Revenant Catalysts: " + ZombieTracker.revCatasSession + "\n" +
+                                                                EnumChatFormatting.DARK_GREEN + "    Snake Runes: " + ZombieTracker.snakesSession + "\n" +
+                                                                EnumChatFormatting.GOLD + "    Scythe Blades: " + ZombieTracker.scythesSession + "\n" +
+                                                                EnumChatFormatting.RED + "    Shard of the Shreddeds: " + ZombieTracker.shardsSession + "\n" +
+                                                                EnumChatFormatting.RED + "    Warden Hearts: " + ZombieTracker.wardenHeartsSession + "\n" +
+                                                                EnumChatFormatting.AQUA + "    Time Since RNG: " + timeBetween + "\n" +
+                                                                EnumChatFormatting.AQUA + "    Bosses Since RNG: " + bossesBetween + "\n" +
+                                                                EnumChatFormatting.GREEN + EnumChatFormatting.STRIKETHROUGH + "-------------------"));
+                    return;
+                }
 
-				if (ZombieTracker.time == -1) {
-					timeBetween = "Never";
-				} else {
-					timeBetween = Utils.getTimeBetween(ZombieTracker.time, timeNow);
-				}
-				if (ZombieTracker.bosses == -1) {
-					bossesBetween = "Never";
-				} else {
-					bossesBetween = nf.format(ZombieTracker.bosses);
-				}
-				if (LootDisplay.slayerCountTotal) {
-					drop20 = nf.format(ZombieTracker.foulFlesh);
-				} else {
-					drop20 = nf.format(ZombieTracker.foulFleshDrops) + " times";
-				}
+                if (ZombieTracker.time == -1) {
+                    timeBetween = "Never";
+                } else {
+                    timeBetween = Utils.getTimeBetween(ZombieTracker.time, timeNow);
+                }
+                if (ZombieTracker.bosses == -1) {
+                    bossesBetween = "Never";
+                } else {
+                    bossesBetween = nf.format(ZombieTracker.bosses);
+                }
+                if (LootDisplay.slayerCountTotal) {
+                    drop20 = nf.format(ZombieTracker.foulFlesh);
+                } else {
+                    drop20 = nf.format(ZombieTracker.foulFleshDrops) + " times";
+                }
 
-				player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "" + EnumChatFormatting.STRIKETHROUGH + "-------------------\n" +
-															EnumChatFormatting.DARK_GREEN + EnumChatFormatting.BOLD + "  Zombie Loot Summary:\n" +
-															EnumChatFormatting.GOLD + "    Revs Killed: " + nf.format(ZombieTracker.revs) + "\n" +
-															EnumChatFormatting.GREEN + "    Revenant Flesh: " + nf.format(ZombieTracker.revFlesh) + "\n" +
-															EnumChatFormatting.GREEN + "    Revenant Viscera: " + nf.format(ZombieTracker.revViscera) + "\n" +
-															EnumChatFormatting.BLUE + "    Foul Flesh: " + drop20 + "\n" +
-															EnumChatFormatting.DARK_GREEN + "    Pestilence Runes: " + ZombieTracker.pestilences + "\n" +
-															EnumChatFormatting.WHITE + "    Smite VI Books: " + ZombieTracker.books + "\n" +
-															EnumChatFormatting.WHITE + "    Smite VII Books: " + ZombieTracker.booksT7 + "\n" +
-															EnumChatFormatting.AQUA + "    Undead Catalysts: " + ZombieTracker.undeadCatas + "\n" +
-															EnumChatFormatting.DARK_PURPLE + "    Beheaded Horrors: " + ZombieTracker.beheadeds + "\n" +
-															EnumChatFormatting.RED + "    Revenant Catalysts: " + ZombieTracker.revCatas + "\n" +
-															EnumChatFormatting.DARK_GREEN + "    Snake Runes: " + ZombieTracker.snakes + "\n" +
-															EnumChatFormatting.GOLD + "    Scythe Blades: " + ZombieTracker.scythes + "\n" +
-															EnumChatFormatting.RED + "    Shard of the Shreddeds: " + ZombieTracker.shards + "\n" +
-															EnumChatFormatting.RED + "    Warden Hearts: " + ZombieTracker.wardenHearts + "\n" +
-															EnumChatFormatting.AQUA + "    Time Since RNG: " + timeBetween + "\n" +
-															EnumChatFormatting.AQUA + "    Bosses Since RNG: " + bossesBetween + "\n" +
-															EnumChatFormatting.GREEN + EnumChatFormatting.STRIKETHROUGH + "-------------------"));
-				break;
-			case "enderman":
-				if (showSession) {
-					if (EndermanTracker.timeSession == -1) {
-						timeBetween = "Never";
-					} else {
-						timeBetween = Utils.getTimeBetween(EndermanTracker.timeSession, timeNow);
-					}
-					if (EndermanTracker.bossesSession == -1) {
-						bossesBetween = "Never";
-					} else {
-						bossesBetween = nf.format(EndermanTracker.bossesSession);
-					}
-					if (LootDisplay.slayerCountTotal) {
-						drop20 = nf.format(EndermanTracker.TAPSession);
-					} else {
-						drop20 = nf.format(EndermanTracker.TAPDropsSession) + " times";
-					}
+                player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "" + EnumChatFormatting.STRIKETHROUGH + "-------------------\n" +
+                                                            EnumChatFormatting.DARK_GREEN + EnumChatFormatting.BOLD + "  Zombie Loot Summary:\n" +
+                                                            EnumChatFormatting.GOLD + "    Revs Killed: " + nf.format(ZombieTracker.revs) + "\n" +
+                                                            EnumChatFormatting.GREEN + "    Revenant Flesh: " + nf.format(ZombieTracker.revFlesh) + "\n" +
+                                                            EnumChatFormatting.GREEN + "    Revenant Viscera: " + nf.format(ZombieTracker.revViscera) + "\n" +
+                                                            EnumChatFormatting.BLUE + "    Foul Flesh: " + drop20 + "\n" +
+                                                            EnumChatFormatting.DARK_GREEN + "    Pestilence Runes: " + ZombieTracker.pestilences + "\n" +
+                                                            EnumChatFormatting.WHITE + "    Smite VI Books: " + ZombieTracker.books + "\n" +
+                                                            EnumChatFormatting.WHITE + "    Smite VII Books: " + ZombieTracker.booksT7 + "\n" +
+                                                            EnumChatFormatting.AQUA + "    Undead Catalysts: " + ZombieTracker.undeadCatas + "\n" +
+                                                            EnumChatFormatting.DARK_PURPLE + "    Beheaded Horrors: " + ZombieTracker.beheadeds + "\n" +
+                                                            EnumChatFormatting.RED + "    Revenant Catalysts: " + ZombieTracker.revCatas + "\n" +
+                                                            EnumChatFormatting.DARK_GREEN + "    Snake Runes: " + ZombieTracker.snakes + "\n" +
+                                                            EnumChatFormatting.GOLD + "    Scythe Blades: " + ZombieTracker.scythes + "\n" +
+                                                            EnumChatFormatting.RED + "    Shard of the Shreddeds: " + ZombieTracker.shards + "\n" +
+                                                            EnumChatFormatting.RED + "    Warden Hearts: " + ZombieTracker.wardenHearts + "\n" +
+                                                            EnumChatFormatting.AQUA + "    Time Since RNG: " + timeBetween + "\n" +
+                                                            EnumChatFormatting.AQUA + "    Bosses Since RNG: " + bossesBetween + "\n" +
+                                                            EnumChatFormatting.GREEN + EnumChatFormatting.STRIKETHROUGH + "-------------------"));
+                break;
+            case "enderman":
+                if (showSession) {
+                    if (EndermanTracker.timeSession == -1) {
+                        timeBetween = "Never";
+                    } else {
+                        timeBetween = Utils.getTimeBetween(EndermanTracker.timeSession, timeNow);
+                    }
+                    if (EndermanTracker.bossesSession == -1) {
+                        bossesBetween = "Never";
+                    } else {
+                        bossesBetween = nf.format(EndermanTracker.bossesSession);
+                    }
+                    if (LootDisplay.slayerCountTotal) {
+                        drop20 = nf.format(EndermanTracker.TAPSession);
+                    } else {
+                        drop20 = nf.format(EndermanTracker.TAPDropsSession) + " times";
+                    }
 
-					player.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_PURPLE + "" + EnumChatFormatting.STRIKETHROUGH + "-------------------\n" +
-							EnumChatFormatting.DARK_GREEN + EnumChatFormatting.BOLD + "  Enderman Loot Summary (Current Session):\n" +
-							EnumChatFormatting.GOLD + "    Voidglooms Killed: " + nf.format(EndermanTracker.voidgloomsSession) + "\n" +
-							EnumChatFormatting.DARK_GRAY + "    Null Spheres: " + nf.format(EndermanTracker.nullSpheresSession) + "\n" +
-							EnumChatFormatting.DARK_PURPLE + "    Arrow Poison: " + drop20 + "\n" +
-							EnumChatFormatting.LIGHT_PURPLE + "    Endersnake Runes: " + EndermanTracker.endersnakesSession + "\n" +
-							EnumChatFormatting.DARK_GREEN + "    Summoning Eyes: " + EndermanTracker.summoningEyesSession + "\n" +
-							EnumChatFormatting.AQUA + "    Mana Steal Books: " + EndermanTracker.manaBooksSession + "\n" +
-							EnumChatFormatting.BLUE + "    Transmission Tuners: " + EndermanTracker.tunersSession + "\n" +
-							EnumChatFormatting.YELLOW + "    Null Atoms: " + EndermanTracker.atomsSession + "\n" +
-							EnumChatFormatting.YELLOW + "    Hazmat Endermen: " + EndermanTracker.hazmatsSession + "\n" +
-							EnumChatFormatting.AQUA + "    Espresso Machines: " + EndermanTracker.espressoMachinesSession + "\n" +
-							EnumChatFormatting.WHITE + "    Smarty Pants Books: " + EndermanTracker.smartyBooksSession + "\n" +
-							EnumChatFormatting.LIGHT_PURPLE + "    End Runes: " + EndermanTracker.endRunesSession + "\n" +
-							EnumChatFormatting.RED + "    Blood Chalices: " + EndermanTracker.chalicesSession + "\n" +
-							EnumChatFormatting.RED + "    Sinful Dice: " + EndermanTracker.diceSession + "\n" +
-							EnumChatFormatting.DARK_PURPLE + "    Artifact Upgrader: " + EndermanTracker.artifactsSession + "\n" +
-							EnumChatFormatting.DARK_PURPLE + "    Enderman Skins: " + EndermanTracker.skinsSession + "\n" +
-							EnumChatFormatting.GRAY + "    Enchant Runes: " + EndermanTracker.enchantRunesSession + "\n" +
-							EnumChatFormatting.GOLD + "    Etherwarp Mergers: " + EndermanTracker.mergersSession + "\n" +
-							EnumChatFormatting.GOLD + "    Judgement Cores: " + EndermanTracker.coresSession + "\n" +
-							EnumChatFormatting.RED + "    Ender Slayer VII Books: " + EndermanTracker.enderBooksSession + "\n" +
-							EnumChatFormatting.AQUA + "    Time Since RNG: " + timeBetween + "\n" +
-							EnumChatFormatting.AQUA + "    Bosses Since RNG: " + bossesBetween + "\n" +
-							EnumChatFormatting.DARK_PURPLE + EnumChatFormatting.STRIKETHROUGH + "-------------------"));
-					return;
-				}
+                    player.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_PURPLE + "" + EnumChatFormatting.STRIKETHROUGH + "-------------------\n" +
+                            EnumChatFormatting.DARK_GREEN + EnumChatFormatting.BOLD + "  Enderman Loot Summary (Current Session):\n" +
+                            EnumChatFormatting.GOLD + "    Voidglooms Killed: " + nf.format(EndermanTracker.voidgloomsSession) + "\n" +
+                            EnumChatFormatting.DARK_GRAY + "    Null Spheres: " + nf.format(EndermanTracker.nullSpheresSession) + "\n" +
+                            EnumChatFormatting.DARK_PURPLE + "    Arrow Poison: " + drop20 + "\n" +
+                            EnumChatFormatting.LIGHT_PURPLE + "    Endersnake Runes: " + EndermanTracker.endersnakesSession + "\n" +
+                            EnumChatFormatting.DARK_GREEN + "    Summoning Eyes: " + EndermanTracker.summoningEyesSession + "\n" +
+                            EnumChatFormatting.AQUA + "    Mana Steal Books: " + EndermanTracker.manaBooksSession + "\n" +
+                            EnumChatFormatting.BLUE + "    Transmission Tuners: " + EndermanTracker.tunersSession + "\n" +
+                            EnumChatFormatting.YELLOW + "    Null Atoms: " + EndermanTracker.atomsSession + "\n" +
+                            EnumChatFormatting.YELLOW + "    Hazmat Endermen: " + EndermanTracker.hazmatsSession + "\n" +
+                            EnumChatFormatting.AQUA + "    Espresso Machines: " + EndermanTracker.espressoMachinesSession + "\n" +
+                            EnumChatFormatting.WHITE + "    Smarty Pants Books: " + EndermanTracker.smartyBooksSession + "\n" +
+                            EnumChatFormatting.LIGHT_PURPLE + "    End Runes: " + EndermanTracker.endRunesSession + "\n" +
+                            EnumChatFormatting.RED + "    Blood Chalices: " + EndermanTracker.chalicesSession + "\n" +
+                            EnumChatFormatting.RED + "    Sinful Dice: " + EndermanTracker.diceSession + "\n" +
+                            EnumChatFormatting.DARK_PURPLE + "    Artifact Upgrader: " + EndermanTracker.artifactsSession + "\n" +
+                            EnumChatFormatting.DARK_PURPLE + "    Enderman Skins: " + EndermanTracker.skinsSession + "\n" +
+                            EnumChatFormatting.GRAY + "    Enchant Runes: " + EndermanTracker.enchantRunesSession + "\n" +
+                            EnumChatFormatting.GOLD + "    Etherwarp Mergers: " + EndermanTracker.mergersSession + "\n" +
+                            EnumChatFormatting.GOLD + "    Judgement Cores: " + EndermanTracker.coresSession + "\n" +
+                            EnumChatFormatting.RED + "    Ender Slayer VII Books: " + EndermanTracker.enderBooksSession + "\n" +
+                            EnumChatFormatting.AQUA + "    Time Since RNG: " + timeBetween + "\n" +
+                            EnumChatFormatting.AQUA + "    Bosses Since RNG: " + bossesBetween + "\n" +
+                            EnumChatFormatting.DARK_PURPLE + EnumChatFormatting.STRIKETHROUGH + "-------------------"));
+                    return;
+                }
 
-				if (EndermanTracker.time == -1) {
-					timeBetween = "Never";
-				} else {
-					timeBetween = Utils.getTimeBetween(EndermanTracker.time, timeNow);
-				}
-				if (EndermanTracker.bosses == -1) {
-					bossesBetween = "Never";
-				} else {
-					bossesBetween = nf.format(EndermanTracker.bosses);
-				}
-				if (LootDisplay.slayerCountTotal) {
-					drop20 = nf.format(EndermanTracker.TAP);
-				} else {
-					drop20 = nf.format(EndermanTracker.TAPDrops) + " times";
-				}
+                if (EndermanTracker.time == -1) {
+                    timeBetween = "Never";
+                } else {
+                    timeBetween = Utils.getTimeBetween(EndermanTracker.time, timeNow);
+                }
+                if (EndermanTracker.bosses == -1) {
+                    bossesBetween = "Never";
+                } else {
+                    bossesBetween = nf.format(EndermanTracker.bosses);
+                }
+                if (LootDisplay.slayerCountTotal) {
+                    drop20 = nf.format(EndermanTracker.TAP);
+                } else {
+                    drop20 = nf.format(EndermanTracker.TAPDrops) + " times";
+                }
 
-				player.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_PURPLE + "" + EnumChatFormatting.STRIKETHROUGH + "-------------------\n" +
-						EnumChatFormatting.DARK_GREEN + EnumChatFormatting.BOLD + "  Enderman Loot Summary:\n" +
-						EnumChatFormatting.GOLD + "    Voidglooms Killed: " + nf.format(EndermanTracker.voidglooms) + "\n" +
-						EnumChatFormatting.DARK_GRAY + "    Null Spheres: " + nf.format(EndermanTracker.nullSpheres) + "\n" +
-						EnumChatFormatting.DARK_PURPLE + "    Arrow Poison: " + drop20 + "\n" +
-						EnumChatFormatting.LIGHT_PURPLE + "    Endersnake Runes: " + EndermanTracker.endersnakes + "\n" +
-						EnumChatFormatting.DARK_GREEN + "    Summoning Eyes: " + EndermanTracker.summoningEyes + "\n" +
-						EnumChatFormatting.AQUA + "    Mana Steal Books: " + EndermanTracker.manaBooks + "\n" +
-						EnumChatFormatting.BLUE + "    Transmission Tuners: " + EndermanTracker.tuners + "\n" +
-						EnumChatFormatting.YELLOW + "    Null Atoms: " + EndermanTracker.atoms + "\n" +
-						EnumChatFormatting.YELLOW + "    Hazmat Endermen: " + EndermanTracker.hazmats + "\n" +
-						EnumChatFormatting.AQUA + "    Espresso Machines: " + EndermanTracker.espressoMachines + "\n" +
-						EnumChatFormatting.WHITE + "    Smarty Pants Books: " + EndermanTracker.smartyBooks + "\n" +
-						EnumChatFormatting.LIGHT_PURPLE + "    End Runes: " + EndermanTracker.endRunes + "\n" +
-						EnumChatFormatting.RED + "    Blood Chalices: " + EndermanTracker.chalices + "\n" +
-						EnumChatFormatting.RED + "    Sinful Dice: " + EndermanTracker.dice + "\n" +
-						EnumChatFormatting.DARK_PURPLE + "    Artifact Upgrader: " + EndermanTracker.artifacts + "\n" +
-						EnumChatFormatting.DARK_PURPLE + "    Enderman Skins: " + EndermanTracker.skins + "\n" +
-						EnumChatFormatting.GRAY + "    Enchant Runes: " + EndermanTracker.enchantRunes + "\n" +
-						EnumChatFormatting.GOLD + "    Etherwarp Mergers: " + EndermanTracker.mergers + "\n" +
-						EnumChatFormatting.GOLD + "    Judgement Cores: " + EndermanTracker.cores + "\n" +
-						EnumChatFormatting.RED + "    Ender Slayer VII Books: " + EndermanTracker.enderBooks + "\n" +
-						EnumChatFormatting.AQUA + "    Time Since RNG: " + timeBetween + "\n" +
-						EnumChatFormatting.AQUA + "    Bosses Since RNG: " + bossesBetween + "\n" +
-						EnumChatFormatting.DARK_PURPLE + EnumChatFormatting.STRIKETHROUGH + "-------------------"));
-				break;
-			case "blaze":
-				if (showSession) {
-					if (BlazeTracker.timeSession == -1) {
-						timeBetween = "Never";
-					} else {
-						timeBetween = Utils.getTimeBetween(BlazeTracker.timeSession, timeNow);
-					}
-					if (BlazeTracker.bossesSession == -1) {
-						bossesBetween = "Never";
-					} else {
-						bossesBetween = nf.format(BlazeTracker.bossesSession);
-					}
+                player.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_PURPLE + "" + EnumChatFormatting.STRIKETHROUGH + "-------------------\n" +
+                        EnumChatFormatting.DARK_GREEN + EnumChatFormatting.BOLD + "  Enderman Loot Summary:\n" +
+                        EnumChatFormatting.GOLD + "    Voidglooms Killed: " + nf.format(EndermanTracker.voidglooms) + "\n" +
+                        EnumChatFormatting.DARK_GRAY + "    Null Spheres: " + nf.format(EndermanTracker.nullSpheres) + "\n" +
+                        EnumChatFormatting.DARK_PURPLE + "    Arrow Poison: " + drop20 + "\n" +
+                        EnumChatFormatting.LIGHT_PURPLE + "    Endersnake Runes: " + EndermanTracker.endersnakes + "\n" +
+                        EnumChatFormatting.DARK_GREEN + "    Summoning Eyes: " + EndermanTracker.summoningEyes + "\n" +
+                        EnumChatFormatting.AQUA + "    Mana Steal Books: " + EndermanTracker.manaBooks + "\n" +
+                        EnumChatFormatting.BLUE + "    Transmission Tuners: " + EndermanTracker.tuners + "\n" +
+                        EnumChatFormatting.YELLOW + "    Null Atoms: " + EndermanTracker.atoms + "\n" +
+                        EnumChatFormatting.YELLOW + "    Hazmat Endermen: " + EndermanTracker.hazmats + "\n" +
+                        EnumChatFormatting.AQUA + "    Espresso Machines: " + EndermanTracker.espressoMachines + "\n" +
+                        EnumChatFormatting.WHITE + "    Smarty Pants Books: " + EndermanTracker.smartyBooks + "\n" +
+                        EnumChatFormatting.LIGHT_PURPLE + "    End Runes: " + EndermanTracker.endRunes + "\n" +
+                        EnumChatFormatting.RED + "    Blood Chalices: " + EndermanTracker.chalices + "\n" +
+                        EnumChatFormatting.RED + "    Sinful Dice: " + EndermanTracker.dice + "\n" +
+                        EnumChatFormatting.DARK_PURPLE + "    Artifact Upgrader: " + EndermanTracker.artifacts + "\n" +
+                        EnumChatFormatting.DARK_PURPLE + "    Enderman Skins: " + EndermanTracker.skins + "\n" +
+                        EnumChatFormatting.GRAY + "    Enchant Runes: " + EndermanTracker.enchantRunes + "\n" +
+                        EnumChatFormatting.GOLD + "    Etherwarp Mergers: " + EndermanTracker.mergers + "\n" +
+                        EnumChatFormatting.GOLD + "    Judgement Cores: " + EndermanTracker.cores + "\n" +
+                        EnumChatFormatting.RED + "    Ender Slayer VII Books: " + EndermanTracker.enderBooks + "\n" +
+                        EnumChatFormatting.AQUA + "    Time Since RNG: " + timeBetween + "\n" +
+                        EnumChatFormatting.AQUA + "    Bosses Since RNG: " + bossesBetween + "\n" +
+                        EnumChatFormatting.DARK_PURPLE + EnumChatFormatting.STRIKETHROUGH + "-------------------"));
+                break;
+            case "blaze":
+                if (showSession) {
+                    if (BlazeTracker.timeSession == -1) {
+                        timeBetween = "Never";
+                    } else {
+                        timeBetween = Utils.getTimeBetween(BlazeTracker.timeSession, timeNow);
+                    }
+                    if (BlazeTracker.bossesSession == -1) {
+                        bossesBetween = "Never";
+                    } else {
+                        bossesBetween = nf.format(BlazeTracker.bossesSession);
+                    }
 
-					player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "" + EnumChatFormatting.STRIKETHROUGH + "-------------------\n" +
-							EnumChatFormatting.DARK_RED + EnumChatFormatting.BOLD + "  Blaze Loot Summary (Current Session):\n" +
-							EnumChatFormatting.GOLD + "    Demonlords Killed: " + nf.format(BlazeTracker.demonlordsSession) + "\n" +
-							EnumChatFormatting.GRAY + "    Derelict Ashes: " + nf.format(BlazeTracker.derelictAshesSession) + "\n" +
-							EnumChatFormatting.YELLOW + "    Enchanted Blaze Powder: " + nf.format(BlazeTracker.blazePowderSession) + "\n" +
-							EnumChatFormatting.RED + "    Lavatear Runes: " + nf.format(BlazeTracker.lavatearRunesSession) + "\n" +
-							EnumChatFormatting.AQUA + "    Splash Potions: " + nf.format(BlazeTracker.splashPotionsSession) + "\n" +
-							EnumChatFormatting.DARK_RED + "    Magma Arrows: " + nf.format(BlazeTracker.magmaArrowsSession) + "\n" +
-							EnumChatFormatting.DARK_AQUA + "    Mana Disintegrators: " + nf.format(BlazeTracker.manaDisintegratorsSession) + "\n" +
-							EnumChatFormatting.LIGHT_PURPLE + "    Scorched Books: " + nf.format(BlazeTracker.scorchedBooksSession) + "\n" +
-							EnumChatFormatting.WHITE + "    Kelvin Inverters: " + nf.format(BlazeTracker.kelvinInvertersSession) + "\n" +
-							EnumChatFormatting.BLUE + "    Blaze Rod Distillates: " + nf.format(BlazeTracker.blazeRodDistillatesSession) + "\n" +
-							EnumChatFormatting.BLUE + "    Glowstone Distillates: " + nf.format(BlazeTracker.glowstoneDistillatesSession) + "\n" +
-							EnumChatFormatting.BLUE + "    Magma Cream Distillates: " + nf.format(BlazeTracker.magmaCreamDistillatesSession) + "\n" +
-							EnumChatFormatting.BLUE + "    Nether Wart Distillates: " + nf.format(BlazeTracker.netherWartDistillatesSession) + "\n" +
-							EnumChatFormatting.BLUE + "    Gabagool Distillates: " + nf.format(BlazeTracker.gabagoolDistillatesSession) + "\n" +
-							EnumChatFormatting.RED + "    Scorched Power Crystals: " + nf.format(BlazeTracker.scorchedPowerCrystalsSession) + "\n" +
-							EnumChatFormatting.RED + "    Fire Aspect Books: " + nf.format(BlazeTracker.fireAspectBooksSession) + "\n" +
-							EnumChatFormatting.GOLD + "    Fiery Burst Runes: " + nf.format(BlazeTracker.fieryBurstRunesSession) + "\n" +
-							EnumChatFormatting.WHITE + "    Opal Gems: " + nf.format(BlazeTracker.opalGemsSession) + "\n" +
-							EnumChatFormatting.RED + "    Archfiend Dice: " + nf.format(BlazeTracker.archfiendDiceSession) + "\n" +
-							EnumChatFormatting.LIGHT_PURPLE + "    Duplex Books: " + nf.format(BlazeTracker.duplexBooksSession) + "\n" +
-							EnumChatFormatting.GOLD + "    High Class Archfiend Dice: " + nf.format(BlazeTracker.highClassArchfiendDiceSession) + "\n" +
-							EnumChatFormatting.GOLD + "    Engineering Plans: " + nf.format(BlazeTracker.engineeringPlansSession) + "\n" +
-							EnumChatFormatting.GOLD + "    Subzero Inverters: " + nf.format(BlazeTracker.subzeroInvertersSession) + "\n" +
-							EnumChatFormatting.AQUA + "    Time Since RNG: " + timeBetween + "\n" +
-							EnumChatFormatting.AQUA + "    Bosses Since RNG: " + bossesBetween + "\n" +
-							EnumChatFormatting.RED + EnumChatFormatting.STRIKETHROUGH + "-------------------"));
-					return;
-				}
+                    player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "" + EnumChatFormatting.STRIKETHROUGH + "-------------------\n" +
+                            EnumChatFormatting.DARK_RED + EnumChatFormatting.BOLD + "  Blaze Loot Summary (Current Session):\n" +
+                            EnumChatFormatting.GOLD + "    Demonlords Killed: " + nf.format(BlazeTracker.demonlordsSession) + "\n" +
+                            EnumChatFormatting.GRAY + "    Derelict Ashes: " + nf.format(BlazeTracker.derelictAshesSession) + "\n" +
+                            EnumChatFormatting.YELLOW + "    Enchanted Blaze Powder: " + nf.format(BlazeTracker.blazePowderSession) + "\n" +
+                            EnumChatFormatting.RED + "    Lavatear Runes: " + nf.format(BlazeTracker.lavatearRunesSession) + "\n" +
+                            EnumChatFormatting.AQUA + "    Splash Potions: " + nf.format(BlazeTracker.splashPotionsSession) + "\n" +
+                            EnumChatFormatting.DARK_RED + "    Magma Arrows: " + nf.format(BlazeTracker.magmaArrowsSession) + "\n" +
+                            EnumChatFormatting.DARK_AQUA + "    Mana Disintegrators: " + nf.format(BlazeTracker.manaDisintegratorsSession) + "\n" +
+                            EnumChatFormatting.LIGHT_PURPLE + "    Scorched Books: " + nf.format(BlazeTracker.scorchedBooksSession) + "\n" +
+                            EnumChatFormatting.WHITE + "    Kelvin Inverters: " + nf.format(BlazeTracker.kelvinInvertersSession) + "\n" +
+                            EnumChatFormatting.BLUE + "    Blaze Rod Distillates: " + nf.format(BlazeTracker.blazeRodDistillatesSession) + "\n" +
+                            EnumChatFormatting.BLUE + "    Glowstone Distillates: " + nf.format(BlazeTracker.glowstoneDistillatesSession) + "\n" +
+                            EnumChatFormatting.BLUE + "    Magma Cream Distillates: " + nf.format(BlazeTracker.magmaCreamDistillatesSession) + "\n" +
+                            EnumChatFormatting.BLUE + "    Nether Wart Distillates: " + nf.format(BlazeTracker.netherWartDistillatesSession) + "\n" +
+                            EnumChatFormatting.BLUE + "    Gabagool Distillates: " + nf.format(BlazeTracker.gabagoolDistillatesSession) + "\n" +
+                            EnumChatFormatting.RED + "    Scorched Power Crystals: " + nf.format(BlazeTracker.scorchedPowerCrystalsSession) + "\n" +
+                            EnumChatFormatting.RED + "    Fire Aspect Books: " + nf.format(BlazeTracker.fireAspectBooksSession) + "\n" +
+                            EnumChatFormatting.GOLD + "    Fiery Burst Runes: " + nf.format(BlazeTracker.fieryBurstRunesSession) + "\n" +
+                            EnumChatFormatting.WHITE + "    Opal Gems: " + nf.format(BlazeTracker.opalGemsSession) + "\n" +
+                            EnumChatFormatting.RED + "    Archfiend Dice: " + nf.format(BlazeTracker.archfiendDiceSession) + "\n" +
+                            EnumChatFormatting.LIGHT_PURPLE + "    Duplex Books: " + nf.format(BlazeTracker.duplexBooksSession) + "\n" +
+                            EnumChatFormatting.GOLD + "    High Class Archfiend Dice: " + nf.format(BlazeTracker.highClassArchfiendDiceSession) + "\n" +
+                            EnumChatFormatting.GOLD + "    Engineering Plans: " + nf.format(BlazeTracker.engineeringPlansSession) + "\n" +
+                            EnumChatFormatting.GOLD + "    Subzero Inverters: " + nf.format(BlazeTracker.subzeroInvertersSession) + "\n" +
+                            EnumChatFormatting.AQUA + "    Time Since RNG: " + timeBetween + "\n" +
+                            EnumChatFormatting.AQUA + "    Bosses Since RNG: " + bossesBetween + "\n" +
+                            EnumChatFormatting.RED + EnumChatFormatting.STRIKETHROUGH + "-------------------"));
+                    return;
+                }
 
-				if (BlazeTracker.time == -1) {
-					timeBetween = "Never";
-				} else {
-					timeBetween = Utils.getTimeBetween(BlazeTracker.time, timeNow);
-				}
-				if (BlazeTracker.bosses == -1) {
-					bossesBetween = "Never";
-				} else {
-					bossesBetween = nf.format(BlazeTracker.bosses);
-				}
+                if (BlazeTracker.time == -1) {
+                    timeBetween = "Never";
+                } else {
+                    timeBetween = Utils.getTimeBetween(BlazeTracker.time, timeNow);
+                }
+                if (BlazeTracker.bosses == -1) {
+                    bossesBetween = "Never";
+                } else {
+                    bossesBetween = nf.format(BlazeTracker.bosses);
+                }
 
-				player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "" + EnumChatFormatting.STRIKETHROUGH + "-------------------\n" +
-						EnumChatFormatting.DARK_RED + EnumChatFormatting.BOLD + "  Blaze Loot Summary:\n" +
-						EnumChatFormatting.GOLD + "    Demonlords Killed: " + nf.format(BlazeTracker.demonlords) + "\n" +
-						EnumChatFormatting.GRAY + "    Derelict Ashes: " + nf.format(BlazeTracker.derelictAshes) + "\n" +
-						EnumChatFormatting.YELLOW + "    Enchanted Blaze Powder: " + nf.format(BlazeTracker.blazePowder) + "\n" +
-						EnumChatFormatting.RED + "    Lavatear Runes: " + nf.format(BlazeTracker.lavatearRunes) + "\n" +
-						EnumChatFormatting.AQUA + "    Splash Potions: " + nf.format(BlazeTracker.splashPotions) + "\n" +
-						EnumChatFormatting.DARK_RED + "    Magma Arrows: " + nf.format(BlazeTracker.magmaArrows) + "\n" +
-						EnumChatFormatting.DARK_AQUA + "    Mana Disintegrators: " + nf.format(BlazeTracker.manaDisintegrators) + "\n" +
-						EnumChatFormatting.LIGHT_PURPLE + "    Scorched Books: " + nf.format(BlazeTracker.scorchedBooks) + "\n" +
-						EnumChatFormatting.WHITE + "    Kelvin Inverters: " + nf.format(BlazeTracker.kelvinInverters) + "\n" +
-						EnumChatFormatting.BLUE + "    Blaze Rod Distillates: " + nf.format(BlazeTracker.blazeRodDistillates) + "\n" +
-						EnumChatFormatting.BLUE + "    Glowstone Distillates: " + nf.format(BlazeTracker.glowstoneDistillates) + "\n" +
-						EnumChatFormatting.BLUE + "    Magma Cream Distillates: " + nf.format(BlazeTracker.magmaCreamDistillates) + "\n" +
-						EnumChatFormatting.BLUE + "    Nether Wart Distillates: " + nf.format(BlazeTracker.netherWartDistillates) + "\n" +
-						EnumChatFormatting.BLUE + "    Gabagool Distillates: " + nf.format(BlazeTracker.gabagoolDistillates) + "\n" +
-						EnumChatFormatting.RED + "    Scorched Power Crystals: " + nf.format(BlazeTracker.scorchedPowerCrystals) + "\n" +
-						EnumChatFormatting.RED + "    Fire Aspect Books: " + nf.format(BlazeTracker.fireAspectBooks) + "\n" +
-						EnumChatFormatting.GOLD + "    Fiery Burst Runes: " + nf.format(BlazeTracker.fieryBurstRunes) + "\n" +
-						EnumChatFormatting.WHITE + "    Opal Gems: " + nf.format(BlazeTracker.opalGems) + "\n" +
-						EnumChatFormatting.RED + "    Archfiend Dice: " + nf.format(BlazeTracker.archfiendDice) + "\n" +
-						EnumChatFormatting.LIGHT_PURPLE + "    Duplex Books: " + nf.format(BlazeTracker.duplexBooks) + "\n" +
-						EnumChatFormatting.GOLD + "    High Class Archfiend Dice: " + nf.format(BlazeTracker.highClassArchfiendDice) + "\n" +
-						EnumChatFormatting.GOLD + "    Engineering Plans: " + nf.format(BlazeTracker.engineeringPlans) + "\n" +
-						EnumChatFormatting.GOLD + "    Subzero Inverters: " + nf.format(BlazeTracker.subzeroInverters) + "\n" +
-						EnumChatFormatting.AQUA + "    Time Since RNG: " + timeBetween + "\n" +
-						EnumChatFormatting.AQUA + "    Bosses Since RNG: " + bossesBetween + "\n" +
-						EnumChatFormatting.RED + EnumChatFormatting.STRIKETHROUGH + "-------------------"));
-				break;
-			case "vampire":
-				if (showSession) {
-					player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "" + EnumChatFormatting.STRIKETHROUGH + "-------------------\n" +
-							EnumChatFormatting.DARK_RED + EnumChatFormatting.BOLD + "  Vampire Loot Summary (Current Session):\n" +
-							EnumChatFormatting.GOLD + "    Riftstalkers Killed: " + nf.format(VampireTracker.riftstalkersSession) + "\n" +
-							EnumChatFormatting.DARK_RED + "    Coven Seals: " + nf.format(VampireTracker.covenSealsSession) + "\n" +
-							EnumChatFormatting.DARK_AQUA + "    Quantum Bundles: " + nf.format(VampireTracker.quantumBundlesSession) + "\n" +
-							EnumChatFormatting.RED + "    Bubba Blisters: " + nf.format(VampireTracker.bubbaBlistersSession) + "\n" +
-							EnumChatFormatting.LIGHT_PURPLE + "    Soultwist Runes: " + nf.format(VampireTracker.soultwistRunesSession) + "\n" +
-							EnumChatFormatting.GRAY + "    Chocolate Chips: " + nf.format(VampireTracker.chocolateChipsSession) + "\n" +
-							EnumChatFormatting.GOLD + "    Lucky Blocks: " + nf.format(VampireTracker.luckyBlocksSession) + "\n" +
-							EnumChatFormatting.RED + "    The One Bundles: " + nf.format(VampireTracker.theOneBundlesSession) + "\n" +
-							EnumChatFormatting.GREEN + "    McGrubber's Burgers: " + nf.format(VampireTracker.mcgrubbersBurgersSession) + "\n" +
-							EnumChatFormatting.WHITE + "    Vampire Parts: " + nf.format(VampireTracker.vampirePartsSession) + "\n" +
-							EnumChatFormatting.RED + EnumChatFormatting.STRIKETHROUGH + "-------------------"));
-					return;
-				}
+                player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "" + EnumChatFormatting.STRIKETHROUGH + "-------------------\n" +
+                        EnumChatFormatting.DARK_RED + EnumChatFormatting.BOLD + "  Blaze Loot Summary:\n" +
+                        EnumChatFormatting.GOLD + "    Demonlords Killed: " + nf.format(BlazeTracker.demonlords) + "\n" +
+                        EnumChatFormatting.GRAY + "    Derelict Ashes: " + nf.format(BlazeTracker.derelictAshes) + "\n" +
+                        EnumChatFormatting.YELLOW + "    Enchanted Blaze Powder: " + nf.format(BlazeTracker.blazePowder) + "\n" +
+                        EnumChatFormatting.RED + "    Lavatear Runes: " + nf.format(BlazeTracker.lavatearRunes) + "\n" +
+                        EnumChatFormatting.AQUA + "    Splash Potions: " + nf.format(BlazeTracker.splashPotions) + "\n" +
+                        EnumChatFormatting.DARK_RED + "    Magma Arrows: " + nf.format(BlazeTracker.magmaArrows) + "\n" +
+                        EnumChatFormatting.DARK_AQUA + "    Mana Disintegrators: " + nf.format(BlazeTracker.manaDisintegrators) + "\n" +
+                        EnumChatFormatting.LIGHT_PURPLE + "    Scorched Books: " + nf.format(BlazeTracker.scorchedBooks) + "\n" +
+                        EnumChatFormatting.WHITE + "    Kelvin Inverters: " + nf.format(BlazeTracker.kelvinInverters) + "\n" +
+                        EnumChatFormatting.BLUE + "    Blaze Rod Distillates: " + nf.format(BlazeTracker.blazeRodDistillates) + "\n" +
+                        EnumChatFormatting.BLUE + "    Glowstone Distillates: " + nf.format(BlazeTracker.glowstoneDistillates) + "\n" +
+                        EnumChatFormatting.BLUE + "    Magma Cream Distillates: " + nf.format(BlazeTracker.magmaCreamDistillates) + "\n" +
+                        EnumChatFormatting.BLUE + "    Nether Wart Distillates: " + nf.format(BlazeTracker.netherWartDistillates) + "\n" +
+                        EnumChatFormatting.BLUE + "    Gabagool Distillates: " + nf.format(BlazeTracker.gabagoolDistillates) + "\n" +
+                        EnumChatFormatting.RED + "    Scorched Power Crystals: " + nf.format(BlazeTracker.scorchedPowerCrystals) + "\n" +
+                        EnumChatFormatting.RED + "    Fire Aspect Books: " + nf.format(BlazeTracker.fireAspectBooks) + "\n" +
+                        EnumChatFormatting.GOLD + "    Fiery Burst Runes: " + nf.format(BlazeTracker.fieryBurstRunes) + "\n" +
+                        EnumChatFormatting.WHITE + "    Opal Gems: " + nf.format(BlazeTracker.opalGems) + "\n" +
+                        EnumChatFormatting.RED + "    Archfiend Dice: " + nf.format(BlazeTracker.archfiendDice) + "\n" +
+                        EnumChatFormatting.LIGHT_PURPLE + "    Duplex Books: " + nf.format(BlazeTracker.duplexBooks) + "\n" +
+                        EnumChatFormatting.GOLD + "    High Class Archfiend Dice: " + nf.format(BlazeTracker.highClassArchfiendDice) + "\n" +
+                        EnumChatFormatting.GOLD + "    Engineering Plans: " + nf.format(BlazeTracker.engineeringPlans) + "\n" +
+                        EnumChatFormatting.GOLD + "    Subzero Inverters: " + nf.format(BlazeTracker.subzeroInverters) + "\n" +
+                        EnumChatFormatting.AQUA + "    Time Since RNG: " + timeBetween + "\n" +
+                        EnumChatFormatting.AQUA + "    Bosses Since RNG: " + bossesBetween + "\n" +
+                        EnumChatFormatting.RED + EnumChatFormatting.STRIKETHROUGH + "-------------------"));
+                break;
+            case "vampire":
+                if (showSession) {
+                    player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "" + EnumChatFormatting.STRIKETHROUGH + "-------------------\n" +
+                            EnumChatFormatting.DARK_RED + EnumChatFormatting.BOLD + "  Vampire Loot Summary (Current Session):\n" +
+                            EnumChatFormatting.GOLD + "    Riftstalkers Killed: " + nf.format(VampireTracker.riftstalkersSession) + "\n" +
+                            EnumChatFormatting.DARK_RED + "    Coven Seals: " + nf.format(VampireTracker.covenSealsSession) + "\n" +
+                            EnumChatFormatting.DARK_AQUA + "    Quantum Bundles: " + nf.format(VampireTracker.quantumBundlesSession) + "\n" +
+                            EnumChatFormatting.RED + "    Bubba Blisters: " + nf.format(VampireTracker.bubbaBlistersSession) + "\n" +
+                            EnumChatFormatting.LIGHT_PURPLE + "    Soultwist Runes: " + nf.format(VampireTracker.soultwistRunesSession) + "\n" +
+                            EnumChatFormatting.GRAY + "    Chocolate Chips: " + nf.format(VampireTracker.chocolateChipsSession) + "\n" +
+                            EnumChatFormatting.GOLD + "    Lucky Blocks: " + nf.format(VampireTracker.luckyBlocksSession) + "\n" +
+                            EnumChatFormatting.RED + "    The One Bundles: " + nf.format(VampireTracker.theOneBundlesSession) + "\n" +
+                            EnumChatFormatting.GREEN + "    McGrubber's Burgers: " + nf.format(VampireTracker.mcgrubbersBurgersSession) + "\n" +
+                            EnumChatFormatting.WHITE + "    Vampire Parts: " + nf.format(VampireTracker.vampirePartsSession) + "\n" +
+                            EnumChatFormatting.RED + EnumChatFormatting.STRIKETHROUGH + "-------------------"));
+                    return;
+                }
 
-				player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "" + EnumChatFormatting.STRIKETHROUGH + "-------------------\n" +
-						EnumChatFormatting.DARK_RED + EnumChatFormatting.BOLD + "  Vampire Loot Summary:\n" +
-						EnumChatFormatting.GOLD + "    Riftstalkers Killed: " + nf.format(VampireTracker.riftstalkers) + "\n" +
-						EnumChatFormatting.DARK_RED + "    Coven Seals: " + nf.format(VampireTracker.covenSeals) + "\n" +
-						EnumChatFormatting.DARK_AQUA + "    Quantum Bundles: " + nf.format(VampireTracker.quantumBundles) + "\n" +
-						EnumChatFormatting.RED + "    Bubba Blisters: " + nf.format(VampireTracker.bubbaBlisters) + "\n" +
-						EnumChatFormatting.LIGHT_PURPLE + "    Soultwist Runes: " + nf.format(VampireTracker.soultwistRunes) + "\n" +
-						EnumChatFormatting.GRAY + "    Chocolate Chips: " + nf.format(VampireTracker.chocolateChips) + "\n" +
-						EnumChatFormatting.GOLD + "    Lucky Blocks: " + nf.format(VampireTracker.luckyBlocks) + "\n" +
-						EnumChatFormatting.RED + "    The One Bundles: " + nf.format(VampireTracker.theOneBundles) + "\n" +
-						EnumChatFormatting.GREEN + "    McGrubber's Burgers: " + nf.format(VampireTracker.mcgrubbersBurgers) + "\n" +
-						EnumChatFormatting.WHITE + "    Vampire Parts: " + nf.format(VampireTracker.vampireParts) + "\n" +
-						EnumChatFormatting.RED + EnumChatFormatting.STRIKETHROUGH + "-------------------"));
-				break;
-			case "fishing":
-				if (arg1.length > 1) {
-					if (arg1[1].equalsIgnoreCase("winter")) {
-						if (showSession) {
-							if (FishingTracker.reindrakeTimeSession == -1) {
-								timeBetween = "Never";
-							} else {
-								timeBetween = Utils.getTimeBetween(FishingTracker.reindrakeTimeSession, timeNow);
-							}
-							if (FishingTracker.reindrakeSCsSession == -1) {
-								bossesBetween = "Never";
-							} else {
-								bossesBetween = nf.format(FishingTracker.reindrakeSCsSession);
-							}
+                player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "" + EnumChatFormatting.STRIKETHROUGH + "-------------------\n" +
+                        EnumChatFormatting.DARK_RED + EnumChatFormatting.BOLD + "  Vampire Loot Summary:\n" +
+                        EnumChatFormatting.GOLD + "    Riftstalkers Killed: " + nf.format(VampireTracker.riftstalkers) + "\n" +
+                        EnumChatFormatting.DARK_RED + "    Coven Seals: " + nf.format(VampireTracker.covenSeals) + "\n" +
+                        EnumChatFormatting.DARK_AQUA + "    Quantum Bundles: " + nf.format(VampireTracker.quantumBundles) + "\n" +
+                        EnumChatFormatting.RED + "    Bubba Blisters: " + nf.format(VampireTracker.bubbaBlisters) + "\n" +
+                        EnumChatFormatting.LIGHT_PURPLE + "    Soultwist Runes: " + nf.format(VampireTracker.soultwistRunes) + "\n" +
+                        EnumChatFormatting.GRAY + "    Chocolate Chips: " + nf.format(VampireTracker.chocolateChips) + "\n" +
+                        EnumChatFormatting.GOLD + "    Lucky Blocks: " + nf.format(VampireTracker.luckyBlocks) + "\n" +
+                        EnumChatFormatting.RED + "    The One Bundles: " + nf.format(VampireTracker.theOneBundles) + "\n" +
+                        EnumChatFormatting.GREEN + "    McGrubber's Burgers: " + nf.format(VampireTracker.mcgrubbersBurgers) + "\n" +
+                        EnumChatFormatting.WHITE + "    Vampire Parts: " + nf.format(VampireTracker.vampireParts) + "\n" +
+                        EnumChatFormatting.RED + EnumChatFormatting.STRIKETHROUGH + "-------------------"));
+                break;
+            case "fishing":
+                if (arg1.length > 1) {
+                    if (arg1[1].equalsIgnoreCase("winter")) {
+                        if (showSession) {
+                            if (FishingTracker.reindrakeTimeSession == -1) {
+                                timeBetween = "Never";
+                            } else {
+                                timeBetween = Utils.getTimeBetween(FishingTracker.reindrakeTimeSession, timeNow);
+                            }
+                            if (FishingTracker.reindrakeSCsSession == -1) {
+                                bossesBetween = "Never";
+                            } else {
+                                bossesBetween = nf.format(FishingTracker.reindrakeSCsSession);
+                            }
 
-							player.addChatMessage(new ChatComponentText(EnumChatFormatting.AQUA + "" + EnumChatFormatting.STRIKETHROUGH + "-------------------\n" +
-																		EnumChatFormatting.WHITE + EnumChatFormatting.BOLD + "  Winter Fishing Summary (Current Session):\n" +
-																		EnumChatFormatting.AQUA + "    Frozen Steves: " + nf.format(FishingTracker.frozenStevesSession) + "\n" +
-																		EnumChatFormatting.WHITE + "    Snowmans: " + nf.format(FishingTracker.frostyTheSnowmansSession) + "\n" +
-																		EnumChatFormatting.DARK_GREEN + "    Grinches: " + nf.format(FishingTracker.grinchesSession) + "\n" +
-																		EnumChatFormatting.RED + "    Nutcrackers: " + nf.format(FishingTracker.nutcrackersSession) + "\n" +
-																		EnumChatFormatting.GOLD + "    Yetis: " + nf.format(FishingTracker.yetisSession) + "\n" +
-																		EnumChatFormatting.GOLD + "    Reindrakes: " + nf.format(FishingTracker.reindrakesSession) + "\n" +
-																		EnumChatFormatting.AQUA + "    Time Since Reindrake: " + timeBetween + "\n" +
-																		EnumChatFormatting.AQUA + "    Creatures Since Reindrake: " + bossesBetween + "\n" +
-																		EnumChatFormatting.AQUA + EnumChatFormatting.STRIKETHROUGH + "-------------------"));
-							return;
-						}
+                            player.addChatMessage(new ChatComponentText(EnumChatFormatting.AQUA + "" + EnumChatFormatting.STRIKETHROUGH + "-------------------\n" +
+                                                                        EnumChatFormatting.WHITE + EnumChatFormatting.BOLD + "  Winter Fishing Summary (Current Session):\n" +
+                                                                        EnumChatFormatting.AQUA + "    Frozen Steves: " + nf.format(FishingTracker.frozenStevesSession) + "\n" +
+                                                                        EnumChatFormatting.WHITE + "    Snowmans: " + nf.format(FishingTracker.frostyTheSnowmansSession) + "\n" +
+                                                                        EnumChatFormatting.DARK_GREEN + "    Grinches: " + nf.format(FishingTracker.grinchesSession) + "\n" +
+                                                                        EnumChatFormatting.RED + "    Nutcrackers: " + nf.format(FishingTracker.nutcrackersSession) + "\n" +
+                                                                        EnumChatFormatting.GOLD + "    Yetis: " + nf.format(FishingTracker.yetisSession) + "\n" +
+                                                                        EnumChatFormatting.GOLD + "    Reindrakes: " + nf.format(FishingTracker.reindrakesSession) + "\n" +
+                                                                        EnumChatFormatting.AQUA + "    Time Since Reindrake: " + timeBetween + "\n" +
+                                                                        EnumChatFormatting.AQUA + "    Creatures Since Reindrake: " + bossesBetween + "\n" +
+                                                                        EnumChatFormatting.AQUA + EnumChatFormatting.STRIKETHROUGH + "-------------------"));
+                            return;
+                        }
 
-						if (FishingTracker.reindrakeTime == -1) {
-							timeBetween = "Never";
-						} else {
-							timeBetween = Utils.getTimeBetween(FishingTracker.reindrakeTime, timeNow);
-						}
-						if (FishingTracker.reindrakeSCs == -1) {
-							bossesBetween = "Never";
-						} else {
-							bossesBetween = nf.format(FishingTracker.reindrakeSCs);
-						}
+                        if (FishingTracker.reindrakeTime == -1) {
+                            timeBetween = "Never";
+                        } else {
+                            timeBetween = Utils.getTimeBetween(FishingTracker.reindrakeTime, timeNow);
+                        }
+                        if (FishingTracker.reindrakeSCs == -1) {
+                            bossesBetween = "Never";
+                        } else {
+                            bossesBetween = nf.format(FishingTracker.reindrakeSCs);
+                        }
 
-						player.addChatMessage(new ChatComponentText(EnumChatFormatting.AQUA + "" + EnumChatFormatting.STRIKETHROUGH + "-------------------\n" +
-																	EnumChatFormatting.WHITE + EnumChatFormatting.BOLD + "  Winter Fishing Summary:\n" +
-																	EnumChatFormatting.AQUA + "    Frozen Steves: " + nf.format(FishingTracker.frozenSteves) + "\n" +
-																	EnumChatFormatting.WHITE + "    Snowmans: " + nf.format(FishingTracker.frostyTheSnowmans) + "\n" +
-																	EnumChatFormatting.DARK_GREEN + "    Grinches: " + nf.format(FishingTracker.grinches) + "\n" +
-																	EnumChatFormatting.RED + "    Nutcrackers: " + nf.format(FishingTracker.nutcrackers) + "\n" +
-																	EnumChatFormatting.GOLD + "    Yetis: " + nf.format(FishingTracker.yetis) + "\n" +
-																	EnumChatFormatting.GOLD + "    Reindrakes: " + nf.format(FishingTracker.reindrakes) + "\n" +
-																	EnumChatFormatting.AQUA + "    Time Since Reindrake: " + timeBetween + "\n" +
-																	EnumChatFormatting.AQUA + "    Creatures Since Reindrake: " + bossesBetween + "\n" +
-																	EnumChatFormatting.AQUA + EnumChatFormatting.STRIKETHROUGH + "-------------------"));
-						return;
-					} else if (arg1[1].equalsIgnoreCase("festival")) {
-						if (showSession) {
-							player.addChatMessage(new ChatComponentText(EnumChatFormatting.AQUA + "" + EnumChatFormatting.STRIKETHROUGH + "-------------------\n" +
-																		EnumChatFormatting.DARK_BLUE + EnumChatFormatting.BOLD + " Fishing Festival Summary (Current Session):\n" +
-																		EnumChatFormatting.LIGHT_PURPLE + "    Nurse Sharks: " + nf.format(FishingTracker.nurseSharksSession) + "\n" +
-																		EnumChatFormatting.BLUE + "    Blue Sharks: " + nf.format(FishingTracker.blueSharksSession) + "\n" +
-																		EnumChatFormatting.GOLD + "    Tiger Sharks: " + nf.format(FishingTracker.tigerSharksSession) + "\n" +
-																		EnumChatFormatting.WHITE + "    Great White Sharks: " + nf.format(FishingTracker.greatWhiteSharksSession) + "\n" +
-																		EnumChatFormatting.AQUA + EnumChatFormatting.STRIKETHROUGH + "-------------------"));
-							return;
-						}
+                        player.addChatMessage(new ChatComponentText(EnumChatFormatting.AQUA + "" + EnumChatFormatting.STRIKETHROUGH + "-------------------\n" +
+                                                                    EnumChatFormatting.WHITE + EnumChatFormatting.BOLD + "  Winter Fishing Summary:\n" +
+                                                                    EnumChatFormatting.AQUA + "    Frozen Steves: " + nf.format(FishingTracker.frozenSteves) + "\n" +
+                                                                    EnumChatFormatting.WHITE + "    Snowmans: " + nf.format(FishingTracker.frostyTheSnowmans) + "\n" +
+                                                                    EnumChatFormatting.DARK_GREEN + "    Grinches: " + nf.format(FishingTracker.grinches) + "\n" +
+                                                                    EnumChatFormatting.RED + "    Nutcrackers: " + nf.format(FishingTracker.nutcrackers) + "\n" +
+                                                                    EnumChatFormatting.GOLD + "    Yetis: " + nf.format(FishingTracker.yetis) + "\n" +
+                                                                    EnumChatFormatting.GOLD + "    Reindrakes: " + nf.format(FishingTracker.reindrakes) + "\n" +
+                                                                    EnumChatFormatting.AQUA + "    Time Since Reindrake: " + timeBetween + "\n" +
+                                                                    EnumChatFormatting.AQUA + "    Creatures Since Reindrake: " + bossesBetween + "\n" +
+                                                                    EnumChatFormatting.AQUA + EnumChatFormatting.STRIKETHROUGH + "-------------------"));
+                        return;
+                    } else if (arg1[1].equalsIgnoreCase("festival")) {
+                        if (showSession) {
+                            player.addChatMessage(new ChatComponentText(EnumChatFormatting.AQUA + "" + EnumChatFormatting.STRIKETHROUGH + "-------------------\n" +
+                                                                        EnumChatFormatting.DARK_BLUE + EnumChatFormatting.BOLD + " Fishing Festival Summary (Current Session):\n" +
+                                                                        EnumChatFormatting.LIGHT_PURPLE + "    Nurse Sharks: " + nf.format(FishingTracker.nurseSharksSession) + "\n" +
+                                                                        EnumChatFormatting.BLUE + "    Blue Sharks: " + nf.format(FishingTracker.blueSharksSession) + "\n" +
+                                                                        EnumChatFormatting.GOLD + "    Tiger Sharks: " + nf.format(FishingTracker.tigerSharksSession) + "\n" +
+                                                                        EnumChatFormatting.WHITE + "    Great White Sharks: " + nf.format(FishingTracker.greatWhiteSharksSession) + "\n" +
+                                                                        EnumChatFormatting.AQUA + EnumChatFormatting.STRIKETHROUGH + "-------------------"));
+                            return;
+                        }
 
-						player.addChatMessage(new ChatComponentText(EnumChatFormatting.AQUA + "" + EnumChatFormatting.STRIKETHROUGH + "-------------------\n" +
-																	EnumChatFormatting.DARK_BLUE + EnumChatFormatting.BOLD + " Fishing Festival Summary:\n" +
-																	EnumChatFormatting.LIGHT_PURPLE + "    Nurse Sharks: " + nf.format(FishingTracker.nurseSharks) + "\n" +
-																	EnumChatFormatting.BLUE + "    Blue Sharks: " + nf.format(FishingTracker.blueSharks) + "\n" +
-																	EnumChatFormatting.GOLD + "    Tiger Sharks: " + nf.format(FishingTracker.tigerSharks) + "\n" +
-																	EnumChatFormatting.WHITE + "    Great White Sharks: " + nf.format(FishingTracker.greatWhiteSharks) + "\n" +
-																	EnumChatFormatting.AQUA + EnumChatFormatting.STRIKETHROUGH + "-------------------"));
-						return;
-					} else if (arg1[1].equalsIgnoreCase("spooky")) {
-						if (showSession) {
-							player.addChatMessage(new ChatComponentText(EnumChatFormatting.AQUA + "" + EnumChatFormatting.STRIKETHROUGH + "-------------------\n" +
-																		EnumChatFormatting.GOLD + EnumChatFormatting.BOLD + " Spooky Fishing Summary (Current Session):\n" +
-																		EnumChatFormatting.BLUE + "    Scarecrows: " + nf.format(FishingTracker.scarecrowsSession) + "\n" +
-																		EnumChatFormatting.GRAY + "    Nightmares: " + nf.format(FishingTracker.nightmaresSession) + "\n" +
-																		EnumChatFormatting.DARK_PURPLE + "    Werewolves: " + nf.format(FishingTracker.werewolfsSession) + "\n" +
-																		EnumChatFormatting.GOLD + "    Phantom Fishers: " + nf.format(FishingTracker.phantomFishersSession) + "\n" +
-																		EnumChatFormatting.GOLD + "    Grim Reapers: " + nf.format(FishingTracker.grimReapersSession) + "\n" +
-																		EnumChatFormatting.AQUA + "" + EnumChatFormatting.STRIKETHROUGH + "-------------------"));
-							return;
-						}
+                        player.addChatMessage(new ChatComponentText(EnumChatFormatting.AQUA + "" + EnumChatFormatting.STRIKETHROUGH + "-------------------\n" +
+                                                                    EnumChatFormatting.DARK_BLUE + EnumChatFormatting.BOLD + " Fishing Festival Summary:\n" +
+                                                                    EnumChatFormatting.LIGHT_PURPLE + "    Nurse Sharks: " + nf.format(FishingTracker.nurseSharks) + "\n" +
+                                                                    EnumChatFormatting.BLUE + "    Blue Sharks: " + nf.format(FishingTracker.blueSharks) + "\n" +
+                                                                    EnumChatFormatting.GOLD + "    Tiger Sharks: " + nf.format(FishingTracker.tigerSharks) + "\n" +
+                                                                    EnumChatFormatting.WHITE + "    Great White Sharks: " + nf.format(FishingTracker.greatWhiteSharks) + "\n" +
+                                                                    EnumChatFormatting.AQUA + EnumChatFormatting.STRIKETHROUGH + "-------------------"));
+                        return;
+                    } else if (arg1[1].equalsIgnoreCase("spooky")) {
+                        if (showSession) {
+                            player.addChatMessage(new ChatComponentText(EnumChatFormatting.AQUA + "" + EnumChatFormatting.STRIKETHROUGH + "-------------------\n" +
+                                                                        EnumChatFormatting.GOLD + EnumChatFormatting.BOLD + " Spooky Fishing Summary (Current Session):\n" +
+                                                                        EnumChatFormatting.BLUE + "    Scarecrows: " + nf.format(FishingTracker.scarecrowsSession) + "\n" +
+                                                                        EnumChatFormatting.GRAY + "    Nightmares: " + nf.format(FishingTracker.nightmaresSession) + "\n" +
+                                                                        EnumChatFormatting.DARK_PURPLE + "    Werewolves: " + nf.format(FishingTracker.werewolfsSession) + "\n" +
+                                                                        EnumChatFormatting.GOLD + "    Phantom Fishers: " + nf.format(FishingTracker.phantomFishersSession) + "\n" +
+                                                                        EnumChatFormatting.GOLD + "    Grim Reapers: " + nf.format(FishingTracker.grimReapersSession) + "\n" +
+                                                                        EnumChatFormatting.AQUA + "" + EnumChatFormatting.STRIKETHROUGH + "-------------------"));
+                            return;
+                        }
 
-						player.addChatMessage(new ChatComponentText(EnumChatFormatting.AQUA + "" + EnumChatFormatting.STRIKETHROUGH + "-------------------\n" +
-																	EnumChatFormatting.GOLD + EnumChatFormatting.BOLD + " Spooky Fishing Summary:\n" +
-																	EnumChatFormatting.BLUE + "    Scarecrows: " + nf.format(FishingTracker.scarecrows) + "\n" +
-																	EnumChatFormatting.GRAY + "    Nightmares: " + nf.format(FishingTracker.nightmares) + "\n" +
-																	EnumChatFormatting.DARK_PURPLE + "    Werewolves: " + nf.format(FishingTracker.werewolfs) + "\n" +
-																	EnumChatFormatting.GOLD + "    Phantom Fishers: " + nf.format(FishingTracker.phantomFishers) + "\n" +
-																	EnumChatFormatting.GOLD + "    Grim Reapers: " + nf.format(FishingTracker.grimReapers) + "\n" +
-																	EnumChatFormatting.AQUA + "" + EnumChatFormatting.STRIKETHROUGH + "-------------------"));
-						return;
-					} else if (arg1[1].equalsIgnoreCase("ch")) {
-						if (showSession) {
-							player.addChatMessage(new ChatComponentText(EnumChatFormatting.AQUA + "" + EnumChatFormatting.STRIKETHROUGH + "-------------------\n" +
-																		EnumChatFormatting.GOLD + EnumChatFormatting.BOLD + " Crystal Hollows Fishing Summary (Current Session):\n" +
-																		EnumChatFormatting.BLUE + "    Water Worms: " + nf.format(FishingTracker.waterWormsSession) + "\n" +
-																		EnumChatFormatting.GREEN + "    Poisoned Water Worms: " + nf.format(FishingTracker.poisonedWaterWormsSession) + "\n" +
-																		EnumChatFormatting.RED + "    Flaming Worms: " + nf.format(FishingTracker.flamingWormsSession) + "\n" +
-																		EnumChatFormatting.LIGHT_PURPLE + "    Lava Blazes: " + nf.format(FishingTracker.lavaBlazesSession) + "\n" +
-																		EnumChatFormatting.LIGHT_PURPLE + "    Lava Pigmen: " + nf.format(FishingTracker.lavaPigmenSession) + "\n" +
-																		EnumChatFormatting.GOLD + "    Zombie Miners: " + nf.format(FishingTracker.zombieMinersSession) + "\n" +
-																		EnumChatFormatting.AQUA + "" + EnumChatFormatting.STRIKETHROUGH + "-------------------"));
+                        player.addChatMessage(new ChatComponentText(EnumChatFormatting.AQUA + "" + EnumChatFormatting.STRIKETHROUGH + "-------------------\n" +
+                                                                    EnumChatFormatting.GOLD + EnumChatFormatting.BOLD + " Spooky Fishing Summary:\n" +
+                                                                    EnumChatFormatting.BLUE + "    Scarecrows: " + nf.format(FishingTracker.scarecrows) + "\n" +
+                                                                    EnumChatFormatting.GRAY + "    Nightmares: " + nf.format(FishingTracker.nightmares) + "\n" +
+                                                                    EnumChatFormatting.DARK_PURPLE + "    Werewolves: " + nf.format(FishingTracker.werewolfs) + "\n" +
+                                                                    EnumChatFormatting.GOLD + "    Phantom Fishers: " + nf.format(FishingTracker.phantomFishers) + "\n" +
+                                                                    EnumChatFormatting.GOLD + "    Grim Reapers: " + nf.format(FishingTracker.grimReapers) + "\n" +
+                                                                    EnumChatFormatting.AQUA + "" + EnumChatFormatting.STRIKETHROUGH + "-------------------"));
+                        return;
+                    } else if (arg1[1].equalsIgnoreCase("ch")) {
+                        if (showSession) {
+                            player.addChatMessage(new ChatComponentText(EnumChatFormatting.AQUA + "" + EnumChatFormatting.STRIKETHROUGH + "-------------------\n" +
+                                                                        EnumChatFormatting.GOLD + EnumChatFormatting.BOLD + " Crystal Hollows Fishing Summary (Current Session):\n" +
+                                                                        EnumChatFormatting.BLUE + "    Water Worms: " + nf.format(FishingTracker.waterWormsSession) + "\n" +
+                                                                        EnumChatFormatting.GREEN + "    Poisoned Water Worms: " + nf.format(FishingTracker.poisonedWaterWormsSession) + "\n" +
+                                                                        EnumChatFormatting.RED + "    Flaming Worms: " + nf.format(FishingTracker.flamingWormsSession) + "\n" +
+                                                                        EnumChatFormatting.LIGHT_PURPLE + "    Lava Blazes: " + nf.format(FishingTracker.lavaBlazesSession) + "\n" +
+                                                                        EnumChatFormatting.LIGHT_PURPLE + "    Lava Pigmen: " + nf.format(FishingTracker.lavaPigmenSession) + "\n" +
+                                                                        EnumChatFormatting.GOLD + "    Zombie Miners: " + nf.format(FishingTracker.zombieMinersSession) + "\n" +
+                                                                        EnumChatFormatting.AQUA + "" + EnumChatFormatting.STRIKETHROUGH + "-------------------"));
 
-							return;
-						}
+                            return;
+                        }
 
-						player.addChatMessage(new ChatComponentText(EnumChatFormatting.AQUA + "" + EnumChatFormatting.STRIKETHROUGH + "-------------------\n" +
-																	EnumChatFormatting.GOLD + EnumChatFormatting.BOLD + " Crystal Hollows Fishing Summary:\n" +
-																	EnumChatFormatting.BLUE + "    Water Worms: " + nf.format(FishingTracker.waterWorms) + "\n" +
-																	EnumChatFormatting.GREEN + "    Poisoned Water Worms: " + nf.format(FishingTracker.poisonedWaterWorms) + "\n" +
-																	EnumChatFormatting.RED + "    Flaming Worms: " + nf.format(FishingTracker.flamingWorms) + "\n" +
-																	EnumChatFormatting.LIGHT_PURPLE + "    Lava Blazes: " + nf.format(FishingTracker.lavaBlazes) + "\n" +
-																	EnumChatFormatting.LIGHT_PURPLE + "    Lava Pigmen: " + nf.format(FishingTracker.lavaPigmen) + "\n" +
-																	EnumChatFormatting.GOLD + "    Zombie Miners: " + nf.format(FishingTracker.zombieMiners) + "\n" +
-																	EnumChatFormatting.AQUA + "" + EnumChatFormatting.STRIKETHROUGH + "-------------------"));
-						return;
-					} else if (arg1[1].equalsIgnoreCase("lava")) {
-						if (showSession) {
-							if (FishingTracker.jawbusTimeSession == -1) {
-								timeBetween = "Never";
-							} else {
-								timeBetween = Utils.getTimeBetween(FishingTracker.jawbusTimeSession, timeNow);
-							}
-							if (FishingTracker.jawbusSCsSession == -1) {
-								bossesBetween = "Never";
-							} else {
-								bossesBetween = nf.format(FishingTracker.jawbusSCsSession);
-							}
+                        player.addChatMessage(new ChatComponentText(EnumChatFormatting.AQUA + "" + EnumChatFormatting.STRIKETHROUGH + "-------------------\n" +
+                                                                    EnumChatFormatting.GOLD + EnumChatFormatting.BOLD + " Crystal Hollows Fishing Summary:\n" +
+                                                                    EnumChatFormatting.BLUE + "    Water Worms: " + nf.format(FishingTracker.waterWorms) + "\n" +
+                                                                    EnumChatFormatting.GREEN + "    Poisoned Water Worms: " + nf.format(FishingTracker.poisonedWaterWorms) + "\n" +
+                                                                    EnumChatFormatting.RED + "    Flaming Worms: " + nf.format(FishingTracker.flamingWorms) + "\n" +
+                                                                    EnumChatFormatting.LIGHT_PURPLE + "    Lava Blazes: " + nf.format(FishingTracker.lavaBlazes) + "\n" +
+                                                                    EnumChatFormatting.LIGHT_PURPLE + "    Lava Pigmen: " + nf.format(FishingTracker.lavaPigmen) + "\n" +
+                                                                    EnumChatFormatting.GOLD + "    Zombie Miners: " + nf.format(FishingTracker.zombieMiners) + "\n" +
+                                                                    EnumChatFormatting.AQUA + "" + EnumChatFormatting.STRIKETHROUGH + "-------------------"));
+                        return;
+                    } else if (arg1[1].equalsIgnoreCase("lava")) {
+                        if (showSession) {
+                            if (FishingTracker.jawbusTimeSession == -1) {
+                                timeBetween = "Never";
+                            } else {
+                                timeBetween = Utils.getTimeBetween(FishingTracker.jawbusTimeSession, timeNow);
+                            }
+                            if (FishingTracker.jawbusSCsSession == -1) {
+                                bossesBetween = "Never";
+                            } else {
+                                bossesBetween = nf.format(FishingTracker.jawbusSCsSession);
+                            }
 
-							player.addChatMessage(new ChatComponentText(EnumChatFormatting.AQUA + "" + EnumChatFormatting.STRIKETHROUGH + "-------------------\n" +
-									EnumChatFormatting.RED + EnumChatFormatting.BOLD + " Lava Fishing Summary (Current Session):\n" +
-									EnumChatFormatting.BLUE + "    Plhlegblasts: " + nf.format(FishingTracker.plhlegblastsSession) + "\n" +
-									EnumChatFormatting.DARK_RED + "    Magma Slugs: " + nf.format(FishingTracker.magmaSlugsSession) + "\n" +
-									EnumChatFormatting.RED + "    Moogmas: " + nf.format(FishingTracker.moogmasSession) + "\n" +
-									EnumChatFormatting.RED + "    Lava Leeches: " + nf.format(FishingTracker.lavaLeechesSession) + "\n" +
-									EnumChatFormatting.RED + "    Pyroclastic Worms: " + nf.format(FishingTracker.pyroclasticWormsSession) + "\n" +
-									EnumChatFormatting.DARK_RED + "    Lava Flames: " + nf.format(FishingTracker.lavaFlamesSession) + "\n" +
-									EnumChatFormatting.RED + "    Fire Eels: " + nf.format(FishingTracker.fireEelsSession) + "\n" +
-									EnumChatFormatting.GOLD + "    Tauruses: " + nf.format(FishingTracker.taurusesSession) + "\n" +
-									EnumChatFormatting.LIGHT_PURPLE + "    Thunders: " + nf.format(FishingTracker.thundersSession) + "\n" +
-									EnumChatFormatting.LIGHT_PURPLE + "    Lord Jawbuses: " + nf.format(FishingTracker.lordJawbusesSession) + "\n" +
-									EnumChatFormatting.AQUA + "    Time Since Lord Jawbus: " + timeBetween + "\n" +
-									EnumChatFormatting.AQUA + "    Creatures Since Lord Jawbus: " + bossesBetween + "\n" +
-									EnumChatFormatting.AQUA + EnumChatFormatting.STRIKETHROUGH + "-------------------"));
-							return;
-						}
+                            player.addChatMessage(new ChatComponentText(EnumChatFormatting.AQUA + "" + EnumChatFormatting.STRIKETHROUGH + "-------------------\n" +
+                                    EnumChatFormatting.RED + EnumChatFormatting.BOLD + " Lava Fishing Summary (Current Session):\n" +
+                                    EnumChatFormatting.BLUE + "    Plhlegblasts: " + nf.format(FishingTracker.plhlegblastsSession) + "\n" +
+                                    EnumChatFormatting.DARK_RED + "    Magma Slugs: " + nf.format(FishingTracker.magmaSlugsSession) + "\n" +
+                                    EnumChatFormatting.RED + "    Moogmas: " + nf.format(FishingTracker.moogmasSession) + "\n" +
+                                    EnumChatFormatting.RED + "    Lava Leeches: " + nf.format(FishingTracker.lavaLeechesSession) + "\n" +
+                                    EnumChatFormatting.RED + "    Pyroclastic Worms: " + nf.format(FishingTracker.pyroclasticWormsSession) + "\n" +
+                                    EnumChatFormatting.DARK_RED + "    Lava Flames: " + nf.format(FishingTracker.lavaFlamesSession) + "\n" +
+                                    EnumChatFormatting.RED + "    Fire Eels: " + nf.format(FishingTracker.fireEelsSession) + "\n" +
+                                    EnumChatFormatting.GOLD + "    Tauruses: " + nf.format(FishingTracker.taurusesSession) + "\n" +
+                                    EnumChatFormatting.LIGHT_PURPLE + "    Thunders: " + nf.format(FishingTracker.thundersSession) + "\n" +
+                                    EnumChatFormatting.LIGHT_PURPLE + "    Lord Jawbuses: " + nf.format(FishingTracker.lordJawbusesSession) + "\n" +
+                                    EnumChatFormatting.AQUA + "    Time Since Lord Jawbus: " + timeBetween + "\n" +
+                                    EnumChatFormatting.AQUA + "    Creatures Since Lord Jawbus: " + bossesBetween + "\n" +
+                                    EnumChatFormatting.AQUA + EnumChatFormatting.STRIKETHROUGH + "-------------------"));
+                            return;
+                        }
 
-						if (FishingTracker.jawbusTime == -1) {
-							timeBetween = "Never";
-						} else {
-							timeBetween = Utils.getTimeBetween(FishingTracker.jawbusTime, timeNow);
-						}
-						if (FishingTracker.jawbusSCs == -1) {
-							bossesBetween = "Never";
-						} else {
-							bossesBetween = nf.format(FishingTracker.jawbusSCs);
-						}
+                        if (FishingTracker.jawbusTime == -1) {
+                            timeBetween = "Never";
+                        } else {
+                            timeBetween = Utils.getTimeBetween(FishingTracker.jawbusTime, timeNow);
+                        }
+                        if (FishingTracker.jawbusSCs == -1) {
+                            bossesBetween = "Never";
+                        } else {
+                            bossesBetween = nf.format(FishingTracker.jawbusSCs);
+                        }
 
-						player.addChatMessage(new ChatComponentText(EnumChatFormatting.AQUA + "" + EnumChatFormatting.STRIKETHROUGH + "-------------------\n" +
-								EnumChatFormatting.RED + EnumChatFormatting.BOLD + " Lava Fishing Summary:\n" +
-								EnumChatFormatting.BLUE + "    Plhlegblasts: " + nf.format(FishingTracker.plhlegblasts) + "\n" +
-								EnumChatFormatting.DARK_RED + "    Magma Slugs: " + nf.format(FishingTracker.magmaSlugs) + "\n" +
-								EnumChatFormatting.RED + "    Moogmas: " + nf.format(FishingTracker.moogmas) + "\n" +
-								EnumChatFormatting.RED + "    Lava Leeches: " + nf.format(FishingTracker.lavaLeeches) + "\n" +
-								EnumChatFormatting.RED + "    Pyroclastic Worms: " + nf.format(FishingTracker.pyroclasticWorms) + "\n" +
-								EnumChatFormatting.DARK_RED + "    Lava Flames: " + nf.format(FishingTracker.lavaFlames) + "\n" +
-								EnumChatFormatting.RED + "    Fire Eels: " + nf.format(FishingTracker.fireEels) + "\n" +
-								EnumChatFormatting.GOLD + "    Tauruses: " + nf.format(FishingTracker.tauruses) + "\n" +
-								EnumChatFormatting.LIGHT_PURPLE + "    Thunders: " + nf.format(FishingTracker.thunders) + "\n" +
-								EnumChatFormatting.LIGHT_PURPLE + "    Lord Jawbuses: " + nf.format(FishingTracker.lordJawbuses) + "\n" +
-								EnumChatFormatting.AQUA + "    Time Since Lord Jawbus: " + timeBetween + "\n" +
-								EnumChatFormatting.AQUA + "    Creatures Since Lord Jawbus: " + bossesBetween + "\n" +
-								EnumChatFormatting.AQUA + EnumChatFormatting.STRIKETHROUGH + "-------------------"));
-						return;
-					} else if (arg1[1].equalsIgnoreCase("trophy")) {
-						if (showSession) {
-							player.addChatMessage(new ChatComponentText(EnumChatFormatting.AQUA + "" + EnumChatFormatting.STRIKETHROUGH + "-------------------\n" +
-									EnumChatFormatting.GOLD + EnumChatFormatting.BOLD + " Trophy Fishing Summary (Current Session):\n" +
-									EnumChatFormatting.WHITE + "    Sulphur Skitter " + EnumChatFormatting.DARK_GRAY + "(" + TrophyFishTracker.getSum(TrophyFishTracker.fishSession, "Sulphur Skitter") + ")" + EnumChatFormatting.WHITE + ": " + TrophyFishTracker.getTierCount(TrophyFishTracker.fishSession, "Sulphur Skitter") + "\n" +
-									EnumChatFormatting.WHITE + "    Obfuscated 1 " + EnumChatFormatting.DARK_GRAY + "(" + TrophyFishTracker.getSum(TrophyFishTracker.fishSession, "Obfuscated 1") + ")" + EnumChatFormatting.WHITE + ": " + TrophyFishTracker.getTierCount(TrophyFishTracker.fishSession, "Obfuscated 1") + "\n" +
-									EnumChatFormatting.WHITE + "    Steaminghot Flounder " + EnumChatFormatting.DARK_GRAY + "(" + TrophyFishTracker.getSum(TrophyFishTracker.fishSession, "Steaming-Hot Flounder") + ")" + EnumChatFormatting.WHITE + ": " + TrophyFishTracker.getTierCount(TrophyFishTracker.fishSession, "Steaming-Hot Flounder") + "\n" +
-									EnumChatFormatting.WHITE + "    Gusher " + EnumChatFormatting.DARK_GRAY + "(" + TrophyFishTracker.getSum(TrophyFishTracker.fishSession, "Gusher") + ")" + EnumChatFormatting.WHITE + ": " + TrophyFishTracker.getTierCount(TrophyFishTracker.fishSession, "Gusher") + "\n" +
-									EnumChatFormatting.WHITE + "    Blobfish " + EnumChatFormatting.DARK_GRAY + "(" + TrophyFishTracker.getSum(TrophyFishTracker.fishSession, "Blobfish") + ")" + EnumChatFormatting.WHITE + ": " + TrophyFishTracker.getTierCount(TrophyFishTracker.fishSession, "Blobfish") + "\n" +
-									EnumChatFormatting.GREEN + "    Obfuscated 2 " + EnumChatFormatting.DARK_GRAY + "(" + TrophyFishTracker.getSum(TrophyFishTracker.fishSession, "Obfuscated 2") + ")" + EnumChatFormatting.GREEN + ": " + TrophyFishTracker.getTierCount(TrophyFishTracker.fishSession, "Obfuscated 2") + "\n" +
-									EnumChatFormatting.GREEN + "    Slugfish " + EnumChatFormatting.DARK_GRAY + "(" + TrophyFishTracker.getSum(TrophyFishTracker.fishSession, "Slugfish") + ")" + EnumChatFormatting.GREEN + ": " + TrophyFishTracker.getTierCount(TrophyFishTracker.fishSession, "Slugfish") + "\n" +
-									EnumChatFormatting.GREEN + "    Flyfish " + EnumChatFormatting.DARK_GRAY + "(" + TrophyFishTracker.getSum(TrophyFishTracker.fishSession, "Flyfish") + ")" + EnumChatFormatting.GREEN + ": " + TrophyFishTracker.getTierCount(TrophyFishTracker.fishSession, "Flyfish") + "\n" +
-									EnumChatFormatting.BLUE + "    Obfuscated 3 " + EnumChatFormatting.DARK_GRAY + "(" + TrophyFishTracker.getSum(TrophyFishTracker.fishSession, "Obfuscated 3") + ")" + EnumChatFormatting.BLUE + ": " + TrophyFishTracker.getTierCount(TrophyFishTracker.fishSession, "Obfuscated 3") + "\n" +
-									EnumChatFormatting.BLUE + "    Lavahorse " + EnumChatFormatting.DARK_GRAY + "(" + TrophyFishTracker.getSum(TrophyFishTracker.fishSession, "Lavahorse") + ")" + EnumChatFormatting.BLUE + ": " + TrophyFishTracker.getTierCount(TrophyFishTracker.fishSession, "Lavahorse") + "\n" +
-									EnumChatFormatting.BLUE + "    Mana Ray " + EnumChatFormatting.DARK_GRAY + "(" + TrophyFishTracker.getSum(TrophyFishTracker.fishSession, "Mana Ray") + ")" + EnumChatFormatting.BLUE + ": " + TrophyFishTracker.getTierCount(TrophyFishTracker.fishSession, "Mana Ray") + "\n" +
-									EnumChatFormatting.BLUE + "    Volcanic Stonefish " + EnumChatFormatting.DARK_GRAY + "(" + TrophyFishTracker.getSum(TrophyFishTracker.fishSession, "Volcanic Stonefish") + ")" + EnumChatFormatting.BLUE + ": " + TrophyFishTracker.getTierCount(TrophyFishTracker.fishSession, "Volcanic Stonefish") + "\n" +
-									EnumChatFormatting.BLUE + "    Vanille " + EnumChatFormatting.DARK_GRAY + "(" + TrophyFishTracker.getSum(TrophyFishTracker.fishSession, "Vanille") + ")" + EnumChatFormatting.BLUE + ": " + TrophyFishTracker.getTierCount(TrophyFishTracker.fishSession, "Vanille") + "\n" +
-									EnumChatFormatting.DARK_PURPLE + "    Skeleton Fish " + EnumChatFormatting.DARK_GRAY + "(" + TrophyFishTracker.getSum(TrophyFishTracker.fishSession, "Skeleton Fish") + ")" + EnumChatFormatting.DARK_PURPLE + ": " + TrophyFishTracker.getTierCount(TrophyFishTracker.fishSession, "Skeleton Fish") + "\n" +
-									EnumChatFormatting.DARK_PURPLE + "    Moldfin " + EnumChatFormatting.DARK_GRAY + "(" + TrophyFishTracker.getSum(TrophyFishTracker.fishSession, "Moldfin") + ")" + EnumChatFormatting.DARK_PURPLE + ": " + TrophyFishTracker.getTierCount(TrophyFishTracker.fishSession, "Moldfin") + "\n" +
-									EnumChatFormatting.DARK_PURPLE + "    Soul Fish " + EnumChatFormatting.DARK_GRAY + "(" + TrophyFishTracker.getSum(TrophyFishTracker.fishSession, "Soul Fish") + ")" + EnumChatFormatting.DARK_PURPLE + ": " + TrophyFishTracker.getTierCount(TrophyFishTracker.fishSession, "Soul Fish") + "\n" +
-									EnumChatFormatting.DARK_PURPLE + "    Karate Fish " + EnumChatFormatting.DARK_GRAY + "(" + TrophyFishTracker.getSum(TrophyFishTracker.fishSession, "Karate Fish") + ")" + EnumChatFormatting.DARK_PURPLE + ": " + TrophyFishTracker.getTierCount(TrophyFishTracker.fishSession, "Karate Fish") + "\n" +
-									EnumChatFormatting.GOLD + "    Golden Fish " + EnumChatFormatting.DARK_GRAY + "(" + TrophyFishTracker.getSum(TrophyFishTracker.fishSession, "Golden Fish") + ")" + EnumChatFormatting.GOLD + ": " + TrophyFishTracker.getTierCount(TrophyFishTracker.fishSession, "Golden Fish") + "\n" +
-									EnumChatFormatting.AQUA + EnumChatFormatting.STRIKETHROUGH + "-------------------"));
-							return;
-						}
+                        player.addChatMessage(new ChatComponentText(EnumChatFormatting.AQUA + "" + EnumChatFormatting.STRIKETHROUGH + "-------------------\n" +
+                                EnumChatFormatting.RED + EnumChatFormatting.BOLD + " Lava Fishing Summary:\n" +
+                                EnumChatFormatting.BLUE + "    Plhlegblasts: " + nf.format(FishingTracker.plhlegblasts) + "\n" +
+                                EnumChatFormatting.DARK_RED + "    Magma Slugs: " + nf.format(FishingTracker.magmaSlugs) + "\n" +
+                                EnumChatFormatting.RED + "    Moogmas: " + nf.format(FishingTracker.moogmas) + "\n" +
+                                EnumChatFormatting.RED + "    Lava Leeches: " + nf.format(FishingTracker.lavaLeeches) + "\n" +
+                                EnumChatFormatting.RED + "    Pyroclastic Worms: " + nf.format(FishingTracker.pyroclasticWorms) + "\n" +
+                                EnumChatFormatting.DARK_RED + "    Lava Flames: " + nf.format(FishingTracker.lavaFlames) + "\n" +
+                                EnumChatFormatting.RED + "    Fire Eels: " + nf.format(FishingTracker.fireEels) + "\n" +
+                                EnumChatFormatting.GOLD + "    Tauruses: " + nf.format(FishingTracker.tauruses) + "\n" +
+                                EnumChatFormatting.LIGHT_PURPLE + "    Thunders: " + nf.format(FishingTracker.thunders) + "\n" +
+                                EnumChatFormatting.LIGHT_PURPLE + "    Lord Jawbuses: " + nf.format(FishingTracker.lordJawbuses) + "\n" +
+                                EnumChatFormatting.AQUA + "    Time Since Lord Jawbus: " + timeBetween + "\n" +
+                                EnumChatFormatting.AQUA + "    Creatures Since Lord Jawbus: " + bossesBetween + "\n" +
+                                EnumChatFormatting.AQUA + EnumChatFormatting.STRIKETHROUGH + "-------------------"));
+                        return;
+                    } else if (arg1[1].equalsIgnoreCase("trophy")) {
+                        if (showSession) {
+                            player.addChatMessage(new ChatComponentText(EnumChatFormatting.AQUA + "" + EnumChatFormatting.STRIKETHROUGH + "-------------------\n" +
+                                    EnumChatFormatting.GOLD + EnumChatFormatting.BOLD + " Trophy Fishing Summary (Current Session):\n" +
+                                    EnumChatFormatting.WHITE + "    Sulphur Skitter " + EnumChatFormatting.DARK_GRAY + "(" + TrophyFishTracker.getSum(TrophyFishTracker.fishSession, "Sulphur Skitter") + ")" + EnumChatFormatting.WHITE + ": " + TrophyFishTracker.getTierCount(TrophyFishTracker.fishSession, "Sulphur Skitter") + "\n" +
+                                    EnumChatFormatting.WHITE + "    Obfuscated 1 " + EnumChatFormatting.DARK_GRAY + "(" + TrophyFishTracker.getSum(TrophyFishTracker.fishSession, "Obfuscated 1") + ")" + EnumChatFormatting.WHITE + ": " + TrophyFishTracker.getTierCount(TrophyFishTracker.fishSession, "Obfuscated 1") + "\n" +
+                                    EnumChatFormatting.WHITE + "    Steaminghot Flounder " + EnumChatFormatting.DARK_GRAY + "(" + TrophyFishTracker.getSum(TrophyFishTracker.fishSession, "Steaming-Hot Flounder") + ")" + EnumChatFormatting.WHITE + ": " + TrophyFishTracker.getTierCount(TrophyFishTracker.fishSession, "Steaming-Hot Flounder") + "\n" +
+                                    EnumChatFormatting.WHITE + "    Gusher " + EnumChatFormatting.DARK_GRAY + "(" + TrophyFishTracker.getSum(TrophyFishTracker.fishSession, "Gusher") + ")" + EnumChatFormatting.WHITE + ": " + TrophyFishTracker.getTierCount(TrophyFishTracker.fishSession, "Gusher") + "\n" +
+                                    EnumChatFormatting.WHITE + "    Blobfish " + EnumChatFormatting.DARK_GRAY + "(" + TrophyFishTracker.getSum(TrophyFishTracker.fishSession, "Blobfish") + ")" + EnumChatFormatting.WHITE + ": " + TrophyFishTracker.getTierCount(TrophyFishTracker.fishSession, "Blobfish") + "\n" +
+                                    EnumChatFormatting.GREEN + "    Obfuscated 2 " + EnumChatFormatting.DARK_GRAY + "(" + TrophyFishTracker.getSum(TrophyFishTracker.fishSession, "Obfuscated 2") + ")" + EnumChatFormatting.GREEN + ": " + TrophyFishTracker.getTierCount(TrophyFishTracker.fishSession, "Obfuscated 2") + "\n" +
+                                    EnumChatFormatting.GREEN + "    Slugfish " + EnumChatFormatting.DARK_GRAY + "(" + TrophyFishTracker.getSum(TrophyFishTracker.fishSession, "Slugfish") + ")" + EnumChatFormatting.GREEN + ": " + TrophyFishTracker.getTierCount(TrophyFishTracker.fishSession, "Slugfish") + "\n" +
+                                    EnumChatFormatting.GREEN + "    Flyfish " + EnumChatFormatting.DARK_GRAY + "(" + TrophyFishTracker.getSum(TrophyFishTracker.fishSession, "Flyfish") + ")" + EnumChatFormatting.GREEN + ": " + TrophyFishTracker.getTierCount(TrophyFishTracker.fishSession, "Flyfish") + "\n" +
+                                    EnumChatFormatting.BLUE + "    Obfuscated 3 " + EnumChatFormatting.DARK_GRAY + "(" + TrophyFishTracker.getSum(TrophyFishTracker.fishSession, "Obfuscated 3") + ")" + EnumChatFormatting.BLUE + ": " + TrophyFishTracker.getTierCount(TrophyFishTracker.fishSession, "Obfuscated 3") + "\n" +
+                                    EnumChatFormatting.BLUE + "    Lavahorse " + EnumChatFormatting.DARK_GRAY + "(" + TrophyFishTracker.getSum(TrophyFishTracker.fishSession, "Lavahorse") + ")" + EnumChatFormatting.BLUE + ": " + TrophyFishTracker.getTierCount(TrophyFishTracker.fishSession, "Lavahorse") + "\n" +
+                                    EnumChatFormatting.BLUE + "    Mana Ray " + EnumChatFormatting.DARK_GRAY + "(" + TrophyFishTracker.getSum(TrophyFishTracker.fishSession, "Mana Ray") + ")" + EnumChatFormatting.BLUE + ": " + TrophyFishTracker.getTierCount(TrophyFishTracker.fishSession, "Mana Ray") + "\n" +
+                                    EnumChatFormatting.BLUE + "    Volcanic Stonefish " + EnumChatFormatting.DARK_GRAY + "(" + TrophyFishTracker.getSum(TrophyFishTracker.fishSession, "Volcanic Stonefish") + ")" + EnumChatFormatting.BLUE + ": " + TrophyFishTracker.getTierCount(TrophyFishTracker.fishSession, "Volcanic Stonefish") + "\n" +
+                                    EnumChatFormatting.BLUE + "    Vanille " + EnumChatFormatting.DARK_GRAY + "(" + TrophyFishTracker.getSum(TrophyFishTracker.fishSession, "Vanille") + ")" + EnumChatFormatting.BLUE + ": " + TrophyFishTracker.getTierCount(TrophyFishTracker.fishSession, "Vanille") + "\n" +
+                                    EnumChatFormatting.DARK_PURPLE + "    Skeleton Fish " + EnumChatFormatting.DARK_GRAY + "(" + TrophyFishTracker.getSum(TrophyFishTracker.fishSession, "Skeleton Fish") + ")" + EnumChatFormatting.DARK_PURPLE + ": " + TrophyFishTracker.getTierCount(TrophyFishTracker.fishSession, "Skeleton Fish") + "\n" +
+                                    EnumChatFormatting.DARK_PURPLE + "    Moldfin " + EnumChatFormatting.DARK_GRAY + "(" + TrophyFishTracker.getSum(TrophyFishTracker.fishSession, "Moldfin") + ")" + EnumChatFormatting.DARK_PURPLE + ": " + TrophyFishTracker.getTierCount(TrophyFishTracker.fishSession, "Moldfin") + "\n" +
+                                    EnumChatFormatting.DARK_PURPLE + "    Soul Fish " + EnumChatFormatting.DARK_GRAY + "(" + TrophyFishTracker.getSum(TrophyFishTracker.fishSession, "Soul Fish") + ")" + EnumChatFormatting.DARK_PURPLE + ": " + TrophyFishTracker.getTierCount(TrophyFishTracker.fishSession, "Soul Fish") + "\n" +
+                                    EnumChatFormatting.DARK_PURPLE + "    Karate Fish " + EnumChatFormatting.DARK_GRAY + "(" + TrophyFishTracker.getSum(TrophyFishTracker.fishSession, "Karate Fish") + ")" + EnumChatFormatting.DARK_PURPLE + ": " + TrophyFishTracker.getTierCount(TrophyFishTracker.fishSession, "Karate Fish") + "\n" +
+                                    EnumChatFormatting.GOLD + "    Golden Fish " + EnumChatFormatting.DARK_GRAY + "(" + TrophyFishTracker.getSum(TrophyFishTracker.fishSession, "Golden Fish") + ")" + EnumChatFormatting.GOLD + ": " + TrophyFishTracker.getTierCount(TrophyFishTracker.fishSession, "Golden Fish") + "\n" +
+                                    EnumChatFormatting.AQUA + EnumChatFormatting.STRIKETHROUGH + "-------------------"));
+                            return;
+                        }
 
-						player.addChatMessage(new ChatComponentText(EnumChatFormatting.AQUA + "" + EnumChatFormatting.STRIKETHROUGH + "-------------------\n" +
-								EnumChatFormatting.GOLD + EnumChatFormatting.BOLD + " Trophy Fishing Summary:\n" +
-								EnumChatFormatting.WHITE + "    Sulphur Skitter " + EnumChatFormatting.DARK_GRAY + "(" + TrophyFishTracker.getSum(TrophyFishTracker.fish, "Sulphur Skitter") + ")" + EnumChatFormatting.WHITE + ": " + TrophyFishTracker.getTierCount(TrophyFishTracker.fish, "Sulphur Skitter") + "\n" +
-								EnumChatFormatting.WHITE + "    Obfuscated 1 " + EnumChatFormatting.DARK_GRAY + "(" + TrophyFishTracker.getSum(TrophyFishTracker.fish, "Obfuscated 1") + ")" + EnumChatFormatting.WHITE + ": " + TrophyFishTracker.getTierCount(TrophyFishTracker.fish, "Obfuscated 1") + "\n" +
-								EnumChatFormatting.WHITE + "    Steaminghot Flounder " + EnumChatFormatting.DARK_GRAY + "(" + TrophyFishTracker.getSum(TrophyFishTracker.fish, "Steaming-Hot Flounder") + ")" + EnumChatFormatting.WHITE + ": " + TrophyFishTracker.getTierCount(TrophyFishTracker.fish, "Steaming-Hot Flounder") + "\n" +
+                        player.addChatMessage(new ChatComponentText(EnumChatFormatting.AQUA + "" + EnumChatFormatting.STRIKETHROUGH + "-------------------\n" +
+                                EnumChatFormatting.GOLD + EnumChatFormatting.BOLD + " Trophy Fishing Summary:\n" +
+                                EnumChatFormatting.WHITE + "    Sulphur Skitter " + EnumChatFormatting.DARK_GRAY + "(" + TrophyFishTracker.getSum(TrophyFishTracker.fish, "Sulphur Skitter") + ")" + EnumChatFormatting.WHITE + ": " + TrophyFishTracker.getTierCount(TrophyFishTracker.fish, "Sulphur Skitter") + "\n" +
+                                EnumChatFormatting.WHITE + "    Obfuscated 1 " + EnumChatFormatting.DARK_GRAY + "(" + TrophyFishTracker.getSum(TrophyFishTracker.fish, "Obfuscated 1") + ")" + EnumChatFormatting.WHITE + ": " + TrophyFishTracker.getTierCount(TrophyFishTracker.fish, "Obfuscated 1") + "\n" +
+        						EnumChatFormatting.WHITE + "    Steaminghot Flounder " + EnumChatFormatting.DARK_GRAY + "(" + TrophyFishTracker.getSum(TrophyFishTracker.fish, "Steaming-Hot Flounder") + ")" + EnumChatFormatting.WHITE + ": " + TrophyFishTracker.getTierCount(TrophyFishTracker.fish, "Steaming-Hot Flounder") + "\n" +
 								EnumChatFormatting.WHITE + "    Gusher " + EnumChatFormatting.DARK_GRAY + "(" + TrophyFishTracker.getSum(TrophyFishTracker.fish, "Gusher") + ")" + EnumChatFormatting.WHITE + ": " + TrophyFishTracker.getTierCount(TrophyFishTracker.fish, "Gusher") + "\n" +
 								EnumChatFormatting.WHITE + "    Blobfish " + EnumChatFormatting.DARK_GRAY + "(" + TrophyFishTracker.getSum(TrophyFishTracker.fish, "Blobfish") + ")" + EnumChatFormatting.WHITE + ": " + TrophyFishTracker.getTierCount(TrophyFishTracker.fish, "Blobfish") + "\n" +
 								EnumChatFormatting.GREEN + "    Obfuscated 2 " + EnumChatFormatting.DARK_GRAY + "(" + TrophyFishTracker.getSum(TrophyFishTracker.fish, "Obfuscated 2") + ")" + EnumChatFormatting.GREEN + ": " + TrophyFishTracker.getTierCount(TrophyFishTracker.fish, "Obfuscated 2") + "\n" +

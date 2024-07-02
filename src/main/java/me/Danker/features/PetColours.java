@@ -25,7 +25,16 @@ public class PetColours {
                     if (name.endsWith("aHealer") || name.endsWith("aMage") || name.endsWith("aBerserk") || name.endsWith("aArcher") || name.endsWith("aTank"))
                         continue;
                     int colour;
-                    int petLevel = Integer.parseInt(item.getDisplayName().substring(item.getDisplayName().indexOf(" ") + 1, item.getDisplayName().indexOf("]")));
+                    int petLevel;
+
+                    try {
+                        String level = name.substring(name.indexOf("Lvl") + 4, name.indexOf("]"));
+                        petLevel = Integer.parseInt(level);
+                    } catch (NumberFormatException ex) {
+                        ex.printStackTrace();
+                        continue;
+                    }
+
                     if (petLevel == 100 || petLevel == 200) {
                         colour = ModConfig.pet100Colour.getRGB();
                     } else if ((petLevel < 100 && petLevel >= 90) || petLevel >= 190) {

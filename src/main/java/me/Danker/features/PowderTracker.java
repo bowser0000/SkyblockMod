@@ -28,30 +28,36 @@ import java.util.Locale;
 public class PowderTracker {
 
     public static StopWatch powderStopwatch = new StopWatch();
-    static int lastMithril = -1;
-    static int mithrilGained = 0;
-    static int lastGemstone = -1;
-    static int gemstoneGained = 0;
+    private static int lastMithril = -1;
+    private static int mithrilGained = 0;
+    private static int lastGemstone = -1;
+    private static int gemstoneGained = 0;
+    private static int lastGlacite = -1;
+    private static int glaciteGained = 0;
 
     @SubscribeEvent
     public void onTick(TickEvent.ClientTickEvent event) {
         if (event.phase != TickEvent.Phase.START) return;
 
         if (DankersSkyblockMod.tickAmount % 20 == 0) {
-            if (Utils.currentLocation == Location.DWARVEN_MINES || Utils.currentLocation == Location.CRYSTAL_HOLLOWS) {
+            if (Utils.currentLocation == Location.DWARVEN_MINES || Utils.currentLocation == Location.CRYSTAL_HOLLOWS || Utils.currentLocation == Location.MINESHAFT) {
                 if (Minecraft.getMinecraft().getNetHandler() == null) return;
                 Collection<NetworkPlayerInfo> players = Minecraft.getMinecraft().getNetHandler().getPlayerInfoMap();
                 for (NetworkPlayerInfo player : players) {
                     if (player == null || player.getDisplayName() == null) continue;
                     String text = player.getDisplayName().getUnformattedText();
-                    if (text.startsWith(" Mithril Powder:")) {
+                    if (text.startsWith(" Mithril: ")) {
                         int mithril = Integer.parseInt(text.replaceAll("\\D", ""));
                         if (powderStopwatch.isStarted() && !powderStopwatch.isSuspended() && lastMithril != -1 && mithril > lastMithril) mithrilGained += mithril - lastMithril;
                         lastMithril = mithril;
-                    } else if (text.startsWith(" Gemstone Powder:")) {
+                    } else if (text.startsWith(" Gemstone: ")) {
                         int gemstone = Integer.parseInt(text.replaceAll("\\D", ""));
                         if (powderStopwatch.isStarted() && !powderStopwatch.isSuspended() && lastGemstone != -1 && gemstone > lastGemstone) gemstoneGained += gemstone - lastGemstone;
                         lastGemstone = gemstone;
+                    } else if (text.startsWith(" Glacite: ")) {
+                        int glacite = Integer.parseInt(text.replaceAll("\\D", ""));
+                        if (powderStopwatch.isStarted() && !powderStopwatch.isSuspended() && lastGlacite != -1 && glacite > lastGlacite) glaciteGained += glacite - lastGlacite;
+                        lastGlacite = glacite;
                     }
                 }
             }
@@ -80,6 +86,8 @@ public class PowderTracker {
         mithrilGained = 0;
         lastGemstone = -1;
         gemstoneGained = 0;
+        lastGlacite = -1;
+        glaciteGained = 0;
     }
 
     public static class PowderTrackerHud extends Hud {
@@ -89,6 +97,8 @@ public class PowderTracker {
                              EnumChatFormatting.DARK_GREEN + "Mithril Per Hour: 107,326\n" +
                              EnumChatFormatting.LIGHT_PURPLE + "Gemstone Gained: 101,299\n" +
                              EnumChatFormatting.LIGHT_PURPLE + "Gemstone Per Hour: 146,397\n" +
+                             EnumChatFormatting.AQUA + "Glacite Gained: 123,456\n" +
+                             EnumChatFormatting.AQUA + "Glacite Per Hour: 178,418\n" +
                              ModConfig.getColour(powderTrackerColour) + "Time Elapsed: " + Utils.getTimeBetween(0, 2491);
 
         @Button(
@@ -149,7 +159,7 @@ public class PowderTracker {
             }
 
             if (enabled && Utils.inSkyblock) {
-                if (!onlyInArea || (Utils.currentLocation == Location.DWARVEN_MINES || Utils.currentLocation == Location.CRYSTAL_HOLLOWS)) {
+                if (!onlyInArea || (Utils.currentLocation == Location.DWARVEN_MINES || Utils.currentLocation == Location.CRYSTAL_HOLLOWS || Utils.currentLocation == Location.MINESHAFT)) {
                     TextRenderer.drawHUDText(getText(), x, y, scale);
                 }
             }
@@ -168,12 +178,15 @@ public class PowderTracker {
         String getText() {
             int mithrilPerHour = (int) Math.round(mithrilGained / ((powderStopwatch.getTime() + 1) / 3600000d));
             int gemstonePerHour = (int) Math.round(gemstoneGained / ((powderStopwatch.getTime() + 1) / 3600000d));
+            int glacitePerHour = (int) Math.round(glaciteGained / ((powderStopwatch.getTime() + 1) / 3600000d));
 
             NumberFormat nf = NumberFormat.getIntegerInstance(Locale.US);
             String powderTrackerText = EnumChatFormatting.DARK_GREEN + "Mithril Gained: " + nf.format(mithrilGained) + "\n" +
                                        EnumChatFormatting.DARK_GREEN + "Mithril Per Hour: " + nf.format(mithrilPerHour) + "\n" +
                                        EnumChatFormatting.LIGHT_PURPLE + "Gemstone Gained: " + nf.format(gemstoneGained) + "\n" +
                                        EnumChatFormatting.LIGHT_PURPLE + "Gemstone Per Hour: " + nf.format(gemstonePerHour) + "\n" +
+                                       EnumChatFormatting.AQUA + "Glacite Gained: " + nf.format(glaciteGained) + "\n" +
+                                       EnumChatFormatting.AQUA + "Glacite Per Hour: " + nf.format(glacitePerHour) + "\n" +
                                        ModConfig.getColour(powderTrackerColour) + "Time Elapsed: " + Utils.getTimeBetween(0, powderStopwatch.getTime() / 1000d);
             if (!powderStopwatch.isStarted() || powderStopwatch.isSuspended()) {
                 powderTrackerText += "\n" + EnumChatFormatting.RED + "PAUSED";

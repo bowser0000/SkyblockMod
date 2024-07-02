@@ -14,7 +14,6 @@ import cc.polyfrost.oneconfig.config.data.ModType;
 import cc.polyfrost.oneconfig.config.data.OptionSize;
 import cc.polyfrost.oneconfig.config.migration.CfgMigrator;
 import cc.polyfrost.oneconfig.config.migration.CfgName;
-import cc.polyfrost.oneconfig.libs.universal.UKeyboard;
 import cc.polyfrost.oneconfig.utils.Notifications;
 import me.Danker.DankersSkyblockMod;
 import me.Danker.features.*;
@@ -43,6 +42,7 @@ public class ModConfig extends Config {
         initialize();
 
         registerKeyBind(maddoxKey, FasterMaddoxCalling::onKey);
+        registerKeyBind(pearlKey, GetPearlFromSack::onKey);
         registerKeyBind(abilityKey, DankersSkyblockMod::onAbilityKey);
         registerKeyBind(waypointKey, CrystalHollowWaypoints::onKey);
         registerKeyBind(skillTrackerKey, SkillTracker::onKey);
@@ -2186,39 +2186,55 @@ public class ModConfig extends Config {
     // Keybinds
 
     @KeyBind(
+            name = "Get Pearl From Sack",
+            category = "Keybinds",
+            subcategory = "General"
+    )
+    public static OneKeyBind pearlKey = new OneKeyBind();
+
+    @Number(
+            name = "Amount of Pearls",
+            description = "Amount of pearls to top up to.",
+            min = 1, max = 560,
+            category = "Keybinds",
+            subcategory = "General"
+    )
+    public static int pearlAmount = 16;
+
+    @KeyBind(
             name = "Open Maddox Menu",
             category = "Keybinds",
             subcategory = "General"
     )
-    public static OneKeyBind maddoxKey = new OneKeyBind(UKeyboard.KEY_M);
+    public static OneKeyBind maddoxKey = new OneKeyBind();
 
     @KeyBind(
             name = "Regular Ability",
             category = "Keybinds",
             subcategory = "Dungeons"
     )
-    public static OneKeyBind abilityKey = new OneKeyBind(UKeyboard.KEY_NUMPAD4);
+    public static OneKeyBind abilityKey = new OneKeyBind();
 
     @KeyBind(
             name = "Create Waypoint",
             category = "Keybinds",
             subcategory = "Waypoints"
     )
-    public static OneKeyBind waypointKey = new OneKeyBind(UKeyboard.KEY_NUMPAD6);
+    public static OneKeyBind waypointKey = new OneKeyBind();
 
     @KeyBind(
             name = "Start/Stop Skill Tracker",
             category = "Keybinds",
             subcategory = "Trackers"
     )
-    public static OneKeyBind skillTrackerKey = new OneKeyBind(UKeyboard.KEY_NUMPAD5);
+    public static OneKeyBind skillTrackerKey = new OneKeyBind();
 
     @KeyBind(
             name = "Start/Stop Powder Tracker",
             category = "Keybinds",
             subcategory = "Trackers"
     )
-    public static OneKeyBind powderTrackerKey = new OneKeyBind(UKeyboard.KEY_NUMPAD8);
+    public static OneKeyBind powderTrackerKey = new OneKeyBind();
 
     @KeyBind(
             name = "Disable Mouse Movement",

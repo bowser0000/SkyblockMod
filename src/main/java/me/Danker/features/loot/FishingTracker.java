@@ -147,7 +147,7 @@ public class FishingTracker {
         if (event.type == 2) return;
         if (message.contains(":")) return;
 
-        if (message.equals("It's a Double Hook!")) {
+        if (message.startsWith("It's a Double Hook!")) {
             doubleHook = true;
         } else if (message.startsWith("GOOD CATCH!")) {
             goodCatches++;
@@ -158,8 +158,8 @@ public class FishingTracker {
             greatCatchesSession++;
             CfgConfig.writeIntConfig("fishing", "greatCatch", greatCatches);
         } else if (message.equals("A Squid appeared.")) {
-            squids++;
-            squidsSession++;
+            squids += getAmount();
+            squidsSession += getAmount();
             CfgConfig.writeIntConfig("fishing", "squid", squids);
             increaseSeaCreatures();
         } else if (message.equals("You caught a Sea Walker.")) {
@@ -345,7 +345,7 @@ public class FishingTracker {
             lavaPigmenSession += getAmount();
             CfgConfig.writeIntConfig("fishing", "lavaPigman", lavaPigmen);
             increaseSeaCreatures();
-        } else if (message.equals("A Zombie Miner surfaces!")) {
+        } else if (message.equals("An Abyssal Miner breaks out of the water!")) {
             zombieMiners += getAmount();
             zombieMinersSession += getAmount();
             CfgConfig.writeIntConfig("fishing", "zombieMiner", zombieMiners);
@@ -408,38 +408,41 @@ public class FishingTracker {
             increaseSeaCreatures();
         }
 
-        ifIncreased();
+        if (hasIncreased) {
+            doubleHook = false;
+            hasIncreased = false;
+        }
     }
 
     public void increaseSeaCreatures() {
         // Only increment Yetis when in Jerry's Workshop
         if (Utils.currentLocation == Location.JERRY_WORKSHOP) {
             if (reindrakeSCs != -1) {
-                reindrakeSCs++;
+                reindrakeSCs += getAmount();
             }
             if (reindrakeSCsSession != -1) {
-                reindrakeSCsSession++;
+                reindrakeSCsSession += getAmount();
             }
         } else if (Utils.currentLocation == Location.CRIMSON_ISLE) {
             if (jawbusSCs != -1) {
-                jawbusSCs++;
+                jawbusSCs += getAmount();
             }
             if (jawbusSCsSession != -1) {
-                jawbusSCsSession++;
+                jawbusSCsSession += getAmount();
             }
         } else {
             if (empSCs != -1) {
-                empSCs++;
+                empSCs += getAmount();
             }
             if (empSCsSession != -1) {
-                empSCsSession++;
+                empSCsSession += getAmount();
             }
         }
 
-        seaCreatures++;
-        fishingMilestone++;
-        seaCreaturesSession++;
-        fishingMilestoneSession++;
+        seaCreatures += getAmount();
+        fishingMilestone += getAmount();
+        seaCreaturesSession += getAmount();
+        fishingMilestoneSession += getAmount();
         CfgConfig.writeIntConfig("fishing", "seaCreature", seaCreatures);
         CfgConfig.writeIntConfig("fishing", "milestone", fishingMilestone);
         CfgConfig.writeIntConfig("fishing", "empSC", empSCs);
@@ -450,10 +453,6 @@ public class FishingTracker {
     public int getAmount() {
         hasIncreased = true;
         return doubleHook ? 2 : 1;
-    }
-
-    public void ifIncreased() {
-        if (hasIncreased) doubleHook = false;
     }
 
 }

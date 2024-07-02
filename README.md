@@ -3,6 +3,8 @@ QOL changes that enhances your Hypixel Skyblock experience. Created to add featu
 
 Discord Server: https://discord.gg/QsEkNQS
 
+Modrinth Link: https://modrinth.com/mod/dankers-skyblock-mod
+
 <details>
 <summary>Incompatibilites</summary>
 
