@@ -871,7 +871,7 @@ public class LootDisplay extends Hud {
                                     EnumChatFormatting.GOLD + "Good Catches:\n" +
                                     EnumChatFormatting.DARK_PURPLE + "Great Catches:\n" +
                                     EnumChatFormatting.AQUA + "Frozen Steves:\n" +
-                                    EnumChatFormatting.WHITE + "Snowmans:\n" +
+                                    EnumChatFormatting.WHITE + "Snowmen:\n" +
                                     EnumChatFormatting.DARK_GREEN + "Grinches:\n" +
                                     EnumChatFormatting.RED + "Nutcrackers:\n" +
                                     EnumChatFormatting.GOLD + "Yetis:\n" +
@@ -907,7 +907,7 @@ public class LootDisplay extends Hud {
                                     EnumChatFormatting.GOLD + "Good Catches:\n" +
                                     EnumChatFormatting.DARK_PURPLE + "Great Catches:\n" +
                                     EnumChatFormatting.AQUA + "Frozen Steves:\n" +
-                                    EnumChatFormatting.WHITE + "Snowmans:\n" +
+                                    EnumChatFormatting.WHITE + "Snowmen:\n" +
                                     EnumChatFormatting.DARK_GREEN + "Grinches:\n" +
                                     EnumChatFormatting.RED + "Nutcrackers:\n" +
                                     EnumChatFormatting.GOLD + "Yetis:\n" +

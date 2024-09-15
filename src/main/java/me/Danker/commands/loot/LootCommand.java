@@ -500,7 +500,7 @@ public class LootCommand extends CommandBase {
                             player.addChatMessage(new ChatComponentText(EnumChatFormatting.AQUA + "" + EnumChatFormatting.STRIKETHROUGH + "-------------------\n" +
                                                                         EnumChatFormatting.WHITE + EnumChatFormatting.BOLD + "  Winter Fishing Summary (Current Session):\n" +
                                                                         EnumChatFormatting.AQUA + "    Frozen Steves: " + nf.format(FishingTracker.frozenStevesSession) + "\n" +
-                                                                        EnumChatFormatting.WHITE + "    Snowmans: " + nf.format(FishingTracker.frostyTheSnowmansSession) + "\n" +
+                                                                        EnumChatFormatting.WHITE + "    Snowmen: " + nf.format(FishingTracker.frostyTheSnowmansSession) + "\n" +
                                                                         EnumChatFormatting.DARK_GREEN + "    Grinches: " + nf.format(FishingTracker.grinchesSession) + "\n" +
                                                                         EnumChatFormatting.RED + "    Nutcrackers: " + nf.format(FishingTracker.nutcrackersSession) + "\n" +
                                                                         EnumChatFormatting.GOLD + "    Yetis: " + nf.format(FishingTracker.yetisSession) + "\n" +
@@ -525,7 +525,7 @@ public class LootCommand extends CommandBase {
                         player.addChatMessage(new ChatComponentText(EnumChatFormatting.AQUA + "" + EnumChatFormatting.STRIKETHROUGH + "-------------------\n" +
                                                                     EnumChatFormatting.WHITE + EnumChatFormatting.BOLD + "  Winter Fishing Summary:\n" +
                                                                     EnumChatFormatting.AQUA + "    Frozen Steves: " + nf.format(FishingTracker.frozenSteves) + "\n" +
-                                                                    EnumChatFormatting.WHITE + "    Snowmans: " + nf.format(FishingTracker.frostyTheSnowmans) + "\n" +
+                                                                    EnumChatFormatting.WHITE + "    Snowmen: " + nf.format(FishingTracker.frostyTheSnowmans) + "\n" +
                                                                     EnumChatFormatting.DARK_GREEN + "    Grinches: " + nf.format(FishingTracker.grinches) + "\n" +
                                                                     EnumChatFormatting.RED + "    Nutcrackers: " + nf.format(FishingTracker.nutcrackers) + "\n" +
                                                                     EnumChatFormatting.GOLD + "    Yetis: " + nf.format(FishingTracker.yetis) + "\n" +
