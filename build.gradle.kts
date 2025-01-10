@@ -1,14 +1,13 @@
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
-import gg.essential.gradle.util.noServerRunConfigs
+import org.polyfrost.gradle.util.noServerRunConfigs
 
 plugins {
-    id("gg.essential.multi-version")
-    id("gg.essential.defaults.repo")
-    id("gg.essential.defaults.java")
-    id("gg.essential.defaults.loom")
+    id("org.polyfrost.multi-version")
+    id("org.polyfrost.defaults.repo")
+    id("org.polyfrost.defaults.java")
+    id("org.polyfrost.defaults.loom")
     id("com.github.johnrengelman.shadow")
     id("net.kyori.blossom") version "1.3.0"
-    id("io.github.juuxel.loom-quiltflower-mini")
     id("signing")
     java
 }
@@ -16,10 +15,6 @@ plugins {
 val mod_name: String by project
 val mod_version: String by project
 val mod_id: String by project
-
-preprocess {
-    vars.put("MODERN", if (project.platform.mcMinor >= 16) 1 else 0)
-}
 
 blossom {
     replaceToken("@VER@", mod_version)
@@ -35,18 +30,18 @@ base {
 loom {
     noServerRunConfigs()
     if (project.platform.isLegacyForge) {
-        launchConfigs.named("client") {
-            arg("--tweakClass", "cc.polyfrost.oneconfig.loader.stage0.LaunchWrapperTweaker")
-            property("mixin.debug.export", "true")
-        }
         runConfigs.named("client") {
-            vmArgs.remove("-XstartOnFirstThread")
+            programArgs("--tweakClass", "cc.polyfrost.oneconfig.loader.stage0.LaunchWrapperTweaker")
+            property("mixin.debug.export", "true")
         }
     }
 }
 
 val shade: Configuration by configurations.creating {
     configurations.implementation.get().extendsFrom(this)
+}
+val modShade: Configuration by configurations.creating {
+    configurations.modImplementation.get().extendsFrom(this)
 }
 
 sourceSets {
@@ -122,7 +117,7 @@ tasks {
     }
     named<ShadowJar>("shadowJar") {
         archiveClassifier.set("dev")
-        configurations = listOf(shade)
+        configurations = listOf(shade, modShade)
         duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     }
     remapJar {

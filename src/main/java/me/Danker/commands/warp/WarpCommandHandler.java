@@ -1,5 +1,6 @@
 package me.Danker.commands.warp;
 
+import me.Danker.config.CfgConfig;
 import net.minecraftforge.client.ClientCommandHandler;
 
 import java.util.ArrayList;
@@ -7,13 +8,13 @@ import java.util.List;
 
 public class WarpCommandHandler {
 
-    private List<WarpCommand> commands;
+    private final List<WarpCommand> commands;
 
     /**
      * Constructor of the WarpCommandHandler, it will register all commands when it is created
      */
     public WarpCommandHandler() {
-        this.commands = new ArrayList<WarpCommand>();
+        this.commands = new ArrayList<>();
         registerCommands();
     }
 
@@ -30,6 +31,10 @@ public class WarpCommandHandler {
      * @param warpCommand WarpCommand to register
      */
     public void registerCommand(WarpCommand warpCommand) {
+        if (!CfgConfig.initBoolean("commands", warpCommand.name, true)) {
+            return;
+        }
+
         this.commands.add(warpCommand);
         ClientCommandHandler.instance.registerCommand(warpCommand);
     }
@@ -91,6 +96,11 @@ public class WarpCommandHandler {
         registerCommand(new WarpCommand("howl"));
         registerCommand(new WarpCommand("dun", "dungeon_hub"));
         registerCommand(new WarpCommand("garden"));
+        registerCommand(new WarpCommand("rift"));
+        registerCommand(new WarpCommand("carnival"));
+        registerCommand(new WarpCommand("trapper"));
+        registerCommand(new WarpCommand("base"));
+        registerCommand(new WarpCommand("nucleus"));
     }
 
 }

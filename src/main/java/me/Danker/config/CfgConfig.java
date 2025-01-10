@@ -488,9 +488,6 @@ public class CfgConfig {
         DankersSkyblockMod.enchantingLevel = initInt("skills", "enchanting", -1);
         DankersSkyblockMod.alchemyLevel = initInt("skills", "alchemy", -1);
         DankersSkyblockMod.carpentryLevel = initInt("skills", "carpentry", -1);
-
-        // Commands
-        if (!hasKey("commands", "reparty")) writeBooleanConfig("commands", "reparty", false);
     }
     
 }

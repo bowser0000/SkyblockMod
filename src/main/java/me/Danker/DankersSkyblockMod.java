@@ -82,7 +82,6 @@ public class DankersSkyblockMod {
     public static boolean firstLaunch = false;
     public static String configDirectory;
     public static JsonObject data = null;
-    public static WarpCommandHandler warpCommandHandler;
 
     public static int farmingLevel;
     public static int miningLevel;
@@ -199,6 +198,7 @@ public class DankersSkyblockMod {
         ConfigHandler.reloadConfig();
         MinecraftForge.EVENT_BUS.post(new PostConfigInitEvent(configDirectory));
 
+        new WarpCommandHandler();
         new Thread(Utils::refreshRepo).start();
     }
 
@@ -235,8 +235,6 @@ public class DankersSkyblockMod {
         ClientCommandHandler.instance.registerCommand(new TrophyFishCommand());
         ClientCommandHandler.instance.registerCommand(new WeightCommand());
 
-        warpCommandHandler = new WarpCommandHandler();
-
         configDirectory = event.getModConfigurationDirectory().toString();
     }
 
@@ -256,7 +254,7 @@ public class DankersSkyblockMod {
         
         if (!ClientCommandHandler.instance.getCommands().containsKey("reparty")) {
             ClientCommandHandler.instance.registerCommand(new RepartyCommand());
-        } else if (CfgConfig.getBoolean("commands", "reparty")) {
+        } else if (CfgConfig.initBoolean("commands", "reparty", false)) {
             for (Map.Entry<String, ICommand> entry : ClientCommandHandler.instance.getCommands().entrySet()) {
                 if (entry.getKey().equals("reparty") || entry.getKey().equals("rp")) {
                     entry.setValue(new RepartyCommand());
