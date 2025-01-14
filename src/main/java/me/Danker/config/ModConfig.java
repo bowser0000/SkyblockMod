@@ -1642,6 +1642,18 @@ public class ModConfig extends Config {
     public static int dungeonBossVolume = 50;
 
     @CfgName(
+            name = "Phase1Volume",
+            category = "music"
+    )
+    @Slider(
+            name = "F7 Phase 1 Music Volume",
+            min = 0, max = 100,
+            category = "Music",
+            subcategory = "Music"
+    )
+    public static int phase1Volume = 50;
+
+    @CfgName(
             name = "Phase2Volume",
             category = "music"
     )
