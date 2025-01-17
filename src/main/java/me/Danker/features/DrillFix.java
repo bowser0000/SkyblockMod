@@ -30,7 +30,8 @@ public class DrillFix {
                 ItemStack item = packet.func_149174_e();
 
                 if (item != null && windowId == 0 && slot - 36 == player.inventory.currentItem) {
-                    if (item.getItem().equals(Items.prismarine_shard) && isDown) {
+                    boolean isMiningTool = item.getItem().equals(Items.prismarine_shard) || item.getItem().equals(Items.skull);
+                    if (isMiningTool && isDown) {
                         event.setCanceled(true);
                     }
                 }
@@ -43,7 +44,8 @@ public class DrillFix {
                     ItemStack item = items[slot];
 
                     if (item != null) {
-                        if (item.getItem().equals(Items.prismarine_shard) && isDown) {
+                        boolean isMiningTool = item.getItem().equals(Items.prismarine_shard) || item.getItem().equals(Items.skull);
+                        if (isMiningTool && isDown) {
                             items[slot] = player.inventory.getCurrentItem();
                             event.packet = packet;
                         }
