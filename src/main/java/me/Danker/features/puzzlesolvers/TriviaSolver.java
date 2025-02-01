@@ -64,6 +64,7 @@ public class TriviaSolver {
         triviaSolutions.put("Which of these monsters only spawns at night?", new String[]{"Zombie Villager", "Ghast"});
         triviaSolutions.put("Which of these is not a dragon in The End?", new String[]{"Zoomer Dragon", "Weak Dragon", "Stonk Dragon", "Holy Dragon", "Boomer Dragon",
                 "Booger Dragon", "Older Dragon", "Elder Dragon", "Stable Dragon", "Professor Dragon"});
+        triviaSolutions.put("What is the name of the vendor in the Hub who sells stained glass?", new String[]{"Wool Weaver"});
     }
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
